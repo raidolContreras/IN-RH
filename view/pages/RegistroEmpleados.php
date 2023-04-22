@@ -22,11 +22,45 @@
 			<div class="col-lg-12">
 				<div class="card">
 					<div class="card-body">
-						<form id="formulario" class="container mt-4">
+						<form id="formulario" class="container mt-4" method="post">
+
+
+								<?php 
+
+								/*=============================================
+								FORMA EN QUE SE INSTANCIA LA CLASE DE UN MÉTODO ESTÁTICO 
+								=============================================*/
+
+								$registro = ControladorFormularios::ctrRegistrarEmpleados();
+
+								if($registro == "ok"){
+
+									echo '<script>
+
+									window.location = "Empleados";
+
+									</script>';
+
+									echo '<div class="alert alert-success">¡Nuevo Colaborador Registrado Exitosamente!</div>';
+
+								}
+								if ($registro == "1") {
+
+									echo '<script>
+
+									if ( window.history.replaceState ) {
+
+										window.history.replaceState( null, null, window.location.href );
+
+									}
+
+									</script>';
+
+									echo '<div class="alert alert-danger">Error, no se pudo registrar al colaborador, Error en los datos</div>';
+								}
+
+								?>
 							<div class="card">
-								<div class="card-header">
-									<h3>Datos personales</h3>
-								</div>
 								<div class="card-body">
 									<div class="form-row">
 										<div class="col-md-6">
@@ -43,16 +77,41 @@
 										</div>
 									</div>
 									<div class="form-row">
-										<div class="col-md-6">
+										<div class="col-md-4">
+											<div class="form-group">
+												<label for="genero">Género</label>
+												<select class="form-control" id="genero" name="genero" required>
+													<option value="">Seleccione una opción</option>
+													<option value="1">Masculino</option>
+													<option value="0">Femenino</option>
+												</select>
+											</div>
+										</div>
+										<div class="col-md-4">
 											<div class="form-group">
 												<label for="fecha_nacimiento">Fecha de nacimiento</label>
 												<input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" required>
 											</div>
 										</div>
+										<div class="col-md-4">
+											<div class="form-group">
+												<label for="num_identificacion">Número de identificación
+													<a data-toggle="identificacion" title="Número de identificación" 
+													data-content="Ejemplos: N° de INE, Pasaporte, etc."><i class="fas fa-info-circle"></i></a>
+												</label>
+												<input type="text" class="form-control" id="num_identificacion" name="num_identificacion" required>
+											</div>
+										</div>
 										<div class="col-md-6">
 											<div class="form-group">
-												<label for="num_identificacion">Número de identificación</label>
-												<input type="text" class="form-control" id="num_identificacion" name="num_identificacion" required>
+												<label for="num_seguro_social">Número de Seguro Social</label>
+												<input type="number" class="form-control" id="num_seguro_social" name="num_seguro_social" required>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												<label for="rfc">RFC</label>
+												<input type="text" class="form-control" id="rfc" name="rfc" required>
 											</div>
 										</div>
 									</div>
@@ -68,7 +127,7 @@
 										</div>
 										<div class="row mt-2">
 											<div class="col-md-3">
-												<input type="text" class="form-control" id="num_interior" name="num_interior" placeholder="Núm. Int.">
+												<input type="text" class="form-control" id="num_interior" name="num_interior" placeholder="Núm. Int." value=" ">
 											</div>
 											<div class="col-md-6">
 												<input type="text" class="form-control" id="colonia" name="colonia" placeholder="Colonia" required>
@@ -116,14 +175,14 @@
 										</div>
 
 										<div class="form-group col-md-6">
-											<label for="departamento" class="col-form-label text-center font-weight-bold">Parentesco:</label>
-											<select class="form-control form-control-lg" id="departamento" name="departamento">
-											<option value="">Selecciona una opción</option>
-											<option value="padre">Padre</option>
-											<option value="madre">Madre</option>
-											<option value="hermano">Hermano</option>
-											<option value="amigo">Amigo</option>
-											<option value="pareja">Pareja</option>
+											<label for="parentesco" class="col-form-label text-center font-weight-bold">Parentesco:</label>
+											<select class="form-control form-control-lg" id="parentesco" name="parentesco">
+												<option value="">Selecciona una opción</option>
+												<option value="padre">Padre</option>
+												<option value="madre">Madre</option>
+												<option value="hermano">Hermano</option>
+												<option value="amigo">Amigo</option>
+												<option value="pareja">Pareja</option>
 											</select>
 										</div>
 									</div>
@@ -150,7 +209,6 @@
 <!-- Bootstrap 4 JS -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper-base.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 
 <!-- Validación de formulario con jQuery -->
 <script>
@@ -255,5 +313,9 @@
 // Si todos los campos son válidos, enviar el formulario
 			return true;
 		});
+	});
+
+	$(document).ready(function(){
+		$('[data-toggle="identificacion"]').popover();   
 	});
 </script>

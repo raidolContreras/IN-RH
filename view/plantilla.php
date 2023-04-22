@@ -19,6 +19,7 @@
 	<link rel="stylesheet" type="text/css" href="assets/vendor/datatables/css/buttons.bootstrap4.css">
 	<link rel="stylesheet" type="text/css" href="assets/vendor/datatables/css/select.bootstrap4.css">
 	<link rel="stylesheet" type="text/css" href="assets/vendor/datatables/css/fixedHeader.bootstrap4.css">
+	
 	<?php if (isset($_GET["pagina"])): ?>
 		<title><?php echo 'IN Consulting México - '.$_GET["pagina"]; ?></title>
 	<?php else: ?>
@@ -35,6 +36,7 @@
 			$_GET["pagina"] == "InformacionLaboral" ||
 			$_GET["pagina"] == "Formacion" ||
 			$_GET["pagina"] == "HistorialLaboral" ||
+			$_GET["pagina"] == "Departamento" ||
 			$_GET["pagina"] == "somos" 
 
 		){
@@ -62,12 +64,19 @@
 	}
 
 
-}else{
+	}else{
+		include "pages/navs/navbar.php";
+		include "pages/navs/sidenav.php"; 
+		echo'
+		<!-- ============================================================== -->
+		<!-- wrapper  -->
+		<!-- ============================================================== -->
+		<div class="dashboard-wrapper">
+		<div class="dashboard-ecommerce">';
+		include "pages/inicio.php";
 
-	include "pages/inicio.php";
-
-}
-include "pages/navs/footer.php";
+	}
+	include "pages/navs/footer.php";
 
 ?>
 </div>
