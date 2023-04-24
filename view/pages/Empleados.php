@@ -2,7 +2,7 @@
 $empleados = ControladorFormularios::ctrVerEmpleados(null, null); 
 ?><div class="container-fluid dashboard-content ">
 	<!-- ============================================================== -->
-	<!-- pageheader  -->
+	<!-- pageheader	-->
 	<!-- ============================================================== -->
 	<div class="row">
 		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
@@ -20,11 +20,11 @@ $empleados = ControladorFormularios::ctrVerEmpleados(null, null);
 		</div>
 	</div>
 	<!-- ============================================================== -->
-	<!-- end pageheader  -->
+	<!-- end pageheader	-->
 	<!-- ============================================================== -->
 	<div class="ecommerce-widget">
 		<!-- ============================================================== -->
-		<!-- data table  -->
+		<!-- data table	-->
 		<!-- ============================================================== -->
 		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 			<div class="card">
@@ -37,8 +37,7 @@ $empleados = ControladorFormularios::ctrVerEmpleados(null, null);
 							<thead>
 								<tr>
 									<th>N° de Identificación</th>
-									<th>Nombre(s)</th>
-									<th>Apellidos</th>
+									<th>Nombre Completo</th>
 									<th>Fecha de Nacimiento</th>
 									<th>Dirección</th>
 									<th>Teléfono</th>
@@ -50,8 +49,7 @@ $empleados = ControladorFormularios::ctrVerEmpleados(null, null);
 								<?php foreach ($empleados as $key => $value): ?>
 								<tr>
 									<td><?php echo strtoupper($value['identificacion']); ?></td>
-									<td><?php echo strtoupper($value['name']); ?></td>
-									<td><?php echo strtoupper($value['lastname']); ?></td>
+									<td><?php echo strtoupper($value['name'].' '.$value['lastname']); ?></td>
 									<td><?php echo $value['fNac']; ?></td>
 
 								<?php if ($value['numI']==null || $value['numI'] == ""): ?>
@@ -62,29 +60,69 @@ $empleados = ControladorFormularios::ctrVerEmpleados(null, null);
 									<td><?php echo strtoupper($value['street'].", #".$value['numE'].", #".$value['numI'].", ".$value['colonia'].", ".$value['municipio'].", ".$value['estado']."."); ?></td>
 								<?php endif ?>
 
-									<td><?php echo $value['phone']; ?></td>
+								<?php 
+									$formattedNumber = ControladorFormularios::ctrNumeroTelefonico($value['phone']);
+								?>
+									<td><?php echo $formattedNumber; ?></td>
 									<td><?php echo $value['email']; ?></td>
 									<td>
 										<table>
 											<tr>
 												<td>
+													<form method="POST" action="Colaborador">
+													<button class="btn btn btn-outline-secondary rounded btn-block" name="Editar" value="<?php echo $value['idEmpleados'];?>">
+														<i class="fas fa-address-card"></i>
+													</button>
+													</form>
+													
+													<!--<div class="container">
+														<button type="button" class="btn btn-info rounded" data-toggle="modal" data-target="#<?php echo $value['idEmpleados'] ?>">
+														Emergencia
+														</button>
+
+														<div class="modal fade" id="<?php echo $value['idEmpleados'] ?>">
+														<div class="modal-dialog">
+															<div class="modal-content">
+															
+															<div class="modal-header">
+																<h4 class="modal-title">Datos de emergencia (<?php echo strtoupper($value['name']." ".$value['lastname']); ?>)</h4>
+																<button type="button" class="close" data-dismiss="modal">&times;</button>
+															</div>
+															
+															<div class="modal-body">
+															<?php 
+																$formattedNumber = ControladorFormularios::ctrNumeroTelefonico($value['phoneEmer']);
+															?>
+																Nombre: <?php echo strtoupper($value['nameEmer']); ?><br>
+																Parentesco: <?php echo strtoupper($value['parentesco']); ?><br>
+																Teléfono: <?php echo $formattedNumber;?>
+															</div>
+															 
+															</div>
+														</div>
+														</div>
+														
+													</div>	
+												</td>
+												<td> 
 													<form method="POST" action="Edicion">
-													<button class="btn btn-primary rounded" value="<?php echo $value['idEmpleados'];?>">
+													<button class="btn btn-primary rounded" name="Editar" value="<?php echo $value['idEmpleados'];?>">
 														<i class="fa fa-edit"></i>
 													</button>
 													</form>
 												</td>
 												<td>
-													<form method="POST" action="InformacionLaboral">
-													<button class="btn btn-warning rounded" value="<?php echo $value['idEmpleados'];?>">
-														<i class="fa fa-user"></i>
+
+													<form method="POST" action="HistorialLaboral">
+													<button class="btn btn-warning rounded" name="Historial" value="<?php echo $value['idEmpleados'];?>">
+														<i class="fas fa-history"></i>
 													</button>
 												</td>
 												<td>
-													<form method="POST" action="Eliminacion">
-													<button class="btn btn-danger rounded" value="<?php echo $value['idEmpleados'];?>">
-														<i class="fa fa-trash"></i>
-													</button>
+													<form method="POST" action="Borrar">
+													<button class="btn btn-danger rounded" name="Borrar" value="<?php echo $value['idEmpleados'];?>">
+														<i class="fas fa-eraser"></i>
+													</button>-->
 												</td>
 											</tr>
 										</table>

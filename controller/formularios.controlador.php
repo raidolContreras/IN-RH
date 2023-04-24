@@ -2,7 +2,7 @@
 
 class ControladorFormularios{
 	
-/*---------- Función Hecha para registrar a los empleados---------- */
+/*---------- Función hecha para registrar a los empleados---------- */
 
 	static public function ctrRegistrarEmpleados(){
 		if (isset($_POST['nombre'])) {
@@ -36,6 +36,47 @@ class ControladorFormularios{
 		
 	}
 
+	static public function ctrRegistrarHistorial($idEmpleado){
+		if (isset($_POST['empresa']) && isset($_POST['puesto'])) {
+			if ($_POST['empresa'] != '' && $_POST['puesto'] != '') {
+				if (isset($_POST['noResponder'])) {
+					$noResponder = 1;
+					$salario = null;
+				}else{
+					$noResponder = 0;
+				}
+				if (isset($_POST['trabajo_actual'])) {
+					$trabajo_actual = 1;
+				}else{
+					$trabajo_actual = 0;
+				}
+				$tabla = 'historial_laboral';
+				$datos = array('empresa' => $_POST['empresa'],
+							   'puesto' => $_POST['puesto'],
+							   'noResponder' => $noResponder,
+							   'salario' => $salario,
+							   'fecha_inicio' => $_POST['fecha_inicio'],
+							   'trabajo_actual' => $trabajo_actual,
+							   'fecha_fin' => $_POST['fecha_fin'],
+							   'motivos' => $_POST['motivos'],
+							   'logros' => $_POST['logros'],
+							   'accion' => $_POST['accion']);
+
+				$Registro = ModeloFormularios::mdlRegistrarHistorial($tabla, $datos, $idEmpleado);
+
+				if ($Registro == 'otro') {
+					return 'otro';
+				}elseif ($Registro == 'terminar') {
+					return 'terminar';
+				}else{
+					return 'error';
+				}
+
+			}
+		}
+	}
+
+/*---------- Función hecha para ver a los empleados---------- */
 	static public function ctrVerEmpleados($item, $valor){
 
 		$tabla = "empleados";
@@ -44,6 +85,26 @@ class ControladorFormularios{
 
 		return $respuesta;
 
+	}
+
+/*---------- Esta función envia los datos para crear el formato del numero teléfonico ---------- */
+	static public function ctrNumeroTelefonico($phone){
+		$numero = ModeloFormularios::mdlNumeroTelefonico($phone);
+		return $numero;
+	}
+
+/*---------- Esta función envia los datos para crear el formato del numero teléfonico ---------- */
+	static public function ctrSeleccionarHisrory($idEmpleado){
+		$tabla = 'historial_laboral';
+		$history = ModeloFormularios::mdlSeleccionarHisrory($tabla, $idEmpleado);
+		return $history;
+	}
+
+	static public function ctrFecha($fecha){
+		setlocale(LC_TIME, 'es_ES');
+		$originalDate = $fecha;
+		$newDate = strftime("%b' %y", strtotime($originalDate));
+		return $newDate;
 	}
 
 /*---------- Fin de ControladorFormularios ---------- */

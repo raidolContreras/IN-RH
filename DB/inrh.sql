@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 24-04-2023 a las 08:46:57
--- Versión del servidor: 10.4.24-MariaDB
+-- Tiempo de generación: 25-04-2023 a las 00:28:15
+-- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -36,7 +36,7 @@ CREATE TABLE `contratacion` (
   `horaSalida` varchar(5) NOT NULL,
   `Puestos_idPuestos` int(11) NOT NULL,
   `Empleados_idEmpleados` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -49,7 +49,7 @@ CREATE TABLE `departamentos` (
   `nameDepto` varchar(45) NOT NULL,
   `description` varchar(255) NOT NULL,
   `Empleados_idEmpleados` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -63,7 +63,16 @@ CREATE TABLE `emergencia` (
   `parentesco` varchar(45) NOT NULL,
   `phoneEmer` varchar(15) NOT NULL,
   `Empleados_idEmpleados` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Volcado de datos para la tabla `emergencia`
+--
+
+INSERT INTO `emergencia` (`idEmergencia`, `nameEmer`, `parentesco`, `phoneEmer`, `Empleados_idEmpleados`) VALUES
+(1, 'Miguel Angel Contreras Parra', 'padre', '44326253552', 3),
+(2, 'kjaksdkj', 'amigo', '6543216549', 4),
+(3, '32165', 'madre', '654654654', 5);
 
 -- --------------------------------------------------------
 
@@ -88,15 +97,18 @@ CREATE TABLE `empleados` (
   `colonia` varchar(45) NOT NULL,
   `CP` varchar(8) NOT NULL,
   `municipio` varchar(30) NOT NULL,
-  `estado` varchar(45) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `estado` varchar(45) NOT NULL,
+  `fecha_contratado` date NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Volcado de datos para la tabla `empleados`
 --
 
-INSERT INTO `empleados` (`idEmpleados`, `name`, `lastname`, `genero`, `fNac`, `phone`, `email`, `identificacion`, `NSS`, `RFC`, `street`, `numE`, `numI`, `colonia`, `CP`, `municipio`, `estado`) VALUES
-(1, 'Oscar Rafael', 'Contreras Flota', '1', '1991-12-19', '4435398291', 'oscarcontrerasf91@gmail.com', 'Abc321654987', '5162362548', 'COFO911219925', 'Palomas', '149', '', 'La hacienda', '58330', 'Morelia', 'Michoacan de Ocampo');
+INSERT INTO `empleados` (`idEmpleados`, `name`, `lastname`, `genero`, `fNac`, `phone`, `email`, `identificacion`, `NSS`, `RFC`, `street`, `numE`, `numI`, `colonia`, `CP`, `municipio`, `estado`, `fecha_contratado`) VALUES
+(3, 'Oscar', 'Contreras Flota', '1', '1991-12-19', '4435398291', 'oscarcontrerasf91@gmail.com', 'asdasd522', '5542625222515', 'Cofo911219925', 'Palomas', '149', '', 'La hacienda', '58330', 'morelia', 'Michoacán', '2015-12-14'),
+(4, 'Prueba', 'Prueba', '0', '1996-05-12', '4465985656', 'kjasd@asd.com', '654654987987', '645654654987', 'asjj1226626622', 'prueba', '25', 'sakjd', 'lkjsad', '51445', 'morelia', 'michoacán', '2020-04-15'),
+(5, 'Oscar', 'Contrerah', '1', '1995-04-06', '3213216565', '3213@asda.c', '3asd354', '64641323156', '65465sdasd65', 'alsjkh', '654', '1', '32132', '32132', 'sasd', 'asdad', '2023-04-17');
 
 -- --------------------------------------------------------
 
@@ -107,7 +119,7 @@ INSERT INTO `empleados` (`idEmpleados`, `name`, `lastname`, `genero`, `fNac`, `p
 CREATE TABLE `evaluaciones` (
   `idEvaluaciones` int(11) NOT NULL,
   `nombreEvaluacion` varchar(45) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -119,7 +131,7 @@ CREATE TABLE `evaluaciones_has_empleados` (
   `status` tinyint(4) NOT NULL DEFAULT 0,
   `Empleados_idEmpleados` int(11) NOT NULL,
   `Evaluaciones_idEvaluaciones` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -134,7 +146,7 @@ CREATE TABLE `formacion` (
   `FechaFin` date DEFAULT NULL,
   `escuela` varchar(60) NOT NULL,
   `Empleados_idEmpleados` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -146,7 +158,7 @@ CREATE TABLE `foto_empleado` (
   `idfoto_empleado` int(11) NOT NULL,
   `namePhoto` varchar(45) NOT NULL,
   `Empleados_idEmpleados` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -156,12 +168,26 @@ CREATE TABLE `foto_empleado` (
 
 CREATE TABLE `historial_laboral` (
   `idHistorial_laboral` int(11) NOT NULL,
-  `fecha_inicio` date NOT NULL,
-  `fecha_fin` date DEFAULT NULL,
+  `empresa` text NOT NULL,
+  `puesto` text NOT NULL,
+  `noResponder` int(11) NOT NULL DEFAULT 0,
   `salario` float DEFAULT NULL,
+  `fecha_inicio` date NOT NULL,
+  `trabajo_actual` int(11) NOT NULL DEFAULT 0,
+  `fecha_fin` date DEFAULT NULL,
   `motivos` varchar(255) DEFAULT NULL,
+  `logros` text DEFAULT NULL,
   `Empleados_idEmpleados` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Volcado de datos para la tabla `historial_laboral`
+--
+
+INSERT INTO `historial_laboral` (`idHistorial_laboral`, `empresa`, `puesto`, `noResponder`, `salario`, `fecha_inicio`, `trabajo_actual`, `fecha_fin`, `motivos`, `logros`, `Empleados_idEmpleados`) VALUES
+(1, 'CCM', 'Administrador de sistemas', 0, 8000, '2018-11-12', 1, NULL, NULL, NULL, 3),
+(2, 'Instituto Gestalt Moreli', 'Administrador de plataforma', 1, NULL, '2021-01-04', 0, '2022-06-15', 'Termino de contrato', 'Aprendizaje', 3),
+(3, 'prueba', 'laksjd', 0, NULL, '1994-05-15', 1, NULL, NULL, 'ninguno', 5);
 
 -- --------------------------------------------------------
 
@@ -173,7 +199,7 @@ CREATE TABLE `organigrama` (
   `idOrganigrama` int(11) NOT NULL,
   `jefe` int(11) NOT NULL,
   `empleado` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -185,7 +211,7 @@ CREATE TABLE `preguntasevaluacion` (
   `idPreguntasEvaluacion` int(11) NOT NULL,
   `pregunta` varchar(255) NOT NULL,
   `Evaluaciones_idEvaluaciones` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -202,7 +228,7 @@ CREATE TABLE `solicitudes` (
   `cv` varchar(45) DEFAULT NULL,
   `presentation` varchar(45) DEFAULT NULL,
   `Vacantes_idVacantes` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -218,7 +244,7 @@ CREATE TABLE `vacantes` (
   `requisitos` varchar(255) NOT NULL,
   `Empleados_idEmpleados` int(11) NOT NULL,
   `Departamentos_idDepartamentos` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Índices para tablas volcadas
@@ -228,23 +254,19 @@ CREATE TABLE `vacantes` (
 -- Indices de la tabla `contratacion`
 --
 ALTER TABLE `contratacion`
-  ADD PRIMARY KEY (`idContratacion`),
-  ADD KEY `FOREIGN` (`Puestos_idPuestos`,`Empleados_idEmpleados`),
-  ADD KEY `Empleados_idEmpleados` (`Empleados_idEmpleados`);
+  ADD PRIMARY KEY (`idContratacion`);
 
 --
 -- Indices de la tabla `departamentos`
 --
 ALTER TABLE `departamentos`
-  ADD PRIMARY KEY (`idDepartamentos`),
-  ADD KEY `FOREIGN` (`Empleados_idEmpleados`);
+  ADD PRIMARY KEY (`idDepartamentos`);
 
 --
 -- Indices de la tabla `emergencia`
 --
 ALTER TABLE `emergencia`
-  ADD PRIMARY KEY (`idEmergencia`),
-  ADD KEY `FOREIGN` (`Empleados_idEmpleados`);
+  ADD PRIMARY KEY (`idEmergencia`);
 
 --
 -- Indices de la tabla `empleados`
@@ -259,32 +281,22 @@ ALTER TABLE `evaluaciones`
   ADD PRIMARY KEY (`idEvaluaciones`);
 
 --
--- Indices de la tabla `evaluaciones_has_empleados`
---
-ALTER TABLE `evaluaciones_has_empleados`
-  ADD KEY `FOREIGN` (`Evaluaciones_idEvaluaciones`),
-  ADD KEY `Id_Empleados` (`Empleados_idEmpleados`);
-
---
 -- Indices de la tabla `formacion`
 --
 ALTER TABLE `formacion`
-  ADD PRIMARY KEY (`idFormacion`),
-  ADD KEY `FOREIGN` (`Empleados_idEmpleados`);
+  ADD PRIMARY KEY (`idFormacion`);
 
 --
 -- Indices de la tabla `foto_empleado`
 --
 ALTER TABLE `foto_empleado`
-  ADD PRIMARY KEY (`idfoto_empleado`),
-  ADD KEY `FOREIGN` (`Empleados_idEmpleados`);
+  ADD PRIMARY KEY (`idfoto_empleado`);
 
 --
 -- Indices de la tabla `historial_laboral`
 --
 ALTER TABLE `historial_laboral`
-  ADD PRIMARY KEY (`idHistorial_laboral`),
-  ADD KEY `FOREIGN` (`Empleados_idEmpleados`);
+  ADD PRIMARY KEY (`idHistorial_laboral`);
 
 --
 -- Indices de la tabla `organigrama`
@@ -302,15 +314,13 @@ ALTER TABLE `preguntasevaluacion`
 -- Indices de la tabla `solicitudes`
 --
 ALTER TABLE `solicitudes`
-  ADD PRIMARY KEY (`idSolicitudes`),
-  ADD KEY `FOREIGN` (`Vacantes_idVacantes`);
+  ADD PRIMARY KEY (`idSolicitudes`);
 
 --
 -- Indices de la tabla `vacantes`
 --
 ALTER TABLE `vacantes`
-  ADD PRIMARY KEY (`idVacantes`),
-  ADD KEY `FOREIGN` (`Empleados_idEmpleados`,`Departamentos_idDepartamentos`);
+  ADD PRIMARY KEY (`idVacantes`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -332,13 +342,13 @@ ALTER TABLE `departamentos`
 -- AUTO_INCREMENT de la tabla `emergencia`
 --
 ALTER TABLE `emergencia`
-  MODIFY `idEmergencia` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idEmergencia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `empleados`
 --
 ALTER TABLE `empleados`
-  MODIFY `idEmpleados` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idEmpleados` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `evaluaciones`
@@ -362,7 +372,7 @@ ALTER TABLE `foto_empleado`
 -- AUTO_INCREMENT de la tabla `historial_laboral`
 --
 ALTER TABLE `historial_laboral`
-  MODIFY `idHistorial_laboral` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idHistorial_laboral` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `organigrama`
@@ -387,67 +397,6 @@ ALTER TABLE `solicitudes`
 --
 ALTER TABLE `vacantes`
   MODIFY `idVacantes` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- Restricciones para tablas volcadas
---
-
---
--- Filtros para la tabla `contratacion`
---
-ALTER TABLE `contratacion`
-  ADD CONSTRAINT `contratacion_ibfk_1` FOREIGN KEY (`Empleados_idEmpleados`) REFERENCES `empleados` (`idEmpleados`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `contratacion_ibfk_2` FOREIGN KEY (`Puestos_idPuestos`) REFERENCES `vacantes` (`idVacantes`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Filtros para la tabla `departamentos`
---
-ALTER TABLE `departamentos`
-  ADD CONSTRAINT `departamentos_ibfk_1` FOREIGN KEY (`Empleados_idEmpleados`) REFERENCES `empleados` (`idEmpleados`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Filtros para la tabla `emergencia`
---
-ALTER TABLE `emergencia`
-  ADD CONSTRAINT `emergencia_ibfk_1` FOREIGN KEY (`Empleados_idEmpleados`) REFERENCES `empleados` (`idEmpleados`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Filtros para la tabla `evaluaciones_has_empleados`
---
-ALTER TABLE `evaluaciones_has_empleados`
-  ADD CONSTRAINT `evaluaciones_has_empleados_ibfk_1` FOREIGN KEY (`Evaluaciones_idEvaluaciones`) REFERENCES `evaluaciones` (`idEvaluaciones`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `evaluaciones_has_empleados_ibfk_2` FOREIGN KEY (`Empleados_idEmpleados`) REFERENCES `empleados` (`idEmpleados`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Filtros para la tabla `formacion`
---
-ALTER TABLE `formacion`
-  ADD CONSTRAINT `formacion_ibfk_1` FOREIGN KEY (`Empleados_idEmpleados`) REFERENCES `empleados` (`idEmpleados`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Filtros para la tabla `foto_empleado`
---
-ALTER TABLE `foto_empleado`
-  ADD CONSTRAINT `foto_empleado_ibfk_1` FOREIGN KEY (`Empleados_idEmpleados`) REFERENCES `empleados` (`idEmpleados`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Filtros para la tabla `historial_laboral`
---
-ALTER TABLE `historial_laboral`
-  ADD CONSTRAINT `historial_laboral_ibfk_1` FOREIGN KEY (`Empleados_idEmpleados`) REFERENCES `empleados` (`idEmpleados`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Filtros para la tabla `preguntasevaluacion`
---
-ALTER TABLE `preguntasevaluacion`
-  ADD CONSTRAINT `preguntasevaluacion_ibfk_1` FOREIGN KEY (`Evaluaciones_idEvaluaciones`) REFERENCES `empleados` (`idEmpleados`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Filtros para la tabla `vacantes`
---
-ALTER TABLE `vacantes`
-  ADD CONSTRAINT `vacantes_ibfk_1` FOREIGN KEY (`Empleados_idEmpleados`) REFERENCES `empleados` (`idEmpleados`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `vacantes_ibfk_2` FOREIGN KEY (`idVacantes`) REFERENCES `solicitudes` (`Vacantes_idVacantes`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

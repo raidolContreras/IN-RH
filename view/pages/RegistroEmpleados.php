@@ -127,7 +127,7 @@
 										</div>
 										<div class="row mt-2">
 											<div class="col-md-3">
-												<input type="text" class="form-control" id="num_interior" name="num_interior" placeholder="Núm. Int." value=" ">
+												<input type="text" class="form-control" id="num_interior" name="num_interior" placeholder="Núm. Int.">
 											</div>
 											<div class="col-md-6">
 												<input type="text" class="form-control" id="colonia" name="colonia" placeholder="Colonia" required>
@@ -186,15 +186,8 @@
 											</select>
 										</div>
 									</div>
-
-									<div class="col-md-9">
-									</div>
-
 									<div class="form-group">
 										<button type="submit" class="btn btn-primary">Enviar</button>
-										<a class="btn btn-success p-2 rounded mb-3 float-right" href="InformacionLaboral">
-											Siguiente<i class="fas fa-arrow-right ml-2"></i>
-										</a>
 									</div>
 								</div>
 							</div>

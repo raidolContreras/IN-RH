@@ -19,6 +19,9 @@
 	<link rel="stylesheet" type="text/css" href="assets/vendor/datatables/css/buttons.bootstrap4.css">
 	<link rel="stylesheet" type="text/css" href="assets/vendor/datatables/css/select.bootstrap4.css">
 	<link rel="stylesheet" type="text/css" href="assets/vendor/datatables/css/fixedHeader.bootstrap4.css">
+    <link rel="stylesheet" href="assets/vendor/fonts/simple-line-icons/css/simple-line-icons.css">
+    <link rel="stylesheet" href="assets/vendor/fonts/material-design-iconic-font/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="assets/vendor/fonts/themify-icons/themify-icons.css">
 	
 	<?php if (isset($_GET["pagina"])): ?>
 		<title><?php echo 'IN Consulting México - '.$_GET["pagina"]; ?></title>
@@ -37,6 +40,7 @@
 			$_GET["pagina"] == "Formacion" ||
 			$_GET["pagina"] == "HistorialLaboral" ||
 			$_GET["pagina"] == "Departamento" ||
+			$_GET["pagina"] == "Colaborador" ||
 			$_GET["pagina"] == "somos" 
 
 		){
