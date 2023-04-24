@@ -36,5 +36,15 @@ class ControladorFormularios{
 		
 	}
 
+	static public function ctrVerEmpleados($item, $valor){
+
+		$tabla = "empleados";
+
+		$respuesta = ModeloFormularios::mdlVerEmpleados($tabla, $item, $valor);
+
+		return $respuesta;
+
+	}
+
 /*---------- Fin de ControladorFormularios ---------- */
 }

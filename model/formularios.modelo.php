@@ -9,7 +9,7 @@ class ModeloFormularios{
 
 	static public function mdlRegistrarEmpleados($tabla1, $table2, $datos){
 
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla1(name, lastname, genero, fNac, phone, email, identificacion, NSS, RFC, street, numE, numI, colonia, CP, estado, pais) VALUES (:nombre, :apellidos, :genero, :fecha_nacimiento, :telefono, :email, :num_identificacion, :num_seguro_social, :rfc, :calle, :num_exterior, :num_interior, :colonia, :cp, :municipio, :estado)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla1(name, lastname, genero, fNac, phone, email, identificacion, NSS, RFC, street, numE, numI, colonia, CP, municipio, estado) VALUES (:nombre, :apellidos, :genero, :fecha_nacimiento, :telefono, :email, :num_identificacion, :num_seguro_social, :rfc, :calle, :num_exterior, :num_interior, :colonia, :cp, :municipio, :estado)");
 
 		$stmt->bindParam(':nombre', $datos['nombre'], PDO::PARAM_STR);
 		$stmt->bindParam(':apellidos', $datos['apellidos'], PDO::PARAM_STR);
@@ -44,6 +44,35 @@ class ModeloFormularios{
 		$stmt = null;
 
 		}
+
+
+
+	static public function mdlVerEmpleados($tabla, $item, $valor){
+
+		if($item == null && $valor == null){
+
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla ORDER BY idEmpleados DESC;");
+
+			$stmt->execute();
+
+			return $stmt -> fetchAll();
+
+		}else{
+
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
+
+			$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
+
+			$stmt->execute();
+
+			return $stmt -> fetch();
+		}
+
+		$stmt->close();
+
+		$stmt = null;	
+
+	}
 
 
 /*---------- Fin de ModeloFormularios ---------- */
