@@ -140,7 +140,7 @@ class ModeloFormularios{
 
 			$sql = "SELECT e.idEmpleados, e.name, e.lastname, e.genero, e.fNac, e.phone, e.email, e.identificacion, e.NSS, e.RFC, e.street, e.numE, e.numI, e.colonia, e.CP, e.estado, e.municipio, e.fecha_contratado, m.nameEmer, m.parentesco, m.phoneEmer 
 				FROM Empleados e 
-				INNER JOIN Emergencia m ON e.idEmpleados = m.Empleados_idEmpleados ORDER BY idEmpleados DESC;";
+				INNER JOIN Emergencia m ON e.idEmpleados = m.Empleados_idEmpleados WHERE status = 1 ORDER BY idEmpleados DESC;";
 
 			$stmt = Conexion::conectar()->prepare($sql);
 
@@ -195,6 +195,27 @@ class ModeloFormularios{
 		$stmt -> close();
 
 		$stmt = null;	
+	}
+
+	static public function mdlEliminarEmpleado($tabla, $idEmpleado){
+		
+		$sql = "UPDATE $tabla SET status = 0 WHERE idEmpleados=$idEmpleado";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+
+		if ($stmt->execute()) {
+
+			return 'ok';
+
+		}else{
+			print_r(Conexion::conectar()->errorInfo());
+
+		}
+
+		$stmt->close();
+
+		$stmt = null;
+
 	}
 
 

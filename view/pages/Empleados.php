@@ -70,6 +70,7 @@ $empleados = ControladorFormularios::ctrVerEmpleados(null, null);
 											<tr>
 												<td>
 													<form method="POST" action="Colaborador">
+													<input type="hidden" name="Eliminar" value="no">
 													<button class="btn btn btn-outline-secondary rounded btn-block" name="Editar" value="<?php echo $value['idEmpleados'];?>">
 														<i class="fas fa-address-card"></i>
 													</button>

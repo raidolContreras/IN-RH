@@ -1,7 +1,8 @@
 <?php
 $colaborador = ControladorFormularios::ctrVerEmpleados( 'idEmpleados',$_POST['Editar']); 
 
-$formattedNumber = ControladorFormularios::ctrNumeroTelefonico($colaborador['phone']);
+$Numbero = ControladorFormularios::ctrNumeroTelefonico($colaborador['phone']);
+$emergencia = ControladorFormularios::ctrNumeroTelefonico($colaborador['phoneEmer']);
 ?>
 <div class="container-fluid dashboard-content ">
 	<div class="row">
@@ -40,7 +41,7 @@ $formattedNumber = ControladorFormularios::ctrNumeroTelefonico($colaborador['pho
 
 						<li class="header-li"><i class="icon-phone"></i> Teléfono</li>
 
-						<li><?php echo $formattedNumber ?></li>
+						<li><?php echo $Numbero ?></li>
 
 						<li class="header-li"><i class="mdi mdi-home-outline"></i> Dirección</li>
 
@@ -67,18 +68,74 @@ $formattedNumber = ControladorFormularios::ctrNumeroTelefonico($colaborador['pho
 							<li class="header-li"><i class="mdi mdi-account-alert"></i> Nombre</li>
 							<li><?php echo $colaborador["nameEmer"]." (".$colaborador["parentesco"].")" ?></li>
 							<li class="header-li"><i class="icon-phone"></i> Teléfono</li>
-							<li><?php echo $colaborador["phoneEmer"] ?></li>
+							<li><?php echo $emergencia ?></li>
 						</ul>
 					</div>
 				</div>
 				<div class="card-body border-top">
 					<h3 class="font-16 hprofile">Acciones</h3>
 					<div>
-						<form method="POST" action="Borrar">
-							<button class="btn btn-danger rounded btn-block" name="Borrar" value="<?php echo $colaborador['idEmpleados'];?>">
-								<i class="fas fa-eraser"></i> Dar de baja
+						<div class="container">
+							<button type="button" class="btn btn-danger rounded btn-block" data-toggle="modal" data-target="#eliminar">
+								Dar de baja
 							</button>
-						</form>
+
+							<div class="modal fade" id="eliminar">
+								<div class="modal-dialog">
+									<div class="modal-content">
+
+										<div class="modal-header">
+											<h4 class="modal-title">Baja (<?php echo strtoupper($colaborador['name']." ".$colaborador['lastname']); ?>)</h4>
+											<button type="button" class="close" data-dismiss="modal">&times;</button>
+										</div>
+
+										<div class="modal-body">
+											<p>Seguro que deseas dar de baja a <?php echo strtoupper($colaborador['name']." ".$colaborador['lastname']); ?>, esta acción <strong>si </strong>puede deshacerse</p>
+
+										</div>
+
+										<div class="modal-footer">
+											<form method="POST">
+												<?php if (isset($_POST['Eliminar']) && $_POST['Eliminar'] == 'si'): ?>
+													<?php $baja = ControladorFormularios::ctrEliminarEmpleado(); ?>
+													<?php if ($baja == 'ok'): ?>
+														<div class="alert alert-success">¡Colaborador dado de baja!</div>
+														<script>
+
+															window.location = "Empleados";
+
+														</script>
+													<?php elseif($baja == 'error'): ?>
+														<script>
+
+															if ( window.history.replaceState ) {
+
+																window.history.replaceState( null, null, window.location.href );
+
+															}
+
+														</script>
+														<div class="alert alert-danger">Error, no se pudo dar de baja alcolaborador, Intentelo de nuevo</div>
+													<?php endif ?>
+												<?php endif ?>
+												<input type="hidden" name="Editar" value="<?php echo $colaborador['idEmpleados'];?>">
+												<input type="hidden" name="Eliminar" value="si">
+												<button class="btn btn-danger rounded float-right" >
+													<i class="fas fa-eraser"></i> Dar de baja
+												</button>
+											</form>
+
+											<button class="btn btn-success rounded float-right" data-dismiss="modal">
+												 Cancelar
+											</button>
+
+										</div>
+
+									</div>
+								</div>
+							</div>
+
+						</div>
 					</div>
 				</div>
 			</div>

@@ -107,5 +107,17 @@ class ControladorFormularios{
 		return $newDate;
 	}
 
+	static public function ctrEliminarEmpleado(){
+		if (isset($_POST['Editar'])) {
+			$tabla = 'empleados';
+			$eliminar = ModeloFormularios::mdlEliminarEmpleado($tabla, $_POST['Editar']);
+			if ($eliminar == 'ok') {
+					return 'ok';
+				}else{
+					return 'error';
+				}
+		}
+	}
+
 /*---------- Fin de ControladorFormularios ---------- */
 }
