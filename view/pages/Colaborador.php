@@ -163,13 +163,13 @@ $foto = ControladorFormularios::ctrVerFotos("Empleados_idEmpleados", $colaborado
 					<div class="col-4">
 						<input type="hidden" id="idEmpleados" value="<?php echo $colaborador['idEmpleados']; ?>">
 						<button class="btn btn-primary rounded btn-block" id="expedientes" value="<?php echo $colaborador['idEmpleados'];?>">
-							<i class="icon-book-open"></i> Expedientes
+							<i class="icon-folder-alt"></i> Expedientes
 						</button>
 					</div>
 					<div class="col-4">
 						<form method="POST" action="Incapacidad">
 							<button class="btn btn-secondary rounded btn-block" name="empleado" value="<?php echo $colaborador['idEmpleados'];?>">
-								<i class="icon-book-open"></i> Incapacidades
+								<i class="icon-shield"></i> Incapacidades
 							</button>
 						</form>
 					</div>
@@ -185,14 +185,14 @@ $foto = ControladorFormularios::ctrVerFotos("Empleados_idEmpleados", $colaborado
 					<div class="col-4">
 						<form method="POST" action="Nominas">
 							<button class="btn btn-dark rounded btn-block" name="empleado" value="<?php echo $colaborador['idEmpleados'];?>">
-								<i class="icon-book-open"></i> Nominas
+								<i class="icon-wallet"></i> Nominas
 							</button>
 						</form>
 					</div>
 					<div class="col-4">
 						<form method="POST" action="FormatosVacacionales">
 							<button class="btn btn-brand rounded btn-block" name="empleado" value="<?php echo $colaborador['idEmpleados'];?>">
-								<i class="icon-book-open"></i> Formatos vacacionales
+								<i class="icon-social-dribbble"></i> Formatos vacacionales
 							</button>
 						</form>
 					</div>
