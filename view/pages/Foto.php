@@ -50,8 +50,14 @@ $empleado = ControladorFormularios::ctrVerEmpleados("idEmpleados", $_POST["emple
 
 										}
 
-									</script>';
+									</script>
+									';
+									echo '<script>
 
+									window.location = "Empleados";
+
+									</script>';
+									
 									echo '<div class="alert alert-success">¡Foto Subida Exitosamente!</div>';
 								
 								}

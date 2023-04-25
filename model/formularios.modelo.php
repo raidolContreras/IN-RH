@@ -36,7 +36,7 @@ class ModeloFormularios{
 			$id_empleado = $pdo->lastInsertId(); //obtener el ID del empleado recién insertado
 
 			if ($id_empleado == 0) {
-         		echo $consulta->errorInfo()[2];
+		 		echo $consulta->errorInfo()[2];
 			}else{
 				$Registro = ModeloFormularios::mdlEmergencia($table2, $id_empleado, $datos);
 			}
@@ -170,14 +170,14 @@ class ModeloFormularios{
 
 /*---------- Esta función crea el formato del numero teléfonico ---------- */
 	static public function mdlNumeroTelefonico($number){
-	    $number = preg_replace('/[^0-9]/', '', $number); // Elimina cualquier caracter que no sea un numero
-	    $length = strlen($number);
-	    if($length == 10){ // Formato de 10 digitos
-	        $number = preg_replace('/([0-9]{3})([0-9]{3})([0-9]{4})/', '($1) $2-$3', $number);
-	    }elseif($length == 11){ // Formato de 11 digitos (con codigo de pais)
-	        $number = preg_replace('/([0-9]{1})([0-9]{3})([0-9]{3})([0-9]{4})/', '+$1 ($2) $3-$4', $number);
-	    }
-	    return $number;
+		$number = preg_replace('/[^0-9]/', '', $number); // Elimina cualquier caracter que no sea un numero
+		$length = strlen($number);
+		if($length == 10){ // Formato de 10 digitos
+			$number = preg_replace('/([0-9]{3})([0-9]{3})([0-9]{4})/', '($1) $2-$3', $number);
+		}elseif($length == 11){ // Formato de 11 digitos (con codigo de pais)
+			$number = preg_replace('/([0-9]{1})([0-9]{3})([0-9]{3})([0-9]{4})/', '+$1 ($2) $3-$4', $number);
+		}
+		return $number;
 	}
 
 	static public function mdlSeleccionarHisrory($tabla, $idEmpleado){
@@ -320,7 +320,7 @@ class ModeloFormularios{
 		return $stmt -> fetchAll();
 
 		$stmt->close();
-
+		
 		$stmt = null;	
 
 	}

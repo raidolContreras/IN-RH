@@ -34,6 +34,11 @@ $empleado = ControladorFormularios::ctrVerEmpleados("idEmpleados", $_POST["emple
 							window.history.replaceState( null, null, window.location.href );
 						}
 						</script>';
+						echo '<script>
+
+							window.location = "Empleados";
+
+						</script>';
 						echo '<div class="alert alert-success">¡Archivo PDF subido exitosamente!</div>';
 					}
 					if ($registro == "error") {
