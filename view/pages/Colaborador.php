@@ -4,7 +4,6 @@ $colaborador = ControladorFormularios::ctrVerEmpleados( 'idEmpleados',$_POST['Ed
 $Numbero = ControladorFormularios::ctrNumeroTelefonico($colaborador['phone']);
 $emergencia = ControladorFormularios::ctrNumeroTelefonico($colaborador['phoneEmer']);
 $foto = ControladorFormularios::ctrVerFotos("Empleados_idEmpleados", $colaborador['idEmpleados']);
-$documentos = ControladorFormularios::ctrVerDocumentos("Empleados_idEmpleados", $colaborador['idEmpleados']);
 ?>
 <div class="container-fluid dashboard-content ">
 	<div class="row">
@@ -84,6 +83,13 @@ $documentos = ControladorFormularios::ctrVerDocumentos("Empleados_idEmpleados", 
 				</div>
 				<div class="card-body border-top">
 					<h3 class="font-16 hprofile">Acciones</h3>
+
+						<form method="POST" action="Documento" class="container pb-2">
+							<button class="btn btn-primary rounded btn-block " name="empleado" value="<?php echo $colaborador['idEmpleados'];?>">
+								<i class="ti-upload"></i> Subir Documentos
+							</button>
+						</form>
+
 					<div>
 						<div class="container">
 							<button type="button" class="btn btn-danger rounded btn-block" data-toggle="modal" data-target="#eliminar">
@@ -153,13 +159,12 @@ $documentos = ControladorFormularios::ctrVerDocumentos("Empleados_idEmpleados", 
 
 		<div class="col-xl-9 col-lg-9 col-md-7 col-sm-12 col-12">
 			<div class="card p-3">
-				<div class="row">
+				<div class="row pb-2">
 					<div class="col-4">
-						<form method="POST" action="Documento">
-							<button class="btn btn-primary rounded btn-block" name="empleado" value="<?php echo $colaborador['idEmpleados'];?>">
-								<i class="ti-upload"></i> Subir Documentos
-							</button>
-						</form>
+						<input type="hidden" id="idEmpleados" value="<?php echo $colaborador['idEmpleados']; ?>">
+						<button class="btn btn-primary rounded btn-block" id="expedientes" value="<?php echo $colaborador['idEmpleados'];?>">
+							<i class="icon-book-open"></i> Expedientes
+						</button>
 					</div>
 					<div class="col-4">
 						<form method="POST" action="Incapacidad">
@@ -176,57 +181,45 @@ $documentos = ControladorFormularios::ctrVerDocumentos("Empleados_idEmpleados", 
 						</form>
 					</div>
 				</div>
-			</div>
-			<div class="pills-outline">
-				<ul class="nav nav-pills mb-1" id="myTab2" role="tablist">
-					<li class="nav-item">
-						<a class="nav-link active" id="tab-outline-one" data-toggle="tab" href="#outline-one" role="tab" aria-controls="home" aria-selected="true">Expediente</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" id="tab-outline-two" data-toggle="tab" href="#outline-two" role="tab" aria-controls="profile" aria-selected="false">Nominas</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" id="tab-outline-three" data-toggle="tab" href="#outline-three" role="tab" aria-controls="contact" aria-selected="false">Formatos vacacionales</a>
-					</li>
-				</ul>
-				<div class="tab-content" id="myTabContent2">
-					<div class="tab-pane fade show active" id="outline-one" role="tabpanel" aria-labelledby="tab-outline-one">
-						<div>
-							<div class="row">
-								<?php foreach ($documentos as $key => $value): ?>
-									<div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
-										<div class="card card-figure">
-											<figure class="figure">
-												<div class="figure-attachment">
-													<span class="fa-stack fa-lg">
-														<i class="fa fa-square fa-stack-2x text-primary"></i>
-														<i class="fa fa-file-pdf fa-stack-1x fa-inverse"></i>
-													</span>
-												</div>
-												<figcaption class="figure-caption">
-													<ul class="list-inline d-flex text-muted mb-0">
-														<li class="list-inline-item text-truncate mr-auto">
-															<span><i class="fas fa-file-pdf"></i></span> <?php echo $value['nameDoc'] ?>.pdf </li>
-															<li class="list-inline-item">
-																<a download href="view/pdfs/<?php echo $value['Empleados_idEmpleados']."/".$value['nameDoc']; ?>.pdf"><i class="fas fa-download "></i></a>
-															</li>
-														</ul>
-													</figcaption>
-												</figure>
-											</div>
-										</div>
-									<?php endforeach ?>
-								</div>
-							</div>
-						</div>
-						<div class="tab-pane fade" id="outline-two" role="tabpanel" aria-labelledby="tab-outline-two">
-							<h3>Nominas</h3>
-						</div>
-						<div class="tab-pane fade" id="outline-three" role="tabpanel" aria-labelledby="tab-outline-three">
-							<h3>Formatos vacacionales</h3>
-						</div>
+				<div class="row">
+					<div class="col-4">
+						<form method="POST" action="Nominas">
+							<button class="btn btn-dark rounded btn-block" name="empleado" value="<?php echo $colaborador['idEmpleados'];?>">
+								<i class="icon-book-open"></i> Nominas
+							</button>
+						</form>
 					</div>
+					<div class="col-4">
+						<form method="POST" action="FormatosVacacionales">
+							<button class="btn btn-brand rounded btn-block" name="empleado" value="<?php echo $colaborador['idEmpleados'];?>">
+								<i class="icon-book-open"></i> Formatos vacacionales
+							</button>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div>
+				<div class="row" id="show">
 				</div>
 			</div>
 		</div>
 	</div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+
+document.getElementById("expedientes").addEventListener("click", function(event) {
+  event.preventDefault(); // Prevenir comportamiento predeterminado del botón
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      document.getElementById("show").innerHTML = this.responseText; // Actualizar contenido del elemento con ID "show"
+    }
+  };
+  xhttp.open("GET", "view/pages/Expedientes.php?idEmpleados=" + "<?php echo $colaborador['idEmpleados']; ?>", true); // Configurar solicitud
+  xhttp.send(); // Enviar solicitud
+});
+
+</script>
