@@ -1,3 +1,31 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.0
+-- https://www.phpmyadmin.net/
+--
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 25-04-2023 a las 23:02:23
+-- Versión del servidor: 10.4.27-MariaDB
+-- Versión de PHP: 8.2.0
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Base de datos: `inrh`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `contratacion`
+--
 
 CREATE TABLE `contratacion` (
   `idContratacion` int(11) NOT NULL,
@@ -22,6 +50,36 @@ CREATE TABLE `departamentos` (
   `description` varchar(255) NOT NULL,
   `Empleados_idEmpleados` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `documento`
+--
+
+CREATE TABLE `documento` (
+  `idDocumento` int(11) NOT NULL,
+  `nameDoc` varchar(30) NOT NULL,
+  `Empleados_idEmpleados` int(11) NOT NULL,
+  `fechaCreacion` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Volcado de datos para la tabla `documento`
+--
+
+INSERT INTO `documento` (`idDocumento`, `nameDoc`, `Empleados_idEmpleados`, `fechaCreacion`) VALUES
+(1, 'curriculum', 3, '2023-04-25 06:00:00'),
+(2, 'acta_nacimiento', 3, '2023-04-25 06:00:00'),
+(3, 'comprobante-domicilio', 3, '2023-04-25 06:00:00'),
+(4, 'identificacion-anverso', 3, '2023-04-25 06:00:00'),
+(5, 'identificacion-reverso', 3, '2023-04-25 06:00:00'),
+(6, 'rfc', 3, '2023-04-25 06:00:00'),
+(7, 'curp', 3, '2023-04-25 06:00:00'),
+(8, 'nss', 3, '2023-04-25 06:00:00'),
+(9, 'comprobante_estudios', 3, '2023-04-25 06:00:00'),
+(10, 'recomendacion-laboral', 3, '2023-04-25 06:00:00'),
+(11, 'recomendacion-personal', 3, '2023-04-25 06:00:00');
 
 -- --------------------------------------------------------
 
@@ -72,7 +130,7 @@ CREATE TABLE `empleados` (
   `municipio` varchar(30) NOT NULL,
   `estado` varchar(45) NOT NULL,
   `status` int(1) NOT NULL DEFAULT 1,
-  `fecha_contratado` date NOT NULL
+  `fecha_contratado` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
@@ -80,10 +138,10 @@ CREATE TABLE `empleados` (
 --
 
 INSERT INTO `empleados` (`idEmpleados`, `name`, `lastname`, `genero`, `fNac`, `phone`, `email`, `identificacion`, `NSS`, `RFC`, `street`, `numE`, `numI`, `colonia`, `CP`, `municipio`, `estado`, `status`, `fecha_contratado`) VALUES
-(3, 'Oscar', 'Contreras Flota', '1', '1991-12-19', '4435398291', 'oscarcontrerasf91@gmail.com', 'asdasd522', '5542625222515', 'Cofo911219925', 'Palomas', '149', '', 'La hacienda', '58330', 'morelia', 'Michoacán', 1, '2015-12-14'),
-(4, 'Prueba', 'Prueba', '0', '1996-05-12', '4465985656', 'kjasd@asd.com', '654654987987', '645654654987', 'asjj1226626622', 'prueba', '25', 'sakjd', 'lkjsad', '51445', 'morelia', 'michoacán', 0, '2020-04-15'),
-(5, 'Oscar', 'Contrerah', '1', '1995-04-06', '3213216565', '3213@asda.c', '3asd354', '64641323156', '65465sdasd65', 'alsjkh', '654', '1', '32132', '32132', 'sasd', 'asdad', 1, '2023-04-17'),
-(6, 'ERICK', 'NATIVIDAD', '1', '1993-04-16', '4433900175', 'ericknatividad93@hotmail.com', '8', '53029875477', 'NABE9304168D3', 'FACULTAD DE PSICOLOGIA', '45', '', 'REAL UNIVERSIDAD', '58088', 'MORELIA', 'MICHOACAN', 1, '2023-04-25');
+(3, 'Oscar', 'Contreras Flota', '1', '1991-12-19', '4435398291', 'oscarcontrerasf91@gmail.com', 'asdasd522', '5542625222515', 'Cofo911219925', 'Palomas', '149', '', 'La hacienda', '58330', 'morelia', 'Michoacán', 1, '2015-12-14 06:00:00'),
+(4, 'Prueba', 'Prueba', '0', '1996-05-12', '4465985656', 'kjasd@asd.com', '654654987987', '645654654987', 'asjj1226626622', 'prueba', '25', 'sakjd', 'lkjsad', '51445', 'morelia', 'michoacán', 0, '2020-04-15 06:00:00'),
+(5, 'Oscar', 'Contrerah', '1', '1995-04-06', '3213216565', '3213@asda.c', '3asd354', '64641323156', '65465sdasd65', 'alsjkh', '654', '1', '32132', '32132', 'sasd', 'asdad', 1, '2023-04-17 06:00:00'),
+(6, 'ERICK', 'NATIVIDAD', '1', '1993-04-16', '4433900175', 'ericknatividad93@hotmail.com', '8', '53029875477', 'NABE9304168D3', 'FACULTAD DE PSICOLOGIA', '45', '', 'REAL UNIVERSIDAD', '58088', 'MORELIA', 'MICHOACAN', 1, '2023-04-25 06:00:00');
 
 -- --------------------------------------------------------
 
@@ -132,8 +190,17 @@ CREATE TABLE `formacion` (
 CREATE TABLE `foto_empleado` (
   `idfoto_empleado` int(11) NOT NULL,
   `namePhoto` varchar(45) NOT NULL,
-  `Empleados_idEmpleados` int(11) NOT NULL
+  `Empleados_idEmpleados` int(11) NOT NULL,
+  `fechaCreacion` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Volcado de datos para la tabla `foto_empleado`
+--
+
+INSERT INTO `foto_empleado` (`idfoto_empleado`, `namePhoto`, `Empleados_idEmpleados`, `fechaCreacion`) VALUES
+(1, 'Oscar Contrerah.png', 5, '2023-04-25 06:00:00'),
+(2, 'Oscar Contreras Flota.jpg', 3, '2023-04-25 06:00:00');
 
 -- --------------------------------------------------------
 
@@ -238,6 +305,12 @@ ALTER TABLE `departamentos`
   ADD PRIMARY KEY (`idDepartamentos`);
 
 --
+-- Indices de la tabla `documento`
+--
+ALTER TABLE `documento`
+  ADD PRIMARY KEY (`idDocumento`);
+
+--
 -- Indices de la tabla `emergencia`
 --
 ALTER TABLE `emergencia`
@@ -314,6 +387,12 @@ ALTER TABLE `departamentos`
   MODIFY `idDepartamentos` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de la tabla `documento`
+--
+ALTER TABLE `documento`
+  MODIFY `idDocumento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
 -- AUTO_INCREMENT de la tabla `emergencia`
 --
 ALTER TABLE `emergencia`
@@ -341,7 +420,7 @@ ALTER TABLE `formacion`
 -- AUTO_INCREMENT de la tabla `foto_empleado`
 --
 ALTER TABLE `foto_empleado`
-  MODIFY `idfoto_empleado` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idfoto_empleado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `historial_laboral`

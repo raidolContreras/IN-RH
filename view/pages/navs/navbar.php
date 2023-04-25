@@ -3,7 +3,7 @@
 <!-- ============================================================== -->
 <div class="dashboard-header">
 	<nav class="navbar navbar-expand-lg bg-white fixed-top">
-		<a class="navbar-brand rambla" href="index.html"><img src="assets/images/logo.png" width="40px" height="auto">consulting</a>
+		<a class="navbar-brand rambla" href="Inicio"><img src="assets/images/logo.png" width="40px" height="auto">consulting</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="fas fa-bars"></span>
 		</button>

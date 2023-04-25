@@ -35,6 +35,7 @@
 
 	if(isset($_GET["pagina"])){
 		if($_GET["pagina"] == "Empleados" ||
+			$_GET["pagina"] == "Inicio" ||
 			$_GET["pagina"] == "RegistroEmpleados" ||
 			$_GET["pagina"] == "InformacionLaboral" ||
 			$_GET["pagina"] == "Formacion" ||
@@ -42,6 +43,7 @@
 			$_GET["pagina"] == "Departamento" ||
 			$_GET["pagina"] == "Colaborador" ||
 			$_GET["pagina"] == "Foto" ||
+			$_GET["pagina"] == "Documento" ||
 			$_GET["pagina"] == "somos" 
 
 		){
@@ -78,7 +80,7 @@
 		<!-- ============================================================== -->
 		<div class="dashboard-wrapper">
 		<div class="dashboard-ecommerce">';
-		include "pages/inicio.php";
+		include "pages/Inicio.php";
 
 	}
 	include "pages/navs/footer.php";

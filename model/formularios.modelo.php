@@ -151,8 +151,8 @@ class ModeloFormularios{
 		}else{
 
 			$stmt = Conexion::conectar()->prepare("SELECT e.idEmpleados, e.name, e.lastname, e.genero, e.fNac, e.phone, e.email, e.identificacion, e.NSS, e.RFC, e.street, e.numE, e.numI, e.colonia, e.CP, e.estado, e.municipio, e.fecha_contratado, m.nameEmer, m.parentesco, m.phoneEmer 
-				FROM Empleados e 
-				INNER JOIN Emergencia m ON e.idEmpleados = m.Empleados_idEmpleados 
+				FROM empleados e 
+				INNER JOIN emergencia m ON e.idEmpleados = m.Empleados_idEmpleados 
 				WHERE $item = :$item");
 
 			$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
@@ -218,6 +218,7 @@ class ModeloFormularios{
 
 	}
 
+/*---------- Función hecha para Registrar las fotos de Empleados---------- */
 	static public function mdlRegistroFotoEmpleado($tabla, $datos){
 
 		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla (namePhoto, Empleados_idEmpleados) VALUES (:imageName, :idEmpleado)");
@@ -235,7 +236,7 @@ class ModeloFormularios{
 		$stmt = null;
 
 	}
-/*---------- Función hecha para ver a los empleados---------- */
+/*---------- Función hecha para ver las fotos---------- */
 
 	static public function mdlVerFotos($tabla, $item, $valor){
 
@@ -266,5 +267,62 @@ class ModeloFormularios{
 
 	}
 
+	static public function mdlRegistroPDFEmpleado($tabla, $datos){
+
+		$sql = "INSERT INTO $tabla (nameDoc, Empleados_idEmpleados) VALUES (:curriculum, :idEmpleado);";
+		$sql .= "INSERT INTO $tabla (nameDoc, Empleados_idEmpleados) VALUES (:acta_nacimiento, :idEmpleado);";
+		$sql .= "INSERT INTO $tabla (nameDoc, Empleados_idEmpleados) VALUES (:comprobante_domicilio, :idEmpleado);";
+		$sql .= "INSERT INTO $tabla (nameDoc, Empleados_idEmpleados) VALUES (:identificacion_anverso, :idEmpleado);";
+		$sql .= "INSERT INTO $tabla (nameDoc, Empleados_idEmpleados) VALUES (:identificacion_reverso, :idEmpleado);";
+		$sql .= "INSERT INTO $tabla (nameDoc, Empleados_idEmpleados) VALUES (:rfc, :idEmpleado);";
+		$sql .= "INSERT INTO $tabla (nameDoc, Empleados_idEmpleados) VALUES (:curp, :idEmpleado);";
+		$sql .= "INSERT INTO $tabla (nameDoc, Empleados_idEmpleados) VALUES (:nss, :idEmpleado);";
+		$sql .= "INSERT INTO $tabla (nameDoc, Empleados_idEmpleados) VALUES (:comprobante_estudios, :idEmpleado);";
+		$sql .= "INSERT INTO $tabla (nameDoc, Empleados_idEmpleados) VALUES (:recomendacion_laboral, :idEmpleado);";
+		$sql .= "INSERT INTO $tabla (nameDoc, Empleados_idEmpleados) VALUES (:recomendacion_personal, :idEmpleado);";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":idEmpleado", $datos["idEmpleado"], PDO::PARAM_STR);
+		$stmt->bindParam(":curriculum", $datos["curriculum"], PDO::PARAM_STR);
+		$stmt->bindParam(":acta_nacimiento", $datos["acta_nacimiento"], PDO::PARAM_STR);
+		$stmt->bindParam(":comprobante_domicilio", $datos["comprobante_domicilio"], PDO::PARAM_STR);
+		$stmt->bindParam(":identificacion_anverso", $datos["identificacion_anverso"], PDO::PARAM_STR);
+		$stmt->bindParam(":identificacion_reverso", $datos["identificacion_reverso"], PDO::PARAM_STR);
+		$stmt->bindParam(":rfc", $datos["rfc"], PDO::PARAM_STR);
+		$stmt->bindParam(":curp", $datos["curp"], PDO::PARAM_STR);
+		$stmt->bindParam(":nss", $datos["nss"], PDO::PARAM_STR);
+		$stmt->bindParam(":comprobante_estudios", $datos["comprobante_estudios"], PDO::PARAM_STR);
+		$stmt->bindParam(":recomendacion_laboral", $datos["recomendacion_laboral"], PDO::PARAM_STR);
+		$stmt->bindParam(":recomendacion_personal", $datos["recomendacion_personal"], PDO::PARAM_STR);
+
+		if ($stmt->execute()) {
+			return "ok";
+		} else {
+			return "error";
+		}
+
+		$stmt->close();
+		$stmt = null;
+
+	}
+
+	/*---------- Función hecha para ver las fotos---------- */
+
+	static public function mdlVerDocumentos($tabla, $item, $valor){
+
+		$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
+
+		$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
+
+		$stmt->execute();
+
+		return $stmt -> fetchAll();
+
+		$stmt->close();
+
+		$stmt = null;	
+
+	}
 /*---------- Fin de ModeloFormularios ---------- */
 }

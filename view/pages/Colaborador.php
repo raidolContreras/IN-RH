@@ -4,6 +4,7 @@ $colaborador = ControladorFormularios::ctrVerEmpleados( 'idEmpleados',$_POST['Ed
 $Numbero = ControladorFormularios::ctrNumeroTelefonico($colaborador['phone']);
 $emergencia = ControladorFormularios::ctrNumeroTelefonico($colaborador['phoneEmer']);
 $foto = ControladorFormularios::ctrVerFotos("Empleados_idEmpleados", $colaborador['idEmpleados']);
+$documentos = ControladorFormularios::ctrVerDocumentos("Empleados_idEmpleados", $colaborador['idEmpleados']);
 ?>
 <div class="container-fluid dashboard-content ">
 	<div class="row">
@@ -135,7 +136,7 @@ $foto = ControladorFormularios::ctrVerFotos("Empleados_idEmpleados", $colaborado
 											</form>
 
 											<button class="btn btn-success rounded float-right" data-dismiss="modal">
-												 Cancelar
+												Cancelar
 											</button>
 
 										</div>
@@ -151,96 +152,44 @@ $foto = ControladorFormularios::ctrVerFotos("Empleados_idEmpleados", $colaborado
 		</div>
 
 		<div class="col-xl-9 col-lg-9 col-md-7 col-sm-12 col-12">
-			<div class="row">
-				<div class="col-4 pb-3">
-					<form method="POST" action="Edicion">
-						<button class="btn btn-primary rounded btn-block" name="Editar" value="<?php echo $colaborador['idEmpleados'];?>">
-							<i class="fa fa-edit"></i> Editar
-						</button>
-					</form>
+			<div class="card p-3">
+				<div class="row">
+					<div class="col-4">
+						<form method="POST" action="Documento">
+							<button class="btn btn-primary rounded btn-block" name="empleado" value="<?php echo $colaborador['idEmpleados'];?>">
+								<i class="ti-upload"></i> Subir Documentos
+							</button>
+						</form>
+					</div>
 				</div>
-				<div class="col-4 pb-3">
-					<form method="POST" action="Formacion">
-						<button class="btn btn-warning rounded btn-block" name="Formacion" value="<?php echo $colaborador['idEmpleados'];?>">
-							<i class="ti-bookmark-alt"></i> Agregar formación
-						</button>
-					</form>
-				</div>
-				<div class="col-4 pb-3">
-					<form method="POST" action="HistorialLaboral">
-						<button class="btn btn-info rounded btn-block" name="Historial" value="<?php echo $colaborador['idEmpleados'];?>">
-							<i class="fas fa-history"></i> Agregar historial
-						</button>
-					</form>
-				</div>
-
-				<div class="card">
-					<?php 
-					$history = ControladorFormularios::ctrSeleccionarHisrory($colaborador["idEmpleados"]);
-					$i = 0;
-					?>
-
-					<link rel="stylesheet" href="assets/libs/css/timeline.css">
-					<div class="container">
-						<div class="row">
-							<div class="col-md-12">
-								<div class="card-body">
-									<h3 class="card-title hprofile"></h3>
-									<div id="content">
-										<ul class="timeline">
-											<li class="">
-												<h2 class="hprofile"><i class="icon-briefcase"></i> Experiencia laboral</h2>
-											</li>
-											<?php 
-
-											foreach ($history as $key => $laboral): 
-
-												?>
-												<?php if ($laboral['fecha_fin'] == null): ?>
-													<li class="event" data-date="<?php echo ControladorFormularios::ctrFecha($laboral['fecha_inicio']); ?> - Actualidad">
-													<?php else: ?>
-														<li class="event" data-date="<?php echo ControladorFormularios::ctrFecha($laboral['fecha_inicio']); ?> - <?php echo ControladorFormularios::ctrFecha($laboral['fecha_fin']); ?>">
-														<?php endif ?>
-														<h3 class="hprofile"><?php echo $laboral['empresa']; ?></h3>
-														<p><?php echo $laboral['puesto']; ?>
-
-														<?php if ($laboral['salario'] != null): ?>
-															- <?php
-															$amount = $laboral['salario'];
-															$formatted_amount = '$' . number_format($amount, 0) . ' MXN';
-															echo $formatted_amount; 
-															?>
-
-														<?php endif ?>
-
-													</p>
-												</li>
-												<?php $i++; ?>
-											<?php endforeach ?>
-											<!-- si no tiene empleos previos se activa un botón para agregarlos -->
-											<?php if ($i==0): ?>
-												<li class="event">
-													<form action="HistorialLaboral" method="post">
-														<h3 class="hprofile">Agregar Historial</h3>
-														<button class="btn btn-success rounded-circle" name="Historial" value="<?php echo $colaborador["idEmpleados"]; ?>"><i class="ti-plus"></i></button>
-													</form>
-												</li>
-											<?php endif ?>
-											<li class="">
-												<h2 class="hprofile"><i class="ti ti-bookmark-alt"></i> Formación</h2>
-											</li>
-											<li class="event" data-date="Nov' 19 - Actualidad">
-												<h3 class="hprofile">Opening Ceremony</h3>
-												<p>Get ready for an exciting event, this will kick off in amazing fashion with MOP &amp; Busta Rhymes as an opening show.</p>
-											</li>
-										</ul>
+			</div>
+			<div>
+				<div class="row">
+					<?php foreach ($documentos as $key => $value): ?>
+						<div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+							<div class="card card-figure">
+								<figure class="figure">
+									<div class="figure-attachment">
+										<span class="fa-stack fa-lg">
+											<i class="fa fa-square fa-stack-2x text-primary"></i>
+											<i class="fa fa-file-pdf fa-stack-1x fa-inverse"></i>
+										</span>
 									</div>
+									<figcaption class="figure-caption">
+										<ul class="list-inline d-flex text-muted mb-0">
+											<li class="list-inline-item text-truncate mr-auto">
+												<span><i class="fas fa-file-pdf"></i></span> <?php echo $value['nameDoc'] ?>.pdf </li>
+												<li class="list-inline-item">
+													<a download href="view/pdfs/<?php echo $value['Empleados_idEmpleados']."/".$value['nameDoc']; ?>.pdf"><i class="fas fa-download "></i></a>
+												</li>
+											</ul>
+										</figcaption>
+									</figure>
 								</div>
 							</div>
-						</div>
+						<?php endforeach ?>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
