@@ -119,5 +119,71 @@ class ControladorFormularios{
 		}
 	}
 
+
+/*---------- Esta función Sube una foto, y guarda un tumbnails para optimización de la pagina ---------- */
+	static public function ctrSubirFoto(){
+
+		if (isset($_FILES["image-upload"]) && $_FILES["image-upload"]["error"] == 0) {
+			// Obtener los datos del archivo
+			$imagen = $_FILES["image-upload"];
+			$tabla = "foto_empleado";
+			$imageName = $_POST["name"] . " " . $_POST["lastname"];
+
+			// Obtener la extensión del archivo
+			$extension = pathinfo($imagen["name"], PATHINFO_EXTENSION);
+
+			// Renombrar la imagen con el nombre y apellidos proporcionados, más la extensión
+			$imageFileName = $imageName . "." . $extension;
+
+			// Guardar la imagen original en el servidor
+			$uploadPath = "view/fotos/" . $imageFileName;
+			move_uploaded_file($imagen["tmp_name"], $uploadPath);
+
+			// Obtener la ruta para la imagen en miniatura
+			$thumbnailPath = "view/fotos/thumbnails/" . $imageFileName;
+
+			// Cargar la imagen original
+			$originalImage = imagecreatefromstring(file_get_contents($uploadPath));
+
+			// Obtener las dimensiones originales de la imagen
+			$originalWidth = imagesx($originalImage);
+			$originalHeight = imagesy($originalImage);
+
+			// Calcular las nuevas dimensiones para la imagen en miniatura
+			$maxSize = 150;
+			$scale = min($maxSize / $originalWidth, $maxSize / $originalHeight);
+			$newWidth = round($scale * $originalWidth);
+			$newHeight = round($scale * $originalHeight);
+
+			// Crear la imagen en miniatura
+			$thumbnailImage = imagecreatetruecolor($newWidth, $newHeight);
+			imagecopyresampled($thumbnailImage, $originalImage, 0, 0, 0, 0, $newWidth, $newHeight, $originalWidth, $originalHeight);
+
+			// Guardar la imagen en miniatura en el servidor
+			imagepng($thumbnailImage, $thumbnailPath);
+
+			// Guardar los datos en la base de datos
+			$datos = array("imageName" => $imageFileName,
+						   "idEmpleado" => $_POST['idEmpleado']
+							);
+			$respuesta = ModeloFormularios::mdlRegistroFotoEmpleado($tabla, $datos);
+
+			return $respuesta;
+		}
+	}
+
+/*---------- Función hecha para Buscar las Fotos---------- */
+	static public function ctrVerFotos($item, $valor){
+
+		$tabla = "foto_empleado";
+
+		$respuesta = ModeloFormularios::mdlVerFotos($tabla, $item, $valor);
+
+		return $respuesta;
+
+	}
+
+
+
 /*---------- Fin de ControladorFormularios ---------- */
 }

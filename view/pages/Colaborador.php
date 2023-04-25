@@ -3,6 +3,7 @@ $colaborador = ControladorFormularios::ctrVerEmpleados( 'idEmpleados',$_POST['Ed
 
 $Numbero = ControladorFormularios::ctrNumeroTelefonico($colaborador['phone']);
 $emergencia = ControladorFormularios::ctrNumeroTelefonico($colaborador['phoneEmer']);
+$foto = ControladorFormularios::ctrVerFotos("Empleados_idEmpleados", $colaborador['idEmpleados']);
 ?>
 <div class="container-fluid dashboard-content ">
 	<div class="row">
@@ -25,7 +26,15 @@ $emergencia = ControladorFormularios::ctrNumeroTelefonico($colaborador['phoneEme
 			<div class="card">
 				<div class="card-body">
 					<div class="user-avatar text-center d-block">
-						<img src="assets/images/avatar-1.jpg" alt="User Avatar" class="rounded-circle user-avatar-xxl">
+						<?php if (!empty($foto)): ?>
+							<img src="view/fotos/thumbnails/<?php echo $foto['namePhoto'] ?>" alt="User Avatar" class="rounded-circle user-avatar-xxl">
+						<?php else: ?>
+							<form method="POST" action="Foto">
+								<button type="submit" class="btn btn-info rounded" name="empleado" value="<?php echo $colaborador['idEmpleados']; ?>">
+									Subir foto
+								</button>
+							</form>
+						<?php endif ?>
 					</div>
 					<div class="text-center">
 						<h2 class="font-24 mb-0 hprofile"><?php echo ucwords($colaborador["name"]." ".$colaborador["lastname"]) ?></h2>

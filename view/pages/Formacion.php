@@ -10,8 +10,6 @@
 					<nav aria-label="breadcrumb">
 						<ol class="breadcrumb">
 							<li class="breadcrumb-item"><a href="Inicio" class="breadcrumb-link">IN Consulting México</a></li>
-							<li class="breadcrumb-item active" aria-current="page">Registro Empleados</li>
-							<li class="breadcrumb-item active" aria-current="page">Información laboral</li>
 							<li class="breadcrumb-item active" aria-current="page">Formación</li>
 						</ol>
 					</nav>

@@ -139,8 +139,8 @@ class ModeloFormularios{
 		if($item == null && $valor == null){
 
 			$sql = "SELECT e.idEmpleados, e.name, e.lastname, e.genero, e.fNac, e.phone, e.email, e.identificacion, e.NSS, e.RFC, e.street, e.numE, e.numI, e.colonia, e.CP, e.estado, e.municipio, e.fecha_contratado, m.nameEmer, m.parentesco, m.phoneEmer 
-				FROM Empleados e 
-				INNER JOIN Emergencia m ON e.idEmpleados = m.Empleados_idEmpleados WHERE status = 1 ORDER BY idEmpleados DESC;";
+				FROM empleados e 
+				INNER JOIN emergencia m ON e.idEmpleados = m.Empleados_idEmpleados WHERE status = 1 ORDER BY idEmpleados DESC;";
 
 			$stmt = Conexion::conectar()->prepare($sql);
 
@@ -218,6 +218,53 @@ class ModeloFormularios{
 
 	}
 
+	static public function mdlRegistroFotoEmpleado($tabla, $datos){
+
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla (namePhoto, Empleados_idEmpleados) VALUES (:imageName, :idEmpleado)");
+
+		$stmt->bindParam(":imageName", $datos["imageName"], PDO::PARAM_STR);
+		$stmt->bindParam(":idEmpleado", $datos["idEmpleado"], PDO::PARAM_STR);
+
+		if ($stmt->execute()) {
+			return "ok";
+		} else {
+			return "error";
+		}
+
+		$stmt->close();
+		$stmt = null;
+
+	}
+/*---------- Función hecha para ver a los empleados---------- */
+
+	static public function mdlVerFotos($tabla, $item, $valor){
+
+		if($item == null && $valor == null){
+
+			$sql = "SELECT * FROM $tabla";
+
+			$stmt = Conexion::conectar()->prepare($sql);
+
+			$stmt->execute();
+
+			return $stmt -> fetchAll();
+
+		}else{
+
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
+
+			$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
+
+			$stmt->execute();
+
+			return $stmt -> fetch();
+		}
+
+		$stmt->close();
+
+		$stmt = null;	
+
+	}
 
 /*---------- Fin de ModeloFormularios ---------- */
 }

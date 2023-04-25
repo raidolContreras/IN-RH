@@ -41,6 +41,7 @@
 			$_GET["pagina"] == "HistorialLaboral" ||
 			$_GET["pagina"] == "Departamento" ||
 			$_GET["pagina"] == "Colaborador" ||
+			$_GET["pagina"] == "Foto" ||
 			$_GET["pagina"] == "somos" 
 
 		){
