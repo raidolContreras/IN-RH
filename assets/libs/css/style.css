@@ -5271,6 +5271,13 @@ Vertical Timeline - by CodyHouse.co
     width: 128px;
 }
 
+.user-avatar-xxl2 {
+    height: 128px;
+    width: 128px;
+    object-fit: cover;
+    object-position: center center;
+}
+
 .user-avatar-xl {
     height: 90px;
     width: 90px;
