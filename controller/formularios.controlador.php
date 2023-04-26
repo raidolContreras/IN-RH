@@ -185,70 +185,50 @@ class ControladorFormularios{
 
 /*---------- Función hecha para subir pdf---------- */
 	static public function ctrSubirPDF(){
-		if (isset($_POST['name'])) {
-			if ($_FILES['curriculum']['error'] > 0) {
-			  echo 'Error al cargar el archivo: ' . $_FILES['curriculum']['error'] . '<br>';
-			}
+		if (isset($_POST['archivo'])) {
+			if ($_FILES['file']['error'] > 0) {
+			  echo 'Error al cargar el archivo: ' . $_FILES['file']['error'] . '<br>';
+			}else{
 
-		// Crear la carpeta con el id del empleado
-			$empleadoId = $_POST['empleado'];
-			$carpetaEmpleado = "view/pdfs/" . $empleadoId;
-			if (!file_exists($carpetaEmpleado)) {
-				mkdir($carpetaEmpleado);
-			}
+				// Crear la carpeta con el id del empleado
+				$empleadoId = $_POST['empleado'];
+				$carpetaEmpleado = "view/pdfs/" . $empleadoId;
+				if (!file_exists($carpetaEmpleado)) {
+					mkdir($carpetaEmpleado);
+				}
 
-		// Array con los nombres de los campos
-			$campos = array("curriculum", "acta-nacimiento", "comprobante-domicilio", "identificacion-anverso", "identificacion-reverso", "rfc", "curp", "nss", "comprobante-estudios", "recomendacion-laboral", "recomendacion-personal");
+				if (isset($_FILES['file']) && $_FILES['file']["error"] == 0) {
+					// Obtener los datos del archivo
+					$pdf = $_FILES['file'];
+					$pdfName = $_POST['archivo'];
 
-		// Array para almacenar los nombres de los archivos subidos
-			$pdfNames = array();
-
-		// Recorremos los campos y subimos cada archivo
-			foreach ($campos as $campo) {
-				if (isset($_FILES[$campo]) && $_FILES[$campo]["error"] == 0) {
-		// Obtener los datos del archivo
-					$pdf = $_FILES[$campo];
-					$pdfName = $campo;
-
-		// Obtener la extensión del archivo
+					// Obtener la extensión del archivo
 					$extension = pathinfo($pdf["name"], PATHINFO_EXTENSION);
 
-		// Renombrar el archivo con el nombre del campo, más la extensión
+					// Renombrar el archivo con el nombre del campo, más la extensión
 					$pdfFileName = $pdfName . "." . $extension;
 
-		// Guardar el archivo en la carpeta del empleado
+					// Guardar el archivo en la carpeta del empleado
 					$uploadPath = $carpetaEmpleado . "/" . $pdfFileName;
 					move_uploaded_file($pdf["tmp_name"], $uploadPath);
+				}
 
-		// Guardar el nombre del archivo en el array
-					array_push($pdfNames, $pdfFileName);
+				// Guardar los datos en la base de datos
+				$datos = array("fileName" => $_POST['archivo'],
+					"idEmpleado" => $_POST['empleado']
+				);
+				$tabla = "documento";
+
+				$respuesta = ModeloFormularios::mdlRegistroPDFEmpleado($tabla, $datos);
+
+				if ($respuesta=='ok') {
+					return 'ok';
+				}else{
+					return 'error';
 				}
 			}
-
-		// Guardar los datos en la base de datos
-			$datos = array("curriculum" => "curriculum",
-				"acta_nacimiento" => "acta_nacimiento",
-				"comprobante_domicilio" => "comprobante_domicilio",
-				"identificacion_anverso" => "identificacion_anverso",
-				"identificacion_reverso" => "identificacion_reverso",
-				"rfc" => "rfc",
-				"curp" => "curp",
-				"nss" => "nss",
-				"comprobante_estudios" => "comprobante_estudios",
-				"recomendacion_laboral" => "recomendacion_laboral",
-				"recomendacion_personal" => "recomendacion_personal",
-				"idEmpleado" => $_POST['empleado']
-			);
-			$tabla = "documento";
-
-			$respuesta = ModeloFormularios::mdlRegistroPDFEmpleado($tabla, $datos);
-
-			if ($respuesta=='ok') {
-				return 'ok';
-			}else{
-				return 'error';
-			}
 		}
+
 
 	}
 
@@ -257,6 +237,16 @@ class ControladorFormularios{
 		$tabla = "documento";
 
 		$respuesta = ModeloFormularios::mdlVerDocumentos($tabla, $item, $valor);
+
+		return $respuesta;
+
+	}
+
+	static public function ctrVerDocumento($item, $valor){
+
+		$tabla = "documento";
+
+		$respuesta = ModeloFormularios::mdlVerDocumento($tabla, $item, $valor);
 
 		return $respuesta;
 

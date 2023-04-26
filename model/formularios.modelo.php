@@ -269,32 +269,12 @@ class ModeloFormularios{
 
 	static public function mdlRegistroPDFEmpleado($tabla, $datos){
 
-		$sql = "INSERT INTO $tabla (nameDoc, Empleados_idEmpleados) VALUES (:curriculum, :idEmpleado);";
-		$sql .= "INSERT INTO $tabla (nameDoc, Empleados_idEmpleados) VALUES (:acta_nacimiento, :idEmpleado);";
-		$sql .= "INSERT INTO $tabla (nameDoc, Empleados_idEmpleados) VALUES (:comprobante_domicilio, :idEmpleado);";
-		$sql .= "INSERT INTO $tabla (nameDoc, Empleados_idEmpleados) VALUES (:identificacion_anverso, :idEmpleado);";
-		$sql .= "INSERT INTO $tabla (nameDoc, Empleados_idEmpleados) VALUES (:identificacion_reverso, :idEmpleado);";
-		$sql .= "INSERT INTO $tabla (nameDoc, Empleados_idEmpleados) VALUES (:rfc, :idEmpleado);";
-		$sql .= "INSERT INTO $tabla (nameDoc, Empleados_idEmpleados) VALUES (:curp, :idEmpleado);";
-		$sql .= "INSERT INTO $tabla (nameDoc, Empleados_idEmpleados) VALUES (:nss, :idEmpleado);";
-		$sql .= "INSERT INTO $tabla (nameDoc, Empleados_idEmpleados) VALUES (:comprobante_estudios, :idEmpleado);";
-		$sql .= "INSERT INTO $tabla (nameDoc, Empleados_idEmpleados) VALUES (:recomendacion_laboral, :idEmpleado);";
-		$sql .= "INSERT INTO $tabla (nameDoc, Empleados_idEmpleados) VALUES (:recomendacion_personal, :idEmpleado);";
+		$sql = "INSERT INTO $tabla (nameDoc, Empleados_idEmpleados) VALUES (:fileName, :idEmpleado);";
 
 		$stmt = Conexion::conectar()->prepare($sql);
 
 		$stmt->bindParam(":idEmpleado", $datos["idEmpleado"], PDO::PARAM_STR);
-		$stmt->bindParam(":curriculum", $datos["curriculum"], PDO::PARAM_STR);
-		$stmt->bindParam(":acta_nacimiento", $datos["acta_nacimiento"], PDO::PARAM_STR);
-		$stmt->bindParam(":comprobante_domicilio", $datos["comprobante_domicilio"], PDO::PARAM_STR);
-		$stmt->bindParam(":identificacion_anverso", $datos["identificacion_anverso"], PDO::PARAM_STR);
-		$stmt->bindParam(":identificacion_reverso", $datos["identificacion_reverso"], PDO::PARAM_STR);
-		$stmt->bindParam(":rfc", $datos["rfc"], PDO::PARAM_STR);
-		$stmt->bindParam(":curp", $datos["curp"], PDO::PARAM_STR);
-		$stmt->bindParam(":nss", $datos["nss"], PDO::PARAM_STR);
-		$stmt->bindParam(":comprobante_estudios", $datos["comprobante_estudios"], PDO::PARAM_STR);
-		$stmt->bindParam(":recomendacion_laboral", $datos["recomendacion_laboral"], PDO::PARAM_STR);
-		$stmt->bindParam(":recomendacion_personal", $datos["recomendacion_personal"], PDO::PARAM_STR);
+		$stmt->bindParam(":fileName", $datos["fileName"], PDO::PARAM_STR);
 
 		if ($stmt->execute()) {
 			return "ok";
@@ -318,6 +298,22 @@ class ModeloFormularios{
 		$stmt->execute();
 
 		return $stmt -> fetchAll();
+
+		$stmt->close();
+		
+		$stmt = null;	
+
+	}
+
+	/*---------- Función hecha para ver las fotos---------- */
+
+	static public function mdlVerDocumento($tabla, $item, $valor){
+
+		$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE nameDoc = '$item' AND Empleados_idEmpleados = $valor");
+
+		$stmt->execute();
+
+		return $stmt -> fetch();
 
 		$stmt->close();
 		

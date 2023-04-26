@@ -161,40 +161,31 @@ $foto = ControladorFormularios::ctrVerFotos("Empleados_idEmpleados", $colaborado
 			<div class="card p-3">
 				<div class="row pb-2">
 					<div class="col-4">
-						<input type="hidden" id="idEmpleados" value="<?php echo $colaborador['idEmpleados']; ?>">
-						<button class="btn btn-primary rounded btn-block" id="expedientes" value="<?php echo $colaborador['idEmpleados'];?>">
+						<button class="btn btn-primary rounded btn-block" onClick="cargarContenido('Expedientes.php')">
 							<i class="icon-folder-alt"></i> Expedientes
 						</button>
 					</div>
 					<div class="col-4">
-						<form method="POST" action="Incapacidad">
-							<button class="btn btn-secondary rounded btn-block" name="empleado" value="<?php echo $colaborador['idEmpleados'];?>">
+						<button class="btn btn-secondary rounded btn-block" onClick="cargarContenido('Incapacidades.php')">
 								<i class="icon-shield"></i> Incapacidades
 							</button>
-						</form>
 					</div>
 					<div class="col-4">
-						<form method="POST" action="ActaAdministrativa">
-							<button class="btn btn-warning rounded btn-block" name="empleado" value="<?php echo $colaborador['idEmpleados'];?>">
+						<button class="btn btn-warning rounded btn-block" onClick="cargarContenido('ActaAdministrativa.php')">
 								<span class="indicator"></span><i class="icon-book-open"></i> Actas administrativas (2)
 							</button>
-						</form>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-4">
-						<form method="POST" action="Nominas">
-							<button class="btn btn-dark rounded btn-block" name="empleado" value="<?php echo $colaborador['idEmpleados'];?>">
+						<button class="btn btn-dark rounded btn-block" onClick="cargarContenido('Nominas.php')">
 								<i class="icon-wallet"></i> Nominas
 							</button>
-						</form>
 					</div>
 					<div class="col-4">
-						<form method="POST" action="FormatosVacacionales">
-							<button class="btn btn-brand rounded btn-block" name="empleado" value="<?php echo $colaborador['idEmpleados'];?>">
+						<button class="btn btn-brand rounded btn-block" onClick="cargarContenido('Vacaciones.php')">
 								<i class="icon-social-dribbble"></i> Formatos vacacionales
 							</button>
-						</form>
 					</div>
 				</div>
 			</div>
@@ -209,17 +200,14 @@ $foto = ControladorFormularios::ctrVerFotos("Empleados_idEmpleados", $colaborado
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <script>
-
-document.getElementById("expedientes").addEventListener("click", function(event) {
-  event.preventDefault(); // Prevenir comportamiento predeterminado del botón
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
+function cargarContenido(pagina) {
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-      document.getElementById("show").innerHTML = this.responseText; // Actualizar contenido del elemento con ID "show"
+      document.getElementById("show").innerHTML = this.responseText;
     }
   };
-  xhttp.open("GET", "view/pages/Expedientes.php?idEmpleados=" + "<?php echo $colaborador['idEmpleados']; ?>", true); // Configurar solicitud
-  xhttp.send(); // Enviar solicitud
-});
-
+  xmlhttp.open("POST", "view/pages/"+pagina+"?idEmpleados=" + "<?php echo $colaborador['idEmpleados']; ?>", true);
+  xmlhttp.send();
+}
 </script>

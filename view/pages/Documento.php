@@ -1,5 +1,15 @@
 <?php
-$empleado = ControladorFormularios::ctrVerEmpleados("idEmpleados", $_POST["empleado"]); 
+$curriculum = ControladorFormularios::ctrVerDocumento("curriculum", $_POST["empleado"]);
+$acta_nacimiento = ControladorFormularios::ctrVerDocumento("acta_nacimiento", $_POST["empleado"]);
+$comprobante_domicilio = ControladorFormularios::ctrVerDocumento("comprobante_domicilio", $_POST["empleado"]);
+$identificacion_anverso = ControladorFormularios::ctrVerDocumento("identificacion_anverso", $_POST["empleado"]);
+$identificacion_reverso = ControladorFormularios::ctrVerDocumento("identificacion_reverso", $_POST["empleado"]);
+$rfc = ControladorFormularios::ctrVerDocumento("rfc", $_POST["empleado"]);
+$curp = ControladorFormularios::ctrVerDocumento("curp", $_POST["empleado"]);
+$nss = ControladorFormularios::ctrVerDocumento("nss", $_POST["empleado"]);
+$comprobante_estudios = ControladorFormularios::ctrVerDocumento("comprobante_estudios", $_POST["empleado"]);
+$recomendacion_laboral = ControladorFormularios::ctrVerDocumento("recomendacion_laboral", $_POST["empleado"]);
+$recomendacion_personal = ControladorFormularios::ctrVerDocumento("recomendacion_personal", $_POST["empleado"]);
 ?>
 <link rel="stylesheet" href="assets/libs/css/archivo.css">
 <div class="container-fluid dashboard-content ">
@@ -23,94 +33,62 @@ $empleado = ControladorFormularios::ctrVerEmpleados("idEmpleados", $_POST["emple
 		</div>
 	</div>
 	<div class="container-fluid">
-		<div class="card shadow mb-5">
+		<div class="card shadow">
 			<div class="card-body">
-				<form method="POST" enctype="multipart/form-data">
+				<div class="row">
 					<?php
-					$registro = ControladorFormularios::ctrSubirPDF();
-					if ($registro == "ok") {
-						echo '<script>
-						if ( window.history.replaceState ) {
-							window.history.replaceState( null, null, window.location.href );
-						}
-						</script>';
-						echo '<script>
+					$subir = ControladorFormularios::ctrSubirPDF();
+					// Definir un arreglo asociativo para almacenar la información de los documentos
+					$documentos = [
+					    'curriculum' => 'Curriculum',
+					    'acta_nacimiento' => 'Acta de Nacimiento',
+					    'comprobante_domicilio' => 'Comprobante de Domicilio',
+					    'identificacion_anverso' => 'Identificación Anverso',
+					    'identificacion_reverso' => 'Identificación Reverso',
+					    'rfc' => 'RFC (Constancia de situación fiscal)',
+					    'curp' => 'CURP',
+					    'nss' => 'NSS',
+					    'comprobante_estudios' => 'Comprobante último grado de estudios',
+					    'recomendacion_laboral' => 'Carta de recomendación (Laboral)',
+					    'recomendacion_personal' => 'Carta de recomendación (personal)'
+					];
 
-							window.location = "Empleados";
-
-						</script>';
-						echo '<div class="alert alert-success">¡Archivo PDF subido exitosamente!</div>';
-					}
-					if ($registro == "error") {
-						echo '<script>
-						if ( window.history.replaceState ) {
-							window.history.replaceState( null, null, window.location.href );
-						}
-						</script>';
-						echo '<div class="alert alert-danger">Error, no se pudo subir el archivo PDF, intente de nuevo</div>';
+					// Recorrer el arreglo para mostrar o subir los documentos
+					foreach ($documentos as $nombreArchivo => $nombreDocumento) {
+					    if (!isset($$nombreArchivo['nameDoc'])) {
+					        // Si el archivo no existe, mostrar el formulario para subirlo
+					        echo '<form method="POST" enctype="multipart/form-data" class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">';
+					        echo '<div class="row centrado">';
+					        echo '<div class="form-group col-xl-8 col-lg-8 col-md-6 col-sm-6 col-12">';
+					        echo "<label for=\"$nombreArchivo\">$nombreDocumento</label>";
+					        echo "<input type=\"file\" accept=\".pdf\" class=\"form-control-file\" id=\"$nombreArchivo\" name=\"file\" required>";
+					        echo '</div>';
+					        echo '<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">';
+					        echo "<input type=\"hidden\" name=\"archivo\" value=\"$nombreArchivo\">";
+					        echo "<input type=\"hidden\" name=\"empleado\" value=\"{$_POST['empleado']}\">";
+					        echo '<button type="submit" class="btn btn-secondary rounded btn-block">Enviar</button>';
+					        echo '</div>';
+					        echo '</div>';
+					        echo '</form>';
+					    } else {
+					        // Si el archivo existe, mostrar un mensaje de éxito
+					        echo '<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">';
+					        echo '<div class="row centrado">';
+					        echo '<div class="form-group col-xl-8 col-lg-8 col-md-6 col-sm-6 col-12">';
+					        echo "<label>$nombreDocumento</label>";
+					        echo '<div class="alert alert-success center">';
+					        echo "$nombreDocumento ya en sistema";
+					        echo '</div>';
+					        echo '</div>';
+					        echo '</div>';
+					        echo '</div>';
+					    }
 					}
 					?>
-					<div class="row">
-						<div class="form-group p-2">
-							<label for="curriculum">Curriculum</label>
-							<input type="file" accept=".pdf" class="form-control-file" id="curriculum" name="curriculum"required>
-						</div>
-						<div class="form-group p-2">
-							<label for="acta-nacimiento">Acta de Nacimiento</label>
-							<input type="file" accept=".pdf" class="form-control-file" id="acta-nacimiento" name="acta-nacimiento" required>
-						</div>
-						<div class="form-group p-2">
-							<label for="comprobante-domicilio">Comprobante de domicilio</label>
-							<input type="file" accept=".pdf" class="form-control-file" id="comprobante-domicilio" name="comprobante-domicilio"required>
-						</div>
-					</div>
-					<div class="row">
-						<div class="form-group p-2">
-							<label for="identificacion-anverso">Identificación Anverso</label>
-							<input type="file" accept=".pdf" class="form-control-file" id="identificacion-anverso" name="identificacion-anverso" required>
-						</div>
-						<div class="form-group p-2">
-							<label for="identificacion-reverso">Identificación Reverso</label>
-							<input type="file" accept=".pdf" class="form-control-file" id="identificacion-reverso" name="identificacion-reverso" required>
-						</div>
-						<div class="form-group p-2">
-							<label for="rfc">RFC (Constancia de situación fiscal)</label>
-							<input type="file" accept=".pdf" class="form-control-file" id="rfc" name="rfc" required>
-						</div>
 
-					</div>
-					<div class="row">
-						<div class="form-group p-2">
-							<label for="curp">CURP</label>
-							<input type="file" accept=".pdf" class="form-control-file" id="curp" name="curp" required>
-						</div>
-						<div class="form-group p-2">
-							<label for="nss">NSS</label>
-							<input type="file" accept=".pdf" class="form-control-file" id="nss" name="nss" required>
-						</div>
-						<div class="form-group p-2">
-							<label for="comprobante-estudios">Comprobante último grado de estudios</label>
-							<input type="file" accept=".pdf" class="form-control-file" id="comprobante-estudios" name="comprobante-estudios" required>
-						</div>
-					</div>
-					<div class="row">
-						<div class="form-group p-2">
-							<label for="recomendacion-laboral">Carta de recomendación (Laboral)</label>
-							<input type="file" accept=".pdf" class="form-control-file" id="recomendacion-laboral" name="recomendacion-laboral" required>
-						</div>
-						<div class="form-group p-2">
-							<label for="recomendacion-personal">Carta de recomendación (Personal)</label>
-							<input type="file" accept=".pdf" class="form-control-file" id="recomendacion-personal" name="recomendacion-personal" required>
-						</div>
-					</div>
-					<input type="hidden" name="name" value="<?php echo $empleado['name'] ?>">
-					<input type="hidden" name="lastname" value="<?php echo $empleado['lastname'] ?>">
-					<input type="hidden" name="empleado" value="<?php echo $empleado['idEmpleados'] ?>">
-					<center>
-						<button type="submit" class="btn btn-primary rounded col-6">Subir Documentos</button>
-					</center>
-				</form>
+				</div>
 			</div>
 		</div>
 	</div> 
+</div>
 </div>
