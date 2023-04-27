@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="assets/vendor/fonts/simple-line-icons/css/simple-line-icons.css">
     <link rel="stylesheet" href="assets/vendor/fonts/material-design-iconic-font/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="assets/vendor/fonts/themify-icons/themify-icons.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	
 	<?php if (isset($_GET["pagina"])): ?>
 		<title><?php echo 'IN Consulting México - '.$_GET["pagina"]; ?></title>

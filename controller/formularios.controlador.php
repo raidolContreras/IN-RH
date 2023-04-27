@@ -252,6 +252,11 @@ class ControladorFormularios{
 
 	}
 
+	static public function ctrImprimirDivs($validar,$nameDoc,$id,$nombreDocumento){
+		$respuesta = ModeloFormularios::mdlImprimirDivs($validar,$nameDoc,$id,$nombreDocumento);
+		return $respuesta;
+	}
+
 
 	/*---------- Fin de ControladorFormularios ---------- */
 }

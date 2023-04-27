@@ -3,60 +3,60 @@
 require_once "conexion.php";
 
 class ModeloFormularios{
-	
+
 
 /*---------- Función hecha para registrar a los empleados---------- */
 
-	static public function mdlRegistrarEmpleados($tabla1, $table2, $datos){
+static public function mdlRegistrarEmpleados($tabla1, $table2, $datos){
 
-		$pdo=Conexion::conectar();
+	$pdo=Conexion::conectar();
 
-		$stmt = $pdo->prepare("INSERT INTO $tabla1(name, lastname, genero, fNac, phone, email, identificacion, NSS, RFC, street, numE, numI, colonia, CP, municipio, estado) VALUES (:nombre, :apellidos, :genero, :fecha_nacimiento, :telefono, :email, :num_identificacion, :num_seguro_social, :rfc, :calle, :num_exterior, :num_interior, :colonia, :cp, :municipio, :estado)");
+	$stmt = $pdo->prepare("INSERT INTO $tabla1(name, lastname, genero, fNac, phone, email, identificacion, NSS, RFC, street, numE, numI, colonia, CP, municipio, estado) VALUES (:nombre, :apellidos, :genero, :fecha_nacimiento, :telefono, :email, :num_identificacion, :num_seguro_social, :rfc, :calle, :num_exterior, :num_interior, :colonia, :cp, :municipio, :estado)");
 
-		$stmt->bindParam(':nombre', $datos['nombre'], PDO::PARAM_STR);
-		$stmt->bindParam(':apellidos', $datos['apellidos'], PDO::PARAM_STR);
-		$stmt->bindParam(':genero', $datos['genero'], PDO::PARAM_STR);
-		$stmt->bindParam(':fecha_nacimiento', $datos['fecha_nacimiento'], PDO::PARAM_STR);
-		$stmt->bindParam(':telefono', $datos['telefono'], PDO::PARAM_INT);
-		$stmt->bindParam(':email', $datos['email'], PDO::PARAM_STR);
-		$stmt->bindParam(':num_identificacion', $datos['num_identificacion'], PDO::PARAM_STR);
-		$stmt->bindParam(':num_seguro_social', $datos['num_seguro_social'], PDO::PARAM_INT);
-		$stmt->bindParam(':rfc', $datos['rfc'], PDO::PARAM_STR);
-		$stmt->bindParam(':calle', $datos['calle'], PDO::PARAM_STR);
-		$stmt->bindParam(':num_exterior', $datos['num_exterior'], PDO::PARAM_STR);
-		$stmt->bindParam(':num_interior', $datos['num_interior'], PDO::PARAM_STR);
-		$stmt->bindParam(':colonia', $datos['colonia'], PDO::PARAM_STR);
-		$stmt->bindParam(':cp', $datos['cp'], PDO::PARAM_INT);
-		$stmt->bindParam(':municipio', $datos['municipio'], PDO::PARAM_STR);
-		$stmt->bindParam(':estado', $datos['estado'], PDO::PARAM_STR);
-
-
-		if($stmt->execute()){
-
-			$id_empleado = $pdo->lastInsertId(); //obtener el ID del empleado recién insertado
-
-			if ($id_empleado == 0) {
-		 		echo $consulta->errorInfo()[2];
-			}else{
-				$Registro = ModeloFormularios::mdlEmergencia($table2, $id_empleado, $datos);
-			}
+	$stmt->bindParam(':nombre', $datos['nombre'], PDO::PARAM_STR);
+	$stmt->bindParam(':apellidos', $datos['apellidos'], PDO::PARAM_STR);
+	$stmt->bindParam(':genero', $datos['genero'], PDO::PARAM_STR);
+	$stmt->bindParam(':fecha_nacimiento', $datos['fecha_nacimiento'], PDO::PARAM_STR);
+	$stmt->bindParam(':telefono', $datos['telefono'], PDO::PARAM_INT);
+	$stmt->bindParam(':email', $datos['email'], PDO::PARAM_STR);
+	$stmt->bindParam(':num_identificacion', $datos['num_identificacion'], PDO::PARAM_STR);
+	$stmt->bindParam(':num_seguro_social', $datos['num_seguro_social'], PDO::PARAM_INT);
+	$stmt->bindParam(':rfc', $datos['rfc'], PDO::PARAM_STR);
+	$stmt->bindParam(':calle', $datos['calle'], PDO::PARAM_STR);
+	$stmt->bindParam(':num_exterior', $datos['num_exterior'], PDO::PARAM_STR);
+	$stmt->bindParam(':num_interior', $datos['num_interior'], PDO::PARAM_STR);
+	$stmt->bindParam(':colonia', $datos['colonia'], PDO::PARAM_STR);
+	$stmt->bindParam(':cp', $datos['cp'], PDO::PARAM_INT);
+	$stmt->bindParam(':municipio', $datos['municipio'], PDO::PARAM_STR);
+	$stmt->bindParam(':estado', $datos['estado'], PDO::PARAM_STR);
 
 
-			return "ok";
+	if($stmt->execute()){
 
-		}else{
+	$id_empleado = $pdo->lastInsertId(); //obtener el ID del empleado recién insertado
 
-			print_r(Conexion::conectar()->errorInfo());
+	if ($id_empleado == 0) {
+		echo $consulta->errorInfo()[2];
+	}else{
+		$Registro = ModeloFormularios::mdlEmergencia($table2, $id_empleado, $datos);
+	}
 
-		}
 
-		$stmt->close();
+	return "ok";
 
-		$stmt = null;
+	}else{
 
-		}
+		print_r(Conexion::conectar()->errorInfo());
 
-/*---------- Función hecha para registrar a los numeros de emergencia---------- */
+	}
+
+	$stmt->close();
+
+	$stmt = null;
+
+	}
+
+	/*---------- Función hecha para registrar a los numeros de emergencia---------- */
 
 	static public function mdlEmergencia($table2, $id_empleado, $datos){
 
@@ -81,7 +81,7 @@ class ModeloFormularios{
 
 		$stmt = null;
 
-		}
+	}
 
 	static public function mdlRegistrarHistorial($tabla, $datos, $idEmpleado){
 		if ($datos['noResponder'] == 0) {
@@ -132,15 +132,15 @@ class ModeloFormularios{
 		$stmt = null;
 	}
 
-/*---------- Función hecha para ver a los empleados---------- */
+	/*---------- Función hecha para ver a los empleados---------- */
 
 	static public function mdlVerEmpleados($tabla, $item, $valor){
 
 		if($item == null && $valor == null){
 
 			$sql = "SELECT e.idEmpleados, e.name, e.lastname, e.genero, e.fNac, e.phone, e.email, e.identificacion, e.NSS, e.RFC, e.street, e.numE, e.numI, e.colonia, e.CP, e.estado, e.municipio, e.fecha_contratado, m.nameEmer, m.parentesco, m.phoneEmer 
-				FROM empleados e 
-				INNER JOIN emergencia m ON e.idEmpleados = m.Empleados_idEmpleados WHERE status = 1 ORDER BY idEmpleados DESC;";
+			FROM empleados e 
+			INNER JOIN emergencia m ON e.idEmpleados = m.Empleados_idEmpleados WHERE status = 1 ORDER BY idEmpleados DESC;";
 
 			$stmt = Conexion::conectar()->prepare($sql);
 
@@ -168,16 +168,16 @@ class ModeloFormularios{
 
 	}
 
-/*---------- Esta función crea el formato del numero teléfonico ---------- */
+	/*---------- Esta función crea el formato del numero teléfonico ---------- */
 	static public function mdlNumeroTelefonico($number){
-		$number = preg_replace('/[^0-9]/', '', $number); // Elimina cualquier caracter que no sea un numero
-		$length = strlen($number);
-		if($length == 10){ // Formato de 10 digitos
-			$number = preg_replace('/([0-9]{3})([0-9]{3})([0-9]{4})/', '($1) $2-$3', $number);
-		}elseif($length == 11){ // Formato de 11 digitos (con codigo de pais)
-			$number = preg_replace('/([0-9]{1})([0-9]{3})([0-9]{3})([0-9]{4})/', '+$1 ($2) $3-$4', $number);
-		}
-		return $number;
+	$number = preg_replace('/[^0-9]/', '', $number); // Elimina cualquier caracter que no sea un numero
+	$length = strlen($number);
+	if($length == 10){ // Formato de 10 digitos
+		$number = preg_replace('/([0-9]{3})([0-9]{3})([0-9]{4})/', '($1) $2-$3', $number);
+	}elseif($length == 11){ // Formato de 11 digitos (con codigo de pais)
+		$number = preg_replace('/([0-9]{1})([0-9]{3})([0-9]{3})([0-9]{4})/', '+$1 ($2) $3-$4', $number);
+	}
+	return $number;
 	}
 
 	static public function mdlSeleccionarHisrory($tabla, $idEmpleado){
@@ -198,7 +198,7 @@ class ModeloFormularios{
 	}
 
 	static public function mdlEliminarEmpleado($tabla, $idEmpleado){
-		
+
 		$sql = "UPDATE $tabla SET status = 0 WHERE idEmpleados=$idEmpleado";
 
 		$stmt = Conexion::conectar()->prepare($sql);
@@ -218,7 +218,7 @@ class ModeloFormularios{
 
 	}
 
-/*---------- Función hecha para Registrar las fotos de Empleados---------- */
+	/*---------- Función hecha para Registrar las fotos de Empleados---------- */
 	static public function mdlRegistroFotoEmpleado($tabla, $datos){
 
 		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla (namePhoto, Empleados_idEmpleados) VALUES (:imageName, :idEmpleado)");
@@ -236,7 +236,7 @@ class ModeloFormularios{
 		$stmt = null;
 
 	}
-/*---------- Función hecha para ver las fotos---------- */
+	/*---------- Función hecha para ver las fotos---------- */
 
 	static public function mdlVerFotos($tabla, $item, $valor){
 
@@ -300,7 +300,7 @@ class ModeloFormularios{
 		return $stmt -> fetchAll();
 
 		$stmt->close();
-		
+
 		$stmt = null;	
 
 	}
@@ -309,16 +309,53 @@ class ModeloFormularios{
 
 	static public function mdlVerDocumento($tabla, $item, $valor){
 
-		$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE nameDoc = '$item' AND Empleados_idEmpleados = $valor");
+		$stmt = Conexion::conectar()->prepare("SELECT nameDoc FROM $tabla WHERE nameDoc = '$item' AND Empleados_idEmpleados = $valor");
 
 		$stmt->execute();
 
 		return $stmt -> fetch();
 
 		$stmt->close();
-		
+
 		$stmt = null;	
 
 	}
-/*---------- Fin de ModeloFormularios ---------- */
+
+	static public function mdlImprimirDivs($validar,$nameDoc,$id,$nombreDocumento){
+
+	// Si el archivo existe, mostrar un mensaje de éxito
+	$div = '<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">';
+	$div .= '<div class="row centrado">';
+	$div .= '<div class="form-group col-xl-8 col-lg-8 col-md-6 col-sm-6 col-12">';
+	$div .= "<label>$nombreDocumento</label>";
+	$div .= '<div class="alert alert-success center">';
+	$div .= "$nombreDocumento ya en sistema";
+	$div .= '</div>';
+	$div .= '</div>';
+	$div .= '</div>';
+	$div .= '</div>';
+
+	// Si el archivo no existe, mostrar el formulario para subirlo
+	$div2 = '<form method="POST" enctype="multipart/form-data" class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">';
+	$div2 .= '<div class="row centrado">';
+	$div2 .= '<div class="form-group col-xl-8 col-lg-8 col-md-6 col-sm-6 col-12">';
+	$div2 .= "<label for=\"$nameDoc\">$nombreDocumento</label>";
+	$div2 .= "<input type=\"file\" accept=\".pdf\" class=\"form-control-file\" id=\"$nameDoc\" name=\"file\" required>";
+	$div2 .= '</div>';
+	$div2 .= '<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">';
+	$div2 .= "<input type=\"hidden\" name=\"archivo\" value=\"$nameDoc\">";
+	$div2 .= "<input type=\"hidden\" name=\"empleado\" value=\"$id\">";
+	$div2 .= '<button type="submit" class="btn btn-secondary rounded btn-block">Enviar</button>';
+	$div2 .= '</div>';
+	$div2 .= '</div>';
+	$div2 .= '</form>';
+
+		if ($validar == 1) {
+			return $div;
+		}else{
+			return $div2;
+		}
+
+	/*---------- Fin de ModeloFormularios ---------- */
+	}
 }
