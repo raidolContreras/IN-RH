@@ -39,38 +39,38 @@ $documentos = [
 	<div id="resultado"></div>
 
 	<?php $subir = ControladorFormularios::ctrSubirPDF();
-					if($subir == "ok"){
+if($subir == "ok"){
 
-									echo '<script>
+			echo '<script>
 
-										if ( window.history.replaceState ) {
+				if ( window.history.replaceState ) {
 
-											window.history.replaceState( null, null, window.location.href );
+					window.history.replaceState( null, null, window.location.href );
 
-										}
+				}
 
-									</script>
-									';
-									
-									echo '<div class="alert alert-success">¡Documento cargado Exitosamente!</div>';
-								
-								}
+			</script>
+			';
+			
+			echo '<div class="alert alert-success">¡Documento cargado Exitosamente!</div>';
+		
+		}
 
-								if($subir == "error"){
+		if($subir == "error"){
 
-									echo '<script>
+			echo '<script>
 
-										if ( window.history.replaceState ) {
+				if ( window.history.replaceState ) {
 
-											window.history.replaceState( null, null, window.location.href );
+					window.history.replaceState( null, null, window.location.href );
 
-										}
+				}
 
-									</script>';
+			</script>';
 
-									echo '<div class="alert alert-danger">Error, no se pudo subir el documento, intente de nuevo</div>';
+			echo '<div class="alert alert-danger">Error, no se pudo subir el documento, intente de nuevo</div>';
 
-								} ?>
+		} ?>
 	<div class="container-fluid">
 		<div class="card shadow">
 			<div class="card-body">

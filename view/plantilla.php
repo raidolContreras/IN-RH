@@ -42,9 +42,12 @@
 			$_GET["pagina"] == "Formacion" ||
 			$_GET["pagina"] == "HistorialLaboral" ||
 			$_GET["pagina"] == "Departamento" ||
+			$_GET["pagina"] == "CrearDepartamentos" ||
 			$_GET["pagina"] == "Colaborador" ||
 			$_GET["pagina"] == "Foto" ||
 			$_GET["pagina"] == "Documento" ||
+			$_GET["pagina"] == "EditarDepto" ||
+			$_GET["pagina"] == "EliminarDepto" ||
 			$_GET["pagina"] == "somos" 
 
 		){

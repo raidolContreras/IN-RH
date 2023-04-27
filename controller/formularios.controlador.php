@@ -257,6 +257,92 @@ class ControladorFormularios{
 		return $respuesta;
 	}
 
+	static public function ctrRegistrarDeptos(){
+		if (isset($_POST['name'])) {
+			$description = "";
+			if (preg_match('/^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["name"])) {
+				if (isset($_POST['description']) && preg_match('/^[0-9a-zA-Z ]+$/', $_POST["description"])) {
+					$description = $_POST["description"];
+				}
+
+				$datos = array("name" => $_POST["name"],
+						"description" => $description,
+						"idEmpleado" => $_POST["jefe"]
+											);
+				$tabla = "departamentos";
+				$respuesta = ModeloFormularios::mdlRegistrarDeptos($tabla, $datos);
+
+				if ($respuesta == "ok") {
+					return $respuesta;
+				}else{
+					return "error";
+				}
+			}
+
+		}
+
+	}
+
+	/*---------- Función hecha para ver a los empleados---------- */
+	static public function ctrVerEmpleadosDisponibles(){
+
+		$tabla = "empleados";
+
+		$respuesta = ModeloFormularios::mdlVerEmpleadosDisponibles($tabla);
+
+		return $respuesta;
+
+	}
+
+	/*---------- Función hecha para ver a los empleados---------- */
+	static public function ctrVerDepartamentos($item, $valor){
+
+		$tabla = "departamentos";
+
+		$respuesta = ModeloFormularios::mdlVerDepartamentos($tabla, $item, $valor);
+
+		return $respuesta;
+
+	}
+
+	static public function ctrActualizarDepto(){
+
+		if (isset($_POST['name'])) {
+			$description = "";
+			if (preg_match('/^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["name"])) {
+				if (isset($_POST['description']) && preg_match('/^[0-9a-zA-Z ]+$/', $_POST["description"])) {
+					$description = $_POST["description"];
+				}
+
+				$datos = array("name" => $_POST["name"],
+						"description" => $description,
+						"idEmpleado" => $_POST["jefe"],
+						"idDepto" => $_POST["idDepto"]
+											);
+				$tabla = "departamentos";
+				$respuesta = ModeloFormularios::mdlActualizarDepto($tabla, $datos);
+
+				if ($respuesta == "ok") {
+					return $respuesta;
+				}else{
+					return "error";
+				}
+			}
+
+		}
+
+	}
+
+	static public function ctrEliminarDepto(){
+		if (isset($_POST['idDepto'])) {
+			$respuesta = ModeloFormularios::mdlEliminarDepto('departamentos', $_POST['idDepto']);
+			if ($respuesta == "ok") {
+				return $respuesta;
+			}else{
+				return "error";
+			}
+		}
+	}
 
 	/*---------- Fin de ControladorFormularios ---------- */
 }

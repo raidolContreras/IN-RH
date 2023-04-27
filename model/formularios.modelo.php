@@ -229,7 +229,7 @@ static public function mdlRegistrarEmpleados($tabla1, $table2, $datos){
 		if ($stmt->execute()) {
 			return "ok";
 		} else {
-			return "error";
+			print_r(Conexion::conectar()->errorInfo());
 		}
 
 		$stmt->close();
@@ -356,6 +356,109 @@ static public function mdlRegistrarEmpleados($tabla1, $table2, $datos){
 			return $div2;
 		}
 
-	/*---------- Fin de ModeloFormularios ---------- */
 	}
+
+	static public function mdlRegistrarDeptos($tabla, $datos){
+
+		$sql = "INSERT INTO $tabla(nameDepto, description, Empleados_idEmpleados) VALUES (:nameDepto, :description, :Empleados_idEmpleados)";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":nameDepto", $datos['name'], PDO::PARAM_STR);
+		$stmt->bindParam(":description", $datos['description'], PDO::PARAM_STR);
+		$stmt->bindParam(":Empleados_idEmpleados", $datos['idEmpleado'], PDO::PARAM_INT);
+		if ($stmt->execute()) {
+			return "ok";
+		}else{
+			print_r(Conexion::conectar()->errorInfo());
+		}
+
+	}
+
+	/*---------- Función hecha para ver a los empleados---------- */
+
+	static public function mdlVerEmpleadosDisponibles($tabla){
+
+		$sql = "SELECT * FROM empleados 
+				WHERE status = 1 
+				AND idEmpleados NOT IN (SELECT Empleados_idEmpleados FROM departamentos)
+				";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+
+		$stmt->execute();
+
+		return $stmt -> fetchAll();
+
+		$stmt->close();
+
+		$stmt = null;	
+
+	}
+
+	/*---------- Función hecha para ver a los empleados---------- */
+
+	static public function mdlVerDepartamentos($tabla, $item, $valor){
+
+		if ($item == null && $valor == null) {
+			$sql = "SELECT * FROM departamentos WHERE status = 1 ORDER BY idDepartamentos;";
+
+			$stmt = Conexion::conectar()->prepare($sql);
+
+			$stmt->execute();
+
+			return $stmt -> fetchAll();
+		}else{
+			$sql = "SELECT * FROM $tabla WHERE $item = :$item";
+
+			$stmt = Conexion::conectar()->prepare($sql);
+			$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
+
+			$stmt->execute();
+
+			return $stmt -> fetch();
+		}
+
+		$stmt->close();
+
+		$stmt = null;	
+
+	}
+
+	static public function mdlActualizarDepto($tabla, $datos){
+
+		$sql = "UPDATE $tabla SET nameDepto=:nameDepto ,description=:description ,Empleados_idEmpleados=:Empleados_idEmpleados WHERE idDepartamentos = :idDepartamentos";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":nameDepto", $datos['name'], PDO::PARAM_STR);
+		$stmt->bindParam(":description", $datos['description'], PDO::PARAM_STR);
+		$stmt->bindParam(":Empleados_idEmpleados", $datos['idEmpleado'], PDO::PARAM_INT);
+		$stmt->bindParam(":idDepartamentos", $datos['idDepto'], PDO::PARAM_INT);
+		if ($stmt->execute()) {
+			return "ok";
+		}else{
+			print_r(Conexion::conectar()->errorInfo());
+		}
+
+	}
+	
+	static public function mdlEliminarDepto($tabla, $idDepto){
+
+		$sql = "UPDATE $tabla SET status=0, Empleados_idEmpleados=0 WHERE idDepartamentos = :idDepartamentos";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":idDepartamentos", $idDepto, PDO::PARAM_INT);
+
+		if ($stmt->execute()) {
+			return "ok";
+		}else{
+			print_r(Conexion::conectar()->errorInfo());
+		}
+
+	}
+
+	/*---------- Fin de ModeloFormularios ---------- */
+
 }
