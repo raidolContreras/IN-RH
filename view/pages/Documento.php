@@ -12,7 +12,10 @@ $documentos = [
 		'nss' => 'NSS',
 		'comprobante_estudios' => 'Comprobante último grado de estudios',
 		'recomendacion_laboral' => 'Carta de recomendación (Laboral)',
-		'recomendacion_personal' => 'Carta de recomendación (personal)'
+		'recomendacion_personal' => 'Carta de recomendación (personal)',
+		'estado_cuenta' => 'Estado de cuenta',
+		'infonavit' => 'Carta de no adeudos (infonavit)',
+		'fonacot' => 'Carta de no adeudos (fonacot)'
 ];
 ?>
 <link rel="stylesheet" href="assets/libs/css/archivo.css">

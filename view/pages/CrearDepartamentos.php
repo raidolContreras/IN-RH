@@ -1,5 +1,5 @@
 <?php 
-$empleados = ControladorFormularios::ctrVerEmpleadosDisponibles(null,null); 
+$empleados = ControladorFormularios::ctrVerEmpleadosDisponibles("departamentos"); 
 $registro = ControladorFormularios::ctrRegistrarDeptos();
 ?>
 <div class="container-fluid dashboard-content ">
@@ -74,10 +74,6 @@ $registro = ControladorFormularios::ctrRegistrarDeptos();
 							</option>
 						<?php endforeach ?>
 					</select>
-				</div>
-				<div class="form-group">
-					<label for="description" class="col-form-label font-weight-bold">Descripción:</label>
-					<textarea class="form-control" id="description" name="description" rows="5"></textarea>
 				</div>
 				<div class="row mt-5 rounded float-right">
 					<div class="text-center">

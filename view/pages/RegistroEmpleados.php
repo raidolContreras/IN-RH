@@ -102,13 +102,19 @@
 												<input type="text" class="form-control" id="num_identificacion" name="num_identificacion" required>
 											</div>
 										</div>
-										<div class="col-md-6">
+										<div class="col-md-4">
+											<div class="form-group">
+												<label for="curp">CURP</label>
+												<input type="text" class="form-control" id="curp" name="curp" required>
+											</div>
+										</div>
+										<div class="col-md-4">
 											<div class="form-group">
 												<label for="num_seguro_social">Número de Seguro Social</label>
 												<input type="number" class="form-control" id="num_seguro_social" name="num_seguro_social" required>
 											</div>
 										</div>
-										<div class="col-md-6">
+										<div class="col-md-4">
 											<div class="form-group">
 												<label for="rfc">RFC</label>
 												<input type="text" class="form-control" id="rfc" name="rfc" required>

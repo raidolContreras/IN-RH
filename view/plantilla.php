@@ -48,6 +48,8 @@
 			$_GET["pagina"] == "Documento" ||
 			$_GET["pagina"] == "EditarDepto" ||
 			$_GET["pagina"] == "EliminarDepto" ||
+			$_GET["pagina"] == "Puestos" ||
+			$_GET["pagina"] == "CrearPuestos" ||
 			$_GET["pagina"] == "somos" 
 
 		){

@@ -11,7 +11,7 @@ static public function mdlRegistrarEmpleados($tabla1, $table2, $datos){
 
 	$pdo=Conexion::conectar();
 
-	$stmt = $pdo->prepare("INSERT INTO $tabla1(name, lastname, genero, fNac, phone, email, identificacion, NSS, RFC, street, numE, numI, colonia, CP, municipio, estado) VALUES (:nombre, :apellidos, :genero, :fecha_nacimiento, :telefono, :email, :num_identificacion, :num_seguro_social, :rfc, :calle, :num_exterior, :num_interior, :colonia, :cp, :municipio, :estado)");
+	$stmt = $pdo->prepare("INSERT INTO $tabla1(name, lastname, genero, fNac, phone, email, identificacion, CURP, NSS, RFC, street, numE, numI, colonia, CP, municipio, estado) VALUES (:nombre, :apellidos, :genero, :fecha_nacimiento, :telefono, :email, :num_identificacion, :curp, :num_seguro_social, :rfc, :calle, :num_exterior, :num_interior, :colonia, :cp, :municipio, :estado)");
 
 	$stmt->bindParam(':nombre', $datos['nombre'], PDO::PARAM_STR);
 	$stmt->bindParam(':apellidos', $datos['apellidos'], PDO::PARAM_STR);
@@ -20,6 +20,7 @@ static public function mdlRegistrarEmpleados($tabla1, $table2, $datos){
 	$stmt->bindParam(':telefono', $datos['telefono'], PDO::PARAM_INT);
 	$stmt->bindParam(':email', $datos['email'], PDO::PARAM_STR);
 	$stmt->bindParam(':num_identificacion', $datos['num_identificacion'], PDO::PARAM_STR);
+	$stmt->bindParam(':curp', $datos['curp'], PDO::PARAM_STR);
 	$stmt->bindParam(':num_seguro_social', $datos['num_seguro_social'], PDO::PARAM_INT);
 	$stmt->bindParam(':rfc', $datos['rfc'], PDO::PARAM_STR);
 	$stmt->bindParam(':calle', $datos['calle'], PDO::PARAM_STR);
@@ -360,12 +361,11 @@ static public function mdlRegistrarEmpleados($tabla1, $table2, $datos){
 
 	static public function mdlRegistrarDeptos($tabla, $datos){
 
-		$sql = "INSERT INTO $tabla(nameDepto, description, Empleados_idEmpleados) VALUES (:nameDepto, :description, :Empleados_idEmpleados)";
+		$sql = "INSERT INTO $tabla(nameDepto, Empleados_idEmpleados) VALUES (:nameDepto, :Empleados_idEmpleados)";
 
 		$stmt = Conexion::conectar()->prepare($sql);
 
 		$stmt->bindParam(":nameDepto", $datos['name'], PDO::PARAM_STR);
-		$stmt->bindParam(":description", $datos['description'], PDO::PARAM_STR);
 		$stmt->bindParam(":Empleados_idEmpleados", $datos['idEmpleado'], PDO::PARAM_INT);
 		if ($stmt->execute()) {
 			return "ok";
@@ -377,12 +377,10 @@ static public function mdlRegistrarEmpleados($tabla1, $table2, $datos){
 
 	/*---------- Función hecha para ver a los empleados---------- */
 
-	static public function mdlVerEmpleadosDisponibles($tabla){
-
-		$sql = "SELECT * FROM empleados 
+	static public function mdlVerEmpleadosDisponibles($tabla,$item){
+		$sql = "SELECT * FROM $tabla 
 				WHERE status = 1 
-				AND idEmpleados NOT IN (SELECT Empleados_idEmpleados FROM departamentos)
-				";
+				AND idEmpleados NOT IN (SELECT Empleados_idEmpleados FROM $item)";
 
 		$stmt = Conexion::conectar()->prepare($sql);
 
@@ -427,7 +425,7 @@ static public function mdlRegistrarEmpleados($tabla1, $table2, $datos){
 
 	static public function mdlActualizarDepto($tabla, $datos){
 
-		$sql = "UPDATE $tabla SET nameDepto=:nameDepto ,description=:description ,Empleados_idEmpleados=:Empleados_idEmpleados WHERE idDepartamentos = :idDepartamentos";
+		$sql = "UPDATE $tabla SET nameDepto=:nameDepto ,Empleados_idEmpleados=:Empleados_idEmpleados WHERE idDepartamentos = :idDepartamentos";
 
 		$stmt = Conexion::conectar()->prepare($sql);
 
@@ -456,6 +454,60 @@ static public function mdlRegistrarEmpleados($tabla1, $table2, $datos){
 		}else{
 			print_r(Conexion::conectar()->errorInfo());
 		}
+
+	}
+	static public function mdlRegistrarPuestos($tabla, $datos){
+		$sql = "INSERT INTO $tabla(namePuesto, salario, salario_integrado, Empleados_idEmpleados, Departamentos_idDepartamentos, horario_entrada, horario_salida) VALUES (:namePuesto, :salario, :salario_integrado, :Empleados_idEmpleados, :Departamentos_idDepartamentos, :horario_entrada, :horario_salida)";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":namePuesto", $datos['namePuesto'], PDO::PARAM_STR);
+		$stmt->bindParam(":salario", $datos['salario'], PDO::PARAM_STR);
+		$stmt->bindParam(":salario_integrado", $datos['salario_integrado'], PDO::PARAM_STR);
+		$stmt->bindParam(":Empleados_idEmpleados", $datos['Empleados_idEmpleados'], PDO::PARAM_STR);
+		$stmt->bindParam(":Departamentos_idDepartamentos", $datos['Departamentos_idDepartamentos'], PDO::PARAM_STR);
+		$stmt->bindParam(":horario_entrada", $datos['horario_entrada'], PDO::PARAM_STR);
+		$stmt->bindParam(":horario_salida", $datos['horario_salida'], PDO::PARAM_STR);
+
+		if ($stmt->execute()) {
+
+			return 'ok';
+
+		}else{
+			print_r(Conexion::conectar()->errorInfo());
+
+		}
+	}
+
+	/*---------- Función hecha para ver a los empleados---------- */
+
+	static public function mdlVerPuestos($tabla, $item, $valor){
+
+		if ($item == null && $valor == null) {
+			$sql = "SELECT * FROM puesto 
+			JOIN empleados ON empleados.idEmpleados = puesto.Empleados_idEmpleados 
+			JOIN departamentos ON puesto.Departamentos_idDepartamentos = departamentos.idDepartamentos 
+			WHERE empleados.status = 1;";
+
+			$stmt = Conexion::conectar()->prepare($sql);
+
+			$stmt->execute();
+
+			return $stmt -> fetchAll();
+		}else{
+			$sql = "SELECT * FROM $tabla WHERE $item = :$item";
+
+			$stmt = Conexion::conectar()->prepare($sql);
+			$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
+
+			$stmt->execute();
+
+			return $stmt -> fetch();
+		}
+
+		$stmt->close();
+
+		$stmt = null;	
 
 	}
 

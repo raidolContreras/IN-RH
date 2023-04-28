@@ -11,7 +11,8 @@ class ControladorFormularios{
 				'apellidos' => $_POST['apellidos'],
 				'genero' => $_POST['genero'],
 				'fecha_nacimiento' => $_POST['fecha_nacimiento'],
-				'num_identificacion' => $_POST['num_identificacion'],
+				'num_identificacion' => strtoupper($_POST['num_identificacion']),
+				'curp' => $_POST['curp'],
 				'num_seguro_social' => $_POST['num_seguro_social'],
 				'rfc' => $_POST['rfc'],
 				'calle' => $_POST['calle'],
@@ -259,14 +260,9 @@ class ControladorFormularios{
 
 	static public function ctrRegistrarDeptos(){
 		if (isset($_POST['name'])) {
-			$description = "";
 			if (preg_match('/^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["name"])) {
-				if (isset($_POST['description']) && preg_match('/^[0-9a-zA-Z ]+$/', $_POST["description"])) {
-					$description = $_POST["description"];
-				}
 
 				$datos = array("name" => $_POST["name"],
-						"description" => $description,
 						"idEmpleado" => $_POST["jefe"]
 											);
 				$tabla = "departamentos";
@@ -284,11 +280,11 @@ class ControladorFormularios{
 	}
 
 	/*---------- Función hecha para ver a los empleados---------- */
-	static public function ctrVerEmpleadosDisponibles(){
+	static public function ctrVerEmpleadosDisponibles($item){
 
 		$tabla = "empleados";
 
-		$respuesta = ModeloFormularios::mdlVerEmpleadosDisponibles($tabla);
+		$respuesta = ModeloFormularios::mdlVerEmpleadosDisponibles($tabla,$item);
 
 		return $respuesta;
 
@@ -308,14 +304,9 @@ class ControladorFormularios{
 	static public function ctrActualizarDepto(){
 
 		if (isset($_POST['name'])) {
-			$description = "";
 			if (preg_match('/^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["name"])) {
-				if (isset($_POST['description']) && preg_match('/^[0-9a-zA-Z ]+$/', $_POST["description"])) {
-					$description = $_POST["description"];
-				}
 
 				$datos = array("name" => $_POST["name"],
-						"description" => $description,
 						"idEmpleado" => $_POST["jefe"],
 						"idDepto" => $_POST["idDepto"]
 											);
@@ -342,6 +333,41 @@ class ControladorFormularios{
 				return "error";
 			}
 		}
+	}
+	static public function ctrRegistrarPuestos(){
+
+		if (isset($_POST['name'])) {
+			if (preg_match('/^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["name"])){
+				$tabla = "puesto";
+				$datos = array("namePuesto" => $_POST['name'],
+							   "salario" => $_POST['salario'],
+							   "salario_integrado" => $_POST['salario_integrado'],
+							   "Empleados_idEmpleados" => $_POST['empleado'],
+							   "Departamentos_idDepartamentos" => $_POST['departamento'],
+							   "horario_entrada" => $_POST['horario_entrada'],
+							   "horario_salida" => $_POST['horario_salida']);
+				$registro = ModeloFormularios::mdlRegistrarPuestos($tabla,$datos);
+				if ($registro == 'ok') {
+					return 'ok';
+				}else{
+					return 'Error';
+				}
+
+			}else{
+				return "2";
+			}
+		}
+	}
+
+	/*---------- Función hecha para ver a los empleados---------- */
+	static public function ctrVerPuestos($item, $valor){
+
+		$tabla = "puesto";
+
+		$respuesta = ModeloFormularios::mdlVerPuestos($tabla, $item, $valor);
+
+		return $respuesta;
+
 	}
 
 	/*---------- Fin de ControladorFormularios ---------- */

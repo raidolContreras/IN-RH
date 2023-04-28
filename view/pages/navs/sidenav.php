@@ -23,9 +23,6 @@
 								<li class="nav-item">
 									<a class="nav-link" href="Empleados">Lista de empleados</a>
 								</li>
-								<li class="nav-item">
-									<a class="nav-link" href="Departamento">Departamentos</a>
-								</li>
 							</ul>
 						</div>
 					</li>
@@ -34,7 +31,10 @@
 						<div id="submenu-2" class="collapse submenu" style="">
 							<ul class="nav flex-column">
 								<li class="nav-item">
-									<a class="nav-link" href="Vacantes">Vacantes</a>
+									<a class="nav-link" href="Departamento">Departamentos</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="Puestos">Puestos</a>
 								</li>
 								<li class="nav-item">
 									<a class="nav-link" href="Contratacion">Seguimiento de contratación</a>
