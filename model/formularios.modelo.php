@@ -456,6 +456,7 @@ static public function mdlRegistrarEmpleados($tabla1, $table2, $datos){
 		}
 
 	}
+
 	static public function mdlRegistrarPuestos($tabla, $datos){
 		$sql = "INSERT INTO $tabla(namePuesto, salario, salario_integrado, Empleados_idEmpleados, Departamentos_idDepartamentos, horario_entrada, horario_salida) VALUES (:namePuesto, :salario, :salario_integrado, :Empleados_idEmpleados, :Departamentos_idDepartamentos, :horario_entrada, :horario_salida)";
 
@@ -479,21 +480,127 @@ static public function mdlRegistrarEmpleados($tabla1, $table2, $datos){
 		}
 	}
 
+	static public function mdlRegistrarVacantes($tabla, $datos){
+		$sql = "INSERT INTO $tabla(nameVacante, salarioVacante, requisitos, Departamentos_idDepartamentos) VALUES (:nameVacante, :salarioVacante, :requisitos, :Departamentos_idDepartamentos)";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":nameVacante", $datos['nameVacante'], PDO::PARAM_STR);
+		$stmt->bindParam(":salarioVacante", $datos['salarioVacante'], PDO::PARAM_STR);
+		$stmt->bindParam(":requisitos", $datos['requisitos'], PDO::PARAM_STR);
+		$stmt->bindParam(":Departamentos_idDepartamentos", $datos['Departamentos_idDepartamentos'], PDO::PARAM_STR);
+
+		if ($stmt->execute()) {
+
+			return 'ok';
+
+		}else{
+			print_r(Conexion::conectar()->errorInfo());
+
+		}
+	}
+
 	/*---------- Función hecha para ver a los empleados---------- */
 
-	static public function mdlVerPuestos($tabla, $item, $valor){
+	static public function mdlVerTabla($tabla, $item, $valor){
 
 		if ($item == null && $valor == null) {
-			$sql = "SELECT * FROM puesto 
-			JOIN empleados ON empleados.idEmpleados = puesto.Empleados_idEmpleados 
-			JOIN departamentos ON puesto.Departamentos_idDepartamentos = departamentos.idDepartamentos 
-			WHERE empleados.status = 1;";
+			if ($tabla == "puesto") {
+
+				$sql = "SELECT * FROM $tabla 
+				JOIN empleados ON empleados.idEmpleados = $tabla.Empleados_idEmpleados 
+				JOIN departamentos ON $tabla.Departamentos_idDepartamentos = departamentos.idDepartamentos 
+				WHERE $tabla.status = 1;";
+
+			}elseif ($tabla == "vacantes") {
+
+				$sql = "SELECT * FROM $tabla 
+				JOIN departamentos ON $tabla.Departamentos_idDepartamentos = departamentos.idDepartamentos 
+				WHERE $tabla.status = 1;";
+
+			}
 
 			$stmt = Conexion::conectar()->prepare($sql);
 
 			$stmt->execute();
 
 			return $stmt -> fetchAll();
+		}else{
+			$sql = "SELECT * FROM $tabla WHERE $item = :$item";
+
+			$stmt = Conexion::conectar()->prepare($sql);
+			$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
+
+			$stmt->execute();
+
+			return $stmt -> fetch();
+		}
+
+		$stmt->close();
+
+		$stmt = null;	
+
+	}
+
+	static public function mdlEliminarVacante($tabla, $idVacantes){
+
+		$sql = "UPDATE $tabla SET status = 0 WHERE idVacantes=$idVacantes";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+
+		if ($stmt->execute()) {
+
+			return 'ok';
+
+		}else{
+			print_r(Conexion::conectar()->errorInfo());
+
+		}
+
+		$stmt->close();
+
+		$stmt = null;
+
+	}
+
+	static public function mdlVerPostulantes($tabla, $item, $valor){
+
+		if ($item == null && $valor == null) {
+
+			$sql = "SELECT * FROM $tabla 
+			JOIN Vacantes ON $tabla.Vacantes_idVacantes = Vacantes.idVacantes 
+			WHERE $tabla.status = 1;";
+
+			$stmt = Conexion::conectar()->prepare($sql);
+
+			$stmt->execute();
+
+			return $stmt -> fetchAll();
+
+		}elseif ($tabla == "suma") {
+
+			$sql = "SELECT SUM(1) FROM postulantes WHERE statusPostulante = 1 AND $item = :$item;";
+
+			$stmt = Conexion::conectar()->prepare($sql);
+
+			$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
+
+			$stmt->execute();
+
+			return $stmt -> fetch();
+			
+		}elseif ($item == "Vacantes_idVacantes") {
+
+			$sql = "SELECT * FROM $tabla WHERE statusPostulante = 1 AND $item = :$item;";
+
+			$stmt = Conexion::conectar()->prepare($sql);
+			
+			$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
+
+			$stmt->execute();
+
+			return $stmt -> fetchAll();
+			
 		}else{
 			$sql = "SELECT * FROM $tabla WHERE $item = :$item";
 

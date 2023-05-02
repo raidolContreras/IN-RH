@@ -37,7 +37,7 @@
 									<a class="nav-link" href="Puestos">Puestos</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link" href="Contratacion">Seguimiento de contratación</a>
+									<a class="nav-link" href="Vacantes">Ofertas de empleo</a>
 								</li>
 							</ul>
 						</div>

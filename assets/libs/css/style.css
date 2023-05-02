@@ -2840,31 +2840,31 @@ clip-path: polygon(10% 25%, 10% 0, 35% 0%, 65% 0%, 90% 0, 90% 25%, 90% 50%, 91% 
 /*--- btn info --*/
 
 .btn-info {
-    color: #fff;
+    color: #665870;
     background-color: #25d5f2;
     border-color: #25d5f2;
 }
 
 .btn-info:hover {
     color: #fff;
-    background-color: #17c0dc;
-    border-color: #17c0dc;
+    background-color: #2990A2;
+    border-color: #2990A2;
 }
 
 .btn-info.focus,
 .btn-info:focus {
     color: #fff;
-    background-color: #17c0dc;
-    border-color: #17c0dc;
+    background-color: #2990A2;
+    border-color: #2990A2;
     box-shadow: 0 0 0 1px rgb(238, 184, 22);
 }
 
 .btn-info:not(:disabled):not(.disabled).active,
 .btn-info:not(:disabled):not(.disabled):active,
 .show>.btn-info.dropdown-toggle {
-    color: #fff;
-    background-color: #17c0dc;
-    border-color: #17c0dc;
+    color: #665870;
+    background-color: #2990A2;
+    border-color: #2990A2;
 }
 
 
@@ -6995,3 +6995,19 @@ li.header-li{
     margin-top: 10px;
 }
 
+.animacion{
+animation: myAnim 1s ease-out 1ms infinite alternate-reverse both;
+}
+@keyframes myAnim {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}

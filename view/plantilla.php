@@ -23,6 +23,9 @@
     <link rel="stylesheet" href="assets/vendor/fonts/material-design-iconic-font/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="assets/vendor/fonts/themify-icons/themify-icons.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Rambla:ital@1&display=swap" rel="stylesheet">
 	
 	<?php if (isset($_GET["pagina"])): ?>
 		<title><?php echo 'IN Consulting México - '.$_GET["pagina"]; ?></title>
@@ -50,6 +53,8 @@
 			$_GET["pagina"] == "EliminarDepto" ||
 			$_GET["pagina"] == "Puestos" ||
 			$_GET["pagina"] == "CrearPuestos" ||
+			$_GET["pagina"] == "Vacantes" ||
+			$_GET["pagina"] == "Postulantes" ||
 			$_GET["pagina"] == "somos" 
 
 		){
@@ -70,8 +75,33 @@
 
 		include "pages/".$_GET["pagina"].".php";
 
-	}elseif($_GET["pagina"] == "Login"){
-		include "pages/".$_GET["pagina"].".php";
+	}elseif(strpos($_GET["pagina"], "Vacantes-") !== false){
+
+		$pagina = str_replace("Vacantes-", "", $_GET["pagina"]);
+		if ($pagina == 'Postulantes'||
+			$pagina == "CrearVacante" ||
+			$pagina == "EliminarVacante") {
+			echo '
+			<!-- ============================================================== -->
+			<!-- main wrapper -->
+			<!-- ============================================================== -->
+			<div class="dashboard-main-wrapper">';
+
+			include "pages/navs/navbar.php";
+			include "pages/navs/sidenav.php";
+			
+			echo'
+			<!-- ============================================================== -->
+			<!-- wrapper  -->
+			<!-- ============================================================== -->
+			<div class="dashboard-wrapper">
+			<div class="dashboard-ecommerce">';
+
+			include "pages/Vacantes/".$pagina.".php";
+		}else{
+			include "pages/404-page.html";
+		}
+
 	}else{
 		include "pages/404-page.html";
 	}

@@ -334,6 +334,7 @@ class ControladorFormularios{
 			}
 		}
 	}
+
 	static public function ctrRegistrarPuestos(){
 
 		if (isset($_POST['name'])) {
@@ -358,13 +359,76 @@ class ControladorFormularios{
 			}
 		}
 	}
+	
+	static public function ctrRegistrarVacantes(){
+
+		if (isset($_POST['name'])) {
+			if (preg_match('/^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["name"])){
+				$tabla = "vacantes";
+				$datos = array("nameVacante" => $_POST['name'],
+							   "salarioVacante" => $_POST['salario'],
+							   "Departamentos_idDepartamentos" => $_POST['departamento'],
+							   "requisitos" => $_POST['requisitos']);
+				$registro = ModeloFormularios::mdlRegistrarVacantes($tabla,$datos);
+				if ($registro == 'ok') {
+					return 'ok';
+				}else{
+					return 'Error';
+				}
+
+			}else{
+				return "2";
+			}
+		}
+	}
 
 	/*---------- Función hecha para ver a los empleados---------- */
 	static public function ctrVerPuestos($item, $valor){
 
 		$tabla = "puesto";
 
-		$respuesta = ModeloFormularios::mdlVerPuestos($tabla, $item, $valor);
+		$respuesta = ModeloFormularios::mdlVerTabla($tabla, $item, $valor);
+
+		return $respuesta;
+
+	}
+
+	static public function ctrVerVacantes($item, $valor){
+
+		$tabla = "vacantes";
+
+		$respuesta = ModeloFormularios::mdlVerTabla($tabla, $item, $valor);
+
+		return $respuesta;
+
+	}
+
+	static public function ctrEliminarVacante(){
+
+		if (isset($_POST['vacante'])) {
+			$tabla = "vacantes";
+			$idVacantes = $_POST['vacante'];
+			$respuesta = ModeloFormularios::mdlEliminarVacante($tabla, $idVacantes);
+
+			return $respuesta;
+		}
+	}
+
+	static public function ctrVerPostulantes($item, $valor){
+
+		$tabla = "postulantes";
+
+		$respuesta = ModeloFormularios::mdlVerPostulantes($tabla, $item, $valor);
+
+		return $respuesta;
+
+	}
+
+	static public function ctrSumaPostulantes($item, $valor){
+
+		$tabla = "suma";
+
+		$respuesta = ModeloFormularios::mdlVerPostulantes($tabla, $item, $valor);
 
 		return $respuesta;
 
