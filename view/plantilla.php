@@ -103,6 +103,20 @@
 		}
 
 	}elseif ($_GET["pagina"] == "Postulacion") {
+			echo '
+		<!-- ============================================================== -->
+		<!-- main wrapper -->
+		<!-- ============================================================== -->
+		<div class="dashboard-main-wrapper">';
+
+		include "pages/navs/navbar.php";
+		include "pages/navs/sidenav.php"; 
+		echo'
+		<!-- ============================================================== -->
+		<!-- wrapper  -->
+		<!-- ============================================================== -->
+		<div class="dashboard-wrapper">
+		<div class="dashboard-ecommerce">';
 		include "pages/Vacantes/".$_GET["pagina"].".php";
 	}else{
 		include "pages/404-page.html";
@@ -121,7 +135,7 @@
 		include "pages/Inicio.php";
 
 	}
-	include "pages/navs/footer.php";
+//	include "pages/navs/footer.php";
 
 ?>
 </div>

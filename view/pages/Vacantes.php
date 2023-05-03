@@ -1,5 +1,4 @@
-<?php $vacantes = ControladorFormularios::ctrVerVacantes(null, null); 
-?>
+<?php $vacantes = ControladorFormularios::ctrVerVacantes(null, null); ?>
 <div class="container-fluid dashboard-content ">
 	<!-- ============================================================== -->
 	<!-- pageheader	-->
@@ -56,7 +55,7 @@
 											<form action="Vacantes-Postulantes" method="POST">
 												<input type="hidden" value="<?php echo $vacante['idVacantes'] ?>" name="Postulantes">
 												<button class="btn btn-outline-secondary" href="Vacantes-Postulantes">
-													Postulantes <span class="badge">(<?php echo $suma[0] ?>)</span>
+													Postulantes <span class="badge">(<?php if ($suma[0] >=1) { echo $suma[0]; }else{ echo "0";} ?>)</span>
 												</button>
 											</form>
 										</td>
@@ -72,24 +71,13 @@
 													<td>
 														<form method="POST" action="Vacantes-EliminarVacante">
 															<input type="hidden" name="Eliminar" value="<?php echo $vacante['idVacantes'] ?>">
-															<button type="submit" class="btn btn-danger rounded btn-block"><i class="fas fa-trash"></i></button>
+															<button type="submit" class="btn btn-outline-danger rounded btn-block"><i class="fas fa-trash"></i></button>
 														</form>
 													</td>
 													<td>
-														<button onclick="copyToClipboard('http://127.0.0.1/IN-RH/Postulacion&vacante=<?php echo $vacante['idVacantes'] ?>')">Generar URL</button>
-
-														<script>
-														function copyToClipboard(text) {
-														  const input = document.createElement('input');
-														  input.setAttribute('value', text);
-														  document.body.appendChild(input);
-														  input.select();
-														  document.execCommand('copy');
-														  document.body.removeChild(input);
-														  alert("¡URL copiada al portapapeles!");
-														}
-														</script>
-
+														<a class="btn btn-outline-primary rounded" href="Postulacion&vacante=<?php echo $vacante['idVacantes'] ?>">
+															<i class="fas fa-user-plus"></i>
+														</a>
 													</td>
 												</tr>
 											</table>

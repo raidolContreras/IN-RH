@@ -1,6 +1,6 @@
 <?php $vacante = ControladorFormularios::ctrVerVacantes('idVacantes', $_GET['vacante']); ?>
 <div class="container-fluid dashboard-content ">
-	<div class="container">
+	<div class="">
 	<!-- ============================================================== -->
 	<!-- pageheader  -->
 	<!-- ============================================================== -->
@@ -8,9 +8,22 @@
 		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 			<div class="page-header">
 				<h2 class="pageheader-title">Postulación (<?php echo $vacante['nameVacante'] ?>)</h2>
+				<div class="page-breadcrumb">
+					<nav aria-label="breadcrumb">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item"><a href="Inicio" class="breadcrumb-link">IN Consulting México</a></li>
+							<li class="breadcrumb-item"><a href="Vacantes" class="breadcrumb-link">Ofertas de empleo</a></li>
+							<li class="breadcrumb-item active" aria-current="page">Postulación (<?php echo $vacante['nameVacante'] ?>)</li>
+						</ol>
+					</nav>
+				</div>
 			</div>
 		</div>
 	</div>
+	<!-- ============================================================== -->
+	<!-- end pageheader	-->
+	<!-- ============================================================== -->
+	<div class="ecommerce-widget">
 
 		<div class="row justify-content-center">
 			<div class="col-xl-5 col-lg-6 col-md-6 col-sm-12 col-12">

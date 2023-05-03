@@ -58,8 +58,52 @@ $vacante = ControladorFormularios::ctrVerVacantes("idVacantes", $_POST['Postulan
 									</td>
 									<td><?php echo $postulante['phonePostulante']?></td>
 									<td><?php echo $postulante['emailPostulante']?></td>
-									<td></td>
+									<td>  <!-- Button to Open the Modal -->
+										<table>
+											<tr>
+												<td>
+												  <button type="button" 
+												  class="btn btn-outline-danger rounded" 
+												  data-toggle="modal" 
+												  data-target="#Modal<?php echo $postulante['idPostulantes'] ?>">
+												    <i class="far fa-file-pdf"></i>
+												  </button>
+												</td>
+												<td></td>
+												<td></td>
+											</tr>
+										</table>
+									</td>
 								</tr>
+
+								<div class="modal fade" id="Modal<?php echo $postulante['idPostulantes'] ?>">
+									<div class="modal-dialog modal-lg">
+									  <div class="modal-content">
+										
+											<!-- Modal body -->
+											<div class="modal-body card">
+												<div class="card-body">
+
+													<!--API de Adobe gratuita para ver pdf online-->
+													<div id="adobe-dc-view" style="height: 680px;"></div>
+													<script src="https://documentservices.adobe.com/view-sdk/viewer.js"></script>
+													<script type="text/javascript">
+														document.addEventListener("adobe_dc_view_sdk.ready", function(){ 
+															var adobeDCView = new AdobeDC.View({clientId: "a043d7dd0d7b45e1bbefa391730a4243", divId: "adobe-dc-view"});
+															adobeDCView.previewFile({
+																content:{location: {url: "view/pdfs/postulantes/<?php echo $postulante['idPostulantes'] ?>/curriculum.pdf"}},
+																metaData:{fileName: "curriculum.pdf"}
+															}, {defaultViewMode: "FIT_WIDTH", showAnnotationTools: false});
+														});
+													</script>
+													<!--Fin de la API-->
+
+												</div>
+											</div>
+										
+									  </div>
+									</div>
+							  </div>
 								<?php endforeach ?>
 							</tbody>
 						</table>
