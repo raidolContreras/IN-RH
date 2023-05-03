@@ -1,5 +1,6 @@
 <?php
 					
+$colaborador = ControladorFormularios::ctrVerEmpleados( 'idEmpleados',$_POST["empleado"]); 
 // Definir un arreglo asociativo para almacenar la información de los documentos
 $documentos = [
 		'curriculum' => 'Curriculum',
@@ -27,11 +28,19 @@ $documentos = [
 		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 			<div class="page-header">
 				<h2 class="pageheader-title">Subir Documentos</h2>
+				<form method="POST" action="Colaborador" class="breadcrumb-item">
+					<button class="btn btn-outline-warning float-right" name="Editar" value="<?php echo $_POST["empleado"];?>">
+						Regresar
+					</button>
+				</form>
 				<div class="page-breadcrumb">
 					<nav aria-label="breadcrumb">
 						<ol class="breadcrumb">
 							<li class="breadcrumb-item"><a href="Inicio" class="breadcrumb-link">IN Consulting México</a></li>
-							<li class="breadcrumb-item active" aria-current="page"><a href="Empleados" class="breadcrumb-link">Colaboradores</a></li>
+							<li class="breadcrumb-item" aria-current="page"><a href="Empleados" class="breadcrumb-link">Colaboradores</a></li>
+							<li class="breadcrumb-item" aria-current="page">
+								Perfil (<?php echo ucwords($colaborador["name"]." ".$colaborador["lastname"]); ?>)
+							</li>
 							<li class="breadcrumb-item active" aria-current="page">Subir documentos</li>
 						</ol>
 					</nav>

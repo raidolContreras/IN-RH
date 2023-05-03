@@ -67,16 +67,16 @@ $calendary = ControladorFormularios::generarCalendario();
 														class="btn btn-outline-danger rounded" 
 														data-toggle="modal" 
 														data-target="#Modal<?php echo $postulante['idPostulantes'] ?>">
-														<i class="far fa-file-pdf"></i>
-													</button>
+															<i class="far fa-file-pdf"></i>
+														</button>
 												</td>
 												<td>
 													<button type="button" 
 													class="btn btn-outline-secondary rounded" 
 													data-toggle="modal" 
 													data-target="#Date<?php echo $postulante['idPostulantes'] ?>">
-													<i class="fas fa-calendar-plus"></i>
-												</button>
+														<i class="fas fa-calendar-plus"></i>
+													</button>
 											</td>
 											<td></td>
 										</tr>

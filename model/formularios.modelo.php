@@ -346,7 +346,7 @@ static public function mdlRegistrarEmpleados($tabla1, $table2, $datos){
 	$div2 .= '<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">';
 	$div2 .= "<input type=\"hidden\" name=\"archivo\" value=\"$nameDoc\">";
 	$div2 .= "<input type=\"hidden\" name=\"empleado\" value=\"$id\">";
-	$div2 .= '<button type="submit" class="btn btn-secondary rounded btn-block">Enviar</button>';
+	$div2 .= '<button type="submit" class="btn btn-outline-secondary rounded btn-block">Enviar</button>';
 	$div2 .= '</div>';
 	$div2 .= '</div>';
 	$div2 .= '</form>';
