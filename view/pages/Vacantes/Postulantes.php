@@ -49,8 +49,10 @@ $vacante = ControladorFormularios::ctrVerVacantes("idVacantes", $_POST['Postulan
 										<i class="fas fa-dot-circle" style="color: #06b729;"></i>
 									<?php elseif ($postulante['colorPostulante']==2): ?>
 										<i class="fas fa-dot-circle" style="color: #c0bb11;"></i>
-									<?php else: ?>
+									<?php elseif ($postulante['colorPostulante']==3): ?>
 										<i class="fas fa-dot-circle" style="color: #d00b0b;"></i>
+									<?php else: ?>
+										<span class="badge badge-secondary ml-1">Nuevo</span>
 									<?php endif ?> 
 									<?php echo $postulante['namePostulante']." ".$postulante['lastnamePostulante'] ?>
 									</td>

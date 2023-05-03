@@ -229,8 +229,6 @@ class ControladorFormularios{
 				}
 			}
 		}
-
-
 	}
 
 	static public function ctrVerDocumentos($item, $valor){
@@ -432,6 +430,86 @@ class ControladorFormularios{
 
 		return $respuesta;
 
+	}
+
+	static public function ctrRegistrarPostulante(){
+		$patron = "/^(\+52)?(044|045)?([0-9]{10})$/";
+		if (isset($_POST['nombre'])) {
+			if (preg_match('/^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["nombre"]) &&
+				preg_match('/^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["apellidos"])) {
+				if (filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+					if (preg_match($patron, $_POST['telefono'])) {
+						$tabla = "postulantes";
+						$datos = array("namePostulante" => $_POST["nombre"],
+													 "lastnamePostulante" => $_POST["apellidos"],
+													 "phonePostulante" => $_POST["telefono"],
+													 "emailPostulante" => $_POST["email"],
+													 "Vacantes_idVacantes" => $_POST["Oferta"],
+													 "nameDocPost" => $_POST["archivo"],
+													 "File" => $_FILES['file']);
+						$registro = ModeloFormularios::mdlRegistroPostulante($tabla, $datos);
+						if ($registro != "error") {
+						 		$ctrSubirPDF = ControladorFormularios::ctrSubirPDFPostulante($registro,$datos);
+						 		if ($ctrSubirPDF == "ok") {
+						 			return $ctrSubirPDF;
+						 		}else{
+						 			return "Error: 5";
+						 		}
+						 }else{
+						 	return "Error: 4";
+						 } 
+					}else{
+						return "Error: 3";
+					}
+				}else{
+					return "Error: 2";
+				}
+			}else{
+				return "Error: 1";
+			}
+		}
+	}
+
+/*---------- Función hecha para subir pdf---------- */
+	static public function ctrSubirPDFPostulante($idPostulante, $datos){
+		if (isset($datos['nameDocPost'])) {
+			if ($datos['File']['error'] > 0) {
+			  echo 'Error al cargar el archivo: ' . $datos['File']['error'] . '<br>';
+			}else{
+
+				// Crear la carpeta con el id del empleado
+				$postulante = $idPostulante;
+				$carpetaEmpleado = "view/pdfs/postulantes/" . $postulante;
+				if (!file_exists($carpetaEmpleado)) {
+					mkdir($carpetaEmpleado);
+				}
+
+				if (isset($datos['File']) && $datos['File']["error"] == 0) {
+					// Obtener los datos del archivo
+					$pdf = $datos['File'];
+					$pdfName = $datos['nameDocPost'];
+
+					// Obtener la extensión del archivo
+					$extension = pathinfo($pdf["name"], PATHINFO_EXTENSION);
+
+					// Renombrar el archivo con el nombre del campo, más la extensión
+					$pdfFileName = $pdfName . "." . $extension;
+
+					// Guardar el archivo en la carpeta del empleado
+					$uploadPath = $carpetaEmpleado . "/" . $pdfFileName;
+					move_uploaded_file($pdf["tmp_name"], $uploadPath);
+				}
+				$tabla = "documento_postulante";
+				$data = array("nameDocPost" => $datos['nameDocPost'],
+											"Postulantes_idPostulantes" => $idPostulante);
+				$respuesta = ModeloFormularios::mdlRegistroPDFPostulante($tabla, $data); 
+				if ($respuesta=='ok') {
+					return 'ok';
+				}else{
+					return 'error';
+				}
+			}
+		}
 	}
 
 	/*---------- Fin de ControladorFormularios ---------- */

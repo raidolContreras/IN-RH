@@ -102,6 +102,8 @@
 			include "pages/404-page.html";
 		}
 
+	}elseif ($_GET["pagina"] == "Postulacion") {
+		include "pages/Vacantes/".$_GET["pagina"].".php";
 	}else{
 		include "pages/404-page.html";
 	}

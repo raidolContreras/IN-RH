@@ -618,6 +618,63 @@ static public function mdlRegistrarEmpleados($tabla1, $table2, $datos){
 
 	}
 
+	static public function mdlRegistroPostulante($tabla, $datos){
+
+		$pdo=Conexion::conectar();
+
+		$sql = "INSERT INTO $tabla(namePostulante, lastnamePostulante, phonePostulante, emailPostulante, Vacantes_idVacantes) VALUES (:namePostulante, :lastnamePostulante, :phonePostulante, :emailPostulante, :Vacantes_idVacantes)";
+
+		$stmt = $pdo->prepare($sql);
+
+		$stmt->bindParam(":namePostulante", $datos['namePostulante'], PDO::PARAM_STR);
+		$stmt->bindParam(":lastnamePostulante", $datos['lastnamePostulante'], PDO::PARAM_STR);
+		$stmt->bindParam(":phonePostulante", $datos['phonePostulante'], PDO::PARAM_STR);
+		$stmt->bindParam(":emailPostulante", $datos['emailPostulante'], PDO::PARAM_STR);
+		$stmt->bindParam(":Vacantes_idVacantes", $datos['Vacantes_idVacantes'], PDO::PARAM_STR);
+
+		if ($stmt->execute()) {
+
+			$idPostulante = $pdo->lastInsertId(); //obtener el ID del empleado recién insertado
+
+			if ($idPostulante == 0) {
+				echo $consulta->errorInfo()[2];
+				return "error";
+			}else{
+				$Registro = $idPostulante;
+				return $Registro;
+			}
+
+		}else{
+			print_r(Conexion::conectar()->errorInfo());
+		}
+
+		$stmt->close();
+
+		$stmt = null;
+	}
+
+	static public function mdlRegistroPDFPostulante($tabla, $datos){
+
+		$pdo=Conexion::conectar();
+
+		$sql = "INSERT INTO documento_postulante(nameDocPost, Postulantes_idPostulantes) VALUES (:nameDocPost, :Postulantes_idPostulantes)";
+
+		$stmt = $pdo->prepare($sql);
+
+		$stmt->bindParam(":nameDocPost", $datos['nameDocPost'], PDO::PARAM_STR);
+		$stmt->bindParam(":Postulantes_idPostulantes", $datos['Postulantes_idPostulantes'], PDO::PARAM_STR);
+
+		if ($stmt->execute()) {
+			return "ok";
+		}else{
+			print_r(Conexion::conectar()->errorInfo());
+		}
+
+		$stmt->close();
+
+		$stmt = null;
+	}
+
 	/*---------- Fin de ModeloFormularios ---------- */
 
 }

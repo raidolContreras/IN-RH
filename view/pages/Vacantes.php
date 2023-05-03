@@ -75,6 +75,22 @@
 															<button type="submit" class="btn btn-danger rounded btn-block"><i class="fas fa-trash"></i></button>
 														</form>
 													</td>
+													<td>
+														<button onclick="copyToClipboard('http://127.0.0.1/IN-RH/Postulacion&vacante=<?php echo $vacante['idVacantes'] ?>')">Generar URL</button>
+
+														<script>
+														function copyToClipboard(text) {
+														  const input = document.createElement('input');
+														  input.setAttribute('value', text);
+														  document.body.appendChild(input);
+														  input.select();
+														  document.execCommand('copy');
+														  document.body.removeChild(input);
+														  alert("¡URL copiada al portapapeles!");
+														}
+														</script>
+
+													</td>
 												</tr>
 											</table>
 										</td>
