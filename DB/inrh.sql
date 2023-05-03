@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 03-05-2023 a las 00:04:28
+-- Tiempo de generación: 03-05-2023 a las 19:29:21
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.1.17
 
@@ -88,6 +88,19 @@ INSERT INTO `documento` (`idDocumento`, `nameDoc`, `Empleados_idEmpleados`, `fec
 (9, 'comprobante_estudios', 3, '2023-04-25 06:00:00'),
 (10, 'recomendacion-laboral', 3, '2023-04-25 06:00:00'),
 (11, 'recomendacion-personal', 3, '2023-04-25 06:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `documento_postulante`
+--
+
+CREATE TABLE `documento_postulante` (
+  `idDocPost` int(11) NOT NULL,
+  `nameDocPost` varchar(20) NOT NULL,
+  `Postulantes_idPostulantes` int(11) NOT NULL,
+  `fechaCreacion` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -263,20 +276,11 @@ CREATE TABLE `postulantes` (
   `lastnamePostulante` varchar(30) NOT NULL,
   `phonePostulante` varchar(15) NOT NULL,
   `emailPostulante` varchar(30) NOT NULL,
-  `colorPostulante` varchar(1) NOT NULL,
+  `colorPostulante` varchar(1) DEFAULT NULL,
   `Vacantes_idVacantes` int(11) NOT NULL,
-  `statusPostulante` int(11) NOT NULL DEFAULT 1
+  `statusPostulante` int(11) NOT NULL DEFAULT 1,
+  `fRegistro` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `postulantes`
---
-
-INSERT INTO `postulantes` (`idPostulantes`, `namePostulante`, `lastnamePostulante`, `phonePostulante`, `emailPostulante`, `colorPostulante`, `Vacantes_idVacantes`, `statusPostulante`) VALUES
-(1, 'Mayel', 'Ortega Cambron', '4435398585', 'mayelortega07@gmail.com', '1', 3, 1),
-(2, 'Brayan', 'Lucatero', '5548775852', 'blucatero@hotmail.com', '2', 2, 1),
-(3, 'Brayan', 'Lucatero', '5548775852', 'blucatero@hotmail.com', '3', 1, 1),
-(4, 'Juan', 'Valdespino', '4435349582', 'valdesjuan@outlook.com', '2', 3, 1);
 
 -- --------------------------------------------------------
 
@@ -365,6 +369,13 @@ ALTER TABLE `departamentos`
 ALTER TABLE `documento`
   ADD PRIMARY KEY (`idDocumento`),
   ADD KEY `Empleados_idEmpleados` (`Empleados_idEmpleados`);
+
+--
+-- Indices de la tabla `documento_postulante`
+--
+ALTER TABLE `documento_postulante`
+  ADD PRIMARY KEY (`idDocPost`),
+  ADD KEY `Postulantes_idPostulantes` (`Postulantes_idPostulantes`);
 
 --
 -- Indices de la tabla `emergencia`
@@ -461,6 +472,12 @@ ALTER TABLE `documento`
   MODIFY `idDocumento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
+-- AUTO_INCREMENT de la tabla `documento_postulante`
+--
+ALTER TABLE `documento_postulante`
+  MODIFY `idDocPost` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT de la tabla `emergencia`
 --
 ALTER TABLE `emergencia`
@@ -506,7 +523,7 @@ ALTER TABLE `organigrama`
 -- AUTO_INCREMENT de la tabla `postulantes`
 --
 ALTER TABLE `postulantes`
-  MODIFY `idPostulantes` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idPostulantes` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `preguntasevaluacion`
@@ -541,6 +558,12 @@ ALTER TABLE `departamentos`
 --
 ALTER TABLE `documento`
   ADD CONSTRAINT `documento_ibfk_1` FOREIGN KEY (`Empleados_idEmpleados`) REFERENCES `empleados` (`idEmpleados`);
+
+--
+-- Filtros para la tabla `documento_postulante`
+--
+ALTER TABLE `documento_postulante`
+  ADD CONSTRAINT `documento_postulante_ibfk_1` FOREIGN KEY (`Postulantes_idPostulantes`) REFERENCES `postulantes` (`idPostulantes`);
 
 --
 -- Filtros para la tabla `emergencia`
