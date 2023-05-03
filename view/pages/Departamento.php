@@ -32,7 +32,7 @@
 						Crear Departamentos<i class="fas fa-user-plus ml-2"></i>
 					</a>
 					<div class="table-responsive">
-						<table id="Departamentos" class="table table-striped table-bordered first" style="width:100%">
+						<table id="example" class="table table-striped table-bordered second" style="width:100%">
 							<thead>
 								<tr>
 									<th width="43%">Nombre Depto</th>

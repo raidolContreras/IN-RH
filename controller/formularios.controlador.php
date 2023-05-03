@@ -512,5 +512,43 @@ class ControladorFormularios{
 		}
 	}
 
+	static public function generarCalendario(){
+		$calendary = "
+		";
+				// Obtener el día actual
+				$hoy = getdate();
+				$dia_actual = $hoy['mday'];
+				$mes_actual = $hoy['mon'];
+				$anio_actual = $hoy['year'];
+				
+				// Generar los días del mes
+				$dias_mes = cal_days_in_month(CAL_GREGORIAN, $mes_actual, $anio_actual);
+				$primer_dia = mktime(0, 0, 0, $mes_actual, 1, $anio_actual);
+				$dia_semana = date('N', $primer_dia);
+				$contador = 0;
+				
+				for ($fila = 1; $fila <= 6; $fila++) {
+					$calendary .= '<tr>';
+					for ($columna = 1; $columna <= 7; $columna++) {
+						if ($contador < $dia_semana || $contador >= $dias_mes + $dia_semana) {
+							$calendary .= '<td></td>';
+						} else {
+							$dia = $contador - $dia_semana + 1;
+							if ($dia == $dia_actual) {
+								$calendary .= '<td style="background-color: yellow;">' . $dia . '</td>';
+							} else {
+								$calendary .= '<td>' . $dia . '</td>';
+							}
+						}
+						$contador++;
+					}
+					$calendary .= '</tr>';
+				}
+				$calendary .= "
+			</tbody>
+		</table>";
+		return $calendary;
+	}
+
 	/*---------- Fin de ControladorFormularios ---------- */
 }

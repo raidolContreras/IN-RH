@@ -32,7 +32,7 @@
 						Crear Oferta de Empleo <i class="icon-briefcase"></i>
 					</a>
 					<div class="table-responsive">
-						<table id="Oferta-trabajo" class="table table-striped table-bordered first" style="width:100%">
+						<table id="example" class="table table-striped table-bordered second" style="width:100%">
 							<thead>
 								<tr>
 									<th>Departamento</th>
