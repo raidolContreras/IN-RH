@@ -550,5 +550,32 @@ class ControladorFormularios{
 		return $calendary;
 	}
 
+	static public function ctrAgendarCitas($idPostulante, $fechaReunion){
+		$tabla = "reuniones";
+		$datos = array("fechaReunion" => $fechaReunion,
+					   "Postulantes_idPostulantes" => $idPostulante);
+		$agendar = ModeloFormularios::mdlAgendarCitas($tabla, $datos);
+		if ($agendar == "ok") {
+			return "ok";
+
+		}else{
+			return "Error";
+		}
+	}
+
+	static public function ctrVerReuniones($tabla, $item, $valor){
+
+		$respuesta = ModeloFormularios::mdlVerReuniones($tabla, $item, $valor);
+
+		return $respuesta;
+	}
+
+	static public function ctrContarReuniones($tabla, $item, $valor){
+
+		$respuesta = ModeloFormularios::mdlContarReuniones($tabla, $item, $valor);
+
+		return $respuesta;
+	}
+
 	/*---------- Fin de ControladorFormularios ---------- */
 }

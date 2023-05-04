@@ -11,21 +11,30 @@ jQuery(document).ready(function($) {
         });
     }
 
-    /* Calender jQuery **/
+if ($("table.second").length) {
 
-    if ($("table.second").length) {
-
-        $(document).ready(function() {
-            var table = $('table.second').DataTable({
-                lengthChange: false,
-                buttons: ['excel', 'pdf', 'print', 'colvis']
-            });
-
-            table.buttons().container()
-                .appendTo('#example_wrapper .col-md-6:eq(0)');
+    $(document).ready(function() {
+        var table = $('table.second').DataTable({
+            lengthChange: false,
+            buttons: ['excel', 'pdf'],
+            fixedHeader: true,
+            scrollY: 375,
+            stateSave: true,
+            select: true,
+        language: {
+            lengthMenu: 'Mostrar _MENU_ resultados por pagina',
+            zeroRecords: 'Sin resultados - lo siento',
+            info: 'Pagina _PAGE_ de _PAGES_',
+            infoEmpty: 'No se encontraron registros',
+            infoFiltered: '(Filtrado de _MAX_ registros totales)',
+            search: 'Buscar',
+        }
         });
-    }
 
+        table.buttons().container()
+            .appendTo('#example_wrapper .col-md-6:eq(0)');
+    });
+}
 
     if ($("#example2").length) {
 

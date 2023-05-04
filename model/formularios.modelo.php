@@ -675,6 +675,63 @@ static public function mdlRegistrarEmpleados($tabla1, $table2, $datos){
 		$stmt = null;
 	}
 
+	static public function mdlAgendarCitas($tabla, $datos){
+
+		$pdo=Conexion::conectar();
+
+		$sql = "INSERT INTO $tabla(fechaReunion, Postulantes_idPostulantes) VALUES (:fechaReunion, :Postulantes_idPostulantes)";
+
+		$stmt = $pdo->prepare($sql);
+
+		$stmt->bindParam(":fechaReunion", $datos['fechaReunion'], PDO::PARAM_STR);
+		$stmt->bindParam(":Postulantes_idPostulantes", $datos['Postulantes_idPostulantes'], PDO::PARAM_STR);
+
+		if ($stmt->execute()) {
+			return "ok";
+		}else{
+			print_r(Conexion::conectar()->errorInfo());
+		}
+
+		$stmt->close();
+
+		$stmt = null;
+		
+	}
+
+	static public function mdlVerReuniones($tabla, $item, $valor){
+
+		$sql = "SELECT idReuniones, fechaReunion, status, Postulantes_idPostulantes, comentariosReunion 
+				FROM $tabla 
+				WHERE $item = :$item AND status = 0";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
+
+		$stmt->execute();
+
+		return $stmt -> fetchAll();
+
+		$stmt->close();
+
+		$stmt = null;	
+	}
+
+	static public function mdlContarReuniones($tabla, $item, $valor){
+
+		$sql = "SELECT  COUNT(*) FROM $tabla WHERE $item = :$item";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
+
+		$stmt->execute();
+
+		return $stmt -> fetchAll();
+
+		$stmt->close();
+
+		$stmt = null;	
+	}
+
 	/*---------- Fin de ModeloFormularios ---------- */
 
 }

@@ -26,6 +26,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Rambla:ital@1&display=swap" rel="stylesheet">
+	<link href='assets/vendor/full-calendar/css/fullcalendar.css' rel='stylesheet' />
+	<link href='assets/vendor/full-calendar/css/fullcalendar.print.css' rel='stylesheet' media='print' />
 	
 	<?php if (isset($_GET["pagina"])): ?>
 		<title><?php echo 'IN Consulting México - '.$_GET["pagina"]; ?></title>
@@ -171,6 +173,12 @@
 <script src="https://cdn.datatables.net/rowgroup/1.0.4/js/dataTables.rowGroup.min.js"></script>
 <script src="https://cdn.datatables.net/select/1.2.7/js/dataTables.select.min.js"></script>
 <script src="https://cdn.datatables.net/fixedheader/3.1.5/js/dataTables.fixedHeader.min.js"></script>
+    <!-- Optional JavaScript -->
+    <script src='assets/vendor/full-calendar/js/moment.min.js'></script>
+    <script src='assets/vendor/full-calendar/js/fullcalendar.js'></script>
+    <script src='assets/vendor/full-calendar/js/jquery-ui.min.js'></script>
+    <script src='assets/vendor/full-calendar/js/calendar.js'></script>
+    <script src="assets/libs/js/main-js.js"></script>
 </body>
 
 </html>
