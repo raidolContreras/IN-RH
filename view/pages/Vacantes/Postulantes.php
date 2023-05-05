@@ -18,7 +18,7 @@ $calendary = ControladorFormularios::generarCalendario(); ?>
 					<nav aria-label="breadcrumb">
 						<ol class="breadcrumb">
 							<li class="breadcrumb-item"><a href="Inicio" class="breadcrumb-link">IN Consulting México</a></li>
-							<li class="breadcrumb-item" aria-current="page"><a href="Vacantes" class="breadcrumb-link">Ofertas de trabajo</a></li>
+							<li class="breadcrumb-item" aria-current="page"><a href="Vacantes" class="breadcrumb-link">Ofertas de empleo</a></li>
 							<li class="breadcrumb-item active" aria-current="page">Postulantes (<?php echo $vacante['nameVacante'] ?>)</li>
 						</ol>
 					</nav>
@@ -49,7 +49,8 @@ $calendary = ControladorFormularios::generarCalendario(); ?>
 							</thead>
 							<tbody>
 								<?php foreach ($postulantes as $key => $postulante): ?>
-								<?php $reuniones = ControladorFormularios::ctrVerReuniones("reuniones", "Postulantes_idPostulantes", $postulante['idPostulantes']); ?>
+								<?php $reuniones = ControladorFormularios::ctrVerReuniones("Postulantes_idPostulantes", $postulante['idPostulantes']); ?>
+								<?php $nReuniones = ControladorFormularios::ctrContarReuniones("Postulantes_idPostulantes", $postulante['idPostulantes']); ?>
 
 									<script>
 										$(document).ready(function() {
@@ -75,24 +76,6 @@ $calendary = ControladorFormularios::generarCalendario(); ?>
 
 													}
 												});
-											});
-										});
-									</script>
-									<script>
-										$(document).ready(function() {
-
-											$.ajax({
-												var parametros = {
-													"valor" : "<?php echo $postulante['idPostulantes'] ?>",
-													"item"	: "Postulantes_idPostulantes",
-													"tabla"	: "Postulantes_idPostulantes"
-												}
-												url: "ajax.formularios.php", // Ruta al archivo PHP que procesará los datos del formulario
-												type: "POST",
-												data: parametros,
-												success: function(verificar) {
-												}
-												
 											});
 										});
 									</script>
@@ -133,11 +116,12 @@ $calendary = ControladorFormularios::generarCalendario(); ?>
 													</td>
 													<td>
 														<button type="button" 
-														class="btn btn-outline-primary rounded" 
+														class="btn btn-outline-primary rounded button" 
 														data-toggle="modal" 
 														data-target="#Comments<?php echo $postulante['idPostulantes'] ?>">
-														<i class="fas fa-diagnoses"></i>
+														<i class="fas fa-diagnoses"></i><span class="indicador"><?php echo $nReuniones[0] ?></span>
 														</button>
+
 													</td>
 												</tr>
 											</table>
@@ -284,11 +268,26 @@ $calendary = ControladorFormularios::generarCalendario(); ?>
 												<h1>Reuniones</h1>
 											</div>
 											<div class="modal-content">
+												<div class="row ml-3 mb-3">
 												<?php foreach ($reuniones as $key => $reunion): ?>
-													<form method="POST" class="container mt-4">
-														<label><?php echo $reunion['fechaReunion']; ?></label>
-													</form>
+													<?php if ($reunion['status'] == 0): ?>
+														<div class="m-0 mt-3 mr-1 col-3 card-hover justify-content-center">
+															<form class="container mt-4">
+																<input type="hidden" name="reunion" value="<?php echo $reunion['idReuniones'] ?>">
+																<label>Calificar reunión<br><?php echo date("d-m-Y h:i a", strtotime($reunion['fechaReunion'])); ?></label>
+																<a href="Reuniones&reunion=<?php echo $reunion['idReuniones'] ?>" class="btn btn-outline-success rounded mx-5 mb-2"><i class="mdi mdi-account-edit"></i></a>
+															</form>
+														</div>
+													<?php elseif ($reunion['status'] == 1): ?>
+														<div class="m-0 mt-3 mr-1 col-3 card-hover justify-content-center">
+															<form class="container mt-4" >
+																<label>Calificar reunión<br><?php echo date("d-m-Y h:i a", strtotime($reunion['fechaReunion'])); ?></label>
+																<button type="submit" class="btn btn-outline-success rounded mx-5 mb-2 disabled" disabled><i class="mdi mdi-account-edit"></i></button>
+															</form>
+														</div>
+													<?php endif ?>
 												<?php endforeach ?>
+												</div>
 											</div>
 										</div>
 									</div>

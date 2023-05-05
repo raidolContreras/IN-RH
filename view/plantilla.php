@@ -20,7 +20,6 @@
 	<link rel="stylesheet" type="text/css" href="assets/vendor/datatables/css/select.bootstrap4.css">
 	<link rel="stylesheet" type="text/css" href="assets/vendor/datatables/css/fixedHeader.bootstrap4.css">
     <link rel="stylesheet" href="assets/vendor/fonts/simple-line-icons/css/simple-line-icons.css">
-    <link rel="stylesheet" href="assets/vendor/fonts/material-design-iconic-font/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="assets/vendor/fonts/themify-icons/themify-icons.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -57,6 +56,7 @@
 			$_GET["pagina"] == "CrearPuestos" ||
 			$_GET["pagina"] == "Vacantes" ||
 			$_GET["pagina"] == "Postulantes" ||
+			$_GET["pagina"] == "Reuniones" ||
 			$_GET["pagina"] == "somos" 
 
 		){
