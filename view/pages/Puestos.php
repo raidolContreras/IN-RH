@@ -53,7 +53,7 @@
 										<td><?php echo $puesto['salario_integrado'] ?></td>
 										<td><?php echo $puesto['horario_entrada']." - ".$puesto['horario_salida']?></td>
 										<td>
-											<div class="card-body border-top">
+											<div class="card-body ">
 												<button type="button" class="btn btn-lg btn-primary" data-toggle="popover" data-placement="top" data-html="true"
 													title="Datos fiscales" 
 													data-content="<strong>RFC:</strong> <?php echo strtoupper($puesto['RFC']) ?><br><strong>NSS:</strong> <?php echo strtoupper($puesto['NSS']) ?><br><strong>CP:</strong> <?php echo strtoupper($puesto['CP']) ?>">

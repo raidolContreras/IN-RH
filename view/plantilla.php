@@ -27,6 +27,8 @@
 	<link href="https://fonts.googleapis.com/css2?family=Rambla:ital@1&display=swap" rel="stylesheet">
 	<link href='assets/vendor/full-calendar/css/fullcalendar.css' rel='stylesheet' />
 	<link href='assets/vendor/full-calendar/css/fullcalendar.print.css' rel='stylesheet' media='print' />
+	<link rel="shortcut icon" href="assets/images/logo.png" />
+
 	
 	<?php if (isset($_GET["pagina"])): ?>
 		<title><?php echo 'IN Consulting México - '.$_GET["pagina"]; ?></title>

@@ -3,32 +3,28 @@ $(function() {
 
     $(document).ready(function() {
 
-        $('#calendar1').fullCalendar({
-            header: {
-                left: 'prev,next today',
-                center: 'title'
-            },
-            defaultDate: new Date(),
-            navLinks: false, // can click day/week names to navigate views
-            editable: false,
-            eventLimit: true, // allow "more" link when too many events
-            events: [{
-                    title: 'Reunión Mayel',
-                    start: '2023-05-07 11:00:00',
-                    backgroundColor: '#cc25ac5',
-                    borderColor: '#cc25ac5'
+        // Hacemos una solicitud AJAX al archivo PHP para obtener los datos de fecha
+        $.ajax({
+            url: 'obtener.fechas.php',
+            dataType: 'json'
+        }).done(function(data) {
+
+            // Inicializamos el calendario con los eventos
+            $('#calendar1').fullCalendar({
+                header: {
+                    left: 'prev,next today',
+                    center: 'title'
                 },
-                {
-                    id: 999,
-                    title: 'Reunión Prueba',
-                    start: '2023-05-09T16:00:00',
-                    backgroundColor: '#ffc108',
-                    borderColor: '#ffc108'
+                defaultDate: new Date(),
+                navLinks: false, // can click day/week names to navigate views
+                editable: false,
+                eventLimit: true, // allow "more" link when too many events
+                events: data // Pasamos los eventos al calendario
+            });
 
-                }
-            ]
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+            console.error('Error en la solicitud AJAX:', textStatus, errorThrown);
         });
-
     });
   
    

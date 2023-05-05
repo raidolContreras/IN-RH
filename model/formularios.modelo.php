@@ -482,7 +482,10 @@ class ModeloFormularios{
 	}
 
 	static public function mdlRegistrarVacantes($tabla, $datos){
-		$sql = "INSERT INTO $tabla(nameVacante, salarioVacante, requisitos, Departamentos_idDepartamentos) VALUES (:nameVacante, :salarioVacante, :requisitos, :Departamentos_idDepartamentos)";
+
+		$color = '#' . str_pad(dechex(mt_rand(0, 0xFFFFFF)), 6, '0', STR_PAD_LEFT);
+
+		$sql = "INSERT INTO $tabla(nameVacante, salarioVacante, requisitos, Departamentos_idDepartamentos, color) VALUES (:nameVacante, :salarioVacante, :requisitos, :Departamentos_idDepartamentos, :color)";
 
 		$stmt = Conexion::conectar()->prepare($sql);
 
@@ -490,6 +493,7 @@ class ModeloFormularios{
 		$stmt->bindParam(":salarioVacante", $datos['salarioVacante'], PDO::PARAM_STR);
 		$stmt->bindParam(":requisitos", $datos['requisitos'], PDO::PARAM_STR);
 		$stmt->bindParam(":Departamentos_idDepartamentos", $datos['Departamentos_idDepartamentos'], PDO::PARAM_STR);
+		$stmt->bindParam(":color", $color, PDO::PARAM_STR);
 
 		if ($stmt->execute()) {
 
@@ -703,7 +707,7 @@ class ModeloFormularios{
 
 		if ($item == "idReuniones") {
 
-			$sql = "SELECT idReuniones, fechaReunion, status, Postulantes_idPostulantes, comentariosReunion 
+			$sql = "SELECT *
 					FROM $tabla 
 					WHERE $item = :$item";
 
@@ -719,7 +723,7 @@ class ModeloFormularios{
 			$stmt = null;
 		}else{
 
-			$sql = "SELECT idReuniones, fechaReunion, status, Postulantes_idPostulantes, comentariosReunion 
+			$sql = "SELECT * 
 					FROM $tabla 
 					WHERE $item = :$item";
 
@@ -754,7 +758,7 @@ class ModeloFormularios{
 
 	static public function mdlCalificarReunion($tabla, $datos){
 
-		$sql = "UPDATE $tabla SET pregunta1=:pregunta1, pregunta2=:pregunta2, pregunta3=:pregunta3, comentariosReunion=:comentariosReunion, status = 1 WHERE idReuniones = :idReuniones AND status = 0;";
+		$sql = "UPDATE $tabla SET pregunta1=:pregunta1, pregunta2=:pregunta2, pregunta3=:pregunta3, pregunta4=:pregunta4, comentariosReunion=:comentariosReunion, status = 1 WHERE idReuniones = :idReuniones AND status = 0;";
 		$sql .= "UPDATE postulantes SET colorPostulante=:pregunta4 WHERE idPostulantes = :idPostulantes;";
 
 		$stmt = Conexion::conectar()->prepare($sql);

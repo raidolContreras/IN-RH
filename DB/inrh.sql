@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 04-05-2023 a las 23:48:26
+-- Tiempo de generación: 05-05-2023 a las 23:24:32
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.1.17
 
@@ -56,7 +56,7 @@ CREATE TABLE `departamentos` (
 --
 
 INSERT INTO `departamentos` (`idDepartamentos`, `nameDepto`, `Empleados_idEmpleados`, `status`) VALUES
-(1, 'Sistemas', 3, 1),
+(1, 'Sistemas', 5, 1),
 (4, 'Finanzas', 3, 1);
 
 -- --------------------------------------------------------
@@ -298,8 +298,8 @@ CREATE TABLE `postulantes` (
 --
 
 INSERT INTO `postulantes` (`idPostulantes`, `namePostulante`, `lastnamePostulante`, `phonePostulante`, `emailPostulante`, `colorPostulante`, `Vacantes_idVacantes`, `statusPostulante`, `fRegistro`) VALUES
-(13, 'Mayel', 'Ortega Cambrón', '4434655955', 'mayelortega07@gmail.com', NULL, 1, 1, '2023-05-03 17:51:56'),
-(14, 'Prueba', 'Prueba', '4425362514', 'prueba@gmail.com', NULL, 1, 1, '2023-05-04 17:54:45');
+(13, 'Mayel', 'Ortega Cambrón', '4434655955', 'mayelortega07@gmail.com', '2', 1, 1, '2023-05-03 17:51:56'),
+(14, 'Prueba', 'Prueba', '4425362514', 'prueba@gmail.com', '1', 1, 1, '2023-05-04 17:54:45');
 
 -- --------------------------------------------------------
 
@@ -349,6 +349,10 @@ INSERT INTO `puesto` (`idPuesto`, `namePuesto`, `salario`, `salario_integrado`, 
 CREATE TABLE `reuniones` (
   `idReuniones` int(11) NOT NULL,
   `fechaReunion` datetime NOT NULL,
+  `pregunta1` int(1) DEFAULT NULL,
+  `pregunta2` int(1) DEFAULT NULL,
+  `pregunta3` int(1) DEFAULT NULL,
+  `pregunta4` int(1) DEFAULT NULL,
   `comentariosReunion` text DEFAULT NULL,
   `Postulantes_idPostulantes` int(11) NOT NULL,
   `fechaCreacion` timestamp NOT NULL DEFAULT current_timestamp(),
@@ -359,12 +363,13 @@ CREATE TABLE `reuniones` (
 -- Volcado de datos para la tabla `reuniones`
 --
 
-INSERT INTO `reuniones` (`idReuniones`, `fechaReunion`, `comentariosReunion`, `Postulantes_idPostulantes`, `fechaCreacion`, `status`) VALUES
-(1, '2023-01-01 00:00:00', NULL, 14, '2023-05-04 21:41:29', 0),
-(2, '2023-01-01 00:00:00', NULL, 13, '2023-05-04 21:41:31', 0),
-(3, '2023-01-01 00:00:00', NULL, 14, '2023-05-04 21:41:32', 0),
-(4, '2023-01-01 00:00:00', NULL, 14, '2023-05-04 21:41:34', 0),
-(5, '2023-01-01 00:00:00', NULL, 13, '2023-05-04 21:41:49', 0);
+INSERT INTO `reuniones` (`idReuniones`, `fechaReunion`, `pregunta1`, `pregunta2`, `pregunta3`, `pregunta4`, `comentariosReunion`, `Postulantes_idPostulantes`, `fechaCreacion`, `status`) VALUES
+(1, '2023-01-01 00:00:00', 1, 2, 3, 1, 'Prueba', 14, '2023-05-04 21:41:29', 1),
+(2, '2023-01-01 00:00:00', 1, 1, 1, 1, '', 13, '2023-05-04 21:41:31', 1),
+(3, '2023-01-01 00:00:00', NULL, NULL, NULL, NULL, NULL, 14, '2023-05-04 21:41:32', 0),
+(4, '2023-01-01 00:00:00', NULL, NULL, NULL, NULL, NULL, 14, '2023-05-04 21:41:34', 0),
+(5, '2023-01-01 00:00:00', 2, 2, 3, 2, 'puede ser', 13, '2023-05-04 21:41:49', 1),
+(6, '2023-05-10 06:00:00', NULL, NULL, NULL, NULL, NULL, 13, '2023-05-05 21:18:39', 0);
 
 -- --------------------------------------------------------
 
@@ -379,17 +384,19 @@ CREATE TABLE `vacantes` (
   `requisitos` varchar(255) NOT NULL,
   `Empleados_idEmpleados` int(11) DEFAULT NULL,
   `Departamentos_idDepartamentos` int(11) NOT NULL,
-  `status` int(11) NOT NULL DEFAULT 1
+  `status` int(11) NOT NULL DEFAULT 1,
+  `color` varchar(7) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Volcado de datos para la tabla `vacantes`
 --
 
-INSERT INTO `vacantes` (`idVacantes`, `nameVacante`, `salarioVacante`, `requisitos`, `Empleados_idEmpleados`, `Departamentos_idDepartamentos`, `status`) VALUES
-(1, 'Contador', 10500, 'Contador Publico', 0, 1, 1),
-(2, 'Diseñador Grafico', 9200, 'Diseñador grafico que sepa manejar, paqueteria de adobe', 0, 1, 1),
-(3, 'Auxiliar Contable', 9200, 'Auxiliar contable con conocimientos en Compac', NULL, 1, 1);
+INSERT INTO `vacantes` (`idVacantes`, `nameVacante`, `salarioVacante`, `requisitos`, `Empleados_idEmpleados`, `Departamentos_idDepartamentos`, `status`, `color`) VALUES
+(1, 'Contador', 10500, 'Contador Publico', 0, 1, 1, '#5969ff'),
+(2, 'Diseñador Grafico', 9200, 'Diseñador grafico que sepa manejar, paqueteria de adobe', 0, 1, 1, '#c2c8ff'),
+(3, 'Auxiliar Contable', 9200, 'Auxiliar contable con conocimientos en Compac', NULL, 1, 1, '#8fb7ba'),
+(4, 'Licenciado en econimia', 15000, 'Licenciado egresado\r\nCon cedula\r\n2 años de experiencia en el área de analista de datos', NULL, 4, 1, '#f9227a');
 
 --
 -- Índices para tablas volcadas
@@ -592,13 +599,13 @@ ALTER TABLE `puesto`
 -- AUTO_INCREMENT de la tabla `reuniones`
 --
 ALTER TABLE `reuniones`
-  MODIFY `idReuniones` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idReuniones` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `vacantes`
 --
 ALTER TABLE `vacantes`
-  MODIFY `idVacantes` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idVacantes` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Restricciones para tablas volcadas

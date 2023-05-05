@@ -10,13 +10,13 @@ $registro = ControladorFormularios::ctrRegistrarVacantes();
 	<div class="row">
 		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 			<div class="page-header">
-				<h2 class="pageheader-title">Asignar Puesto</h2>
+				<h2 class="pageheader-title">Crear oferta</h2>
 				<div class="page-breadcrumb">
 					<nav aria-label="breadcrumb">
 						<ol class="breadcrumb">
 							<li class="breadcrumb-item"><a href="Inicio" class="breadcrumb-link">IN Consulting México</a></li>
-							<li class="breadcrumb-item" aria-current="page"><a href="Puestos" class="breadcrumb-link">Puestos</a></li>
-							<li class="breadcrumb-item active" aria-current="page">Asignar Puesto</li>
+							<li class="breadcrumb-item" aria-current="page"><a href="Vacantes" class="breadcrumb-link">Ofertas de empleo</a></li>
+							<li class="breadcrumb-item active" aria-current="page">Crear oferta</li>
 						</ol>
 					</nav>
 				</div>
@@ -44,6 +44,9 @@ if ($registro == "error") {
 		window.history.replaceState( null, null, window.location.href );
 
 	}
+	setTimeout(function() {
+		  window.location.href = "Vacantes";
+		}, 500);
 
 	</script>';
 

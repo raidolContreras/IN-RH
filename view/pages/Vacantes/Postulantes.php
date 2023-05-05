@@ -282,7 +282,7 @@ $calendary = ControladorFormularios::generarCalendario(); ?>
 														<div class="m-0 mt-3 mr-1 col-3 card-hover justify-content-center">
 															<form class="container mt-4" >
 																<label>Calificar reunión<br><?php echo date("d-m-Y h:i a", strtotime($reunion['fechaReunion'])); ?></label>
-																<button type="submit" class="btn btn-outline-success rounded mx-5 mb-2 disabled" disabled><i class="mdi mdi-account-edit"></i></button>
+																<a href="Reuniones&Evaluado=true&reunion=<?php echo $reunion['idReuniones'] ?>" class="btn btn-outline-warning rounded mx-5 mb-2"><i class="mdi mdi-eye"></i></a>
 															</form>
 														</div>
 													<?php endif ?>
