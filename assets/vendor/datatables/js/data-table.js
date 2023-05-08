@@ -82,13 +82,7 @@ jQuery(document).ready(function($) {
                     {
                         extend: 'pdfHtml5',
                         text: 'PDF',
-                        orientation: 'landscape',
-                        customize: function ( doc ) {
-                           var cols = [];
-                           var objFooter = {};
-                           objFooter['columns'] = cols;
-                           doc['footer']=objFooter;
-                        }
+                        orientation: 'landscape'
                     }
                     ],
                 fixedHeader: true,

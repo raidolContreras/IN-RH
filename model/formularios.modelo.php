@@ -473,9 +473,9 @@ class ModeloFormularios{
 		$stmt = Conexion::conectar()->prepare($sql);
 
 		$stmt->bindParam(":nameDepto", $datos['name'], PDO::PARAM_STR);
-		$stmt->bindParam(":description", $datos['description'], PDO::PARAM_STR);
 		$stmt->bindParam(":Empleados_idEmpleados", $datos['idEmpleado'], PDO::PARAM_INT);
 		$stmt->bindParam(":idDepartamentos", $datos['idDepto'], PDO::PARAM_INT);
+
 		if ($stmt->execute()) {
 			return "ok";
 		}else{

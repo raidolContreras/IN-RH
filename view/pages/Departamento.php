@@ -57,10 +57,7 @@
 											<table>
 												<tr>
 													<td>
-														<form method="POST" action="EditarDepto">
-															<input type="hidden" name="Edicion" value="<?php echo $depa['idDepartamentos'] ?>">
-															<button type="submit" class="btn btn-primary rounded btn-block"><i class="far fa-edit"></i></button>
-														</form>
+														<a href="EditarDepto&Edicion=<?php echo $depa['idDepartamentos'] ?>" class="btn btn-primary rounded btn-block"><i class="far fa-edit"></i></a>
 													</td>
 													<td>
 														<form method="POST" action="EliminarDepto">

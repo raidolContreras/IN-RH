@@ -1,9 +1,9 @@
 <?php 
-
-$datos = ControladorFormularios::ctrVerDepartamentos("idDepartamentos",$_POST['Edicion']);
+$datos = ControladorFormularios::ctrVerDepartamentos("idDepartamentos",$_GET['Edicion']);
 if ($datos['Empleados_idEmpleados']!=0) {
 	$empleadoDpto = ControladorFormularios::ctrVerEmpleados("idEmpleados", $datos['Empleados_idEmpleados']); 
 }
+$empleadosDpto = ControladorFormularios::ctrVerEmpleadosDisponibles("departamentos"); 
 $registro = ControladorFormularios::ctrActualizarDepto();
 ?>
 <div class="container-fluid dashboard-content ">
@@ -76,7 +76,7 @@ $registro = ControladorFormularios::ctrActualizarDepto();
 								<?php echo ucwords(strtolower($empleadoDpto['name']." ".$empleadoDpto['lastname'])); ?>
 							</option>
 							<?php endif ?>
-						<?php foreach ($empleados as $key => $empleado): ?>
+						<?php foreach ($empleadosDpto as $key => $empleado): ?>
 							<option value="<?php echo $empleado['idEmpleados']; ?>">
 								<?php echo ucwords(strtolower($empleado['name']." ".$empleado['lastname'])); ?>
 							</option>
@@ -85,8 +85,8 @@ $registro = ControladorFormularios::ctrActualizarDepto();
 				</div>
 				<div class="row mt-5 rounded float-right">
 					<div class="text-center">
-						<input type="hidden" name="idDepto" value="<?php echo $_POST['Edicion']; ?>">
-						<button type="submit" name="accion" class="btn btn-primary mr-1" value="<?php echo $_POST['Edicion'] ?>">Enviar</button>
+						<input type="hidden" name="idDepto" value="<?php echo $_GET['Edicion']; ?>">
+						<button type="submit" name="accion" class="btn btn-primary mr-1" value="<?php echo $_GET['Edicion'] ?>">Enviar</button>
 					</div>
 					<div class="text-center">
 						<a href="Departamento" class="btn btn-danger mr-3">Cancelar</a>
