@@ -18,10 +18,13 @@
 						<div id="submenu-1" class="collapse submenu" style="">
 							<ul class="nav flex-column">
 								<li class="nav-item">
-									<a class="nav-link" href="RegistroEmpleados">Registrar empleados</a>
+									<a class="nav-link" href="Empleados">Directorio</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link" href="Empleados">Lista de empleados</a>
+									<a class="nav-link" href="Nominas">Nóminas</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="Organigrama">Organigrama</a>
 								</li>
 							</ul>
 						</div>
@@ -44,7 +47,11 @@
 					</li>
 
 					<li class="nav-item">
-						<a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-10" aria-controls="submenu-10"><i class="fas fa-bookmark"></i>Gestión de permisos y vacaciones</a>
+						<a class="nav-link" href="Horas"><i class="fas fa-bookmark"></i>Registro de horas</a>
+					</li>
+
+					<li class="nav-item">
+						<a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-10" aria-controls="submenu-10"><i class="fas fa-bookmark"></i>REGISTRO Y SOLICITUD DE AUSENCIA</a>
 						<div id="submenu-10" class="collapse submenu" style="">
 							<ul class="nav flex-column">
 								<li class="nav-item">
@@ -54,50 +61,26 @@
 									<a class="nav-link" href="#">Aprobar permisos</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link" href="#">Programar vacaciones</a>
+									<a class="nav-link" href="#">Calendario</a>
 								</li>
 							</ul>
 						</div>
 					</li>
 
 					<li class="nav-item">
-						<a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-3" aria-controls="submenu-3"><i class="fas fa-clipboard-check"></i> Gestión de evaluaciones</a>
-						<div id="submenu-3" class="collapse submenu" style="">
-							<ul class="nav flex-column">
-								<li class="nav-item">
-									<a class="nav-link" href="#">Crear evaluación</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link" href="#">Revisar evaluaciones</a>
-								</li>
-							</ul>
-						</div>
+						<a class="nav-link" href="#"><i class=" fas fa-check-square"></i>Tareas</a>
 					</li>
 
 					<li class="nav-item">
-						<a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-4" aria-controls="submenu-4"><i class=" fas fa-check-square"></i>Gestión de tareas</a>
-						<div id="submenu-4" class="collapse submenu" style="">
-							<ul class="nav flex-column">
-								<li class="nav-item">
-									<a class="nav-link" href="#">Asignación de tareas</a>
-								</li>
-							</ul>
-						</div>
+						<a class="nav-link" href="#"><i class="fas fa-clipboard-check"></i>Evaluaciones</a>
 					</li>
 
 					<li class="nav-item">
-						<a class="nav-link" href="#"><i class="fas fa-newspaper"></i>Gestión de nominas y pagos</a>
+						<a class="nav-link" href="#"><i class="fas fa-newspaper"></i>Gastos</a>
 					</li>
 
 					<li class="nav-item">
-						<a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-6" aria-controls="submenu-6"><i class="fas fa-seedling"></i>Gestión de beneficios</a>
-						<div id="submenu-6" class="collapse submenu" style="">
-							<ul class="nav flex-column">
-								<li class="nav-item">
-									<a class="nav-link" href="#">??</a>
-								</li>
-							</ul>
-						</div>
+						<a class="nav-link" href="#"><i class="fas fa-newspaper"></i>Análisis e informes</a>
 					</li>
 
 					<li class="nav-divider">
