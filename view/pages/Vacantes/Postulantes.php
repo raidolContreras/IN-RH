@@ -241,6 +241,9 @@ $calendary = ControladorFormularios::generarCalendario(); ?>
 					<div class="card-body">
 						<div class="modal-header">
 							<h1>Reuniones</h1>
+							<a href="RegistroEmpleados&postulante=<?php echo $postulante['idPostulantes'] ?>" class="btn btn-outline-success rounded">
+								<i class="mdi mdi-account-check"></i> Contratar
+							</a>
 						</div>
 						<div class="modal-content">
 							<div class="row ml-3 mb-3">
@@ -250,7 +253,7 @@ $calendary = ControladorFormularios::generarCalendario(); ?>
 											<form class="container mt-4">
 												<input type="hidden" name="reunion" value="<?php echo $reunion['idReuniones'] ?>">
 												<label>Calificar reunión<br><?php echo date("d-m-Y h:i a", strtotime($reunion['fechaReunion'])); ?></label>
-												<a href="Reuniones&reunion=<?php echo $reunion['idReuniones'] ?>" class="btn btn-outline-success rounded mx-5 mb-2"><i class="mdi mdi-account-edit"></i></a>
+												<a href="Reuniones&reunion=<?php echo $reunion['idReuniones'] ?>" class="btn btn-outline-primary rounded mx-5 mb-2"><i class="mdi mdi-account-edit"></i></a>
 											</form>
 										</div>
 									<?php elseif ($reunion['status'] == 1): ?>

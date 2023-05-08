@@ -1,5 +1,4 @@
 <?php 
-$empleados = ControladorFormularios::ctrVerEmpleadosDisponibles(); 
 
 $datos = ControladorFormularios::ctrVerDepartamentos("idDepartamentos",$_POST['Edicion']);
 if ($datos['Empleados_idEmpleados']!=0) {
@@ -83,10 +82,6 @@ $registro = ControladorFormularios::ctrActualizarDepto();
 							</option>
 						<?php endforeach ?>
 					</select>
-				</div>
-				<div class="form-group">
-					<label for="description" class="col-form-label font-weight-bold">Descripción:</label>
-					<textarea class="form-control" id="description" name="description" rows="5"><?php echo $datos['description']; ?></textarea>
 				</div>
 				<div class="row mt-5 rounded float-right">
 					<div class="text-center">

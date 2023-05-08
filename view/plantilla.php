@@ -30,6 +30,8 @@
 	<link rel="shortcut icon" href="assets/images/logo.png" />
 	<script src='fullcalendar/core/index.global.js'></script>
 	<script src='fullcalendar/core/locales/es.global.js'></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
 
 	
 	<?php if (isset($_GET["pagina"])): ?>

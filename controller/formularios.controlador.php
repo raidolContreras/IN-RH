@@ -6,6 +6,19 @@ class ControladorFormularios{
 
 	static public function ctrRegistrarEmpleados(){
 		if (isset($_POST['nombre'])) {
+			if ($_POST['postulante'] != 0) {
+				$namePuesto = $_POST['namePuesto'];
+				$salarioPuesto = $_POST['salarioPuesto'];
+				$salario_integrado = $_POST['salario_integrado'];
+				$horario_entrada = $_POST['horario_entrada'];
+				$horario_salida = $_POST['horario_salida'];
+			}else{
+				$namePuesto = "";
+				$salarioPuesto = "";
+				$salario_integrado = "";
+				$horario_entrada = "";
+				$horario_salida = "";
+			}
 
 			$datos = array('nombre' => $_POST['nombre'],
 				'apellidos' => $_POST['apellidos'],
@@ -26,7 +39,13 @@ class ControladorFormularios{
 				'email' => $_POST['email'],
 				'emergencia' => $_POST['emergencia'],
 				'telefonoE' => $_POST['telefonoE'],
-				'parentesco' => $_POST['parentesco']);
+				'parentesco' => $_POST['parentesco'],
+				'namePuesto' => $namePuesto,
+				'salarioPuesto' => $salarioPuesto,
+				'salario_integrado' => $salario_integrado,
+				'horario_entrada' => $horario_entrada,
+				'horario_salida' => $horario_salida,
+				'postulante' => $_POST['postulante']);
 			$Registro = ModeloFormularios::mdlRegistrarEmpleados('empleados','emergencia', $datos);
 			if ($Registro == 'ok') {
 				return 'ok';

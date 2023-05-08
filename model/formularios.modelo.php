@@ -4,7 +4,6 @@ require_once "conexion.php";
 
 class ModeloFormularios{
 
-
 	/*---------- Función hecha para registrar a los empleados---------- */
 
 	static public function mdlRegistrarEmpleados($tabla1, $table2, $datos){
@@ -31,14 +30,53 @@ class ModeloFormularios{
 		$stmt->bindParam(':municipio', $datos['municipio'], PDO::PARAM_STR);
 		$stmt->bindParam(':estado', $datos['estado'], PDO::PARAM_STR);
 
-
 		if($stmt->execute()){
 
-		$id_empleado = $pdo->lastInsertId(); //obtener el ID del empleado recién insertado
+			$id_empleado = $pdo->lastInsertId(); //obtener el ID del empleado recién insertado
 
 		if ($id_empleado == 0) {
 			echo $consulta->errorInfo()[2];
 		}else{
+
+			if ($datos['postulante'] != 0) {
+				$RegistroPostulante = ControladorFormularios::ctrVerPostulantes('idPostulantes', $datos['postulante']);
+				$CerrarVacante = ModeloFormularios::mdlEliminarVacante('vacantes', $RegistroPostulante['Vacantes_idVacantes']);
+				$vacante = ControladorFormularios::ctrVerVacantes('idVacantes', $RegistroPostulante['Vacantes_idVacantes']);
+				$puesto = array("namePuesto" => $datos['namePuesto'],
+								"salario" => $datos['salarioPuesto'],
+								"salario_integrado" => $datos['salario_integrado'],
+								"Empleados_idEmpleados" => $id_empleado,
+								"Departamentos_idDepartamentos" => $vacante['Departamentos_idDepartamentos'],
+								"horario_entrada" => $datos['horario_entrada'],
+								"horario_salida" => $datos['horario_salida'],
+								);
+				$registrarPuesto = ModeloFormularios::mdlRegistrarPuestos('puesto', $puesto);
+				if ($registrarPuesto == 'ok') {
+					echo 'Usuario registrado en el puesto';
+
+					$carpetaEmpleado = "view/pdfs/" . $id_empleado;
+					if (!file_exists($carpetaEmpleado)) {
+						mkdir($carpetaEmpleado);
+					}
+					$currentLocation = 'view/pdfs/postulantes/'.$datos['postulante']."/curriculum.pdf";
+					$newLocation = $carpetaEmpleado."/curriculum.pdf";
+					$moved = rename($currentLocation, $newLocation);
+					if($moved)
+					{
+					    echo "File moved successfully";
+
+						$regDoc = array("fileName" => 'curriculum',
+							"idEmpleado" => $id_empleado
+						);
+
+					    $registroDocumento = ModeloFormularios::mdlRegistroPDFEmpleado('documento', $regDoc);
+					    if ($registroDocumento == 'ok') {
+					    	echo 'Curriculum Registrado';
+					    }
+					}
+				}
+			}
+
 			$Registro = ModeloFormularios::mdlEmergencia($table2, $id_empleado, $datos);
 		}
 

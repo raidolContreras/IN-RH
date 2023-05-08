@@ -32,15 +32,18 @@
 						Asignar Puestos<i class="fas fa-user-plus ml-2"></i>
 					</a>
 					<div class="table-responsive">
-						<table id="example" class="table table-striped table-bordered second" style="width:100%">
+						<table id="Puestos" class="table table-striped table-bordered Puestos" style="width:100%">
 							<thead>
 								<tr>
-									<th width="43%">Nombre del puesto</th>
-									<th width="43%">Colaborador</th>
-									<th width="43%">Salario</th>
-									<th width="43%">Salario diario integrado</th>
-									<th width="43%">Horario</th>
-									<th width="43%">Datos fiscales</th>
+									<th width="30%">Nombre del puesto</th>
+									<th width="30%">Colaborador</th>
+									<th width="">Salario</th>
+									<th width="">Salario diario integrado</th>
+									<th width="">Horario</th>
+									<th width="">CURP</th>
+									<th width="">RFC</th>
+									<th width="">NSS</th>
+									<th width="">CP</th>
 									<th>Acciones</th>
 								</tr>
 							</thead>
@@ -52,23 +55,16 @@
 										<td><?php echo $puesto['salario'] ?></td>
 										<td><?php echo $puesto['salario_integrado'] ?></td>
 										<td><?php echo $puesto['horario_entrada']." - ".$puesto['horario_salida']?></td>
-										<td>
-											<div class="card-body ">
-												<button type="button" class="btn btn-lg btn-primary" data-toggle="popover" data-placement="top" data-html="true"
-													title="Datos fiscales" 
-													data-content="<strong>RFC:</strong> <?php echo strtoupper($puesto['RFC']) ?><br><strong>NSS:</strong> <?php echo strtoupper($puesto['NSS']) ?><br><strong>CP:</strong> <?php echo strtoupper($puesto['CP']) ?>">
-													Datos fiscales
-											</button>
-											</div>
-                    </td>
+										<td><?php echo strtoupper($puesto['CURP']) ?></td>
+                    					<td><?php echo strtoupper($puesto['RFC']) ?></td>
+                    					<td><?php echo strtoupper($puesto['NSS']) ?></td>
+                    					<td><?php echo strtoupper($puesto['CP']) ?></td>
 										<td>
 											<table>
 												<tr>
 													<td>
-														<form method="POST" action="EditarDepto">
-															<input type="hidden" name="Edicion" value="">
-															<button type="submit" class="btn btn-primary rounded btn-block"><i class="far fa-edit"></i></button>
-														</form>
+														<input type="hidden" name="Edicion" value="">
+														<a href="EditarPuesto&puesto<?php echo $puesto['idPuesto'] ?>" class="btn btn-primary rounded btn-block"><i class="far fa-edit"></i></a>
 													</td>
 													<td>
 														<form method="POST" action="EliminarDepto">
