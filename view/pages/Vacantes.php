@@ -52,22 +52,21 @@
 										<td><?php echo $vacante['requisitos'] ?></td>
 										<td><?php echo $vacante['salarioVacante'] ?></td>
 										<td>
-											<form action="Vacantes-Postulantes" method="POST">
-												<input type="hidden" value="<?php echo $vacante['idVacantes'] ?>" name="Postulantes">
-												<button class="btn btn-outline-secondary" href="Vacantes-Postulantes">
+											<?php if ($suma[0] >= 1): ?>
+											<form action="Vacantes-Postulantes" method="GET">
+												<a class="btn btn-outline-secondary rounded" href="Vacantes-Postulantes&Postulantes=<?php echo $vacante['idVacantes'] ?>">
 													Postulantes <span class="badge">(<?php if ($suma[0] >=1) { echo $suma[0]; }else{ echo "0";} ?>)</span>
-												</button>
+												</a>
 											</form>
+											<?php else: ?>
+											<a class="btn btn-outline-secondary rounded disabled" href="">
+												Postulantes <span class="badge">(0)</span>
+											</a>
+											<?php endif ?>
 										</td>
 										<td>
 											<table>
 												<tr>
-													<!--<td>
-														<form method="POST" action="EditarVacante">
-															<inpat type="hidden" name="Edicion" value="<?php echo $vacante['idVacantes'] ?>">
-															<button type="submit" class="btn btn-primary rounded btn-block"><i class="far fa-edit"></i></button>
-														</form>
-													</td>-->
 													<td>
 														<form method="POST" action="Vacantes-EliminarVacante">
 															<input type="hidden" name="Eliminar" value="<?php echo $vacante['idVacantes'] ?>">

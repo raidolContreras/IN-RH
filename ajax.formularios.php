@@ -47,6 +47,21 @@ class FormulariosAjax{
 
 	}
 
+	public function eliminarPostulanteAjax(){
+
+		$item = $this->item;
+		$valor = $this->valor;
+
+		$eliminarPostulante = ControladorFormularios::ctrEliminarPostulante($item, $valor);
+			echo '<pre>'; print_r($eliminarPostulante); echo '<pre>'; 
+		if ($eliminarPostulante == 'ok') {
+		    echo json_encode('ok');
+		} else {
+		    echo json_encode('error');
+		}
+
+	}
+
 }
 
 if(isset($_POST["validate"])){
@@ -97,4 +112,14 @@ if (isset($_POST['reunion'])) {
 
 	$calificar -> calificarReunionesAjax();
 
+}
+
+if (isset($_POST['eliminarPostulante'])) {
+	$item =	"idPostulantes";
+	$valor = $_POST['eliminarPostulante'];
+
+	$validate = new FormulariosAjax();
+	$validate -> item = $item;
+	$validate -> valor = $valor;
+	$validate -> eliminarPostulanteAjax();
 }

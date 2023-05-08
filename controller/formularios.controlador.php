@@ -441,12 +441,12 @@ class ControladorFormularios{
 					if (preg_match($patron, $_POST['telefono'])) {
 						$tabla = "postulantes";
 						$datos = array("namePostulante" => $_POST["nombre"],
-													 "lastnamePostulante" => $_POST["apellidos"],
-													 "phonePostulante" => $_POST["telefono"],
-													 "emailPostulante" => $_POST["email"],
-													 "Vacantes_idVacantes" => $_POST["Oferta"],
-													 "nameDocPost" => $_POST["archivo"],
-													 "File" => $_FILES['file']);
+									 "lastnamePostulante" => $_POST["apellidos"],
+									 "phonePostulante" => $_POST["telefono"],
+									 "emailPostulante" => $_POST["email"],
+									 "Vacantes_idVacantes" => $_POST["Oferta"],
+									 "nameDocPost" => $_POST["archivo"],
+									 "File" => $_FILES['file']);
 						$registro = ModeloFormularios::mdlRegistroPostulante($tabla, $datos);
 						if ($registro != "error") {
 						 		$ctrSubirPDF = ControladorFormularios::ctrSubirPDFPostulante($registro,$datos);
@@ -584,6 +584,12 @@ class ControladorFormularios{
 	static public function ctrCalificarReunion($tabla, $datos){
 
 		$respuesta = ModeloFormularios::mdlCalificarReunion($tabla, $datos);
+		return $respuesta;
+	}
+
+	static public function ctrEliminarPostulante($item, $valor){
+		$tabla = "postulantes";
+		$respuesta = ModeloFormularios::mdlEliminarPostulante($tabla, $item, $valor);
 		return $respuesta;
 	}
 

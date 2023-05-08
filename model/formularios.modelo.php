@@ -374,6 +374,10 @@ class ModeloFormularios{
 			print_r(Conexion::conectar()->errorInfo());
 		}
 
+		$stmt->close();
+
+		$stmt = null;	
+
 	}
 
 	/*---------- Función hecha para ver a los empleados---------- */
@@ -440,6 +444,10 @@ class ModeloFormularios{
 			print_r(Conexion::conectar()->errorInfo());
 		}
 
+		$stmt->close();
+
+		$stmt = null;	
+
 	}
 	
 	static public function mdlEliminarDepto($tabla, $idDepto){
@@ -455,6 +463,10 @@ class ModeloFormularios{
 		}else{
 			print_r(Conexion::conectar()->errorInfo());
 		}
+
+		$stmt->close();
+
+		$stmt = null;	
 
 	}
 
@@ -479,6 +491,10 @@ class ModeloFormularios{
 			print_r(Conexion::conectar()->errorInfo());
 
 		}
+
+		$stmt->close();
+
+		$stmt = null;	
 	}
 
 	static public function mdlRegistrarVacantes($tabla, $datos){
@@ -503,6 +519,10 @@ class ModeloFormularios{
 			print_r(Conexion::conectar()->errorInfo());
 
 		}
+
+		$stmt->close();
+
+		$stmt = null;	
 	}
 
 	/*---------- Función hecha para ver a los empleados---------- */
@@ -574,7 +594,7 @@ class ModeloFormularios{
 
 			$sql = "SELECT * FROM $tabla 
 			JOIN Vacantes ON $tabla.Vacantes_idVacantes = Vacantes.idVacantes 
-			WHERE $tabla.status = 1;";
+			WHERE $tabla.statusPostulante = 1;";
 
 			$stmt = Conexion::conectar()->prepare($sql);
 
@@ -756,6 +776,18 @@ class ModeloFormularios{
 		$stmt = null;	
 	}
 
+	/*
+	Esta función actualiza la calificación y comentarios de una reunión y establece el estado de la reunión como "calificada". También actualiza el color del postulante en la tabla "postulantes".
+
+	Parámetros:
+
+	$tabla: nombre de la tabla en la que se almacenarán los datos.
+	$datos: un array que contiene los datos de la reunión a calificar.
+	La función prepara una consulta SQL que actualiza los campos de la tabla "reuniones" y "postulantes" y vincula los parámetros a los valores de las variables. La función utiliza dos consultas SQL separadas, una para actualizar la tabla "reuniones" y otra para actualizar la tabla "postulantes".
+
+	La función devuelve "ok" si la actualización fue exitosa o imprime el mensaje de error devuelto por la base de datos en caso contrario.
+	*/
+	
 	static public function mdlCalificarReunion($tabla, $datos){
 
 		$sql = "UPDATE $tabla SET pregunta1=:pregunta1, pregunta2=:pregunta2, pregunta3=:pregunta3, pregunta4=:pregunta4, comentariosReunion=:comentariosReunion, status = 1 WHERE idReuniones = :idReuniones AND status = 0;";
@@ -775,6 +807,29 @@ class ModeloFormularios{
 		}else{
 			print_r(Conexion::conectar()->errorInfo());
 		}
+
+		$stmt->close();
+
+		$stmt = null;	
+	}
+
+	static public function mdlEliminarPostulante($tabla, $item, $valor){
+
+		$sql = "UPDATE $tabla SET statusPostulante=0 WHERE $item = :valor";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":valor", $valor, PDO::PARAM_INT);
+
+		if ($stmt->execute()) {
+			return "ok";
+		}else{
+			print_r(Conexion::conectar()->errorInfo());
+		}
+
+		$stmt->close();
+
+		$stmt = null;	
 	}
 
 	/*---------- Fin de ModeloFormularios ---------- */

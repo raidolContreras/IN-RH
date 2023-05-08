@@ -22,6 +22,20 @@ $(function() {
                 events: data // Pasamos los eventos al calendario
             });
 
+            // Inicializamos el calendario con los eventos
+            $('#calendar2').fullCalendar({
+                header: {
+                    left: 'prev,next today',
+                    center: 'title'
+                },
+                locale: 'es',
+                defaultDate: new Date(),
+                navLinks: false, // can click day/week names to navigate views
+                editable: false,
+                eventLimit: true, // allow "more" link when too many events
+                events: data // Pasamos los eventos al calendario
+            });
+
         }).fail(function(jqXHR, textStatus, errorThrown) {
             console.error('Error en la solicitud AJAX:', textStatus, errorThrown);
         });
@@ -49,27 +63,6 @@ $(function() {
                 revertDuration: 0 //  original position after the drag
             });
 
-        });
-
-
-        /* initialize the calendar
-        -----------------------------------------------------------------*/
-
-        $('#calendar').fullCalendar({
-            header: {
-                left: 'prev,next today',
-                center: 'title',
-                right: 'month,agendaWeek,agendaDay'
-            },
-            editable: true,
-            droppable: true, // this allows things to be dropped onto the calendar
-            drop: function() {
-                // is the "remove after drop" checkbox checked?
-                if ($('#drop-remove').is(':checked')) {
-                    // if so, remove the element from the "Draggable Events" list
-                    $(this).remove();
-                }
-            }
         });
 
 

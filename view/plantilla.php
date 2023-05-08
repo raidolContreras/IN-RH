@@ -28,6 +28,8 @@
 	<link href='assets/vendor/full-calendar/css/fullcalendar.css' rel='stylesheet' />
 	<link href='assets/vendor/full-calendar/css/fullcalendar.print.css' rel='stylesheet' media='print' />
 	<link rel="shortcut icon" href="assets/images/logo.png" />
+	<script src='fullcalendar/core/index.global.js'></script>
+	<script src='fullcalendar/core/locales/es.global.js'></script>
 
 	
 	<?php if (isset($_GET["pagina"])): ?>
@@ -128,6 +130,11 @@
 
 
 	}else{
+			echo '
+		<!-- ============================================================== -->
+		<!-- main wrapper -->
+		<!-- ============================================================== -->
+		<div class="dashboard-main-wrapper">';
 		include "pages/navs/navbar.php";
 		include "pages/navs/sidenav.php"; 
 		echo'
