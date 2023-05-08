@@ -61,6 +61,7 @@
 			$_GET["pagina"] == "Vacantes" ||
 			$_GET["pagina"] == "Postulantes" ||
 			$_GET["pagina"] == "Reuniones" ||
+			$_GET["pagina"] == "VerPdf" ||
 			$_GET["pagina"] == "somos" 
 
 		){

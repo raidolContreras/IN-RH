@@ -39,7 +39,7 @@ $calendary = ControladorFormularios::generarCalendario(); ?>
 				<div class="card-body">
 					<div id="form-result"></div>
 					<div class="table-responsive" >
-						<table id="example" class="table table-striped table-bordered second" style="width:100%">
+						<table id="example" class="table table-striped table-bordered Postulantes" style="width:100%">
 							<thead>
 								<tr>
 									<th data-class-name="priority">Nombre Completo</th>
@@ -71,12 +71,11 @@ $calendary = ControladorFormularios::generarCalendario(); ?>
 											<table>
 												<tr>
 													<td>
-														<button type="button" 
+														<a type="button" 
 															class="btn btn-outline-danger rounded" 
-															data-toggle="modal" 
-															data-target="#Modal<?php echo $postulante['idPostulantes'] ?>">
+															href="VerPdf&postulante=<?php echo $postulante['idPostulantes'] ?>">
 															<i class="far fa-file-pdf"></i>
-														</button>
+														</a>
 													</td>
 													<td>
 														<button type="button" 
@@ -232,37 +231,6 @@ $calendary = ControladorFormularios::generarCalendario(); ?>
 		</div>
 	</div>
 
-<!-- Modal Ver PDF -->
-
-	<div class="modal fade" id="Modal<?php echo $postulante['idPostulantes'] ?>">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-
-				<!-- Modal body -->
-				<div class="modal-body card">
-					<div class="card-body">
-
-						<!--API de Adobe gratuita para ver pdf online-->
-						<div id="adobe-dc-view" style="height: 680px;"></div>
-						<script src="https://documentservices.adobe.com/view-sdk/viewer.js"></script>
-						<script type="text/javascript">
-							document.addEventListener("adobe_dc_view_sdk.ready", function(){ 
-								var adobeDCView = new AdobeDC.View({clientId: "a043d7dd0d7b45e1bbefa391730a4243", divId: "adobe-dc-view"});
-								adobeDCView.previewFile({
-									content:{location: {url: "view/pdfs/postulantes/<?php echo $postulante['idPostulantes'] ?>/curriculum.pdf"}},
-									metaData:{fileName: "curriculum.pdf"}
-								}, {defaultViewMode: "FIT_WIDTH", showAnnotationTools: false});
-							});
-						</script>
-						<!--Fin de la API-->
-
-					</div>
-				</div>
-
-			</div>
-		</div>
-	</div>
-
 <!-- Modal Ver citas y comentarlas -->
 
 	<div class="modal fade" id="Comments<?php echo $postulante['idPostulantes'] ?>">
@@ -320,7 +288,7 @@ $calendary = ControladorFormularios::generarCalendario(); ?>
 						<div class="card">
 							<div class="card-footer p-0 text-center d-flex justify-content-center ">
 								<div class="card-footer-item card-footer-item-bordered">
-								    <a href="Vacantes" class="card-link btn btn-outline-primary">Cancelar</a>
+								    <button data-dismiss="modal"  class="card-link btn btn-outline-primary">Cancelar</button>
 								</div>
 								<div class="card-footer-item card-footer-item-bordered">
 									<form method="POST">
