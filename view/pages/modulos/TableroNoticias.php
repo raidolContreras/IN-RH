@@ -24,8 +24,11 @@
 			<center>
 			<b style="font-size: 20px;">Los humanos somos muchos más que recursos</b></center>
 			<br>
-
-			Desde este apartado podrás añadir mensajes al tablón de anuncios. Puedes decidir quién verá cada mensaje, cuánto tiempo estará visible y programar desde qué día deberá aparecer.
+Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus reiciendis accusamus, recusandae sequi vero illum, itaque. Delectus, vero dolorem, aspernatur recusandae laborum numquam ratione minima, et dolor consequuntur quasi optio.
+Lorem, ipsum dolor sit, amet consectetur adipisicing elit. Culpa tenetur quaerat consequatur eaque deserunt reiciendis officiis, voluptates exercitationem, repellat facilis, impedit commodi magnam error. Obcaecati, delectus, in. Asperiores, autem enim!
+Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident reprehenderit, ducimus ipsam, quae consequatur consectetur ex at maiores sed, architecto, incidunt! Quos, libero debitis unde qui vitae quod ut quibusdam.
+Lorem ipsum dolor sit, amet consectetur adipisicing, elit. Voluptatum accusamus explicabo dignissimos possimus non, reprehenderit minima, perferendis rem atque illum id deleniti iste repellat, sapiente nobis similique, inventore cum unde.
+Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aspernatur, nihil perspiciatis deleniti culpa, voluptates blanditiis natus consectetur eveniet eaque quaerat assumenda laudantium quia laboriosam non rerum! Aperiam magni a reprehenderit.
 		</div>
 	</div>
 </div>
