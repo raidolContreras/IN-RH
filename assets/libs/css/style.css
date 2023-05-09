@@ -3226,6 +3226,23 @@ btn-link
 2.3  Cards
 -------------------------*/
 
+.card-into-card {
+	margin-bottom: 0px;
+	border: 1px solid #dedede;
+	padding: 10px 10px 10px 10px;
+	background-color: #F8F8F8;
+	-webkit-box-shadow: 0px 1px 2px 1px rgba(154, 154, 204, 0.22);
+	-moz-box-shadow: 0px 1px 2px 1px rgba(154, 154, 204, 0.22);
+	box-shadow: 0px 1px 2px 1px rgba(154, 154, 204, 0.22);
+	text-align: justify;
+}
+
+.second-card{
+	border: 1;
+	padding: 10px 10px 0px 10px;
+	background-color: #fff;
+}
+
 .card {
 	margin-bottom: 30px;
 	border: none;
@@ -5277,6 +5294,18 @@ Vertical Timeline - by CodyHouse.co
 	object-fit: cover;
 	object-position: center center;
 }
+.user-avatar-xl2 {
+	height: 90px;
+	width: 90px;
+	object-fit: cover;
+	object-position: center center;
+}
+.user-avatar-lg2 {
+	height: 43px;
+	width: 43px;
+	object-fit: cover;
+	object-position: center center;
+}
 
 .user-avatar-xl {
 	height: 90px;
@@ -7074,4 +7103,91 @@ animation: myAnim 1s ease-out 1ms infinite alternate-reverse both;
 
 .card-hover:hover {
 	box-shadow: 0px 6px 12px 1px rgba(154, 154, 204, 0.4);
+}
+
+div.center-all{
+	text-align: center;
+}
+
+.in-text{
+	margin: 15px 0px 15px 0px;
+	color: #767676;
+	font-size: 14px;
+}
+
+p.titulo-sup{
+	font-size: 11px;
+}
+p.subtitulo-sup{
+	font-size: 9px;
+	opacity: 90%;
+}
+
+p.titulo-tablero{
+	font-size: 16px;
+}
+p.titulo {
+	margin: 0px 0px 0px 0px;
+}
+p.subtitulo-tablero{
+	font-size: 14px;
+	opacity: 90%;
+}
+
+hr.titulo {
+    margin-top: 1rem;
+    margin-bottom: 0rem;
+    border: 0;
+    border-top: 1px solid rgba(0,0,0,.1);
+}
+
+.boton {
+  border: none;
+  background-color: transparent;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.arriba{
+  z-index: 1;
+}
+
+.abajo
+{
+  position:absolute;
+}
+.widget-container{
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+.widget-mb-10px {
+    margin-bottom: 0.625rem !important;
+}
+.cursor-pointer {
+    cursor: pointer;
+}
+.aw-widget-container[_ngcontent-vya-c824] .aw-widget-image[_ngcontent-vya-c824] .aw-avatar[_ngcontent-vya-c824] {
+    position: absolute;
+    top: 0.375rem;
+    padding-right: 0.0625rem;
+}
+.avatar-large[_ngcontent-vya-c56] {
+    height: 70px;
+    width: 70px;
+}
+.avatar-image[_ngcontent-vya-c56] {
+    height: inherit;
+    width: inherit;
+}
+.avatar-circled[_ngcontent-vya-c56], .name-user[_ngcontent-vya-c56], .avatar-image[_ngcontent-vya-c56], .ac-camera-icon[_ngcontent-vya-c56], [_nghost-vya-c56]:hover .ac-camera-icon-container[_ngcontent-vya-c56], .avatar-tiny[_ngcontent-vya-c56], .avatar-extra-small[_ngcontent-vya-c56], .avatar-smaller[_ngcontent-vya-c56], .avatar-small[_ngcontent-vya-c56], .avatar-medium[_ngcontent-vya-c56], .avatar-large[_ngcontent-vya-c56], [_nghost-vya-c56] {
+    border-radius: 50%;
+}
+.widget-container[_ngcontent-vya-c824] .aw-widget-image[_ngcontent-vya-c824] .aw-appreciation-image[_ngcontent-vya-c824] {
+    width: 7.4375rem;
+}
+.justify-content-center{
+	text-align: center;
 }

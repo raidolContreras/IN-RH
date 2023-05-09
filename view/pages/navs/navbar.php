@@ -1,3 +1,10 @@
+<?php if (!isset($_SESSION['validarIngreso'])): ?>
+      <script>
+        setTimeout(function() {
+          location.href='Login';
+        }, 500);
+      </script>
+<?php endif ?>
 <!-- ============================================================== -->
 <!-- navbar -->
 <!-- ============================================================== -->
@@ -64,7 +71,7 @@
 						</div>
 						<a class="dropdown-item" href="#"><i class="fas fa-user mr-2"></i>Cuenta</a>
 						<a class="dropdown-item" href="#"><i class="fas fa-cog mr-2"></i>Configuraciones</a>
-						<a class="dropdown-item" href="#"><i class="fas fa-power-off mr-2"></i>Cerrar sesión</a>
+						<a class="dropdown-item" href="Salir"><i class="fas fa-power-off mr-2"></i>Cerrar sesión</a>
 					</div>
 				</li>
 			</ul>

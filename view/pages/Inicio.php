@@ -1,15 +1,27 @@
 <div class="container-fluid dashboard-content ">
 
 	<div class="row">
-
-		<div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 col-12">
-			<div class="card rounded">
+<!--Tablero de empleado del mes-->
+		<div class="col-xl-3 col-lg-3 col-md-4 col-sm-12 col-12">
+			<div class="card">
+				<div class="m-2">
+					<?php include "view/pages/modulos/EmpleadoMes.php" ?>
+				</div>
+			</div>
+		</div>
+<!--Tablero de Noticias-->
+		<div class="col-xl-9 col-lg-9 col-md-8 col-sm-12 col-12">
+			<div class="card">
+				<div class="m-2">
+					<?php include "view/pages/modulos/TableroNoticias.php" ?>
+				</div>
+			</div>
+		</div>
+<!--Tablero de epleado del mes-->
+		<div class="col-xl-3 col-lg-3 col-md-4 col-sm-12 col-12">
+			<div class="card">
 				<div class="card-body">
-					<div class="box">
-						<h2 class="hprofile">Calendario de citas</h2>
-						<hr>
-						<div id='calendar2'></div>
-					</div>
+					<?php include "view/pages/modulos/Responsable.php" ?>
 				</div>
 			</div>
 		</div>

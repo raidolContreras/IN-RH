@@ -1,5 +1,17 @@
 <?php
 
+function generarPassword() {
+    $caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    $password = '';
+
+    for ($i = 0; $i < 8; $i++) {
+        $indice = rand(0, strlen($caracteres) - 1);
+        $password .= $caracteres[$indice];
+    }
+
+    return $password;
+}
+
 class ControladorFormularios{
 
 	/*---------- Función hecha para registrar a los empleados---------- */
@@ -20,6 +32,10 @@ class ControladorFormularios{
 				$horario_salida = "";
 			}
 
+		$password = generarPassword();
+
+		$encriptarPassword = crypt($password, '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$');
+
 			$datos = array('nombre' => $_POST['nombre'],
 				'apellidos' => $_POST['apellidos'],
 				'genero' => $_POST['genero'],
@@ -37,6 +53,8 @@ class ControladorFormularios{
 				'estado' => $_POST['estado'],
 				'telefono' => $_POST['telefono'],
 				'email' => $_POST['email'],
+				'password' => $password,
+				'passwordEncriptado' => $encriptarPassword,
 				'emergencia' => $_POST['emergencia'],
 				'telefonoE' => $_POST['telefonoE'],
 				'parentesco' => $_POST['parentesco'],
@@ -612,5 +630,40 @@ class ControladorFormularios{
 		return $respuesta;
 	}
 
+	static public function ctrLogin(){
+
+		if (isset($_POST['loginEmail'])) {
+			$loginEmail = $_POST['loginEmail'];
+			$loginPass = $_POST['loginPass'];
+			$tabla = "empleados";
+			$item = "email";
+			$valor = $loginEmail;
+
+			$respuesta = ModeloFormularios::mdlVerEmpleados($tabla, $item, $valor);
+
+			$encriptarPassword = crypt($loginPass, '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$');
+
+			if($respuesta["email"] == $loginEmail && $respuesta["password"] == $encriptarPassword){
+
+				if ($respuesta["status"] == 1) {
+					$_SESSION["validarIngreso"] = "ok";
+					$_SESSION["idEmpleado"] = $respuesta["idEmpleados"];
+					$_SESSION["name"] = $respuesta["name"];
+					$_SESSION["lastname"] = $respuesta["lastname"];
+					$_SESSION["status"] = $respuesta["status"];
+					$_SESSION["loginEmail"] = $respuesta["email"];
+
+					return 'ok';
+				}else{
+					return 'Error: status';
+				}
+
+			}else{
+			
+				return 'Error: datos';
+			}
+		}
+
+	}
 	/*---------- Fin de ControladorFormularios ---------- */
 }

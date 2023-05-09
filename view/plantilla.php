@@ -1,3 +1,7 @@
+<?php 
+header('Content-Type: text/html; charset=utf-8');
+session_start();
+?>
 <!doctype html>
 <html lang="es">
 
@@ -28,8 +32,6 @@
 	<link href='assets/vendor/full-calendar/css/fullcalendar.css' rel='stylesheet' />
 	<link href='assets/vendor/full-calendar/css/fullcalendar.print.css' rel='stylesheet' media='print' />
 	<link rel="shortcut icon" href="assets/images/logo.png" />
-	<script src='fullcalendar/core/index.global.js'></script>
-	<script src='fullcalendar/core/locales/es.global.js'></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 
@@ -127,6 +129,13 @@
 		<div class="dashboard-wrapper">
 		<div class="dashboard-ecommerce">';
 		include "pages/Vacantes/".$_GET["pagina"].".php";
+
+	}elseif ($_GET["pagina"] == "Login" ||
+			 $_GET["pagina"] == "Salir"
+			) {
+
+		include "pages/Login/".$_GET["pagina"].".php";
+
 	}else{
 		include "pages/404-page.html";
 	}
