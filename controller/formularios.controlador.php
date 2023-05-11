@@ -712,5 +712,66 @@ class ControladorFormularios{
 		return $buscar;
 	}
 
+	static public function ctrCrearNoticia(){
+		if (isset($_POST['fecha_fin'])) {
+			$tabla = 'noticias';
+			$datos = array("fecha_fin" => $_POST['fecha_fin'],
+						   "mensaje" => $_POST['mensaje_noticia'],
+						   "Empleados_idEmpleados" => $_POST['publicado'],
+						   "foto_noticia" => $_POST['foto_noticia']);
+			$noticia = ModeloFormularios::mdlCrearNoticia($tabla,$datos);
+
+			if ($_POST['foto_noticia'] == 1 && $noticia > 0) {
+
+				if (isset($_FILES["image_upload"]) && $_FILES["image_upload"]["error"] == 0) {
+
+					// Obtener los datos del archivo
+					$imagen = $_FILES["image_upload"];
+					$imageName = $noticia;
+
+					// Obtener la extensión del archivo
+					$extension = pathinfo($imagen["name"], PATHINFO_EXTENSION);
+
+					// Renombrar la imagen con el nombre y apellidos proporcionados, más la extensión
+					$imageFileName = $imageName . "." . $extension;
+
+					// Guardar la imagen original en el servidor
+					$uploadPath = "view/noticias/" . $imageFileName;
+					move_uploaded_file($imagen["tmp_name"], $uploadPath);
+
+					// Obtener la ruta para la imagen en miniatura
+					$thumbnailPath = "view/noticias/thumbnails/" . $imageFileName;
+
+					// Cargar la imagen original
+					$originalImage = imagecreatefromstring(file_get_contents($uploadPath));
+
+					// Obtener las dimensiones originales de la imagen
+					$originalWidth = imagesx($originalImage);
+					$originalHeight = imagesy($originalImage);
+
+					// Calcular las nuevas dimensiones para la imagen en miniatura
+					$maxSize = 350;
+					$scale = min($maxSize / $originalWidth, $maxSize / $originalHeight);
+					$newWidth = round($scale * $originalWidth);
+					$newHeight = round($scale * $originalHeight);
+
+					// Crear la imagen en miniatura
+					$thumbnailImage = imagecreatetruecolor($newWidth, $newHeight);
+					imagecopyresampled($thumbnailImage, $originalImage, 0, 0, 0, 0, $newWidth, $newHeight, $originalWidth, $originalHeight);
+
+					// Guardar la imagen en miniatura en el servidor
+					imagepng($thumbnailImage, $thumbnailPath);
+
+					return "ok";
+
+				}
+			}elseif($noticia > 0){
+				return 'ok';
+			}else{
+				return 'Error';
+			}
+		}
+	}
+
 	/*---------- Fin de ControladorFormularios ---------- */
 }

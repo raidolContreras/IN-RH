@@ -1696,7 +1696,7 @@ Left Navigation Sidebar
 .nav-left-sidebar .navbar-nav .nav-item {}
 
 .nav-left-sidebar .navbar-nav .nav-link {
-	font-size: 11px;
+	font-size: 13px;
 	padding: 11px;
 	margin-bottom: 2px;
 	color: #4c4c4c;
@@ -1726,7 +1726,7 @@ Left Navigation Sidebar
 }
 
 .nav-left-sidebar .submenu .nav .nav-item .nav-link {
-	font-size: 10px;
+	font-size: 12px;
 	padding: 6px 10px;
 	transition: 0.3s;
 }

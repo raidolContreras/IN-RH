@@ -135,6 +135,25 @@ session_start();
 
 		include "pages/Login/".$_GET["pagina"].".php";
 
+	}elseif ($_GET["pagina"] == "Noticias"
+			) {
+
+			echo '
+		<!-- ============================================================== -->
+		<!-- main wrapper -->
+		<!-- ============================================================== -->
+		<div class="dashboard-main-wrapper">';
+
+		include "pages/navs/navbar.php";
+		include "pages/navs/sidenav.php"; 
+		echo'
+		<!-- ============================================================== -->
+		<!-- wrapper  -->
+		<!-- ============================================================== -->
+		<div class="dashboard-wrapper">
+		<div class="dashboard-ecommerce">';
+		include "pages/modulos/".$_GET["pagina"].".php";
+
 	}else{
 		include "pages/404-page.html";
 	}

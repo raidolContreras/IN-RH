@@ -10,15 +10,18 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarNav">
 				<ul class="navbar-nav flex-column">
-					<li class="nav-divider">
-						Trabajadores
-					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-1" aria-controls="submenu-1"><i class="fas fa-address-card"></i>Gestión de empleados</a>
+						<a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-1" aria-controls="submenu-1"><i class="fas fa-address-card"></i>EMPLEADOS</a>
 						<div id="submenu-1" class="collapse submenu" style="">
 							<ul class="nav flex-column">
 								<li class="nav-item">
 									<a class="nav-link" href="Empleados">Directorio</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="Puestos">Puestos</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="Departamento">Departamentos</a>
 								</li>
 								<li class="nav-item">
 									<a class="nav-link" href="Nominas">Nóminas</a>
@@ -30,14 +33,11 @@
 						</div>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-2" aria-controls="submenu-2"><i class="fas fa-handshake"></i>Selección y contratación</a>
+						<a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-2" aria-controls="submenu-2"><i class="fas fa-handshake"></i>RECLUTAMIENTO</a>
 						<div id="submenu-2" class="collapse submenu" style="">
 							<ul class="nav flex-column">
 								<li class="nav-item">
-									<a class="nav-link" href="Departamento">Departamentos</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link" href="Puestos">Puestos</a>
+									<a class="nav-link" href="Talento">Bases de talento</a>
 								</li>
 								<li class="nav-item">
 									<a class="nav-link" href="Vacantes">Ofertas de empleo</a>
@@ -47,7 +47,7 @@
 					</li>
 
 					<li class="nav-item">
-						<a class="nav-link" href="Horas"><i class="fas fa-bookmark"></i>Registro de horas</a>
+						<a class="nav-link" href="Horas"><i class="fas fa-bookmark"></i>REGISTRO DE HORAS</a>
 					</li>
 
 					<li class="nav-item">
@@ -68,19 +68,19 @@
 					</li>
 
 					<li class="nav-item">
-						<a class="nav-link" href="#"><i class=" fas fa-check-square"></i>Tareas</a>
+						<a class="nav-link" href="#"><i class=" fas fa-check-square"></i>TAREAS</a>
 					</li>
 
 					<li class="nav-item">
-						<a class="nav-link" href="#"><i class="fas fa-clipboard-check"></i>Evaluaciones</a>
+						<a class="nav-link" href="#"><i class="fas fa-clipboard-check"></i>EVALUACIONES</a>
 					</li>
 
 					<li class="nav-item">
-						<a class="nav-link" href="#"><i class="fas fa-newspaper"></i>Gastos</a>
+						<a class="nav-link" href="#"><i class="fas fa-newspaper"></i>GASTOS</a>
 					</li>
 
 					<li class="nav-item">
-						<a class="nav-link" href="#"><i class="fas fa-newspaper"></i>Análisis e informes</a>
+						<a class="nav-link" href="#"><i class="fas fa-newspaper"></i>ANALISÍS E INFORMES</a>
 					</li>
 
 					<li class="nav-divider">
@@ -88,11 +88,11 @@
 					</li>
 
 					<li class="nav-item">
-						<a class="nav-link" href="Evaluación"><i class="fas fa-table"></i>Evaluación del desempeño</a>
+						<a class="nav-link" href="Evaluación"><i class="fas fa-table"></i>EVALUACION DEL DESEMPEÑO</a>
 					</li>
 
 					<li class="nav-item">
-						<a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-8" aria-controls="submenu-8"><i class="fab fa-rocketchat"></i>Comunicación interna</a>
+						<a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-8" aria-controls="submenu-8"><i class="fab fa-rocketchat"></i>COMUNICACIÓN INTERNA</a>
 						<div id="submenu-8" class="collapse submenu" style="">
 							<ul class="nav flex-column">
 								<li class="nav-item">
@@ -107,30 +107,11 @@
 							</ul>
 						</div>
 					</li>
-<!--
-					<li class="nav-item">
-						<a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-9" aria-controls="submenu-9"><i class="fas fa-f fa-folder"></i>Formación y desarrollo</a>
-						<div id="submenu-9" class="collapse submenu" style="">
-							<ul class="nav flex-column">
-								<li class="nav-item">
-									<a class="nav-link" href="#">Level 1</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link" href="#">Level 2</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link" href="#">Level 3</a>
-								</li>
-							</ul>
-						</div>
-					</li>
--->
 					<li class="nav-divider">
 						Acciones
 					</li>
-
 					<li class="nav-item">
-						<a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-11" aria-controls="submenu-11"><i class="fas fa-book"></i>Control de asistencias</a>
+						<a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-11" aria-controls="submenu-11"><i class="fas fa-book"></i>CONTROL DE ASISTENCIAS</a>
 						<div id="submenu-11" class="collapse submenu" style="">
 							<ul class="nav flex-column">
 								<li class="nav-item">

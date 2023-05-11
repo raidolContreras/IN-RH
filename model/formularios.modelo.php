@@ -896,7 +896,24 @@ class ModeloFormularios{
 		$stmt->execute();
 		return $stmt -> fetch();
 		$stmt->close();
-		$stmt = null;	
+		$stmt = null;
+	}
+
+	static public function mdlCrearNoticia($tabla, $datos){
+		$pdo = Conexion::conectar();
+		$stmt = $pdo->prepare("INSERT INTO $tabla(Empleados_idEmpleados, mensaje, fecha_fin, foto_noticia) VALUES (:Empleados_idEmpleados, :mensaje, :fecha_fin, :foto_noticia)");
+
+		$stmt->bindParam(":Empleados_idEmpleados", $datos['Empleados_idEmpleados'], PDO::PARAM_INT);
+		$stmt->bindParam(":mensaje", $datos['mensaje'], PDO::PARAM_STR);
+		$stmt->bindParam(":fecha_fin", $datos['fecha_fin'], PDO::PARAM_STR);
+		$stmt->bindParam(":foto_noticia", $datos['foto_noticia'], PDO::PARAM_INT);
+		if ($stmt->execute()) {
+			return $pdo->lastInsertId();
+		}else{
+			print_r(Conexion::conectar()->errorInfo());
+		}
+		$stmt->close();
+		$stmt = null;
 	}
 
 	/*---------- Fin de ModeloFormularios ---------- */
