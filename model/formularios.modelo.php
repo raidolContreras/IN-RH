@@ -534,6 +534,29 @@ class ModeloFormularios{
 		$stmt = null;	
 	}
 
+	static public function mdlActualizarVacantes($tabla, $datos){
+
+		$sql = "UPDATE vacantes SET nameVacante=:nameVacante,salarioVacante=:salarioVacante,requisitos=:requisitos,Departamentos_idDepartamentos=:Departamentos_idDepartamentos WHERE idVacantes = :idVacante";
+		$stmt = Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":nameVacante", $datos['nameVacante'], PDO::PARAM_STR);
+		$stmt->bindParam(":salarioVacante", $datos['salarioVacante'], PDO::PARAM_STR);
+		$stmt->bindParam(":requisitos", $datos['requisitos'], PDO::PARAM_STR);
+		$stmt->bindParam(":Departamentos_idDepartamentos", $datos['Departamentos_idDepartamentos'], PDO::PARAM_STR);
+		$stmt->bindParam(":idVacante", $datos['idVacante'], PDO::PARAM_INT);
+
+		if ($stmt->execute()) {
+			return 'ok';
+		}
+		else{
+
+			print_r(Conexion::conectar()->errorInfo());
+		}
+
+		$stmt->close();
+		$stmt = null;	
+	}
+
 	/*---------- Función hecha para ver a los empleados---------- */
 	static public function mdlVerTabla($tabla, $item, $valor){
 

@@ -416,6 +416,29 @@ class ControladorFormularios{
 			}
 		}
 	}
+	
+	static public function ctrActualizarVacantes($idVacante){
+
+		if (isset($_POST['name'])) {
+			if (preg_match('/^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["name"])){
+				$tabla = "vacantes";
+				$datos = array("nameVacante" => $_POST['name'],
+							   "salarioVacante" => $_POST['salario'],
+							   "Departamentos_idDepartamentos" => $_POST['departamento'],
+							   "requisitos" => $_POST['requisitos'],
+							   "idVacante" => $idVacante);
+				$registro = ModeloFormularios::mdlActualizarVacantes($tabla,$datos);
+				if ($registro == 'ok') {
+					return 'ok';
+				}else{
+					return 'Error';
+				}
+
+			}else{
+				return "2";
+			}
+		}
+	}
 
 	/*---------- Función hecha para ver a los empleados---------- */
 	static public function ctrVerPuestos($item, $valor){
@@ -688,6 +711,6 @@ class ControladorFormularios{
 		$buscar = ModeloFormularios::mdlSeleccionarEmpleadoMes($tabla);
 		return $buscar;
 	}
-	
+
 	/*---------- Fin de ControladorFormularios ---------- */
 }

@@ -32,7 +32,7 @@
 						Crear Oferta de Empleo <i class="icon-briefcase"></i>
 					</a>
 					<div class="table-responsive">
-						<table id="example" class="table table-striped table-bordered second" style="width:100%">
+						<table id="example" class="table table-striped table-bordered Extras" style="width:100%">
 							<thead>
 								<tr>
 									<th>Departamento</th>
@@ -65,21 +65,17 @@
 											<?php endif ?>
 										</td>
 										<td>
-											<table>
-												<tr>
-													<td>
-														<form method="POST" action="Vacantes-EliminarVacante">
-															<input type="hidden" name="Eliminar" value="<?php echo $vacante['idVacantes'] ?>">
-															<button type="submit" class="btn btn-outline-danger rounded btn-block"><i class="fas fa-trash"></i></button>
-														</form>
-													</td>
-													<td>
-														<a class="btn btn-outline-primary rounded" href="Postulacion&vacante=<?php echo $vacante['idVacantes'] ?>">
-															<i class="fas fa-user-plus"></i>
-														</a>
-													</td>
-												</tr>
-											</table>
+											<div class="dropdown">
+											  <button class="btn btn-link" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+											    <i class="fas fa-ellipsis-v"></i>
+											  </button>
+											  <div class="dropdown-menu mr-0" aria-labelledby="dropdownMenuButton">
+											    <a class="dropdown-item" href="Vacantes-CrearVacante&Editar=<?php echo $vacante['idVacantes'] ?>"><i class="fas fa-edit"></i> Editar</a>
+											    <a class="dropdown-item" href="Vacantes-EliminarVacante&Eliminar=<?php echo $vacante['idVacantes'] ?>"><i class="fas fa-trash"></i> Eliminar</a>
+											    <a class="dropdown-item" href="Postulacion&vacante=<?php echo $vacante['idVacantes'] ?>">
+											    <i class="fas fa-user-plus"></i> Agregar</a>
+											  </div>
+											</div>
 										</td>
 									</tr>
 									

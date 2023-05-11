@@ -1,6 +1,6 @@
 <?php 
 $eliminar = ControladorFormularios::ctrEliminarVacante(); 
-$datos = ControladorFormularios::ctrVerVacantes("idVacantes",$_POST['Eliminar']);
+$datos = ControladorFormularios::ctrVerVacantes("idVacantes",$_GET['Eliminar']);
 ?>
 <div class="container-fluid dashboard-content ">
 	<!-- ============================================================== -->
@@ -64,7 +64,7 @@ $datos = ControladorFormularios::ctrVerVacantes("idVacantes",$_POST['Eliminar'])
 			</div>
 			<div class="card-footer-item card-footer-item-bordered">
 				<form method="POST">
-					<input type="hidden" name="vacante" value="<?php echo $_POST['Eliminar']; ?>">
+					<input type="hidden" name="vacante" value="<?php echo $_GET['Eliminar']; ?>">
 				    <button type="submit" name="accion" class="card-link btn btn-outline-secondary">Eliminar</button>
 				</form>
 			</div>
