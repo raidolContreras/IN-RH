@@ -66,12 +66,6 @@
 														<input type="hidden" name="Edicion" value="">
 														<a href="EditarPuesto&puesto<?php echo $puesto['idPuesto'] ?>" class="btn btn-primary rounded btn-block"><i class="far fa-edit"></i></a>
 													</td>
-													<td>
-														<form method="POST" action="EliminarDepto">
-															<input type="hidden" name="Eliminar" value="">
-															<button type="submit" class="btn btn-danger rounded btn-block"><i class="fas fa-trash"></i></button>
-														</form>
-													</td>
 												</tr>
 											</table>
 										</td>

@@ -244,17 +244,32 @@ class ModeloFormularios{
 
 	static public function mdlEliminarEmpleado($tabla, $idEmpleado){
 
-		$sql = "UPDATE $tabla SET status = 0 WHERE idEmpleados=$idEmpleado";
-		$stmt = Conexion::conectar()->prepare($sql);
-		if ($stmt->execute()) {
+		$puesto = ControladorFormularios::ctrVerPuestos("Empleados_idEmpleados", $idEmpleado);
 
-			return 'ok';
+		$sql = "UPDATE $tabla SET status = 0 WHERE idEmpleados = $idEmpleado;";
+		$sql .= "UPDATE puesto SET status = 0 WHERE idPuesto = ".$puesto['idPuesto'].";";
+
+
+		$tabla2 = "vacantes";
+		$datos = array("nameVacante" => $puesto['namePuesto'],
+					   "salarioVacante" => $puesto['salario'],
+					   "Departamentos_idDepartamentos" => $puesto['Departamentos_idDepartamentos'],
+					   "requisitos" => "Nueva Vacante");
+		$registro = ModeloFormularios::mdlRegistrarVacantes($tabla2,$datos);
+
+		if ($registro == 'ok') {
+
+			$stmt = Conexion::conectar()->prepare($sql);
+			if ($stmt->execute()) {
+				return 'ok';
+			}
+			else{
+				print_r(Conexion::conectar()->errorInfo());
+			}
+
+		}else{
+			return 'Error';
 		}
-		else{
-
-			print_r(Conexion::conectar()->errorInfo());
-		}
-
 		$stmt->close();
 		$stmt = null;
 	}
