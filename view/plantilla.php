@@ -33,8 +33,7 @@ session_start();
 	<link href='assets/vendor/full-calendar/css/fullcalendar.print.css' rel='stylesheet' media='print' />
 	<link rel="shortcut icon" href="assets/images/logo.png" />
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
-
+	<script src="https://cdn.tiny.cloud/1/ojrrit6i20fvuzvl2sioxzrflc9dh7gpi3gosuyrwgzfa18y/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 	
 	<?php if (isset($_GET["pagina"])): ?>
 		<title><?php echo 'IN Consulting México - '.$_GET["pagina"]; ?></title>
@@ -175,7 +174,6 @@ session_start();
 <!-- ============================================================== -->
 
 <!-- JavaScript de Bootstrap 4 y jQuery -->
-<script src="assets/vendor/jquery/jquery-3.3.1.min.js"></script>
 <script src="assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
 <script src="assets/vendor/slimscroll/jquery.slimscroll.js"></script>
 <script src="assets/vendor/multi-select/js/jquery.multi-select.js"></script>

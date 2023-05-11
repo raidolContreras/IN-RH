@@ -190,7 +190,7 @@ class ModeloFormularios{
 			$stmt = Conexion::conectar()->prepare("SELECT e.idEmpleados, e.name, e.lastname, e.genero, e.fNac, e.phone, e.email, e.password, e.identificacion, e.NSS, e.RFC, e.street, e.numE, e.numI, e.colonia, e.CP, e.estado, e.municipio, e.fecha_contratado, e.status, m.nameEmer, m.parentesco, m.phoneEmer 
 				FROM empleados e 
 				INNER JOIN emergencia m ON e.idEmpleados = m.Empleados_idEmpleados 
-				WHERE status = 1 && $item = :$item");
+				WHERE $item = :$item");
 			$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
 			$stmt->execute();
 			return $stmt -> fetch();
@@ -828,6 +828,38 @@ class ModeloFormularios{
 			return 'no enviado';
 		}
 
+	}
+
+	static public function mdlEmpleadoMes($tabla,$datos){
+		$sql = "INSERT INTO $tabla(Empleados_idEmpleados, mensaje, Publicado_idEmpleados) VALUES (:Empleados_idEmpleados, :mensaje, :Publicado_idEmpleados)";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":Empleados_idEmpleados", $datos['Empleados_idEmpleados'], PDO::PARAM_INT);
+		$stmt->bindParam(":mensaje", $datos['mensaje'], PDO::PARAM_STR);
+		$stmt->bindParam(":Publicado_idEmpleados", $datos['Publicado_idEmpleados'], PDO::PARAM_INT);
+
+		if ($stmt->execute()) {
+			return 'ok';
+		}else{
+			print_r(Conexion::conectar()->errorInfo());
+		}
+
+		$stmt->close();
+		$stmt = null;	
+	}
+
+	static public function mdlSeleccionarEmpleadoMes($tabla){
+
+		$stmt = Conexion::conectar()->prepare("
+			SELECT * FROM $tabla
+			JOIN empleados ON empleados.idEmpleados = $tabla.Empleados_idEmpleados
+			JOIN foto_empleado ON foto_empleado.Empleados_idEmpleados = $tabla.Empleados_idEmpleados
+			ORDER BY fecha_publicacion DESC LIMIT 1");
+		$stmt->execute();
+		return $stmt -> fetch();
+		$stmt->close();
+		$stmt = null;	
 	}
 
 	/*---------- Fin de ModeloFormularios ---------- */

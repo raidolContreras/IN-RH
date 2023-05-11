@@ -665,5 +665,29 @@ class ControladorFormularios{
 		}
 
 	}
+
+	static public function ctrEmpleadoMes($empleadoMes, $mensaje, $publicado){
+
+		$tabla = 'empleado_mes';
+
+		$datos = array("Empleados_idEmpleados" => $empleadoMes,
+						"mensaje" => $mensaje,
+						"Publicado_idEmpleados" => $publicado);
+
+		$registrar = ModeloFormularios::mdlEmpleadoMes($tabla,$datos);
+
+		if ($registrar == 'ok') {
+			return $registrar;
+		}else{
+			return 'Error';
+		}
+	}
+
+	static public function ctrSeleccionarEmpleadoMes(){
+		$tabla = 'empleado_mes';
+		$buscar = ModeloFormularios::mdlSeleccionarEmpleadoMes($tabla);
+		return $buscar;
+	}
+	
 	/*---------- Fin de ControladorFormularios ---------- */
 }

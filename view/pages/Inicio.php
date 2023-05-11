@@ -1,7 +1,6 @@
 <div class="container-fluid dashboard-content ">
 
 	<div class="row">
-		
 <!--Tablero de empleado del mes-->
 		<div class="row col-xl-3 col-lg-3 col-md-4 col-sm-12 col-12">
 			<div class="col-12">

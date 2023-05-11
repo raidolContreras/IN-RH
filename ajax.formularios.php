@@ -77,6 +77,22 @@ class FormulariosAjax{
 
 	}
 
+	public function empleadoMesAjax(){
+		
+		$empleadoMes = $this->empleadoMes;
+		$mensaje = $this->mensaje;
+		$publicado = $this->publicado;
+
+		$ingresar = ControladorFormularios::ctrEmpleadoMes($empleadoMes, $mensaje, $publicado);
+
+		if ($ingresar == 'ok') {
+		    echo json_encode('ok');
+		} else {
+		    echo json_encode('Error');
+		}
+
+	}
+
 }
 
 if(isset($_POST["validate"])){
@@ -145,4 +161,15 @@ if (isset($_POST['loginEmail'])) {
 	$login -> loginEmail = $_POST['loginEmail'];
 	$login -> loginPass = $_POST['loginPass'];
 	$login -> iniciarSesionAjax();
+}
+
+if (isset($_POST['empleadoMes'])) {
+	if (isset($_POST['mensaje'])) {
+		$empleado_mes = new FormulariosAjax();
+		$empleado_mes -> empleadoMes = $_POST['empleadoMes'];
+		$empleado_mes -> mensaje = $_POST['mensaje'];
+		$empleado_mes -> publicado = $_POST['publicado'];
+		$empleado_mes -> empleadoMesAjax();
+	}
+
 }
