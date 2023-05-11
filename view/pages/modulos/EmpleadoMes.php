@@ -1,6 +1,7 @@
 <?php 
 $empleados = ControladorFormularios::ctrVerEmpleados(null, null); 
-$empleadoMes = ControladorFormularios::ctrSeleccionarEmpleadoMes(); 
+$empleadoMes = ControladorFormularios::ctrSeleccionarEmpleadoMes();
+$fotoEmpleado = ControladorFormularios::ctrVerFotos("Empleados_idEmpleados", $empleadoMes['idEmpleados']); 
 ?>
 <?php if (isset($empleadoMes['name'])): ?>
 	<?php $datosPublicante = ControladorFormularios::ctrVerEmpleados("idEmpleados", $empleadoMes['Publicado_idEmpleados']);  ?>
@@ -25,7 +26,19 @@ $empleadoMes = ControladorFormularios::ctrSeleccionarEmpleadoMes();
 	<div class="col-12 mb-0 pb-0">
 		<div class="center-all cursor-pointer">
 			<div class="widget-container widget-mb-10px pb-3">
-				<img src="view/fotos/thumbnails/<?php echo $empleadoMes['namePhoto'] ?>" size="large"	alt="User Avatar" class="rounded-circle user-avatar-xl2 arriba">
+
+				<?php if (isset($fotoEmpleado['namePhoto'])): ?>
+					<img src="view/fotos/thumbnails/<?php echo $fotoEmpleado['namePhoto'] ?>"
+				<?php else: ?>
+					<?php if ($empleadoMes['genero']==1): ?>
+						<img src="assets/images/Ejecutivo.webp"
+					<?php else: ?>
+						<img src="assets/images/Ejecutiva.webp"
+					<?php endif ?>
+				<?php endif ?>
+
+				size="large" alt="User Avatar" class="rounded-circle user-avatar-xl2 arriba">
+
 				<img src="assets/images/appreciation.svg" alt="Winner" class="abajo">
 			</div>
 			<h3 class="in-text"><?php echo $empleadoMes['name']." ".$empleadoMes['lastname'] ?></h3>
@@ -163,12 +176,16 @@ $empleadoMes = ControladorFormularios::ctrSeleccionarEmpleadoMes();
 
 	    var mensaje;
 
-	    if (minutosTranscurridos < 30) {
-	      mensaje = "Hace unos minutos";
-	    } else if (minutosTranscurridos >= 30 && minutosTranscurridos <= 59) {
+	    if (minutosTranscurridos < 1) {
+	      mensaje = "Hace un momento";
+	    } else if (minutosTranscurridos == 1) {
+	      mensaje = "Hace " + minutosTranscurridos + " minuto";
+	    }  else if (minutosTranscurridos > 1 && minutosTranscurridos <= 59) {
 	      mensaje = "Hace " + minutosTranscurridos + " minutos";
-	    } else if (horasTranscurridas >= 1 && horasTranscurridas <= 23) {
-	      mensaje = "Hace " + horasTranscurridas + " hora(s) con " + (minutosTranscurridos % 60) + " minutos";
+	    } else if (horasTranscurridas == 1) {
+	      mensaje = "Hace " + horasTranscurridas + " hora";
+	    } else if (horasTranscurridas >= 2 && horasTranscurridas <= 23) {
+	      mensaje = "Hace " + horasTranscurridas + " horas";
 	    } else {
 	      mensaje = "Hace " + diasTranscurridos + " días";
 	    }

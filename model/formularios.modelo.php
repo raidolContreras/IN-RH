@@ -892,7 +892,6 @@ class ModeloFormularios{
 		$stmt = Conexion::conectar()->prepare("
 			SELECT * FROM $tabla
 			JOIN empleados ON empleados.idEmpleados = $tabla.Empleados_idEmpleados
-			JOIN foto_empleado ON foto_empleado.Empleados_idEmpleados = $tabla.Empleados_idEmpleados
 			ORDER BY fecha_publicacion DESC LIMIT 1");
 		$stmt->execute();
 		return $stmt -> fetch();
