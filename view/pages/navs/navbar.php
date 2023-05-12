@@ -5,6 +5,11 @@
         }, 500);
       </script>
 <?php endif ?>
+<?php 
+$primerLetra = strtoupper(substr($_SESSION["name"], 0, 1)); // Extrae la primer letra del texto
+$segundaLetra = strtoupper(substr($_SESSION["lastname"], 0, 1)); // Extrae la primer letra del texto
+$perfil = $primerLetra.$segundaLetra;
+ ?>
 <!-- ============================================================== -->
 <!-- navbar -->
 <!-- ============================================================== -->
@@ -15,6 +20,52 @@
 			<span class="fas fa-bars"></span>
 		</button>
 		<div class="collapse navbar-collapse " id="navbarSupportedContent">
+			<ul class="navbar-nav navbar-left-top">
+				<li class="nav-item"></li>
+				<?php if (isset($_GET['pagina'])): ?>
+					
+				<?php 
+					$paginas = array('Empleados', 'Departamento', 'Nominas', 'Organigrama');
+					$paginaActual = $_GET['pagina'];
+
+					if (!empty($paginaActual) && in_array($paginaActual, $paginas)) {
+					    foreach ($paginas as $pagina) {
+					        $activeClass = ($paginaActual == $pagina) ? ' active' : '';
+					        $marginLeftClass = ($pagina != $paginas[0]) ? ' ml-3' : '';
+					        
+					        echo '<li class="nav-item' . $activeClass . $marginLeftClass . '">';
+					        if ($pagina == 'Nominas') {
+					        	echo '<a href="' . $pagina . '"> Nóminas </a>';
+					        }else{
+						        echo '<a href="' . $pagina . '">' . ucfirst($pagina) . '</a>';
+						      }
+					        echo '</li>';
+					    }
+					}
+					?>
+
+				<?php 
+					$paginas = array( 'Vacantes','Talento');
+					$paginaActual = $_GET['pagina'];
+
+					if (!empty($paginaActual) && in_array($paginaActual, $paginas)) {
+					    foreach ($paginas as $pagina) {
+					        $activeClass = ($paginaActual == $pagina) ? ' active' : '';
+					        $marginLeftClass = ($pagina != $paginas[0]) ? ' ml-3' : '';
+					        
+					        echo '<li class="nav-item' . $activeClass . $marginLeftClass . '">';
+					        if ($pagina == 'Vacantes') {
+					        	echo '<a href="' . $pagina . '"> Ofertas de empleo </a>';
+					        }else{
+						        echo '<a href="' . $pagina . '"> Bases de talento </a>';
+						      }
+					        echo '</li>';
+					    }
+					}
+					?>
+
+				<?php endif ?>
+			</ul>
 			<ul class="navbar-nav ml-auto navbar-right-top">
 				<li class="nav-item dropdown notification">
 					<a class="nav-link nav-icons" href="#" id="navbarDropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-fw fa-bell"></i> <span class="indicator"></span></a>
@@ -64,10 +115,14 @@
 					</ul>
 				</li>
 				<li class="nav-item dropdown nav-user">
-					<a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="assets/images/avatar-1.jpg" alt="" class="user-avatar-md rounded-circle"></a>
+					<a class="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<span style="background-color: #29CEE8; border-radius: 50%; width: 40px; height: 40px; display: inline-flex; justify-content: center; align-items: center;">
+					        <p class="mt-1" style="color: white;"><?php echo $perfil; ?></p>
+					  </span>
+					</a>
 					<div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">
 						<div class="nav-user-info">
-							<h5 class="mb-0 text-white nav-user-name">John Abraham </h5>
+							<h5 class="mb-0 text-white nav-user-name"><?php echo $_SESSION['name']." ".$_SESSION['lastname'] ?></h5>
 						</div>
 						<a class="dropdown-item" href="#"><i class="fas fa-user mr-2"></i>Cuenta</a>
 						<a class="dropdown-item" href="#"><i class="fas fa-cog mr-2"></i>Configuraciones</a>

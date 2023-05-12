@@ -1228,7 +1228,7 @@ Top Header
 .dashboard-header {}
 
 .dashboard-header .navbar {
-	padding: 0px;
+	padding: 1px;
 	border-bottom: 1px solid #e6e6f2;
 	-webkit-box-shadow: 0px 0px 28px 0px rgba(82, 63, 105, 0.13);
 	box-shadow: 0px 0px 28px 0px rgba(82, 63, 105, 0.13);
@@ -1236,16 +1236,12 @@ Top Header
 	min-height: 60px;
 }
 
-
-
 .navbar-brand {
 	display: inline-block;
-	margin-right: 1rem;
 	line-height: inherit;
 	white-space: nowrap;
-	padding: 11px 20px;
+	padding: 10px 30px;
 	font-size: 30px;
-	font-weight: 700;
 	color: #333;
 }
 .navbar-brand:hover{
@@ -1268,13 +1264,32 @@ Top Header
 	line-height: 2;
 	color: #82849f;
 }
+.navbar-left-top {}
 
+.navbar-left-top .nav-item:first-child {
+	padding-left: 10px;
+	border-left: 1px solid #e6e6f2;
+	border-bottom: 0px;
+}
+.navbar-left-top .nav-item {
+  border-bottom: 2px solid #e6e6f2;
+}
 
-/* ------  top-search-bar --------  */
+.navbar-left-top .nav-item:focus,
+.navbar-left-top .nav-item.active {
+  border-bottom: 2px solid #29B4E8;
+}
 
-.top-search-bar {
-	padding-top: 12px;
-	padding-right: 24px;
+.navbar-left-top .nav-item .nav-link {
+  padding: 13px 20px;
+  font-size: 16px;
+  line-height: 2;
+  color: #82849f;
+}
+
+.navbar-left-top .nav-item .nav-link:focus,
+.navbar-left-top .nav-item .nav-link.active {
+  color: #29B4E8 !important;
 }
 
 
@@ -1690,13 +1705,14 @@ Left Navigation Sidebar
 
 .nav-left-sidebar .navbar {
 	position: relative;
-	padding: 14px;
+	padding-top: 14px;
+	padding: 2px;
 }
 
 .nav-left-sidebar .navbar-nav .nav-item {}
 
 .nav-left-sidebar .navbar-nav .nav-link {
-	font-size: 13px;
+	font-size: 10px;
 	padding: 11px;
 	margin-bottom: 2px;
 	color: #4c4c4c;
@@ -1810,10 +1826,7 @@ Leftsidebar - dark
 ------------------------- */
 
 .sidebar-dark {
-	background-color: #eee;
-	-webkit-box-shadow: 0px 0px 28px 0px rgba(82, 63, 105, 0.13);
-	box-shadow: 0px 0px 28px 0px rgba(82, 63, 105, 0.13);
-	-webkit-transition: all 0.3s ease;
+	background-color: #fff;
 }
 
 .sidebar-dark .nav-divider {
@@ -2382,10 +2395,6 @@ clip-path: polygon(10% 25%, 10% 0, 35% 0%, 65% 0%, 90% 0, 90% 25%, 90% 50%, 91% 
 .custom-color-yellow.custom-radio .custom-control-input:checked~.custom-control-label::before{background-color: #ffdc40; border-color: #ffdc40;}
 .custom-color-black.custom-radio .custom-control-input:checked~.custom-control-label::before{background-color: #111111; border-color: #111111;}
 
-
-
-
-
 .product-slider{background-color: #fff;  border-top-left-radius: 4px; border-bottom-left-radius: 4px; padding: 110px;}
 .product-carousel{}
 .product-carousel .carousel-indicators {
@@ -2417,8 +2426,6 @@ clip-path: polygon(10% 25%, 10% 0, 35% 0%, 65% 0%, 90% 0, 90% 25%, 90% 50%, 91% 
 	border-radius: 100%;
 }
 .product-carousel .carousel-indicators li.active{ background-color: #5969ff; }
-.product-carousel .carousel-control-next, .carousel-control-prev {display: none;}
-
 
 .product-details{ background-color: #fff; padding: 30px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; position: relative;}
 .product-colors {padding-bottom: 10px; margin-bottom: 10px;}

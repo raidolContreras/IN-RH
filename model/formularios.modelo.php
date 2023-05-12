@@ -916,5 +916,43 @@ class ModeloFormularios{
 		$stmt = null;
 	}
 
+	static public function mdlVerNoticias($tabla, $item, $valor){
+
+		if ($item == null && $valor == null) {
+			$sql = "SELECT * FROM $tabla WHERE fecha_fin > CURDATE()";
+			$stmt = Conexion::conectar()->prepare($sql);
+			$stmt->execute();
+			return $stmt -> fetchAll();
+		}else{
+			$sql = "SELECT * FROM $tabla WHERE $item = :$item";
+			$stmt = Conexion::conectar()->prepare($sql);
+			$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
+			$stmt->execute();
+			return $stmt -> fetch();
+		}
+
+		$stmt->close();
+		$stmt = null;
+
+	}
+
+	static public function mdlImagenNoticia($id, $name){
+		$sql = "UPDATE noticias SET name_foto=:name_foto WHERE idNoticias=:idNoticias";
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->bindParam(":name_foto", $name, PDO::PARAM_STR);
+		$stmt->bindParam(":idNoticias", $id, PDO::PARAM_INT);
+		if ($stmt->execute()) {
+
+			return "ok";
+		}
+		else{
+
+			print_r(Conexion::conectar()->errorInfo());
+		}
+
+		$stmt->close();
+		$stmt = null;	
+	}
+
 	/*---------- Fin de ModeloFormularios ---------- */
 }

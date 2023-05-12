@@ -6759,6 +6759,13 @@ a.bg-dark:focus, a.bg-dark:hover {
   padding-bottom: 3rem !important;
 }
 
+.pt-6 {
+  padding-top: 4rem !important;
+}
+.pb-6 {
+  padding-bottom: 4rem !important;
+}
+
 .m-auto {
   margin: auto !important;
 }

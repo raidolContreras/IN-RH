@@ -762,7 +762,8 @@ class ControladorFormularios{
 					// Guardar la imagen en miniatura en el servidor
 					imagepng($thumbnailImage, $thumbnailPath);
 
-					return "ok";
+					$imagen = ModeloFormularios::mdlImagenNoticia($noticia,$imageFileName);
+					return $imagen;
 
 				}
 			}elseif($noticia > 0){
@@ -771,6 +772,12 @@ class ControladorFormularios{
 				return 'Error';
 			}
 		}
+	}
+
+	static public function ctrVerNoticias($item, $valor){
+		$tabla = 'noticias';
+		$respuesta = ModeloFormularios::mdlVerNoticias($tabla, $item, $valor);
+		return $respuesta;
 	}
 
 	/*---------- Fin de ControladorFormularios ---------- */

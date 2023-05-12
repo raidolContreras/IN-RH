@@ -23,6 +23,15 @@
 		<div class="col-xl-9 col-lg-9 col-md-8 col-sm-12 col-12">
 			<div class="card">
 				<div class="m-2">
+					<div class="pr-3 pt-3">
+						<div class="float-right pr-2">
+							<p class="titulo-sup m-0">
+								<a href="Noticias" class="btn-outline-light boton" >
+									<i class="fas fa-plus"></i>
+								</a>
+							</p>
+						</div>
+					</div>
 					<?php include "view/pages/modulos/TableroNoticias.php" ?>
 				</div>
 			</div>
