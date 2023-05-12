@@ -919,7 +919,7 @@ class ModeloFormularios{
 	static public function mdlVerNoticias($tabla, $item, $valor){
 
 		if ($item == null && $valor == null) {
-			$sql = "SELECT * FROM $tabla WHERE fecha_fin > CURDATE()";
+			$sql = "SELECT * FROM $tabla WHERE fecha_fin+1 > CURDATE()";
 			$stmt = Conexion::conectar()->prepare($sql);
 			$stmt->execute();
 			return $stmt -> fetchAll();

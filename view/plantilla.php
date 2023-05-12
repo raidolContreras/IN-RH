@@ -135,8 +135,8 @@ session_start();
 
 		include "pages/Login/".$_GET["pagina"].".php";
 
-	}elseif ($_GET["pagina"] == "Noticias"
-			) {
+	}elseif ($_GET["pagina"] == "Noticias" ||
+			 $_GET["pagina"] == "TableroNoticias"	) {
 
 			echo '
 		<!-- ============================================================== -->

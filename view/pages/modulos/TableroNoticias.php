@@ -47,17 +47,18 @@
 						</div>
 						<?php if ($noticia['foto_noticia'] == 1): ?>
 								<div class="col-8 pl-4 pt-2 pb-4">
-									<div class="card-into-card rounded pt-5 pb-5">
-										<div class="pt-5 pb-5">
-											<?php echo $noticia['mensaje']; ?>
-										</div>
-									</div>
+								  <div class="card-into-card rounded pt-5 pb-5 h-100 d-flex align-items-center">
+								    <div>
+								      <?php echo $noticia['mensaje']; ?>
+								    </div>
+								  </div>
 								</div>
 								<div class="col-4 pr-4 pt-2 pb-4">
-									<div class="card-into-card rounded">
-										<img src="view/noticias/thumbnails/<?php echo $noticia['name_foto']; ?>" height="280">
-									</div>
+								  <div class="card-into-card rounded">
+								    <img src="view/noticias/<?php echo $noticia['name_foto']; ?>" class="img-fluid w-100" alt="Imagen de la noticia">
+								  </div>
 								</div>
+
 						<?php else: ?>
 							<div class="col-12 pl-4 pr-4 pt-2 pb-4">
 								<div class="card-into-card rounded">

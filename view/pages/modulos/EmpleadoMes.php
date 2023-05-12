@@ -37,7 +37,7 @@ $fotoEmpleado = ControladorFormularios::ctrVerFotos("Empleados_idEmpleados", $em
 					<?php endif ?>
 				<?php endif ?>
 
-				size="large" alt="User Avatar" class="rounded-circle user-avatar-xl2 arriba">
+				size="large" alt="User Avatar" class="rounded-circle user-avatar-xl2 arriba mt-2">
 
 				<img src="assets/images/appreciation.svg" alt="Winner" class="abajo">
 			</div>
