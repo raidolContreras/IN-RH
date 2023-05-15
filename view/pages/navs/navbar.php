@@ -29,13 +29,13 @@ $perfil = $primerLetra.$segundaLetra;
 				<?php if (isset($_GET['pagina'])): ?>
 				<?php 
 				//Menu de empleados
-					$paginas = array('Empleados', 'Departamento', 'Nominas', 'Organigrama');
+					$empleados = array('Empleados', 'Departamento', 'Nominas', 'Organigrama');
 					$paginaActual = $_GET['pagina'];
 
-					if (!empty($paginaActual) && in_array($paginaActual, $paginas)) {
-					    foreach ($paginas as $pagina) {
+					if (!empty($paginaActual) && in_array($paginaActual, $empleados)) {
+					    foreach ($empleados as $pagina) {
 					        $activeClass = ($paginaActual == $pagina) ? ' active' : '';
-					        $marginLeftClass = ($pagina != $paginas[0]) ? ' ml-3' : '';
+					        $marginLeftClass = ($pagina != $empleados[0]) ? ' ml-3' : '';
 					        
 					        echo '<li class="nav-item' . $activeClass . $marginLeftClass . '">';
 					        if ($pagina == 'Nominas') {
@@ -52,13 +52,13 @@ $perfil = $primerLetra.$segundaLetra;
 
 				<?php 
 				//Menu de empleado individual
-					$paginas = array('Empleado', 'Datos');
+					$empleado = array('Empleado', 'Datos');
 					$paginaActual = $_GET['pagina'];
 
-					if (!empty($paginaActual) && in_array($paginaActual, $paginas)) {
-					    foreach ($paginas as $pagina) {
+					if (!empty($paginaActual) && in_array($paginaActual, $empleado)) {
+					    foreach ($empleado as $pagina) {
 					        $activeClass = ($paginaActual == $pagina) ? ' active' : '';
-					        $marginLeftClass = ($pagina != $paginas[0]) ? ' ml-3' : '';
+					        $marginLeftClass = ($pagina != $empleado[0]) ? ' ml-3' : '';
 					        
 					        echo '<li class="nav-item' . $activeClass . $marginLeftClass . '">';
 					        if ($pagina == 'Datos') {
@@ -73,12 +73,12 @@ $perfil = $primerLetra.$segundaLetra;
 
 				<?php 
 				//Menu de de Bolsa de trabajo
-					$paginas = array( 'Vacantes','Talento');
+					$Vacantes = array( 'Vacantes','Talento');
 					$paginaActual = $_GET['pagina'];
-					if (!empty($paginaActual) && in_array($paginaActual, $paginas)) {
-					    foreach ($paginas as $pagina) {
+					if (!empty($paginaActual) && in_array($paginaActual, $Vacantes)) {
+					    foreach ($Vacantes as $pagina) {
 					        $activeClass = ($paginaActual == $pagina) ? ' active' : '';
-					        $marginLeftClass = ($pagina != $paginas[0]) ? ' ml-3' : '';
+					        $marginLeftClass = ($pagina != $Vacantes[0]) ? ' ml-3' : '';
 					        
 					        echo '<li class="nav-item' . $activeClass . $marginLeftClass . '">';
 					        if ($pagina == 'Vacantes') {
@@ -86,6 +86,22 @@ $perfil = $primerLetra.$segundaLetra;
 					        }else{
 						        echo '<a href="' . $pagina . '"> Bases de talento </a>';
 						      }
+					        echo '</li>';
+					    }
+					}
+					?>
+
+				<?php 
+				//Menu de de Bolsa de trabajo
+					$Vacantes = array( 'Configuraciones','Empresas', 'Permisos');
+					$paginaActual = $_GET['pagina'];
+					if (!empty($paginaActual) && in_array($paginaActual, $Vacantes)) {
+					    foreach ($Vacantes as $pagina) {
+					        $activeClass = ($paginaActual == $pagina) ? ' active' : '';
+					        $marginLeftClass = ($pagina != $Vacantes[0]) ? ' ml-3' : '';
+					        
+					        echo '<li class="nav-item' . $activeClass . $marginLeftClass . '">';
+						      echo '<a href="' . $pagina . '">' . ucfirst($pagina) . '</a>';
 					        echo '</li>';
 					    }
 					}
