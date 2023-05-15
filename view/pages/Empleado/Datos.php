@@ -32,17 +32,24 @@
 								FORMA EN QUE SE INSTANCIA LA CLASE DE UN MÉTODO ESTÁTICO 
 								=============================================*/
 
-								$registro = ControladorEmpleados::ctrRegistrarEmpleados();
+								$registro = ControladorEmpleados::ctrActualizarEmpleado();
 
 								if($registro == "ok"){
 
-									echo '<script>
-
-									window.location = "Empleados";
-
-									</script>';
-
-									echo '<div class="alert alert-success">¡Nuevo Colaborador Registrado Exitosamente!</div>';
+									echo '  <script>window.onload = function () {
+										      showAlert();
+										    };</script>
+											<div id="alertContainer" class="alert-container">
+											    <div id="alert" class="alert" role="alert">
+													<button type="button" class="close close-btn" onclick="closeAlert()">
+											    		<span>&times;</span>
+											    	</button>
+											    	<div class="alert-content">
+														<h4 class="alert-heading">¡Datos Actualizados!</h4>
+														<p>Registrado Exitosamente</p>
+											    	</div>
+												</div>
+											</div>';
 
 								}
 								if ($registro == "1") {
@@ -57,7 +64,7 @@
 
 									</script>';
 
-									echo '<div class="alert alert-danger">Error, no se pudo registrar al colaborador, Error en los datos</div>';
+									echo '<div class="alert alert-danger">Error, no se pudo actualizar, Error en los datos</div>';
 								}
 
 								?>
@@ -194,8 +201,8 @@
 											</div>
 
 											<div class="form-group col-md-6">
-												<label for="departamento" class="col-form-label text-center font-weight-bold">Departamento:</label>
-												<select class="form-control form-control-lg" id="departamento" name="departamento">
+												<label for="parentesco" class="col-form-label text-center font-weight-bold">Parentesco:</label>
+												<select class="form-control form-control-lg" id="parentesco" name="parentesco">
 													<?php foreach ($parentesco as $key => $pariente): ?>
 														<?php if ($empleado['parentesco'] == $pariente): ?>
 															<option value="<?php echo $pariente; ?>" selected><?php echo $key; ?></option>
@@ -219,13 +226,13 @@
 													<div class="col-md-6">
 														<div class="form-group">
 															<label for="salarioPuesto" class="col-form-label font-weight-bold">Salario:</label>
-															<input type="text"  maxlength="10" class="form-control" id="salarioPuesto" name="salarioPuesto" pattern="[0-9]+(\.[0-9]{1,2})?" title="Ingrese un número con hasta dos decimales" required onkeypress="return (event.charCode >= 46 && event.charCode <= 57 && event.charCode != 47)" min="1" value="<?php echo $puesto['salario'] ?>">
+															<input type="text"	maxlength="10" class="form-control" id="salarioPuesto" name="salarioPuesto" pattern="[0-9]+(\.[0-9]{1,2})?" title="Ingrese un número con hasta dos decimales" required onkeypress="return (event.charCode >= 46 && event.charCode <= 57 && event.charCode != 47)" min="1" value="<?php echo $puesto['salario'] ?>">
 															</div>
 														</div>
 														<div class="col-md-6">
 															<div class="form-group">
 																<label for="salario_integrado" class="col-form-label font-weight-bold">Salario Diario Integrado:</label>
-																<input type="text"  maxlength="10" class="form-control" id="salario_integrado" name="salario_integrado" pattern="[0-9]+(\.[0-9]{1,2})?" title="Ingrese un número con hasta dos decimales" required onkeypress="return (event.charCode >= 46 && event.charCode <= 57 && event.charCode != 47)" min="1" value="<?php echo $puesto['salario_integrado'] ?>">
+																<input type="text"	maxlength="10" class="form-control" id="salario_integrado" name="salario_integrado" pattern="[0-9]+(\.[0-9]{1,2})?" title="Ingrese un número con hasta dos decimales" required onkeypress="return (event.charCode >= 46 && event.charCode <= 57 && event.charCode != 47)" min="1" value="<?php echo $puesto['salario_integrado'] ?>">
 																</div>
 															</div>
 															<div class="col-md-6">
@@ -242,8 +249,8 @@
 															</div>
 
 														<div class="form-group col-md-6">
-															<label for="parentesco" class="col-form-label text-center font-weight-bold">Departamento:</label>
-															<select class="form-control form-control-lg" id="parentesco" name="parentesco">
+															<label for="departamento" class="col-form-label text-center font-weight-bold">Departamento:</label>
+															<select class="form-control form-control-lg" id="departamento" name="departamento">
 																<?php foreach ($departamentos as $key => $departamento): ?>
 																	<?php if ($departamento['idDepartamentos'] == $puesto['Departamentos_idDepartamentos']): ?>
 																		<option value="<?php echo $departamento['idDepartamentos']; ?>" selected><?php echo ucwords(strtolower($departamento['nameDepto'])); ?></option>
@@ -253,11 +260,12 @@
 																<?php endforeach ?>
 															</select>
 														</div>
+														<input type="hidden" name="empleado" value="<?php echo $_GET['perfil'] ?>">
 														</div>
 													</div>
 												</div>
 											<div class="form-group">
-												<button type="submit" class="btn btn-primary rounded btn-block">Actualizar</button>
+												<button type="submit" class="btn btn-primary rounded btn-block" name="btn-update">Actualizar</button>
 											</div>
 										</div>
 									</div>
@@ -385,6 +393,29 @@
 			});
 
 			$(document).ready(function(){
-				$('[data-toggle="identificacion"]').popover();   
+				$('[data-toggle="identificacion"]').popover();	 
 			});
 		</script>
+  <script>
+    function showAlert() {
+      var alertContainer = document.getElementById('alertContainer');
+      var alert = document.getElementById('alert');
+
+      alertContainer.style.display = 'block';
+
+      setTimeout(function () {
+        alert.classList.add('show');
+      }, 100);
+    }
+
+    function closeAlert() {
+      var alertContainer = document.getElementById('alertContainer');
+      var alert = document.getElementById('alert');
+
+      alert.classList.remove('show');
+
+      setTimeout(function () {
+        alertContainer.style.display = 'none';
+      }, 300);
+    }
+  </script>

@@ -33,7 +33,6 @@ $perfil = $primerLetra.$segundaLetra;
 					$paginaActual = $_GET['pagina'];
 
 					if (!empty($paginaActual) && in_array($paginaActual, $paginas)) {
-					echo '<li class="nav-item-title">Empleados</li>';
 					    foreach ($paginas as $pagina) {
 					        $activeClass = ($paginaActual == $pagina) ? ' active' : '';
 					        $marginLeftClass = ($pagina != $paginas[0]) ? ' ml-3' : '';
@@ -57,7 +56,6 @@ $perfil = $primerLetra.$segundaLetra;
 					$paginaActual = $_GET['pagina'];
 
 					if (!empty($paginaActual) && in_array($paginaActual, $paginas)) {
-					echo '<li class="nav-item-title">Empleado</li>';
 					    foreach ($paginas as $pagina) {
 					        $activeClass = ($paginaActual == $pagina) ? ' active' : '';
 					        $marginLeftClass = ($pagina != $paginas[0]) ? ' ml-3' : '';
@@ -78,7 +76,6 @@ $perfil = $primerLetra.$segundaLetra;
 					$paginas = array( 'Vacantes','Talento');
 					$paginaActual = $_GET['pagina'];
 					if (!empty($paginaActual) && in_array($paginaActual, $paginas)) {
-					echo '<li class="nav-item-title">Reclutamiento</li>';
 					    foreach ($paginas as $pagina) {
 					        $activeClass = ($paginaActual == $pagina) ? ' active' : '';
 					        $marginLeftClass = ($pagina != $paginas[0]) ? ' ml-3' : '';

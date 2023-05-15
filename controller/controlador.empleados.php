@@ -5,19 +5,11 @@ class ControladorEmpleados{
 
 	static public function ctrRegistrarEmpleados(){
 		if (isset($_POST['nombre'])) {
-			if ($_POST['postulante'] != 0) {
-				$namePuesto = $_POST['namePuesto'];
-				$salarioPuesto = $_POST['salarioPuesto'];
-				$salario_integrado = $_POST['salario_integrado'];
-				$horario_entrada = $_POST['horario_entrada'];
-				$horario_salida = $_POST['horario_salida'];
-			}else{
-				$namePuesto = "";
-				$salarioPuesto = "";
-				$salario_integrado = "";
-				$horario_entrada = "";
-				$horario_salida = "";
-			}
+			$namePuesto = $_POST['namePuesto'];
+			$salarioPuesto = $_POST['salarioPuesto'];
+			$salario_integrado = $_POST['salario_integrado'];
+			$horario_entrada = $_POST['horario_entrada'];
+			$horario_salida = $_POST['horario_salida'];
 
 		$password = generarPassword();
 
@@ -97,6 +89,74 @@ class ControladorEmpleados{
 	}
 
 	static public function ctrActualizarEmpleado(){
-		
+		if (isset($_POST['btn-update'])) {
+			//Datos Puesto
+			$namePuesto = $_POST['namePuesto'];
+			$salarioPuesto = $_POST['salarioPuesto'];
+			$salario_integrado = $_POST['salario_integrado'];
+			$horario_entrada = $_POST['horario_entrada'];
+			$horario_salida = $_POST['horario_salida'];
+			$departamento = $_POST['departamento'];
+			$empleado = $_POST['empleado'];
+
+			$datosPuesto = array(
+				"namePuesto" => $namePuesto,
+				"salarioPuesto" => $salarioPuesto,
+				"salario_integrado" => $salario_integrado,
+				"horario_entrada" => $horario_entrada,
+				"horario_salida" => $horario_salida,
+				"Departamentos_idDepartamentos" => $departamento,
+				"Empleados_idEmpleados" => $empleado
+			);
+
+			//Datos Empleado
+			$datosEmpleado = array(
+				'nombre' => $_POST['nombre'],
+				'apellidos' => $_POST['apellidos'],
+				'genero' => $_POST['genero'],
+				'fecha_nacimiento' => $_POST['fecha_nacimiento'],
+				'num_identificacion' => strtoupper($_POST['num_identificacion']),
+				'curp' => $_POST['curp'],
+				'num_seguro_social' => $_POST['num_seguro_social'],
+				'rfc' => $_POST['rfc'],
+				'calle' => $_POST['calle'],
+				'num_exterior' => $_POST['num_exterior'],
+				'num_interior' => $_POST['num_interior'],
+				'colonia' => $_POST['colonia'],
+				'cp' => $_POST['cp'],
+				'municipio' => $_POST['municipio'],
+				'estado' => $_POST['estado'],
+				'telefono' => $_POST['telefono'],
+				'email' => $_POST['email'],
+				'emergencia' => $_POST['emergencia'],
+				'telefonoE' => $_POST['telefonoE'],
+				'parentesco' => $_POST['parentesco'],
+				'idEmpleados' => $empleado
+			);
+
+			$datosEmergencia = array(
+				"emergencia" => $_POST['emergencia'],
+				"telefonoE" => $_POST['telefonoE'],
+				"parentesco" => $_POST['parentesco'],
+				"idEmpleados" => $empleado
+			);
+
+			$updateDataEmpleado = ModeloEmpleados::mdlActualizarEmpleado('empleados', $datosEmpleado);
+			if ($updateDataEmpleado == 'ok') {
+				$updateDataEmergencia = ModeloEmpleados::mdlActualizarEmergencia('emergencia', $datosEmergencia);
+				if ($updateDataEmergencia == 'ok') {
+					$updateDataPuesto = ModeloEmpleados::mdlActualizarPuesto('puesto', $datosPuesto);
+					if ($updateDataPuesto == 'ok') {
+						return 'ok';
+					} else {
+						return 'error: 3';
+					}
+				} else {
+					return 'error: 2';
+				}
+			} else {
+				return 'error: 1';
+			}
+		}
 	}
 }

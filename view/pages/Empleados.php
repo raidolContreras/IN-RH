@@ -30,12 +30,12 @@ $empleados = ControladorEmpleados::ctrVerEmpleados(null, null);
 							<tbody>
 								<?php foreach ($empleados as $key => $value): ?>
 								<tr>
-									<td><?php echo strtoupper($value['identificacion']); ?></td>
 									<td>
 										<a class="btn btn-link" href="Empleado&perfil=<?php echo $value['idEmpleados'];?>">
 											<?php echo strtoupper($value['name'].' '.$value['lastname']); ?>
 										</a>
 									</td>
+									<td><?php echo strtoupper($value['identificacion']); ?></td>
 									<td><?php echo $value['fNac']; ?></td>
 
 								<?php if ($value['numI']==null || $value['numI'] == ""): ?>
