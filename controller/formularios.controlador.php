@@ -580,6 +580,7 @@ class ControladorFormularios{
 				if ($respuesta["status"] == 1) {
 					$_SESSION["validarIngreso"] = "ok";
 					$_SESSION["idEmpleado"] = $respuesta["idEmpleados"];
+					$_SESSION["genero"] = $respuesta["genero"];
 					$_SESSION["name"] = $respuesta["name"];
 					$_SESSION["lastname"] = $respuesta["lastname"];
 					$_SESSION["status"] = $respuesta["status"];

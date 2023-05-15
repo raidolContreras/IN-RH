@@ -41,8 +41,8 @@ class ModeloEmpleados{
 		$stmt = Conexion::conectar()->prepare($sql);
 
 		$stmt->bindParam(":nameEmer", $datos['emergencia'],PDO::PARAM_STR);
-		$stmt->bindParam(":parentesco", $datos['telefonoE'],PDO::PARAM_STR);
-		$stmt->bindParam(":phoneEmer", $datos['parentesco'],PDO::PARAM_STR);
+		$stmt->bindParam(":parentesco", $datos['parentesco'],PDO::PARAM_STR);
+		$stmt->bindParam(":phoneEmer", $datos['telefonoE'],PDO::PARAM_STR);
 		$stmt->bindParam(":Empleados_idEmpleados", $datos['idEmpleados'],PDO::PARAM_INT);
 
 		if ($stmt->execute()) {

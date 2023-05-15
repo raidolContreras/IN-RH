@@ -5,11 +5,18 @@ class ControladorEmpleados{
 
 	static public function ctrRegistrarEmpleados(){
 		if (isset($_POST['nombre'])) {
+
 			$namePuesto = $_POST['namePuesto'];
 			$salarioPuesto = $_POST['salarioPuesto'];
 			$salario_integrado = $_POST['salario_integrado'];
 			$horario_entrada = $_POST['horario_entrada'];
 			$horario_salida = $_POST['horario_salida'];
+
+			if ($_POST['postulante'] == 0) {
+				$departamento = $_POST['departamento'];
+			}else{
+				$departamento = 0;
+			}
 
 		$password = generarPassword();
 
@@ -42,6 +49,7 @@ class ControladorEmpleados{
 				'salario_integrado' => $salario_integrado,
 				'horario_entrada' => $horario_entrada,
 				'horario_salida' => $horario_salida,
+				'Departamentos_idDepartamentos' => $departamento,
 				'postulante' => $_POST['postulante']);
 			$Registro = ModeloFormularios::mdlRegistrarEmpleados('empleados','emergencia', $datos);
 			if ($Registro == 'ok') {

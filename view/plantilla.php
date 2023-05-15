@@ -127,6 +127,8 @@ session_start();
 //	include "pages/navs/footer.php";
 
 ?>
+
+	<a href="Configuraciones" class="configuration-button"><i class="fas fa-cog rotate-center"></i></a>
 </div>
 </div>
 <!-- ============================================================== -->

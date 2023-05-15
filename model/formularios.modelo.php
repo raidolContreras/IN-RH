@@ -43,6 +43,7 @@ class ModeloFormularios{
 				$RegistroPostulante = ControladorFormularios::ctrVerPostulantes('idPostulantes', $datos['postulante']);
 				$CerrarVacante = ModeloFormularios::mdlEliminarVacante('vacantes', $RegistroPostulante['Vacantes_idVacantes']);
 				$vacante = ControladorFormularios::ctrVerVacantes('idVacantes', $RegistroPostulante['Vacantes_idVacantes']);
+
 				$puesto = array("namePuesto" => $datos['namePuesto'],
 								"salario" => $datos['salarioPuesto'],
 								"salario_integrado" => $datos['salario_integrado'],
@@ -51,7 +52,9 @@ class ModeloFormularios{
 								"horario_entrada" => $datos['horario_entrada'],
 								"horario_salida" => $datos['horario_salida'],
 								);
+
 				$registrarPuesto = ModeloFormularios::mdlRegistrarPuestos('puesto', $puesto);
+
 				if ($registrarPuesto == 'ok') {
 
 					echo 'Usuario registrado en el puesto';
@@ -78,16 +81,25 @@ class ModeloFormularios{
 
 				}
 
+			} else{
+				$puesto = array("namePuesto" => $datos['namePuesto'],
+								"salario" => $datos['salarioPuesto'],
+								"salario_integrado" => $datos['salario_integrado'],
+								"Empleados_idEmpleados" => $id_empleado,
+								"Departamentos_idDepartamentos" => $datos['Departamentos_idDepartamentos'],
+								"horario_entrada" => $datos['horario_entrada'],
+								"horario_salida" => $datos['horario_salida'],
+								);
+
+				$registrarPuesto = ModeloFormularios::mdlRegistrarPuestos('puesto', $puesto);
 			}
 
 			$Registro = ModeloFormularios::mdlEmergencia($table2, $id_empleado, $datos);
 			$correo = ModeloFormularios::correoVerificacion($datos);
 			if ($correo == 'enviado') {
-
 				return "ok";
 			}
 			else{
-
 				echo 'No enviado';
 				print_r(Conexion::conectar()->errorInfo());
 			}

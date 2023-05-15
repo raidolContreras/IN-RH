@@ -14,8 +14,11 @@
 	$telefono = '';
 	$email = '';
 	$idPostulante = 0;
+	$nombreVacante = "";
+	$salarioVacante = 0;
 }
 
+	$departamentos = ControladorFormularios::ctrVerDepartamentos(null, null);
 ?>
 <link rel="stylesheet" href="assets/vendor/datepicker/tempusdominus-bootstrap-4.css" />
 <div class="container-fluid dashboard-content ">
@@ -198,8 +201,6 @@
 												</select>
 											</div>
 										</div>
-										<input type="hidden" name="postulante" value="<?php echo $idPostulante; ?>">
-										<?php if (isset($_GET['postulante'])): ?>
 											<hr>
 											<h3 class="hprofile">Datos del puesto</h3>
 											<hr>
@@ -234,10 +235,27 @@
 																	<input type="time" class="form-control" id="horario_salida" name="horario_salida" required>
 																</div>
 															</div>
+													<?php if (!isset($_GET['postulante'])): ?>
+														<div class="form-group col-md-6">
+															<label for="departamento" class="col-form-label text-center font-weight-bold">Departamento:</label>
+															<select class="form-control form-control-lg" id="departamento" name="departamento">
+																<?php foreach ($departamentos as $key => $departamento): ?>
+																	<?php if ($departamento['idDepartamentos'] == $puesto['Departamentos_idDepartamentos']): ?>
+																		<option value="<?php echo $departamento['idDepartamentos']; ?>" selected><?php echo ucwords(strtolower($departamento['nameDepto'])); ?></option>
+																	<?php else: ?>
+																		<option value="<?php echo $departamento['idDepartamentos']; ?>"><?php echo ucwords(strtolower($departamento['nameDepto'])); ?></option>
+																	<?php endif ?>
+																<?php endforeach ?>
+															</select>
+														</div>
+														<input type="hidden" name="postulante" value="0">
+													<?php else: ?>
+														<input type="hidden" name="postulante" value="<?php echo $idPostulante; ?>">
+													<?php endif ?>
 														</div>
 													</div>
 												</div>
-											<?php endif ?>
+										
 											<div class="form-group">
 												<button type="submit" class="btn btn-primary rounded btn-block">Enviar</button>
 											</div>

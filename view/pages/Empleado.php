@@ -4,6 +4,7 @@ $colaborador = ControladorEmpleados::ctrVerEmpleados( 'idEmpleados',$_GET['perfi
 $Numbero = ControladorFormularios::ctrNumeroTelefonico($colaborador['phone']);
 $emergencia = ControladorFormularios::ctrNumeroTelefonico($colaborador['phoneEmer']);
 $foto = ControladorFormularios::ctrVerFotos("Empleados_idEmpleados", $colaborador['idEmpleados']);
+$puesto = ControladorFormularios::ctrVerPuestos("Empleados_idEmpleados", $_GET['perfil']);
 ?>
 <div class="container-fluid dashboard-content ">
 	<div class="row">
@@ -23,7 +24,8 @@ $foto = ControladorFormularios::ctrVerFotos("Empleados_idEmpleados", $colaborado
 					</div>
 					<div class="text-center">
 						<h2 class="font-24 mb-0 hprofile"><?php echo ucwords($colaborador["name"]." ".$colaborador["lastname"]) ?></h2>
-						<p>ID: <?php echo $colaborador['identificacion'] ?></p>
+						<p>Puesto: <?php echo $puesto['namePuesto'] ?> <br>
+							Salario: <?php echo $puesto['salario'] ?></p>
 					</div>
 				</div>
 				<div class="card-body border-top">
