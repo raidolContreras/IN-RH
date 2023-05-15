@@ -46,6 +46,7 @@ session_start();
 	<?php
 
 	if(isset($_GET["pagina"])){
+
 		if($_GET["pagina"] == "Empleados" ||
 			$_GET["pagina"] == "Inicio" ||
 			$_GET["pagina"] == "RegistroEmpleados" ||
@@ -54,7 +55,7 @@ session_start();
 			$_GET["pagina"] == "HistorialLaboral" ||
 			$_GET["pagina"] == "Departamento" ||
 			$_GET["pagina"] == "CrearDepartamentos" ||
-			$_GET["pagina"] == "Colaborador" ||
+			$_GET["pagina"] == "Empleado" ||
 			$_GET["pagina"] == "Foto" ||
 			$_GET["pagina"] == "Documento" ||
 			$_GET["pagina"] == "EditarDepto" ||
@@ -65,116 +66,63 @@ session_start();
 			$_GET["pagina"] == "Postulantes" ||
 			$_GET["pagina"] == "Reuniones" ||
 			$_GET["pagina"] == "VerPdf" ||
+			$_GET["pagina"] == "Configuraciones" ||
 			$_GET["pagina"] == "somos" 
 
 		){
-			echo '
-		<!-- ============================================================== -->
-		<!-- main wrapper -->
-		<!-- ============================================================== -->
-		<div class="dashboard-main-wrapper">';
+			include "pages/navs/navbar.php";
+			include "pages/navs/sidenav.php"; 
 
-		include "pages/navs/navbar.php";
-		include "pages/navs/sidenav.php"; 
-		echo'
-		<!-- ============================================================== -->
-		<!-- wrapper  -->
-		<!-- ============================================================== -->
-		<div class="dashboard-wrapper">
-		<div class="dashboard-ecommerce">';
+			include "pages/".$_GET["pagina"].".php";
 
-		include "pages/".$_GET["pagina"].".php";
+		}elseif(strpos($_GET["pagina"], "Vacantes-") !== false){
 
-	}elseif(strpos($_GET["pagina"], "Vacantes-") !== false){
+			$pagina = str_replace("Vacantes-", "", $_GET["pagina"]);
+			if ($pagina == 'Postulantes'||
+				$pagina == "CrearVacante" ||
+				$pagina == "EliminarVacante") {
 
-		$pagina = str_replace("Vacantes-", "", $_GET["pagina"]);
-		if ($pagina == 'Postulantes'||
-			$pagina == "CrearVacante" ||
-			$pagina == "EliminarVacante") {
-			echo '
-			<!-- ============================================================== -->
-			<!-- main wrapper -->
-			<!-- ============================================================== -->
-			<div class="dashboard-main-wrapper">';
+				include "pages/navs/navbar.php";
+				include "pages/navs/sidenav.php";
+
+				include "pages/Vacantes/".$pagina.".php";
+			}else{
+				include "pages/404-page.html";
+			}
+
+		}elseif ($_GET["pagina"] == "Postulacion") {
 
 			include "pages/navs/navbar.php";
-			include "pages/navs/sidenav.php";
-			
-			echo'
-			<!-- ============================================================== -->
-			<!-- wrapper  -->
-			<!-- ============================================================== -->
-			<div class="dashboard-wrapper">
-			<div class="dashboard-ecommerce">';
+			include "pages/navs/sidenav.php"; 
+			include "pages/Vacantes/".$_GET["pagina"].".php";
 
-			include "pages/Vacantes/".$pagina.".php";
+		}elseif ($_GET["pagina"] == "Datos") {
+
+			include "pages/navs/navbar.php";
+			include "pages/navs/sidenav.php"; 
+			include "pages/Empleado/".$_GET["pagina"].".php";
+
+		}elseif ($_GET["pagina"] == "Login" ||
+				 $_GET["pagina"] == "Salir"
+				) {
+
+			include "pages/Login/".$_GET["pagina"].".php";
+
+		}elseif ($_GET["pagina"] == "Noticias" ||
+				 $_GET["pagina"] == "TableroNoticias"	) {
+
+			include "pages/navs/navbar.php";
+			include "pages/navs/sidenav.php"; 
+			include "pages/modulos/".$_GET["pagina"].".php";
+
 		}else{
 			include "pages/404-page.html";
 		}
 
-	}elseif ($_GET["pagina"] == "Postulacion") {
-			echo '
-		<!-- ============================================================== -->
-		<!-- main wrapper -->
-		<!-- ============================================================== -->
-		<div class="dashboard-main-wrapper">';
-
-		include "pages/navs/navbar.php";
-		include "pages/navs/sidenav.php"; 
-		echo'
-		<!-- ============================================================== -->
-		<!-- wrapper  -->
-		<!-- ============================================================== -->
-		<div class="dashboard-wrapper">
-		<div class="dashboard-ecommerce">';
-		include "pages/Vacantes/".$_GET["pagina"].".php";
-
-	}elseif ($_GET["pagina"] == "Login" ||
-			 $_GET["pagina"] == "Salir"
-			) {
-
-		include "pages/Login/".$_GET["pagina"].".php";
-
-	}elseif ($_GET["pagina"] == "Noticias" ||
-			 $_GET["pagina"] == "TableroNoticias"	) {
-
-			echo '
-		<!-- ============================================================== -->
-		<!-- main wrapper -->
-		<!-- ============================================================== -->
-		<div class="dashboard-main-wrapper">';
-
-		include "pages/navs/navbar.php";
-		include "pages/navs/sidenav.php"; 
-		echo'
-		<!-- ============================================================== -->
-		<!-- wrapper  -->
-		<!-- ============================================================== -->
-		<div class="dashboard-wrapper">
-		<div class="dashboard-ecommerce">';
-		include "pages/modulos/".$_GET["pagina"].".php";
-
 	}else{
-		include "pages/404-page.html";
-	}
-
-
-	}else{
-			echo '
-		<!-- ============================================================== -->
-		<!-- main wrapper -->
-		<!-- ============================================================== -->
-		<div class="dashboard-main-wrapper">';
 		include "pages/navs/navbar.php";
 		include "pages/navs/sidenav.php"; 
-		echo'
-		<!-- ============================================================== -->
-		<!-- wrapper  -->
-		<!-- ============================================================== -->
-		<div class="dashboard-wrapper">
-		<div class="dashboard-ecommerce">';
 		include "pages/Inicio.php";
-
 	}
 //	include "pages/navs/footer.php";
 

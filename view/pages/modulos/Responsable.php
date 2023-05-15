@@ -2,8 +2,8 @@
 
 $puesto = ControladorFormularios::ctrVerPuestos("Empleados_idEmpleados", $_SESSION['idEmpleado']);
 $departamento = ControladorFormularios::ctrVerDepartamentos("idDepartamentos", $puesto['Departamentos_idDepartamentos']);
-$jefeDirecto = ControladorFormularios::ctrVerEmpleados("idEmpleados", $departamento['Empleados_idEmpleados']);
-$foto = ControladorFormularios::ctrVerEmpleados("Empleados_idEmpleados", $jefeDirecto['idEmpleados']);
+$jefeDirecto = ControladorEmpleados::ctrVerEmpleados("idEmpleados", $departamento['Empleados_idEmpleados']);
+$foto = ControladorEmpleados::ctrVerEmpleados("Empleados_idEmpleados", $jefeDirecto['idEmpleados']);
 ?>
 <p class="titulo-tablero titulo">Mi grupo de trabajo</p>
 <hr class="titulo">

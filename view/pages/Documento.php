@@ -1,6 +1,6 @@
 <?php
 					
-$colaborador = ControladorFormularios::ctrVerEmpleados( 'idEmpleados',$_POST["empleado"]); 
+$colaborador = ControladorEmpleados::ctrVerEmpleados( 'idEmpleados',$_POST["empleado"]); 
 // Definir un arreglo asociativo para almacenar la información de los documentos
 $documentos = [
 		'curriculum' => 'Curriculum',

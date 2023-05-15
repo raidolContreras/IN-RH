@@ -1,29 +1,10 @@
 <?php 
-$empleados = ControladorFormularios::ctrVerEmpleadosDisponibles("puesto"); 
+$empleados = ControladorEmpleados::ctrVerEmpleadosDisponibles("puesto"); 
 $departamento = ControladorFormularios::ctrVerDepartamentos(null, null);
 $registro = ControladorFormularios::ctrRegistrarPuestos();
 ?>
 <link rel="stylesheet" href="assets/vendor/datepicker/tempusdominus-bootstrap-4.css" />
 <div class="container-fluid dashboard-content ">
-	<!-- ============================================================== -->
-	<!-- pageheader	-->
-	<!-- ============================================================== -->
-	<div class="row">
-		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-			<div class="page-header">
-				<h2 class="pageheader-title">Asignar Puesto</h2>
-				<div class="page-breadcrumb">
-					<nav aria-label="breadcrumb">
-						<ol class="breadcrumb">
-							<li class="breadcrumb-item"><a href="Inicio" class="breadcrumb-link">IN Consulting México</a></li>
-							<li class="breadcrumb-item" aria-current="page"><a href="Puestos" class="breadcrumb-link">Puestos</a></li>
-							<li class="breadcrumb-item active" aria-current="page">Asignar Puesto</li>
-						</ol>
-					</nav>
-				</div>
-			</div>
-		</div>
-	</div>
 
 	<?php 
 

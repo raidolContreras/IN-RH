@@ -11,7 +11,7 @@
 				<div class="carousel-item">
 				<?php endif ?>
 					<?php 
-					$empleado = ControladorFormularios::ctrVerEmpleados("idEmpleados", $noticia['Empleados_idEmpleados']);
+					$empleado = ControladorEmpleados::ctrVerEmpleados("idEmpleados", $noticia['Empleados_idEmpleados']);
 					$fotoEmpleado = ControladorFormularios::ctrVerFotos("Empleados_idEmpleados", $empleado['idEmpleados']);
 					?>
 					<div class="row">

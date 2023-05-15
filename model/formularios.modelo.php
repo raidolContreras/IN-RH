@@ -178,16 +178,16 @@ class ModeloFormularios{
 
 		if($item == null && $valor == null){
 
-			$sql = "SELECT e.idEmpleados, e.name, e.lastname, e.genero, e.fNac, e.phone, e.email, e.identificacion, e.NSS, e.RFC, e.street, e.numE, e.numI, e.colonia, e.CP, e.estado, e.municipio, e.fecha_contratado, e.status, m.nameEmer, m.parentesco, m.phoneEmer 
+			$sql = "SELECT *
 			FROM empleados e 
-			INNER JOIN emergencia m ON e.idEmpleados = m.Empleados_idEmpleados WHERE status = 1 ORDER BY idEmpleados DESC;";
+			INNER JOIN emergencia m ON e.idEmpleados = m.Empleados_idEmpleados ORDER BY idEmpleados DESC;";
 			$stmt = Conexion::conectar()->prepare($sql);
 			$stmt->execute();
 			return $stmt -> fetchAll();
 		}
 		else{
 
-			$stmt = Conexion::conectar()->prepare("SELECT e.idEmpleados, e.name, e.lastname, e.genero, e.fNac, e.phone, e.email, e.password, e.identificacion, e.NSS, e.RFC, e.street, e.numE, e.numI, e.colonia, e.CP, e.estado, e.municipio, e.fecha_contratado, e.status, m.nameEmer, m.parentesco, m.phoneEmer 
+			$stmt = Conexion::conectar()->prepare("SELECT * 
 				FROM empleados e 
 				INNER JOIN emergencia m ON e.idEmpleados = m.Empleados_idEmpleados 
 				WHERE $item = :$item");

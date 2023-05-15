@@ -1,10 +1,10 @@
 <?php 
-$empleados = ControladorFormularios::ctrVerEmpleados(null, null); 
+$empleados = ControladorEmpleados::ctrVerEmpleados(null, null); 
 $empleadoMes = ControladorFormularios::ctrSeleccionarEmpleadoMes();
 $fotoEmpleado = ControladorFormularios::ctrVerFotos("Empleados_idEmpleados", $empleadoMes['idEmpleados']); 
 ?>
 <?php if (isset($empleadoMes['name'])): ?>
-	<?php $datosPublicante = ControladorFormularios::ctrVerEmpleados("idEmpleados", $empleadoMes['Publicado_idEmpleados']);  ?>
+	<?php $datosPublicante = ControladorEmpleados::ctrVerEmpleados("idEmpleados", $empleadoMes['Publicado_idEmpleados']);  ?>
 <div class="row">
 	<div id="form-result"></div>
 	<div class="col-12">

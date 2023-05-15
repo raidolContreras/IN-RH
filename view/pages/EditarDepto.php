@@ -1,31 +1,12 @@
 <?php 
 $datos = ControladorFormularios::ctrVerDepartamentos("idDepartamentos",$_GET['Edicion']);
 if ($datos['Empleados_idEmpleados']!=0) {
-	$empleadoDpto = ControladorFormularios::ctrVerEmpleados("idEmpleados", $datos['Empleados_idEmpleados']); 
+	$empleadoDpto = ControladorEmpleados::ctrVerEmpleados("idEmpleados", $datos['Empleados_idEmpleados']); 
 }
-$empleadosDpto = ControladorFormularios::ctrVerEmpleadosDisponibles("departamentos"); 
+$empleadosDpto = ControladorEmpleados::ctrVerEmpleadosDisponibles("departamentos"); 
 $registro = ControladorFormularios::ctrActualizarDepto();
 ?>
 <div class="container-fluid dashboard-content ">
-	<!-- ============================================================== -->
-	<!-- pageheader	-->
-	<!-- ============================================================== -->
-	<div class="row">
-		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-			<div class="page-header">
-				<h2 class="pageheader-title">Departamento (<?php echo $datos['nameDepto']; ?>)</h2>
-				<div class="page-breadcrumb">
-					<nav aria-label="breadcrumb">
-						<ol class="breadcrumb">
-							<li class="breadcrumb-item"><a href="Inicio" class="breadcrumb-link">IN Consulting México</a></li>
-							<li class="breadcrumb-item" aria-current="page"><a href="Departamento" class="breadcrumb-link">Departamentos</a></li>
-							<li class="breadcrumb-item active" aria-current="page">Departamento (<?php echo $datos['nameDepto']; ?>)</li>
-						</ol>
-					</nav>
-				</div>
-			</div>
-		</div>
-	</div>
 
 		<?php 
 

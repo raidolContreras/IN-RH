@@ -1,27 +1,11 @@
 <?php
-$colaborador = ControladorFormularios::ctrVerEmpleados( 'idEmpleados',$_POST['Editar']); 
+$colaborador = ControladorEmpleados::ctrVerEmpleados( 'idEmpleados',$_GET['perfil']); 
 
 $Numbero = ControladorFormularios::ctrNumeroTelefonico($colaborador['phone']);
 $emergencia = ControladorFormularios::ctrNumeroTelefonico($colaborador['phoneEmer']);
 $foto = ControladorFormularios::ctrVerFotos("Empleados_idEmpleados", $colaborador['idEmpleados']);
 ?>
 <div class="container-fluid dashboard-content ">
-	<div class="row">
-		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-			<div class="page-header">
-				<h3 class="mb-2">Perfil del colaborador</h3>
-				<div class="page-breadcrumb">
-					<nav aria-label="breadcrumb">
-						<ol class="breadcrumb">
-							<li class="breadcrumb-item"><a href="Inicio" class="breadcrumb-link">IN Consulting México</a></li>
-							<li class="breadcrumb-item"><a href="Empleados" class="breadcrumb-link">Colaboradores</a></li>
-							<li class="breadcrumb-item active" aria-current="page">Perfil (<?php echo ucwords($colaborador["name"]." ".$colaborador["lastname"]); ?>)</li>
-						</ol>
-					</nav>
-				</div>
-			</div>
-		</div>
-	</div>
 	<div class="row">
 		<div class="col-xl-3 col-lg-3 col-md-5 col-sm-12 col-12">
 			<div class="card">
@@ -114,7 +98,7 @@ $foto = ControladorFormularios::ctrVerFotos("Empleados_idEmpleados", $colaborado
 										<div class="modal-footer">
 											<form method="POST">
 												<?php if (isset($_POST['Eliminar']) && $_POST['Eliminar'] == 'si'): ?>
-													<?php $baja = ControladorFormularios::ctrEliminarEmpleado(); ?>
+													<?php $baja = ctrEliminarEmpleado::ctrEliminarEmpleado(); ?>
 													<?php if ($baja == 'ok'): ?>
 														<div class="alert alert-success">¡Colaborador dado de baja!</div>
 														<script>
