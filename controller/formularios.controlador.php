@@ -218,7 +218,8 @@ class ControladorFormularios{
 			if (preg_match('/^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["name"])) {
 
 				$datos = array("name" => $_POST["name"],
-						"idEmpleado" => $_POST["jefe"]
+						"idEmpleado" => $_POST["jefe"],
+						"idEmpresa" => $_POST["empresa"]
 											);
 				$tabla = "departamentos";
 				$respuesta = ModeloFormularios::mdlRegistrarDeptos($tabla, $datos);
@@ -252,6 +253,7 @@ class ControladorFormularios{
 
 				$datos = array("name" => $_POST["name"],
 						"idEmpleado" => $_POST["jefe"],
+						"idEmpresa" => $_POST["empresa"],
 						"idDepto" => $_POST["idDepto"]
 											);
 				$tabla = "departamentos";
@@ -688,6 +690,17 @@ class ControladorFormularios{
 		$tabla = 'noticias';
 		$respuesta = ModeloFormularios::mdlVerNoticias($tabla, $item, $valor);
 		return $respuesta;
+	}
+
+	static public function ctrRegistrarEmpresas($tabla, $datos){
+		$respuesta = ModeloFormularios::mdlRegistrarEmpresas($tabla, $datos);
+		return $respuesta;
+	}
+
+	static public function ctrVerEmpresas($item,$valor){
+		$tabla = 'empresas';
+		$buscar = ModeloFormularios::mdlVerEmpresas($tabla,$item,$valor);
+		return $buscar;
 	}
 
 	/*---------- Fin de ControladorFormularios ---------- */

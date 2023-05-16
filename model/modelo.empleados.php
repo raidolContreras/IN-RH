@@ -75,5 +75,18 @@ class ModeloEmpleados{
 		$stmt = null;
 	}
 
+	static public function mdlFechaNacimiento($tabla){
+		$sql = "SELECT * FROM $tabla
+				WHERE DATE_FORMAT(fNac, '%m-%d') 
+				BETWEEN DATE_FORMAT(CURDATE(), '%m-%d') 
+				AND DATE_FORMAT(DATE_ADD(CURDATE(), INTERVAL 30 DAY), '%m-%d')";
+		$stmt = Conexion::conectar()->prepare($sql);
+
+		$stmt->execute();
+		return $stmt->fetchAll();
+
+		$stmt->close();
+		$stmt = null;
+	}
 
 }

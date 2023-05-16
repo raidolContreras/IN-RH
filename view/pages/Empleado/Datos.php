@@ -40,7 +40,7 @@
 										      showAlert();
 										    };</script>
 											<div id="alertContainer" class="alert-container">
-											    <div id="alert" class="alert" role="alert">
+											    <div id="alert" class="alert2" role="alert">
 													<button type="button" class="close close-btn" onclick="closeAlert()">
 											    		<span>&times;</span>
 											    	</button>

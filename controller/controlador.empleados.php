@@ -167,4 +167,10 @@ class ControladorEmpleados{
 			}
 		}
 	}
+
+	static public function ctrFechaNacimiento(){
+		$tabla = 'empleados';
+		$fechaNacimiento = ModeloEmpleados::mdlFechaNacimiento($tabla);
+		return $fechaNacimiento;
+	}
 }

@@ -14,8 +14,9 @@
 						<table id="example" class="table table-striped table-bordered second" style="width:100%">
 							<thead>
 								<tr>
-									<th width="43%">Nombre Depto</th>
-									<th width="43%">Encargado</th>
+									<th width="33%">Nombre Depto</th>
+									<th width="33%">Encargado</th>
+									<th width="23%">empresa</th>
 									<th>Acciones</th>
 								</tr>
 							</thead>
@@ -28,10 +29,12 @@
 									}else{
 										$nombreEmpleado = "-";
 									}
+										$empresa = ControladorFormularios::ctrVerEmpresas("idEmpresas", $depa['Empresas_idEmpresas']);
 									?>
 									<tr>
 										<td><?php echo $depa['nameDepto'] ?></td>
 										<td><?php echo $nombreEmpleado; ?></td>
+										<td><?php echo $empresa['nombre_razon_social']." (".$empresa['rfc'].")"; ?></td>
 										<td>
 											<table>
 												<tr>

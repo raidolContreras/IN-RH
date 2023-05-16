@@ -67,6 +67,8 @@ session_start();
 			$_GET["pagina"] == "Reuniones" ||
 			$_GET["pagina"] == "VerPdf" ||
 			$_GET["pagina"] == "Configuraciones" ||
+			$_GET["pagina"] == "Empresas" ||
+			$_GET["pagina"] == "RegistroEmpresa" ||
 			$_GET["pagina"] == "somos" 
 
 		){

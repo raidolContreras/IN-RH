@@ -3,14 +3,15 @@
 <div class="row">
   <div class="col-md-3">
   <!--Tablero de empleado del mes-->
-    <div class="row"><div class="col-12">
+    <div class="row">
+    	<div class="col-12">
 				<div class="card">
 					<div class="m-2">
 						<?php include "view/pages/modulos/EmpleadoMes.php" ?>
 					</div>
 				</div>
 			</div>
-	<!--Tablero de epleado del mes-->
+	<!--Tablero de empleado del mes-->
 			<div class="col-12">
 				<div class="card">
 					<div class="card-body">
@@ -18,8 +19,17 @@
 					</div>
 				</div>
 			</div>
+	<!--Tablero de cumpleaños empleado-->
+			<div class="col-12">
+				<div class="card">
+					<div class="card-body">
+						<?php include "view/pages/modulos/Birtday.php" ?>
+					</div>
+				</div>
+			</div>
     </div>
   </div>
+	<!--Tablero de Notificaciones-->
   <div class="col-md-9">
 		<div class="card">
 			<div class="m12">

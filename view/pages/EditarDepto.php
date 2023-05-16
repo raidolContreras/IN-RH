@@ -5,6 +5,7 @@ if ($datos['Empleados_idEmpleados']!=0) {
 }
 $empleadosDpto = ControladorEmpleados::ctrVerEmpleadosDisponibles("departamentos"); 
 $registro = ControladorFormularios::ctrActualizarDepto();
+$empresas = ControladorFormularios::ctrVerEmpresas(null,null);
 ?>
 <div class="container-fluid dashboard-content ">
 
@@ -60,6 +61,19 @@ $registro = ControladorFormularios::ctrActualizarDepto();
 						<?php foreach ($empleadosDpto as $key => $empleado): ?>
 							<option value="<?php echo $empleado['idEmpleados']; ?>">
 								<?php echo ucwords(strtolower($empleado['name']." ".$empleado['lastname'])); ?>
+							</option>
+						<?php endforeach ?>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="empresa" class="col-form-label font-weight-bold">Empresa:</label>
+					<select class="form-control" id="empresa" name="empresa">
+							<option>
+								Seleccionar empresa
+							</option>
+						<?php foreach ($empresas as $key => $empresa): ?>
+							<option value="<?php echo $empresa['idEmpresas']; ?>">
+								<?php echo ucwords(strtolower($empresa['nombre_razon_social']." (".$empresa['rfc'].")")); ?>
 							</option>
 						<?php endforeach ?>
 					</select>

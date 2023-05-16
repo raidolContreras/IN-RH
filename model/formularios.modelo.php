@@ -69,7 +69,7 @@ class ModeloFormularios{
 					$moved = rename($currentLocation, $newLocation);
 					if($moved){
 
-					  echo "File moved successfully";
+						echo "File moved successfully";
 						$regDoc = array("fileName" => 'curriculum', "idEmpleado" => $id_empleado);
 						$registroDocumento = ModeloFormularios::mdlRegistroPDFEmpleado('documento', $regDoc);
 						if ($registroDocumento == 'ok') {
@@ -209,7 +209,7 @@ class ModeloFormularios{
 		}
 
 		$stmt->close();
-		$stmt = null;	
+		$stmt = null;
 	}
 
 	/*---------- Esta función crea el formato del numero teléfonico ---------- */
@@ -251,7 +251,7 @@ class ModeloFormularios{
 		$stmt->execute();
 		return $stmt -> fetchAll();
 		$stmt -> close();
-		$stmt = null;	
+		$stmt = null;
 	}
 
 	static public function mdlEliminarEmpleado($tabla, $idEmpleado){
@@ -264,9 +264,9 @@ class ModeloFormularios{
 
 		$tabla2 = "vacantes";
 		$datos = array("nameVacante" => $puesto['namePuesto'],
-					   "salarioVacante" => $puesto['salario'],
-					   "Departamentos_idDepartamentos" => $puesto['Departamentos_idDepartamentos'],
-					   "requisitos" => "Nueva Vacante");
+						 "salarioVacante" => $puesto['salario'],
+						 "Departamentos_idDepartamentos" => $puesto['Departamentos_idDepartamentos'],
+						 "requisitos" => "Nueva Vacante");
 		$registro = ModeloFormularios::mdlRegistrarVacantes($tabla2,$datos);
 
 		if ($registro == 'ok') {
@@ -324,7 +324,7 @@ class ModeloFormularios{
 		}
 
 		$stmt->close();
-		$stmt = null;	
+		$stmt = null;
 	}
 
 	static public function mdlRegistroPDFEmpleado($tabla, $datos){
@@ -354,7 +354,7 @@ class ModeloFormularios{
 		$stmt->execute();
 		return $stmt -> fetchAll();
 		$stmt->close();
-		$stmt = null;	
+		$stmt = null;
 	}
 
 	/*---------- Función hecha para ver las fotos---------- */
@@ -364,7 +364,7 @@ class ModeloFormularios{
 		$stmt->execute();
 		return $stmt -> fetch();
 		$stmt->close();
-		$stmt = null;	
+		$stmt = null;
 	}
 
 	static public function mdlImprimirDivs($validar,$nameDoc,$id,$nombreDocumento){
@@ -407,10 +407,11 @@ class ModeloFormularios{
 
 	static public function mdlRegistrarDeptos($tabla, $datos){
 
-		$sql = "INSERT INTO $tabla(nameDepto, Empleados_idEmpleados) VALUES (:nameDepto, :Empleados_idEmpleados)";
+		$sql = "INSERT INTO $tabla(nameDepto, Empleados_idEmpleados, Empresas_idEmpresas) VALUES (:nameDepto, :Empleados_idEmpleados, :Empresas_idEmpresas)";
 		$stmt = Conexion::conectar()->prepare($sql);
 		$stmt->bindParam(":nameDepto", $datos['name'], PDO::PARAM_STR);
 		$stmt->bindParam(":Empleados_idEmpleados", $datos['idEmpleado'], PDO::PARAM_INT);
+		$stmt->bindParam(":Empresas_idEmpresas", $datos['idEmpresa'], PDO::PARAM_INT);
 		if ($stmt->execute()) {
 
 			return "ok";
@@ -421,7 +422,7 @@ class ModeloFormularios{
 		}
 
 		$stmt->close();
-		$stmt = null;	
+		$stmt = null;
 	}
 
 	/*---------- Función hecha para ver a los empleados---------- */
@@ -434,7 +435,7 @@ class ModeloFormularios{
 		$stmt->execute();
 		return $stmt -> fetchAll();
 		$stmt->close();
-		$stmt = null;	
+		$stmt = null;
 	}
 
 	/*---------- Función hecha para ver a los empleados---------- */
@@ -457,15 +458,16 @@ class ModeloFormularios{
 		}
 
 		$stmt->close();
-		$stmt = null;	
+		$stmt = null;
 	}
 
 	static public function mdlActualizarDepto($tabla, $datos){
 
-		$sql = "UPDATE $tabla SET nameDepto=:nameDepto ,Empleados_idEmpleados=:Empleados_idEmpleados WHERE idDepartamentos = :idDepartamentos";
+		$sql = "UPDATE $tabla SET nameDepto=:nameDepto ,Empleados_idEmpleados=:Empleados_idEmpleados, Empresas_idEmpresas=:Empresas_idEmpresas WHERE idDepartamentos = :idDepartamentos";
 		$stmt = Conexion::conectar()->prepare($sql);
 		$stmt->bindParam(":nameDepto", $datos['name'], PDO::PARAM_STR);
 		$stmt->bindParam(":Empleados_idEmpleados", $datos['idEmpleado'], PDO::PARAM_INT);
+		$stmt->bindParam(":Empresas_idEmpresas", $datos['idEmpresa'], PDO::PARAM_INT);
 		$stmt->bindParam(":idDepartamentos", $datos['idDepto'], PDO::PARAM_INT);
 		if ($stmt->execute()) {
 
@@ -477,7 +479,7 @@ class ModeloFormularios{
 		}
 
 		$stmt->close();
-		$stmt = null;	
+		$stmt = null;
 	}
 
 	
@@ -496,7 +498,7 @@ class ModeloFormularios{
 		}
 
 		$stmt->close();
-		$stmt = null;	
+		$stmt = null;
 	}
 
 	static public function mdlRegistrarPuestos($tabla, $datos){
@@ -520,7 +522,7 @@ class ModeloFormularios{
 		}
 
 		$stmt->close();
-		$stmt = null;	
+		$stmt = null;
 	}
 
 	static public function mdlRegistrarVacantes($tabla, $datos){
@@ -543,7 +545,7 @@ class ModeloFormularios{
 		}
 
 		$stmt->close();
-		$stmt = null;	
+		$stmt = null;
 	}
 
 	static public function mdlActualizarVacantes($tabla, $datos){
@@ -566,7 +568,7 @@ class ModeloFormularios{
 		}
 
 		$stmt->close();
-		$stmt = null;	
+		$stmt = null;
 	}
 
 	/*---------- Función hecha para ver a los empleados---------- */
@@ -602,7 +604,7 @@ class ModeloFormularios{
 		}
 
 		$stmt->close();
-		$stmt = null;	
+		$stmt = null;
 	}
 
 	static public function mdlEliminarVacante($tabla, $idVacantes){
@@ -662,7 +664,7 @@ class ModeloFormularios{
 		}
 
 		$stmt->close();
-		$stmt = null;	
+		$stmt = null;
 	}
 
 	static public function mdlRegistroPostulante($tabla, $datos){
@@ -764,7 +766,7 @@ class ModeloFormularios{
 			$stmt->execute();
 			return $stmt -> fetchAll();
 			$stmt->close();
-			$stmt = null;	
+			$stmt = null;
 		}
 
 	}
@@ -777,7 +779,7 @@ class ModeloFormularios{
 		$stmt->execute();
 		return $stmt -> fetch();
 		$stmt->close();
-		$stmt = null;	
+		$stmt = null;
 	}
 
 	/*
@@ -811,7 +813,7 @@ class ModeloFormularios{
 		}
 
 		$stmt->close();
-		$stmt = null;	
+		$stmt = null;
 	}
 
 	static public function mdlEliminarPostulante($tabla, $item, $valor){
@@ -829,7 +831,7 @@ class ModeloFormularios{
 		}
 
 		$stmt->close();
-		$stmt = null;	
+		$stmt = null;
 	}
 
 
@@ -896,7 +898,7 @@ class ModeloFormularios{
 		}
 
 		$stmt->close();
-		$stmt = null;	
+		$stmt = null;
 	}
 
 	static public function mdlSeleccionarEmpleadoMes($tabla){
@@ -963,7 +965,55 @@ class ModeloFormularios{
 		}
 
 		$stmt->close();
-		$stmt = null;	
+		$stmt = null;
+	}
+
+	static public function mdlRegistrarEmpresas($tabla, $datos){
+		$sql = "INSERT INTO $tabla
+		(registro_patronal, rfc, nombre_razon_social, actividad_economica, calle, numero, numero_interior, colonia, cp, entidad, poblacion_municipio, telefono, convenio_reembolso, delegacion_imss, subdelegacion, clave_subdelegacion, mes_inicio_afiliacion, anio_inicio_afiliacion) 
+		VALUES (:registro_patronal,:rfc,:nombre_razon_social,:actividad_economica,:calle,:numero,:numero_interior,:colonia,:cp,:entidad,:poblacion_municipio,:telefono,:convenio_reembolso,:delegacion_imss,:subdelegacion,:clave_subdelegacion,:mes_inicio_afiliacion,:anio_inicio_afiliacion)";
+		$stmt = Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam("registro_patronal", $datos['registro_patronal'], PDO::PARAM_STR);
+		$stmt->bindParam("rfc", $datos['rfc'], PDO::PARAM_STR);
+		$stmt->bindParam("nombre_razon_social", $datos['nombre_razon_social'], PDO::PARAM_STR);
+		$stmt->bindParam("actividad_economica", $datos['actividad_economica'], PDO::PARAM_STR);
+		$stmt->bindParam("calle", $datos['calle'], PDO::PARAM_STR);
+		$stmt->bindParam("numero", $datos['numero'], PDO::PARAM_STR);
+		$stmt->bindParam("numero_interior", $datos['numero_interior'], PDO::PARAM_STR);
+		$stmt->bindParam("colonia", $datos['colonia'], PDO::PARAM_STR);
+		$stmt->bindParam("cp", $datos['cp'], PDO::PARAM_INT);
+		$stmt->bindParam("entidad", $datos['entidad'], PDO::PARAM_STR);
+		$stmt->bindParam("poblacion_municipio", $datos['poblacion_municipio'], PDO::PARAM_STR);
+		$stmt->bindParam("telefono", $datos['telefono'], PDO::PARAM_INT);
+		$stmt->bindParam("convenio_reembolso", $datos['convenio_reembolso'], PDO::PARAM_STR);
+		$stmt->bindParam("delegacion_imss", $datos['delegacion_imss'], PDO::PARAM_STR);
+		$stmt->bindParam("subdelegacion", $datos['subdelegacion'], PDO::PARAM_STR);
+		$stmt->bindParam("clave_subdelegacion", $datos['clave_subdelegacion'], PDO::PARAM_STR);
+		$stmt->bindParam("mes_inicio_afiliacion", $datos['mes_inicio_afiliacion'], PDO::PARAM_STR);
+		$stmt->bindParam("anio_inicio_afiliacion", $datos['anio_inicio_afiliacion'], PDO::PARAM_INT);
+
+		if ($stmt->execute()) {
+			return 'ok';
+		}else{
+			print_r(Conexion::conectar()->errorInfo());
+		}
+	}
+	static public function mdlVerEmpresas($tabla,$item,$valor){
+		if ($item == null && $valor == null) {
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla");
+			$stmt->execute();
+			return $stmt->fetchAll();
+		}else{
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
+			$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
+			$stmt->execute();
+			return $stmt->fetch();
+		}
+
+		$stmt->close();
+		$stmt = null;
+
 	}
 
 	/*---------- Fin de ModeloFormularios ---------- */

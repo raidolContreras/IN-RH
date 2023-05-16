@@ -93,6 +93,58 @@ class FormulariosAjax{
 
 	}
 
+	public function registroEmpresaAjax(){
+
+		$registro_patronal = $this->registro_patronal;
+		$rfc = $this->rfc;
+		$nombre_razon_social = $this->nombre_razon_social;
+		$actividad_economica = $this->actividad_economica;
+		$calle = $this->calle;
+		$numero = $this->numero;
+		$numero_interior = $this->numero_interior;
+		$colonia = $this->colonia;
+		$cp = $this->cp;
+		$entidad = $this->entidad;
+		$poblacion_municipio = $this->poblacion_municipio;
+		$telefono = $this->telefono;
+		$convenio_reembolso = $this->convenio_reembolso;
+		$delegacion_imss = $this->delegacion_imss;
+		$subdelegacion = $this->subdelegacion;
+		$clave_subdelegacion = $this->clave_subdelegacion;
+		$mes_inicio_afiliacion = $this->mes_inicio_afiliacion;
+		$anio_inicio_afiliacion = $this->anio_inicio_afiliacion;
+
+		$datos = array(
+			"registro_patronal" => $registro_patronal,
+			"rfc" => $rfc,
+			"nombre_razon_social" => $nombre_razon_social,
+			"actividad_economica" => $actividad_economica,
+			"calle" => $calle,
+			"numero" => $numero,
+			"numero_interior" => $numero_interior,
+			"colonia" => $colonia,
+			"cp" => $cp,
+			"entidad" => $entidad,
+			"poblacion_municipio" => $poblacion_municipio,
+			"telefono" => $telefono,
+			"convenio_reembolso" => $convenio_reembolso,
+			"delegacion_imss" => $delegacion_imss,
+			"subdelegacion" => $subdelegacion,
+			"clave_subdelegacion" => $clave_subdelegacion,
+			"mes_inicio_afiliacion" => $mes_inicio_afiliacion,
+			"anio_inicio_afiliacion" => $anio_inicio_afiliacion
+		);
+
+		$tabla = "empresas";
+
+		$registrarEmpresa = ControladorFormularios::ctrRegistrarEmpresas($tabla, $datos);
+		if ($registrarEmpresa == 'ok') {
+			echo json_encode('ok');
+		}else{
+			echo json_encode('Error');
+		}
+	}
+
 }
 
 if(isset($_POST["validate"])){
@@ -171,5 +223,34 @@ if (isset($_POST['empleadoMes'])) {
 		$empleado_mes -> publicado = $_POST['publicado'];
 		$empleado_mes -> empleadoMesAjax();
 	}
+
+}
+
+if (isset($_POST['empresa'])) {
+	if (isset($_POST['convenio_reembolso'])) {
+		$convenio_reembolso = 1;
+	}else{
+		$convenio_reembolso = 0;
+	}
+	$registro_empresa = new FormulariosAjax();
+	$registro_empresa -> registro_patronal = $_POST['registro_patronal'];
+	$registro_empresa -> rfc = $_POST['rfc'];
+	$registro_empresa -> nombre_razon_social = $_POST['nombre_razon_social'];
+	$registro_empresa -> actividad_economica = $_POST['actividad_economica'];
+	$registro_empresa -> calle = $_POST['calle'];
+	$registro_empresa -> numero = $_POST['numero'];
+	$registro_empresa -> numero_interior = $_POST['numero_interior'];
+	$registro_empresa -> colonia = $_POST['colonia'];
+	$registro_empresa -> cp = $_POST['cp'];
+	$registro_empresa -> entidad = $_POST['entidad'];
+	$registro_empresa -> poblacion_municipio = $_POST['poblacion_municipio'];
+	$registro_empresa -> telefono = $_POST['telefono'];
+	$registro_empresa -> convenio_reembolso = $convenio_reembolso;
+	$registro_empresa -> delegacion_imss = $_POST['delegacion_imss'];
+	$registro_empresa -> subdelegacion = $_POST['subdelegacion'];
+	$registro_empresa -> clave_subdelegacion = $_POST['clave_subdelegacion'];
+	$registro_empresa -> mes_inicio_afiliacion = $_POST['mes_inicio_afiliacion'];
+	$registro_empresa -> anio_inicio_afiliacion = $_POST['anio_inicio_afiliacion'];
+	$registro_empresa -> registroEmpresaAjax();
 
 }

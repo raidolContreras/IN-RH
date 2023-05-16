@@ -11,7 +11,7 @@
 			<div class="collapse navbar-collapse" id="navbarNav">
 				<ul class="navbar-nav flex-column">
 					<li class="nav-item">
-						<?php if (isset($_GET['pagina']) && in_array($_GET['pagina'], array('Empleados', 'Departamento', 'Nominas', 'Organigrama'))): ?>
+						<?php if (isset($_GET['pagina']) && in_array($_GET['pagina'], array('Empleados', 'Departamento', 'Nominas', 'Organigrama','RegistroEmpleados'))): ?>
 							<a class="nav-link active" href="Empleados">
 						<?php else: ?>
 							<a class="nav-link" href="Empleados">
