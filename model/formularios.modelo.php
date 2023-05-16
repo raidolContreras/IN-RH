@@ -970,13 +970,14 @@ class ModeloFormularios{
 
 	static public function mdlRegistrarEmpresas($tabla, $datos){
 		$sql = "INSERT INTO $tabla
-		(registro_patronal, rfc, nombre_razon_social, actividad_economica, calle, numero, numero_interior, colonia, cp, entidad, poblacion_municipio, telefono, convenio_reembolso, delegacion_imss, subdelegacion, clave_subdelegacion, mes_inicio_afiliacion, anio_inicio_afiliacion) 
-		VALUES (:registro_patronal,:rfc,:nombre_razon_social,:actividad_economica,:calle,:numero,:numero_interior,:colonia,:cp,:entidad,:poblacion_municipio,:telefono,:convenio_reembolso,:delegacion_imss,:subdelegacion,:clave_subdelegacion,:mes_inicio_afiliacion,:anio_inicio_afiliacion)";
+		(registro_patronal, rfc, nombre_razon_social, regimen, actividad_economica, calle, numero, numero_interior, colonia, cp, entidad, poblacion_municipio, telefono, convenio_reembolso, delegacion_imss, subdelegacion, clave_subdelegacion, mes_inicio_afiliacion, anio_inicio_afiliacion) 
+		VALUES (:registro_patronal,:rfc,:nombre_razon_social,:regimen,:actividad_economica,:calle,:numero,:numero_interior,:colonia,:cp,:entidad,:poblacion_municipio,:telefono,:convenio_reembolso,:delegacion_imss,:subdelegacion,:clave_subdelegacion,:mes_inicio_afiliacion,:anio_inicio_afiliacion)";
 		$stmt = Conexion::conectar()->prepare($sql);
 
 		$stmt->bindParam("registro_patronal", $datos['registro_patronal'], PDO::PARAM_STR);
 		$stmt->bindParam("rfc", $datos['rfc'], PDO::PARAM_STR);
 		$stmt->bindParam("nombre_razon_social", $datos['nombre_razon_social'], PDO::PARAM_STR);
+		$stmt->bindParam("regimen", $datos['regimen'], PDO::PARAM_INT);
 		$stmt->bindParam("actividad_economica", $datos['actividad_economica'], PDO::PARAM_STR);
 		$stmt->bindParam("calle", $datos['calle'], PDO::PARAM_STR);
 		$stmt->bindParam("numero", $datos['numero'], PDO::PARAM_STR);

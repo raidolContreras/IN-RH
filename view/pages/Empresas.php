@@ -5,6 +5,8 @@ $estadosJson = file_get_contents('view/pages/json/estados.json');
 
 // Convertir el JSON a un array asociativo
 $estadosArray = json_decode($estadosJson, true);
+$regimenJson = file_get_contents('view/pages/json/regimen.json');
+$regimenArray = json_decode($regimenJson, true); 
 ?>
 <div class="container-fluid dashboard-content ">
 	<!-- ============================================================== -->
@@ -27,11 +29,11 @@ $estadosArray = json_decode($estadosJson, true);
 									<th>Registro patronal</th>
 									<th>R.F.C.</th>
 									<th>Nombre o Razón social</th>
+									<th>Régimen</th>
 									<th>Actividad económica</th>
 									<th>Dirección</th>
 									<th>Entidad y Población o municipio/alcaldia</th>
 									<th>Teléfono</th>
-									<th>Convenio de reembolso de suministros</th>
 									<th>Delegación IMSS</th>
 									<th>Subdelegación IMSS</th>
 									<th>Clave subdelegación</th>
@@ -45,6 +47,11 @@ $estadosArray = json_decode($estadosJson, true);
 										<td><?php echo $empresa['registro_patronal']; ?></td>
 										<td><?php echo $empresa['rfc']; ?></td>
 										<td><?php echo $empresa['nombre_razon_social']; ?></td>
+										<?php foreach ($regimenArray as $key => $value): ?>
+											<?php if ($value['clave'] == $empresa['regimen']): ?>
+												<td>(<?php echo $value['clave']; ?>) <?php echo $value['nombre']; ?></td>
+											<?php endif ?>
+										<?php endforeach ?>
 										<td><?php echo $empresa['actividad_economica']; ?></td>
 										<td>Calle: <?php echo $empresa['calle']; ?>,
 										N°: <?php echo $empresa['numero']; ?>, N° interior: <? echo $empresa['numero_interior']; ?>,
@@ -52,11 +59,6 @@ $estadosArray = json_decode($estadosJson, true);
 										C.P.: <?php echo $empresa['cp']; ?></td>
 										<td><?php echo $empresa['poblacion_municipio']; ?>, <?php echo $empresa['entidad']; ?></td>
 										<td><?php echo $empresa['telefono']; ?></td>
-										<?php if ($empresa['convenio_reembolso'] == 1): ?>
-										<td><span class="badge-dot badge-success"></span>Si</td>
-										<?php else: ?>
-										<td><span class="badge-dot badge-warning"></span>No</td>
-										<?php endif ?>
 										<?php foreach ($estadosArray as $key => $value): ?>
 											<?php if ($value['clave'] == $empresa['delegacion_imss']): ?>
 												<td><?php echo $value['nombre']; ?></td>

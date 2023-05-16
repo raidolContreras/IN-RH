@@ -98,6 +98,7 @@ class FormulariosAjax{
 		$registro_patronal = $this->registro_patronal;
 		$rfc = $this->rfc;
 		$nombre_razon_social = $this->nombre_razon_social;
+		$regimen = $this->regimen;
 		$actividad_economica = $this->actividad_economica;
 		$calle = $this->calle;
 		$numero = $this->numero;
@@ -118,6 +119,7 @@ class FormulariosAjax{
 			"registro_patronal" => $registro_patronal,
 			"rfc" => $rfc,
 			"nombre_razon_social" => $nombre_razon_social,
+			"regimen" => $regimen,
 			"actividad_economica" => $actividad_economica,
 			"calle" => $calle,
 			"numero" => $numero,
@@ -236,6 +238,7 @@ if (isset($_POST['empresa'])) {
 	$registro_empresa -> registro_patronal = $_POST['registro_patronal'];
 	$registro_empresa -> rfc = $_POST['rfc'];
 	$registro_empresa -> nombre_razon_social = $_POST['nombre_razon_social'];
+	$registro_empresa -> regimen = $_POST['regimen'];
 	$registro_empresa -> actividad_economica = $_POST['actividad_economica'];
 	$registro_empresa -> calle = $_POST['calle'];
 	$registro_empresa -> numero = $_POST['numero'];

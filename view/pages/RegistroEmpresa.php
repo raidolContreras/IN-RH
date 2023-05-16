@@ -8,6 +8,10 @@ $ciudadesJson = file_get_contents('view/pages/json/ciudades.json');
 // Convertir el JSON a un array asociativo
 $estadosArray = json_decode($estadosJson, true);
 $ciudadesArray = json_decode($ciudadesJson, true); 
+
+
+$regimenJson = file_get_contents('view/pages/json/regimen.json');
+$regimenArray = json_decode($regimenJson, true); 
 ?>
 <div class="container-fluid dashboard-content ">
 	<div class="container">
@@ -34,6 +38,17 @@ $ciudadesArray = json_decode($ciudadesJson, true);
 									<div class="form-group">
 										<label for="nombre_razon_social">Nombre o Razón social</label>
 										<input type="text" class="form-control" id="nombre_razon_social" name="nombre_razon_social" required>
+									</div>
+								</div>
+								<div class="col-md-12">
+									<div class="form-group">
+										<label for="regimen">Régimen</label>
+										<select class="form-control" name="regimen" id="regimen" required>
+											<option>Selecciona el régimen</option>
+											<?php foreach ($regimenArray as $key => $regimen): ?>
+												<option value="<?php echo $regimen['clave'] ?>">(<?php echo $regimen['clave'] ?>) <?php echo $regimen['nombre'] ?></option>
+											<?php endforeach ?>
+										</select>
 									</div>
 								</div>
 							</div>
@@ -103,13 +118,7 @@ $ciudadesArray = json_decode($ciudadesJson, true);
 							</div>
 								<hr>
 							<div class="form-row">
-								<div class="col-md-3">
-									<div class="form-group">
-										<label for="convenio_reembolso">Convenio de reembolso de suministros</label>
-										<input type="checkbox" class="form-control" id="convenio_reembolso" name="convenio_reembolso">
-									</div>
-								</div>
-								<div class="col-md-3">
+								<div class="col-md-4">
 									<div class="form-group">
 										<label for="delegacion_imss">Delegación IMSS</label>
 										<select class="form-control" id="delegacion_imss" name="delegacion_imss" required>
@@ -120,7 +129,7 @@ $ciudadesArray = json_decode($ciudadesJson, true);
 										</select>
 									</div>
 								</div>
-								<div class="col-md-3">
+								<div class="col-md-4">
 									<div class="form-group">
 										<label for="subdelegacion">Subdelegación IMSS</label>
 										<select class="form-control" id="subdelegacion" name="subdelegacion" required>
@@ -128,44 +137,47 @@ $ciudadesArray = json_decode($ciudadesJson, true);
 										</select>
 									</div>
 								</div>
-								<div class="col-md-3">
+								<div class="col-md-4">
 									<div class="form-group">
 										<label for="clave_subdelegacion">Clave subdelegación</label>
 										<input type="text" class="form-control" id="clave_subdelegacion" name="clave_subdelegacion" required>
 									</div>
-								</div>
-								<div class="col-md-4">
-									<div class="form-group">
-										<label for="mes_inicio_afiliacion">Mes del inicio del modulo de afiliación</label>
-										<select class="form-control" id="mes_inicio_afiliacion" name="mes_inicio_afiliacion" required>
-											<option>Selecciona un mes</option>
-											<option value="Enero">Enero</option>
-											<option value="Febrero">Febrero</option>
-											<option value="Marzo">Marzo</option>
-											<option value="Abril">Abril</option>
-											<option value="Mayo">Mayo</option>
-											<option value="Junio">Junio</option>
-											<option value="Julio">Julio</option>
-											<option value="Agosto">Agosto</option>
-											<option value="Septiembre">Septiembre</option>
-											<option value="Octubre">Octubre</option>
-											<option value="Noviembre">Noviembre</option>
-											<option value="Diciembre">Diciembre</option>
-										</select>
-									</div>
-								</div>
-								<div class="col-md-4">
-									<div class="form-group">
-										<label for="anio_inicio_afiliacion">Año del inicio del modulo de afiliación</label>
-										<select class="form-control" id="anio_inicio_afiliacion" name="anio_inicio_afiliacion" required>
-											<option value="">Selecciona el año</option>
-											<?php for ($i=2023; $i >= 1990; $i--) { 
-												echo "<option value='".$i."'>".$i."</option>";
-											} ?>
-										</select>
-									</div>
-								</div>
 							</div>
+								</div>
+									<div class="form-group row">
+										<div class="col-md-4">
+											<label for="mes_inicio_afiliacion">Fecha de inicio de operaciones</label>
+										</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<select class="form-control" id="mes_inicio_afiliacion" name="mes_inicio_afiliacion" required>
+												<option>Mes</option>
+												<option value="Enero">Enero</option>
+												<option value="Febrero">Febrero</option>
+												<option value="Marzo">Marzo</option>
+												<option value="Abril">Abril</option>
+												<option value="Mayo">Mayo</option>
+												<option value="Junio">Junio</option>
+												<option value="Julio">Julio</option>
+												<option value="Agosto">Agosto</option>
+												<option value="Septiembre">Septiembre</option>
+												<option value="Octubre">Octubre</option>
+												<option value="Noviembre">Noviembre</option>
+												<option value="Diciembre">Diciembre</option>
+											</select>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<select class="form-control" id="anio_inicio_afiliacion" name="anio_inicio_afiliacion" required>
+												<option value="">Año</option>
+												<?php for ($i=2023; $i >= 1990; $i--) { 
+													echo "<option value='".$i."'>".$i."</option>";
+												} ?>
+											</select>
+										</div>
+									</div>
+								</div>
 							<div class="form-group">
 								<input type="hidden" name="empresa" value="1">
 								<button type="button" class="btn btn-primary rounded btn-block" id="empresa-btn">Registrar empresa</button>
