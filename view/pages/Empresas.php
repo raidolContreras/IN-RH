@@ -37,8 +37,7 @@ $regimenArray = json_decode($regimenJson, true);
 									<th>Delegación IMSS</th>
 									<th>Subdelegación IMSS</th>
 									<th>Clave subdelegación</th>
-									<th>Mes del inicio del modulo de afiliación</th>
-									<th>Año del inicio del modulo de afiliación</th>
+									<th>Fecha de inicio de operaciones</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -66,8 +65,7 @@ $regimenArray = json_decode($regimenJson, true);
 										<?php endforeach ?>
 										<td><?php echo $empresa['subdelegacion']; ?></td>
 										<td><?php echo $empresa['clave_subdelegacion']; ?></td>
-										<td><?php echo $empresa['mes_inicio_afiliacion']; ?></td>
-										<td><?php echo $empresa['anio_inicio_afiliacion']; ?></td>
+										<td><?php echo $empresa['dia_inicio_afiliacion']; ?> de <?php echo $empresa['mes_inicio_afiliacion']; ?> del <?php echo $empresa['anio_inicio_afiliacion']; ?></td>
 									</tr>
 								<?php endforeach ?>
 							</tbody>

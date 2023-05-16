@@ -145,10 +145,20 @@ $regimenArray = json_decode($regimenJson, true);
 							</div>
 								</div>
 									<div class="form-group row">
-										<div class="col-md-4">
+										<div class="col-md-3">
 											<label for="mes_inicio_afiliacion">Fecha de inicio de operaciones</label>
 										</div>
-									<div class="col-md-4">
+									<div class="col-md-3">
+										<div class="form-group">
+											<select class="form-control" id="dia_inicio_afiliacion" name="dia_inicio_afiliacion" required>
+												<option value="">Día</option>
+												<?php for ($i=01; $i <= 31; $i++) { 
+													echo "<option value='".$i."'>".$i."</option>";
+												} ?>
+											</select>
+										</div>
+									</div>
+									<div class="col-md-3">
 										<div class="form-group">
 											<select class="form-control" id="mes_inicio_afiliacion" name="mes_inicio_afiliacion" required>
 												<option>Mes</option>
@@ -167,7 +177,7 @@ $regimenArray = json_decode($regimenJson, true);
 											</select>
 										</div>
 									</div>
-									<div class="col-md-4">
+									<div class="col-md-3">
 										<div class="form-group">
 											<select class="form-control" id="anio_inicio_afiliacion" name="anio_inicio_afiliacion" required>
 												<option value="">Año</option>

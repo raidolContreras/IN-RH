@@ -112,6 +112,7 @@ class FormulariosAjax{
 		$delegacion_imss = $this->delegacion_imss;
 		$subdelegacion = $this->subdelegacion;
 		$clave_subdelegacion = $this->clave_subdelegacion;
+		$dia_inicio_afiliacion = $this->dia_inicio_afiliacion;
 		$mes_inicio_afiliacion = $this->mes_inicio_afiliacion;
 		$anio_inicio_afiliacion = $this->anio_inicio_afiliacion;
 
@@ -133,6 +134,7 @@ class FormulariosAjax{
 			"delegacion_imss" => $delegacion_imss,
 			"subdelegacion" => $subdelegacion,
 			"clave_subdelegacion" => $clave_subdelegacion,
+			"dia_inicio_afiliacion" => $dia_inicio_afiliacion,
 			"mes_inicio_afiliacion" => $mes_inicio_afiliacion,
 			"anio_inicio_afiliacion" => $anio_inicio_afiliacion
 		);
@@ -252,6 +254,7 @@ if (isset($_POST['empresa'])) {
 	$registro_empresa -> delegacion_imss = $_POST['delegacion_imss'];
 	$registro_empresa -> subdelegacion = $_POST['subdelegacion'];
 	$registro_empresa -> clave_subdelegacion = $_POST['clave_subdelegacion'];
+	$registro_empresa -> dia_inicio_afiliacion = $_POST['dia_inicio_afiliacion'];
 	$registro_empresa -> mes_inicio_afiliacion = $_POST['mes_inicio_afiliacion'];
 	$registro_empresa -> anio_inicio_afiliacion = $_POST['anio_inicio_afiliacion'];
 	$registro_empresa -> registroEmpresaAjax();
