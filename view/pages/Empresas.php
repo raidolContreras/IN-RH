@@ -1,6 +1,12 @@
 <?php 
 $empresas = ControladorFormularios::ctrVerEmpresas(null,null);
-?><div class="container-fluid dashboard-content ">
+// Leer el archivo JSON de estados
+$estadosJson = file_get_contents('view/pages/json/estados.json');
+
+// Convertir el JSON a un array asociativo
+$estadosArray = json_decode($estadosJson, true);
+?>
+<div class="container-fluid dashboard-content ">
 	<!-- ============================================================== -->
 	<!-- end pageheader	-->
 	<!-- ============================================================== -->
@@ -22,14 +28,10 @@ $empresas = ControladorFormularios::ctrVerEmpresas(null,null);
 									<th>R.F.C.</th>
 									<th>Nombre o Razón social</th>
 									<th>Actividad económica</th>
-									<th>Calle</th>
-									<th>Numero</th>
-									<th>Colonia</th>
-									<th>C.P.</th>
-									<th>Entidad</th>
-									<th>Población y municipio / alcaldia</th>
+									<th>Dirección</th>
+									<th>Entidad y Población o municipio/alcaldia</th>
 									<th>Teléfono</th>
-									<th>Convenio de reembolso de suministros (checkbox)</th>
+									<th>Convenio de reembolso de suministros</th>
 									<th>Delegación IMSS</th>
 									<th>Subdelegación IMSS</th>
 									<th>Clave subdelegación</th>
@@ -44,15 +46,22 @@ $empresas = ControladorFormularios::ctrVerEmpresas(null,null);
 										<td><?php echo $empresa['rfc']; ?></td>
 										<td><?php echo $empresa['nombre_razon_social']; ?></td>
 										<td><?php echo $empresa['actividad_economica']; ?></td>
-										<td><?php echo $empresa['calle']; ?></td>
-										<td><?php echo $empresa['numero']; ?>, N° interior:<? echo $empresa['numero_interior']; ?></td>
-										<td><?php echo $empresa['colonia']; ?></td>
-										<td><?php echo $empresa['cp']; ?></td>
-										<td><?php echo $empresa['entidad']; ?></td>
-										<td><?php echo $empresa['poblacion_municipio']; ?></td>
+										<td>Calle: <?php echo $empresa['calle']; ?>,
+										N°: <?php echo $empresa['numero']; ?>, N° interior: <? echo $empresa['numero_interior']; ?>,
+										Colonia: <?php echo $empresa['colonia']; ?>
+										C.P.: <?php echo $empresa['cp']; ?></td>
+										<td><?php echo $empresa['poblacion_municipio']; ?>, <?php echo $empresa['entidad']; ?></td>
 										<td><?php echo $empresa['telefono']; ?></td>
-										<td><?php echo $empresa['convenio_reembolso']; ?></td>
-										<td><?php echo $empresa['delegacion_imss']; ?></td>
+										<?php if ($empresa['convenio_reembolso'] == 1): ?>
+										<td><span class="badge-dot badge-success"></span>Si</td>
+										<?php else: ?>
+										<td><span class="badge-dot badge-warning"></span>No</td>
+										<?php endif ?>
+										<?php foreach ($estadosArray as $key => $value): ?>
+											<?php if ($value['clave'] == $empresa['delegacion_imss']): ?>
+												<td><?php echo $value['nombre']; ?></td>
+											<?php endif ?>
+										<?php endforeach ?>
 										<td><?php echo $empresa['subdelegacion']; ?></td>
 										<td><?php echo $empresa['clave_subdelegacion']; ?></td>
 										<td><?php echo $empresa['mes_inicio_afiliacion']; ?></td>
