@@ -32,7 +32,15 @@
 										$empresa = ControladorFormularios::ctrVerEmpresas("idEmpresas", $depa['Empresas_idEmpresas']);
 									?>
 									<tr>
-										<td><?php echo $depa['nameDepto'] ?></td>
+
+										<?php $depaEspe = ControladorFormularios::ctrVerDepartamentos("idDepartamentos",$depa['Pertenencia']); ?>
+										<?php if (isset($depaEspe['nameDepto'])): ?>
+												<?php $nameDepa = mb_strtoupper($depa['nameDepto']." (".$depaEspe['nameDepto'].")");?>
+										<?php else: ?>
+												<?php $nameDepa = mb_strtoupper($depa['nameDepto']);?>
+										<?php endif ?>
+
+										<td><?php echo $nameDepa ?></td>
 										<td><?php echo $nombreEmpleado; ?></td>
 										<td><?php echo $empresa['nombre_razon_social']." (".$empresa['rfc'].")"; ?></td>
 										<td>

@@ -3,7 +3,8 @@ $datos = ControladorFormularios::ctrVerDepartamentos("idDepartamentos",$_GET['Ed
 if ($datos['Empleados_idEmpleados']!=0) {
 	$empleadoDpto = ControladorEmpleados::ctrVerEmpleados("idEmpleados", $datos['Empleados_idEmpleados']); 
 }
-$empleadosDpto = ControladorEmpleados::ctrVerEmpleadosDisponibles("departamentos"); 
+$empleadosDpto = ControladorEmpleados::ctrVerEmpleados(null,null); 
+$empleados = ControladorEmpleados::ctrVerEmpleados(null,null); 
 $registro = ControladorFormularios::ctrActualizarDepto();
 $empresas = ControladorFormularios::ctrVerEmpresas(null,null);
 ?>

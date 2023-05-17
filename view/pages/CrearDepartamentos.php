@@ -1,7 +1,8 @@
 <?php 
-$empleados = ControladorEmpleados::ctrVerEmpleadosDisponibles("departamentos"); 
+$empleados = ControladorEmpleados::ctrVerEmpleados(null,null); 
 $registro = ControladorFormularios::ctrRegistrarDeptos();
 $empresas = ControladorFormularios::ctrVerEmpresas(null,null);
+$departamentos = ControladorFormularios::ctrVerDepartamentos(null, null);
 ?>
 <div class="container-fluid dashboard-content ">
 
@@ -46,9 +47,9 @@ $empresas = ControladorFormularios::ctrVerEmpresas(null,null);
 				</div>
 				<div class="form-group">
 					<label for="jefe" class="col-form-label font-weight-bold">Jefe del departamento:</label>
-					<select class="form-control" id="jefe" name="jefe">
-							<option>
-								Selecciona un empleado
+					<select class="form-control" id="jefe" name="jefe" required>
+							<option value="Sin empleado" selected>
+								Sin empleado
 							</option>
 						<?php foreach ($empleados as $key => $empleado): ?>
 							<option value="<?php echo $empleado['idEmpleados']; ?>">
@@ -59,7 +60,7 @@ $empresas = ControladorFormularios::ctrVerEmpresas(null,null);
 				</div>
 				<div class="form-group">
 					<label for="empresa" class="col-form-label font-weight-bold">Empresa:</label>
-					<select class="form-control" id="empresa" name="empresa">
+					<select class="form-control" id="empresa" name="empresa" required>
 							<option>
 								Seleccionar empresa
 							</option>
@@ -67,6 +68,26 @@ $empresas = ControladorFormularios::ctrVerEmpresas(null,null);
 							<option value="<?php echo $empresa['idEmpresas']; ?>">
 								<?php echo ucwords(strtolower($empresa['nombre_razon_social']." (".$empresa['rfc'].")")); ?>
 							</option>
+						<?php endforeach ?>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="Pertenencia" class="col-form-label font-weight-bold">Departamento:</label>
+					<select class="form-control" id="Pertenencia" name="Pertenencia">
+							<option>
+								Seleccionar departamento
+							</option>
+						<?php foreach ($departamentos as $key => $departamento): ?>
+							<?php $depa = ControladorFormularios::ctrVerDepartamentos("idDepartamentos",$departamento['Pertenencia']); ?>
+							<?php if (isset($depa['nameDepto'])): ?>
+								<option value="<?php echo $departamento['idDepartamentos']; ?>">
+									<?php echo strtoupper($departamento['nameDepto']." (".$depa['nameDepto'].")");?>
+								</option>
+							<?php else: ?>
+								<option value="<?php echo $departamento['idDepartamentos']; ?>">
+									<?php echo strtoupper($departamento['nameDepto']);?>
+								</option>
+							<?php endif ?>
 						<?php endforeach ?>
 					</select>
 				</div>

@@ -219,7 +219,8 @@ class ControladorFormularios{
 
 				$datos = array("name" => $_POST["name"],
 						"idEmpleado" => $_POST["jefe"],
-						"idEmpresa" => $_POST["empresa"]
+						"idEmpresa" => $_POST["empresa"],
+						"Pertenencia" => $_POST["Pertenencia"]
 											);
 				$tabla = "departamentos";
 				$respuesta = ModeloFormularios::mdlRegistrarDeptos($tabla, $datos);
@@ -701,6 +702,11 @@ class ControladorFormularios{
 		$tabla = 'empresas';
 		$buscar = ModeloFormularios::mdlVerEmpresas($tabla,$item,$valor);
 		return $buscar;
+	}
+
+	static public function ctrOrganigrama(){
+		$organigrama = ModeloFormularios::mdlOrganigrama();
+		return $organigrama;
 	}
 
 	/*---------- Fin de ControladorFormularios ---------- */

@@ -36,20 +36,7 @@
 
 								if($registro == "ok"){
 
-									echo '  <script>window.onload = function () {
-										      showAlert();
-										    };</script>
-											<div id="alertContainer" class="alert-container">
-											    <div id="alert" class="alert2" role="alert">
-													<button type="button" class="close close-btn" onclick="closeAlert()">
-											    		<span>&times;</span>
-											    	</button>
-											    	<div class="alert-content">
-														<h4 class="alert-heading">¡Datos Actualizados!</h4>
-														<p>Registrado Exitosamente</p>
-											    	</div>
-												</div>
-											</div>';
+									echo '<div class="alert alert-success">Se actualizo empleado</div>';
 
 								}
 								if ($registro == "1") {
@@ -251,13 +238,20 @@
 														<div class="form-group col-md-6">
 															<label for="departamento" class="col-form-label text-center font-weight-bold">Departamento:</label>
 															<select class="form-control form-control-lg" id="departamento" name="departamento">
+
 																<?php foreach ($departamentos as $key => $departamento): ?>
-																	<?php if ($departamento['idDepartamentos'] == $puesto['Departamentos_idDepartamentos']): ?>
-																		<option value="<?php echo $departamento['idDepartamentos']; ?>" selected><?php echo ucwords(strtolower($departamento['nameDepto'])); ?></option>
-																	<?php else: ?>
-																		<option value="<?php echo $departamento['idDepartamentos']; ?>"><?php echo ucwords(strtolower($departamento['nameDepto'])); ?></option>
-																	<?php endif ?>
+																	
+																    <?php $depa = ControladorFormularios::ctrVerDepartamentos("idDepartamentos",$departamento['Pertenencia']); ?>
+																    <?php
+																        $selected = ($departamento['idDepartamentos'] == $puesto['Departamentos_idDepartamentos']) ? 'selected' : '';
+																        $nameDepto = strtoupper($departamento['nameDepto']);
+																        $nameDepto .= isset($depa['nameDepto']) ? ' (' . $depa['nameDepto'] . ')' : '';
+																    ?>
+																    <option value="<?php echo $departamento['idDepartamentos']; ?>" <?php echo $selected; ?>>
+																        <?php echo $nameDepto; ?>
+																    </option>
 																<?php endforeach ?>
+
 															</select>
 														</div>
 														<input type="hidden" name="empleado" value="<?php echo $_GET['perfil'] ?>">
@@ -290,7 +284,7 @@
 		<!-- Validación de formulario con jQuery -->
 		<script>
 			$(document).ready(function() {
-				$("#registro-form").submit(function(event) {
+				$("#formulario").submit(function(event) {
 // Obtener valores de los campos
 					var nombre = $("#nombre").val();
 					var apellidos = $("#apellidos").val();

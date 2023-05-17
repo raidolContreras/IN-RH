@@ -407,11 +407,20 @@ class ModeloFormularios{
 
 	static public function mdlRegistrarDeptos($tabla, $datos){
 
-		$sql = "INSERT INTO $tabla(nameDepto, Empleados_idEmpleados, Empresas_idEmpresas) VALUES (:nameDepto, :Empleados_idEmpleados, :Empresas_idEmpresas)";
-		$stmt = Conexion::conectar()->prepare($sql);
+		if ($datos['idEmpleado'] == "Sin empleado") {
+			$sql = "INSERT INTO $tabla (nameDepto, Empresas_idEmpresas, Pertenencia) VALUES (:nameDepto, :Empresas_idEmpresas, :Pertenencia);";
+			
+			$stmt = Conexion::conectar()->prepare($sql);
+		}else{
+			$sql = "INSERT INTO $tabla(nameDepto, Empleados_idEmpleados, Empresas_idEmpresas, Pertenencia) VALUES (:nameDepto, :Empleados_idEmpleados, :Empresas_idEmpresas, :Pertenencia)";
+			
+			$stmt = Conexion::conectar()->prepare($sql);
+			$stmt->bindParam(":Empleados_idEmpleados", $datos['idEmpleado'], PDO::PARAM_INT);
+		}
+
 		$stmt->bindParam(":nameDepto", $datos['name'], PDO::PARAM_STR);
-		$stmt->bindParam(":Empleados_idEmpleados", $datos['idEmpleado'], PDO::PARAM_INT);
 		$stmt->bindParam(":Empresas_idEmpresas", $datos['idEmpresa'], PDO::PARAM_INT);
+		$stmt->bindParam(":Pertenencia", $datos['Pertenencia'], PDO::PARAM_INT);
 		if ($stmt->execute()) {
 
 			return "ok";
@@ -1016,6 +1025,16 @@ class ModeloFormularios{
 		$stmt->close();
 		$stmt = null;
 
+	}
+
+	static public function mdlOrganigrama(){
+		$sql = "SELECT *
+				FROM empleados e
+				LEFT JOIN puesto p ON p.Empleados_idEmpleados = e.idEmpleados
+				WHERE e.status = 1";
+		$stmt =	Conexion::conectar()->prepare($sql);
+		$stmt->execute();
+		return $stmt->fetchAll();
 	}
 
 	/*---------- Fin de ModeloFormularios ---------- */

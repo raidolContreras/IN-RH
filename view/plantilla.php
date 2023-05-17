@@ -110,6 +110,11 @@ session_start();
 
 			include "pages/Login/".$_GET["pagina"].".php";
 
+		}elseif ($_GET["pagina"] == "Organigrama") {
+
+			include "pages/navs/navbar.php";
+			include "pages/".$_GET["pagina"].".php";
+
 		}elseif ($_GET["pagina"] == "Noticias" ||
 				 $_GET["pagina"] == "TableroNoticias"	) {
 
@@ -133,16 +138,7 @@ session_start();
 	<a href="Configuraciones" class="configuration-button"><i class="fas fa-cog rotate-center"></i></a>
 </div>
 </div>
-<!-- ============================================================== -->
-<!-- end wrapper  -->
-<!-- ============================================================== -->
 </div>
-<!-- ============================================================== -->
-<!-- end main wrapper  -->
-<!-- ============================================================== -->
-<!-- Optional JavaScript -->
-<!-- jquery 3.3.1 -->
-<!-- ============================================================== -->
 
 <!-- JavaScript de Bootstrap 4 y jQuery -->
 <script src="assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
