@@ -1,4 +1,3 @@
-<script src="assets/libs/vendor/OrgChartJS/OrgChart.js"></script>
 <?php 
 $organigrama = ControladorFormularios::ctrOrganigrama();
 ?>
@@ -103,3 +102,5 @@ chart.load([
 	<?php endforeach ?>
 ]);
 </script> 
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

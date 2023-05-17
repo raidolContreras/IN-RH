@@ -34,6 +34,7 @@ session_start();
 	<link rel="shortcut icon" href="assets/images/logo.png" />
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 	<script src="https://cdn.tiny.cloud/1/ojrrit6i20fvuzvl2sioxzrflc9dh7gpi3gosuyrwgzfa18y/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+	<script src="https://balkan.app/js/OrgChart.js"></script>
 	
 	<?php if (isset($_GET["pagina"])): ?>
 		<title><?php echo 'IN Consulting México - '.$_GET["pagina"]; ?></title>
