@@ -1,7 +1,7 @@
 <?php 
 $organigrama = ControladorFormularios::ctrOrganigrama();
 ?>
-<div id="tree"></div>
+<div id="tree" style="height: 800px;"></div>
 
 <script>
 //JavaScript
@@ -71,9 +71,11 @@ chart.load([
 			$idDepto = $departamento['idDepartamentos'];
 			$fotoEmpleado = ControladorFormularios::ctrVerFotos("Empleados_idEmpleados", $value['idEmpleados']);
 			$idEmpleadoDepa = $departamento['Empleados_idEmpleados'];
+
+			$empresa = ControladorFormularios::ctrVerEmpresas("idEmpresas", $departamento['Empresas_idEmpresas']);
+			$nameEmpresa = $empresa['nombre_razon_social'];
 			
 			// Obtener datos de pertenencia (si existe)
-			$pertenencia = null;
 			$idPertenencia = null;
 			if ($departamento['Pertenencia'] != 0) {
 				$pertenencia = ControladorFormularios::ctrVerDepartamentos("idDepartamentos", $departamento['Pertenencia']);
@@ -92,7 +94,7 @@ chart.load([
 				'id' => $idEmpleado,
 				'pid' => ($departamento['Pertenencia'] == 0) ? null : $idPertenencia,
 				'Nombre' => $name,
-				'Empresa' => 'InConsulting',
+				'Empresa' => $nameEmpresa,
 				'Puesto' => $namePuesto,
 				'Departamento' => $nameDepa,
 				'img' => $foto
@@ -102,5 +104,3 @@ chart.load([
 	<?php endforeach ?>
 ]);
 </script> 
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
