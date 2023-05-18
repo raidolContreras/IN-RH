@@ -119,32 +119,8 @@ $perfil = $primerLetra.$segundaLetra;
 								<div class="list-group">
 									<a href="#" class="list-group-item list-group-item-action active">
 										<div class="notification-info">
-											<div class="notification-list-user-img"><img src="assets/images/avatar-2.jpg" alt="" class="user-avatar-md rounded-circle"></div>
+											<div class="notification-list-user-img"><img src="" alt="" class="user-avatar-md rounded-circle"></div>
 											<div class="notification-list-user-block"><span class="notification-list-user-name">Jeremy Rakestraw</span>Aceptó la hora de la reunión.
-												<div class="notification-date">2 min ago</div>
-											</div>
-										</div>
-									</a>
-									<a href="#" class="list-group-item list-group-item-action">
-										<div class="notification-info">
-											<div class="notification-list-user-img"><img src="assets/images/avatar-3.jpg" alt="" class="user-avatar-md rounded-circle"></div>
-											<div class="notification-list-user-block"><span class="notification-list-user-name">John Abraham </span>Mando un nuevo mensaje
-												<div class="notification-date">2 days ago</div>
-											</div>
-										</div>
-									</a>
-									<a href="#" class="list-group-item list-group-item-action">
-										<div class="notification-info">
-											<div class="notification-list-user-img"><img src="assets/images/avatar-4.jpg" alt="" class="user-avatar-md rounded-circle"></div>
-											<div class="notification-list-user-block"><span class="notification-list-user-name">Monaan Pechi</span> Acepto la hora de la reunión
-												<div class="notification-date">2 min ago</div>
-											</div>
-										</div>
-									</a>
-									<a href="#" class="list-group-item list-group-item-action">
-										<div class="notification-info">
-											<div class="notification-list-user-img"><img src="assets/images/avatar-5.jpg" alt="" class="user-avatar-md rounded-circle"></div>
-											<div class="notification-list-user-block"><span class="notification-list-user-name">Jessica Caruso</span>accepted your invitation to join the team.
 												<div class="notification-date">2 min ago</div>
 											</div>
 										</div>

@@ -6,8 +6,20 @@ jQuery(document).ready(function($) {
         $(document).ready(function() {
             var table = $('table.second').DataTable({
                 lengthChange: false,
-                buttons: ['excel',
-                    'pdf'
+                buttons: [
+                    {
+                        extend: 'excelHtml5',
+                        text: 'Excel',
+                        customize: function( xlsx ) {
+                            var sheet = xlsx.xl.worksheets['Datos.xml'];
+                            $('row:first c', sheet).attr( 's', '42' );
+                        }
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        orientation: 'landscape',
+                        pageSize: 'LEGAL'
+                    }
                     ],
                 fixedHeader: true,
                 scrollY: 375,
@@ -39,11 +51,15 @@ jQuery(document).ready(function($) {
                         extend: 'excelHtml5',
                         text: 'Excel',
                         customize: function( xlsx ) {
-                            var sheet = xlsx.xl.worksheets['IN Consulting.xml'];
+                            var sheet = xlsx.xl.worksheets['Postulantes.xml'];
                             $('row:first c', sheet).attr( 's', '42' );
                         }
                     },
-                    'pdf'
+                    {
+                        extend: 'pdfHtml5',
+                        orientation: 'landscape',
+                        pageSize: 'LEGAL'
+                    }
                     ],
                 fixedHeader: true,
                 scrollY: 375,
@@ -82,7 +98,8 @@ jQuery(document).ready(function($) {
                     {
                         extend: 'pdfHtml5',
                         text: 'PDF',
-                        orientation: 'landscape'
+                        orientation: 'landscape',
+                        pageSize: 'LEGAL'
                     }
                     ],
                 fixedHeader: true,

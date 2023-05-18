@@ -62,7 +62,7 @@ $regimenArray = json_decode($regimenJson, true);
 								</div>
 								<div class="col-md-5">
 									<div class="form-group">
-										<label for="calle">Calle</label>
+										<label for="calle">Calle / Avenida</label>
 										<input type="text" class="form-control" id="calle" name="calle" required>
 									</div>
 								</div>

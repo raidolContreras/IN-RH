@@ -52,7 +52,7 @@ $regimenArray = json_decode($regimenJson, true);
 											<?php endif ?>
 										<?php endforeach ?>
 										<td><?php echo $empresa['actividad_economica']; ?></td>
-										<td>Calle: <?php echo $empresa['calle']; ?>,
+										<td>Calle / Avenida: <?php echo $empresa['calle']; ?>,
 										N°: <?php echo $empresa['numero']; ?>, N° interior: <? echo $empresa['numero_interior']; ?>,
 										Colonia: <?php echo $empresa['colonia']; ?>
 										C.P.: <?php echo $empresa['cp']; ?></td>

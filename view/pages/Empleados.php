@@ -19,6 +19,9 @@ $empleados = ControladorEmpleados::ctrVerEmpleados(null, null);
 							<thead>
 								<tr>
 									<th>Nombre Completo</th>
+									<th>Puesto</th>
+									<th>Departamento</th>
+									<th>Empresa</th>
 									<th>N° de Identificación</th>
 									<th>Fecha de Nacimiento</th>
 									<th>Dirección</th>
@@ -35,6 +38,27 @@ $empleados = ControladorEmpleados::ctrVerEmpleados(null, null);
 											<?php echo strtoupper($value['name'].' '.$value['lastname']); ?>
 										</a>
 									</td>
+
+										<?php if ($value['status'] == 1): ?>
+									<td>
+										<?php $puesto = ControladorFormularios::ctrVerPuestos("Empleados_idEmpleados", $value['idEmpleados']) ?>
+										<?php echo $puesto['namePuesto'] ?>
+									</td>
+									<td>
+										<?php $depa = ControladorFormularios::ctrVerDepartamentos("idDepartamentos", $puesto['Departamentos_idDepartamentos']) ?>
+										<?php echo $depa['nameDepto'] ?>
+									</td>
+									<td>
+										<?php $empresa = ControladorFormularios::ctrVerEmpresas("idEmpresas", $depa['Empresas_idEmpresas']) ?>
+										<?php echo $empresa['nombre_razon_social'] ?>
+									</td>
+									
+										<?php else: ?>
+											<td></td>
+											<td></td>
+											<td></td>
+										<?php endif ?>
+
 									<td><?php echo strtoupper($value['identificacion']); ?></td>
 									<td><?php echo $value['fNac']; ?></td>
 

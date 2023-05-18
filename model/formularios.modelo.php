@@ -1037,5 +1037,22 @@ class ModeloFormularios{
 		return $stmt->fetchAll();
 	}
 
+	static public function mdlContarDepartamento($idDepartamento){
+		$sql = "SELECT SUM(1) FROM puesto WHERE Departamentos_idDepartamentos = $idDepartamento";
+
+		$stmt =	Conexion::conectar()->prepare($sql);
+		$stmt->execute();
+		return $stmt->fetch();
+	}
+
+	static public function mdlPuestosOrganigrama($tabla,$item,$valor){
+		$sql = "SELECT Empleados_idEmpleados FROM puesto WHERE Empleados_idEmpleados <> $item AND Departamentos_idDepartamentos = $valor";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+
+		$stmt->execute();
+		return $stmt->fetchAll();
+	}
+
 	/*---------- Fin de ModeloFormularios ---------- */
 }

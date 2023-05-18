@@ -709,5 +709,15 @@ class ControladorFormularios{
 		return $organigrama;
 	}
 
+	static public function ctrContarDepartamento($idDepartamento){
+		$contarDepto = ModeloFormularios::mdlContarDepartamento($idDepartamento);
+		return $contarDepto;
+	}
+
+	static public function ctrVerPuestosOrganigrama($item,$valor){
+		$tabla = 'puesto';
+		$puestosOrganigrama = ModeloFormularios::mdlPuestosOrganigrama($tabla,$item,$valor);
+		return $puestosOrganigrama;
+	}
 	/*---------- Fin de ControladorFormularios ---------- */
 }
