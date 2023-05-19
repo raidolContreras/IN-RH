@@ -1,99 +1,72 @@
-<?php
-$organigrama = ControladorFormularios::ctrOrganigrama();
+<?php $empresaId = 6; // ID de la empresa específica
 
-$departamentoPresi = ControladorFormularios::ctrVerDepartamentos("Pertenencia", 0);
-$datosPresi = ControladorEmpleados::ctrVerEmpleados("idEmpleados", $departamentoPresi['Empleados_idEmpleados']);
-$puestoPresi = ControladorFormularios::ctrVerPuestos("Empleados_idEmpleados", $datosPresi['idEmpleados']);
+$controladorFormularios = new ControladorFormularios();
+$controladorFormularios->generarArchivoCSV($empresaId);
+ ?>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-org-chart@2.6.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-flextree@2.1.2/build/d3-flextree.js"></script>
+    <div
+      class="chart-container"
+      style="height: 900px; background-color: #fffeff"
+    ></div>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      rel="stylesheet"
+    />
 
-$nombrePresi = $datosPresi['name'];
-$tituloPresi = $puestoPresi['namePuesto'];
-?>
+    <script>
+      var chart;
+      d3.csv(
+        'assets/organigrama/org.csv'
+      ).then((dataFlattened) => {
+        chart = new d3.OrgChart()
+          .container('.chart-container')
+          .data(dataFlattened)
+          .nodeHeight((d) => 70)
+          .nodeWidth((d) => {
+            if (d.depth == 0) return 260;
+            if (d.depth == 1) return 240;
+            return 220;
+          })
+          .childrenMargin((d) => 50)
+          .compactMarginBetween((d) => 35)
+          .compactMarginPair((d) => 40)
+          .neightbourMargin((a, b) => 30)
+          .buttonContent(({ node, state }) => {
+            return `<div style="border-radius:3px;padding:3px;font-size:10px;margin:auto auto;background-color:lightgray"> <span style="font-size:9px">${
+              node.children
+                ? `<i class="fas fa-chevron-up"></i>`
+                : `<i class="fas fa-chevron-down"></i>`
+            }</span> ${node.data._directSubordinates}  </div>`;
+          })
+          .nodeContent(function (d, i, arr, state) {
+            const colors = ['#278B8D', '#404040', '#0C5C73', '#33C6CB'];
+            const color = colors[d.depth % colors.length];
+            return `
+            <div style="background-color:${color}; position:absolute;margin-top:-1px; margin-left:-1px;width:${d.width}px;height:${d.height}px;border-radius:50px">
+               <img src=" ${
+                 d.data.imageUrl
+               }" style="position:absolute;margin-top:5px;margin-left:${5}px;border-radius:100px;width:60px;height:60px;" />
+               <div style="position:absolute;top:-15px;width:${
+                 d.width
+               }px;text-align:center;color:#fafafa;">
+              </div>
 
-<link rel="stylesheet" href="assets/libs/vendor/OrgChart/css/jquery.orgchart.css">
-<link rel="stylesheet" href="assets/libs/vendor/OrgChart/css/style.css">
-<div id="chart-container"></div>
-
-<script type="text/javascript" src="assets/libs/vendor/OrgChart/js/jquery.min.js"></script>
-<script type="text/javascript" src="assets/libs/vendor/OrgChart/js/jquery.mockjax.min.js"></script>
-<script type="text/javascript" src="assets/libs/vendor/OrgChart/js/jquery.orgchart.js"></script>
-<script type="text/javascript">
-	$(function() {
-	
-		$.mockjax({
-			url: '/orgchart/initdata',
-			responseTime: 1000,
-			contentType: 'application/json',
-			responseText: {
-				'name': '<?php echo $nombrePresi; ?>', 
-				'title': '<?php echo $tituloPresi; ?>',
-				'children': [
-					<?php foreach ($organigrama as  $value): ?>
-						<?php 
-							if ($datosPresi['idEmpleados'] != $value['idEmpleados']) {
-								$name = $value['name'];
-								$namePuesto = $value['namePuesto'];
-								$depa = $value['Departamentos_idDepartamentos'];
-
-								$departamento = ControladorFormularios::ctrVerDepartamentos("idDepartamentos", $depa);
-								$jefeDirecto = ControladorEmpleados::ctrVerEmpleados("idEmpleados", $departamento['Empleados_idEmpleados']);
-
-								if (isset($jefeDirecto[0])) {
-									if ($jefeDirecto[0] == $value['idEmpleados']) {
-										$sumaDepto = ControladorFormularios::ctrContarDepartamento($depa);
-										if ($sumaDepto[0] > 1) {
-											
-											$puestosChildren = ControladorFormularios::ctrVerPuestosOrganigrama($value['idEmpleados'], $depa);
-
-											// Construir el arreglo de datos para los hijos
-											$childrenData = [];
-											foreach ($puestosChildren as $pChildren) {
-												$children = ControladorEmpleados::ctrVerEmpleados("idEmpleados", $pChildren['Empleados_idEmpleados']);
-												$puestoChildren = ControladorFormularios::ctrVerPuestos("Empleados_idEmpleados", $children['idEmpleados']);
-												$childrenName = $children['name'];
-												$childrenTitle = isset($puestoChildren['namePuesto']) ? $puestoChildren['namePuesto'] : '';
-
-												$childrenData[] = [
-													'name' => $childrenName,
-													'title' => $childrenTitle
-												];
-											}
-
-											// Construir el arreglo de datos para el empleado actual
-											$data = [
-												'name' => $name,
-												'title' => $namePuesto,
-												'children' => $childrenData
-											];
-											echo json_encode($data, JSON_UNESCAPED_UNICODE).",";
-
-										}else{
-											// Construir el arreglo de datos para el empleado actual
-											$data = [
-												'name' => $name,
-												'title' => $namePuesto
-											];
-											echo json_encode($data, JSON_UNESCAPED_UNICODE).",";
-										}
-									}
-								}else{
-									// Construir el arreglo de datos para el empleado actual
-									$data = [
-										'name' => $name,
-										'title' => $namePuesto
-									];
-									echo json_encode($data, JSON_UNESCAPED_UNICODE).",";
-								}
-							}
-						?>
-					<?php endforeach ?>
-				]
-			}
-		});
-
-		$('#chart-container').orgchart({
-			'data' : '/orgchart/initdata',
-			'nodeContent': 'title'
-		});
-
-	});
-</script>
+              <a href='${d.data.profileUrl}'><div style="color:#fafafa;font-size:${
+                d.depth < 2 ? 14 : 12
+              }px;font-weight:bold;margin-left:70px;margin-top:5px"> ${d.depth < 2 ? d.data.name : (d.data.name || '').trim().split(/\s+/g)[0]} </div>
+              <div style="color:#fafafa;margin-left:70px;margin-top:5px"> ${d.data.positionName} </div>
+              <div style="color:#fff;margin-left:70px;margin-top:5px"> ${d.data.area} </div></a>
+              
+               <!--
+               <div style="padding:30px; padding-top:35px;text-align:center">
+                  
+               </div> 
+               -->
+           </div>
+  `;
+          })
+          .render();
+      });
+    </script>

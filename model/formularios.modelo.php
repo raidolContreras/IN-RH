@@ -1027,32 +1027,37 @@ class ModeloFormularios{
 
 	}
 
-	static public function mdlOrganigrama(){
-		$sql = "SELECT *
+	static public function obtenerDatosEmpresa($empresaId)
+    {
+        $conexion = Conexion::conectar();
+
+        $sql = "SELECT e.idEmpleados AS id, CONCAT(e.name, ' ', e.lastname) AS name, d.nameDepto AS area, 
+				    CONCAT('Empleado&perfil=', e.idEmpleados) AS profileUrl, p.namePuesto AS positionName, 
+				    CASE 
+				        WHEN d.Empleados_idEmpleados = e.idEmpleados THEN
+				            (SELECT Empleados_idEmpleados FROM departamentos WHERE idDepartamentos = d.Pertenencia)
+				        ELSE
+				            (SELECT Empleados_idEmpleados FROM departamentos WHERE idDepartamentos = p.Departamentos_idDepartamentos)
+				    END AS parentId,
+				    CASE 
+				        WHEN f.namePhoto IS NULL THEN 'assets/images/general.jpg'
+				        ELSE CONCAT('view/fotos/thumbnails/', f.namePhoto)
+				    END AS imageUrl
 				FROM empleados e
-				LEFT JOIN puesto p ON p.Empleados_idEmpleados = e.idEmpleados
-				WHERE e.status = 1";
-		$stmt =	Conexion::conectar()->prepare($sql);
-		$stmt->execute();
-		return $stmt->fetchAll();
-	}
+				INNER JOIN puesto p ON e.idEmpleados = p.Empleados_idEmpleados
+				INNER JOIN departamentos d ON p.Departamentos_idDepartamentos = d.idDepartamentos
+				LEFT JOIN foto_empleado f ON f.Empleados_idEmpleados = e.idEmpleados
+				WHERE d.Empresas_idEmpresas = :empresaId AND e.status = 1;;
+				";
 
-	static public function mdlContarDepartamento($idDepartamento){
-		$sql = "SELECT SUM(1) FROM puesto WHERE Departamentos_idDepartamentos = $idDepartamento";
+        $stmt = $conexion->prepare($sql);
+        $stmt->bindParam(':empresaId', $empresaId);
+        $stmt->execute();
 
-		$stmt =	Conexion::conectar()->prepare($sql);
-		$stmt->execute();
-		return $stmt->fetch();
-	}
+        $datosEmpresa = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-	static public function mdlPuestosOrganigrama($tabla,$item,$valor){
-		$sql = "SELECT Empleados_idEmpleados FROM puesto WHERE Empleados_idEmpleados <> $item AND Departamentos_idDepartamentos = $valor";
-
-		$stmt = Conexion::conectar()->prepare($sql);
-
-		$stmt->execute();
-		return $stmt->fetchAll();
-	}
+        return $datosEmpresa;
+    }
 
 	/*---------- Fin de ModeloFormularios ---------- */
 }

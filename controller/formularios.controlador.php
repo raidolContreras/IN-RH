@@ -704,20 +704,49 @@ class ControladorFormularios{
 		return $buscar;
 	}
 
-	static public function ctrOrganigrama(){
-		$organigrama = ModeloFormularios::mdlOrganigrama();
-		return $organigrama;
-	}
+	static public function generarArchivoCSV($empresaId)
+    {
+        $datosEmpresa = ModeloFormularios::obtenerDatosEmpresa($empresaId);
 
-	static public function ctrContarDepartamento($idDepartamento){
-		$contarDepto = ModeloFormularios::mdlContarDepartamento($idDepartamento);
-		return $contarDepto;
-	}
+        if (!empty($datosEmpresa)) {
+            $directorio = "assets/organigrama";
+            if (!is_dir($directorio)) {
+                mkdir($directorio, 0777, true);
+            }
 
-	static public function ctrVerPuestosOrganigrama($item,$valor){
-		$tabla = 'puesto';
-		$puestosOrganigrama = ModeloFormularios::mdlPuestosOrganigrama($tabla,$item,$valor);
-		return $puestosOrganigrama;
-	}
+            $archivo = fopen($directorio . "/org.csv", "w");
+
+            $encabezado = array("id", "name", "area", "profileUrl", "imageUrl", "positionName", "parentId");
+            fputcsv($archivo, $encabezado);
+
+            foreach ($datosEmpresa as $fila) {
+			    $parentId = ($fila["parentId"] == 0 ? '' : $fila["parentId"]);
+
+			    $datos = array(
+			        $fila["id"],
+			        $fila["name"],
+			        $fila["area"],
+			        $fila["profileUrl"],
+			        $fila["imageUrl"],
+			        $fila["positionName"],
+			        $parentId
+			    );
+
+			    // Eliminar las comillas de cada valor
+			    $datosSinComillas = array_map(function ($valor) {
+			        return str_replace('"', '', $valor);
+			    }, $datos);
+
+			    fputcsv($archivo, $datosSinComillas);
+			}
+
+
+            fclose($archivo);
+
+            return "ok";
+        } else {
+            return "Error";
+        }
+    }
 	/*---------- Fin de ControladorFormularios ---------- */
 }
