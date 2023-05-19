@@ -173,4 +173,6 @@ class ControladorEmpleados{
 		$fechaNacimiento = ModeloEmpleados::mdlFechaNacimiento($tabla);
 		return $fechaNacimiento;
 	}
+
+	
 }
