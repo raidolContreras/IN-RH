@@ -1012,7 +1012,13 @@ class ModeloFormularios{
 	}
 	static public function mdlVerEmpresas($tabla,$item,$valor){
 		if ($item == null && $valor == null) {
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla");
+			$stmt = Conexion::conectar()->prepare("SELECT e.*, COUNT(em.idEmpleados) AS totalEmpleados
+													FROM empresas e
+													LEFT JOIN departamentos d ON e.idEmpresas = d.Empresas_idEmpresas
+													LEFT JOIN puesto p ON d.idDepartamentos = p.Departamentos_idDepartamentos
+													LEFT JOIN empleados em ON p.Empleados_idEmpleados = em.idEmpleados AND em.status = 1
+													GROUP BY e.idEmpresas;
+												");
 			$stmt->execute();
 			return $stmt->fetchAll();
 		}else{
@@ -1047,7 +1053,7 @@ class ModeloFormularios{
 				INNER JOIN puesto p ON e.idEmpleados = p.Empleados_idEmpleados
 				INNER JOIN departamentos d ON p.Departamentos_idDepartamentos = d.idDepartamentos
 				LEFT JOIN foto_empleado f ON f.Empleados_idEmpleados = e.idEmpleados
-				WHERE d.Empresas_idEmpresas = :empresaId AND e.status = 1;;
+				WHERE d.Empresas_idEmpresas = :empresaId AND e.status = 1;
 				";
 
         $stmt = $conexion->prepare($sql);

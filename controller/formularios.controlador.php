@@ -704,12 +704,12 @@ class ControladorFormularios{
 		return $buscar;
 	}
 
-	static public function generarArchivoCSV($empresaId)
+	static public function generarArchivoCSV($empresaId,$nameEmpresa)
     {
         $datosEmpresa = ModeloFormularios::obtenerDatosEmpresa($empresaId);
 
         if (!empty($datosEmpresa)) {
-            $directorio = "assets/organigrama";
+            $directorio = "assets/organigrama/".$nameEmpresa;
             if (!is_dir($directorio)) {
                 mkdir($directorio, 0777, true);
             }
