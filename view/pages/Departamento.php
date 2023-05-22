@@ -46,9 +46,9 @@ $departamento = ControladorFormularios::ctrVerDepartamentos(null, null);
 						<table id="example" class="table table-striped table-bordered depto" style="width:100%">
 							<thead>
 								<tr>
-									<th width="33%">Nombre Depto</th>
-									<th width="33%">Encargado</th>
-									<th width="23%">empresa</th>
+									<th width="40%">Nombre Depto</th>
+									<th width="40%">Encargado</th>
+									<th width="20%">empresa</th>
 									<th>Acciones</th>
 								</tr>
 							</thead>
