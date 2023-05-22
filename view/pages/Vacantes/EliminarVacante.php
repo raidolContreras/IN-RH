@@ -3,26 +3,6 @@ $eliminar = ControladorFormularios::ctrEliminarVacante();
 $datos = ControladorFormularios::ctrVerVacantes("idVacantes",$_GET['Eliminar']);
 ?>
 <div class="container-fluid dashboard-content ">
-	<!-- ============================================================== -->
-	<!-- pageheader	-->
-	<!-- ============================================================== -->
-	<div class="row">
-		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-			<div class="page-header">
-				<h2 class="pageheader-title">Eliminar Vacante (<?php echo $datos['nameVacante']; ?>)</h2>
-				<div class="page-breadcrumb">
-					<nav aria-label="breadcrumb">
-						<ol class="breadcrumb">
-							<li class="breadcrumb-item"><a href="Inicio" class="breadcrumb-link">IN Consulting México</a></li>
-							<li class="breadcrumb-item" aria-current="page"><a href="Departamento" class="breadcrumb-link">Departamentos</a></li>
-							<li class="breadcrumb-item active" aria-current="page">Eliminar Vacante (<?php echo $datos['nameVacante']; ?>)</li>
-						</ol>
-					</nav>
-				</div>
-			</div>
-		</div>
-	</div>
-
 		<?php 
 
 		/*=============================================

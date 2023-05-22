@@ -7,7 +7,6 @@ $empresas = ControladorFormularios::ctrVerEmpresas(null, null);
 	<div class="ecommerce-widget">
 		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 			<div class="card">
-				<div class="card-body">
 					<div class="card-header tab-regular">
 						<ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
 							<li class="nav-item">
@@ -28,7 +27,7 @@ $empresas = ControladorFormularios::ctrVerEmpresas(null, null);
 										Registrar empleados<i class="fas fa-user-plus ml-2"></i>
 									</a>
 									<div class="table-responsive">
-										<table id="example" class="table table-striped table-bordered second" style="width:100%">
+										<table id="example" class="table table-striped table-bordered second" style="width:100%; height:100%">
 											<thead>
 												<tr>
 													<th>Nombre Completo</th>
@@ -94,7 +93,6 @@ $empresas = ControladorFormularios::ctrVerEmpresas(null, null);
 							<?php endforeach ?>
 						</div>
 					</div>
-				</div>
 			</div>
 		</div>
 	</div>

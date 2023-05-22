@@ -40,6 +40,51 @@ jQuery(document).ready(function($) {
         });
     }
 
+    if ($("table.depto").length) {
+
+        $(document).ready(function() {
+            var table = $('table.depto').DataTable({
+                lengthChange: false,
+                buttons: [
+                    {
+                        extend: 'excelHtml5',
+                        text: 'Excel',
+                        customize: function( xlsx ) {
+                            var sheet = xlsx.xl.worksheets['Datos.xml'];
+                            $('row:first c', sheet).attr( 's', '42' );
+                        },
+                        exportOptions: {
+                            columns: [ 0, 1, 2 ]
+                        }
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        orientation: 'landscape',
+                        pageSize: 'LEGAL',
+                        exportOptions: {
+                            columns: [ 0, 1, 2 ]
+                        }
+                    }
+                    ],
+                fixedHeader: true,
+                scrollY: 375,
+                stateSave: true,
+                select: true,
+            language: {
+                lengthMenu: 'Mostrar _MENU_ resultados por pagina',
+                zeroRecords: 'Sin resultados - lo siento',
+                info: 'Pagina _PAGE_ de _PAGES_',
+                infoEmpty: 'No se encontraron registros',
+                infoFiltered: '(Filtrado de _MAX_ registros totales)',
+                search: 'Buscar',
+            }
+            });
+
+            table.buttons().container()
+                .appendTo('#example_wrapper .col-md-6:eq(0)');
+        });
+    }
+
     if ($("table.Postulantes").length) {
 
         $(document).ready(function() {

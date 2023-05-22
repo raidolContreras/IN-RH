@@ -235,13 +235,20 @@ class ControladorFormularios{
 		}
 
 	}
-
-	/*---------- Función hecha para ver a los empleados---------- */
 	static public function ctrVerDepartamentos($item, $valor){
 
 		$tabla = "departamentos";
 
 		$respuesta = ModeloFormularios::mdlVerDepartamentos($tabla, $item, $valor);
+
+		return $respuesta;
+
+	}
+	static public function ctrDeptosEspecial($item, $valor){
+
+		$tabla = "departamentos";
+
+		$respuesta = ModeloFormularios::mdlDeptosEspecial($tabla, $item, $valor);
 
 		return $respuesta;
 

@@ -1,6 +1,6 @@
 <?php 
 $eliminar = ControladorFormularios::ctrEliminarDepto(); 
-$datos = ControladorFormularios::ctrVerDepartamentos("idDepartamentos",$_POST['Eliminar']);
+$datos = ControladorFormularios::ctrVerDepartamentos("idDepartamentos",$_GET['Eliminar']);
 ?>
 <div class="container-fluid dashboard-content ">
 		<?php 
@@ -40,7 +40,7 @@ $datos = ControladorFormularios::ctrVerDepartamentos("idDepartamentos",$_POST['E
 				</div>
 				<div class="row mt-5 rounded float-right">
 					<div class="text-center">
-						<input type="hidden" name="idDepto" value="<?php echo $_POST['Eliminar']; ?>">
+						<input type="hidden" name="idDepto" value="<?php echo $_GET['Eliminar']; ?>">
 						<button type="submit" name="accion" class="btn btn-primary mr-1" value="eliminar">Eliminar</button>
 					</div>
 					<div class="text-center">

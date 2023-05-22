@@ -459,12 +459,25 @@ class ModeloFormularios{
 		}
 		else{
 
-			$sql = "SELECT * FROM $tabla WHERE $item = :$item";
+			$sql = "SELECT * FROM $tabla WHERE $item = :$item AND status = 1 ORDER BY idDepartamentos";
 			$stmt = Conexion::conectar()->prepare($sql);
 			$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
 			$stmt->execute();
 			return $stmt -> fetch();
 		}
+
+		$stmt->close();
+		$stmt = null;
+	}
+
+	/*---------- Función hecha para ver a los empleados---------- */
+	static public function mdlDeptosEspecial($tabla, $item, $valor){
+
+		$sql = "SELECT * FROM $tabla WHERE $item = :$item AND status = 1 ORDER BY idDepartamentos";
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
+		$stmt->execute();
+		return $stmt -> fetchAll();
 
 		$stmt->close();
 		$stmt = null;

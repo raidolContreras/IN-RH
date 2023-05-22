@@ -9,9 +9,11 @@
 		<script src="https://d3js.org/d3.v7.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/d3-org-chart@2.6.0"></script>
 		<script src="https://cdn.jsdelivr.net/npm/d3-flextree@2.1.2/build/d3-flextree.js"></script>
+
+<div class="container-fluid dashboard-content">
+	<div class="ecommerce-widget">
 		<div
-			class="chart-container"
-			style="height: 900px; background-color: #fffeff"
+			class="chart-container card"
 		></div>
 		<link
 			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
@@ -50,7 +52,7 @@
 						<div style="background-color:${color}; position:absolute;margin-top:-1px; margin-left:-1px;width:${d.width}px;height:${d.height}px;border-radius:50px">
 							 <img src=" ${
 								 d.data.imageUrl
-							 }" style="position:absolute;margin-top:5px;margin-left:${5}px;border-radius:100px;width:60px;height:60px;" />
+							 }" style="object-fit: cover; position:absolute;margin-top:5px;margin-left:${5}px;border-radius:100px;width:60px;height:60px;" />
 							 <div style="position:absolute;top:-15px;width:${
 								 d.width
 							 }px;text-align:center;color:#fafafa;">
@@ -72,7 +74,7 @@
 					})
 					.render();
 			});
-		</script>
+		</script></div></div>
 <?php else: ?>
 <div class="container-fluid dashboard-content ">
 	<div class="container">
