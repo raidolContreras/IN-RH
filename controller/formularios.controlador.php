@@ -755,5 +755,11 @@ class ControladorFormularios{
             return "Error";
         }
     }
+
+    static public function ctrEmpleadosEspecial($item,$valor){
+    	$tabla = "empleados";
+    	$respuesta = ModeloFormularios::mdlEmpleadosEspecial($tabla,$item,$valor);
+    	return $respuesta;
+    }
 	/*---------- Fin de ControladorFormularios ---------- */
 }

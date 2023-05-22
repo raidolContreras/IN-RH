@@ -1078,5 +1078,22 @@ class ModeloFormularios{
         return $datosEmpresa;
     }
 
+    static public function mdlEmpleadosEspecial($tabla,$item,$valor){
+    	$sql = "SELECT * 
+					FROM $tabla e
+					LEFT JOIN puesto p on p.Empleados_idEmpleados = e.idEmpleados
+					LEFT JOIN departamentos d ON d.idDepartamentos = p.Departamentos_idDepartamentos
+					LEFT JOIN empresas em ON d.Empresas_idEmpresas = em.idEmpresas
+				WHERE em.$item = :$item ORDER BY e.idEmpleados";
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->bindParam(":".$item, $valor, PDO::PARAM_INT);
+
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+		$stmt->close();
+		$stmt = null;
+    }
+
 	/*---------- Fin de ModeloFormularios ---------- */
 }
