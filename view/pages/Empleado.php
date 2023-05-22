@@ -165,7 +165,7 @@ $puesto = ControladorFormularios::ctrVerPuestos("Empleados_idEmpleados", $_GET['
 				</div>
 				<div class="row">
 					<div class="col-4">
-						<button class="btn btn-dark rounded btn-block" onClick="cargarContenido('Nominas.php')">
+						<button class="btn btn-dark rounded btn-block" onClick="cargarContenido('NominasEmpleado.php')">
 								<i class="icon-wallet"></i> Nominas
 							</button>
 					</div>
