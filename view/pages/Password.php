@@ -1,3 +1,9 @@
+<?php $verificar = ControladorEmpleados::ctrVerEmpleados("idEmpleados", $_SESSION['idEmpleado']); ?>
+<?php if ($verificar['cambio_password'] == 1): ?>
+	<script>
+		location.href='Inicio';
+	</script>
+<?php else: ?>
 <?php if (isset($_GET['cambio'])): ?>
 	<div class="container mt-5">
 		<div class="alert alert-info alert-dismissible fade show" role="alert">
@@ -78,3 +84,5 @@
 	});
 
 </script>
+
+<?php endif ?>
