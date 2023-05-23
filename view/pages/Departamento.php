@@ -73,7 +73,14 @@ $departamento = ControladorFormularios::ctrVerDepartamentos(null, null);
 											<?php $nameDepa = mb_strtoupper($depa['nameDepto']);?>
 										<?php endif ?>
 
-										<td><?php echo $nameDepa ?></td>
+										<td>
+											<button type="button" 
+												class="btn btn-link" 
+												data-toggle="modal" 
+												data-target="#Departamento<?php echo $depa['idDepartamentos']; ?>">
+												<?php echo $nameDepa ?>
+											</button>
+										</td>
 										<td><?php echo $nombreEmpleado; ?></td>
 										<td><?php echo $empresa['nombre_razon_social']." (".$empresa['rfc'].")"; ?></td>
 										<td>
@@ -110,7 +117,14 @@ $departamento = ControladorFormularios::ctrVerDepartamentos(null, null);
 											<?php $nameDepa = mb_strtoupper($depa['nameDepto']);?>
 										<?php endif ?>
 
-										<td><?php echo $nameDepa ?></td>
+										<td>
+											<button type="button" 
+												class="btn btn-link" 
+												data-toggle="modal" 
+												data-target="#Departamento<?php echo $depa['idDepartamentos']; ?>">
+												<?php echo $nameDepa ?>
+											</button>
+										</td>
 										<td><?php echo $nombreEmpleado; ?></td>
 										<td><?php echo $empresa['nombre_razon_social']." (".$empresa['rfc'].")"; ?></td>
 										<td>
@@ -135,3 +149,65 @@ $departamento = ControladorFormularios::ctrVerDepartamentos(null, null);
 		</div>
 	</div>
 </div>
+
+
+<!-- Modal Departamento -->
+<?php
+if (isset($_GET['depa'])) {
+    $departamentos = ControladorFormularios::ctrDeptosEspecial("Empresas_idEmpresas", $_GET['depa']);
+} else {
+    $departamentos = $departamento;
+}
+
+foreach ($departamentos as $depa) {
+    $depaEspe = ControladorFormularios::ctrVerDepartamentos("idDepartamentos", $depa['Pertenencia']);
+    $nameDepa = mb_strtoupper($depa['nameDepto']);
+    if (isset($depaEspe['nameDepto'])) {
+        $nameDepa .= " (" . $depaEspe['nameDepto'] . ")";
+    }
+
+    $empleadosDepartamento = ControladorEmpleados::ctrVerEmpleadosDeptos($depa['idDepartamentos']);
+    ?>
+    <div class="modal fade" id="Departamento<?php echo $depa['idDepartamentos']; ?>">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3><?php echo $nameDepa ?></h3>
+                </div>
+                <div class="modal-body">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Nombre</th>
+                                            <th>Puesto</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php foreach ($empleadosDepartamento as $empDepto): ?>
+                                            <tr>
+                                                <td>
+                                                    <a href="Empleado&perfil=<?php echo $empDepto['idEmpleados'] ?>">
+                                                        <?php echo $empDepto['name'] . " " . $empDepto['lastname'] ?>
+                                                    </a>
+                                                </td>
+                                                <td><?php echo $empDepto['namePuesto'] ?></td>
+                                            </tr>
+                                        <?php endforeach ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card-footer p-0 text-center d-flex justify-content-center">
+                            <div class="card-footer-item card-footer-item-bordered">
+                                <button data-dismiss="modal" class="card-link btn btn-outline-secondary">Cerrar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php } ?>

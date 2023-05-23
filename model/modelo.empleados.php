@@ -108,4 +108,19 @@ class ModeloEmpleados{
 
 	}
 
+	static public function mdlVerEmpleadosDeptos($departamento){
+		$sql = "SELECT * FROM empleados e
+				LEFT JOIN puesto p ON p.Empleados_idEmpleados = e.idEmpleados
+				LEFT JOIN departamentos d ON p.Departamentos_idDepartamentos = d.idDepartamentos
+				WHERE d.idDepartamentos = :idDepartamentos AND e.status = 1";
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->bindParam(":idDepartamentos", $departamento, PDO::PARAM_INT);
+
+		$stmt->execute();
+		return $stmt->fetchAll();
+
+		$stmt->close();
+		$stmt = null;
+	}
+
 }

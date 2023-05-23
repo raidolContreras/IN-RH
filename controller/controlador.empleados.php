@@ -178,5 +178,10 @@ class ControladorEmpleados{
 		$cambioPassword = ModeloEmpleados::mdlCambioPassword($tabla,$data);
 		return $cambioPassword;
 	}
+
+	static public function ctrVerEmpleadosDeptos($departamento){
+		$EmpleadoDepartamento = ModeloEmpleados::mdlVerEmpleadosDeptos($departamento);
+		return $EmpleadoDepartamento;
+	}
 	
 }
