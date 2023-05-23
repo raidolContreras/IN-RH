@@ -2,6 +2,9 @@
 require_once "controller/formularios.controlador.php";
 require_once "model/formularios.modelo.php";
 
+require_once "model/modelo.empleados.php";
+require_once "controller/controlador.empleados.php";
+
 class FormulariosAjax{
 
 	public function citasAjax(){
@@ -14,7 +17,7 @@ class FormulariosAjax{
 			$date = date("d-m-Y h:i a", strtotime($fechaReunion));
 			echo json_encode($date);
 		}else{
-			
+
 			echo json_encode("error");
 		}
 	}
@@ -38,11 +41,11 @@ class FormulariosAjax{
 		$table = "reuniones";
 
 		$calificarReuniones = ControladorFormularios::ctrCalificarReunion($table, $datos);
-			echo '<pre>'; print_r($calificarReuniones); echo '<pre>'; 
+		echo '<pre>'; print_r($calificarReuniones); echo '<pre>'; 
 		if ($calificarReuniones == 'ok') {
-		    echo json_encode('ok');
+			echo json_encode('ok');
 		} else {
-		    echo json_encode('error');
+			echo json_encode('error');
 		}
 
 	}
@@ -53,32 +56,32 @@ class FormulariosAjax{
 		$valor = $this->valor;
 
 		$eliminarPostulante = ControladorFormularios::ctrEliminarPostulante($item, $valor);
-			echo '<pre>'; print_r($eliminarPostulante); echo '<pre>'; 
+		echo '<pre>'; print_r($eliminarPostulante); echo '<pre>'; 
 		if ($eliminarPostulante == 'ok') {
-		    echo json_encode('ok');
+			echo json_encode('ok');
 		} else {
-		    echo json_encode('error');
+			echo json_encode('error');
 		}
 
 	}
 
 	public function iniciarSesionAjax(){
-		
+
 		$loginEmail = $this->loginEmail;
 		$loginPass = $this->loginPass;
 
 		$ingresar = ControladorFormularios::ctrLogin($loginEmail,$loginPass);
 
 		if ($ingresar == 'ok') {
-		    echo json_encode('ok');
+			echo json_encode('ok');
 		} else {
-		    echo json_encode($ingresar);
+			echo json_encode($ingresar);
 		}
 
 	}
 
 	public function empleadoMesAjax(){
-		
+
 		$empleadoMes = $this->empleadoMes;
 		$mensaje = $this->mensaje;
 		$publicado = $this->publicado;
@@ -86,9 +89,9 @@ class FormulariosAjax{
 		$ingresar = ControladorFormularios::ctrEmpleadoMes($empleadoMes, $mensaje, $publicado);
 
 		if ($ingresar == 'ok') {
-		    echo json_encode('ok');
+			echo json_encode('ok');
 		} else {
-		    echo json_encode('Error');
+			echo json_encode('Error');
 		}
 
 	}
@@ -149,6 +152,45 @@ class FormulariosAjax{
 		}
 	}
 
+	public function cambioPasswordAjax(){
+    $idEmpleados = $this->idEmpleados;
+    $Password = $this->Password;
+    $confirmarPassword = $this->confirmarPassword;
+
+    // Verificar si las contraseñas cumplen los requisitos
+    $regex = '/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/';
+
+    $tabla = "empleados";
+    $busqueda = ControladorEmpleados::ctrVerEmpleados(null,null);
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $pass1 = $Password;
+        $pass2 = $confirmarPassword;
+
+        // Verificar si las contraseñas son iguales
+        if ($pass1 !== $pass2) {
+            echo json_encode('Error: password');
+        } elseif (!preg_match($regex, $pass1)) {
+            echo json_encode('Error: data');
+        } else {
+            foreach($busqueda as $empleado){
+                if (crypt($empleado['idEmpleados'], 'asxx54ahjppf45sd87a5a4dDDGsystemdev') == $idEmpleados) {
+
+                    $data = array(
+                        "idEmpleados" => $empleado['idEmpleados'],
+                        "password" => crypt($Password, '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$')
+                    );
+
+                    $cambio = ControladorEmpleados::ctrCambioPassword($tabla,$data);
+
+                    echo json_encode($cambio);
+                }
+            }
+        }
+    }
+}
+
+
 }
 
 if(isset($_POST["validate"])){
@@ -186,12 +228,12 @@ if (isset($_POST['reunion'])) {
 	$idPostulantes = $_POST['postulante'];
 
 	$datos = array("pregunta1" => $pregunta1,
-					"pregunta2" => $pregunta2,
-					"pregunta3" => $pregunta3,
-					"pregunta4" => $pregunta4,
-					"comentariosReunion" => $comentariosReunion,
-					"idReuniones" => $idReuniones,
-					"idPostulantes" => $idPostulantes);
+		"pregunta2" => $pregunta2,
+		"pregunta3" => $pregunta3,
+		"pregunta4" => $pregunta4,
+		"comentariosReunion" => $comentariosReunion,
+		"idReuniones" => $idReuniones,
+		"idPostulantes" => $idPostulantes);
 
 	$calificar = new FormulariosAjax();
 
@@ -258,5 +300,19 @@ if (isset($_POST['empresa'])) {
 	$registro_empresa -> mes_inicio_afiliacion = $_POST['mes_inicio_afiliacion'];
 	$registro_empresa -> anio_inicio_afiliacion = $_POST['anio_inicio_afiliacion'];
 	$registro_empresa -> registroEmpresaAjax();
+
+}
+
+if (isset($_POST['cambioPassword'])) {
+
+	$idCodificado = $_POST['cambioPassword'];
+	$Password = $_POST['pass1'];
+	$confirmarPassword = $_POST['pass2'];
+
+	$cambioPassword = new FormulariosAjax();
+	$cambioPassword -> idEmpleados = $idCodificado;
+	$cambioPassword -> Password = $Password;
+	$cambioPassword -> confirmarPassword = $confirmarPassword;
+	$cambioPassword -> cambioPasswordAjax();
 
 }

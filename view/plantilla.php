@@ -25,7 +25,6 @@ session_start();
 	<link rel="stylesheet" type="text/css" href="assets/vendor/datatables/css/fixedHeader.bootstrap4.css">
     <link rel="stylesheet" href="assets/vendor/fonts/simple-line-icons/css/simple-line-icons.css">
     <link rel="stylesheet" href="assets/vendor/fonts/themify-icons/themify-icons.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Rambla:ital@1&display=swap" rel="stylesheet">
@@ -34,6 +33,7 @@ session_start();
 	<link rel="shortcut icon" href="assets/images/logo.png" />
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 	<script src="https://cdn.tiny.cloud/1/ojrrit6i20fvuzvl2sioxzrflc9dh7gpi3gosuyrwgzfa18y/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	
 	<?php if (isset($_GET["pagina"])): ?>
 		<title><?php echo 'IN Consulting México - '.$_GET["pagina"]; ?></title>
@@ -52,7 +52,6 @@ session_start();
 			$_GET["pagina"] == "RegistroEmpleados" ||
 			$_GET["pagina"] == "InformacionLaboral" ||
 			$_GET["pagina"] == "Formacion" ||
-			$_GET["pagina"] == "HistorialLaboral" ||
 			$_GET["pagina"] == "Departamento" ||
 			$_GET["pagina"] == "CrearDepartamentos" ||
 			$_GET["pagina"] == "Empleado" ||
@@ -90,8 +89,6 @@ session_start();
 				include "pages/navs/sidenav.php";
 
 				include "pages/Vacantes/".$pagina.".php";
-			}else{
-				include "pages/404-page.html";
 			}
 
 		}elseif ($_GET["pagina"] == "Postulacion") {
@@ -107,12 +104,12 @@ session_start();
 			include "pages/Empleado/".$_GET["pagina"].".php";
 
 		}elseif ($_GET["pagina"] == "Login" ||
-				 $_GET["pagina"] == "Salir"
-				) {
+				 $_GET["pagina"] == "Salir") {
 
 			include "pages/Login/".$_GET["pagina"].".php";
 
-		}elseif ($_GET["pagina"] == "Organigrama") {
+		}elseif ($_GET["pagina"] == "Organigrama" ||
+					$_GET["pagina"] == "Perfil") {
 
 			include "pages/navs/navbar.php";
 			include "pages/".$_GET["pagina"].".php";
@@ -123,6 +120,10 @@ session_start();
 			include "pages/navs/navbar.php";
 			include "pages/navs/sidenav.php"; 
 			include "pages/modulos/".$_GET["pagina"].".php";
+
+		}elseif ($_GET["pagina"] == "Password") {
+
+			include "pages/".$_GET["pagina"].".php";
 
 		}else{
 			include "pages/404-page.html";

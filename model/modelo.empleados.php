@@ -89,4 +89,23 @@ class ModeloEmpleados{
 		$stmt = null;
 	}
 
+	static public function mdlCambioPassword($tabla,$data){
+
+		$sql = "UPDATE $tabla SET password=:password, cambio_password=1 WHERE idEmpleados = :idEmpleados";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->bindParam(":password", $data['password'], PDO::PARAM_STR);
+		$stmt->bindParam(":idEmpleados", $data['idEmpleados'], PDO::PARAM_INT);
+
+		if ($stmt->execute()) {
+			return 'ok';
+		}else{
+			return 'Error';
+		}
+
+		$stmt->close();
+		$stmt = null;
+
+	}
+
 }

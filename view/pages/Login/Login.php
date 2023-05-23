@@ -59,6 +59,14 @@ $ingreso = ControladorFormularios::ctrLogin();
                     }, 500);
                   </script>
 
+            <?php elseif($ingreso == 'Cambio'): ?>
+
+              <div class='alert alert-success'>Bienvenido</div>
+              <?php $idEmpleado = crypt($_SESSION['idEmpleado'], 'asxx54ahjppf45sd87a5a4dDDGsystemdev'); ?>
+                  <script>
+                      location.href='Password&cambio=<?php echo $idEmpleado; ?>';
+                  </script>
+
             <?php elseif($ingreso == 'Error: status'): ?>
 
               <div class='alert alert-warning'><b>Cuenta suspendida</b>, si es un error contacta con el equipo de sistemas</div>

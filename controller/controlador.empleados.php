@@ -174,5 +174,9 @@ class ControladorEmpleados{
 		return $fechaNacimiento;
 	}
 
+	static public function ctrCambioPassword($tabla,$data){
+		$cambioPassword = ModeloEmpleados::mdlCambioPassword($tabla,$data);
+		return $cambioPassword;
+	}
 	
 }

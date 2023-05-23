@@ -14,8 +14,6 @@ function generarPassword() {
 
 class ControladorFormularios{
 
-	
-
 	static public function ctrRegistrarHistorial($idEmpleado){
 		if (isset($_POST['empresa']) && isset($_POST['puesto'])) {
 			if ($_POST['empresa'] != '' && $_POST['puesto'] != '') {
@@ -596,7 +594,12 @@ class ControladorFormularios{
 					$_SESSION["status"] = $respuesta["status"];
 					$_SESSION["loginEmail"] = $respuesta["email"];
 
-					return 'ok';
+					if ($respuesta['cambio_password'] == 0) {
+						return 'Cambio';
+					}else{
+						return 'ok';
+					}
+
 				}else{
 					return 'Error: status';
 				}

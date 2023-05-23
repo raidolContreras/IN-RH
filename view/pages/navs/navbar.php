@@ -152,7 +152,7 @@ $perfil = $primerLetra.$segundaLetra;
 						<div class="nav-user-info">
 							<h5 class="mb-0 text-white nav-user-name"><?php echo $_SESSION['name']." ".$_SESSION['lastname'] ?></h5>
 						</div>
-						<a class="dropdown-item" href="#"><i class="fas fa-user mr-2"></i>Cuenta</a>
+						<a class="dropdown-item" href="Perfil"><i class="fas fa-user mr-2"></i>Mi perfil</a>
 						<a class="dropdown-item" href="Salir"><i class="fas fa-power-off mr-2"></i>Cerrar sesión</a>
 					</div>
 				</li>
