@@ -1136,7 +1136,7 @@ class ModeloFormularios{
 			$stmt->bindParam(":Empleados_idEmpleados", $datos['idEmpleados'], PDO::PARAM_INT);
 			$stmt->bindParam(":forgot", $datos['emailEncript'], PDO::PARAM_STR);
 			if ($stmt->execute()) {
-				return 'enviado';
+				return 'ok';
 			}
 			$stmt->close();
 			$stmt = null;

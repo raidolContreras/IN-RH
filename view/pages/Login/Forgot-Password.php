@@ -51,7 +51,7 @@
 						Enviar email
 					</button>
 				</div>
-				<div class="form-result"></div>
+				<div class="container-login100-form-btn m-t-32" id="form-result"></div>
 			</form>
 			<div>
 				<a class="btn btn-link" href="Login">Iniciar sesión</a>
@@ -66,6 +66,7 @@
 	$(document).ready(function() {
 		$("#forgot-btn").click(function() {
 		var formData = $("#forgot-form").serialize(); // Obtener los datos del formulario
+            $("#forgot-btn").prop("disabled", true);
 
 			$.ajax({
 				url: "ajax.formularios.php", // Ruta al archivo PHP que procesará los datos del formulario
@@ -77,6 +78,14 @@
 						$("#form-result").val("");
 						$("#form-result").parent().after(`
 							<div class='alert alert-success'>Se envió un correo para restablecer su contraseña. Revíselo y si no lo ve, mire el spam.</div>
+							`);
+						setTimeout(function() {
+							location.href = "Forgot-Password&enviado=true";
+						}, 500);
+					}else if (response === '"existente"') {
+						$("#form-result").val("");
+						$("#form-result").parent().after(`
+							<div class='alert alert-warning'>Ya hay un proceso de verificación, revisa tu correo, de no encontrarlo, busca en el campo de spam.</div>
 							`);
 						setTimeout(function() {
 							location.href = "Forgot-Password&enviado=true";

@@ -766,8 +766,14 @@ class ControladorFormularios{
     }
 
     static public function ctrForgotPasswordEmail($datos){
-    	$respuesta = ModeloFormularios::mdlForgotPasswordEmail($datos);
-    	return $respuesta;
+
+    	$busqueda = ControladorEmpleados::ctrCambioPasswordOlvidado("Empleados_idEmpleados", $datos['idEmpleados']);
+    	if (isset($busqueda[0]) && $busqueda[0] == $datos['idEmpleados']) {
+    		return 'existente';
+    	}else{
+	    	$respuesta = ModeloFormularios::mdlForgotPasswordEmail($datos);
+	    	return $respuesta;
+    	}
     }
 	/*---------- Fin de ControladorFormularios ---------- */
 }
