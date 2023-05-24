@@ -11,7 +11,7 @@ $empresas = ControladorFormularios::ctrVerEmpresas(null, null);
 					<ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
 					<?php if (!isset($_GET['depa'])): ?>
 						<li class="nav-item">
-							<a class="nav-link active" href="Empleados">General</a>
+							<a class="nav-link active" href="Empleados">GENERAL</a>
 						</li>
 						<?php foreach ($empresas as $empresa): ?>
 							<li class="nav-item">
@@ -20,7 +20,7 @@ $empresas = ControladorFormularios::ctrVerEmpresas(null, null);
 						<?php endforeach ?>
 					<?php else: ?>
 						<li class="nav-item">
-							<a class="nav-link" href="Empleados">General</a>
+							<a class="nav-link" href="Empleados">GENERAL</a>
 						</li>
 						<?php foreach ($empresas as $empresa): ?>
 							<li class="nav-item">
