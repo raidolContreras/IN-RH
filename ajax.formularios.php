@@ -153,67 +153,107 @@ class FormulariosAjax{
 	}
 
 	public function cambioPasswordAjax(){
-    $idEmpleados = $this->idEmpleados;
-    $Password = $this->Password;
-    $confirmarPassword = $this->confirmarPassword;
+		$idEmpleados = $this->idEmpleados;
+		$Password = $this->Password;
+		$confirmarPassword = $this->confirmarPassword;
 
-    // Verificar si las contraseñas cumplen los requisitos
-    $regex = '/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/';
+		// Verificar si las contraseñas cumplen los requisitos
+		$regex = '/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/';
 
-    $tabla = "empleados";
-    $busqueda = ControladorEmpleados::ctrVerEmpleados(null,null);
+		$tabla = "empleados";
+		$busqueda = ControladorEmpleados::ctrVerEmpleados(null,null);
 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $pass1 = $Password;
-        $pass2 = $confirmarPassword;
+		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+			$pass1 = $Password;
+			$pass2 = $confirmarPassword;
 
-        // Verificar si las contraseñas son iguales
-        if ($pass1 !== $pass2) {
-            echo json_encode('Error: password');
-        } elseif (!preg_match($regex, $pass1)) {
-            echo json_encode('Error: data');
-        } else {
-            foreach($busqueda as $empleado){
-                if (crypt($empleado['idEmpleados'], 'asxx54ahjppf45sd87a5a4dDDGsystemdev') == $idEmpleados) {
+			// Verificar si las contraseñas son iguales
+			if ($pass1 !== $pass2) {
+				echo json_encode('Error: password');
+			} elseif (!preg_match($regex, $pass1)) {
+				echo json_encode('Error: data');
+			} else {
+				foreach($busqueda as $empleado){
+					if (crypt($empleado['idEmpleados'], 'asxx54ahjppf45sd87a5a4dDDGsystemdev') == $idEmpleados) {
 
-                    $data = array(
-                        "idEmpleados" => $empleado['idEmpleados'],
-                        "password" => crypt($Password, '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$')
-                    );
+						$data = array(
+							"idEmpleados" => $empleado['idEmpleados'],
+							"password" => crypt($Password, '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$')
+						);
 
-                    $cambio = ControladorEmpleados::ctrCambioPassword($tabla,$data);
+						$cambio = ControladorEmpleados::ctrCambioPassword($tabla,$data);
 
-                    echo json_encode($cambio);
-                }
-            }
-        }
-    }
-}
+						echo json_encode($cambio);
+					}
+				}
+			}
+		}
+	}
 
 	public function forgotPasswordAjax(){
-	    $forgotEmail = $this->forgotEmail;
-	    $busqueda = ControladorEmpleados::ctrVerEmpleados("email",$forgotEmail);
-	    if (!isset($busqueda[0])) {
-	    	echo json_encode('error');
-	    }else{
+		$forgotEmail = $this->forgotEmail;
+		$busqueda = ControladorEmpleados::ctrVerEmpleados("email",$forgotEmail);
+		if (!isset($busqueda[0])) {
+			echo json_encode('error');
+		}else{
 
-	    	$idEncript = crypt($busqueda['idEmpleados'], 'asxx54ahjppf45sd87a5a4dDDGsystemdev');
-	    	$emailEncript = crypt($forgotEmail, 'asxx54ahjppf45sd87a5a4dDDGsystemdev');
+			$idEncript = crypt($busqueda['idEmpleados'], 'asxx54ahjppf45sd87a5a4dDDGsystemdev');
+			$emailEncript = crypt($forgotEmail, 'asxx54ahjppf45sd87a5a4dDDGsystemdev');
 
-	    	$link = 'http://inconsulting.porscheclubmorelia.com/Password&cambio='.$idEncript.'&forgot='.$emailEncript;
-	    	$name = $busqueda['name']." ".$busqueda['lastname'];
-	    	
-	    	$datos = array("name" => $name,
-	    					"link" => $link,
-	    					"email" => $forgotEmail,
-	    					"idEmpleados" => $busqueda['idEmpleados'],
-	    					"genero" => $busqueda['genero'],
-	    					"emailEncript" => $emailEncript
-	    	);
+			$link = 'http://inconsulting.porscheclubmorelia.com/Password&cambio='.$idEncript.'&forgot='.$emailEncript;
+			$name = $busqueda['name']." ".$busqueda['lastname'];
+			
+			$datos = array("name" => $name,
+							"link" => $link,
+							"email" => $forgotEmail,
+							"idEmpleados" => $busqueda['idEmpleados'],
+							"genero" => $busqueda['genero'],
+							"emailEncript" => $emailEncript
+			);
 
-	    	$enviarEmail = ControladorFormularios::ctrForgotPasswordEmail($datos);
-	    	echo json_encode($enviarEmail);
-	    }
+			$enviarEmail = ControladorFormularios::ctrForgotPasswordEmail($datos);
+			echo json_encode($enviarEmail);
+		}
+	}
+
+	public function solicitudCambioPasswordAjax(){
+		$solicitudCambio = $this->solicitudCambio;
+		$tokenPassword = $this->tokenPassword;
+		$Password = $this->Password;
+		$confirmarPassword = $this->confirmarPassword;
+
+		// Verificar si las contraseñas cumplen los requisitos
+		$regex = '/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/';
+
+		$tabla = "empleados";
+		$busqueda = ControladorEmpleados::ctrVerEmpleados(null,null);
+
+		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+			// Verificar si las contraseñas son iguales
+			if ($Password !== $confirmarPassword) {
+				echo json_encode('Error: password');
+			} elseif (!preg_match($regex, $Password)) {
+				echo json_encode('Error: data');
+			} else {
+				foreach($busqueda as $empleado){
+					if (crypt($empleado['idEmpleados'], 'asxx54ahjppf45sd87a5a4dDDGsystemdev') == $tokenPassword) {
+
+						$verificacionCambio = ControladorEmpleados::ctrCambioPasswordOlvidado("Empleados_idEmpleados",$empleado['idEmpleados']);
+
+						$data = array(
+							"idEmpleados" => $empleado['idEmpleados'],
+							"password" => crypt($Password, '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$')
+						);
+						$cambio = ControladorEmpleados::ctrCambioPassword($tabla,$data);
+						if ($cambio == 'ok') {
+							$borrarSolicitud = ControladorEmpleados::ctrBorrarSolicitud($verificacionCambio['idSolicitudPassword']);
+							echo json_encode($borrarSolicitud);
+						}
+					}
+				}
+			}
+		}
 	}
 
 
@@ -350,5 +390,21 @@ if (isset($_POST['forgotEmail'])) {
 	$forgot_Password = new FormulariosAjax();
 	$forgot_Password -> forgotEmail = $forgotEmail;
 	$forgot_Password -> forgotPasswordAjax();
+
+}
+
+if (isset($_POST['solicitudCambio'])) {
+
+	$solicitudCambio = $_POST['solicitudCambio'];
+	$tokenPassword = $_POST['tokenPassword'];
+	$Password = $_POST['pass1'];
+	$confirmarPassword = $_POST['pass2'];
+
+	$cambioPassword = new FormulariosAjax();
+	$cambioPassword -> solicitudCambio = $solicitudCambio;
+	$cambioPassword -> tokenPassword = $tokenPassword;
+	$cambioPassword -> Password = $Password;
+	$cambioPassword -> confirmarPassword = $confirmarPassword;
+	$cambioPassword -> solicitudCambioPasswordAjax();
 
 }

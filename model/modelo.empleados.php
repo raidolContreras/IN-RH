@@ -123,4 +123,32 @@ class ModeloEmpleados{
 		$stmt = null;
 	}
 
+	static public function mdlCambioPasswordOlvidado($tabla,$item,$valor){
+		$sql = "SELECT * FROM $tabla WHERE $item = :$item";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
+		$stmt->execute();
+		return $stmt->fetch();
+		
+		$stmt->close();
+		$stmt = null;
+	}
+
+	static public function mdlBorrarSolicitud($tabla,$id){
+		$sql = "DELETE FROM $tabla WHERE idSolicitudPassword =:idSolicitudPassword";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->bindParam(":idSolicitudPassword", $id, PDO::PARAM_INT);
+
+		if ($stmt->execute()) {
+			return 'ok';
+		}else{
+			return 'Error';
+		}
+
+		$stmt->close();
+		$stmt = null;
+	}
+
 }

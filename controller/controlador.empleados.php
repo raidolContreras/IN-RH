@@ -183,5 +183,17 @@ class ControladorEmpleados{
 		$EmpleadoDepartamento = ModeloEmpleados::mdlVerEmpleadosDeptos($departamento);
 		return $EmpleadoDepartamento;
 	}
+
+	static public function ctrCambioPasswordOlvidado($item,$valor){
+		$tabla = "solicitud_cambio_password";
+		$cambiar_password = ModeloEmpleados::mdlCambioPasswordOlvidado($tabla,$item,$valor);
+		return $cambiar_password;
+	}
+
+	static public function ctrBorrarSolicitud($idSolicitudPassword){
+		$tabla = "solicitud_cambio_password";
+		$borrarSolicitud = ModeloEmpleados::mdlBorrarSolicitud($tabla,$idSolicitudPassword);
+		return $borrarSolicitud;
+	}
 	
 }
