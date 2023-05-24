@@ -70,9 +70,9 @@ $empresas = ControladorFormularios::ctrVerEmpresas(null, null);
 															<?php $puesto = ControladorFormularios::ctrVerPuestos("Empleados_idEmpleados", $value['idEmpleados']) ?>
 															<?php $depa = ControladorFormularios::ctrVerDepartamentos("idDepartamentos", $puesto['Departamentos_idDepartamentos']) ?>
 															<?php $empresa = ControladorFormularios::ctrVerEmpresas("idEmpresas", $depa['Empresas_idEmpresas']) ?>
-															<td><?php echo $puesto['namePuesto'] ?></td>
-															<td><?php echo $depa['nameDepto'] ?></td>
-															<td><?php echo $empresa['nombre_razon_social'] ?></td>
+															<td><?php echo mb_strtoupper($puesto['namePuesto'], 'UTF-8') ?></td>
+															<td><?php echo mb_strtoupper($depa['nameDepto'], 'UTF-8') ?></td>
+															<td><?php echo mb_strtoupper($empresa['nombre_razon_social'], 'UTF-8') ?></td>
 														<?php else: ?>
 															<td></td>
 															<td></td>
@@ -81,9 +81,9 @@ $empresas = ControladorFormularios::ctrVerEmpresas(null, null);
 														<td><?php echo strtoupper($value['identificacion']); ?></td>
 														<td><?php echo $value['fNac']; ?></td>
 														<?php if ($value['numI'] == null || $value['numI'] == ""): ?>
-															<td><?php echo strtoupper($value['street'].", #".$value['numE'].", ".$value['colonia'].", ".$value['municipio'].", ".$value['estado']."."); ?></td>
+															<td><?php echo mb_strtoupper($value['street'].", #".$value['numE'].", ".$value['colonia'].", ".$value['municipio'].", ".$value['estado']."."); ?></td>
 														<?php else: ?>
-															<td><?php echo strtoupper($value['street'].", #".$value['numE'].", #".$value['numI'].", ".$value['colonia'].", ".$value['municipio'].", ".$value['estado']."."); ?></td>
+															<td><?php echo mb_strtoupper($value['street'].", #".$value['numE'].", #".$value['numI'].", ".$value['colonia'].", ".$value['municipio'].", ".$value['estado']."."); ?></td>
 														<?php endif ?>
 														<?php $formattedNumber = ControladorFormularios::ctrNumeroTelefonico($value['phone']); ?>
 														<td><?php echo $formattedNumber; ?></td>
@@ -110,20 +110,20 @@ $empresas = ControladorFormularios::ctrVerEmpresas(null, null);
 															<?php $puesto = ControladorFormularios::ctrVerPuestos("Empleados_idEmpleados", $value['idEmpleados']) ?>
 															<?php $depa = ControladorFormularios::ctrVerDepartamentos("idDepartamentos", $puesto['Departamentos_idDepartamentos']) ?>
 															<?php $empresa = ControladorFormularios::ctrVerEmpresas("idEmpresas", $depa['Empresas_idEmpresas']) ?>
-															<td><?php echo $puesto['namePuesto'] ?></td>
-															<td><?php echo $depa['nameDepto'] ?></td>
-															<td><?php echo $empresa['nombre_razon_social'] ?></td>
+															<td><?php echo mb_strtoupper($puesto['namePuesto'], 'UTF-8') ?></td>
+															<td><?php echo mb_strtoupper($depa['nameDepto'], 'UTF-8') ?></td>
+															<td><?php echo mb_strtoupper($empresa['nombre_razon_social'], 'UTF-8') ?></td>
 														<?php else: ?>
 															<td></td>
 															<td></td>
 															<td></td>
 														<?php endif ?>
-														<td><?php echo strtoupper($value['identificacion']); ?></td>
+														<td><?php echo mb_strtoupper($value['identificacion']); ?></td>
 														<td><?php echo $value['fNac']; ?></td>
 														<?php if ($value['numI'] == null || $value['numI'] == ""): ?>
-															<td><?php echo strtoupper($value['street'].", #".$value['numE'].", ".$value['colonia'].", ".$value['municipio'].", ".$value['estado']."."); ?></td>
+															<td><?php echo mb_strtoupper($value['street'].", #".$value['numE'].", ".$value['colonia'].", ".$value['municipio'].", ".$value['estado']."."); ?></td>
 														<?php else: ?>
-															<td><?php echo strtoupper($value['street'].", #".$value['numE'].", #".$value['numI'].", ".$value['colonia'].", ".$value['municipio'].", ".$value['estado']."."); ?></td>
+															<td><?php echo mb_strtoupper($value['street'].", #".$value['numE'].", #".$value['numI'].", ".$value['colonia'].", ".$value['municipio'].", ".$value['estado']."."); ?></td>
 														<?php endif ?>
 														<?php $formattedNumber = ControladorFormularios::ctrNumeroTelefonico($value['phone']); ?>
 														<td><?php echo $formattedNumber; ?></td>
