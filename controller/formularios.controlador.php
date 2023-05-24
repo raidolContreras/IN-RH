@@ -708,6 +708,11 @@ class ControladorFormularios{
 		return $respuesta;
 	}
 
+	static public function ctrActualizarEmpresas($tabla, $datos){
+		$respuesta = ModeloFormularios::mdlActualizarEmpresas($tabla, $datos);
+		return $respuesta;
+	}
+
 	static public function ctrVerEmpresas($item,$valor){
 		$tabla = 'empresas';
 		$buscar = ModeloFormularios::mdlVerEmpresas($tabla,$item,$valor);

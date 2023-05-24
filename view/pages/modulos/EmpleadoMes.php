@@ -115,7 +115,7 @@ $fotoEmpleado = ControladorFormularios::ctrVerFotos("Empleados_idEmpleados", $em
 						<div class="card">
 							<div class="card-footer p-0 text-center d-flex justify-content-center ">
 								<div class="card-footer-item card-footer-item-bordered">
-									<button data-dismiss="modal"	class="card-link btn btn-outline-secondary">Cancelar</button>
+									<button data-dismiss="modal" class="card-link btn btn-outline-secondary">Cancelar</button>
 								</div>
 								<div class="card-footer-item card-footer-item-bordered">
 									<button type="button" id="empleado-btn" data-dismiss="modal" class="card-link btn btn-outline-primary">Enviar</button>

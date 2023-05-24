@@ -996,26 +996,26 @@ class ModeloFormularios{
 		VALUES (:registro_patronal,:rfc,:nombre_razon_social,:regimen,:actividad_economica,:calle,:numero,:numero_interior,:colonia,:cp,:entidad,:poblacion_municipio,:telefono,:convenio_reembolso,:delegacion_imss,:subdelegacion,:clave_subdelegacion,:dia_inicio_afiliacion, :mes_inicio_afiliacion,:anio_inicio_afiliacion)";
 		$stmt = Conexion::conectar()->prepare($sql);
 
-		$stmt->bindParam("registro_patronal", $datos['registro_patronal'], PDO::PARAM_STR);
-		$stmt->bindParam("rfc", $datos['rfc'], PDO::PARAM_STR);
-		$stmt->bindParam("nombre_razon_social", $datos['nombre_razon_social'], PDO::PARAM_STR);
-		$stmt->bindParam("regimen", $datos['regimen'], PDO::PARAM_INT);
-		$stmt->bindParam("actividad_economica", $datos['actividad_economica'], PDO::PARAM_STR);
-		$stmt->bindParam("calle", $datos['calle'], PDO::PARAM_STR);
-		$stmt->bindParam("numero", $datos['numero'], PDO::PARAM_STR);
-		$stmt->bindParam("numero_interior", $datos['numero_interior'], PDO::PARAM_STR);
-		$stmt->bindParam("colonia", $datos['colonia'], PDO::PARAM_STR);
-		$stmt->bindParam("cp", $datos['cp'], PDO::PARAM_INT);
-		$stmt->bindParam("entidad", $datos['entidad'], PDO::PARAM_STR);
-		$stmt->bindParam("poblacion_municipio", $datos['poblacion_municipio'], PDO::PARAM_STR);
-		$stmt->bindParam("telefono", $datos['telefono'], PDO::PARAM_INT);
-		$stmt->bindParam("convenio_reembolso", $datos['convenio_reembolso'], PDO::PARAM_STR);
-		$stmt->bindParam("delegacion_imss", $datos['delegacion_imss'], PDO::PARAM_STR);
-		$stmt->bindParam("subdelegacion", $datos['subdelegacion'], PDO::PARAM_STR);
-		$stmt->bindParam("clave_subdelegacion", $datos['clave_subdelegacion'], PDO::PARAM_STR);
-		$stmt->bindParam("dia_inicio_afiliacion", $datos['dia_inicio_afiliacion'], PDO::PARAM_INT);
-		$stmt->bindParam("mes_inicio_afiliacion", $datos['mes_inicio_afiliacion'], PDO::PARAM_STR);
-		$stmt->bindParam("anio_inicio_afiliacion", $datos['anio_inicio_afiliacion'], PDO::PARAM_INT);
+		$stmt->bindParam(":registro_patronal", $datos['registro_patronal'], PDO::PARAM_STR);
+		$stmt->bindParam(":rfc", $datos['rfc'], PDO::PARAM_STR);
+		$stmt->bindParam(":nombre_razon_social", $datos['nombre_razon_social'], PDO::PARAM_STR);
+		$stmt->bindParam(":regimen", $datos['regimen'], PDO::PARAM_INT);
+		$stmt->bindParam(":actividad_economica", $datos['actividad_economica'], PDO::PARAM_STR);
+		$stmt->bindParam(":calle", $datos['calle'], PDO::PARAM_STR);
+		$stmt->bindParam(":numero", $datos['numero'], PDO::PARAM_STR);
+		$stmt->bindParam(":numero_interior", $datos['numero_interior'], PDO::PARAM_STR);
+		$stmt->bindParam(":colonia", $datos['colonia'], PDO::PARAM_STR);
+		$stmt->bindParam(":cp", $datos['cp'], PDO::PARAM_INT);
+		$stmt->bindParam(":entidad", $datos['entidad'], PDO::PARAM_STR);
+		$stmt->bindParam(":poblacion_municipio", $datos['poblacion_municipio'], PDO::PARAM_STR);
+		$stmt->bindParam(":telefono", $datos['telefono'], PDO::PARAM_INT);
+		$stmt->bindParam(":convenio_reembolso", $datos['convenio_reembolso'], PDO::PARAM_STR);
+		$stmt->bindParam(":delegacion_imss", $datos['delegacion_imss'], PDO::PARAM_STR);
+		$stmt->bindParam(":subdelegacion", $datos['subdelegacion'], PDO::PARAM_STR);
+		$stmt->bindParam(":clave_subdelegacion", $datos['clave_subdelegacion'], PDO::PARAM_STR);
+		$stmt->bindParam(":dia_inicio_afiliacion", $datos['dia_inicio_afiliacion'], PDO::PARAM_INT);
+		$stmt->bindParam(":mes_inicio_afiliacion", $datos['mes_inicio_afiliacion'], PDO::PARAM_STR);
+		$stmt->bindParam(":anio_inicio_afiliacion", $datos['anio_inicio_afiliacion'], PDO::PARAM_INT);
 
 		if ($stmt->execute()) {
 			return 'ok';
@@ -1023,6 +1023,61 @@ class ModeloFormularios{
 			print_r(Conexion::conectar()->errorInfo());
 		}
 	}
+
+	static public function mdlActualizarEmpresas($tabla, $datos){
+		$sql = "UPDATE $tabla SET 
+		        registro_patronal = :registro_patronal,
+		        rfc = :rfc,
+		        nombre_razon_social = :nombre_razon_social,
+		        regimen = :regimen,
+		        actividad_economica = :actividad_economica,
+		        calle = :calle,
+		        numero = :numero,
+		        numero_interior = :numero_interior,
+		        colonia = :colonia,
+		        cp = :cp,
+		        entidad = :entidad,
+		        poblacion_municipio = :poblacion_municipio,
+		        telefono = :telefono,
+		        convenio_reembolso = :convenio_reembolso,
+		        delegacion_imss = :delegacion_imss,
+		        subdelegacion = :subdelegacion,
+		        clave_subdelegacion = :clave_subdelegacion,
+		        dia_inicio_afiliacion = :dia_inicio_afiliacion,
+		        mes_inicio_afiliacion = :mes_inicio_afiliacion,
+		        anio_inicio_afiliacion = :anio_inicio_afiliacion
+		        WHERE idEmpresas = :actualizarEmpresa";
+		$stmt = Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":registro_patronal", $datos['registro_patronal'], PDO::PARAM_STR);
+		$stmt->bindParam(":rfc", $datos['rfc'], PDO::PARAM_STR);
+		$stmt->bindParam(":nombre_razon_social", $datos['nombre_razon_social'], PDO::PARAM_STR);
+		$stmt->bindParam(":regimen", $datos['regimen'], PDO::PARAM_INT);
+		$stmt->bindParam(":actividad_economica", $datos['actividad_economica'], PDO::PARAM_STR);
+		$stmt->bindParam(":calle", $datos['calle'], PDO::PARAM_STR);
+		$stmt->bindParam(":numero", $datos['numero'], PDO::PARAM_STR);
+		$stmt->bindParam(":numero_interior", $datos['numero_interior'], PDO::PARAM_STR);
+		$stmt->bindParam(":colonia", $datos['colonia'], PDO::PARAM_STR);
+		$stmt->bindParam(":cp", $datos['cp'], PDO::PARAM_INT);
+		$stmt->bindParam(":entidad", $datos['entidad'], PDO::PARAM_STR);
+		$stmt->bindParam(":poblacion_municipio", $datos['poblacion_municipio'], PDO::PARAM_STR);
+		$stmt->bindParam(":telefono", $datos['telefono'], PDO::PARAM_INT);
+		$stmt->bindParam(":convenio_reembolso", $datos['convenio_reembolso'], PDO::PARAM_STR);
+		$stmt->bindParam(":delegacion_imss", $datos['delegacion_imss'], PDO::PARAM_STR);
+		$stmt->bindParam(":subdelegacion", $datos['subdelegacion'], PDO::PARAM_STR);
+		$stmt->bindParam(":clave_subdelegacion", $datos['clave_subdelegacion'], PDO::PARAM_STR);
+		$stmt->bindParam(":dia_inicio_afiliacion", $datos['dia_inicio_afiliacion'], PDO::PARAM_INT);
+		$stmt->bindParam(":mes_inicio_afiliacion", $datos['mes_inicio_afiliacion'], PDO::PARAM_STR);
+		$stmt->bindParam(":anio_inicio_afiliacion", $datos['anio_inicio_afiliacion'], PDO::PARAM_INT);
+		$stmt->bindParam(":actualizarEmpresa", $datos['actualizarEmpresa'], PDO::PARAM_INT);
+
+		if ($stmt->execute()) {
+			return 'ok';
+		}else{
+			print_r(Conexion::conectar()->errorInfo());
+		}
+	}
+
 	static public function mdlVerEmpresas($tabla,$item,$valor){
 		if ($item == null && $valor == null) {
 			$stmt = Conexion::conectar()->prepare("SELECT e.*, COUNT(em.idEmpleados) AS totalEmpleados
