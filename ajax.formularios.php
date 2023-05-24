@@ -317,6 +317,16 @@ class FormulariosAjax{
 		}
 	}
 
+	public $idEmpleados;
+
+	public function eliminarEmpleadoAjax()
+	{
+		$idEmpleados = $this->idEmpleados;
+
+		$eliminarEmpleado = ControladorEmpleados::ctrEliminarEmpleado($idEmpleados);
+
+		echo json_encode($eliminarEmpleado);
+	}
 
 }
 
@@ -499,4 +509,14 @@ if (isset($_POST['solicitudCambio'])) {
 	$cambioPassword -> confirmarPassword = $confirmarPassword;
 	$cambioPassword -> solicitudCambioPasswordAjax();
 
+}
+
+if (isset($_POST['EliminarEmpleado'])) {
+	if ($_POST['EliminarEmpleado'] == 1) {
+		$idEmpleados = $_POST['empleado'];
+
+		$EliminarEmpleado = new FormulariosAjax();
+		$EliminarEmpleado -> idEmpleados = $idEmpleados;
+		$EliminarEmpleado -> eliminarEmpleadoAjax();
+	}
 }

@@ -72,15 +72,15 @@ class ControladorEmpleados{
 	}
 
 
-	static public function ctrEliminarEmpleado(){
-		if (isset($_POST['Editar'])) {
+	static public function ctrEliminarEmpleado($idEmpleados){
+		$busqueda = ControladorEmpleados::ctrVerEmpleados("idEmpleados",$idEmpleados);
+
+		if (isset($busqueda[0])) {
 			$tabla = 'empleados';
-			$eliminar = ModeloFormularios::mdlEliminarEmpleado($tabla, $_POST['Editar']);
-			if ($eliminar == 'ok') {
-				return 'ok';
-			}else{
-				return 'error';
-			}
+			$eliminar = ModeloEmpleados::mdlEliminarEmpleado($tabla, $idEmpleados);
+			return $eliminar;
+		}else{
+			return "Error: usuario";
 		}
 	}
 

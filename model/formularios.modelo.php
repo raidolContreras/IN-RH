@@ -254,38 +254,6 @@ class ModeloFormularios{
 		$stmt = null;
 	}
 
-	static public function mdlEliminarEmpleado($tabla, $idEmpleado){
-
-		$puesto = ControladorFormularios::ctrVerPuestos("Empleados_idEmpleados", $idEmpleado);
-
-		$sql = "UPDATE $tabla SET status = 0 WHERE idEmpleados = $idEmpleado;";
-		$sql .= "UPDATE puesto SET status = 0 WHERE idPuesto = ".$puesto['idPuesto'].";";
-
-
-		$tabla2 = "vacantes";
-		$datos = array("nameVacante" => $puesto['namePuesto'],
-						 "salarioVacante" => $puesto['salario'],
-						 "Departamentos_idDepartamentos" => $puesto['Departamentos_idDepartamentos'],
-						 "requisitos" => "Nueva Vacante");
-		$registro = ModeloFormularios::mdlRegistrarVacantes($tabla2,$datos);
-
-		if ($registro == 'ok') {
-
-			$stmt = Conexion::conectar()->prepare($sql);
-			if ($stmt->execute()) {
-				return 'ok';
-			}
-			else{
-				print_r(Conexion::conectar()->errorInfo());
-			}
-
-		}else{
-			return 'Error';
-		}
-		$stmt->close();
-		$stmt = null;
-	}
-
 	/*---------- Función hecha para Registrar las fotos de Empleados---------- */
 	static public function mdlRegistroFotoEmpleado($tabla, $datos){
 

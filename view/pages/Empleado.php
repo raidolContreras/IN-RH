@@ -51,9 +51,17 @@ $puesto = ControladorFormularios::ctrVerPuestos("Empleados_idEmpleados", $_GET['
 						<li class="header-li"><i class="mdi mdi-cake"></i> Fecha de nacimiento</li>
 
 						<li><?php echo $colaborador["fNac"] ?></li>
-						<li class="header-li"><i class="mdi mdi-calendar-blank"></i> Disponibilidad</li>
+						<li class="header-li"><i class="mdi mdi-calendar-blank"></i> Fecha de ingreso</li>
 
 						<li><?php echo $colaborador["fecha_contratado"] ?></li>
+
+						<?php if ($colaborador["fecha_baja"] != null): ?>
+
+						<li class="header-li"><i class="mdi mdi-calendar-blank"></i> Fecha de baja</li>
+
+						<li><?php echo $colaborador["fecha_baja"] ?></li>
+							
+						<?php endif ?>
 
 					</ul>
 				</div>
@@ -69,6 +77,7 @@ $puesto = ControladorFormularios::ctrVerPuestos("Empleados_idEmpleados", $_GET['
 					</div>
 				</div>
 				<div class="card-body border-top">
+							<?php if ($colaborador['status'] == 1): ?>
 					<h3 class="font-16 hprofile">Acciones</h3>
 
 						<form method="POST" action="Documento" class="container pb-2">
@@ -76,12 +85,16 @@ $puesto = ControladorFormularios::ctrVerPuestos("Empleados_idEmpleados", $_GET['
 								<i class="ti-upload"></i> Subir Documentos
 							</button>
 						</form>
+							<?php endif ?>
 
 					<div>
 						<div class="container">
+							<?php if ($colaborador['status'] == 1): ?>
+								
 							<button type="button" class="btn btn-danger rounded btn-block" data-toggle="modal" data-target="#eliminar">
 								Dar de baja
 							</button>
+							<?php endif ?>
 
 							<div class="modal fade" id="eliminar">
 								<div class="modal-dialog">
@@ -98,39 +111,60 @@ $puesto = ControladorFormularios::ctrVerPuestos("Empleados_idEmpleados", $_GET['
 										</div>
 
 										<div class="modal-footer">
-											<form method="POST">
-												<?php if (isset($_POST['Eliminar']) && $_POST['Eliminar'] == 'si'): ?>
-													<?php $baja = ctrEliminarEmpleado::ctrEliminarEmpleado(); ?>
-													<?php if ($baja == 'ok'): ?>
-														<div class="alert alert-success">¡Colaborador dado de baja!</div>
-														<script>
-
-															window.location = "Empleados";
-
-														</script>
-													<?php elseif($baja == 'error'): ?>
-														<script>
-
-															if ( window.history.replaceState ) {
-
-																window.history.replaceState( null, null, window.location.href );
-
-															}
-
-														</script>
-														<div class="alert alert-danger">Error, no se pudo dar de baja alcolaborador, Intentelo de nuevo</div>
-													<?php endif ?>
-												<?php endif ?>
-												<input type="hidden" name="Editar" value="<?php echo $colaborador['idEmpleados'];?>">
-												<input type="hidden" name="Eliminar" value="si">
-												<button class="btn btn-danger rounded float-right" >
+											<div class="col-12" id="form-result"></div>
+											<form method="POST" id="baja-form">
+												<input type="hidden" name="empleado" value="<?php echo $colaborador['idEmpleados'];?>">
+												<input type="hidden" name="EliminarEmpleado" value="1">
+												<button class="btn btn-danger rounded float-right" id="baja-btn" type="button">
 													<i class="fas fa-eraser"></i> Dar de baja
 												</button>
 											</form>
 
-											<button class="btn btn-success rounded float-right" data-dismiss="modal">
+											<button class="btn btn-success rounded float-right">
 												Cancelar
 											</button>
+
+											<script>
+												
+												$(document).ready(function() {
+													$("#baja-btn").click(function() {
+													var formData = $("#baja-form").serialize(); // Obtener los datos del formulario
+
+														$.ajax({
+															url: "ajax.formularios.php", // Ruta al archivo PHP que procesará los datos del formulario
+															type: "POST",
+															data: formData,
+															success: function(response) {
+
+																if (response === '"ok"') {
+																	$("#form-result").val("");
+																	$("#form-result").parent().after(`
+																		<div class='alert alert-success'>Empleado eliminado</div>
+																		`);
+																	setTimeout(function() {
+																		location.href="Empleados";
+																	}, 500);
+																}else if (response === '"Error: usuario"') {
+																	$("#form-result").val("");
+																	$("#form-result").parent().after(`
+																		<div class='alert alert-warning'>Empleado no encontrado</div>
+																		`);
+																	setTimeout(function() {
+																		location.href="Empleados";
+																	}, 500);
+																}else{
+																	$("#form-result").val("");
+																	$("#form-result").parent().after(`
+																		<div class='alert alert-danger'><b>Error</b>, no se elimino al empleado, intenta nuevamente</div>
+																		`);
+																}
+
+															}
+														});
+													});
+												});
+
+											</script>
 
 										</div>
 
@@ -198,3 +232,5 @@ function cargarContenido(pagina) {
   xmlhttp.send();
 }
 </script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
