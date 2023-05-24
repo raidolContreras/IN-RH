@@ -190,6 +190,32 @@ class FormulariosAjax{
     }
 }
 
+	public function forgotPasswordAjax(){
+	    $forgotEmail = $this->forgotEmail;
+	    $busqueda = ControladorEmpleados::ctrVerEmpleados("email",$forgotEmail);
+	    if (!isset($busqueda[0])) {
+	    	echo json_encode('error');
+	    }else{
+
+	    	$idEncript = crypt($busqueda['idEmpleados'], 'asxx54ahjppf45sd87a5a4dDDGsystemdev');
+	    	$emailEncript = crypt($forgotEmail, 'asxx54ahjppf45sd87a5a4dDDGsystemdev');
+
+	    	$link = 'http://inconsulting.porscheclubmorelia.com/Password&cambio='.$idEncript.'&forgot='.$emailEncript;
+	    	$name = $busqueda['name']." ".$busqueda['lastname'];
+	    	
+	    	$datos = array("name" => $name,
+	    					"link" => $link,
+	    					"email" => $forgotEmail,
+	    					"idEmpleados" => $busqueda['idEmpleados'],
+	    					"genero" => $busqueda['genero'],
+	    					"emailEncript" => $emailEncript
+	    	);
+
+	    	$enviarEmail = ControladorFormularios::ctrForgotPasswordEmail($datos);
+	    	echo json_encode($enviarEmail);
+	    }
+	}
+
 
 }
 
@@ -314,5 +340,15 @@ if (isset($_POST['cambioPassword'])) {
 	$cambioPassword -> Password = $Password;
 	$cambioPassword -> confirmarPassword = $confirmarPassword;
 	$cambioPassword -> cambioPasswordAjax();
+
+}
+
+if (isset($_POST['forgotEmail'])) {
+
+	$forgotEmail = $_POST['forgotEmail'];
+
+	$forgot_Password = new FormulariosAjax();
+	$forgot_Password -> forgotEmail = $forgotEmail;
+	$forgot_Password -> forgotPasswordAjax();
 
 }

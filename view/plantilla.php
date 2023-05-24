@@ -77,6 +77,7 @@ session_start();
 			include "pages/navs/sidenav.php"; 
 
 			include "pages/".$_GET["pagina"].".php";
+			echo '<a href="Configuraciones" class="configuration-button"><i class="fas fa-cog rotate-center"></i></a>';
 
 		}elseif(strpos($_GET["pagina"], "Vacantes-") !== false){
 
@@ -104,7 +105,8 @@ session_start();
 			include "pages/Empleado/".$_GET["pagina"].".php";
 
 		}elseif ($_GET["pagina"] == "Login" ||
-				 $_GET["pagina"] == "Salir") {
+				 $_GET["pagina"] == "Salir" ||
+				 $_GET["pagina"] == "Forgot-Password") {
 
 			include "pages/Login/".$_GET["pagina"].".php";
 
@@ -133,12 +135,12 @@ session_start();
 		include "pages/navs/navbar.php";
 		include "pages/navs/sidenav.php"; 
 		include "pages/Inicio.php";
+		echo '<a href="Configuraciones" class="configuration-button"><i class="fas fa-cog rotate-center"></i></a>';
 	}
 //	include "pages/navs/footer.php";
 
 ?>
 
-	<a href="Configuraciones" class="configuration-button"><i class="fas fa-cog rotate-center"></i></a>
 </div>
 </div>
 </div>

@@ -1095,5 +1095,58 @@ class ModeloFormularios{
 		$stmt = null;
     }
 
+    static public function mdlForgotPasswordEmail($datos){
+
+		$mensaje = '<div><img style="display: block; margin-left: auto; margin-right: auto;" src="https://asociacionmexicanadeperiodontologia.com/logoinconsulting.png" alt="" width="112" height="112"></div>';
+		if ($datos['genero'] == 0) {
+
+			$mensaje .= '<div>
+			<div><strong>Estimada '.ucwords($datos["name"]).'</strong></div>
+			<div> </div> 
+			<div>Le escribimos para informarle que hemos recibido una solicitud para restablecer su contraseña. Si usted ha solicitado este cambio, por favor haga clic en el siguiente enlace para completar el proceso:</div>
+			<div> </div>';
+		}
+		else{
+
+			$mensaje .= '<div>
+			<div><strong>Estimado '.ucwords($datos["name"]).'</strong></div>
+			<div> </div> 
+			<div>Le escribimos para informarle que hemos recibido una solicitud para restablecer su contraseña. Si usted ha solicitado este cambio, por favor haga clic en el siguiente enlace para completar el proceso:</div>
+			<div> </div>';
+		}
+
+		$mensaje .= '<div><a href="'.$datos["link"].'">'.$datos["link"].'</a></div>
+		<div> </div>
+		<div>Si usted no ha solicitado este cambio, por favor ignore este mensaje y no haga clic en el enlace. Su contraseña actual seguirá siendo válida.</div>
+		<div> </div>
+		<div>Gracias por confiar en IN Consulting.</div>
+		<div> </div>
+		<div style="text-align: center;"><strong>Atentamente:</strong></div>
+		<div style="text-align: center;"> </div>
+		<div style="text-align: center;"><em>El equipo de IN Consulting</em></div>
+		</div>';
+		$destinatario = $datos['email'];
+		$asunto = 'Recuperación de contraseña';
+// Configuración de cabeceras del correo
+		$cabeceras = "From: noreply@inconsulting.porscheclubmorelia.com\r\n";
+		$cabeceras .= "Content-Type: text/html; charset=UTF-8\r\n";
+// Envío del correo electrónico
+		if (mail($destinatario, $asunto, $mensaje, $cabeceras)) {
+			$stmt = Conexion::conectar()->prepare("INSERT INTO solicitud_cambio_password(Empleados_idEmpleados, forgot) VALUES (:Empleados_idEmpleados, :forgot)");
+			$stmt->bindParam(":Empleados_idEmpleados", $datos['idEmpleados'], PDO::PARAM_INT);
+			$stmt->bindParam(":forgot", $datos['emailEncript'], PDO::PARAM_STR);
+			if ($stmt->execute()) {
+				return 'enviado';
+			}
+			$stmt->close();
+			$stmt = null;
+		}
+		 else {
+
+			return 'no enviado';
+		}
+
+    }
+
 	/*---------- Fin de ModeloFormularios ---------- */
 }

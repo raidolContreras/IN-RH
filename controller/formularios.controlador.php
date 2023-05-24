@@ -764,5 +764,10 @@ class ControladorFormularios{
     	$respuesta = ModeloFormularios::mdlEmpleadosEspecial($tabla,$item,$valor);
     	return $respuesta;
     }
+
+    static public function ctrForgotPasswordEmail($datos){
+    	$respuesta = ModeloFormularios::mdlForgotPasswordEmail($datos);
+    	return $respuesta;
+    }
 	/*---------- Fin de ControladorFormularios ---------- */
 }
