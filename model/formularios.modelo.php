@@ -96,6 +96,15 @@ class ModeloFormularios{
 
 			$Registro = ModeloFormularios::mdlEmergencia($table2, $id_empleado, $datos);
 			$correo = ModeloFormularios::correoVerificacion($datos);
+			if ($datos['jefe_Departamento'] == 1) {
+				
+				$datosDepto = array(
+					"idDepartamentos" => $datos['Departamentos_idDepartamentos'],
+					"idEmpleados" => $id_empleado
+				);
+				
+				$updateDataDepto = ModeloEmpleados::mdlActualizarjefatura('departamentos', $datosDepto);
+			}
 			if ($correo == 'enviado') {
 				return "ok";
 			}

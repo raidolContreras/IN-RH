@@ -248,11 +248,18 @@
 																<?php endforeach ?>
 															</select>
 														</div>
+														<div class="form-group col-md-6">
+															<label for="asignarJefatura" class="col-form-label text-center font-weight-bold">¿Asignar Jefe?:</label>
+							                                <div class="input-group-text" style="justify-content: center;">
+							                                        <input type="checkbox" name="asignarJefatura" id="asignarJefatura">
+							                                </div>
+														</div>
 														<input type="hidden" name="postulante" value="0">
 													<?php else: ?>
 														<input type="hidden" name="postulante" value="<?php echo $idPostulante; ?>">
 													<?php endif ?>
 														</div>
+
 													</div>
 												</div>
 										

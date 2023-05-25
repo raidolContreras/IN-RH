@@ -75,6 +75,23 @@ class ModeloEmpleados{
 		$stmt = null;
 	}
 
+	static public function mdlActualizarjefatura($tabla, $datos){
+		$sql = "UPDATE $tabla SET Empleados_idEmpleados = :idEmpleados WHERE idDepartamentos = :idDepartamentos";
+		$stmt = Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":idEmpleados", $datos['idEmpleados'],PDO::PARAM_INT);
+		$stmt->bindParam(":idDepartamentos", $datos['idDepartamentos'],PDO::PARAM_INT);
+		
+		if ($stmt->execute()) {
+			return 'ok';		
+		}else{
+			print_r(Conexion::conectar()->errorInfo());
+		}
+		$stmt->close();
+		$stmt = null;
+
+	}
+
 	static public function mdlFechaNacimiento($tabla){
 		$sql = "SELECT * FROM $tabla
 				WHERE DATE_FORMAT(fNac, '%m-%d') 

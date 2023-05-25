@@ -2,6 +2,7 @@
 	$empleado = ControladorEmpleados::ctrVerEmpleados("idEmpleados", $_GET['perfil']);
 	$puesto = ControladorFormularios::ctrVerPuestos("Empleados_idEmpleados", $_GET['perfil']);
 	$departamentos = ControladorFormularios::ctrVerDepartamentos(null, null);
+	$jefe = 0;
 }else{
 	echo '<script>
 
@@ -237,24 +238,39 @@
 
 														<div class="form-group col-md-6">
 															<label for="departamento" class="col-form-label text-center font-weight-bold">Departamento:</label>
-															<select class="form-control form-control-lg" id="departamento" name="departamento">
+															<div class="input-group">
+																<select class="form-control" id="departamento" name="departamento">
 
-																<?php foreach ($departamentos as $key => $departamento): ?>
-																	
-																    <?php $depa = ControladorFormularios::ctrVerDepartamentos("idDepartamentos",$departamento['Pertenencia']); ?>
-																    <?php
-																        $selected = ($departamento['idDepartamentos'] == $puesto['Departamentos_idDepartamentos']) ? 'selected' : '';
-																        $nameDepto = strtoupper($departamento['nameDepto']);
-																        $nameDepto .= isset($depa['nameDepto']) ? ' (' . $depa['nameDepto'] . ')' : '';
-																    ?>
-																    <option value="<?php echo $departamento['idDepartamentos']; ?>" <?php echo $selected; ?>>
-																        <?php echo $nameDepto; ?>
-																    </option>
-																<?php endforeach ?>
+																	<?php foreach ($departamentos as $key => $departamento): ?>
+																		
+																			<?php $depa = ControladorFormularios::ctrVerDepartamentos("idDepartamentos",$departamento['Pertenencia']); ?>
+																			<?php
+																					$selected = ($departamento['idDepartamentos'] == $puesto['Departamentos_idDepartamentos']) ? 'selected' : '';
+																					$nameDepto = strtoupper($departamento['nameDepto']);
+																					$nameDepto .= isset($depa['nameDepto']) ? ' (' . $depa['nameDepto'] . ')' : '';
+																					if ($departamento['Empleados_idEmpleados'] == $_GET['perfil']) {
+																						$jefe = 1;
+																					}
+																			?>
+																			<option value="<?php echo $departamento['idDepartamentos']; ?>" <?php echo $selected; ?>>
+																					<?php echo $nameDepto; ?>
+																			</option>
+																	<?php endforeach ?>
 
-															</select>
+																</select>
 														</div>
-														<input type="hidden" name="empleado" value="<?php echo $_GET['perfil'] ?>">
+														<input class="form-control" type="hidden" name="empleado" value="<?php echo $_GET['perfil'] ?>">
+														</div>
+
+														<div class="form-group col-md-6">
+															<label for="asignarJefatura" class="col-form-label text-center font-weight-bold">¿Asignar Jefe?:</label>
+                                <div class="input-group-text" style="justify-content: center;">
+                                	<?php if ($jefe == 1): ?>
+                                    <input type="checkbox" checked name="asignarJefatura" id="asignarJefatura">
+                                	<?php else: ?>
+                                    <input type="checkbox" name="asignarJefatura" id="asignarJefatura">
+                                	<?php endif ?>
+                                </div>
 														</div>
 													</div>
 												</div>
@@ -390,26 +406,26 @@
 				$('[data-toggle="identificacion"]').popover();	 
 			});
 		</script>
-  <script>
-    function showAlert() {
-      var alertContainer = document.getElementById('alertContainer');
-      var alert = document.getElementById('alert');
+	<script>
+		function showAlert() {
+			var alertContainer = document.getElementById('alertContainer');
+			var alert = document.getElementById('alert');
 
-      alertContainer.style.display = 'block';
+			alertContainer.style.display = 'block';
 
-      setTimeout(function () {
-        alert.classList.add('show');
-      }, 100);
-    }
+			setTimeout(function () {
+				alert.classList.add('show');
+			}, 100);
+		}
 
-    function closeAlert() {
-      var alertContainer = document.getElementById('alertContainer');
-      var alert = document.getElementById('alert');
+		function closeAlert() {
+			var alertContainer = document.getElementById('alertContainer');
+			var alert = document.getElementById('alert');
 
-      alert.classList.remove('show');
+			alert.classList.remove('show');
 
-      setTimeout(function () {
-        alertContainer.style.display = 'none';
-      }, 300);
-    }
-  </script>
+			setTimeout(function () {
+				alertContainer.style.display = 'none';
+			}, 300);
+		}
+	</script>

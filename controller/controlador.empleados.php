@@ -6,6 +6,8 @@ class ControladorEmpleados{
 	static public function ctrRegistrarEmpleados(){
 		if (isset($_POST['nombre'])) {
 
+			$jefe = 0;
+			$departamento = 0;
 			$namePuesto = $_POST['namePuesto'];
 			$salarioPuesto = $_POST['salarioPuesto'];
 			$salario_integrado = $_POST['salario_integrado'];
@@ -14,8 +16,9 @@ class ControladorEmpleados{
 
 			if ($_POST['postulante'] == 0) {
 				$departamento = $_POST['departamento'];
-			}else{
-				$departamento = 0;
+			}
+			if (isset($_POST['asignarJefatura'])) {
+				$jefe = 1;
 			}
 
 		$password = generarPassword();
@@ -50,7 +53,8 @@ class ControladorEmpleados{
 				'horario_entrada' => $horario_entrada,
 				'horario_salida' => $horario_salida,
 				'Departamentos_idDepartamentos' => $departamento,
-				'postulante' => $_POST['postulante']);
+				'postulante' => $_POST['postulante'],
+				'jefe_Departamento' => $jefe);
 			$Registro = ModeloFormularios::mdlRegistrarEmpleados('empleados','emergencia', $datos);
 			if ($Registro == 'ok') {
 				return 'ok';
@@ -149,13 +153,25 @@ class ControladorEmpleados{
 				"idEmpleados" => $empleado
 			);
 
+			$datosDepto = array(
+				"idDepartamentos" => $departamento,
+				"idEmpleados" => $empleado
+			);
+
 			$updateDataEmpleado = ModeloEmpleados::mdlActualizarEmpleado('empleados', $datosEmpleado);
 			if ($updateDataEmpleado == 'ok') {
 				$updateDataEmergencia = ModeloEmpleados::mdlActualizarEmergencia('emergencia', $datosEmergencia);
 				if ($updateDataEmergencia == 'ok') {
 					$updateDataPuesto = ModeloEmpleados::mdlActualizarPuesto('puesto', $datosPuesto);
 					if ($updateDataPuesto == 'ok') {
-						return 'ok';
+						if (isset($_POST['asignarJefatura'])) {
+							$updateDataDepto = ModeloEmpleados::mdlActualizarjefatura('departamentos', $datosDepto);
+							if ($updateDataDepto == 'ok') {
+								return 'ok';
+							}
+						}else{
+							return 'ok';
+						}
 					} else {
 						return 'error: 3';
 					}
