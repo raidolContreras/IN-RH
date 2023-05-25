@@ -27,7 +27,7 @@
 			<div class="col-lg-12">
 				<div class="card">
 					<div class="card-body">
-						<form id="formulario" class="container mt-4" method="post">
+						<form id="formulario" class="container mt-4" method="post" id="formulario">
 
 
 							<?php 
@@ -289,7 +289,7 @@
 		<!-- Validación de formulario con jQuery -->
 		<script>
 			$(document).ready(function() {
-				$("#registro-form").submit(function(event) {
+				$("#formulario").submit(function(event) {
 // Obtener valores de los campos
 					var nombre = $("#nombre").val();
 					var apellidos = $("#apellidos").val();
