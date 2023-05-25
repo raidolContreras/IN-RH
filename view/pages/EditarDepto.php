@@ -1,8 +1,10 @@
 <?php 
 $datos = ControladorFormularios::ctrVerDepartamentos("idDepartamentos",$_GET['Edicion']);
-if ($datos['Empleados_idEmpleados']!=0) {
+if ($datos['Empleados_idEmpleados']!=null) {
 	$empleadoDpto = ControladorEmpleados::ctrVerEmpleados("idEmpleados", $datos['Empleados_idEmpleados']); 
 }
+$empresasSelect = ControladorFormularios::ctrVerEmpresas("idEmpresas", $datos['Empresas_idEmpresas']);
+
 $empleadosDpto = ControladorEmpleados::ctrVerEmpleados(null,null); 
 $empleados = ControladorEmpleados::ctrVerEmpleados(null,null); 
 $registro = ControladorFormularios::ctrActualizarDepto();
@@ -54,29 +56,46 @@ $empresas = ControladorFormularios::ctrVerEmpresas(null,null);
 							<option>
 								Selecciona un empleado
 							</option>
-							<?php if ($datos['Empleados_idEmpleados'] != 0): ?>
-							<option value="<?php echo $datos['Empleados_idEmpleados']; ?>" selected>
-								<?php echo ucwords(strtolower($empleadoDpto['name']." ".$empleadoDpto['lastname'])); ?>
-							</option>
-							<?php endif ?>
 						<?php foreach ($empleadosDpto as $key => $empleado): ?>
+							<?php if ($empleado['idEmpleados'] == $empleadoDpto['idEmpleados']): ?>
+								
+							<option value="<?php echo $empleado['idEmpleados']; ?>" selected>
+								<?php echo ucwords(strtolower($empleado['name']." ".$empleado['lastname'])); ?>
+							</option>
+							<?php else: ?>
 							<option value="<?php echo $empleado['idEmpleados']; ?>">
 								<?php echo ucwords(strtolower($empleado['name']." ".$empleado['lastname'])); ?>
 							</option>
+							<?php endif ?>
 						<?php endforeach ?>
 					</select>
 				</div>
 				<div class="form-group">
 					<label for="empresa" class="col-form-label font-weight-bold">Empresa:</label>
-					<select class="form-control" id="empresa" name="empresa">
+					<select class="form-control" id="empresa" name="empresa" required>
 							<option>
 								Seleccionar empresa
 							</option>
-						<?php foreach ($empresas as $key => $empresa): ?>
-							<option value="<?php echo $empresa['idEmpresas']; ?>">
-								<?php echo ucwords(strtolower($empresa['nombre_razon_social']." (".$empresa['rfc'].")")); ?>
-							</option>
+						<?php foreach ($empresas as $empresa): ?>
+						    <?php if ($empresasSelect['idEmpresas'] == $empresa['idEmpresas']): ?>
+						        <option value="<?php echo $empresa['idEmpresas']; ?>" selected>
+						            <?php echo ucwords(strtolower($empresa['nombre_razon_social']." (".$empresa['rfc'].")")); ?>
+						        </option>
+						    <?php else: ?>
+						        <option value="<?php echo $empresa['idEmpresas']; ?>">
+						            <?php echo ucwords(strtolower($empresa['nombre_razon_social']." (".$empresa['rfc'].")")); ?>
+						        </option>
+						    <?php endif ?>
 						<?php endforeach ?>
+
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="Pertenencia" class="col-form-label font-weight-bold">Departamento:</label>
+					<select class="form-control" id="Pertenencia" name="Pertenencia">
+							<option>
+								Seleccionar departamento
+							</option>
 					</select>
 				</div>
 				<div class="row mt-5 rounded float-right">
@@ -95,3 +114,54 @@ $empresas = ControladorFormularios::ctrVerEmpresas(null,null);
 
 	</div>
 </div>
+<script>
+$(document).ready(function() {
+  var empresa = document.getElementById('empresa');
+  var pertenencia = document.getElementById('Pertenencia');
+
+  // Función para cargar los departamentos correspondientes a la empresa seleccionada
+  function cargarDepartamentos(empresaId) {
+    $.ajax({
+      url: "ajax.formularios.php",
+      type: "POST",
+      data: { empresaId: empresaId },
+      success: function(response) {
+        var perteneceDepa = JSON.parse(response);
+
+        // Limpiar las opciones actuales del select de departamentos
+        pertenencia.innerHTML = '';
+
+        // Agregar una opción predeterminada
+        var opcionPredeterminada = document.createElement('option');
+        opcionPredeterminada.text = 'Sin departamento';
+        pertenencia.add(opcionPredeterminada);
+
+        // Agregar las opciones de departamentos correspondientes a la empresa seleccionada
+        perteneceDepa.forEach(function(datos) {
+          var opcionDepartamento = document.createElement('option');
+          if (datos.Pertenencia === null) {
+            opcionDepartamento.text = datos.name;
+          } else {
+            opcionDepartamento.text = datos.name + ' (' + datos.Pertenencia + ')';
+          }
+          opcionDepartamento.value = datos.id;
+          if (datos.id === <?php echo $datos['Pertenencia'] ?>) {
+          	opcionDepartamento.selected = true;
+          }
+          pertenencia.add(opcionDepartamento);
+        });
+      }
+    });
+  }
+
+  // Cargar los departamentos iniciales de la empresa seleccionada por defecto
+  cargarDepartamentos(empresa.value);
+
+  // Cambiar los departamentos cuando se seleccione otra empresa
+  $("#empresa").change(function() {
+    var empresaId = $(this).val();
+    cargarDepartamentos(empresaId);
+  });
+});
+
+</script>

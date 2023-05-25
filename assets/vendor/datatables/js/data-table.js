@@ -9,7 +9,8 @@ jQuery(document).ready(function($) {
                 buttons: [
                     {
                         extend: 'excelHtml5',
-                        text: 'Excel',
+                        text: 'Exportar a Excel',
+                        className: 'btn btn-outline-success rounded',
                         customize: function( xlsx ) {
                             var sheet = xlsx.xl.worksheets['Datos.xml'];
                             $('row:first c', sheet).attr( 's', '42' );
@@ -17,12 +18,14 @@ jQuery(document).ready(function($) {
                     },
                     {
                         extend: 'pdfHtml5',
+                        text: 'Exportar a PDF',
+                        className: 'btn btn-outline-danger rounded',
                         orientation: 'landscape',
                         pageSize: 'LEGAL'
                     }
                     ],
                 fixedHeader: true,
-                scrollY: 375,
+                scrollY: 500,
                 stateSave: true,
                 select: true,
             language: {
@@ -44,11 +47,14 @@ jQuery(document).ready(function($) {
 
         $(document).ready(function() {
             var table = $('table.depto').DataTable({
+                dom: 'Bfrtip',
                 lengthChange: false,
+                "ordering": false,
                 buttons: [
                     {
                         extend: 'excelHtml5',
-                        text: 'Excel',
+                        text: 'Exportar a Excel',
+                        className: 'btn btn-outline-success rounded',
                         customize: function( xlsx ) {
                             var sheet = xlsx.xl.worksheets['Datos.xml'];
                             $('row:first c', sheet).attr( 's', '42' );
@@ -59,16 +65,17 @@ jQuery(document).ready(function($) {
                     },
                     {
                         extend: 'pdfHtml5',
+                        text: 'Exportar a PDF',
+                        className: 'btn btn-outline-danger rounded',
                         orientation: 'landscape',
                         pageSize: 'LEGAL',
                         exportOptions: {
                             columns: [ 0, 1, 2 ]
                         }
                     }
-                    ],
+                ],
                 fixedHeader: true,
-                scrollY: 375,
-                stateSave: true,
+                scrollY: 500,
                 select: true,
             language: {
                 lengthMenu: 'Mostrar _MENU_ resultados por pagina',
@@ -94,7 +101,8 @@ jQuery(document).ready(function($) {
                 buttons: [
                     {
                         extend: 'excelHtml5',
-                        text: 'Excel',
+                        text: 'Exportar a Excel',
+                        className: 'btn btn-outline-success rounded',
                         customize: function( xlsx ) {
                             var sheet = xlsx.xl.worksheets['Postulantes.xml'];
                             $('row:first c', sheet).attr( 's', '42' );
@@ -102,12 +110,14 @@ jQuery(document).ready(function($) {
                     },
                     {
                         extend: 'pdfHtml5',
+                        text: 'Exportar a PDF',
+                        className: 'btn btn-outline-danger rounded',
                         orientation: 'landscape',
                         pageSize: 'LEGAL'
                     }
                     ],
                 fixedHeader: true,
-                scrollY: 375,
+                scrollY: 500,
                 stateSave: true,
                 select: true,
             language: {
@@ -134,7 +144,8 @@ jQuery(document).ready(function($) {
                 buttons: [
                     {
                         extend: 'excelHtml5',
-                        text: 'Excel',
+                        text: 'Exportar a Excel',
+                        className: 'btn btn-outline-success rounded',
                         customize: function( xlsx ) {
                             var sheet = xlsx.xl.worksheets['IN Consulting.xml'];
                             $('row:first c', sheet).attr( 's', '42' );
@@ -142,13 +153,13 @@ jQuery(document).ready(function($) {
                     },
                     {
                         extend: 'pdfHtml5',
-                        text: 'PDF',
-                        orientation: 'landscape',
+                        text: 'Exportar a PDF',
+                        className: 'btn btn-outline-danger rounded',                        orientation: 'landscape',
                         pageSize: 'LEGAL'
                     }
                     ],
                 fixedHeader: true,
-                scrollY: 375,
+                scrollY: 500,
                 stateSave: true,
                 select: true,
             language: {
@@ -172,7 +183,7 @@ jQuery(document).ready(function($) {
             var table = $('table.Extras').DataTable({
                 lengthChange: false,
                 fixedHeader: true,
-                scrollY: 375,
+                scrollY: 500,
                 stateSave: true,
             language: {
                 lengthMenu: 'Mostrar _MENU_ resultados por pagina',
