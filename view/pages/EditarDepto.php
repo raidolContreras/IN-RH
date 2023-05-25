@@ -138,18 +138,24 @@ $(document).ready(function() {
 
         // Agregar las opciones de departamentos correspondientes a la empresa seleccionada
         perteneceDepa.forEach(function(datos) {
-          var opcionDepartamento = document.createElement('option');
-          if (datos.Pertenencia === null) {
-            opcionDepartamento.text = datos.name;
-          } else {
-            opcionDepartamento.text = datos.name + ' (' + datos.Pertenencia + ')';
-          }
-          opcionDepartamento.value = datos.id;
-          if (datos.id === <?php echo $datos['Pertenencia'] ?>) {
-          	opcionDepartamento.selected = true;
-          }
-          pertenencia.add(opcionDepartamento);
-        });
+		  if (datos.id !== <?php echo $datos['idDepartamentos'] ?>) {
+		    var opcionDepartamento = document.createElement('option');
+		    if (datos.Pertenencia === null) {
+		      opcionDepartamento.text = datos.name;
+		    } else {
+		      opcionDepartamento.text = datos.name + ' (' + datos.Pertenencia + ')';
+		    }
+		    opcionDepartamento.value = datos.id;
+
+		    // Comparar con $datos['Pertenencia'] y marcar como seleccionada
+		    if (datos.id === <?php echo $datos['Pertenencia'] ?>) {
+		      opcionDepartamento.selected = true;
+		    }
+
+		    pertenencia.add(opcionDepartamento);
+		  }
+		});
+
       }
     });
   }
