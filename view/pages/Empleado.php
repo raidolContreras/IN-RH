@@ -105,14 +105,15 @@ $puesto = ControladorFormularios::ctrVerPuestos("Empleados_idEmpleados", $_GET['
 											<button type="button" class="close" data-dismiss="modal">&times;</button>
 										</div>
 
+											<form method="POST" id="baja-form">
 										<div class="modal-body">
 											<p>Seguro que deseas dar de baja a <?php echo strtoupper($colaborador['name']." ".$colaborador['lastname']); ?>, esta acción <strong>si </strong>puede deshacerse</p>
 
+												<input type="date" class="form-control" name="fecha_baja" required>
 										</div>
 
 										<div class="modal-footer">
 											<div class="col-12" id="form-result"></div>
-											<form method="POST" id="baja-form">
 												<input type="hidden" name="empleado" value="<?php echo $colaborador['idEmpleados'];?>">
 												<input type="hidden" name="EliminarEmpleado" value="1">
 												<button class="btn btn-danger rounded float-right" id="baja-btn" type="button">

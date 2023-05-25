@@ -76,12 +76,12 @@ class ControladorEmpleados{
 	}
 
 
-	static public function ctrEliminarEmpleado($idEmpleados){
-		$busqueda = ControladorEmpleados::ctrVerEmpleados("idEmpleados",$idEmpleados);
+	static public function ctrEliminarEmpleado($datos){
+		$busqueda = ControladorEmpleados::ctrVerEmpleados("idEmpleados",$datos['idEmpleados']);
 
 		if (isset($busqueda[0])) {
 			$tabla = 'empleados';
-			$eliminar = ModeloEmpleados::mdlEliminarEmpleado($tabla, $idEmpleados);
+			$eliminar = ModeloEmpleados::mdlEliminarEmpleado($tabla, $datos);
 			return $eliminar;
 		}else{
 			return "Error: usuario";

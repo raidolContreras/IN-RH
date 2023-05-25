@@ -168,35 +168,48 @@ class ModeloEmpleados{
 		$stmt = null;
 	}
 
-	static public function mdlEliminarEmpleado($tabla, $idEmpleado){
+	static public function mdlEliminarEmpleado($tabla, $datos){
 
-		$puesto = ControladorFormularios::ctrVerPuestos("Empleados_idEmpleados", $idEmpleado);
+		$sql = "UPDATE $tabla SET status = 0, fecha_baja = :fecha_baja WHERE idEmpleados = :idEmpleados";
 
-		$sql = "UPDATE $tabla SET status = 0, fecha_baja = now() WHERE idEmpleados = :idEmpleado;";
-		$sql .= "UPDATE puesto SET status = 0 WHERE idPuesto = ".$puesto['idPuesto'].";";
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->bindParam(":idEmpleados", $datos['idEmpleados'], PDO::PARAM_INT);
+		$stmt->bindParam(":fecha_baja", $datos['fecha_baja'], PDO::PARAM_STR);
 
-		$tabla2 = "vacantes";
-		$datos = array("nameVacante" => $puesto['namePuesto'],
-						 "salarioVacante" => $puesto['salario'],
-						 "Departamentos_idDepartamentos" => $puesto['Departamentos_idDepartamentos'],
-						 "requisitos" => "Nueva Vacante");
-		
-		$registro = ModeloFormularios::mdlRegistrarVacantes($tabla2,$datos);
-
-		if ($registro == 'ok') {
-
-			$stmt = Conexion::conectar()->prepare($sql);
-			$stmt->bindParam(":idEmpleado",$idEmpleado,PDO::PARAM_INT);
-			if ($stmt->execute()) {
-				return 'ok';
-			}
-			else{
-				print_r(Conexion::conectar()->errorInfo());
-			}
-
-		}else{
-			return 'Error';
+		if ($stmt->execute()) {
+		    $eliminarPuesto = ModeloEmpleados::mdlEliminarPuesto("puesto", $datos['idEmpleados']);
+		    if ($eliminarPuesto == "ok") {
+		    	return "ok";
+		    }
+		} else {
+		    print_r(Conexion::conectar()->errorInfo()); 
 		}
+
+		$stmt->close();
+		$stmt = null;
+	}
+
+	static public function mdlEliminarPuesto($tabla, $idEmpleados){
+
+		$puesto = ControladorFormularios::ctrVerPuestos("Empleados_idEmpleados", $idEmpleados);
+
+		$sql = "UPDATE $tabla SET status = 0 WHERE idPuesto = :idPuesto";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->bindParam(":idPuesto", $puesto['idPuesto'], PDO::PARAM_INT);
+			
+		if ($stmt->execute()) {
+			$tablaVacantes = "vacantes";
+			$data = array("nameVacante" => $puesto['namePuesto'],
+							 "salarioVacante" => $puesto['salario'],
+							 "Departamentos_idDepartamentos" => $puesto['Departamentos_idDepartamentos'],
+							 "requisitos" => "Nueva Vacante");
+			$registro = ModeloFormularios::mdlRegistrarVacantes($tablaVacantes,$data);
+		    return $registro;
+		} else {
+		    print_r(Conexion::conectar()->errorInfo()); 
+		}
+
 		$stmt->close();
 		$stmt = null;
 	}

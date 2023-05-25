@@ -318,12 +318,18 @@ class FormulariosAjax{
 	}
 
 	public $idEmpleados;
+	public $fecha_baja;
 
-	public function eliminarEmpleadoAjax()
-	{
+	public function eliminarEmpleadoAjax(){
+		$fecha_baja = $this->fecha_baja;
 		$idEmpleados = $this->idEmpleados;
 
-		$eliminarEmpleado = ControladorEmpleados::ctrEliminarEmpleado($idEmpleados);
+		$datos = array(
+			"fecha_baja" => $fecha_baja,
+			"idEmpleados" => $idEmpleados
+		);
+
+		$eliminarEmpleado = ControladorEmpleados::ctrEliminarEmpleado($datos);
 
 		echo json_encode($eliminarEmpleado);
 	}
@@ -525,9 +531,11 @@ if (isset($_POST['solicitudCambio'])) {
 if (isset($_POST['EliminarEmpleado'])) {
 	if ($_POST['EliminarEmpleado'] == 1) {
 		$idEmpleados = $_POST['empleado'];
+		$fecha_baja = $_POST['fecha_baja'];
 
 		$EliminarEmpleado = new FormulariosAjax();
 		$EliminarEmpleado -> idEmpleados = $idEmpleados;
+		$EliminarEmpleado -> fecha_baja = $fecha_baja;
 		$EliminarEmpleado -> eliminarEmpleadoAjax();
 	}
 }
