@@ -450,6 +450,21 @@ class ModeloFormularios{
 		$stmt->close();
 		$stmt = null;
 	}
+	static public function mdlDeptosEspecial2($tabla, $item, $valor){
+
+		$sql = "SELECT d.nameDepto as name, d.idDepartamentos as id, de.nameDepto as Pertenencia
+				FROM $tabla d
+				LEFT JOIN $tabla de on de.idDepartamentos = d.Pertenencia
+				WHERE d.$item = :$item AND d.status = 1";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
+		$stmt->execute();
+		return $stmt -> fetchAll();
+
+		$stmt->close();
+		$stmt = null;
+	}
 
 	static public function mdlActualizarDepto($tabla, $datos){
 

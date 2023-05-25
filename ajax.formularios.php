@@ -328,6 +328,17 @@ class FormulariosAjax{
 		echo json_encode($eliminarEmpleado);
 	}
 
+	public function buscarDepasAjax(){
+	    $idEmpresas = $this->idEmpresas;
+	    $buscarDepas = ControladorFormularios::ctrDeptosEspecial2("Empresas_idEmpresas", $idEmpresas);
+	    $departamentos = array();
+	    foreach($buscarDepas as $departamento){
+	        $departamentos[] = $departamento;
+	    }
+	    echo json_encode($departamentos);
+	}
+
+
 }
 
 if(isset($_POST["validate"])){
@@ -519,4 +530,14 @@ if (isset($_POST['EliminarEmpleado'])) {
 		$EliminarEmpleado -> idEmpleados = $idEmpleados;
 		$EliminarEmpleado -> eliminarEmpleadoAjax();
 	}
+}
+
+if (isset($_POST['empresaId'])) {
+
+	$empresaId = $_POST['empresaId'];
+
+	$generarDepas = new FormulariosAjax();
+	$generarDepas -> idEmpresas = $empresaId;
+	$generarDepas -> buscarDepasAjax();
+
 }

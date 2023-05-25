@@ -251,6 +251,15 @@ class ControladorFormularios{
 		return $respuesta;
 
 	}
+	static public function ctrDeptosEspecial2($item, $valor){
+
+		$tabla = "departamentos";
+
+		$respuesta = ModeloFormularios::mdlDeptosEspecial2($tabla, $item, $valor);
+
+		return $respuesta;
+
+	}
 
 	static public function ctrActualizarDepto(){
 

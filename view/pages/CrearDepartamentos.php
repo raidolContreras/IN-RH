@@ -51,7 +51,7 @@ $departamentos = ControladorFormularios::ctrVerDepartamentos(null, null);
 							<option value="Sin empleado" selected>
 								Sin empleado
 							</option>
-						<?php foreach ($empleados as $key => $empleado): ?>
+						<?php foreach ($empleados as $empleado): ?>
 							<option value="<?php echo $empleado['idEmpleados']; ?>">
 								<?php echo ucwords(strtolower($empleado['name']." ".$empleado['lastname'])); ?>
 							</option>
@@ -64,7 +64,7 @@ $departamentos = ControladorFormularios::ctrVerDepartamentos(null, null);
 							<option>
 								Seleccionar empresa
 							</option>
-						<?php foreach ($empresas as $key => $empresa): ?>
+						<?php foreach ($empresas as $empresa): ?>
 							<option value="<?php echo $empresa['idEmpresas']; ?>">
 								<?php echo ucwords(strtolower($empresa['nombre_razon_social']." (".$empresa['rfc'].")")); ?>
 							</option>
@@ -77,18 +77,6 @@ $departamentos = ControladorFormularios::ctrVerDepartamentos(null, null);
 							<option>
 								Seleccionar departamento
 							</option>
-						<?php foreach ($departamentos as $key => $departamento): ?>
-							<?php $depa = ControladorFormularios::ctrVerDepartamentos("idDepartamentos",$departamento['Pertenencia']); ?>
-							<?php if (isset($depa['nameDepto'])): ?>
-								<option value="<?php echo $departamento['idDepartamentos']; ?>">
-									<?php echo strtoupper($departamento['nameDepto']." (".$depa['nameDepto'].")");?>
-								</option>
-							<?php else: ?>
-								<option value="<?php echo $departamento['idDepartamentos']; ?>">
-									<?php echo strtoupper($departamento['nameDepto']);?>
-								</option>
-							<?php endif ?>
-						<?php endforeach ?>
 					</select>
 				</div>
 				<div class="row mt-5 rounded float-right">
@@ -106,3 +94,42 @@ $departamentos = ControladorFormularios::ctrVerDepartamentos(null, null);
 
 	</div>
 </div>
+<script>
+$(document).ready(function() {
+  var empresa = document.getElementById('empresa');
+  var pertenencia = document.getElementById('Pertenencia');
+  $("#empresa").change(function() {
+    var empresaId = $(this).val();
+    $.ajax({
+      url: "ajax.formularios.php",
+      type: "POST",
+      data: {
+        empresaId: empresaId
+      },
+      success: function(response) {
+        var perteneceDepa = JSON.parse(response);
+
+        // Limpiar las opciones actuales del select de ciudades
+        pertenencia.innerHTML = '';
+
+        // Agregar una opción predeterminada
+        var opcionPredeterminada = document.createElement('option');
+        opcionPredeterminada.text = 'Sin departamento';
+        pertenencia.add(opcionPredeterminada);
+
+        // Agregar las opciones de ciudades correspondientes al estado seleccionado
+        perteneceDepa.forEach(function(datos) {
+          var opcionDepartamento = document.createElement('option');
+          if (datos.Pertenencia === null) {
+          	opcionDepartamento.text = datos.name;
+      	  }else{
+          opcionDepartamento.text = datos.name + ' (' + datos.Pertenencia + ')';
+      	  }
+          opcionDepartamento.value = datos.id;
+          pertenencia.add(opcionDepartamento);
+        });
+      }
+    });
+  });
+});
+</script>
