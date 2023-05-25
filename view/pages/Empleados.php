@@ -58,7 +58,7 @@ $empresas = ControladorFormularios::ctrVerEmpresas(null, null);
 												<th>Estado</th>
 											</tr>
 										</thead>
-										<tbody>
+										<tbody style="font-size: 12px !important">
 											<?php if (!isset($_GET['depa'])): ?>
 												<?php foreach ($empleados as $value): ?>
 													<tr>
@@ -70,7 +70,7 @@ $empresas = ControladorFormularios::ctrVerEmpresas(null, null);
 														<?php if ($value['status'] == 1): ?>
 															<?php $puesto = ControladorFormularios::ctrVerPuestos("Empleados_idEmpleados", $value['idEmpleados']) ?>
 															<?php $depa = ControladorFormularios::ctrVerDepartamentos("idDepartamentos", $puesto['Departamentos_idDepartamentos']) ?>
-															<?php $empresa = ControladorFormularios::ctrVerEmpresas("idEmpresas", $depa['Empresas_idEmpresas']) ?>
+															<?php $empresa = ControladorFormularios::ctrVerEmpresas("idEmpresas", $depa['Empresas_idEmpresas']); ?>
 															<td><?php echo mb_strtoupper($puesto['namePuesto'], 'UTF-8') ?></td>
 															<td><?php echo mb_strtoupper($depa['nameDepto'], 'UTF-8') ?></td>
 															<td><?php echo mb_strtoupper($empresa['nombre_razon_social'], 'UTF-8') ?></td>
@@ -116,12 +116,13 @@ $empresas = ControladorFormularios::ctrVerEmpresas(null, null);
 															<td><?php echo mb_strtoupper($depa['nameDepto'], 'UTF-8') ?></td>
 															<td><?php echo mb_strtoupper($empresa['nombre_razon_social'], 'UTF-8') ?></td>
 														<?php else: ?>
-															<td></td>
-															<td></td>
-															<td></td>
+															<td colspan="3" style="text-align: center; color: red;">- Sin puesto laboral -</td>
+															<td style="display: none;"></td>
+															<td style="display: none;"></td>
 														<?php endif ?>
 														<td><?php echo mb_strtoupper($value['identificacion']); ?></td>
-														<td><?php echo $value['fNac']; ?></td>
+														<td><?php echo $value['fecha_contratado']; ?></td>
+														<td><?php echo $value['fecha_baja']; ?></td>
 														<?php if ($value['numI'] == null || $value['numI'] == ""): ?>
 															<td><?php echo mb_strtoupper($value['street'].", #".$value['numE'].", ".$value['colonia'].", ".$value['municipio'].", ".$value['estado']."."); ?></td>
 														<?php else: ?>

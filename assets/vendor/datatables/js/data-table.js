@@ -6,6 +6,12 @@ jQuery(document).ready(function($) {
         $(document).ready(function() {
             var table = $('table.second').DataTable({
                 lengthChange: false,
+                scrollCollapse: true,
+                paging: true,
+                fixedColumns:   {
+                    left: 1,
+                    right: 1
+                },
                 buttons: [
                     {
                         extend: 'excelHtml5',
@@ -26,6 +32,7 @@ jQuery(document).ready(function($) {
                     ],
                 fixedHeader: true,
                 scrollY: 500,
+                scrollX: 400,
                 stateSave: true,
                 select: true,
             language: {
@@ -154,7 +161,8 @@ jQuery(document).ready(function($) {
                     {
                         extend: 'pdfHtml5',
                         text: 'Exportar a PDF',
-                        className: 'btn btn-outline-danger rounded',                        orientation: 'landscape',
+                        className: 'btn btn-outline-danger rounded',
+                        orientation: 'landscape',
                         pageSize: 'LEGAL'
                     }
                     ],

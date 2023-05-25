@@ -41,7 +41,7 @@ $perfil = $primerLetra.$segundaLetra;
 					        if ($pagina == 'Nominas') {
 					        	echo '<a href="' . $pagina . '"> Nóminas </a>';
 					        }elseif($pagina == 'Departamento'){
-					        	echo '<a href="' . $pagina . '"> Directorios </a>';
+					        	echo '<a href="' . $pagina . '"> Directivos y jefaturas </a>';
 						      }else{
 						        echo '<a href="' . $pagina . '">' . ucfirst($pagina) . '</a>';
 						      }
