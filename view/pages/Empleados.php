@@ -80,7 +80,8 @@ $empresas = ControladorFormularios::ctrVerEmpresas(null, null);
 															<td style="display: none;"></td>
 														<?php endif ?>
 														<td><?php echo strtoupper($value['identificacion']); ?></td>
-														<td><?php echo $value['fecha_contratado']; ?></td>
+														<td><?php $fecha_formateada = date("Y-m-d", strtotime($value['fecha_contratado']));
+														echo $fecha_formateada; ?></td>
 														<td><?php echo $value['fecha_baja']; ?></td>
 														<?php if ($value['numI'] == null || $value['numI'] == ""): ?>
 															<td><?php echo mb_strtoupper($value['street'].", #".$value['numE'].", ".$value['colonia'].", ".$value['municipio'].", ".$value['estado']."."); ?></td>
@@ -123,7 +124,8 @@ $empresas = ControladorFormularios::ctrVerEmpresas(null, null);
 															<td style="display: none;"></td>
 														<?php endif ?>
 														<td><?php echo mb_strtoupper($value['identificacion']); ?></td>
-														<td><?php echo $value['fecha_contratado']; ?></td>
+														<td><?php $fecha_formateada = date("Y-m-d", strtotime($value['fecha_contratado']));
+														echo $fecha_formateada; ?></td>
 														<td><?php echo $value['fecha_baja']; ?></td>
 														<?php if ($value['numI'] == null || $value['numI'] == ""): ?>
 															<td><?php echo mb_strtoupper($value['street'].", #".$value['numE'].", ".$value['colonia'].", ".$value['municipio'].", ".$value['estado']."."); ?></td>
