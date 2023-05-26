@@ -31,7 +31,12 @@
 
 
 					<li class="nav-item">
-						<a class="nav-link" href="#"><i class="fas fa-bookmark"></i>REGISTRO DE HORAS</a>
+						<?php if (isset($_GET['pagina']) && in_array($_GET['pagina'], array('Asistencia', 'Asistencia-resumen', 'Asistencia-ajustes'))): ?>
+							<a class="nav-link active" href="Asistencia">
+						<?php else: ?>
+							<a class="nav-link" href="Asistencia">
+						<?php endif ?>
+							<i class="fas fa-bookmark"></i>REGISTRO DE HORAS</a>
 					</li>
 
 					<li class="nav-item">

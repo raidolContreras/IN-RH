@@ -3,11 +3,11 @@
 		<!-- ============================================================== -->
 		<div class="dashboard-main-wrapper">
 <?php if (!isset($_SESSION['validarIngreso'])): ?>
-      <script>
-        setTimeout(function() {
-          location.href='Login';
-        }, 500);
-      </script>
+			<script>
+				setTimeout(function() {
+					location.href='Login';
+				}, 500);
+			</script>
 <?php endif ?>
 <?php 
 $primerLetra = strtoupper(substr($_SESSION["name"], 0, 1)); // Extrae la primer letra del texto
@@ -29,24 +29,46 @@ $perfil = $primerLetra.$segundaLetra;
 				<?php if (isset($_GET['pagina'])): ?>
 				<?php 
 				//Menu de empleados
+					$empleados = array('Asistencia', 'Asistencia-resumen', 'Asistencia-ajustes');
+					$paginaActual = $_GET['pagina'];
+
+					if (!empty($paginaActual) && in_array($paginaActual, $empleados)) {
+							foreach ($empleados as $pagina) {
+									$activeClass = ($paginaActual == $pagina) ? ' active' : '';
+									$marginLeftClass = ($pagina != $empleados[0]) ? ' ml-3' : '';
+									
+									echo '<li class="nav-item' . $activeClass . $marginLeftClass . '">';
+									if ($pagina == 'Asistencia-resumen') {
+										echo '<a href="' . $pagina . '"> Resumen de asistencias </a>';
+									}elseif ($pagina == 'Asistencia-ajustes') {
+										echo '<a href="' . $pagina . '"> Ajustes </a>';
+									}else{
+										echo '<a href="' . $pagina . '">' . ucfirst($pagina) . '</a>';
+									}
+									echo '</li>';
+							}
+					}
+					?>
+				<?php 
+				//Menu de empleados
 					$empleados = array('Empleados', 'Departamento', 'Nominas', 'Organigrama');
 					$paginaActual = $_GET['pagina'];
 
 					if (!empty($paginaActual) && in_array($paginaActual, $empleados)) {
-					    foreach ($empleados as $pagina) {
-					        $activeClass = ($paginaActual == $pagina) ? ' active' : '';
-					        $marginLeftClass = ($pagina != $empleados[0]) ? ' ml-3' : '';
-					        
-					        echo '<li class="nav-item' . $activeClass . $marginLeftClass . '">';
-					        if ($pagina == 'Nominas') {
-					        	echo '<a href="' . $pagina . '"> Nóminas </a>';
-					        }elseif($pagina == 'Departamento'){
-					        	echo '<a href="' . $pagina . '"> Directivos y jefaturas </a>';
-						      }else{
-						        echo '<a href="' . $pagina . '">' . ucfirst($pagina) . '</a>';
-						      }
-					        echo '</li>';
-					    }
+							foreach ($empleados as $pagina) {
+									$activeClass = ($paginaActual == $pagina) ? ' active' : '';
+									$marginLeftClass = ($pagina != $empleados[0]) ? ' ml-3' : '';
+									
+									echo '<li class="nav-item' . $activeClass . $marginLeftClass . '">';
+									if ($pagina == 'Nominas') {
+										echo '<a href="' . $pagina . '"> Nóminas </a>';
+									}elseif($pagina == 'Departamento'){
+										echo '<a href="' . $pagina . '"> Directivos y jefaturas </a>';
+									}else{
+										echo '<a href="' . $pagina . '">' . ucfirst($pagina) . '</a>';
+									}
+									echo '</li>';
+							}
 					}
 					?>
 
@@ -56,18 +78,18 @@ $perfil = $primerLetra.$segundaLetra;
 					$paginaActual = $_GET['pagina'];
 
 					if (!empty($paginaActual) && in_array($paginaActual, $empleado)) {
-					    foreach ($empleado as $pagina) {
-					        $activeClass = ($paginaActual == $pagina) ? ' active' : '';
-					        $marginLeftClass = ($pagina != $empleado[0]) ? ' ml-3' : '';
-					        
-					        echo '<li class="nav-item' . $activeClass . $marginLeftClass . '">';
-					        if ($pagina == 'Datos') {
-					        	echo '<a href="' . $pagina . '&perfil='.$_GET['perfil'].'"> Datos </a>';
-					        }else{
-						        echo '<a href="' . $pagina . '&perfil='.$_GET['perfil'].'">' . ucfirst($pagina) . '</a>';
-						      }
-					        echo '</li>';
-					    }
+							foreach ($empleado as $pagina) {
+									$activeClass = ($paginaActual == $pagina) ? ' active' : '';
+									$marginLeftClass = ($pagina != $empleado[0]) ? ' ml-3' : '';
+									
+									echo '<li class="nav-item' . $activeClass . $marginLeftClass . '">';
+									if ($pagina == 'Datos') {
+										echo '<a href="' . $pagina . '&perfil='.$_GET['perfil'].'"> Datos </a>';
+									}else{
+										echo '<a href="' . $pagina . '&perfil='.$_GET['perfil'].'">' . ucfirst($pagina) . '</a>';
+									}
+									echo '</li>';
+							}
 					}
 					?>
 
@@ -76,18 +98,18 @@ $perfil = $primerLetra.$segundaLetra;
 					$Vacantes = array( 'Vacantes','Talento');
 					$paginaActual = $_GET['pagina'];
 					if (!empty($paginaActual) && in_array($paginaActual, $Vacantes)) {
-					    foreach ($Vacantes as $pagina) {
-					        $activeClass = ($paginaActual == $pagina) ? ' active' : '';
-					        $marginLeftClass = ($pagina != $Vacantes[0]) ? ' ml-3' : '';
-					        
-					        echo '<li class="nav-item' . $activeClass . $marginLeftClass . '">';
-					        if ($pagina == 'Vacantes') {
-					        	echo '<a href="' . $pagina . '"> Ofertas de empleo </a>';
-					        }else{
-						        echo '<a href="' . $pagina . '"> Bases de talento </a>';
-						      }
-					        echo '</li>';
-					    }
+							foreach ($Vacantes as $pagina) {
+									$activeClass = ($paginaActual == $pagina) ? ' active' : '';
+									$marginLeftClass = ($pagina != $Vacantes[0]) ? ' ml-3' : '';
+									
+									echo '<li class="nav-item' . $activeClass . $marginLeftClass . '">';
+									if ($pagina == 'Vacantes') {
+										echo '<a href="' . $pagina . '"> Ofertas de empleo </a>';
+									}else{
+										echo '<a href="' . $pagina . '"> Bases de talento </a>';
+									}
+									echo '</li>';
+							}
 					}
 					?>
 
@@ -96,14 +118,14 @@ $perfil = $primerLetra.$segundaLetra;
 					$Vacantes = array( 'Configuraciones','Empresas', 'Permisos');
 					$paginaActual = $_GET['pagina'];
 					if (!empty($paginaActual) && in_array($paginaActual, $Vacantes)) {
-					    foreach ($Vacantes as $pagina) {
-					        $activeClass = ($paginaActual == $pagina) ? ' active' : '';
-					        $marginLeftClass = ($pagina != $Vacantes[0]) ? ' ml-3' : '';
-					        
-					        echo '<li class="nav-item' . $activeClass . $marginLeftClass . '">';
-						      echo '<a href="' . $pagina . '">' . ucfirst($pagina) . '</a>';
-					        echo '</li>';
-					    }
+							foreach ($Vacantes as $pagina) {
+									$activeClass = ($paginaActual == $pagina) ? ' active' : '';
+									$marginLeftClass = ($pagina != $Vacantes[0]) ? ' ml-3' : '';
+									
+									echo '<li class="nav-item' . $activeClass . $marginLeftClass . '">';
+									echo '<a href="' . $pagina . '">' . ucfirst($pagina) . '</a>';
+									echo '</li>';
+							}
 					}
 					?>
 
@@ -144,8 +166,8 @@ $perfil = $primerLetra.$segundaLetra;
 							<?php else: ?>
 							<span style="background-color: #F56CC1; border-radius: 50%; width: 40px; height: 40px; display: inline-flex; justify-content: center; align-items: center;">
 							<?php endif ?>
-						        <p class="mt-1" style="color: white;"><?php echo $perfil; ?></p>
-						  </span>
+										<p class="mt-1" style="color: white;"><?php echo $perfil; ?></p>
+							</span>
 						<?php endif ?>
 					</a>
 					<div class="dropdown-menu dropdown-menu-right nav-user-dropdown" aria-labelledby="navbarDropdownMenuLink2">

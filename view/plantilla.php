@@ -129,6 +129,14 @@ session_start();
 
 			include "pages/".$_GET["pagina"].".php";
 
+		}elseif ($_GET["pagina"] == "Asistencia" ||
+				 $_GET["pagina"] == "Asistencia-resumen" ||
+				 $_GET["pagina"] == "Asistencia-ajustes" ) {
+
+			include "pages/navs/navbar.php";
+			include "pages/navs/sidenav.php";
+			include "pages/Horarios/".$_GET["pagina"].".php";
+
 		}else{
 			include "pages/404-page.html";
 		}
