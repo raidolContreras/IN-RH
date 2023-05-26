@@ -76,6 +76,7 @@ class ModeloEmpleados{
 	}
 
 	static public function mdlActualizarjefatura($tabla, $datos){
+
 		$sql = "UPDATE $tabla SET Empleados_idEmpleados = :idEmpleados WHERE idDepartamentos = :idDepartamentos";
 		$stmt = Conexion::conectar()->prepare($sql);
 
@@ -177,12 +178,12 @@ class ModeloEmpleados{
 		$stmt->bindParam(":fecha_baja", $datos['fecha_baja'], PDO::PARAM_STR);
 
 		if ($stmt->execute()) {
-		    $eliminarPuesto = ModeloEmpleados::mdlEliminarPuesto("puesto", $datos['idEmpleados']);
-		    if ($eliminarPuesto == "ok") {
-		    	return "ok";
-		    }
+			$eliminarPuesto = ModeloEmpleados::mdlEliminarPuesto("puesto", $datos['idEmpleados']);
+			if ($eliminarPuesto == "ok") {
+				return "ok";
+			}
 		} else {
-		    print_r(Conexion::conectar()->errorInfo()); 
+			print_r(Conexion::conectar()->errorInfo()); 
 		}
 
 		$stmt->close();
@@ -192,6 +193,13 @@ class ModeloEmpleados{
 	static public function mdlEliminarPuesto($tabla, $idEmpleados){
 
 		$puesto = ControladorFormularios::ctrVerPuestos("Empleados_idEmpleados", $idEmpleados);
+		$tablaVacantes = "vacantes";
+		$data = array(
+			"nameVacante" => $puesto['namePuesto'],
+			"salarioVacante" => $puesto['salario'],
+			"Departamentos_idDepartamentos" => $puesto['Departamentos_idDepartamentos'],
+			"requisitos" => "Nueva Vacante"
+		);
 
 		$sql = "UPDATE $tabla SET status = 0 WHERE idPuesto = :idPuesto";
 
@@ -199,15 +207,25 @@ class ModeloEmpleados{
 		$stmt->bindParam(":idPuesto", $puesto['idPuesto'], PDO::PARAM_INT);
 			
 		if ($stmt->execute()) {
-			$tablaVacantes = "vacantes";
-			$data = array("nameVacante" => $puesto['namePuesto'],
-							 "salarioVacante" => $puesto['salario'],
-							 "Departamentos_idDepartamentos" => $puesto['Departamentos_idDepartamentos'],
-							 "requisitos" => "Nueva Vacante");
-			$registro = ModeloFormularios::mdlRegistrarVacantes($tablaVacantes,$data);
-		    return $registro;
+			$quitarJefatura = ControladorFormularios::ctrVerDepartamentos("Empleados_idEmpleados", $idEmpleados);
+			if ($quitarJefatura !== false) {
+				$datosDepto = array(
+					"idDepartamentos" => $quitarJefatura['idDepartamentos'],
+					"idEmpleados" => NULL
+				);
+				$updateDataDepto = ModeloEmpleados::mdlActualizarjefatura('departamentos', $datosDepto);
+					if ($updateDataDepto == 'ok') {
+						$registro = ModeloFormularios::mdlRegistrarVacantes($tablaVacantes,$data);
+						return $registro;
+					}else{
+						print_r(Conexion::conectar()->errorInfo());
+					}
+			}else{
+				$registro = ModeloFormularios::mdlRegistrarVacantes($tablaVacantes,$data);
+				return $registro;
+			}
 		} else {
-		    print_r(Conexion::conectar()->errorInfo()); 
+			print_r(Conexion::conectar()->errorInfo()); 
 		}
 
 		$stmt->close();

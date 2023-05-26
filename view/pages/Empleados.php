@@ -99,7 +99,9 @@ $empresas = ControladorFormularios::ctrVerEmpresas(null, null);
 														</td>
 													</tr>
 												<?php endforeach ?>
+
 											<?php else: ?>
+												
 												<?php $empleadosSeleccionados = ControladorFormularios::ctrEmpleadosEspecial("idEmpresas", $_GET['depa']); ?>
 												<?php foreach ($empleadosSeleccionados as $value): ?>
 													<tr>
