@@ -344,6 +344,13 @@ class FormulariosAjax{
 	    echo json_encode($departamentos);
 	}
 
+	public function CambiarPredeterminadoAjax(){
+		$idHorarios = $this->idHorarios;
+
+		$cambiar = ControladorFormularios::ctrCambiarHorarioDefault($idHorarios);
+		echo json_encode($cambiar);
+	}
+
 
 }
 
@@ -548,4 +555,12 @@ if (isset($_POST['empresaId'])) {
 	$generarDepas -> idEmpresas = $empresaId;
 	$generarDepas -> buscarDepasAjax();
 
+}
+
+if (isset($_POST['id'])) {
+	$idHorarios = $_POST['id'];
+
+	$cambiarPredeterminado = new FormulariosAjax();
+	$cambiarPredeterminado -> idHorarios = $idHorarios;
+	$cambiarPredeterminado -> CambiarPredeterminadoAjax();
 }

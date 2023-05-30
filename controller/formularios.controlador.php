@@ -789,5 +789,23 @@ class ControladorFormularios{
 	    	return $respuesta;
     	}
     }
+
+    static public function ctrGuardarHorario($nameHorario, $horarios){
+    	$tabla = "horarios";
+    	$registrarNombreHorario = ModeloFormularios::mdlGuardarHorario($tabla,$nameHorario,$horarios);
+    	return $registrarNombreHorario;
+    }
+
+    static public function ctrSeleccionarHorarios($item,$valor){
+    	$tabla = "horarios";
+    	$horarios = ModeloFormularios::mdlSeleccionarHorarios($tabla,$item,$valor);
+    	return $horarios;
+    }
+
+    static public function ctrCambiarHorarioDefault($idHorarios){
+    	$tabla = "horarios";
+    	$cambio = ModeloFormularios::mdlCambiarHorarioDefault($tabla,$idHorarios);
+    	return $cambio;
+    }
 	/*---------- Fin de ControladorFormularios ---------- */
 }

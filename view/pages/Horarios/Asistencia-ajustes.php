@@ -5,31 +5,108 @@
 			<div class="card-header encabezado">Configuración del registro de horas</div>
 			<div class="row">
 				<div class="card-side-nav col-2 lista-ajustes">
-					<div><button class="btn btn-in-consulting-link" onClick="cargarContenido('Registros.php')">Horarios de trabajo</button></div>
+					<div><button class="btn btn-in-consulting-link">Horarios de trabajo</button></div>
 					<div><button class="btn btn-in-consulting-link">Importar horarios</button></div>
 					<div><button class="btn btn-in-consulting-link">Exportar resultados</button></div>
 				</div>
 				<div class="col-10" id="horarios">
-					
+					<?php
+					$horarios = ControladorFormularios::ctrSeleccionarHorarios(null, null); ?>
+					<div class="row mr-4 ml-2 mt-3">
+						<div class="card-header encabezado">
+							Horarios de trabajo
+						</div>
+						<div class="card-body">
+							<h3 class="encabezado-h">Plantillas de horario de trabajo</h3>
+							<p class="ajustes-text">A continuación encontrarás una lista de plantillas de horario que puedes asignar a los empleados. También puedes guardar una plantilla y mantenerla en el sistema, sin asignársela a nadie.</p>
+
+							<a class="btn btn-in-consulting" href="CrearHorario">
+								<i class="fas fa-plus-circle"></i> <span>Crear plantilla</span>
+							</a>
+
+							<div>
+								<div id="form-result"></div>
+								<table class="table">
+								<caption>Lista de Horarios</caption>
+									<thead>
+										<tr>
+											<th scope="col">Nombre de la plantilla</th>
+											<th scope="col">Horas semanales</th>
+											<th scope="col">Horario por defecto</th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody>
+										<?php foreach ($horarios as $horario): ?>
+											<?php 
+												$horas = floor($horario['SUM(dh.numero_Horas)']);
+												$minutos = floor(($horario['SUM(dh.numero_Horas)'] - $horas) * 60);
+												$resultado = $horas . " horas " . $minutos . " min"; 
+											?>
+											<tr>
+												<td><?php echo $horario['nameHorario'] ?></td>
+												<td><?php echo $resultado; ?></td>
+												<td>
+													<label class="custom-control custom-radio">
+														<?php if ($horario['default'] == 1): ?>
+														<input type="radio" 
+																id="default" 
+																name="default" 
+																value="<?php echo $horario['idHorarios'] ?>"
+																onchange="cambio(<?php echo $horario['idHorarios'] ?>)" 
+																class="custom-control-input" checked>
+														<?php else: ?>
+														<input type="radio" 
+																id="default" 
+																name="default" 
+																value="<?php echo $horario['idHorarios'] ?>"
+																onchange="cambio(<?php echo $horario['idHorarios'] ?>)"
+																class="custom-control-input">
+														<?php endif ?>
+														<span class="custom-control-label"></span>
+													</label>
+												</td>
+												<td></td>
+											</tr>
+										<?php endforeach ?>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+
+					<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+					<script>
+						function cambio(id) {
+						$.ajax({
+							url: "ajax/ajax.formularios.php", // Ruta al archivo PHP que procesará los datos del formulario
+							type: "POST",
+							data: { id: id },
+							success: function(response) {
+							if (response === '"ok"') {
+								$("#form-result").html("");
+								$("#form-result").parent().after(`
+								<div class='alert alert-success'>Horario predeterminado actualizado</div>
+								`);
+								setTimeout(function() {
+								location.reload();
+								}, 500);
+							} else {
+								$("#form-result").html("");
+								$("#form-result").parent().after(`
+								<div class='alert alert-danger'><b>Error</b>, no se pudo cambiar el horario predeterminado, intenta nuevamente</div>
+								`);
+							}
+							},
+							error: function(xhr, status, error) {
+							console.log(error);
+							}
+						});
+						}
+					</script>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-<script>
-function cargarContenido(pagina) {
-	var xmlhttp = new XMLHttpRequest();
-	xmlhttp.onreadystatechange = function() {
-		if (this.readyState == 4 && this.status == 200) {
-			document.getElementById("horarios").innerHTML = this.responseText;
-		}
-	};
-	xmlhttp.open("POST", "view/pages/Horarios/Registro_horarios/" + pagina, true);
-	xmlhttp.send();
-}
-
-window.onload = function() {
-	cargarContenido('Registros.php');
-};
-</script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

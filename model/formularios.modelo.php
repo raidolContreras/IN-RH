@@ -1195,5 +1195,113 @@ class ModeloFormularios{
 
     }
 
+    static public function mdlGuardarHorario($tabla,$nameHorario,$horarios){
+
+    	$pdo = Conexion::conectar();
+    	$sql = "INSERT INTO $tabla (nameHorario) VALUES (:nameHorario)";
+    	$stmt = $pdo->prepare($sql);
+    	$stmt->bindParam(":nameHorario", $nameHorario, PDO::PARAM_STR);
+		
+		$idHorario = 0;
+
+		if($stmt->execute()){
+			$idHorario = $pdo->lastInsertId(); //obtener el ID del empleado recién insertado
+		}
+
+		if ($idHorario == 0) {
+			echo $consulta->errorInfo()[2];
+		}else{
+			$i=0;
+			$tabla = "dia_horario";
+			foreach ($horarios as $key => $value) {
+
+				$timestamp_entrada = strtotime($value['entrada']);
+				$timestamp_salida = strtotime($value['salida']);
+
+				$diferencia_segundos = $timestamp_salida - $timestamp_entrada;
+				$diferencia_horas = $diferencia_segundos / 3600;
+
+				$diferencia = round($diferencia_horas, 2);
+
+				$datos = array(
+					"Horarios_idHorarios" => $idHorario,
+					"dia_Laborable" => $key,
+					"hora_Entrada" => $value['entrada'],
+					"hora_Salida" => $value['salida'],
+					"numero_Horas" => $diferencia
+				);
+				$registrar_dias = ModeloFormularios::mdlRegistrarDiasHorario($tabla,$datos);
+				$i++;
+			}
+			if ($i >= 1) {
+				return "ok";
+			}
+
+		}
+
+		$stmt->close();
+		$stmt = null;
+		
+
+    }
+
+    static public function mdlRegistrarDiasHorario($tabla,$datos){
+    	$pdo = Conexion::conectar();
+    	$sql = "INSERT INTO $tabla (Horarios_idHorarios, dia_Laborable, hora_Entrada, hora_Salida, numero_Horas) VALUES (:Horarios_idHorarios, :dia_Laborable, :hora_Entrada, :hora_Salida, :numero_Horas)";
+		$stmt = $pdo->prepare($sql);
+
+    	$stmt->bindParam(":Horarios_idHorarios", $datos['Horarios_idHorarios'], PDO::PARAM_INT);
+    	$stmt->bindParam(":dia_Laborable", $datos['dia_Laborable'], PDO::PARAM_INT);
+    	$stmt->bindParam(":hora_Entrada", $datos['hora_Entrada'], PDO::PARAM_STR);
+    	$stmt->bindParam(":hora_Salida", $datos['hora_Salida'], PDO::PARAM_STR);
+    	$stmt->bindParam(":numero_Horas", $datos['numero_Horas'], PDO::PARAM_STR);
+
+		if($stmt->execute()){
+			return "ok";
+		}
+
+		$stmt->close();
+		$stmt = null;
+    }
+
+    static public function mdlSeleccionarHorarios($tabla,$item,$valor){
+	    if ($item == null && $valor == null) {	
+	    	$sql = "SELECT h.idHorarios, h.nameHorario, h.default, SUM(dh.numero_Horas) 
+					FROM horarios h
+					JOIN dia_horario dh ON dh.Horarios_idHorarios = h.idHorarios
+					GROUP BY h.idHorarios, h.nameHorario, h.default";
+
+			$stmt = Conexion::conectar()->prepare($sql);
+			$stmt->execute();
+			return $stmt -> fetchAll();
+		}else{
+			$sql = "SELECT  h.nameHorario as nombre, SUM(dh.numero_Horas), h.default AS determinado FROM horarios h
+					JOIN dia_horario dh on dh.Horarios_idHorarios = h.idHorarios
+					WHERE h.$item = :$item;";
+			$stmt = Conexion::conectar()->prepare($sql);
+			$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
+			$stmt->execute();
+			return $stmt -> fetch();
+		}
+
+		$stmt->close();
+		$stmt = null;
+    }
+
+    static public function mdlCambiarHorarioDefault($tabla,$idHorarios){
+    	$sql = "UPDATE $tabla SET horarios.default = 0 WHERE horarios.default = 1;";
+    	$sql .= "UPDATE $tabla SET horarios.default = 1 WHERE idHorarios = :idHorarios;";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->bindParam(":idHorarios", $idHorarios, PDO::PARAM_INT);
+		if ($stmt->execute()) {
+			return "ok";
+		}else{
+			return "error";
+		}
+		$stmt->close();
+		$stmt = null;
+    }
+
 	/*---------- Fin de ModeloFormularios ---------- */
 }

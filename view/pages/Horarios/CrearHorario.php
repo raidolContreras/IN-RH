@@ -6,7 +6,7 @@
 				<div class="row mb-2">
 					<div class="col-7">
 						<label class="col-form-label font-weight-light" for="nameHorario">Añadir un nombre</label>
-						<input class="form-control" type="text" name="nameHorario" id="nameHorario">
+						<input class="form-control" type="text" name="nameHorario" id="nameHorario" required>
 					</div>
 				</div>
 
@@ -22,43 +22,43 @@
 					</div>
 					<div class="table-body">
 							<div class="row">
-								<div class="col-1"><input type="checkbox" id="Lunes" value="1" onchange="activarDiv(this)"></div>
+								<div class="col-1"><input type="checkbox" name="dia" id="Lunes" value="1" onchange="activarDiv(this)"></div>
 								<div class="col-2" id="dia1">Lunes</div>
 								<div class="col-5" id="horarios1"></div>
 								<div class="col-4" id="horasxdia1"></div>
 							</div>
 							<div class="row">
-								<div class="col-1"><input type="checkbox" id="Martes" value="2" onchange="activarDiv(this)"></div>
+								<div class="col-1"><input type="checkbox" name="dia" id="Martes" value="2" onchange="activarDiv(this)"></div>
 								<div class="col-2" id="dia2">Martes</div>
 								<div class="col-5" id="horarios2"></div>
 								<div class="col-4" id="horasxdia2"></div>
 							</div>
 							<div class="row">
-								<div class="col-1"><input type="checkbox" id="Miércoles" value="3" onchange="activarDiv(this)"></div>
+								<div class="col-1"><input type="checkbox" name="dia" id="Miércoles" value="3" onchange="activarDiv(this)"></div>
 								<div class="col-2" id="dia3">Miércoles</div>
 								<div class="col-5" id="horarios3"></div>
 								<div class="col-4" id="horasxdia3"></div>
 							</div>
 							<div class="row">
-								<div class="col-1"><input type="checkbox" id="Jueves" value="4" onchange="activarDiv(this)"></div>
+								<div class="col-1"><input type="checkbox" name="dia" id="Jueves" value="4" onchange="activarDiv(this)"></div>
 								<div class="col-2" id="dia4">Jueves</div>
 								<div class="col-5" id="horarios4"></div>
 								<div class="col-4" id="horasxdia4"></div>
 							</div>
 							<div class="row">
-								<div class="col-1"><input type="checkbox" id="Viernes" value="5" onchange="activarDiv(this)"></div>
+								<div class="col-1"><input type="checkbox" name="dia" id="Viernes" value="5" onchange="activarDiv(this)"></div>
 								<div class="col-2" id="dia5">Viernes</div>
 								<div class="col-5" id="horarios5"></div>
 								<div class="col-4" id="horasxdia5"></div>
 							</div>
 							<div class="row">
-								<div class="col-1"><input type="checkbox" id="Sábado" value="6" onchange="activarDiv(this)"></div>
+								<div class="col-1"><input type="checkbox" name="dia" id="Sábado" value="6" onchange="activarDiv(this)"></div>
 								<div class="col-2" id="dia6">Sábado</div>
 								<div class="col-5" id="horarios6"></div>
 								<div class="col-4" id="horasxdia6"></div>
 							</div>
 							<div class="row">
-								<div class="col-1"><input type="checkbox" id="Domingo" value="7" onchange="activarDiv(this)"></div>
+								<div class="col-1"><input type="checkbox" name="dia" id="Domingo" value="7" onchange="activarDiv(this)"></div>
 								<div class="col-2" id="dia7">Domingo</div>
 								<div class="col-5" id="horarios7"></div>
 								<div class="col-4" id="horasxdia7"></div>
@@ -72,7 +72,7 @@
 							<a href="Asistencia-ajustes" class="card-link btn btn-outline-secondary btn-block rounded">Cancelar</a>
 						</div>
 						<div class="card-footer-item card-footer-item-bordered">
-							<button type="button" id="NewHorario-btn" class="card-link btn btn-outline-primary disabled btn-block rounded">Enviar</button>
+                            <button class="btn btn-primary btn-block guardar-horario" type="submit">Guardar</button>
 						</div>
 					</div>
 				</div>
@@ -202,34 +202,51 @@
     verificarCheckboxes();
   };
 	
-	$(document).ready(function() {
-		$("#NewHorario-btn").click(function() {
-		var formData = $("#NewHorario-form").serialize(); // Obtener los datos del formulario
+$(document).ready(function() {
+    $("#NewHorario-form").on("submit", function(e) {
+        e.preventDefault();
 
-			$.ajax({
-				url: "ajax/horarios.php", // Ruta al archivo PHP que procesará los datos del formulario
-				type: "POST",
-				data: formData,
-				success: function(response) {
+        var diasSeleccionados = [];
+        $("input[name='dia']:checked").each(function() {
+            diasSeleccionados.push($(this).val());
+        });
 
-					if (response === '"ok"') {
-						$("#form-result").val("");
-						$("#form-result").parent().after(`
-							<div class='alert alert-success'>Nuevo horario creado</div>
-							`);
-						setTimeout(function() {
-							location.href="Asistencia-ajustes";
-						}, 500);
-					}else{
-						$("#form-result").val("");
-						$("#form-result").parent().after(`
-							<div class='alert alert-danger'><b>Error</b>, no se pudo crear el horario, intenta nuevamente</div>
-							`);
-					}
+        var datosHorarios = {};
 
-				}
-			});
-		});
-	});
+        diasSeleccionados.forEach(function(dia) {
+            datosHorarios["Entrada" + dia] = $("#horarios" + dia + " input[name='Entrada" + dia + "']").val();
+            datosHorarios["Salida" + dia] = $("#horarios" + dia + " input[name='Salida" + dia + "']").val();
+        });
 
+        $.ajax({
+            type: "POST",
+            url: "ajax/horarios.php",
+            data: {
+                nameHorario: $("#nameHorario").val(),
+                dia: diasSeleccionados,
+                horarios: datosHorarios
+            },
+            dataType: "json",
+            success: function(response) {
+							if (response === '"ok"' || response === 'ok') {
+								$(".form-result").empty();
+								$(".form-result").after(`
+								   <div class='alert alert-success'>Nuevo Horario Registrado</div>
+								`);
+								setTimeout(function() {
+									location.href="Asistencia-ajustes";
+								}, 500);
+							}else{
+								$(".form-result").val("");
+								$(".form-result").parent().after(`
+									<div class='alert alert-danger'><b>Error</b>, No se pudo registrar el horario, intenta nuevamente</div>
+									`);
+							}
+            },
+            error: function(xhr, status, error) {
+                console.log(error);
+            }
+        });
+    });
+});
 </script>
