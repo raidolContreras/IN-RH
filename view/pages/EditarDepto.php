@@ -122,7 +122,7 @@ $(document).ready(function() {
   // Función para cargar los departamentos correspondientes a la empresa seleccionada
   function cargarDepartamentos(empresaId) {
     $.ajax({
-      url: "ajax.formularios.php",
+      url: "ajax/ajax.formularios.php",
       type: "POST",
       data: { empresaId: empresaId },
       success: function(response) {

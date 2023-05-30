@@ -5,7 +5,7 @@ $(function() {
 
         // Hacemos una solicitud AJAX al archivo PHP para obtener los datos de fecha
         $.ajax({
-            url: 'obtener.fechas.php',
+            url: 'ajax/obtener.fechas.php',
             dataType: 'json'
         }).done(function(data) {
 

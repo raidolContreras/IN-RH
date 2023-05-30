@@ -1,6 +1,6 @@
 <?php
 
-require_once "model/conexion.php";
+require_once "../model/conexion.php";
 
 // Conectamos a la base de datos
 $conexion = Conexion::conectar();

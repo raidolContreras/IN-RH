@@ -35,7 +35,7 @@ if (isset($_GET['forgot'])) {
                     var formData = $("#cambioPassword-form").serialize();
 
                     $.ajax({
-                        url: "ajax.formularios.php",
+                        url: "ajax/ajax.formularios.php",
                         type: "POST",
                         data: formData,
                         success: function(response) {
@@ -125,7 +125,7 @@ if (isset($_GET['forgot'])) {
                         var formData = $("#cambioPassword-form").serialize();
 
                         $.ajax({
-                            url: "ajax.formularios.php",
+                            url: "ajax/ajax.formularios.php",
                             type: "POST",
                             data: formData,
                             success: function(response) {

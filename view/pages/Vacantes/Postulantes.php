@@ -297,7 +297,7 @@ $calendary = ControladorFormularios::generarCalendario(); ?>
 		var formData = $("#eliminar-form<?php echo $postulante['idPostulantes'] ?>").serialize(); // Obtener los datos del formulario
 
 			$.ajax({
-				url: "ajax.formularios.php", // Ruta al archivo PHP que procesará los datos del formulario
+				url: "ajax/ajax.formularios.php", // Ruta al archivo PHP que procesará los datos del formulario
 				type: "POST",
 				data: formData,
 				success: function(response) {
@@ -329,7 +329,7 @@ $calendary = ControladorFormularios::generarCalendario(); ?>
 		var formData = $("#cita-form<?php echo $postulante['idPostulantes'] ?>").serialize(); // Obtener los datos del formulario
 
 			$.ajax({
-				url: "ajax.formularios.php", // Ruta al archivo PHP que procesará los datos del formulario
+				url: "ajax/ajax.formularios.php", // Ruta al archivo PHP que procesará los datos del formulario
 				type: "POST",
 				data: formData,
 				success: function(response) {

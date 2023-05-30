@@ -101,7 +101,7 @@ $(document).ready(function() {
   $("#empresa").change(function() {
     var empresaId = $(this).val();
     $.ajax({
-      url: "ajax.formularios.php",
+      url: "ajax/ajax.formularios.php",
       type: "POST",
       data: {
         empresaId: empresaId

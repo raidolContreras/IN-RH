@@ -69,7 +69,7 @@
             $("#forgot-btn").prop("disabled", true);
 
 			$.ajax({
-				url: "ajax.formularios.php", // Ruta al archivo PHP que procesará los datos del formulario
+				url: "ajax/ajax.formularios.php", // Ruta al archivo PHP que procesará los datos del formulario
 				type: "POST",
 				data: formData,
 				success: function(response) {

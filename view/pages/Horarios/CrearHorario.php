@@ -2,6 +2,7 @@
 	<div class="container">
 		<div class="card p-4">
 			<form id="NewHorario-form">
+				<div class="form-result"></div>
 				<div class="row mb-2">
 					<div class="col-7">
 						<label class="col-form-label font-weight-light" for="nameHorario">Añadir un nombre</label>
@@ -68,10 +69,10 @@
 				<div class="card">
 					<div class="card-footer p-0 text-center d-flex justify-content-center ">
 						<div class="card-footer-item card-footer-item-bordered">
-							<button data-dismiss="modal" class="card-link btn btn-outline-secondary btn-block rounded">Cancelar</button>
+							<a href="Asistencia-ajustes" class="card-link btn btn-outline-secondary btn-block rounded">Cancelar</a>
 						</div>
 						<div class="card-footer-item card-footer-item-bordered">
-							<button  type="button" id="NewHorario-btn" data-dismiss="modal" class="card-link btn btn-outline-primary disabled btn-block rounded">Enviar</button>
+							<button type="button" id="NewHorario-btn" class="card-link btn btn-outline-primary disabled btn-block rounded">Enviar</button>
 						</div>
 					</div>
 				</div>
@@ -79,6 +80,7 @@
 		</div>
 	</div>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
   function activarDiv(checkbox) {
@@ -199,4 +201,35 @@
   window.onload = function () {
     verificarCheckboxes();
   };
+	
+	$(document).ready(function() {
+		$("#NewHorario-btn").click(function() {
+		var formData = $("#NewHorario-form").serialize(); // Obtener los datos del formulario
+
+			$.ajax({
+				url: "ajax/horarios.php", // Ruta al archivo PHP que procesará los datos del formulario
+				type: "POST",
+				data: formData,
+				success: function(response) {
+
+					if (response === '"ok"') {
+						$("#form-result").val("");
+						$("#form-result").parent().after(`
+							<div class='alert alert-success'>Nuevo horario creado</div>
+							`);
+						setTimeout(function() {
+							location.href="Asistencia-ajustes";
+						}, 500);
+					}else{
+						$("#form-result").val("");
+						$("#form-result").parent().after(`
+							<div class='alert alert-danger'><b>Error</b>, no se pudo crear el horario, intenta nuevamente</div>
+							`);
+					}
+
+				}
+			});
+		});
+	});
+
 </script>
