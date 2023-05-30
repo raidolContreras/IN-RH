@@ -132,6 +132,8 @@ session_start();
 		}elseif ($_GET["pagina"] == "Asistencia" ||
 				 $_GET["pagina"] == "Asistencia-resumen" ||
 				 $_GET["pagina"] == "Asistencia-ajustes" ||
+				 $_GET["pagina"] == "Asistencia-importar" ||
+				 $_GET["pagina"] == "Asistencia-exportar" ||
 				 $_GET["pagina"] == "CrearHorario" ) {
 
 			include "pages/navs/navbar.php";

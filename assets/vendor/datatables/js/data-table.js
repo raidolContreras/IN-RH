@@ -31,7 +31,7 @@ jQuery(document).ready(function($) {
                     }
                     ],
                 fixedHeader: true,
-                scrollY: 450,
+                scrollY: 375,
                 scrollX: 400,
                 stateSave: true,
                 select: true,
@@ -82,7 +82,7 @@ jQuery(document).ready(function($) {
                     }
                 ],
                 fixedHeader: true,
-                scrollY: 450,
+                scrollY: 375,
                 select: true,
             language: {
                 lengthMenu: 'Mostrar _MENU_ resultados por pagina',
@@ -124,7 +124,7 @@ jQuery(document).ready(function($) {
                     }
                     ],
                 fixedHeader: true,
-                scrollY: 450,
+                scrollY: 375,
                 stateSave: true,
                 select: true,
             language: {
@@ -167,7 +167,7 @@ jQuery(document).ready(function($) {
                     }
                     ],
                 fixedHeader: true,
-                scrollY: 450,
+                scrollY: 375,
                 stateSave: true,
                 select: true,
             language: {
@@ -191,7 +191,7 @@ jQuery(document).ready(function($) {
             var table = $('table.Extras').DataTable({
                 lengthChange: false,
                 fixedHeader: true,
-                scrollY: 450,
+                scrollY: 375,
                 stateSave: true,
             language: {
                 lengthMenu: 'Mostrar _MENU_ resultados por pagina',
