@@ -7548,4 +7548,7 @@ table-in
   margin-bottom: 0;
 }
 
-
+.input-dia{
+	border: 0;
+	background-color: transparent;
+}
