@@ -816,7 +816,6 @@ class ControladorFormularios{
 
     	$tabla = "empleados_has_horarios";
 
-    	//$borrarEmpleados = ModeloFormularios::mdlBorrarEmpleadosHorarios($tabla,$idHorario);
     	$validar = "cambio";
     	foreach ($empleados as $empleado) {
     		if ($validar == "cambio") {
