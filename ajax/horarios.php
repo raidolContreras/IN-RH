@@ -28,11 +28,17 @@ class HorariosAjax {
 		    $respuesta = ControladorFormularios::ctrGuardarHorario($nameHorario, $horarios);
 		    echo json_encode($respuesta);
 		}
-		if (isset($_POST['empleados_has_horarios'])) {
+		if (isset($_POST['horario'])) {
 			$idHorario = $_POST['horario'];
-			$empleados = $_POST['empleados_has_horarios'];
-			$empleados_has_horarios = ControladorFormularios::ctrEmpleadosHasHorarios($empleados,$idHorario);
-			echo json_encode($empleados_has_horarios);
+			if (empty($_POST['empleados_has_horarios'])) {
+    			$tabla = "empleados_has_horarios";
+				$borrarEmpleados = ModeloFormularios::mdlBorrarEmpleadosHorarios($tabla,$idHorario);
+				echo json_encode($borrarEmpleados);
+			}else{
+				$empleados = $_POST['empleados_has_horarios'];
+				$empleados_has_horarios = ControladorFormularios::ctrEmpleadosHasHorarios($empleados,$idHorario);
+				echo json_encode($empleados_has_horarios);
+			}
 		}
     }
 }

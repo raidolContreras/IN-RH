@@ -202,6 +202,12 @@
 								<div class='alert alert-success' role="alert" id="alerta">Horarios de empleados actualizados</div>
 								`);
 							deleteAlert();
+						}else if (response === '"eliminado"') {
+							$("#form-result").val("");
+							$("#form-result").parent().after(`
+								<div class='alert alert-warning' role="alert" id="alerta">Plantilla de horarios vacia</div>
+								`);
+							deleteAlert();
 						}else{
 							$("#form-result").val("");
 							$("#form-result").parent().after(`

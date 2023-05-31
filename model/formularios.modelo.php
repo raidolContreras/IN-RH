@@ -1314,7 +1314,7 @@ class ModeloFormularios{
 		$stmt = Conexion::conectar()->prepare($sql);
 		$stmt->bindParam(":idHorario", $idHorario, PDO::PARAM_INT);
 		if ($stmt->execute()) {
-			return "cambio";
+			return "eliminado";
 		}else{
 			return "error";
 		}
@@ -1337,6 +1337,23 @@ class ModeloFormularios{
 		}
 		$stmt->close();
 		$stmt = null;
+    }
+
+    static public function mdlActualizarEmpleadoHorario($tabla, $empleado, $idHorario){
+
+    	$sql = "UPDATE $tabla SET Horarios_idHorarios=:idHorario WHERE Empleados_idEmpleados = :empleado";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->bindParam(":empleado", $empleado, PDO::PARAM_INT);
+		$stmt->bindParam(":idHorario", $idHorario, PDO::PARAM_INT);
+		if ($stmt->execute()) {
+			return "cambio";
+		}else{
+			return "error";
+		}
+		$stmt->close();
+		$stmt = null;
+
     }
 
 	/*---------- Fin de ModeloFormularios ---------- */
