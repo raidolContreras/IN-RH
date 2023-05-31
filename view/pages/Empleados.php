@@ -45,16 +45,12 @@ $empresas = ControladorFormularios::ctrVerEmpresas(null, null);
 									<table id="example" class="table table-striped table-bordered second" style="width:100%; height:100%">
 										<thead>
 											<tr>
-												<th>Nombre Completo</th>
-												<th>Puesto</th>
+												<th width="20%">Nombre Completo</th>
+												<th>Puesto de trabajo</th>
 												<th>Departamento</th>
 												<th>Empresa</th>
-												<th>N° de Identificación</th>
 												<th>Fecha de Contratación</th>
 												<th>Fecha de Baja</th>
-												<th>Dirección</th>
-												<th>Teléfono</th>
-												<th>Email</th>
 												<th>Estado</th>
 											</tr>
 										</thead>
@@ -79,18 +75,9 @@ $empresas = ControladorFormularios::ctrVerEmpresas(null, null);
 															<td style="display: none;"></td>
 															<td style="display: none;"></td>
 														<?php endif ?>
-														<td><?php echo strtoupper($value['identificacion']); ?></td>
 														<td><?php $fecha_formateada = date("Y-m-d", strtotime($value['fecha_contratado']));
 														echo $fecha_formateada; ?></td>
 														<td><?php echo $value['fecha_baja']; ?></td>
-														<?php if ($value['numI'] == null || $value['numI'] == ""): ?>
-															<td><?php echo mb_strtoupper($value['street'].", #".$value['numE'].", ".$value['colonia'].", ".$value['municipio'].", ".$value['estado']."."); ?></td>
-														<?php else: ?>
-															<td><?php echo mb_strtoupper($value['street'].", #".$value['numE'].", #".$value['numI'].", ".$value['colonia'].", ".$value['municipio'].", ".$value['estado']."."); ?></td>
-														<?php endif ?>
-														<?php $formattedNumber = ControladorFormularios::ctrNumeroTelefonico($value['phone']); ?>
-														<td><?php echo $formattedNumber; ?></td>
-														<td><?php echo $value['email']; ?></td>
 														<td>
 															<?php if ($value['status'] == 1): ?>
 																<span class="mr-2"><span class="badge-dot badge-success"></span>Activo</span>
@@ -123,18 +110,9 @@ $empresas = ControladorFormularios::ctrVerEmpresas(null, null);
 															<td style="display: none;"></td>
 															<td style="display: none;"></td>
 														<?php endif ?>
-														<td><?php echo mb_strtoupper($value['identificacion']); ?></td>
 														<td><?php $fecha_formateada = date("Y-m-d", strtotime($value['fecha_contratado']));
 														echo $fecha_formateada; ?></td>
 														<td><?php echo $value['fecha_baja']; ?></td>
-														<?php if ($value['numI'] == null || $value['numI'] == ""): ?>
-															<td><?php echo mb_strtoupper($value['street'].", #".$value['numE'].", ".$value['colonia'].", ".$value['municipio'].", ".$value['estado']."."); ?></td>
-														<?php else: ?>
-															<td><?php echo mb_strtoupper($value['street'].", #".$value['numE'].", #".$value['numI'].", ".$value['colonia'].", ".$value['municipio'].", ".$value['estado']."."); ?></td>
-														<?php endif ?>
-														<?php $formattedNumber = ControladorFormularios::ctrNumeroTelefonico($value['phone']); ?>
-														<td><?php echo $formattedNumber; ?></td>
-														<td><?php echo $value['email']; ?></td>
 														<td>
 															<?php if ($value['status'] == 1): ?>
 																<span class="mr-2"><span class="badge-dot badge-success"></span>Activo</span>

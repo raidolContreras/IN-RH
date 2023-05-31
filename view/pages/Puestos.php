@@ -36,7 +36,6 @@
 										<td><?php echo $puesto['name']." ".$puesto['lastname'] ?></td>
 										<td><?php echo $puesto['salario'] ?></td>
 										<td><?php echo $puesto['salario_integrado'] ?></td>
-										<td><?php echo $puesto['horario_entrada']." - ".$puesto['horario_salida']?></td>
 										<td><?php echo strtoupper($puesto['CURP']) ?></td>
                     					<td><?php echo strtoupper($puesto['RFC']) ?></td>
                     					<td><?php echo strtoupper($puesto['NSS']) ?></td>

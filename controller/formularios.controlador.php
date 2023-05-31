@@ -305,9 +305,7 @@ class ControladorFormularios{
 							   "salario" => $_POST['salario'],
 							   "salario_integrado" => $_POST['salario_integrado'],
 							   "Empleados_idEmpleados" => $_POST['empleado'],
-							   "Departamentos_idDepartamentos" => $_POST['departamento'],
-							   "horario_entrada" => $_POST['horario_entrada'],
-							   "horario_salida" => $_POST['horario_salida']);
+							   "Departamentos_idDepartamentos" => $_POST['departamento']);
 				$registro = ModeloFormularios::mdlRegistrarPuestos($tabla,$datos);
 				if ($registro == 'ok') {
 					return 'ok';

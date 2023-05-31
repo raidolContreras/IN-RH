@@ -13,10 +13,10 @@
 
 ?>
 <?php $parentesco = array("Padre" => "padre",
-													"Madre" => "madre",
-													"Hermano" => "hermano",
-													"Amigo" => "amigo",
-													"Pareja" => "pareja"); ?>
+						"Madre" => "madre",
+						"Hermano" => "hermano",
+						"Amigo" => "amigo",
+						"Pareja" => "pareja"); ?>
 <link rel="stylesheet" href="assets/vendor/datepicker/tempusdominus-bootstrap-4.css" />
 <div class="container-fluid dashboard-content ">
 	<div class="container">
@@ -38,6 +38,12 @@
 								if($registro == "ok"){
 
 									echo '<div class="alert alert-success">Se actualizo empleado</div>';
+									echo '<script>
+									
+									setTimeout(function() {
+									window.location = "Empleados";
+									}, 500);
+									</script>';
 
 								}
 								if ($registro == "1") {
@@ -221,18 +227,6 @@
 															<div class="form-group">
 																<label for="salario_integrado" class="col-form-label font-weight-bold">Salario Diario Integrado:</label>
 																<input type="text"	maxlength="10" class="form-control" id="salario_integrado" name="salario_integrado" pattern="[0-9]+(\.[0-9]{1,2})?" title="Ingrese un número con hasta dos decimales" required onkeypress="return (event.charCode >= 46 && event.charCode <= 57 && event.charCode != 47)" min="1" value="<?php echo $puesto['salario_integrado'] ?>">
-																</div>
-															</div>
-															<div class="col-md-6">
-																<div class="form-group">
-																	<label for="horario_entrada" class="col-form-label font-weight-bold">Horario de entrada:</label>
-																	<input type="time" class="form-control" id="horario_entrada" name="horario_entrada" value="<?php echo $puesto['horario_entrada'] ?>" required>
-																</div>
-															</div>
-															<div class="col-md-6">
-																<div class="form-group">
-																	<label for="horario_salida" class="col-form-label font-weight-bold">Horario de salida:</label>
-																	<input type="time" class="form-control" id="horario_salida" name="horario_salida" value="<?php echo $puesto['horario_salida'] ?>" required>
 																</div>
 															</div>
 

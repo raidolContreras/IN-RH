@@ -85,18 +85,6 @@ if ($registro == '2') {
 								</select>
 							</div>
 						</div>
-						<div class="col-md-6">
-							<div class="form-group">
-								<label for="horario_entrada" class="col-form-label font-weight-bold">Horario de entrada:</label>
-								<input type="time" class="form-control" id="horario_entrada" name="horario_entrada" required>
-							</div>
-						</div>
-						<div class="col-md-6">
-							<div class="form-group">
-								<label for="horario_salida" class="col-form-label font-weight-bold">Horario de salida:</label>
-								<input type="time" class="form-control" id="horario_salida" name="horario_salida" required>
-							</div>
-						</div>
 					</div>
 					<div class="form-group float-right">
 						<button type="submit" class="btn btn-primary rounded">Registrar</button>

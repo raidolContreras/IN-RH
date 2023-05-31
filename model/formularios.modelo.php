@@ -48,9 +48,7 @@ class ModeloFormularios{
 								"salario" => $datos['salarioPuesto'],
 								"salario_integrado" => $datos['salario_integrado'],
 								"Empleados_idEmpleados" => $id_empleado,
-								"Departamentos_idDepartamentos" => $vacante['Departamentos_idDepartamentos'],
-								"horario_entrada" => $datos['horario_entrada'],
-								"horario_salida" => $datos['horario_salida'],
+								"Departamentos_idDepartamentos" => $vacante['Departamentos_idDepartamentos']
 								);
 
 				$registrarPuesto = ModeloFormularios::mdlRegistrarPuestos('puesto', $puesto);
@@ -86,9 +84,7 @@ class ModeloFormularios{
 								"salario" => $datos['salarioPuesto'],
 								"salario_integrado" => $datos['salario_integrado'],
 								"Empleados_idEmpleados" => $id_empleado,
-								"Departamentos_idDepartamentos" => $datos['Departamentos_idDepartamentos'],
-								"horario_entrada" => $datos['horario_entrada'],
-								"horario_salida" => $datos['horario_salida'],
+								"Departamentos_idDepartamentos" => $datos['Departamentos_idDepartamentos']
 								);
 
 				$registrarPuesto = ModeloFormularios::mdlRegistrarPuestos('puesto', $puesto);
@@ -517,15 +513,13 @@ class ModeloFormularios{
 
 	static public function mdlRegistrarPuestos($tabla, $datos){
 
-		$sql = "INSERT INTO $tabla(namePuesto, salario, salario_integrado, Empleados_idEmpleados, Departamentos_idDepartamentos, horario_entrada, horario_salida) VALUES (:namePuesto, :salario, :salario_integrado, :Empleados_idEmpleados, :Departamentos_idDepartamentos, :horario_entrada, :horario_salida)";
+		$sql = "INSERT INTO $tabla(namePuesto, salario, salario_integrado, Empleados_idEmpleados, Departamentos_idDepartamentos) VALUES (:namePuesto, :salario, :salario_integrado, :Empleados_idEmpleados, :Departamentos_idDepartamentos)";
 		$stmt = Conexion::conectar()->prepare($sql);
 		$stmt->bindParam(":namePuesto", $datos['namePuesto'], PDO::PARAM_STR);
 		$stmt->bindParam(":salario", $datos['salario'], PDO::PARAM_STR);
 		$stmt->bindParam(":salario_integrado", $datos['salario_integrado'], PDO::PARAM_STR);
 		$stmt->bindParam(":Empleados_idEmpleados", $datos['Empleados_idEmpleados'], PDO::PARAM_STR);
 		$stmt->bindParam(":Departamentos_idDepartamentos", $datos['Departamentos_idDepartamentos'], PDO::PARAM_STR);
-		$stmt->bindParam(":horario_entrada", $datos['horario_entrada'], PDO::PARAM_STR);
-		$stmt->bindParam(":horario_salida", $datos['horario_salida'], PDO::PARAM_STR);
 		if ($stmt->execute()) {
 
 			return 'ok';

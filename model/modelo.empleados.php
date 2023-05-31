@@ -55,14 +55,12 @@ class ModeloEmpleados{
 	}
 
 	static public function mdlActualizarPuesto($tabla, $datos){
-		$sql = "UPDATE puesto SET namePuesto=:namePuesto, salario=:salarioPuesto, salario_integrado=:salario_integrado, Departamentos_idDepartamentos=:Departamentos_idDepartamentos, horario_entrada=:horario_entrada, horario_salida=:horario_salida WHERE Empleados_idEmpleados=:Empleados_idEmpleados";
+		$sql = "UPDATE puesto SET namePuesto=:namePuesto, salario=:salarioPuesto, salario_integrado=:salario_integrado, Departamentos_idDepartamentos=:Departamentos_idDepartamentos WHERE Empleados_idEmpleados=:Empleados_idEmpleados";
 		$stmt = Conexion::conectar()->prepare($sql);
 
 		$stmt->bindParam(":namePuesto", $datos['namePuesto'],PDO::PARAM_STR);
 		$stmt->bindParam(":salarioPuesto", $datos['salarioPuesto'],PDO::PARAM_STR);
 		$stmt->bindParam(":salario_integrado", $datos['salario_integrado'],PDO::PARAM_STR);
-		$stmt->bindParam(":horario_entrada", $datos['horario_entrada'],PDO::PARAM_STR);
-		$stmt->bindParam(":horario_salida", $datos['horario_salida'],PDO::PARAM_STR);
 		$stmt->bindParam(":Departamentos_idDepartamentos", $datos['Departamentos_idDepartamentos'],PDO::PARAM_STR);
 		$stmt->bindParam(":Empleados_idEmpleados", $datos['Empleados_idEmpleados'],PDO::PARAM_INT);
 

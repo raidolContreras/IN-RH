@@ -11,8 +11,6 @@ class ControladorEmpleados{
 			$namePuesto = $_POST['namePuesto'];
 			$salarioPuesto = $_POST['salarioPuesto'];
 			$salario_integrado = $_POST['salario_integrado'];
-			$horario_entrada = $_POST['horario_entrada'];
-			$horario_salida = $_POST['horario_salida'];
 
 			if ($_POST['postulante'] == 0) {
 				$departamento = $_POST['departamento'];
@@ -50,8 +48,6 @@ class ControladorEmpleados{
 				'namePuesto' => $namePuesto,
 				'salarioPuesto' => $salarioPuesto,
 				'salario_integrado' => $salario_integrado,
-				'horario_entrada' => $horario_entrada,
-				'horario_salida' => $horario_salida,
 				'Departamentos_idDepartamentos' => $departamento,
 				'postulante' => $_POST['postulante'],
 				'jefe_Departamento' => $jefe);
@@ -106,8 +102,6 @@ class ControladorEmpleados{
 			$namePuesto = $_POST['namePuesto'];
 			$salarioPuesto = $_POST['salarioPuesto'];
 			$salario_integrado = $_POST['salario_integrado'];
-			$horario_entrada = $_POST['horario_entrada'];
-			$horario_salida = $_POST['horario_salida'];
 			$departamento = $_POST['departamento'];
 			$empleado = $_POST['empleado'];
 
@@ -115,8 +109,6 @@ class ControladorEmpleados{
 				"namePuesto" => $namePuesto,
 				"salarioPuesto" => $salarioPuesto,
 				"salario_integrado" => $salario_integrado,
-				"horario_entrada" => $horario_entrada,
-				"horario_salida" => $horario_salida,
 				"Departamentos_idDepartamentos" => $departamento,
 				"Empleados_idEmpleados" => $empleado
 			);

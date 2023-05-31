@@ -223,18 +223,6 @@
 																<input type="text"  maxlength="10" class="form-control" id="salario_integrado" name="salario_integrado" pattern="[0-9]+(\.[0-9]{1,2})?" title="Ingrese un número con hasta dos decimales" required onkeypress="return (event.charCode >= 46 && event.charCode <= 57 && event.charCode != 47)" min="1">
 																</div>
 															</div>
-															<div class="col-md-6">
-																<div class="form-group">
-																	<label for="horario_entrada" class="col-form-label font-weight-bold">Horario de entrada:</label>
-																	<input type="time" class="form-control" id="horario_entrada" name="horario_entrada" required>
-																</div>
-															</div>
-															<div class="col-md-6">
-																<div class="form-group">
-																	<label for="horario_salida" class="col-form-label font-weight-bold">Horario de salida:</label>
-																	<input type="time" class="form-control" id="horario_salida" name="horario_salida" required>
-																</div>
-															</div>
 													<?php if (!isset($_GET['postulante'])): ?>
 														<div class="form-group col-md-6">
 															<label for="departamento" class="col-form-label text-center font-weight-bold">Departamento:</label>
