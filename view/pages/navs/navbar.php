@@ -32,31 +32,38 @@ $perfil = $primerLetra.$segundaLetra;
 					$paginaActual = $_GET['pagina'];
 
 //Menu de horarios
-					$horarios = array('Asistencia', 'Asistencia-resumen', 'Asistencia-ajustes', 'Asistencia-importar', 'Asistencia-exportar');
+					$Asistencias = array('Asistencia-importar', 'Asistencia-exportar');
+					$horarios = array('Asistencia', 'Asistencia-resumen', 'Asistencia-ajustes');
 
-					if (!empty($paginaActual) && in_array($paginaActual, $horarios)) {
-						foreach ($horarios as $pagina) {
-							if ($pagina == 'Asistencia-importar' || $pagina == 'Asistencia-exportar') {
-								continue; // Omitir generación del elemento del menú
-							}
-
-							$activeClass = ($paginaActual == $pagina) ? ' active' : '';
-							$marginLeftClass = ($pagina != $horarios[0]) ? ' ml-3' : '';
-
-							echo '<li class="nav-item' . $activeClass . $marginLeftClass . '">';
-							if ($pagina == 'Asistencia') {
-								echo '<a href="' . $pagina . '"> Asistencias </a>';
-							}elseif ($pagina == 'Asistencia-resumen') {
-								echo '<a href="' . $pagina . '"> Resumen de asistencias </a>';
-							}elseif ($pagina == 'Asistencia-ajustes') {
-								echo '<a href="' . $pagina . '"> Ajustes </a>';
-							}
+					if (!empty($paginaActual)) {
+						if (in_array($paginaActual, $Asistencias)) {
+							echo '<li class="nav-item">';
+							echo '<a href="Asistencia"> Asistencias </a>';
 							echo '</li>';
+							echo '<li class="nav-item ml-3">';
+							echo '<a href="Asistencia-resumen"> Resumen de asistencias </a>';
+							echo '</li>';
+							echo '<li class="nav-item active ml-3">';
+							echo '<a href="' . $paginaActual . '"> Ajustes </a>';
+							echo '</li>';
+						} elseif (in_array($paginaActual, $horarios)) {
+							foreach ($horarios as $pagina) {
+								$activeClass = ($paginaActual == $pagina) ? ' active' : '';
+								$marginLeftClass = ($pagina != $horarios[0]) ? ' ml-3' : '';
+
+								echo '<li class="nav-item' . $activeClass . $marginLeftClass . '">';
+								if ($pagina == 'Asistencia') {
+									echo '<a href="' . $pagina . '"> Asistencias </a>';
+								} elseif ($pagina == 'Asistencia-resumen') {
+									echo '<a href="' . $pagina . '"> Resumen de asistencias </a>';
+								} elseif ($pagina == 'Asistencia-ajustes') {
+									echo '<a href="' . $pagina . '"> Ajustes </a>';
+								}
+								echo '</li>';
+							}
 						}
 					}
-					?>
 
-					<?php 
 //Menu de empleados
 					$empleados = array('Empleados', 'Departamento', 'Nominas', 'Organigrama');
 
@@ -76,9 +83,6 @@ $perfil = $primerLetra.$segundaLetra;
 							echo '</li>';
 						}
 					}
-					?>
-
-					<?php 
 //Menu de empleado individual
 					$empleado = array('Empleado', 'Datos');
 
@@ -96,9 +100,6 @@ $perfil = $primerLetra.$segundaLetra;
 							echo '</li>';
 						}
 					}
-					?>
-
-					<?php 
 //Menu de de Bolsa de trabajo
 					$Vacantes = array( 'Vacantes','Talento');
 					if (!empty($paginaActual) && in_array($paginaActual, $Vacantes)) {
@@ -115,9 +116,6 @@ $perfil = $primerLetra.$segundaLetra;
 							echo '</li>';
 						}
 					}
-					?>
-
-					<?php 
 //Menu de de Bolsa de trabajo
 					$configuraciones = array( 'Configuraciones','Empresas', 'Permisos');
 					if (!empty($paginaActual) && in_array($paginaActual, $configuraciones)) {
