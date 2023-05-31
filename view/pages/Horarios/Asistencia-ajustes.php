@@ -33,7 +33,6 @@
 											<th scope="col">Nombre de la plantilla</th>
 											<th scope="col">Horas semanales</th>
 											<th scope="col">Horario por defecto</th>
-											<th></th>
 										</tr>
 									</thead>
 									<tbody>
@@ -80,7 +79,6 @@
 												<span class="custom-control-label"></span>
 											</label>
 										</td>
-										<td></td>
 									</tr>
 								<?php endforeach ?>
 							</tbody>
@@ -125,43 +123,93 @@
 </div>
 
 <?php foreach ($horarios as $horario): ?>
+<?php $diasLaborables = ControladorFormularios::ctrSeleccionarHorarios("Horarios_idHorarios", $horario['idHorarios']); ?>
 	<div class="modal fade" id="Horario<?php echo $horario['idHorarios'] ?>">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h3><?php echo $horario['nameHorario'] ?></h3>
+					<h3 class="ml-2 mt-3"><?php echo $horario['nameHorario'] ?></h3>
 				</div>
 				<div class="modal-body">
 					<div class="card">
-						<div class="card-body">
-							<div class="table-responsive">
-								<div class="card">
-									<h5 class="card-header">Empleados</h5>
-										<form id="empleado-horario-form<?php echo $horario['idHorarios'] ?>">
-										  <?php $empleados = ControladorEmpleados::ctrVerEmpleados(null,null); ?>
-										  <?php $empleadosHorarios = ControladorFormularios::ctrVerEmpleadosHorarios("Horarios_idHorarios", $horario['idHorarios']); ?>
-										  <select id='pre-selected-options' multiple='multiple' name='empleados_has_horarios[]'>
-										    <?php foreach ($empleados as $empleado): ?>
-										      <?php $selected = false; ?>
-										      <?php if (!empty($empleadosHorarios[0])): ?>
-										        <?php foreach ($empleadosHorarios as $empleadoHorario): ?>
-										          <?php if ($empleadoHorario['Empleados_idEmpleados'] == $empleado['idEmpleados']): ?>
-										            <?php $selected = true; ?>
-										          <?php endif ?>
-										        <?php endforeach ?>
-										      <?php endif ?>
-										      <?php if ($selected): ?>
-										        <option value='<?php echo $empleado['idEmpleados']; ?>' selected><?php echo $empleado['name']." ".$empleado['lastname']; ?></option>
-										      <?php else: ?>
-										        <option value='<?php echo $empleado['idEmpleados']; ?>'><?php echo $empleado['name']." ".$empleado['lastname']; ?></option>
-										      <?php endif ?>
-										    <?php endforeach ?>
-										  </select>
-										  <input type="hidden" name="horario" value="<?php echo $horario['idHorarios'] ?>">
-										</form>
+						<div class="card-header">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>Días</th>
+										<th>Horario de trabajo</th>
+										<th>Horas esperadas</th>
+									</tr>
+								</thead>
+								<tbody>
+									<?php foreach ($diasLaborables as $diaLaborable): ?>
+									<tr>
+										<td>
+											<?php 
+												if ($diaLaborable['dia_Laborable'] == 1) {
+													echo "Lunes";
+												}elseif ($diaLaborable['dia_Laborable'] == 2) {
+													echo "Martes";
+												}elseif ($diaLaborable['dia_Laborable'] == 3) {
+													echo "Miercoles";
+												}elseif ($diaLaborable['dia_Laborable'] == 4) {
+													echo "Jueves";
+												}elseif ($diaLaborable['dia_Laborable'] == 5) {
+													echo "Viernes";
+												}elseif ($diaLaborable['dia_Laborable'] == 6) {
+													echo "Sábado";
+												}elseif ($diaLaborable['dia_Laborable'] == 7) {
+													echo "Domingo";
+												}
+											?>
+										</td>
+										<td><?php echo $diaLaborable['hora_Entrada']." a ".$diaLaborable['hora_Salida'] ?></td>
+										<td><?php
 
-								</div>
-							</div>
+										$horas = floor($diaLaborable['numero_Horas']);
+										$minutos = floor(($diaLaborable['numero_Horas'] - $horas) * 60);
+										$resultado = $horas . " horas " . $minutos . " min"; 
+										echo $resultado ?></td>
+									</tr>
+									<?php endforeach ?>
+								</tbody>
+								<tfoot>
+									<?php 
+										$horas = floor($horario['SUM(dh.numero_Horas)']);
+										$minutos = floor(($horario['SUM(dh.numero_Horas)'] - $horas) * 60);
+										$resultado = $horas . " horas " . $minutos . " min"; 
+									?>
+									<tr>
+										<td colspan="2"><b>Total de horas:</b></td>
+										<td style="display: none;"></td>
+										<td colspan="1" style=""><?php echo $resultado ?></td>
+									</tr>
+								</tfoot>
+							</table>
+						</div>
+						<div class="card-body">
+							<form class="mb-3" id="empleado-horario-form<?php echo $horario['idHorarios'] ?>">
+							  <?php $empleados = ControladorEmpleados::ctrVerEmpleados(null,null); ?>
+							  <?php $empleadosHorarios = ControladorFormularios::ctrVerEmpleadosHorarios("Horarios_idHorarios", $horario['idHorarios']); ?>
+							  <select id='pre-selected-options' multiple='multiple' name='empleados_has_horarios[]'>
+							    <?php foreach ($empleados as $empleado): ?>
+							      <?php $selected = false; ?>
+							      <?php if (!empty($empleadosHorarios[0])): ?>
+							        <?php foreach ($empleadosHorarios as $empleadoHorario): ?>
+							          <?php if ($empleadoHorario['Empleados_idEmpleados'] == $empleado['idEmpleados']): ?>
+							            <?php $selected = true; ?>
+							          <?php endif ?>
+							        <?php endforeach ?>
+							      <?php endif ?>
+							      <?php if ($selected): ?>
+							        <option value='<?php echo $empleado['idEmpleados']; ?>' selected><?php echo $empleado['name']." ".$empleado['lastname']; ?></option>
+							      <?php else: ?>
+							        <option value='<?php echo $empleado['idEmpleados']; ?>'><?php echo $empleado['name']." ".$empleado['lastname']; ?></option>
+							      <?php endif ?>
+							    <?php endforeach ?>
+							  </select>
+							  <input type="hidden" name="horario" value="<?php echo $horario['idHorarios'] ?>">
+							</form>
 						</div>
 						<div class="card-footer p-0 text-center d-flex justify-content-center">
 							<div class="card-footer-item card-footer-item-bordered">
@@ -224,7 +272,10 @@
 <?php endforeach ?>
 <script src="assets/vendor/multi-select/js/jquery.multi-select.js"></script>
 <script>
-	$('#my-select, #pre-selected-options').multiSelect()
+	$('#my-select, #pre-selected-options').multiSelect({
+	  selectableHeader: "<div class='card-header'>Fuera de plantilla</div>",
+	  selectionHeader: "<div class='card-header'>Dentro de plantilla</div>"
+	});
 
 function deleteAlert() {
   setTimeout(function() {

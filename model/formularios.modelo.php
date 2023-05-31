@@ -1261,21 +1261,22 @@ class ModeloFormularios{
     static public function mdlSeleccionarHorarios($tabla,$item,$valor){
 	    if ($item == null && $valor == null) {	
 	    	$sql = "SELECT h.idHorarios, h.nameHorario, h.default, SUM(dh.numero_Horas) 
-					FROM horarios h
+					FROM $tabla h
 					JOIN dia_horario dh ON dh.Horarios_idHorarios = h.idHorarios
 					GROUP BY h.idHorarios, h.nameHorario, h.default";
 
 			$stmt = Conexion::conectar()->prepare($sql);
 			$stmt->execute();
 			return $stmt -> fetchAll();
+
 		}else{
-			$sql = "SELECT  h.nameHorario as nombre, SUM(dh.numero_Horas), h.default AS determinado FROM horarios h
-					JOIN dia_horario dh on dh.Horarios_idHorarios = h.idHorarios
-					WHERE h.$item = :$item;";
+			$sql = "SELECT * FROM dia_horario WHERE $item = :$item";
+
 			$stmt = Conexion::conectar()->prepare($sql);
-			$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
+			$stmt->bindParam(":".$item, $valor, PDO::PARAM_INT);
 			$stmt->execute();
-			return $stmt -> fetch();
+			return $stmt -> fetchAll();
+
 		}
 
 		$stmt->close();
