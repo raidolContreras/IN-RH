@@ -7,7 +7,7 @@ require_once "../model/modelo.empleados.php";
 require_once "../controller/controlador.empleados.php";
 
 class HorariosAjax {
-    public function guardarHorarioAjax() {
+    public function funcionesHorarios() {
         if (isset($_POST['nameHorario'])) {
 		    $nameHorario = $_POST['nameHorario'];
 
@@ -28,6 +28,12 @@ class HorariosAjax {
 		    $respuesta = ControladorFormularios::ctrGuardarHorario($nameHorario, $horarios);
 		    echo json_encode($respuesta);
 		}
+		if (isset($_POST['empleados_has_horarios'])) {
+			$idHorario = $_POST['horario'];
+			$empleados = $_POST['empleados_has_horarios'];
+			$empleados_has_horarios = ControladorFormularios::ctrEmpleadosHasHorarios($empleados,$idHorario);
+			echo json_encode($empleados_has_horarios);
+		}
     }
 }
 
@@ -35,4 +41,4 @@ class HorariosAjax {
 $horariosAjax = new HorariosAjax();
 
 // Llamar al método guardarHorarioAjax()
-$horariosAjax->guardarHorarioAjax();
+$horariosAjax->funcionesHorarios();

@@ -805,5 +805,27 @@ class ControladorFormularios{
     	$cambio = ModeloFormularios::mdlCambiarHorarioDefault($tabla,$idHorarios);
     	return $cambio;
     }
+
+    static public function ctrVerEmpleadosHorarios($item,$valor){
+    	$tabla = "empleados_has_horarios";
+    	$empleadosHorarios = ModeloFormularios::mdlVerEmpleadosHorarios($tabla,$item,$valor);
+    	return $empleadosHorarios;
+    }
+
+    static public function ctrEmpleadosHasHorarios($empleados,$idHorario){
+
+    	$tabla = "empleados_has_horarios";
+
+    	$borrarEmpleados = ModeloFormularios::mdlBorrarEmpleadosHorarios($tabla,$idHorario);
+    	$validar = "cambio";
+    	foreach ($empleados as $empleado) {
+    		if ($validar == "cambio") {
+    			$registrarEmpleadosHorario = ModeloFormularios::mdlregistrarEmpleadosHorario($tabla,$empleado,$idHorario);
+    			$validar = $registrarEmpleadosHorario;
+    		}
+    	}
+    	return $validar;
+
+    }
 	/*---------- Fin de ControladorFormularios ---------- */
 }

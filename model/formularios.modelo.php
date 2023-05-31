@@ -1297,5 +1297,47 @@ class ModeloFormularios{
 		$stmt = null;
     }
 
+    static public function mdlVerEmpleadosHorarios($tabla,$item,$valor){
+    	$sql = "SELECT * from $tabla WHERE $item = :$item";
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
+		$stmt->execute();
+		return $stmt -> fetchAll();
+		$stmt->close();
+		$stmt = null;
+    }
+
+    static public function mdlBorrarEmpleadosHorarios($tabla,$idHorario){
+
+    	$sql = "DELETE FROM $tabla WHERE Horarios_idHorarios = :idHorario";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->bindParam(":idHorario", $idHorario, PDO::PARAM_INT);
+		if ($stmt->execute()) {
+			return "cambio";
+		}else{
+			return "error";
+		}
+		$stmt->close();
+		$stmt = null;
+
+    }
+
+    static public function mdlregistrarEmpleadosHorario($tabla,$empleado,$idHorario){
+
+    	$sql = "INSERT INTO $tabla (Empleados_idEmpleados, Horarios_idHorarios) VALUES (:empleado,:idHorario)";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->bindParam(":empleado", $empleado, PDO::PARAM_INT);
+		$stmt->bindParam(":idHorario", $idHorario, PDO::PARAM_INT);
+		if ($stmt->execute()) {
+			return "cambio";
+		}else{
+			return "error";
+		}
+		$stmt->close();
+		$stmt = null;
+    }
+
 	/*---------- Fin de ModeloFormularios ---------- */
 }
