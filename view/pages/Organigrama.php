@@ -60,9 +60,9 @@
 
 							<a href='${d.data.profileUrl}'><div style="color:#fafafa;font-size:${
 								d.depth < 2 ? 14 : 12
-							}px;font-weight:bold;margin-left:70px;margin-top:5px"> ${d.depth < 2 ? d.data.name : (d.data.name || '').trim().split(/\s+/g)[0]} </div>
+							}px;font-weight:bold;margin-left:70px;margin-top:8px"> ${d.depth < 2 ? d.data.name : (d.data.name || '').trim().split(/\s+/g)[0]} </div>
 							<div style="color:#fafafa;margin-left:70px;margin-top:5px"> ${d.data.positionName} </div>
-							<div style="color:#fff;margin-left:70px;margin-top:5px"> ${d.data.area} </div></a>
+							<div style="color:#fff;margin-left:70px;font-size:10px;margin-top:5px"> ${d.depth < 3 ? d.data.area : ''} </div></a>
 							
 							 <!--
 							 <div style="padding:30px; padding-top:35px;text-align:center">

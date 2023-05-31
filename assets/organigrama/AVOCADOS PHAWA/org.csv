@@ -1,8 +1,7 @@
 id,name,area,profileUrl,imageUrl,positionName,parentId
-5,"Rafael Flota Sanchez",SUBDIRECCIÓN,Empleado&perfil=5,"view/fotos/thumbnails/Oscar Contrerah.png",Multimedia,19
 3,"Oscar Contreras","Dirección Proyectos",Empleado&perfil=3,"view/fotos/thumbnails/Oscar Contreras Flota.jpg","Ingeniero en Sistemas",20
 6,"ERICK NATIVIDAD","DIRECCIÓN IN  CONSULTING  GDL",Empleado&perfil=6,assets/images/general.jpg,"Director de finanzas",20
 19,"Mayel Ortega Cambron","DIRECCIÓN IN  CONSULTING  MORELIA",Empleado&perfil=19,assets/images/general.jpg,"Director in morelia",20
 20,"Presidente General",Presidencias,Empleado&perfil=20,assets/images/general.jpg,Presidente,
-21,"Prueba Prueba","Dirección Proyectos",Empleado&perfil=21,assets/images/general.jpg,Prueba,3
-22,"asd asd",SUBDIRECCIÓN,Empleado&perfil=22,assets/images/general.jpg,321,5
+21,"Eleasar Cardoso",TESORERÍA,Empleado&perfil=21,assets/images/general.jpg,Tesorero,20
+23,"Patricia Sanchez",Presidencias,Empleado&perfil=23,assets/images/general.jpg,Asistente,20
