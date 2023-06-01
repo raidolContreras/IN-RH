@@ -19,6 +19,8 @@
 }
 
 	$departamentos = ControladorFormularios::ctrVerDepartamentos(null, null);
+	$horarios = ControladorFormularios::ctrSeleccionarHorarios(null, null);
+	$horarios = ControladorFormularios::ctrSeleccionarHorarios(null, null);
 ?>
 <link rel="stylesheet" href="assets/vendor/datepicker/tempusdominus-bootstrap-4.css" />
 <div class="container-fluid dashboard-content ">
@@ -211,18 +213,29 @@
 															<input type="text" class="form-control" id="namePuesto" name="namePuesto" value="<?php echo $nombreVacante; ?>" required>
 														</div>
 													</div>
-													<div class="col-md-6">
+													<div class="col-md-4">
 														<div class="form-group">
 															<label for="salarioPuesto" class="col-form-label font-weight-bold">Salario:</label>
-															<input type="text"  maxlength="10" class="form-control" id="salarioPuesto" name="salarioPuesto" value="<?php echo $salarioVacante; ?>" pattern="[0-9]+(\.[0-9]{1,2})?" title="Ingrese un número con hasta dos decimales" required onkeypress="return (event.charCode >= 46 && event.charCode <= 57 && event.charCode != 47)" min="1">
-															</div>
+															<input type="text"  maxlength="10" class="form-control form-control-lg" id="salarioPuesto" name="salarioPuesto" value="<?php echo $salarioVacante; ?>" pattern="[0-9]+(\.[0-9]{1,2})?" title="Ingrese un número con hasta dos decimales" required onkeypress="return (event.charCode >= 46 && event.charCode <= 57 && event.charCode != 47)" min="1">
 														</div>
-														<div class="col-md-6">
-															<div class="form-group">
-																<label for="salario_integrado" class="col-form-label font-weight-bold">Salario Diario Integrado:</label>
-																<input type="text"  maxlength="10" class="form-control" id="salario_integrado" name="salario_integrado" pattern="[0-9]+(\.[0-9]{1,2})?" title="Ingrese un número con hasta dos decimales" required onkeypress="return (event.charCode >= 46 && event.charCode <= 57 && event.charCode != 47)" min="1">
-																</div>
-															</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<label for="salario_integrado" class="col-form-label font-weight-bold">Salario Diario Integrado:</label>
+															<input type="text"  maxlength="10" class="form-control form-control-lg" id="salario_integrado" name="salario_integrado" pattern="[0-9]+(\.[0-9]{1,2})?" title="Ingrese un número con hasta dos decimales" required onkeypress="return (event.charCode >= 46 && event.charCode <= 57 && event.charCode != 47)" min="1">
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<label for="horarios" class="col-form-label font-weight-bold">Horario:</label>
+															<select class="form-control form-control-lg" id="horarios" name="horarios">
+																<?php foreach ($horarios as $horario): ?>
+																	<?php $selected = ($horario['default'] == 1) ? ' selected' : ''; ?>
+																	<option value="<?php echo $horario['idHorarios'] ?>"<?php echo $selected; ?>><?php echo $horario['nameHorario'] ?></option>
+																<?php endforeach ?>
+															</select>
+														</div>
+													</div>
 													<?php if (!isset($_GET['postulante'])): ?>
 														<div class="form-group col-md-6">
 															<label for="departamento" class="col-form-label text-center font-weight-bold">Departamento:</label>

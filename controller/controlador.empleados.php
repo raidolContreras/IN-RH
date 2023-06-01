@@ -50,7 +50,8 @@ class ControladorEmpleados{
 				'salario_integrado' => $salario_integrado,
 				'Departamentos_idDepartamentos' => $departamento,
 				'postulante' => $_POST['postulante'],
-				'jefe_Departamento' => $jefe);
+				'jefe_Departamento' => $jefe,
+				'horario' => $_POST['horarios']);
 			$Registro = ModeloFormularios::mdlRegistrarEmpleados('empleados','emergencia', $datos);
 			if ($Registro == 'ok') {
 				return 'ok';

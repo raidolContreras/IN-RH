@@ -38,6 +38,8 @@ class ModeloFormularios{
 		}
 		else{
 
+			$horarioEmpleado = ModeloFormularios::mdlregistrarEmpleadosHorario('empleados_has_horarios',$id_empleado, $datos['horario']);
+			
 			if ($datos['postulante'] != 0) {
 
 				$RegistroPostulante = ControladorFormularios::ctrVerPostulantes('idPostulantes', $datos['postulante']);
