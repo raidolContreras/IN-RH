@@ -123,12 +123,26 @@
 </div>
 
 <?php foreach ($horarios as $horario): ?>
-<?php $diasLaborables = ControladorFormularios::ctrSeleccionarHorarios("Horarios_idHorarios", $horario['idHorarios']); ?>
+<?php $diasLaborables = ControladorFormularios::ctrSeleccionarHorarios("Horarios_idHorarios", $horario['idHorarios']); 
+
+$diaLaborableNombres = [
+    1 => "Lunes",
+    2 => "Martes",
+    3 => "Miércoles",
+    4 => "Jueves",
+    5 => "Viernes",
+    6 => "Sábado",
+    7 => "Domingo"
+];
+?>
 	<div class="modal fade" id="Horario<?php echo $horario['idHorarios'] ?>">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
 					<h3 class="ml-2 mt-3"><?php echo $horario['nameHorario'] ?></h3>
+				<a class="btn btn-in-consulting" href="CrearHorario&plantilla=<?php echo $horario['idHorarios'] ?>">
+					<i class="fas fa-edit"></i>
+				</a>
 				</div>
 				<div class="modal-body">
 					<div class="card">
@@ -136,40 +150,29 @@
 							<table class="table">
 								<thead>
 									<tr>
-										<th>Días</th>
-										<th>Horario de trabajo</th>
-										<th>Horas esperadas</th>
+										<th width="25%">Días</th>
+										<th width="50%">Horario de trabajo</th>
+										<th width="25%">Horas esperadas</th>
 									</tr>
 								</thead>
 								<tbody>
 									<?php foreach ($diasLaborables as $diaLaborable): ?>
 									<tr>
-										<td>
+										<th>
 											<?php 
-												if ($diaLaborable['dia_Laborable'] == 1) {
-													echo "Lunes";
-												}elseif ($diaLaborable['dia_Laborable'] == 2) {
-													echo "Martes";
-												}elseif ($diaLaborable['dia_Laborable'] == 3) {
-													echo "Miercoles";
-												}elseif ($diaLaborable['dia_Laborable'] == 4) {
-													echo "Jueves";
-												}elseif ($diaLaborable['dia_Laborable'] == 5) {
-													echo "Viernes";
-												}elseif ($diaLaborable['dia_Laborable'] == 6) {
-													echo "Sábado";
-												}elseif ($diaLaborable['dia_Laborable'] == 7) {
-													echo "Domingo";
-												}
+												echo $diaLaborableNombres[$diaLaborable['dia_Laborable']];
 											?>
+										</th>
+										<td>
+											<?php echo $diaLaborable['hora_Entrada']." a ".$diaLaborable['hora_Salida'] ?>
 										</td>
-										<td><?php echo $diaLaborable['hora_Entrada']." a ".$diaLaborable['hora_Salida'] ?></td>
 										<td><?php
 
-										$horas = floor($diaLaborable['numero_Horas']);
-										$minutos = floor(($diaLaborable['numero_Horas'] - $horas) * 60);
-										$resultado = $horas . " horas " . $minutos . " min"; 
-										echo $resultado ?></td>
+											$horas = floor($diaLaborable['numero_Horas']);
+											$minutos = floor(($diaLaborable['numero_Horas'] - $horas) * 60);
+											$resultado = $horas . " horas " . $minutos . " min"; 
+											echo $resultado ?>
+										</td>
 									</tr>
 									<?php endforeach ?>
 								</tbody>

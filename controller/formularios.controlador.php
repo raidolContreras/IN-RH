@@ -796,6 +796,9 @@ class ControladorFormularios{
 
     static public function ctrSeleccionarHorarios($item,$valor){
     	$tabla = "horarios";
+    	if ($item == "Horarios_idHorarios") {
+    		$tabla = "dia_horario";
+    	}
     	$horarios = ModeloFormularios::mdlSeleccionarHorarios($tabla,$item,$valor);
     	return $horarios;
     }
@@ -838,6 +841,18 @@ class ControladorFormularios{
     	}
     	return $validar;
 
+    }
+
+    static public function ctrActualizarHorario($datos){
+    	$tabla = "horarios";
+    	$actualizarNombreHorario = ModeloFormularios::mdlActualizarNombreHorario($tabla, $datos);
+    	if ($actualizarNombreHorario == 'ok') {
+    		$tabla = "dia_horario";
+    		$actualizarDiasLaborables = ModeloFormularios::mdlActualizarDiasLaborables($tabla, $datos);
+    		return $actualizarDiasLaborables;
+    	}else{
+    		return 'error';
+    	}
     }
 	/*---------- Fin de ControladorFormularios ---------- */
 }

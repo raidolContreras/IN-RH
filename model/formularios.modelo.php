@@ -1270,7 +1270,7 @@ class ModeloFormularios{
 			return $stmt -> fetchAll();
 
 		}else{
-			$sql = "SELECT * FROM dia_horario WHERE $item = :$item";
+			$sql = "SELECT * FROM $tabla WHERE $item = :$item";
 
 			$stmt = Conexion::conectar()->prepare($sql);
 			$stmt->bindParam(":".$item, $valor, PDO::PARAM_INT);
@@ -1349,6 +1349,62 @@ class ModeloFormularios{
 		$stmt->bindParam(":idHorario", $idHorario, PDO::PARAM_INT);
 		if ($stmt->execute()) {
 			return "cambio";
+		}else{
+			return "error";
+		}
+		$stmt->close();
+		$stmt = null;
+
+    }
+
+    static public function mdlActualizarNombreHorario($tabla, $datos){
+    	$sql = "UPDATE $tabla SET nameHorario=:nameHorario WHERE idHorarios = :idHorarios";
+
+    	$stmt = Conexion::conectar()->prepare($sql);
+    	$stmt->bindParam(":nameHorario",$datos['nameHorario'],PDO::PARAM_STR);
+    	$stmt->bindParam(":idHorarios",$datos['idHorarios'],PDO::PARAM_INT);
+		if ($stmt->execute()) {
+			return "ok";
+		}else{
+			return "error";
+		}
+		$stmt->close();
+		$stmt = null;
+
+    }
+
+    static public function mdlActualizarDiasLaborables($tabla, $datos){
+    	$sql = "DELETE FROM $tabla WHERE Horarios_idHorarios = :Horarios_idHorarios";
+
+    	$stmt = Conexion::conectar()->prepare($sql);
+    	$stmt->bindParam(":Horarios_idHorarios",$datos['idHorarios'],PDO::PARAM_INT);
+		if ($stmt->execute()) {
+			$i=0;
+			$idHorarios = $datos['idHorarios'];
+			$tabla = "dia_horario";
+			foreach ($datos['horarios'] as $key => $value) {
+
+				$timestamp_entrada = strtotime($value['entrada']);
+				$timestamp_salida = strtotime($value['salida']);
+
+				$diferencia_segundos = $timestamp_salida - $timestamp_entrada;
+				$diferencia_horas = $diferencia_segundos / 3600;
+
+				$diferencia = round($diferencia_horas, 2);
+
+				$datos = array(
+					"Horarios_idHorarios" => $idHorarios,
+					"dia_Laborable" => $key,
+					"hora_Entrada" => $value['entrada'],
+					"hora_Salida" => $value['salida'],
+					"numero_Horas" => $diferencia
+				);
+				$registrar_dias = ModeloFormularios::mdlRegistrarDiasHorario($tabla,$datos);
+				$i++;
+			}
+			if ($i >= 1) {
+				return "ok";
+			}
 		}else{
 			return "error";
 		}

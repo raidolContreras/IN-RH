@@ -7528,7 +7528,7 @@ table-in
   align-items: center;
   border-bottom: 1px solid #dedede;
   background-color: #fff;
-  padding: 0.625rem;
+  padding: 0.525rem;
   color: #CFCFCF;
 }
 
@@ -7555,4 +7555,7 @@ table-in
 .input-dia{
 	border: 0;
 	background-color: transparent;
+}
+.in-col{
+  border-bottom: 0px !important;
 }
