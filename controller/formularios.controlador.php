@@ -820,22 +820,13 @@ class ControladorFormularios{
     	$tabla = "empleados_has_horarios";
 
     	$validar = "cambio";
+
     	foreach ($empleados as $empleado) {
+
     		if ($validar == "cambio") {
 
-    			$actualizarEmpleado = ModeloFormularios::mdlVerEmpleadosHorarios($tabla, "Empleados_idEmpleados",$empleado);
-
-    			if (!empty($actualizarEmpleado)) {
-
-    				$actualizarEmpleadoHorario = ModeloFormularios::mdlActualizarEmpleadoHorario($tabla, $empleado, $idHorario);
-    				$validar = $actualizarEmpleadoHorario;
-
-    			}else{
-
-    				$registrarEmpleadosHorario = ModeloFormularios::mdlregistrarEmpleadosHorario($tabla,$empleado,$idHorario);
-    				$validar = $registrarEmpleadosHorario;
-
-    			}
+				$registrarEmpleadosHorario = ModeloFormularios::mdlregistrarEmpleadosHorario($tabla,$empleado,$idHorario);
+				$validar = $registrarEmpleadosHorario;
 
     		}
     	}

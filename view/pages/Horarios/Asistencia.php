@@ -1,4 +1,18 @@
-<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+<?php 
+
+  $diaLaborableNombres = [
+    1 => "Lunes",
+    2 => "Martes",
+    3 => "Miércoles",
+    4 => "Jueves",
+    5 => "Viernes",
+    6 => "Sábado",
+    7 => "Domingo"
+  ];
+
+$Horario = ControladorFormularios::ctrVerEmpleadosHorarios("Empleados_idEmpleados", $_SESSION['idEmpleado']); 
+
+?>
 <div class="container-fluid dashboard-content">
   <div class="ecommerce-widget">
     <div class="card mx-5">
