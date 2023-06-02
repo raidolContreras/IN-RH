@@ -2,8 +2,7 @@
 $postulantes = ControladorFormularios::ctrVerPostulantes("Vacantes_idVacantes", $_GET['Postulantes']); 
 $vacante = ControladorFormularios::ctrVerVacantes("idVacantes", $_GET['Postulantes']);
 $calendary = ControladorFormularios::generarCalendario(); ?>
-<style>	
-</style>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <div class="container-fluid dashboard-content ">

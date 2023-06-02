@@ -32,7 +32,7 @@ $perfil = $primerLetra.$segundaLetra;
 					$paginaActual = $_GET['pagina'];
 
 //Menu de horarios
-					$Asistencias = array('Asistencia-importar', 'Asistencia-exportar');
+					$Asistencias = array('Asistencia-importar', 'Asistencia-exportar', 'Asistencia-descanso');
 					$horarios = array('Asistencia', 'Asistencia-resumen', 'Asistencia-ajustes');
 
 					if (!empty($paginaActual)) {

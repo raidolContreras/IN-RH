@@ -28,8 +28,6 @@ session_start();
     <link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Rambla:ital@1&display=swap" rel="stylesheet">
-	<link href='assets/vendor/full-calendar/css/fullcalendar.css' rel='stylesheet' />
-	<link href='assets/vendor/full-calendar/css/fullcalendar.print.css' rel='stylesheet' media='print' />
 	<link rel="shortcut icon" href="assets/images/logo.png" />
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 	<script src="https://cdn.tiny.cloud/1/ojrrit6i20fvuzvl2sioxzrflc9dh7gpi3gosuyrwgzfa18y/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
@@ -134,6 +132,7 @@ session_start();
 				 $_GET["pagina"] == "Asistencia-ajustes" ||
 				 $_GET["pagina"] == "Asistencia-importar" ||
 				 $_GET["pagina"] == "Asistencia-exportar" ||
+				 $_GET["pagina"] == "Asistencia-descanso" ||
 				 $_GET["pagina"] == "CrearHorario" ) {
 
 			include "pages/navs/navbar.php";
@@ -178,10 +177,6 @@ session_start();
 <script src="https://cdn.datatables.net/select/1.2.7/js/dataTables.select.min.js"></script>
 <script src="https://cdn.datatables.net/fixedheader/3.1.5/js/dataTables.fixedHeader.min.js"></script>
     <!-- Optional JavaScript -->
-    <script src='assets/vendor/full-calendar/js/moment.min.js'></script>
-    <script src='assets/vendor/full-calendar/js/fullcalendar.js'></script>
-    <script src='assets/vendor/full-calendar/js/jquery-ui.min.js'></script>
-    <script src='assets/vendor/full-calendar/js/calendar.js'></script>
     <script src="assets/libs/js/main-js.js"></script>
 </body>
 
