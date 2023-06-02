@@ -1415,5 +1415,21 @@ class ModeloFormularios{
 
     }
 
+    static public function mdlRegistrarDiaFestivo($tabla, $datos){
+    	$sql = "INSERT INTO $tabla(nameFestivo, fechaFestivo, fechaFin) VALUES (:nameFestivo,:fechaFestivo,:fechaFin)";
+
+    	$stmt = Conexion::conectar()->prepare($sql);
+    	$stmt->bindParam(":nameFestivo",$datos['nameFestivo'],PDO::PARAM_STR);
+    	$stmt->bindParam(":fechaFestivo",$datos['fechaFestivo'],PDO::PARAM_STR);
+    	$stmt->bindParam(":fechaFin",$datos['fechaFin'],PDO::PARAM_STR);
+		if ($stmt->execute()) {
+			return "ok";
+		}else{
+			return "error";
+		}
+		$stmt->close();
+		$stmt = null;
+    }
+
 	/*---------- Fin de ModeloFormularios ---------- */
 }

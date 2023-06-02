@@ -845,5 +845,12 @@ class ControladorFormularios{
     		return 'error';
     	}
     }
+
+    static public function ctrRegistrarDiaFestivo($datos){
+    	$tabla = "festivos";
+    	$registrar_dia_festivo = ModeloFormularios::mdlRegistrarDiaFestivo($tabla, $datos);
+    	return $registrar_dia_festivo;
+    }
+
 	/*---------- Fin de ControladorFormularios ---------- */
 }

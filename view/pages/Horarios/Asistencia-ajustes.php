@@ -7,7 +7,7 @@
 			<div class="row">
 				<div class="card-side-nav col-2 lista-ajustes">
 					<div><a href="Asistencia-ajustes" class="btn btn-block btn-in-consulting-link active">Horarios de trabajo</a></div>
-					<div><a href="Asistencia-descanso" class="btn btn-block btn-in-consulting-link">Festivos</a></div>
+					<div><a href="Asistencia-permisos" class="btn btn-block btn-in-consulting-link">Permisos</a></div>
 					<div><a href="Asistencia-importar" class="btn btn-block btn-in-consulting-link">Importar horarios</a></div>
 					<div><a href="Asistencia-exportar" class="btn btn-block btn-in-consulting-link">Exportar resultados</a></div>
 				</div>

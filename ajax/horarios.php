@@ -72,6 +72,19 @@ class HorariosAjax {
 				}
 			}
 		}
+		if (isset($_POST['nameFestivo'])) {
+			$fechaFin = NULL;
+			if ($_POST['fechaFin'] != null) {
+				$fechaFin = $_POST['fechaFin'];
+			}
+			$datos = array(
+				"nameFestivo" => $_POST['nameFestivo'],
+				"fechaFestivo" => $_POST['fechaFestivo'],
+				"fechaFin" => $fechaFin
+			);
+			$registrar_dia = ControladorFormularios::ctrRegistrarDiaFestivo($datos);
+			echo json_encode($registrar_dia);
+		}
 	}
 }
 

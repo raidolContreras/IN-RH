@@ -132,7 +132,7 @@ session_start();
 				 $_GET["pagina"] == "Asistencia-ajustes" ||
 				 $_GET["pagina"] == "Asistencia-importar" ||
 				 $_GET["pagina"] == "Asistencia-exportar" ||
-				 $_GET["pagina"] == "Asistencia-descanso" ||
+				 $_GET["pagina"] == "Asistencia-permisos" ||
 				 $_GET["pagina"] == "CrearHorario" ) {
 
 			include "pages/navs/navbar.php";

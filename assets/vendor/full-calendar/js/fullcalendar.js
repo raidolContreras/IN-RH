@@ -2709,12 +2709,12 @@ exports.globalDefaults = {
     locale: null,
     isRTL: false,
     buttonText: {
-        prev: 'prev',
-        next: 'next',
-        prevYear: 'prev year',
-        nextYear: 'next year',
-        year: 'year',
-        today: 'today',
+        prev: 'ant',
+        next: 'sig',
+        prevYear: 'ant año',
+        nextYear: 'sig año',
+        year: 'año',
+        today: 'Hoy',
         month: 'month',
         week: 'week',
         day: 'day'
@@ -12584,7 +12584,7 @@ var Toolbar = /** @class */ (function () {
                     var buttonEl;
                     var buttonAriaAttr;
                     if (buttonName === 'title') {
-                        groupChildren = groupChildren.add($('<h2>&nbsp;</h2>')); // we always want it to take up height
+                        groupChildren = groupChildren.add($('<h2 class="encabezado-h">&nbsp;</h2>')); // we always want it to take up height
                         isOnlyButtons = false;
                     }
                     else {

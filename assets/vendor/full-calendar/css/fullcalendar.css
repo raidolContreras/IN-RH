@@ -212,7 +212,7 @@ hr.fc-divider {
   table-layout: fixed;
   border-collapse: collapse;
   border-spacing: 0;
-  font-size: 1em;
+  font-size: 1.1em;
   /* normalize cross-browser */ }
 
 .fc th {
@@ -901,10 +901,14 @@ NOTE: use percentage font sizes or else old IE chokes
 
 .fc-basic-view .fc-week-number,
 .fc-basic-view .fc-day-number {
+  margin-top: 5px;
+  margin-right: 8px;
   padding: 2px; }
 
 .fc-basic-view th.fc-week-number,
 .fc-basic-view th.fc-day-number {
+  margin-top: 5px;
+  margin-right: 8px;
   padding: 0 2px;
   /* column headers can't have as much v space */ }
 
