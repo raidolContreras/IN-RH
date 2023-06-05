@@ -91,7 +91,7 @@ $fotoEmpleado = ControladorFormularios::ctrVerFotos("Empleados_idEmpleados", $em
 							<select name="empleadoMes" id="empleadoMes" class="form-control" required>
 								<option>Selecciona un empleado</option>
 								<?php foreach ($empleados as $key => $empleado): ?>	
-									<option value="<?php echo $empleado['idEmpleados']; ?>"><?php echo $empleado['name']." ".$empleado['lastname']; ?></option>
+									<option value="<?php echo $empleado['idEmpleados']; ?>"><?php echo $empleado['lastname']." ".$empleado['name']; ?></option>
 								<?php endforeach ?>
 							</select>
 						</div>
