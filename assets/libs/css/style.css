@@ -7559,3 +7559,20 @@ table-in
 .in-col{
   border-bottom: 0px !important;
 }
+
+#d-fest {
+    margin-top: 10px;
+}
+
+.festivo {
+    margin-bottom: 10px;
+}
+
+.festivo .title {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.festivo .date {
+    color: #999;
+}

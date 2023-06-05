@@ -852,5 +852,17 @@ class ControladorFormularios{
     	return $registrar_dia_festivo;
     }
 
+    static public function ctrRegistrarPermisos($datos){
+    	$tabla = "permisos";
+    	$registrar_Permiso = ModeloFormularios::mdlRegistrarPermisos($tabla, $datos);
+    	return $registrar_Permiso;
+    }
+
+    static public function ctrVerPermisos($item,$valor){
+    	$tabla = "permisos";
+    	$ver_Permiso = ModeloFormularios::mdlVerPermisos($tabla,$item,$valor);
+    	return $ver_Permiso;
+    }
+
 	/*---------- Fin de ControladorFormularios ---------- */
 }

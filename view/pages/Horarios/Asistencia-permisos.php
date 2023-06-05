@@ -1,24 +1,14 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<link href='assets/vendor/full-calendar/css/fullcalendar.css' rel='stylesheet' />
-<link href='assets/vendor/full-calendar/css/fullcalendar.print.css' rel='stylesheet' media='print' />
-<link rel="stylesheet" href="assets/vendor/multi-select/css/multi-select.css">
+<?php $permisos = ControladorFormularios::ctrVerPermisos(null,null); ?>
 <style>
-    #d-fest {
-        margin-top: 10px;
-    }
-
-    .festivo {
-        margin-bottom: 10px;
-    }
-
-    .festivo .title {
-        font-weight: bold;
-        margin-bottom: 5px;
-    }
-
-    .festivo .date {
-        color: #999;
-    }
+<?php foreach ($permisos as $permiso): ?>
+	
+.badge-<?php echo strtr($permiso['namePermisos'], " ", "-"); ?> {
+	background-color: <?php echo $permiso['colorPermisos']; ?>;
+}
+	
+<?php endforeach ?>
+	
 </style>
 <div class="container-fluid dashboard-content">
 	<div class="ecommerce-widget">
@@ -42,6 +32,12 @@
 								<button type="button"
 												class="btn btn-in-consulting"
 												data-toggle="modal" 
+												data-target="#Permisos">
+									<i class="fas fa-plus-circle"></i> <span>Crear permisos</span>
+								</button>
+								<button type="button"
+												class="btn btn-in-consulting"
+												data-toggle="modal" 
 												data-target="#Festivo">
 									<i class="fas fa-plus-circle"></i> <span>Crear día festivo</span>
 								</button>
@@ -58,6 +54,20 @@
 									<h3 class="encabezado-h">Días festivos</h3>
 									<div id="d-fest"></div>
 								</div>
+								<div class="col-2">
+									<h3 class="encabezado-h">Tipos de permisos</h3>
+									<div id="t-permisos"></div>
+
+									<?php foreach ($permisos as $permiso): ?>
+										<span class="mr-2"> <span class="badge-dot badge-<?php echo strtr($permiso['namePermisos'], " ", "-"); ?>">
+											
+										</span>
+										<?php echo $permiso['namePermisos'] ?>
+									</span>
+										
+									<?php endforeach ?>
+									<div></div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -66,8 +76,6 @@
 		</div>
 	</div>
 </div>
-
-<!-- Modal Eliminar postulante -->
 
 	<div class="modal fade" id="Festivo">
 		<div class="modal-dialog modal-lg">
@@ -167,10 +175,10 @@
 	</div>
 
 <script>
-	
+
 	$(document).ready(function() {
 		$("#festivo-btn").click(function() {
-		var formData = $("#festivo-form").serialize(); // Obtener los datos del formulario
+			var formData = $("#festivo-form").serialize(); // Obtener los datos del formulario
 
 			$.ajax({
 				url: "ajax/horarios.php", // Ruta al archivo PHP que procesará los datos del formulario
@@ -183,62 +191,127 @@
 						$("#form-result").parent().after(`
 							<div class='alert alert-success' role="alert" id="alerta">Día festivo registrado</div>
 							`);
-							setTimeout('document.location.reload()',800);
-							deleteAlert();
+						setTimeout('document.location.reload()',800);
+						deleteAlert();
 					}else{
 						$("#form-result").val("");
 						$("#form-result").parent().after(`
 							<div class='alert alert-danger' role="alert" id="alerta"><b>Error</b>, no se creo el día festivo, intenta nuevamente</div>
 							`);
-							deleteAlert();
+						deleteAlert();
 					}
 
 				}
 			});
+
 		});
 	});
 
-function deleteAlert() {
-  setTimeout(function() {
-    var alert = $('#alerta');
-    alert.fadeOut('slow', function() {
-      alert.remove();
-    });
-  }, 1500);
-}
+	function deleteAlert() {
+		setTimeout(function() {
+			var alert = $('#alerta');
+			alert.fadeOut('slow', function() {
+				alert.remove();
+			});
+		}, 1500);
+	}
 
-$(document).ready(function() {
-    // Hacemos una solicitud AJAX al archivo PHP para obtener los datos de fecha
-    $.ajax({
-        url: 'ajax/fechas.festivas.php',
-        dataType: 'json'
-    }).done(function(data) {
-        // Creamos una variable para almacenar el contenido de las fechas festivas
-        var fechasFestivas = '';
+	$(document).ready(function() {
+// Hacemos una solicitud AJAX al archivo PHP para obtener los datos de fecha
+		$.ajax({
+			url: 'ajax/fechas.festivas.php',
+			dataType: 'json'
+		}).done(function(data) {
+// Creamos una variable para almacenar el contenido de las fechas festivas
+			var fechasFestivas = '';
 
-        // Recorremos los eventos y creamos una cadena con los datos de las fechas
-        for (var i = 0; i < data.length; i++) {
-            var festivo = data[i];
-            var title = festivo.title;
-            var start = moment(festivo.start).format("DD/MM/YYYY");
-            var end = festivo.end ? ' - ' + moment(festivo.end).format("DD/MM/YYYY") : '';
+// Recorremos los eventos y creamos una cadena con los datos de las fechas
+			for (var i = 0; i < data.length; i++) {
+				var festivo = data[i];
+				var title = festivo.title;
+				var start = moment(festivo.start).format("DD/MM/YYYY");
+				var end = festivo.end ? ' - ' + moment(festivo.end).format("DD/MM/YYYY") : '';
 
-            fechasFestivas += '<div class="festivo">';
-            fechasFestivas += '<p class="title">' + title + '</p>';
-            fechasFestivas += '<p class="date">' + start + end + '</p>';
-            fechasFestivas += '</div>';
-        }
+				fechasFestivas += '<div class="festivo">';
+				fechasFestivas += '<p class="title">' + title + '</p>';
+				fechasFestivas += '<p class="date">' + start + end + '</p>';
+				fechasFestivas += '</div>';
+			}
 
-        // Insertamos el contenido de las fechas festivas en el elemento div
-        $('#d-fest').html(fechasFestivas);
-    }).fail(function(jqXHR, textStatus, errorThrown) {
-        console.error('Error en la solicitud AJAX:', textStatus, errorThrown);
-    });
-});
+// Insertamos el contenido de las fechas festivas en el elemento div
+			$('#d-fest').html(fechasFestivas);
+		}).fail(function(jqXHR, textStatus, errorThrown) {
+			console.error('Error en la solicitud AJAX:', textStatus, errorThrown);
+		});
+	});
 
 
+	$(document).ready(function() {
+		$("#permiso-btn").click(function() {
+			var formData = $("#permiso-form").serialize(); // Obtener los datos del formulario
+
+			$.ajax({
+				url: "ajax/horarios.php", // Ruta al archivo PHP que procesará los datos del formulario
+				type: "POST",
+				data: formData,
+				success: function(response) {
+
+					if (response === '"ok"') {
+						$("#form-result").val("");
+						$("#form-result").parent().after(`
+							<div class='alert alert-success' role="alert" id="alerta">Permiso registrado</div>
+							`);
+						setTimeout('document.location.reload()',800);
+						deleteAlert();
+					}else{
+						$("#form-result").val("");
+						$("#form-result").parent().after(`
+							<div class='alert alert-danger' role="alert" id="alerta"><b>Error</b>, no se creo el permiso, intenta nuevamente</div>
+							`);
+						deleteAlert();
+					}
+
+				}
+			});
+
+		});
+	});
 </script>
-<script src='assets/vendor/full-calendar/js/moment.min.js'></script>
-<script src='assets/vendor/full-calendar/js/fullcalendar.js'></script>
-<script src='assets/vendor/full-calendar/js/jquery-ui.min.js'></script>
-<script src='assets/vendor/full-calendar/js/calendar.js'></script>
+	<div class="modal fade" id="Permisos">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+
+				<div class="modal-header">
+					<h3 class="encabezado-h mt-2">Crear permisos</h3>
+				</div>
+				<!-- Modal body -->
+				<div class="modal-body">
+					<form id="permiso-form">
+					  <div class="row">
+					    <div class="col-12 col-md-6">
+					      <div class="form-group">
+					        <label for="namePermiso">Nombre del permiso</label>
+					        <input type="text" class="form-control" id="namePermiso" name="namePermiso" required>
+					      </div>
+					    </div>
+					    <div class="col-12 col-md-6">
+					        <label for="colorPermiso">Color</label>
+					        <input type="color" class="form-control" id="colorPermiso" name="colorPermiso" value="#4DFF00" required>
+					    </div>
+					  </div>
+					</form>
+						<!---->
+					<div class="card">
+						<div class="card-footer p-0 text-center d-flex justify-content-center ">
+							<div class="card-footer-item card-footer-item-bordered">
+								<button data-dismiss="modal" class="card-link btn btn-outline-secondary">Cancelar</button>
+							</div>
+							<div class="card-footer-item card-footer-item-bordered">
+								<button type="button" id="permiso-btn" data-dismiss="modal" class="card-link btn btn-outline-primary">Enviar</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>

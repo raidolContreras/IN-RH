@@ -36,7 +36,7 @@
 						<?php else: ?>
 							<a class="nav-link" href="Asistencia">
 						<?php endif ?>
-							<i class="fas fa-bookmark"></i>REGISTRO DE HORAS</a>
+							<i class="fas fa-clock"></i>REGISTRO DE HORAS</a>
 					</li>
 
 					<li class="nav-item">

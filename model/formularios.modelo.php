@@ -1431,5 +1431,42 @@ class ModeloFormularios{
 		$stmt = null;
     }
 
+    static public function mdlRegistrarPermisos($tabla, $datos){
+    	$sql = "INSERT INTO $tabla(namePermisos,colorPermisos) VALUES (:namePermisos,:colorPermisos)";
+
+    	$stmt = Conexion::conectar()->prepare($sql);
+    	$stmt->bindParam(":namePermisos",$datos['namePermisos'],PDO::PARAM_STR);
+    	$stmt->bindParam(":colorPermisos",$datos['colorPermisos'],PDO::PARAM_STR);
+		if ($stmt->execute()) {
+			return "ok";
+		}else{
+			return "error";
+		}
+		$stmt->close();
+		$stmt = null;
+    }
+
+    static public function mdlVerPermisos($tabla,$item,$valor){
+	    if ($item == null && $valor == null) {	
+	    	$sql = "SELECT * FROM $tabla";
+
+			$stmt = Conexion::conectar()->prepare($sql);
+			$stmt->execute();
+			return $stmt -> fetchAll();
+
+		}else{
+			$sql = "SELECT * FROM $tabla WHERE $item = :$item";
+
+			$stmt = Conexion::conectar()->prepare($sql);
+			$stmt->bindParam(":".$item, $valor, PDO::PARAM_INT);
+			$stmt->execute();
+			return $stmt -> fetchAll();
+
+		}
+
+		$stmt->close();
+		$stmt = null;
+    }
+
 	/*---------- Fin de ModeloFormularios ---------- */
 }

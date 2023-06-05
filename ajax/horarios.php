@@ -85,6 +85,14 @@ class HorariosAjax {
 			$registrar_dia = ControladorFormularios::ctrRegistrarDiaFestivo($datos);
 			echo json_encode($registrar_dia);
 		}
+		if (isset($_POST['namePermiso'])) {
+			$datos = array(
+				"namePermisos" => $_POST['namePermiso'],
+				"colorPermisos" => $_POST['colorPermiso']
+			);
+			$registrar_Permiso = ControladorFormularios::ctrRegistrarPermisos($datos);
+			echo json_encode($registrar_Permiso);
+		}
 	}
 }
 
