@@ -29,18 +29,6 @@
 						</div>
 						<div class="card-body">
 							<h3 class="encabezado-h">Tipo de permisos y días festivos
-								<button type="button"
-												class="btn btn-in-consulting"
-												data-toggle="modal" 
-												data-target="#Permisos">
-									<i class="fas fa-plus-circle"></i> <span>Crear permisos</span>
-								</button>
-								<button type="button"
-												class="btn btn-in-consulting"
-												data-toggle="modal" 
-												data-target="#Festivo">
-									<i class="fas fa-plus-circle"></i> <span>Crear día festivo</span>
-								</button>
 							</h3>
 							<div class="row">
 								<div class="col-8">
@@ -51,22 +39,32 @@
 									</div>
 								</div>
 								<div class="col-2">
-									<h3 class="encabezado-h">Días festivos</h3>
+									<h3 class="encabezado-h">Días festivos
+								<button type="button"
+												class="btn btn-in-consulting"
+												data-toggle="modal" 
+												data-target="#Festivo">
+									<i class="fas fa-plus-circle"></i>
+								</button></h3>
 									<div id="d-fest"></div>
 								</div>
 								<div class="col-2">
-									<h3 class="encabezado-h">Tipos de permisos</h3>
-									<div id="t-permisos"></div>
-
+									<h3 class="encabezado-h">Permisos
+								<button type="button"
+												class="btn btn-in-consulting"
+												data-toggle="modal" 
+												data-target="#Permisos">
+									<i class="fas fa-plus-circle"></i>
+								</button></h3>
 									<?php foreach ($permisos as $permiso): ?>
-										<span class="mr-2"> <span class="badge-dot badge-<?php echo strtr($permiso['namePermisos'], " ", "-"); ?>">
-											
+									<div class="festivo">
+										<span class="mr-2 title">
+											<span class="badge-dot badge-<?php echo strtr($permiso['namePermisos'], " ", "-"); ?>">
+											</span>
+											<?php echo $permiso['namePermisos'] ?>
 										</span>
-										<?php echo $permiso['namePermisos'] ?>
-									</span>
-										
+									</div>
 									<?php endforeach ?>
-									<div></div>
 								</div>
 							</div>
 						</div>
