@@ -1,4 +1,4 @@
-
+<?php $permisos = ControladorFormularios::ctrVerPermisos(null,null); ?>
 <link href='assets/vendor/full-calendar/css/fullcalendar.css' rel='stylesheet' />
 <link href='assets/vendor/full-calendar/css/fullcalendar.print.css' rel='stylesheet' media='print' />
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -17,6 +17,15 @@
 	background-color: #EF8B8B;
 }
 
+<?php foreach ($permisos as $permiso): ?>
+	
+.badge-<?php echo strtr($permiso['namePermisos'], " ", "-"); ?> {
+	color: #343;
+	background-color: <?php echo $permiso['colorPermisos']; ?>;
+}
+	
+<?php endforeach ?>
+	
 </style>
 <div class="container-fluid dashboard-content">
 	<div class="ecommerce-widget">
@@ -42,6 +51,11 @@
 							<span class="mr-2 badge badge-Presente">Presente</span>
 							<span class="mr-2 badge badge-Retardo">Retardo</span>
 							<span class="mr-2 badge badge-Ausente">Ausente</span>
+							<?php foreach ($permisos as $permiso): ?>
+								<span class="mr-2 mt-2 badge badge-<?php echo strtr($permiso['namePermisos'], " ", "-"); ?>">
+									<?php echo $permiso['namePermisos'] ?>
+								</span>
+							<?php endforeach ?>
 						</div>
 					</div>
 				</div>
@@ -50,9 +64,7 @@
 	</div>
 </div>
 
-
-
-		<script src='assets/vendor/full-calendar/js/moment.min.js'></script>
-		<script src='assets/vendor/full-calendar/js/fullcalendar.js'></script>
-		<script src='assets/vendor/full-calendar/js/jquery-ui.min.js'></script>
-		<script src='assets/vendor/full-calendar/js/calendar.js'></script>
+<script src='assets/vendor/full-calendar/js/moment.min.js'></script>
+<script src='assets/vendor/full-calendar/js/fullcalendar.js'></script>
+<script src='assets/vendor/full-calendar/js/jquery-ui.min.js'></script>
+<script src='assets/vendor/full-calendar/js/calendar.js'></script>

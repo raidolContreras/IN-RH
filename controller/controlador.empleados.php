@@ -204,5 +204,11 @@ class ControladorEmpleados{
 		$borrarSolicitud = ModeloEmpleados::mdlBorrarSolicitud($tabla,$idSolicitudPassword);
 		return $borrarSolicitud;
 	}
+
+	static public function ctrVerEmpleadosHorariosDHorarios($item, $valor){
+		$tabla = "empleados";
+		$VerEmpleadosHorariosDHorarios = ModeloEmpleados::mdlVerEmpleadosHorariosDHorarios($tabla, $item, $valor);
+		return $VerEmpleadosHorariosDHorarios;
+	}
 	
 }
