@@ -4466,7 +4466,7 @@ var EventRenderer = /** @class */ (function () {
     // Utility for generating event skin-related CSS properties
     EventRenderer.prototype.getSkinCss = function (eventDef) {
         return {
-            'background-color': this.getBgColor(eventDef),
+            'font-size:12px; background-color': this.getBgColor(eventDef),
             'border-color': this.getBorderColor(eventDef),
             color: this.getTextColor(eventDef)
         };

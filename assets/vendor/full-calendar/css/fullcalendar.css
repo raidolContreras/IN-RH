@@ -489,13 +489,13 @@ temporary rendered events).
 /* left resizer  */
 .fc-ltr .fc-h-event.fc-selected .fc-start-resizer,
 .fc-rtl .fc-h-event.fc-selected .fc-end-resizer {
-  margin-left: -4px;
+  margin-left: -6px;
   /* centers the 8x8 dot on the left edge */ }
 
 /* right resizer */
 .fc-ltr .fc-h-event.fc-selected .fc-end-resizer,
 .fc-rtl .fc-h-event.fc-selected .fc-start-resizer {
-  margin-right: -4px;
+  margin-right: -6px;
   /* centers the 8x8 dot on the right edge */ }
 
 /* DayGrid events
@@ -510,7 +510,7 @@ be a descendant of the grid when it is being dragged.
   }
 
 tr:first-child > td > .fc-day-grid-event {
-  margin-top: 2px;
+  margin-top: 1px;
   /* a little bit more space before the first event */ }
 
 .fc-day-grid-event.fc-selected:after {
@@ -1308,3 +1308,7 @@ be a descendant of the grid when it is being dragged.
 .fc-unthemed .fc-list-empty {
   /* theme will provide own background */
   background-color: #eee; }
+
+tr { 
+  height: 30px !important; 
+}

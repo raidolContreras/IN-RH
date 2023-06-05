@@ -28,7 +28,6 @@ $(function() {
 										left: 'prev,next today',
 										center: 'title'
 								},
-								locale: 'es',
 								defaultDate: new Date(),
 								navLinks: false, // can click day/week names to navigate views
 								editable: false,
@@ -40,25 +39,40 @@ $(function() {
 						console.error('Error en la solicitud AJAX:', textStatus, errorThrown);
 				});
 		});
-
 		
-		$(document).ready(function(){
-			var festivo = "#BFBFBF";
-			$('#festivos').fullCalendar({
-				header: {
-						left: 'title'
-				},
-				defaultView: 'month',
-				dayRender: function (date, cell) {
-					var today = new Date();
-					 if(date.format("YYYY-MM-DD") == "2023-05-01"){
-						cell.css("background-color", festivo);
-					}
-				}
-			})
-		})
+$(document).ready(function() {
+    // Hacemos una solicitud AJAX al archivo PHP para obtener los datos de fecha
+    $.ajax({
+        url: 'ajax/fechas.festivas.php',
+        dataType: 'json'
+    }).done(function(data) {
+        $('#festivos').fullCalendar({
+            header: {
+                left: 'title'
+            },
+            defaultView: 'month',
+            navLinks: false,
+            editable: false,
+            eventLimit: true,
+            dayRender: function(date, cell) {
+                var today = new Date();
+                // Recorremos los eventos y verificamos si la fecha está entre el inicio y el fin (si existe)
+                for (var i = 0; i < data.length; i++) {
+                    var eventStart = moment(data[i].start).format("YYYY-MM-DD");
+                    var eventEnd = data[i].end ? moment(data[i].end).format("YYYY-MM-DD") : eventStart;
+                    if (date.isBetween(eventStart, eventEnd, 'day', '[]')) {
+                        cell.css("background-color", "#BABABA");
+                        break; // Si encontramos una coincidencia, salimos del bucle
+                    }
+                }
+            },
+            events: data // Pasamos los eventos al calendario
+        });
+    }).fail(function(jqXHR, textStatus, errorThrown) {
+        console.error('Error en la solicitud AJAX:', textStatus, errorThrown);
+    });
+});
 
-		
 		$(document).ready(function(){
 			var presente = "#ACE799";
 			var retardo = "#E7E199";

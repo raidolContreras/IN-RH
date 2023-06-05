@@ -2,6 +2,24 @@
 <link href='assets/vendor/full-calendar/css/fullcalendar.css' rel='stylesheet' />
 <link href='assets/vendor/full-calendar/css/fullcalendar.print.css' rel='stylesheet' media='print' />
 <link rel="stylesheet" href="assets/vendor/multi-select/css/multi-select.css">
+<style>
+    #d-fest {
+        margin-top: 10px;
+    }
+
+    .festivo {
+        margin-bottom: 10px;
+    }
+
+    .festivo .title {
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .festivo .date {
+        color: #999;
+    }
+</style>
 <div class="container-fluid dashboard-content">
 	<div class="ecommerce-widget">
 		<div class="card mx-5">
@@ -29,16 +47,17 @@
 								</button>
 							</h3>
 							<div class="row">
-							<div class="col-10">
-								<div class="card">
-									<div class="card-body">
-										<div id="festivos"></div>
+								<div class="col-8">
+									<div class="card">
+										<div class="card-body">
+											<?php include "Calendarios/calendario-permisos.php" ?>
+										</div>
 									</div>
 								</div>
-							</div>
-							<div class="col-2">
-								<h3 class="encabezado-h">Días festivos</h3>
-							</div>
+								<div class="col-2">
+									<h3 class="encabezado-h">Días festivos</h3>
+									<div id="d-fest"></div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -164,6 +183,7 @@
 						$("#form-result").parent().after(`
 							<div class='alert alert-success' role="alert" id="alerta">Día festivo registrado</div>
 							`);
+							setTimeout('document.location.reload()',800);
 							deleteAlert();
 					}else{
 						$("#form-result").val("");
@@ -186,8 +206,38 @@ function deleteAlert() {
     });
   }, 1500);
 }
-</script>
 
+$(document).ready(function() {
+    // Hacemos una solicitud AJAX al archivo PHP para obtener los datos de fecha
+    $.ajax({
+        url: 'ajax/fechas.festivas.php',
+        dataType: 'json'
+    }).done(function(data) {
+        // Creamos una variable para almacenar el contenido de las fechas festivas
+        var fechasFestivas = '';
+
+        // Recorremos los eventos y creamos una cadena con los datos de las fechas
+        for (var i = 0; i < data.length; i++) {
+            var festivo = data[i];
+            var title = festivo.title;
+            var start = moment(festivo.start).format("DD/MM/YYYY");
+            var end = festivo.end ? ' - ' + moment(festivo.end).format("DD/MM/YYYY") : '';
+
+            fechasFestivas += '<div class="festivo">';
+            fechasFestivas += '<p class="title">' + title + '</p>';
+            fechasFestivas += '<p class="date">' + start + end + '</p>';
+            fechasFestivas += '</div>';
+        }
+
+        // Insertamos el contenido de las fechas festivas en el elemento div
+        $('#d-fest').html(fechasFestivas);
+    }).fail(function(jqXHR, textStatus, errorThrown) {
+        console.error('Error en la solicitud AJAX:', textStatus, errorThrown);
+    });
+});
+
+
+</script>
 <script src='assets/vendor/full-calendar/js/moment.min.js'></script>
 <script src='assets/vendor/full-calendar/js/fullcalendar.js'></script>
 <script src='assets/vendor/full-calendar/js/jquery-ui.min.js'></script>
