@@ -117,7 +117,8 @@ session_start();
 			include "pages/".$_GET["pagina"].".php";
 
 		}elseif ($_GET["pagina"] == "Noticias" ||
-				 $_GET["pagina"] == "TableroNoticias"	) {
+				 $_GET["pagina"] == "TableroNoticias" ||
+				 $_GET["pagina"] == "EliminarNoticia"	) {
 
 			include "pages/navs/navbar.php";
 			include "pages/navs/sidenav.php"; 

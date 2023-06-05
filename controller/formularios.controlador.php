@@ -296,6 +296,17 @@ class ControladorFormularios{
 		}
 	}
 
+	static public function ctrEliminarNoticia(){
+		if (isset($_POST['idNoticia'])) {
+			$respuesta = ModeloFormularios::mdlEliminarNoticia('noticias', $_POST['idNoticia']);
+			if ($respuesta == "ok") {
+				return $respuesta;
+			}else{
+				return "error";
+			}
+		}
+	}
+
 	static public function ctrRegistrarPuestos(){
 
 		if (isset($_POST['name'])) {

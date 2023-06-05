@@ -199,7 +199,7 @@ class ModeloFormularios{
 
 			$sql = "SELECT *
 			FROM empleados e 
-			INNER JOIN emergencia m ON e.idEmpleados = m.Empleados_idEmpleados ORDER BY idEmpleados DESC;";
+			INNER JOIN emergencia m ON e.idEmpleados = m.Empleados_idEmpleados ORDER BY lastname ASC;";
 			$stmt = Conexion::conectar()->prepare($sql);
 			$stmt->execute();
 			return $stmt -> fetchAll();
@@ -500,6 +500,25 @@ class ModeloFormularios{
 		$sql = "UPDATE $tabla SET status=0, Empleados_idEmpleados=0 WHERE idDepartamentos = :idDepartamentos";
 		$stmt = Conexion::conectar()->prepare($sql);
 		$stmt->bindParam(":idDepartamentos", $idDepto, PDO::PARAM_INT);
+		if ($stmt->execute()) {
+
+			return "ok";
+		}
+		else{
+
+			print_r(Conexion::conectar()->errorInfo());
+		}
+
+		$stmt->close();
+		$stmt = null;
+	}
+
+	
+	static public function mdlEliminarNoticia($tabla, $idNoticia){
+
+		$sql = "DELETE FROM $tabla WHERE idNoticias = :idNoticias";
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->bindParam(":idNoticias", $idNoticia, PDO::PARAM_INT);
 		if ($stmt->execute()) {
 
 			return "ok";

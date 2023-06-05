@@ -49,5 +49,5 @@ if ($fechasCompletas === [1, 2, 3, 4, 5, 6, 0]) {
     // Devolvemos el resultado como texto JSON
     header('Content-Type: application/json');
     $fechasEmpleado = json_encode($fechasCompletas);
-echo $fechasEmpleado;
+    echo $fechasEmpleado;
 ?>

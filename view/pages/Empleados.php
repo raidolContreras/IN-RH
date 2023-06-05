@@ -60,7 +60,7 @@ $empresas = ControladorFormularios::ctrVerEmpresas(null, null);
 													<tr>
 														<td>
 															<a class="btn btn-link" href="Empleado&perfil=<?php echo $value['idEmpleados'];?>">
-																<?php echo mb_strtoupper($value['name'].' '.$value['lastname'], 'UTF-8'); ?>
+																<?php echo mb_strtoupper($value['lastname'].' '.$value['name'], 'UTF-8'); ?>
 															</a>
 														</td>
 														<?php if ($value['status'] == 1): ?>

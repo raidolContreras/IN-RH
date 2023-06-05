@@ -74,28 +74,33 @@ $(function() {
 	});
 
 $(document).ready(function() {
-    // Obtener los días no laborables del servidor mediante AJAX
-    $.ajax({
-        url: 'ajax/fechasEmpleados.php',
-        dataType: 'json',
-        success: function(data) {
-            // Configuración del calendario
-            $('#calendar3').fullCalendar({
-                header: {
-                    left: 'title'
-                },
-                defaultView: 'month',
-                navLinks: false,
-                editable: false,
-                eventLimit: true,
-                // Función para personalizar la representación de cada día
-                hiddenDays: data
-            });
-        },
-        error: function(xhr, status, error) {
-            console.error('Error en la solicitud AJAX:', status, error);
-        }
-    });
+	// Obtener los días no laborables del servidor mediante AJAX
+	$.ajax({
+		url: 'ajax/fechasEmpleados.php',
+		dataType: 'json',
+		success: function(data) {
+			// Configuración del calendario
+			$('#calendar3').fullCalendar({
+				header: {
+						left: 'title'
+				},
+				defaultView: 'month',
+				navLinks: false,
+				editable: false,
+				eventLimit: true,
+				
+				businessHours: {
+					dow: data // dias de semana, 0=Domingo
+				},
+				dayClick: function(date, jsEvent, view) {
+					$("#hora_seleccionada").html(date.format("MM/DD/YYYY, h:mm:ss"));
+				}
+			});
+		},
+		error: function(xhr, status, error) {
+				console.error('Error en la solicitud AJAX:', status, error);
+		}
+	});
 });
 
 

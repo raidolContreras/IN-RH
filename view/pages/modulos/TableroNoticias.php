@@ -37,7 +37,7 @@
 
 									<div class="float-right">
 										<p class="titulo-sup m-0">
-											<a href="Noticias" class="btn-outline-light boton" >
+											<a href="EliminarNoticia&noticia=<?php echo $noticia['idNoticias'] ?>" class="btn-outline-light boton" >
 												<i class="fas fa-trash"></i>
 											</a>
 										</p>
