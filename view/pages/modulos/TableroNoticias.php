@@ -41,6 +41,11 @@
 												<i class="fas fa-trash"></i>
 											</a>
 										</p>
+										<p class="titulo-sup m-0">
+											<a href="Noticias&noticia=<?php echo $noticia['idNoticias'] ?>" class="btn-outline-light boton" >
+												<i class="fas fa-edit"></i>
+											</a>
+										</p>
 									</div>
 								</div>
 							</div>

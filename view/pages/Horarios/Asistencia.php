@@ -3,6 +3,14 @@
 <link href='assets/vendor/full-calendar/css/fullcalendar.print.css' rel='stylesheet' media='print' />
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
+
+.fc-nonbusiness {
+  background: #BABABA;  
+}
+	
+.fc-disabled-day {
+  background: #FFF !important;  
+}
 	
 .badge-Presente {
 	color: #343;

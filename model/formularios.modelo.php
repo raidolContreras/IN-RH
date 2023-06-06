@@ -959,6 +959,24 @@ class ModeloFormularios{
 		$stmt = null;
 	}
 
+static public function mdlActualizarNoticia($tabla, $datos)
+{
+	$pdo = Conexion::conectar();
+	$stmt = $pdo->prepare("UPDATE noticias SET mensaje=:mensaje,fecha_fin=:fecha_fin,foto_noticia=:foto_noticia WHERE idNoticias = :idNoticias");
+
+	$stmt->bindParam(":mensaje", $datos['mensaje'], PDO::PARAM_STR);
+	$stmt->bindParam(":fecha_fin", $datos['fecha_fin'], PDO::PARAM_STR);
+	$stmt->bindParam(":foto_noticia", $datos['foto_noticia'], PDO::PARAM_INT);
+	$stmt->bindParam(":idNoticias", $datos['idNoticias'], PDO::PARAM_INT);
+	if ($stmt->execute()) {
+		return $stmt->rowCount();
+	} else {
+		print_r($stmt->errorInfo());
+	}
+	$stmt->close();
+	$stmt = null;
+}
+
 	static public function mdlVerNoticias($tabla, $item, $valor){
 
 		if ($item == null && $valor == null) {
@@ -979,23 +997,21 @@ class ModeloFormularios{
 
 	}
 
-	static public function mdlImagenNoticia($id, $name){
-		$sql = "UPDATE noticias SET name_foto=:name_foto WHERE idNoticias=:idNoticias";
-		$stmt = Conexion::conectar()->prepare($sql);
-		$stmt->bindParam(":name_foto", $name, PDO::PARAM_STR);
-		$stmt->bindParam(":idNoticias", $id, PDO::PARAM_INT);
-		if ($stmt->execute()) {
-
-			return "ok";
-		}
-		else{
-
-			print_r(Conexion::conectar()->errorInfo());
-		}
-
-		$stmt->close();
-		$stmt = null;
+static public function mdlImagenNoticia($id, $name)
+{
+	$pdo = Conexion::conectar();
+	$sql = "UPDATE noticias SET name_foto=:name_foto WHERE idNoticias=:idNoticias";
+	$stmt = $pdo->prepare($sql);
+	$stmt->bindParam(":name_foto", $name, PDO::PARAM_STR);
+	$stmt->bindParam(":idNoticias", $id, PDO::PARAM_INT);
+	if ($stmt->execute()) {
+		return "ok";
+	} else {
+		print_r($stmt->errorInfo());
 	}
+	$stmt->close();
+	$stmt = null;
+}
 
 	static public function mdlRegistrarEmpresas($tabla, $datos){
 		$sql = "INSERT INTO $tabla
