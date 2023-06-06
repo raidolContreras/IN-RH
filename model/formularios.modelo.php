@@ -1347,7 +1347,8 @@ class ModeloFormularios{
 
     static public function mdlregistrarEmpleadosHorario($tabla,$empleado,$idHorario){
 
-    	$sql = "INSERT INTO $tabla (Empleados_idEmpleados, Horarios_idHorarios) VALUES (:empleado,:idHorario)";
+    	$sql = "DELETE FROM $tabla WHERE Empleados_idEmpleados = :empleado;";
+    	$sql .= "INSERT INTO $tabla (Empleados_idEmpleados, Horarios_idHorarios) VALUES (:empleado,:idHorario);";
 
 		$stmt = Conexion::conectar()->prepare($sql);
 		$stmt->bindParam(":empleado", $empleado, PDO::PARAM_INT);

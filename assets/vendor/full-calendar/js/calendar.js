@@ -88,12 +88,9 @@ $(document).ready(function() {
 				navLinks: false,
 				editable: false,
 				eventLimit: true,
-				
+                showNonCurrentDates: false,
 				businessHours: {
 					dow: data // dias de semana, 0=Domingo
-				},
-				dayClick: function(date, jsEvent, view) {
-					$("#hora_seleccionada").html(date.format("MM/DD/YYYY, h:mm:ss"));
 				}
 			});
 		},
