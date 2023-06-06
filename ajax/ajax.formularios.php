@@ -232,7 +232,7 @@ class FormulariosAjax{
 				echo json_encode('Error: data');
 			} else {
 				foreach($busqueda as $empleado){
-					if (crypt($empleado['idEmpleados'], 'asxx54ahjppf45sd87a5a4dDDGsystemdev') == $idEmpleados) {
+					if (md5($empleado['idEmpleados']) == $idEmpleados) {
 
 						$data = array(
 							"idEmpleados" => $empleado['idEmpleados'],
@@ -241,6 +241,9 @@ class FormulariosAjax{
 
 						$cambio = ControladorEmpleados::ctrCambioPassword($tabla,$data);
 
+						if ($cambio == 'ok') {
+							$_SESSION["cambio_password"] = 1;
+						}
 						echo json_encode($cambio);
 					}
 				}

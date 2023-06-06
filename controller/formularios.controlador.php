@@ -620,6 +620,7 @@ class ControladorFormularios{
 					$_SESSION["lastname"] = $respuesta["lastname"];
 					$_SESSION["status"] = $respuesta["status"];
 					$_SESSION["loginEmail"] = $respuesta["email"];
+					$_SESSION["cambio_password"] = $respuesta["cambio_password"];
 
 					if ($respuesta['cambio_password'] == 0) {
 						return 'Cambio';

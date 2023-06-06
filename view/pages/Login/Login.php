@@ -42,7 +42,7 @@ if (isset($_POST['button-login'])) {
 						<?php elseif($ingreso == 'Cambio'): ?>
 
 							<div class='alert alert-success'>Bienvenido</div>
-							<?php $idEmpleado = crypt($_SESSION['idEmpleado'], 'asxx54ahjppf45sd87a5a4dDDGsystemdev'); ?>
+							<?php $idEmpleado = md5($_SESSION['idEmpleado']); ?>
 							<script>
 								location.href='Password&cambio=<?php echo $idEmpleado; ?>';
 							</script>

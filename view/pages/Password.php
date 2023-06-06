@@ -73,9 +73,8 @@ if (isset($_GET['forgot'])) {
         <script>
             location.href = 'Login';
         </script>
-    <?php } ?>
-
-<?php } else {
+    <?php }
+} else {
     $verificar = ControladorEmpleados::ctrVerEmpleados("idEmpleados", $_SESSION['idEmpleado']);
 
     if ($verificar['cambio_password'] == 1) { ?>
@@ -155,6 +154,6 @@ if (isset($_GET['forgot'])) {
                     });
                 });
             </script>
-    <?php } ?>
+<?php }
+} ?>
 
-<?php endif ?>
