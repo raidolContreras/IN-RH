@@ -1,5 +1,5 @@
 <?php 
-$empleados = ControladorEmpleados::ctrVerEmpleados(null, null); 
+$empresas = ControladorFormularios::ctrVerEmpresas(null, null); 
 $empleadoMes = ControladorFormularios::ctrSeleccionarEmpleadoMes();
 $fotoEmpleado = ControladorFormularios::ctrVerFotos("Empleados_idEmpleados", $empleadoMes['idEmpleados']); 
 ?>
@@ -87,12 +87,19 @@ $fotoEmpleado = ControladorFormularios::ctrVerFotos("Empleados_idEmpleados", $em
 					<form id="empleado-form">
 
 						<div class="mb-2">
+							<label class="col-form-label font-weight-bold" for="empresas">Empresa</label>
+							<select name="empresas" id="empresas" class="form-control" required>
+								<option>Selecciona un empresa</option>
+								<?php foreach ($empresas as $empresa): ?>
+									<option value="<?php echo $empresa['idEmpresas'] ?>"><?php echo $empresa['nombre_razon_social'] ?></option>
+								<?php endforeach ?>
+							</select>
+						</div>
+
+						<div class="mb-2">
 							<label class="col-form-label font-weight-bold" for="empleadoMes">Empleado</label>
 							<select name="empleadoMes" id="empleadoMes" class="form-control" required>
 								<option>Selecciona un empleado</option>
-								<?php foreach ($empleados as $key => $empleado): ?>	
-									<option value="<?php echo $empleado['idEmpleados']; ?>"><?php echo $empleado['lastname']." ".$empleado['name']; ?></option>
-								<?php endforeach ?>
 							</select>
 						</div>
 						<!---->
@@ -160,6 +167,31 @@ $fotoEmpleado = ControladorFormularios::ctrVerFotos("Empleados_idEmpleados", $em
 			});
 		});
 	});
+	$(document).ready(function() {
+	  // Manejar el evento de cambio del select de empresas
+	  $("#empresas").change(function() {
+	    // Obtener el ID de la empresa seleccionada
+	    var idEmpresa = $(this).val();
+
+	    // Realizar la solicitud AJAX
+	    $.ajax({
+	      url: "ajax/obtenerEmpleadoEmpresa.php",
+	      type: "POST",
+	      data: { idEmpresa: idEmpresa },
+	      dataType: "json",
+	      success: function(response) {
+	        // Limpiar el select de empleados
+	        $("#empleadoMes").empty();
+
+	        // Agregar las opciones de empleados al select
+	        $.each(response, function(index, empleado) {
+	          $("#empleadoMes").append("<option value='" + empleado.idEmpleados + "'>" + empleado.Nombre + "</option>");
+	        });
+	      }
+	    });
+	  });
+	});
+
 
 </script>
 
