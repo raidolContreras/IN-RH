@@ -13,7 +13,7 @@ $sql = "SELECT CONCAT(e.lastname, ' ', e.name) AS Nombre, e.idEmpleados
         JOIN puesto p ON p.Empleados_idEmpleados = e.idEmpleados
         JOIN departamentos d ON d.idDepartamentos = p.Departamentos_idDepartamentos
         JOIN empresas em ON em.idEmpresas = d.Empresas_idEmpresas
-        WHERE em.idEmpresas = :idEmpresa";
+        WHERE em.idEmpresas = :idEmpresa AND e.status = 1";
 
 // Ejecutar la consulta
 // Asegúrate de utilizar la misma configuración de conexión a la base de datos que utilizas en otros archivos
