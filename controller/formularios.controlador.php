@@ -242,6 +242,15 @@ class ControladorFormularios{
 		return $respuesta;
 
 	}
+	static public function ctrVerPertenenciasDepartamentos($item, $valor){
+
+		$tabla = "departamentos";
+
+		$respuesta = ModeloFormularios::mdlVerPertenenciasDepartamentos($tabla, $item, $valor);
+
+		return $respuesta;
+
+	}
 	static public function ctrDeptosEspecial($item, $valor){
 
 		$tabla = "departamentos";

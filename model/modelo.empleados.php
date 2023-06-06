@@ -231,20 +231,56 @@ class ModeloEmpleados{
 		$stmt = null;
 	}
 
-static public function mdlVerEmpleadosHorariosDHorarios($tabla, $item, $valor){
-	    $sql = "SELECT dh.dia_Laborable
-	    FROM $tabla e
-	    RIGHT JOIN empleados_has_horarios eh ON e.idEmpleados = eh.Empleados_idEmpleados
-	    RIGHT JOIN horarios h ON eh.Horarios_idHorarios = h.idHorarios
-	    RIGHT JOIN dia_horario dh ON h.idHorarios = dh.Horarios_idHorarios
-	    WHERE $item = :valor"; 
+	static public function mdlVerEmpleadosHorariosDHorarios($tabla, $item, $valor){
+		$sql = "SELECT dh.dia_Laborable
+				FROM $tabla e
+				RIGHT JOIN empleados_has_horarios eh ON e.idEmpleados = eh.Empleados_idEmpleados
+				RIGHT JOIN horarios h ON eh.Horarios_idHorarios = h.idHorarios
+				RIGHT JOIN dia_horario dh ON h.idHorarios = dh.Horarios_idHorarios
+				WHERE $item = :valor"; 
 
-    $stmt = Conexion::conectar()->prepare($sql);
-    $stmt->bindParam(":valor", $valor, PDO::PARAM_STR); // Modificación en esta línea
-    $stmt->execute();
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->bindParam(":valor", $valor, PDO::PARAM_STR); // Modificación en esta línea
+		$stmt->execute();
 
-    return $stmt; // No usar fetchAll() aquí, devolver el statement completo
-}
+		return $stmt; // No usar fetchAll() aquí, devolver el statement completo
+	}
+
+	static public function mdlEquipoDeTrabajo($tabla, $item,$pertenece){
+		if ($pertenece == null) {
+			$sql = "SELECT CONCAT( e.lastname, ' ', e.name) As Nombre, e.idEmpleados, d.Empleados_idEmpleados AS jefeDepa, f.namePhoto, e.genero, d.nameDepto AS Depto, p.namePuesto AS Puesto, CONCAT( ep.lastname, ' ', ep.name) AS NombrePertenencia, fp.namePhoto AS fotoPertenencia, dp.nameDepto AS Pertenencia, d.idDepartamentos AS depto
+					FROM $tabla e
+					LEFT JOIN foto_empleado f ON f.Empleados_idEmpleados = e.idEmpleados
+					JOIN puesto p ON p.Empleados_idEmpleados = e.idEmpleados
+					JOIN departamentos d ON d.idDepartamentos = p.Departamentos_idDepartamentos
+					LEFT JOIN departamentos dp ON dp.idDepartamentos = d.Pertenencia
+					LEFT JOIN empleados ep ON dp.Empleados_idEmpleados = ep.idEmpleados
+					LEFT JOIN foto_empleado fp ON fp.Empleados_idEmpleados = ep.idEmpleados
+					WHERE d.idDepartamentos = :idDepartamentos
+					ORDER BY Nombre ASC;"; 
+		}else{
+			$sql = "SELECT CONCAT( e.lastname, ' ', e.name) As Nombre, e.idEmpleados, d.Empleados_idEmpleados AS jefeDepa, f.namePhoto, e.genero, d.nameDepto AS Depto, p.namePuesto AS Puesto, CONCAT( ep.lastname, ' ', ep.name) AS NombrePertenencia, fp.namePhoto AS fotoPertenencia, dp.nameDepto AS Pertenencia, d.idDepartamentos AS depto
+					FROM $tabla e
+					LEFT JOIN foto_empleado f ON f.Empleados_idEmpleados = e.idEmpleados
+					JOIN puesto p ON p.Empleados_idEmpleados = e.idEmpleados
+					JOIN departamentos d ON d.idDepartamentos = p.Departamentos_idDepartamentos
+					LEFT JOIN departamentos dp ON dp.idDepartamentos = d.Pertenencia
+					LEFT JOIN empleados ep ON dp.Empleados_idEmpleados = ep.idEmpleados
+					LEFT JOIN foto_empleado fp ON fp.Empleados_idEmpleados = ep.idEmpleados
+					WHERE d.Pertenencia = :idDepartamentos
+					ORDER BY Nombre ASC;"; 
+		}
+
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->bindParam(":idDepartamentos", $item, PDO::PARAM_INT); // Modificación en esta línea
+		$stmt->execute();
+
+		$stmt->execute();
+		return $stmt->fetchAll();
+
+		$stmt->close();
+		$stmt = null;
+	}
 
 
 

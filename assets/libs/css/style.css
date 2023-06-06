@@ -5326,6 +5326,12 @@ Vertical Timeline - by CodyHouse.co
 	object-fit: cover;
 	object-position: center center;
 }
+.user-avatar-lg3 {
+	height: 50px;
+	width: 50px;
+	object-fit: cover;
+	object-position: center center;
+}
 
 .user-avatar-xl {
 	height: 90px;
@@ -6614,6 +6620,7 @@ Vertical Timeline - by CodyHouse.co
 .align-items-center {
 	align-items: center !important;
 	justify-content: center;
+	display: flex;
 }
 
 .chat-team-sidebar .nav {

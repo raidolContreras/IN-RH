@@ -210,5 +210,13 @@ class ControladorEmpleados{
 		$VerEmpleadosHorariosDHorarios = ModeloEmpleados::mdlVerEmpleadosHorariosDHorarios($tabla, $item, $valor);
 		return $VerEmpleadosHorariosDHorarios;
 	}
+
+	static public function ctrEquipoDeTrabajo($pertenece){
+		$puesto = ControladorFormularios::ctrVerPuestos("Empleados_idEmpleados", $_SESSION['idEmpleado']);
+
+		$tabla = "empleados";
+		$EquipoDeTrabajo = ModeloEmpleados::mdlEquipoDeTrabajo($tabla, $puesto['Departamentos_idDepartamentos'],$pertenece);
+		return $EquipoDeTrabajo;
+	}
 	
 }
