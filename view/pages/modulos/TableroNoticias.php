@@ -4,8 +4,9 @@
 	<div class="col-12 mt-4 mb-4">
 		<div id="carouselExampleIndicators1" class="carousel slide" data-ride="carousel">
 			<div class="carousel-inner">
-				<?php foreach ($noticias as $key => $noticia): ?>
-				<?php if ($key == 0): ?>
+				<?php $i=0;
+				foreach ($noticias as $key => $noticia): ?>
+				<?php $i++; if ($key == 0): ?>
 				<div class="carousel-item active">
 				<?php else: ?>
 				<div class="carousel-item">
@@ -52,7 +53,7 @@
 						</div>
 						<?php if ($noticia['foto_noticia'] == 1): ?>
 								<div class="col-8 pl-4 pt-2 pb-4">
-								  <div class="card-into-card rounded pt-5 pb-5 h-100 d-flex align-items-center">
+								  <div class="card-into-card rounded h-100 d-flex align-items-center">
 								    <div>
 								      <?php echo $noticia['mensaje']; ?>
 								    </div>
@@ -77,6 +78,8 @@
 
 					<?php endforeach ?>
 				</div>
+				<?php if ($i <= 1): ?>
+				<?php else: ?>
 				<a class="carousel-control-prev" href="#carouselExampleIndicators1" role="button" data-slide="prev">
 					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
 					<span class="sr-only">Anterior</span>
@@ -85,6 +88,7 @@
 					<span class="carousel-control-next-icon" aria-hidden="true"></span>
 					<span class="sr-only">Siguiente</span>
 				</a>
+				<?php endif ?>
 			</div>
 		</div>
 
