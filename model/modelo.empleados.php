@@ -92,8 +92,9 @@ class ModeloEmpleados{
 	}
 
 	static public function mdlFechaNacimiento($tabla){
-		$sql = "SELECT * FROM $tabla
-				WHERE DATE_FORMAT(fNac, '%m-%d') 
+		$sql = "SELECT * FROM $tabla e
+				LEFT JOIN foto_empleado fe on e.idEmpleados = fe.Empleados_idEmpleados
+				WHERE DATE_FORMAT(e.fNac, '%m-%d') 
 				BETWEEN DATE_FORMAT(CURDATE(), '%m-%d') 
 				AND DATE_FORMAT(DATE_ADD(CURDATE(), INTERVAL 30 DAY), '%m-%d')";
 		$stmt = Conexion::conectar()->prepare($sql);

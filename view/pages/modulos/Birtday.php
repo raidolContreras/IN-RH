@@ -9,8 +9,8 @@ $empleados = ControladorEmpleados::ctrFechaNacimiento(null, null);
 				<?php foreach ($empleados as $key => $empleado): ?>
 					<div class="widget-container pb-3">
 							<div class="col-2">
-						<?php if (isset($fotoEmpleado['namePhoto'])): ?>
-							<img src="view/fotos/thumbnails/<?php echo $fotoEmpleado['namePhoto'] ?>"
+						<?php if (isset($empleado['namePhoto'])): ?>
+							<img src="view/fotos/thumbnails/<?php echo $empleado['namePhoto'] ?>"
 						<?php else: ?>
 							<?php if ($empleado['genero']==1): ?>
 								<img src="assets/images/Ejecutivo.webp"
