@@ -771,6 +771,8 @@ class ControladorFormularios{
 				} else {
 					return 'Error al mover la imagen';
 				}
+			}else{
+				return 'ok';
 			}
 		} elseif ($noticia > 0) {
 			return 'ok';
