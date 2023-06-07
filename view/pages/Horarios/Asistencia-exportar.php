@@ -1,4 +1,3 @@
-<script src="https://kit.fontawesome.com/a076d05399.js"></script>
 <div class="container-fluid dashboard-content">
 	<div class="ecommerce-widget">
 		<div class="card mx-5">

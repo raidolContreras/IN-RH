@@ -109,7 +109,7 @@ $puesto = ControladorFormularios::ctrVerPuestos("Empleados_idEmpleados", $_GET['
 										<div class="modal-body">
 											<p>Seguro que deseas dar de baja a <?php echo strtoupper($colaborador['name']." ".$colaborador['lastname']); ?>, esta acción <strong>si </strong>puede deshacerse</p>
 
-												<input type="date" class="form-control" name="fecha_baja" required>
+												<input type="date" class="form-control" min="<?php echo date("Y-m-d", strtotime($colaborador['fecha_contratado'])); ?>" name="fecha_baja" required>
 										</div>
 
 										<div class="modal-footer">
