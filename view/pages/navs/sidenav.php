@@ -40,10 +40,6 @@
 					</li>
 
 					<li class="nav-item">
-						<a class="nav-link" href="#"><i class="fas fa-bookmark"></i>REGISTRO Y SOLICITUD DE AUSENCIA</a>
-					</li>
-
-					<li class="nav-item">
 						<a class="nav-link" href="#"><i class=" fas fa-check-square"></i>TAREAS</a>
 					</li>
 
@@ -57,24 +53,6 @@
 
 					<li class="nav-item">
 						<a class="nav-link" href="#"><i class="fas fa-newspaper"></i>ANALISÍS E INFORMES</a>
-					</li>
-
-					<li class="nav-divider">
-						Desarrollo
-					</li>
-
-					<li class="nav-item">
-						<a class="nav-link" href="#"><i class="fas fa-table"></i>EVALUACION DEL DESEMPEÑO</a>
-					</li>
-
-					<li class="nav-item">
-						<a class="nav-link" href="#"><i class="fab fa-rocketchat"></i>COMUNICACIÓN INTERNA</a>
-					</li>
-					<li class="nav-divider">
-						Acciones
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="#"><i class="fas fa-book"></i>CONTROL DE ASISTENCIAS</a>
 					</li>
 				</ul>
 			</div>

@@ -247,6 +247,7 @@ if($registro == "ok"){
 								</select>
 							</div>
 						</div>
+
 						<div class="form-group col-md-4">
 							<label for="empresa" class="col-form-label font-weight-bold">Empresa:</label>
 							<select class="form-control form-control-lg" id="empresa" name="empresa" required>
@@ -266,13 +267,14 @@ if($registro == "ok"){
 								<?php endforeach ?>
 							</select>
 						</div>
+
 						<div class="form-group col-md-4">
 							<label for="departamento" class="col-form-label text-center font-weight-bold">Departamento:</label>
 							<select class="form-control form-control-lg" id="departamento" name="departamento">
 								<option>Selecciona la empresa</option>
 							</select>
 						</div>
-						<input class="form-control" type="hidden" name="empleado" value="<?php echo $_GET['perfil'] ?>">
+						<input type="hidden" name="empleado" value="<?php echo $_GET['perfil'] ?>">
 
 						<div class="form-group col-md-4">
 							<label for="asignarJefatura" class="col-form-label text-center font-weight-bold">¿Asignar Jefe?:</label>
@@ -305,45 +307,25 @@ if($registro == "ok"){
 <script>
 $(document).ready(function() {
   var empresa = document.getElementById('empresa');
-  var pertenencia = document.getElementById('departamento');
+  var departamento = document.getElementById('departamento');
 
   // Función para cargar los departamentos correspondientes a la empresa seleccionada
-  function cargarDepartamentos(empresaId) {
+  function cargarDepartamentos(EmpresaActual,Departamento) {
     $.ajax({
       url: "ajax/ajax.formularios.php",
       type: "POST",
-      data: { empresaId: empresaId },
+      data: { EmpresaActual: EmpresaActual, Departamento: Departamento },
       success: function(response) {
-        var perteneceDepa = JSON.parse(response);
-
         // Limpiar las opciones actuales del select de departamentos
-        pertenencia.innerHTML = '';
+        departamento.innerHTML = '';
 
         // Agregar una opción predeterminada
         var opcionPredeterminada = document.createElement('option');
         opcionPredeterminada.text = 'Sin departamento';
-        pertenencia.add(opcionPredeterminada);
+        departamento.add(opcionPredeterminada);
 
         // Agregar las opciones de departamentos correspondientes a la empresa seleccionada
-        perteneceDepa.forEach(function(datos) {
-				  if (datos.id === <?php echo $departamento['idDepartamentos'] ?>) {
-				    var opcionDepartamento = document.createElement('option');
-				    if (datos.Pertenencia === null) {
-				      opcionDepartamento.text = datos.name;
-				    } else {
-				      opcionDepartamento.text = datos.name + ' (' + datos.Pertenencia + ')';
-				    }
-				    opcionDepartamento.value = datos.id;
-
-				    // Comparar con $datos['Pertenencia'] y marcar como seleccionada
-				    if (datos.id === <?php echo $departamento['idDepartamentos'] ?>) {
-				      opcionDepartamento.selected = true;
-				    }
-
-				    pertenencia.add(opcionDepartamento);
-				  }
-				});
-
+        departamento.innerHTML += response;
       }
     });
   }
@@ -353,8 +335,9 @@ $(document).ready(function() {
 
   // Cambiar los departamentos cuando se seleccione otra empresa
   $("#empresa").change(function() {
-    var empresaId = $(this).val();
-    cargarDepartamentos(empresaId);
+    var EmpresaActual = $(this).val();
+    var Departamento = <?php echo $puesto['Departamentos_idDepartamentos']; ?>;
+    cargarDepartamentos(EmpresaActual,Departamento);
   });
 });
 

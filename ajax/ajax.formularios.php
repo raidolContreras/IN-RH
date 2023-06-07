@@ -347,6 +347,28 @@ class FormulariosAjax{
 	    echo json_encode($departamentos);
 	}
 
+	public function buscarDepasEmpleadoAjax(){
+			$idEmpresas = $this->idEmpresas;
+			$departamento = $this->Departamento;
+			$buscarDepas = ControladorFormularios::ctrDeptosEspecial2("Empresas_idEmpresas", $idEmpresas);
+			$options = '';
+			foreach ($buscarDepas as $datos) {
+				$opcion = '<option value="' . $datos['id'] . '"';
+				if ($datos['id'] === $departamento) {
+					$opcion .= ' selected';
+				}
+				$opcion .= '>' . $datos['name'];
+				if ($datos['Pertenencia'] !== null) {
+					$opcion .= ' (' . $datos['Pertenencia'] . ')';
+				}
+				$opcion .= '</option>';
+				$options .= $opcion;
+			}
+
+			// Devolver las opciones generadas como respuesta
+			echo $options;
+	}
+
 	public function CambiarPredeterminadoAjax(){
 		$idHorarios = $this->idHorarios;
 
@@ -557,6 +579,18 @@ if (isset($_POST['empresaId'])) {
 	$generarDepas = new FormulariosAjax();
 	$generarDepas -> idEmpresas = $empresaId;
 	$generarDepas -> buscarDepasAjax();
+
+}
+
+if (isset($_POST['EmpresaActual'])) {
+
+	$EmpresaActual = $_POST['EmpresaActual'];
+	$Departamento = $_POST['Departamento'];
+
+	$generarDepas = new FormulariosAjax();
+	$generarDepas -> idEmpresas = $EmpresaActual;
+	$generarDepas -> Departamento = $Departamento;
+	$generarDepas -> buscarDepasEmpleadoAjax();
 
 }
 
