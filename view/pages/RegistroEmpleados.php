@@ -18,11 +18,11 @@
 	$salarioVacante = 0;
 }
 
-	$departamentos = ControladorFormularios::ctrVerDepartamentos(null, null);
+	$empresas = ControladorFormularios::ctrVerEmpresas(null,null);
 	$horarios = ControladorFormularios::ctrSeleccionarHorarios(null, null);
-	$horarios = ControladorFormularios::ctrSeleccionarHorarios(null, null);
+
 ?>
-<link rel="stylesheet" href="assets/vendor/datepicker/tempusdominus-bootstrap-4.css" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <div class="container-fluid dashboard-content ">
 	<div class="container">
 		<div class="row justify-content-center">
@@ -237,23 +237,37 @@
 														</div>
 													</div>
 													<?php if (!isset($_GET['postulante'])): ?>
-														<div class="form-group col-md-6">
-															<label for="departamento" class="col-form-label text-center font-weight-bold">Departamento:</label>
-															<select class="form-control form-control-lg" id="departamento" name="departamento">
-																<?php foreach ($departamentos as $key => $departamento): ?>
-																	<?php if ($departamento['idDepartamentos'] == $puesto['Departamentos_idDepartamentos']): ?>
-																		<option value="<?php echo $departamento['idDepartamentos']; ?>" selected><?php echo ucwords(strtolower($departamento['nameDepto'])); ?></option>
-																	<?php else: ?>
-																		<option value="<?php echo $departamento['idDepartamentos']; ?>"><?php echo ucwords(strtolower($departamento['nameDepto'])); ?></option>
-																	<?php endif ?>
+														<div class="form-group col-md-4">
+															<label for="empresa" class="col-form-label font-weight-bold">Empresa:</label>
+															<select class="form-control form-control-lg" id="empresa" name="empresa" required>
+																	<option>
+																		Seleccionar empresa
+																	</option>
+																<?php foreach ($empresas as $empresa): ?>
+																    <?php if ($empresasSelect['idEmpresas'] == $empresa['idEmpresas']): ?>
+																        <option value="<?php echo $empresa['idEmpresas']; ?>" selected>
+																            <?php echo ucwords(strtolower($empresa['nombre_razon_social']." (".$empresa['rfc'].")")); ?>
+																        </option>
+																    <?php else: ?>
+																        <option value="<?php echo $empresa['idEmpresas']; ?>">
+																            <?php echo ucwords(strtolower($empresa['nombre_razon_social']." (".$empresa['rfc'].")")); ?>
+																        </option>
+																    <?php endif ?>
 																<?php endforeach ?>
+
 															</select>
 														</div>
-														<div class="form-group col-md-6">
+														<div class="form-group col-md-4">
+															<label for="departamento" class="col-form-label text-center font-weight-bold">Departamento:</label>
+															<select class="form-control form-control-lg" id="Pertenencia" name="departamento">
+																		<option>Selecciona la empresa</option>
+															</select>
+														</div>
+														<div class="form-group col-md-4">
 															<label for="asignarJefatura" class="col-form-label text-center font-weight-bold">¿Asignar Jefe?:</label>
-							                                <div class="input-group-text" style="justify-content: center;">
-							                                        <input type="checkbox" name="asignarJefatura" id="asignarJefatura">
-							                                </div>
+                              <div class="input-group-text" style="justify-content: center;">
+                                      <input type="checkbox" name="asignarJefatura" id="asignarJefatura">
+                              </div>
 														</div>
 														<input type="hidden" name="postulante" value="0">
 													<?php else: ?>
@@ -277,16 +291,45 @@
 			</div>
 		</div>
 
-		<script src="assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
-		<script src="assets/vendor/slimscroll/jquery.slimscroll.js"></script>
-		<script src="assets/libs/js/main-js.js"></script>
-		<script src="assets/vendor/datepicker/moment.js"></script>
-		<script src="assets/vendor/datepicker/tempusdominus-bootstrap-4.js"></script>
-		<script src="assets/vendor/datepicker/datepicker.js"></script>
-		<!-- Bootstrap 4 JS -->
-		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-		<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper-base.min.js"></script>
+<script>
+$(document).ready(function() {
+  var empresa = document.getElementById('empresa');
+  var pertenencia = document.getElementById('Pertenencia');
+  $("#empresa").change(function() {
+    var empresaId = $(this).val();
+    $.ajax({
+      url: "ajax/ajax.formularios.php",
+      type: "POST",
+      data: {
+        empresaId: empresaId
+      },
+      success: function(response) {
+        var perteneceDepa = JSON.parse(response);
 
+        // Limpiar las opciones actuales del select de ciudades
+        pertenencia.innerHTML = '';
+
+        // Agregar una opción predeterminada
+        var opcionPredeterminada = document.createElement('option');
+        opcionPredeterminada.text = 'Sin departamento';
+        pertenencia.add(opcionPredeterminada);
+
+        // Agregar las opciones de ciudades correspondientes al estado seleccionado
+        perteneceDepa.forEach(function(datos) {
+          var opcionDepartamento = document.createElement('option');
+          if (datos.Pertenencia === null) {
+          	opcionDepartamento.text = datos.name;
+      	  }else{
+          opcionDepartamento.text = datos.name + ' (' + datos.Pertenencia + ')';
+      	  }
+          opcionDepartamento.value = datos.id;
+          pertenencia.add(opcionDepartamento);
+        });
+      }
+    });
+  });
+});
+</script>
 		<!-- Validación de formulario con jQuery -->
 		<script>
 			$(document).ready(function() {
