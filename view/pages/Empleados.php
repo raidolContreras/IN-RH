@@ -95,10 +95,10 @@ $empresas = ControladorFormularios::ctrVerEmpresas(null, null);
 													<tr>
 														<td>
 															<a class="btn btn-link" href="Empleado&perfil=<?php echo $value['idEmpleados'];?>">
-																<?php echo mb_strtoupper($value['name'].' '.$value['lastname'], 'UTF-8'); ?>
+																<?php echo mb_strtoupper($value['lastname'].' '.$value['name'], 'UTF-8'); ?>
 															</a>
 														</td>
-														<?php if ($value['status'] == 1): ?>
+														<?php if ($value['status'] == 1 && $value['fecha_baja'] == null): ?>
 															<?php $puesto = ControladorFormularios::ctrVerPuestos("Empleados_idEmpleados", $value['idEmpleados']) ?>
 															<?php $depa = ControladorFormularios::ctrVerDepartamentos("idDepartamentos", $puesto['Departamentos_idDepartamentos']) ?>
 															<?php $empresa = ControladorFormularios::ctrVerEmpresas("idEmpresas", $depa['Empresas_idEmpresas']) ?>
@@ -114,7 +114,7 @@ $empresas = ControladorFormularios::ctrVerEmpresas(null, null);
 														echo $fecha_formateada; ?></td>
 														<td><?php echo $value['fecha_baja']; ?></td>
 														<td>
-															<?php if ($value['status'] == 1): ?>
+															<?php if ($value['status'] == 1&& $value['fecha_baja'] == null): ?>
 																<span class="mr-2"><span class="badge-dot badge-success"></span>Activo</span>
 															<?php else: ?>
 																<span class="mr-2"><span class="badge-dot badge-warning"></span>Inactivo</span>

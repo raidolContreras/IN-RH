@@ -13,6 +13,9 @@ $fechas = array();
 
 // Recorremos los resultados de la consulta
 while ($fila = $resultado->fetch(PDO::FETCH_ASSOC)) {
+    if ($fila['fechaFin'] != null) {
+        $fila['fechaFin'] = $fila['fechaFin'].' 23:59:59';
+    }
     $fechas[] = array(
         "title" => $fila['nameFestivo'],
         "start" => $fila['fechaFestivo'],

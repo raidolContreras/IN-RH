@@ -1,7 +1,8 @@
 <?php $permisos = ControladorFormularios::ctrVerPermisos(null,null); ?>
 <link href='assets/vendor/full-calendar/css/fullcalendar.css' rel='stylesheet' />
 <link href='assets/vendor/full-calendar/css/fullcalendar.print.css' rel='stylesheet' media='print' />
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script><!-- Agrega esta línea en el head de tu HTML -->
+
 <style>
 
 .fc-nonbusiness {
@@ -41,7 +42,7 @@
 			<div class="col-xl-9 col-lg-8 col-md-10 col-sm-12 col-12">
 				<div class="card">
 					<div class="card-body">
-						<div id="calendar3"></div>
+						<div id="horarios"></div>
 					</div>
 				</div>
 			</div>
@@ -72,7 +73,7 @@
 	</div>
 </div>
 
-<script src='assets/vendor/full-calendar/js/moment.min.js'></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script src='assets/vendor/full-calendar/js/fullcalendar.js'></script>
 <script src='assets/vendor/full-calendar/js/jquery-ui.min.js'></script>
 <script src='assets/vendor/full-calendar/js/calendar.js'></script>

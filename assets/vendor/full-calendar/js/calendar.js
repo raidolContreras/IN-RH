@@ -78,27 +78,64 @@ $(document).ready(function() {
 	$.ajax({
 		url: 'ajax/fechasEmpleados.php',
 		dataType: 'json',
-		success: function(data) {
-			// Configuración del calendario
-			$('#calendar3').fullCalendar({
-				header: {
-						left: 'title'
+		success: function(dataEmpleados) {
+			// Obtener los días festivos del servidor mediante AJAX
+			$.ajax({
+				url: 'ajax/fechas.festivas.php',
+				dataType: 'json',
+				success: function(dataFestivos) {
+					// Obtener los días de asistencias del servidor mediante AJAX
+					$.ajax({
+						url: 'ajax/fechas.asistencias.php',
+						dataType: 'json',
+						success: function(data) {
+							// Combinar los datos de fechas empleados y festivos en una sola variable
+							var allEvents = dataEmpleados.concat(dataFestivos);
+
+							// Configuración del calendario
+							$('#horarios').fullCalendar({
+								header: {
+									left: 'title'
+								},
+								defaultView: 'month',
+								navLinks: false,
+								editable: false,
+								eventLimit: true,
+								showNonCurrentDates: false,
+								businessHours: {
+									dow: dataEmpleados // días de semana, 0=Domingo
+								},
+								dayRender: function(date, cell) {
+								    var today = moment().startOf('day');
+								    for (var i = 0; i < data.length; i++) {
+								        var eventStart = moment(data[i].dia, 'YYYY-MM-DD');
+								        if (date.isSame(eventStart, 'day')) {
+								            cell.css("background-color", data[i].color);
+								            break;
+								        }
+								    }
+								},
+								events: allEvents // Pasar todos los eventos al calendario
+							});
+						},
+						error: function(xhr, status, error) {
+							console.error('Error en la solicitud AJAX de fechas de asistencias:', status, error);
+						}
+					});
 				},
-				defaultView: 'month',
-				navLinks: false,
-				editable: false,
-				eventLimit: true,
-                showNonCurrentDates: false,
-				businessHours: {
-					dow: data // dias de semana, 0=Domingo
+				error: function(xhr, status, error) {
+					console.error('Error en la solicitud AJAX de fechas festivas:', status, error);
 				}
 			});
 		},
 		error: function(xhr, status, error) {
-				console.error('Error en la solicitud AJAX:', status, error);
+			console.error('Error en la solicitud AJAX de fechas de empleados:', status, error);
 		}
 	});
 });
+
+
+
 	 
 	$(document).ready(function() {
 
