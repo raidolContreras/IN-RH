@@ -7363,8 +7363,18 @@ hr.titulo {
   	font-family: Nunito, sans-serif;
     word-break: normal;
     font-size: 1.125rem;
-    margin-left: 0.660rem !important;
+    margin-left: 0.70rem !important;
     color: #757575 !important;
+  }
+
+  .encabezado-c{
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+  	font-family: Nunito, sans-serif;
+    word-break: normal;
+    font-size: 0.925rem;
+    margin-left: 0.660rem !important;
+    color: #000;
   }
 
   .ajustes-text{

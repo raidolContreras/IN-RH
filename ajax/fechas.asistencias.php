@@ -83,11 +83,14 @@ foreach ($stmt_asistencias->fetchAll() as $asistencias) {
             }
 
             $datos[] = array(
-                "dia" => $asistencias['fecha_asistencia'],
+                "title" => $asistencias['entrada']." - ". $asistencias['salida'],
+                "start" => $asistencias['fecha_asistencia'],
+                "end" => Null,
                 "diaL" => $dia_semana,
                 "hora_entrada_marcada" => $asistencias['entrada'],
                 "hora_entrada" => $fecha['hora_Entrada'],
-                "color" => $color
+                "color" => $color,
+                "textColor" => "#000"
             );
             break;
         }

@@ -81,4 +81,4 @@
 <script src='assets/vendor/full-calendar/js/moment.min.js'></script>
 <script src='assets/vendor/full-calendar/js/fullcalendar.js'></script>
 <script src='assets/vendor/full-calendar/js/jquery-ui.min.js'></script>
-<script src='assets/vendor/full-calendar/js/calendar.js'></script>
+<script src='assets/vendor/full-calendar/js/calendarioAsistencias.js'></script>
