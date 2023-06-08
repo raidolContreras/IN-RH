@@ -107,10 +107,10 @@ $(document).ready(function() {
 								},
 								dayRender: function(date, cell) {
 								    var today = moment().startOf('day');
-								    for (var i = 0; i < data.length; i++) {
-								        var eventStart = moment(data[i].dia, 'YYYY-MM-DD');
+								    for (var i = 0; i < data.datos.length; i++) {
+								        var eventStart = moment(data.datos[i].dia, 'YYYY-MM-DD');
 								        if (date.isSame(eventStart, 'day')) {
-								            cell.css("background-color", data[i].color);
+								            cell.css("background-color", data.datos[i].color);
 								            break;
 								        }
 								    }
@@ -133,6 +133,7 @@ $(document).ready(function() {
 		}
 	});
 });
+
 
 
 
