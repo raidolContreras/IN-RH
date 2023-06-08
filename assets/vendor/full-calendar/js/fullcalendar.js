@@ -14469,7 +14469,7 @@ var DayGridEventRenderer = /** @class */ (function (_super) {
             }
         }
         titleHtml =
-            '<span class="fc-title encabezado-c">' +
+            '<span class="fc-title">' +
                 (util_1.htmlEscape(eventDef.title || '') || '&nbsp;') + // we always want one line of height
                 '</span>';
         return '<a class="' + classes.join(' ') + '"' +
