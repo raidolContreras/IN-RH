@@ -307,37 +307,36 @@ if($registro == "ok"){
 <script>
 $(document).ready(function() {
   var empresa = document.getElementById('empresa');
-  var departamento = document.getElementById('departamento');
+  var departament = document.getElementById('departamento');
 
   // Función para cargar los departamentos correspondientes a la empresa seleccionada
-  function cargarDepartamentos(EmpresaActual,Departamento) {
+  function cargarDepartamentos(EmpresaActual,Depa) {
     $.ajax({
-      url: "ajax/ajax.formularios.php",
+      url: "ajax/obtener.depas.empresas.php",
       type: "POST",
-      data: { EmpresaActual: EmpresaActual, Departamento: Departamento },
+      data: { EmpresaActual: EmpresaActual, Departamento: Depa },
       success: function(response) {
         // Limpiar las opciones actuales del select de departamentos
-        departamento.innerHTML = '';
+        departament.innerHTML = '';
 
         // Agregar una opción predeterminada
         var opcionPredeterminada = document.createElement('option');
         opcionPredeterminada.text = 'Sin departamento';
-        departamento.add(opcionPredeterminada);
+        departament.add(opcionPredeterminada);
 
         // Agregar las opciones de departamentos correspondientes a la empresa seleccionada
-        departamento.innerHTML += response;
+        departament.innerHTML += response;
       }
     });
   }
 
   // Cargar los departamentos iniciales de la empresa seleccionada por defecto
-  cargarDepartamentos(empresa.value);
+  cargarDepartamentos(empresa.value, <?php echo $puesto['Departamentos_idDepartamentos'] ?>);
 
   // Cambiar los departamentos cuando se seleccione otra empresa
   $("#empresa").change(function() {
     var EmpresaActual = $(this).val();
-    var Departamento = <?php echo $puesto['Departamentos_idDepartamentos']; ?>;
-    cargarDepartamentos(EmpresaActual,Departamento);
+    cargarDepartamentos(EmpresaActual,<?php echo $puesto['Departamentos_idDepartamentos']; ?>);
   });
 });
 

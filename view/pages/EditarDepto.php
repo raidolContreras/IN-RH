@@ -91,7 +91,7 @@ $empresas = ControladorFormularios::ctrVerEmpresas(null,null);
 					</select>
 				</div>
 				<div class="form-group">
-					<label for="Pertenencia" class="col-form-label font-weight-bold">Departamento:</label>
+					<label for="Pertenencia" class="col-form-label font-weight-bold">Departamento en jefe:</label>
 					<select class="form-control" id="Pertenencia" name="Pertenencia">
 							<option>
 								Seleccionar departamento
@@ -117,56 +117,36 @@ $empresas = ControladorFormularios::ctrVerEmpresas(null,null);
 <script>
 $(document).ready(function() {
   var empresa = document.getElementById('empresa');
-  var pertenencia = document.getElementById('Pertenencia');
+  var departament = document.getElementById('Pertenencia');
 
   // Función para cargar los departamentos correspondientes a la empresa seleccionada
-  function cargarDepartamentos(empresaId) {
+  function cargarDepartamentos(EmpresaActual,Depa) {
     $.ajax({
-      url: "ajax/ajax.formularios.php",
+      url: "ajax/obtener.depas.empresas.php",
       type: "POST",
-      data: { empresaId: empresaId },
+      data: { EmpresaActual: EmpresaActual, Departamento: Depa },
       success: function(response) {
-        var perteneceDepa = JSON.parse(response);
-
         // Limpiar las opciones actuales del select de departamentos
-        pertenencia.innerHTML = '';
+        departament.innerHTML = '';
 
         // Agregar una opción predeterminada
         var opcionPredeterminada = document.createElement('option');
         opcionPredeterminada.text = 'Sin departamento';
-        pertenencia.add(opcionPredeterminada);
+        departament.add(opcionPredeterminada);
 
         // Agregar las opciones de departamentos correspondientes a la empresa seleccionada
-        perteneceDepa.forEach(function(datos) {
-				  if (datos.id !== <?php echo $datos['idDepartamentos'] ?>) {
-				    var opcionDepartamento = document.createElement('option');
-				    if (datos.Pertenencia === null) {
-				      opcionDepartamento.text = datos.name;
-				    } else {
-				      opcionDepartamento.text = datos.name + ' (' + datos.Pertenencia + ')';
-				    }
-				    opcionDepartamento.value = datos.id;
-
-				    // Comparar con $datos['Pertenencia'] y marcar como seleccionada
-				    if (datos.id === <?php echo $datos['Pertenencia'] ?>) {
-				      opcionDepartamento.selected = true;
-				    }
-
-				    pertenencia.add(opcionDepartamento);
-				  }
-				});
-
+        departament.innerHTML += response;
       }
     });
   }
 
   // Cargar los departamentos iniciales de la empresa seleccionada por defecto
-  cargarDepartamentos(empresa.value);
+  cargarDepartamentos(empresa.value, <?php echo $datos['Pertenencia']; ?>);
 
   // Cambiar los departamentos cuando se seleccione otra empresa
   $("#empresa").change(function() {
-    var empresaId = $(this).val();
-    cargarDepartamentos(empresaId);
+    var EmpresaActual = $(this).val();
+    cargarDepartamentos(EmpresaActual,<?php echo $datos['Pertenencia'] ; ?>);
   });
 });
 

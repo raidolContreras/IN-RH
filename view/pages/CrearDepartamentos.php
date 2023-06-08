@@ -72,7 +72,7 @@ $departamentos = ControladorFormularios::ctrVerDepartamentos(null, null);
 					</select>
 				</div>
 				<div class="form-group">
-					<label for="Pertenencia" class="col-form-label font-weight-bold">Departamento:</label>
+					<label for="Pertenencia" class="col-form-label font-weight-bold">Departamento en jefe:</label>
 					<select class="form-control" id="Pertenencia" name="Pertenencia">
 							<option>
 								Seleccionar departamento
