@@ -15,13 +15,13 @@
 		<div class="card mx-5">
 			<div class="card-header encabezado">Configuración del registro de horas</div>
 			<div class="row">
-				<div class="card-side-nav col-2 lista-ajustes">
+				<div class="card-side-nav col-xl-2 col-lg-3 col-md-4 col-sm-4 lista-ajustes">
 					<div><a href="Asistencia-ajustes" class="btn btn-block btn-in-consulting-link">Horarios de trabajo</a></div>
 					<div><a href="Asistencia-permisos" class="btn btn-block btn-in-consulting-link active">Permisos</a></div>
 					<div><a href="Asistencia-importar" class="btn btn-block btn-in-consulting-link">Importar horarios</a></div>
 					<div><a href="Asistencia-exportar" class="btn btn-block btn-in-consulting-link">Exportar resultados</a></div>
 				</div>
-				<div class="col-10" id="permisos">
+				<div class=" col-xl-10 col-lg-9 col-md-8 col-sm-8" id="permisos">
 					<div class="row mr-4 ml-2 mt-3">
 						<div class="card-header encabezado">
 							Permisos
