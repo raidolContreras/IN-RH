@@ -1,3 +1,4 @@
+<?php $jefeDepartamento = ControladorFormularios::ctrVerDepartamentos("Empleados_idEmpleados", $_SESSION['idEmpleado']) ?>
 <div class="container-fluid dashboard-content ">
 
 <div class="row">
@@ -39,6 +40,15 @@
 					</div>
 				</div>
 			</div>
+			<?php if (!empty($jefeDepartamento)): ?>
+	  		<div class="col-12">
+					<div class="card">
+						<div class="mt-2 ml-2">
+							<?php include "view/pages/modulos/Peticiones.php" ?>
+						</div>
+					</div>
+				</div>
+			<?php endif ?>
 		</div>
 	</div>
 
