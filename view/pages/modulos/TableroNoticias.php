@@ -1,7 +1,7 @@
 <?php $noticias = ControladorFormularios::ctrVerNoticias(null, null); ?>
-<?php if (isset($noticias)): ?>
+<?php if (!empty($noticias)): ?>
 
-	<div class="col-12 mt-4 mb-4">
+	<div class="col-12 mt-1 mb-1 altura">
 		<div id="carouselExampleIndicators1" class="carousel slide" data-ride="carousel">
 			<div class="carousel-inner">
 				<?php $i=0;
@@ -19,6 +19,7 @@
 						<div class="col-12">
 							<div class="float-left m-0">
 								<div class="row mt-2 ml-0">
+
 									<div class="col-1 mr-4">
 										<?php if (isset($fotoEmpleado['namePhoto'])): ?>
 											<img src="view/fotos/thumbnails/<?php echo $fotoEmpleado['namePhoto'] ?>"
@@ -35,19 +36,22 @@
 										<p class="titulo-tablero m-0"><?php echo $empleado['name']." ".$empleado['lastname'] ?></p>
 										<p class="subtitulo-tablero m-0" id="tiempo-noticia<?php echo $noticia['idNoticias'] ?>"></p>
 									</div>
+								</div>
+							</div>
 
-									<div class="float-right">
-										<p class="titulo-sup m-0">
-											<a href="EliminarNoticia&noticia=<?php echo $noticia['idNoticias'] ?>" class="btn-outline-light boton" >
-												<i class="fas fa-trash"></i>
-											</a>
-										</p>
-										<p class="titulo-sup m-0">
-											<a href="Noticias&noticia=<?php echo $noticia['idNoticias'] ?>" class="btn-outline-light boton" >
-												<i class="fas fa-edit"></i>
-											</a>
-										</p>
-									</div>
+							<div class="pr-3 pt-3">
+								<div class="float-right pr-2">
+									<p class="titulo-sup m-0">
+										<a href="Noticias" class="btn-outline-light boton ml-3" >
+											<i class="fas fa-plus"></i>
+										</a>
+										<a href="EliminarNoticia&noticia=<?php echo $noticia['idNoticias'] ?>" class="btn-outline-light boton ml-3" >
+											<i class="fas fa-trash"></i>
+										</a>
+										<a href="Noticias&noticia=<?php echo $noticia['idNoticias'] ?>" class="btn-outline-light boton ml-3" >
+											<i class="fas fa-edit"></i>
+										</a>
+									</p>
 								</div>
 							</div>
 						</div>
@@ -61,13 +65,13 @@
 								</div>
 								<div class="col-4 pr-4 pt-2 pb-4">
 								  <div class="card-into-card rounded">
-								    <img src="view/noticias/<?php echo $noticia['name_foto']; ?>" class="img-fluid w-100" alt="Imagen de la noticia">
+								   <center> <img src="view/noticias/<?php echo $noticia['name_foto']; ?>" class="img-fluid w-75" alt="Imagen de la noticia"></center>
 								  </div>
 								</div>
 
 						<?php else: ?>
 							<div class="col-12 pl-4 pr-4 pt-2 pb-4">
-								<div class="card-into-card rounded">
+								<div class="card-into-card rounded altura-card align-content-center" style="margin-top: 20px !important;">
 									<?php echo $noticia['mensaje']; ?>
 								</div>
 							</div>
@@ -127,5 +131,26 @@
 		setInterval(calcularTiempo, 1000);
 	</script>
 <?php endforeach ?>
+<?php else: ?>
 
+	<div class="col-12 mt-1 mb-1 altura">
+		<div class="row">
+			<div class="col-12">
+				<div class="col-12 pl-4 pr-4 pt-2 pb-4">
+					<div class="pr-3 pt-3">
+						<div class="float-right pr-2">
+							<p class="titulo-sup m-0">
+								<a href="Noticias" class="btn-outline-light boton" >
+									<i class="fas fa-plus"></i>
+								</a>
+							</p>
+						</div>
+					</div>
+					<div class="card-into-card rounded altura-card align-content-center">
+							Parece que no hay ningún mensaje en el tablero de noticias.
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 <?php endif ?>

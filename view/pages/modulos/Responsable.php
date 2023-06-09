@@ -68,38 +68,40 @@ $pertenece = 0;
 				</div>
 			<?php endif ?>
 		<?php endforeach ?>
-		<p class="titulo-sup mb-0">Miembros del equipo</p>
-		<?php foreach ($equipo_de_trabajo as $etrabajo): ?>
-			<?php if ($etrabajo['idEmpleados'] != $etrabajo['jefeDepa']): ?>
-				<div class="row">
-					<div class="col-3 ml-2">
-						<a class="btn btn-link float-left">
-							<?php if (isset($etrabajo['namePhoto'])): ?>
-								<img src="view/fotos/thumbnails/<?php echo $etrabajo['namePhoto'] ?>"
-							<?php else: ?>
-								<?php if ($etrabajo['genero']==1): ?>
-									<img src="assets/images/Ejecutivo.webp"
+		<div class="row">
+			<div class="col-12 float-left"><p class="titulo-sup mb-0" style="flex-direction: row !important;">Miembros del equipo</p></div>
+			
+			<?php foreach ($equipo_de_trabajo as $etrabajo): ?>
+				<?php if ($etrabajo['idEmpleados'] != $etrabajo['jefeDepa']): ?>
+						<div class="col-3">
+							<a class="btn btn-link float-left">
+								<?php if (isset($etrabajo['namePhoto'])): ?>
+									<img src="view/fotos/thumbnails/<?php echo $etrabajo['namePhoto'] ?>"
 								<?php else: ?>
-									<img src="assets/images/Ejecutiva.webp"
+									<?php if ($etrabajo['genero']==1): ?>
+										<img src="assets/images/Ejecutivo.webp"
+									<?php else: ?>
+										<img src="assets/images/Ejecutiva.webp"
+									<?php endif ?>
 								<?php endif ?>
-							<?php endif ?>
 
-							size="large"  alt="User Avatar" class="rounded-circle user-avatar-lg2">
-						</a>
-					</div>
-					<div class="col-8 align-items-center">
-						<div class="row">
-							<div class="col-12">
-							<p class="titulo-sup mb-0"><?php echo mb_strtoupper($etrabajo['Nombre']) ?></p>
-							</div>
-							<div class="col-12">
-							<p class="titulo-sup mb-0"><?php echo mb_strtoupper($etrabajo['Puesto']) ?></p>
+								size="large"  alt="User Avatar" class="rounded-circle user-avatar-lg2">
+							</a>
+						</div>
+						<div class="col-9" style="display:flex; align-items: center;">
+							<div class="row">
+								<div class="col-12">
+								<p class="titulo-sup mb-0" style="flex-direction: row !important;"><?php echo mb_strtoupper($etrabajo['Nombre']) ?></p>
+								</div>
+								<div class="col-12">
+								<p class="titulo-sup mb-0" style="flex-direction: row !important;"><?php echo mb_strtoupper($etrabajo['Puesto']) ?></p>
+								</div>
 							</div>
 						</div>
-					</div>
-				</div>
-			<?php endif ?>
-		<?php endforeach ?>
+				<?php endif ?>
+			<?php endforeach ?>
+			
+		</div>
 		<?php if ($pertenece != 0): 
 			$pertenencias = ControladorEmpleados::ctrEquipoDeTrabajo($pertenece);
 			?>

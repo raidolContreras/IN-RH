@@ -22,7 +22,7 @@ $empleados = ControladorEmpleados::ctrFechaNacimiento(null, null);
 						size="large" alt="User Avatar" class="rounded-circle user-avatar-md2 mt-2">
 							</div>
 							<div class="col-10 pt-2 ml-2">
-								<p class="titulo-sup mb-0"><?php echo $empleado['name']." ".$empleado['lastname'] ?></p>
+								<p class="titulo-sup mb-0" style="flex-direction: row;"><?php echo $empleado['name']." ".$empleado['lastname'] ?></p>
 								<p class="subtitulo-sup mt-0"><?php echo date("d-M", strtotime($empleado['fNac'])) ?></p>
 							</div>
 					</div>

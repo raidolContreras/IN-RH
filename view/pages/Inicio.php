@@ -1,9 +1,9 @@
 <div class="container-fluid dashboard-content ">
 
 <div class="row">
-  <div class="col-md-3">
+  <div class="col-xl-3 col-lg-4 col-md-5 col-sm-12 col-12">
   <!--Tablero de empleado del mes-->
-    <div class="row">
+    <div class="row gx-1">
     	<div class="col-12">
 				<div class="card">
 					<div class="m-2">
@@ -30,22 +30,18 @@
     </div>
   </div>
 	<!--Tablero de Notificaciones-->
-  <div class="col-md-9">
-		<div class="card">
-			<div class="m12">
-				<div class="pr-3 pt-3">
-					<div class="float-right pr-2">
-						<p class="titulo-sup m-0">
-							<a href="Noticias" class="btn-outline-light boton" >
-								<i class="fas fa-plus"></i>
-							</a>
-						</p>
+  <div class="col-xl-9 col-lg-8 col-md-7 col-sm-12 col-12">
+  	<div class="row">
+  		<div class="col-12">
+				<div class="card">
+					<div class="m12">
+						<?php include "view/pages/modulos/TableroNoticias.php" ?>
 					</div>
 				</div>
-				<?php include "view/pages/modulos/TableroNoticias.php" ?>
 			</div>
 		</div>
 	</div>
+
 </div>
 
 </div>

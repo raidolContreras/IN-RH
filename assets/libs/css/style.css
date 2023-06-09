@@ -3261,7 +3261,7 @@ btn-link
 }
 
 .card {
-	margin-bottom: 30px;
+	margin-bottom: 15px;
 	border: none;
 	-webkit-box-shadow: 0px 1px 2px 1px rgba(154, 154, 204, 0.22);
 	-moz-box-shadow: 0px 1px 2px 1px rgba(154, 154, 204, 0.22);
@@ -7151,7 +7151,11 @@ div.center-all{
 }
 
 p.titulo-sup{
-	font-size: 11px;
+	display: flex;
+    font-size: 11px;
+    flex-direction: row-reverse;
+    flex-wrap: wrap;
+    
 }
 p.subtitulo-sup{
 	font-size: 9px;
@@ -7598,6 +7602,8 @@ table-in
     position: absolute;
     top: 0;
     bottom: 0;
+    margin-bottom: 200px;
+    margin-top: 200px;
     display: -ms-flexbox;
     display: flex;
     width: 15%;
@@ -7609,6 +7615,8 @@ table-in
     position: absolute;
     top: 0;
     bottom: 0;
+    margin-bottom: 200px;
+    margin-top: 200px;
     display: -ms-flexbox;
     display: flex;
     width: 15%;
@@ -7622,4 +7630,22 @@ table-in
 }
 .carousel-control-next-icon {
     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23dedede' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
+}
+
+.altura{
+	display: block !important;
+	max-height: 365px;
+}
+
+.carousel-inner{
+	max-height: 365px;
+	min-height: 365px;
+}
+
+.altura-card{
+	display: flex;
+    margin-top: 50px;
+    min-height: 260px;
+    flex-wrap: wrap;
+    justify-content: space-around;
 }
