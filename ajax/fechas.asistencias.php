@@ -76,21 +76,27 @@ foreach ($stmt_asistencias->fetchAll() as $asistencias) {
 
             if ($asistencias['entrada'] <= $fecha['hora_Entrada'] && $asistencias['entrada'] != "00:00:00") {
                 $color = "#ACE799";
+                $url = "";
+                $title = $asistencias['entrada']." - ". $asistencias['salida'];
+
             } elseif($asistencias['entrada'] == "00:00:00") {
                 $color = "#EF8B8B";
+                $url = $asistencias['idAsistencias'];
+                $title = "AUSENTE";
             } else {
                 $color = "#E7E199";
+                $url = $asistencias['idAsistencias'];
+                $title = "RETARDO: ".$asistencias['entrada']." - ". $asistencias['salida'];
             }
-
             $datos[] = array(
-                "title" => $asistencias['entrada']." - ". $asistencias['salida'],
+                "title" => $title,
                 "start" => $asistencias['fecha_asistencia'],
                 "end" => Null,
-                "diaL" => $dia_semana,
-                "hora_entrada_marcada" => $asistencias['entrada'],
-                "hora_entrada" => $fecha['hora_Entrada'],
                 "color" => $color,
-                "textColor" => "#000"
+                "textColor" => "#000",
+                "description" => $url,
+                "hEntrada" => $asistencias['entrada'],
+                "entrada" => $fecha['hora_Entrada']
             );
             break;
         }

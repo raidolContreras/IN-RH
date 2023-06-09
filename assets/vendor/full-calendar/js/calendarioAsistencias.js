@@ -45,14 +45,22 @@ $(document).ready(function() {
 								        }
 								    }
 								},
+						        eventClick: function (calEvent, jsEvent, view) {
+						        	if (calEvent.color === '#E7E199' || calEvent.color === '#EF8B8B' ) {
+						        		if (calEvent.color === '#E7E199') {
+							            	$('#event-title').text('Justificación del Retardo');
+							            	$('#hEntrada').html("Hora registrada: "+calEvent.hEntrada);
+						        		}
+						        		if (calEvent.color === '#EF8B8B') {
+							            	$('#event-title').text('Justificación de la Ausencia');
+							            	$('#hEntrada').html("Hora registrada: -");
+						        		}
+							            $('#entrada').html("Hora Esperada: "+calEvent.entrada);
+							            $('#asistencia').val(calEvent.description);
+							            $('#modal-event').modal();
+							        }
+						        },
 								events: allEvents, // Pasar todos los eventos al calendario
-								eventClick: function(info) {
-								    info.jsEvent.preventDefault(); // don't let the browser navigate
-
-								    if (info.event.url) {
-								      window.open("Empleados");
-								    }
-								  }
 							});
 						},
 						error: function(xhr, status, error) {

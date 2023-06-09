@@ -78,6 +78,39 @@
 	</div>
 </div>
 
+    <div class="row">
+        <div id="content" class="col-lg-12">
+            <div id="calendar"></div>
+            <div class="modal fade" id="modal-event" tabindex="-1" role="dialog" aria-labelledby="modal-eventLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="event-title"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="asistencia-form">
+	                <div class="modal-body">
+	                	<div class="row">
+	                		<div class="col"><span id="entrada"></span></div>
+	                		<div class="col"><span id="hEntrada"></span></div>
+	                	</div>
+	                		<label for="Comentario">Comentario</label>
+	                		<input class="form-control" type="text" name="Comentario" id="Comentario">
+	                    <input type="hidden" id="asistencia" name="asistencia">
+	                </div>
+                </form>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" id="asistencia-btn">Enviar</button>
+                </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+
 <script src='assets/vendor/full-calendar/js/moment.min.js'></script>
 <script src='assets/vendor/full-calendar/js/fullcalendar.js'></script>
 <script src='assets/vendor/full-calendar/js/jquery-ui.min.js'></script>

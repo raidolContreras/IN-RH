@@ -1062,27 +1062,27 @@ static public function mdlImagenNoticia($id, $name)
 
 	static public function mdlActualizarEmpresas($tabla, $datos){
 		$sql = "UPDATE $tabla SET 
-		        registro_patronal = :registro_patronal,
-		        rfc = :rfc,
-		        nombre_razon_social = :nombre_razon_social,
-		        regimen = :regimen,
-		        actividad_economica = :actividad_economica,
-		        calle = :calle,
-		        numero = :numero,
-		        numero_interior = :numero_interior,
-		        colonia = :colonia,
-		        cp = :cp,
-		        entidad = :entidad,
-		        poblacion_municipio = :poblacion_municipio,
-		        telefono = :telefono,
-		        convenio_reembolso = :convenio_reembolso,
-		        delegacion_imss = :delegacion_imss,
-		        subdelegacion = :subdelegacion,
-		        clave_subdelegacion = :clave_subdelegacion,
-		        dia_inicio_afiliacion = :dia_inicio_afiliacion,
-		        mes_inicio_afiliacion = :mes_inicio_afiliacion,
-		        anio_inicio_afiliacion = :anio_inicio_afiliacion
-		        WHERE idEmpresas = :actualizarEmpresa";
+				registro_patronal = :registro_patronal,
+				rfc = :rfc,
+				nombre_razon_social = :nombre_razon_social,
+				regimen = :regimen,
+				actividad_economica = :actividad_economica,
+				calle = :calle,
+				numero = :numero,
+				numero_interior = :numero_interior,
+				colonia = :colonia,
+				cp = :cp,
+				entidad = :entidad,
+				poblacion_municipio = :poblacion_municipio,
+				telefono = :telefono,
+				convenio_reembolso = :convenio_reembolso,
+				delegacion_imss = :delegacion_imss,
+				subdelegacion = :subdelegacion,
+				clave_subdelegacion = :clave_subdelegacion,
+				dia_inicio_afiliacion = :dia_inicio_afiliacion,
+				mes_inicio_afiliacion = :mes_inicio_afiliacion,
+				anio_inicio_afiliacion = :anio_inicio_afiliacion
+				WHERE idEmpresas = :actualizarEmpresa";
 		$stmt = Conexion::conectar()->prepare($sql);
 
 		$stmt->bindParam(":registro_patronal", $datos['registro_patronal'], PDO::PARAM_STR);
@@ -1138,10 +1138,10 @@ static public function mdlImagenNoticia($id, $name)
 	}
 
 	static public function obtenerDatosEmpresa($empresaId)
-    {
-        $conexion = Conexion::conectar();
+	{
+		$conexion = Conexion::conectar();
 
-        $sql = "SELECT e.idEmpleados AS id, CONCAT(e.name, ' ', e.lastname) AS name, d.nameDepto AS area, 
+		$sql = "SELECT DISTINCT e.idEmpleados AS id, CONCAT(e.name, ' ', e.lastname) AS name, d.nameDepto AS area, 
 				    CONCAT('Empleado&perfil=', e.idEmpleados) AS profileUrl, p.namePuesto AS positionName, 
 				    CASE 
 				        WHEN d.Empleados_idEmpleados = e.idEmpleados THEN
@@ -1160,17 +1160,17 @@ static public function mdlImagenNoticia($id, $name)
 				WHERE d.Empresas_idEmpresas = :empresaId AND e.status = 1;
 				";
 
-        $stmt = $conexion->prepare($sql);
-        $stmt->bindParam(':empresaId', $empresaId);
-        $stmt->execute();
+		$stmt = $conexion->prepare($sql);
+		$stmt->bindParam(':empresaId', $empresaId);
+		$stmt->execute();
 
-        $datosEmpresa = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		$datosEmpresa = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        return $datosEmpresa;
-    }
+		return $datosEmpresa;
+	}
 
-    static public function mdlEmpleadosEspecial($tabla,$item,$valor){
-    	$sql = "SELECT * 
+	static public function mdlEmpleadosEspecial($tabla,$item,$valor){
+		$sql = "SELECT * 
 					FROM $tabla e
 					LEFT JOIN puesto p on p.Empleados_idEmpleados = e.idEmpleados
 					LEFT JOIN departamentos d ON d.idDepartamentos = p.Departamentos_idDepartamentos
@@ -1184,9 +1184,9 @@ static public function mdlImagenNoticia($id, $name)
 		return $stmt->fetchAll();
 		$stmt->close();
 		$stmt = null;
-    }
+	}
 
-    static public function mdlForgotPasswordEmail($datos){
+	static public function mdlForgotPasswordEmail($datos){
 
 		$mensaje = '<div><img style="display: block; margin-left: auto; margin-right: auto;" src="https://asociacionmexicanadeperiodontologia.com/logoinconsulting.png" alt="" width="112" height="112"></div>';
 		if ($datos['genero'] == 0) {
@@ -1237,14 +1237,14 @@ static public function mdlImagenNoticia($id, $name)
 			return 'no enviado';
 		}
 
-    }
+	}
 
-    static public function mdlGuardarHorario($tabla,$nameHorario,$horarios){
+	static public function mdlGuardarHorario($tabla,$nameHorario,$horarios){
 
-    	$pdo = Conexion::conectar();
-    	$sql = "INSERT INTO $tabla (nameHorario) VALUES (:nameHorario)";
-    	$stmt = $pdo->prepare($sql);
-    	$stmt->bindParam(":nameHorario", $nameHorario, PDO::PARAM_STR);
+		$pdo = Conexion::conectar();
+		$sql = "INSERT INTO $tabla (nameHorario) VALUES (:nameHorario)";
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(":nameHorario", $nameHorario, PDO::PARAM_STR);
 		
 		$idHorario = 0;
 
@@ -1287,18 +1287,18 @@ static public function mdlImagenNoticia($id, $name)
 		$stmt = null;
 		
 
-    }
+	}
 
-    static public function mdlRegistrarDiasHorario($tabla,$datos){
-    	$pdo = Conexion::conectar();
-    	$sql = "INSERT INTO $tabla (Horarios_idHorarios, dia_Laborable, hora_Entrada, hora_Salida, numero_Horas) VALUES (:Horarios_idHorarios, :dia_Laborable, :hora_Entrada, :hora_Salida, :numero_Horas)";
+	static public function mdlRegistrarDiasHorario($tabla,$datos){
+		$pdo = Conexion::conectar();
+		$sql = "INSERT INTO $tabla (Horarios_idHorarios, dia_Laborable, hora_Entrada, hora_Salida, numero_Horas) VALUES (:Horarios_idHorarios, :dia_Laborable, :hora_Entrada, :hora_Salida, :numero_Horas)";
 		$stmt = $pdo->prepare($sql);
 
-    	$stmt->bindParam(":Horarios_idHorarios", $datos['Horarios_idHorarios'], PDO::PARAM_INT);
-    	$stmt->bindParam(":dia_Laborable", $datos['dia_Laborable'], PDO::PARAM_INT);
-    	$stmt->bindParam(":hora_Entrada", $datos['hora_Entrada'], PDO::PARAM_STR);
-    	$stmt->bindParam(":hora_Salida", $datos['hora_Salida'], PDO::PARAM_STR);
-    	$stmt->bindParam(":numero_Horas", $datos['numero_Horas'], PDO::PARAM_STR);
+		$stmt->bindParam(":Horarios_idHorarios", $datos['Horarios_idHorarios'], PDO::PARAM_INT);
+		$stmt->bindParam(":dia_Laborable", $datos['dia_Laborable'], PDO::PARAM_INT);
+		$stmt->bindParam(":hora_Entrada", $datos['hora_Entrada'], PDO::PARAM_STR);
+		$stmt->bindParam(":hora_Salida", $datos['hora_Salida'], PDO::PARAM_STR);
+		$stmt->bindParam(":numero_Horas", $datos['numero_Horas'], PDO::PARAM_STR);
 
 		if($stmt->execute()){
 			return "ok";
@@ -1306,11 +1306,11 @@ static public function mdlImagenNoticia($id, $name)
 
 		$stmt->close();
 		$stmt = null;
-    }
+	}
 
-    static public function mdlSeleccionarHorarios($tabla,$item,$valor){
-	    if ($item == null && $valor == null) {	
-	    	$sql = "SELECT h.idHorarios, h.nameHorario, h.default, SUM(dh.numero_Horas) 
+	static public function mdlSeleccionarHorarios($tabla,$item,$valor){
+		if ($item == null && $valor == null) {	
+			$sql = "SELECT h.idHorarios, h.nameHorario, h.default, SUM(dh.numero_Horas) 
 					FROM $tabla h
 					JOIN dia_horario dh ON dh.Horarios_idHorarios = h.idHorarios
 					GROUP BY h.idHorarios, h.nameHorario, h.default";
@@ -1331,11 +1331,11 @@ static public function mdlImagenNoticia($id, $name)
 
 		$stmt->close();
 		$stmt = null;
-    }
+	}
 
-    static public function mdlCambiarHorarioDefault($tabla,$idHorarios){
-    	$sql = "UPDATE $tabla SET horarios.default = 0 WHERE horarios.default = 1;";
-    	$sql .= "UPDATE $tabla SET horarios.default = 1 WHERE idHorarios = :idHorarios;";
+	static public function mdlCambiarHorarioDefault($tabla,$idHorarios){
+		$sql = "UPDATE $tabla SET horarios.default = 0 WHERE horarios.default = 1;";
+		$sql .= "UPDATE $tabla SET horarios.default = 1 WHERE idHorarios = :idHorarios;";
 
 		$stmt = Conexion::conectar()->prepare($sql);
 		$stmt->bindParam(":idHorarios", $idHorarios, PDO::PARAM_INT);
@@ -1346,21 +1346,21 @@ static public function mdlImagenNoticia($id, $name)
 		}
 		$stmt->close();
 		$stmt = null;
-    }
+	}
 
-    static public function mdlVerEmpleadosHorarios($tabla,$item,$valor){
-    	$sql = "SELECT * from $tabla WHERE $item = :$item";
+	static public function mdlVerEmpleadosHorarios($tabla,$item,$valor){
+		$sql = "SELECT * from $tabla WHERE $item = :$item";
 		$stmt = Conexion::conectar()->prepare($sql);
 		$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
 		$stmt->execute();
 		return $stmt -> fetchAll();
 		$stmt->close();
 		$stmt = null;
-    }
+	}
 
-    static public function mdlBorrarEmpleadosHorarios($tabla,$idHorario){
+	static public function mdlBorrarEmpleadosHorarios($tabla,$idHorario){
 
-    	$sql = "DELETE FROM $tabla WHERE Horarios_idHorarios = :idHorario";
+		$sql = "DELETE FROM $tabla WHERE Horarios_idHorarios = :idHorario";
 
 		$stmt = Conexion::conectar()->prepare($sql);
 		$stmt->bindParam(":idHorario", $idHorario, PDO::PARAM_INT);
@@ -1372,28 +1372,12 @@ static public function mdlImagenNoticia($id, $name)
 		$stmt->close();
 		$stmt = null;
 
-    }
+	}
 
-    static public function mdlregistrarEmpleadosHorario($tabla,$empleado,$idHorario){
+	static public function mdlregistrarEmpleadosHorario($tabla,$empleado,$idHorario){
 
-    	$sql = "DELETE FROM $tabla WHERE Empleados_idEmpleados = :empleado;";
-    	$sql .= "INSERT INTO $tabla (Empleados_idEmpleados, Horarios_idHorarios) VALUES (:empleado,:idHorario);";
-
-		$stmt = Conexion::conectar()->prepare($sql);
-		$stmt->bindParam(":empleado", $empleado, PDO::PARAM_INT);
-		$stmt->bindParam(":idHorario", $idHorario, PDO::PARAM_INT);
-		if ($stmt->execute()) {
-			return "cambio";
-		}else{
-			return "error";
-		}
-		$stmt->close();
-		$stmt = null;
-    }
-
-    static public function mdlActualizarEmpleadoHorario($tabla, $empleado, $idHorario){
-
-    	$sql = "UPDATE $tabla SET Horarios_idHorarios=:idHorario WHERE Empleados_idEmpleados = :empleado";
+		$sql = "DELETE FROM $tabla WHERE Empleados_idEmpleados = :empleado;";
+		$sql .= "INSERT INTO $tabla (Empleados_idEmpleados, Horarios_idHorarios) VALUES (:empleado,:idHorario);";
 
 		$stmt = Conexion::conectar()->prepare($sql);
 		$stmt->bindParam(":empleado", $empleado, PDO::PARAM_INT);
@@ -1405,15 +1389,31 @@ static public function mdlImagenNoticia($id, $name)
 		}
 		$stmt->close();
 		$stmt = null;
+	}
 
-    }
+	static public function mdlActualizarEmpleadoHorario($tabla, $empleado, $idHorario){
 
-    static public function mdlActualizarNombreHorario($tabla, $datos){
-    	$sql = "UPDATE $tabla SET nameHorario=:nameHorario WHERE idHorarios = :idHorarios";
+		$sql = "UPDATE $tabla SET Horarios_idHorarios=:idHorario WHERE Empleados_idEmpleados = :empleado";
 
-    	$stmt = Conexion::conectar()->prepare($sql);
-    	$stmt->bindParam(":nameHorario",$datos['nameHorario'],PDO::PARAM_STR);
-    	$stmt->bindParam(":idHorarios",$datos['idHorarios'],PDO::PARAM_INT);
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->bindParam(":empleado", $empleado, PDO::PARAM_INT);
+		$stmt->bindParam(":idHorario", $idHorario, PDO::PARAM_INT);
+		if ($stmt->execute()) {
+			return "cambio";
+		}else{
+			return "error";
+		}
+		$stmt->close();
+		$stmt = null;
+
+	}
+
+	static public function mdlActualizarNombreHorario($tabla, $datos){
+		$sql = "UPDATE $tabla SET nameHorario=:nameHorario WHERE idHorarios = :idHorarios";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->bindParam(":nameHorario",$datos['nameHorario'],PDO::PARAM_STR);
+		$stmt->bindParam(":idHorarios",$datos['idHorarios'],PDO::PARAM_INT);
 		if ($stmt->execute()) {
 			return "ok";
 		}else{
@@ -1422,13 +1422,13 @@ static public function mdlImagenNoticia($id, $name)
 		$stmt->close();
 		$stmt = null;
 
-    }
+	}
 
-    static public function mdlActualizarDiasLaborables($tabla, $datos){
-    	$sql = "DELETE FROM $tabla WHERE Horarios_idHorarios = :Horarios_idHorarios";
+	static public function mdlActualizarDiasLaborables($tabla, $datos){
+		$sql = "DELETE FROM $tabla WHERE Horarios_idHorarios = :Horarios_idHorarios";
 
-    	$stmt = Conexion::conectar()->prepare($sql);
-    	$stmt->bindParam(":Horarios_idHorarios",$datos['idHorarios'],PDO::PARAM_INT);
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->bindParam(":Horarios_idHorarios",$datos['idHorarios'],PDO::PARAM_INT);
 		if ($stmt->execute()) {
 			$i=0;
 			$idHorarios = $datos['idHorarios'];
@@ -1462,15 +1462,15 @@ static public function mdlImagenNoticia($id, $name)
 		$stmt->close();
 		$stmt = null;
 
-    }
+	}
 
-    static public function mdlRegistrarDiaFestivo($tabla, $datos){
-    	$sql = "INSERT INTO $tabla(nameFestivo, fechaFestivo, fechaFin) VALUES (:nameFestivo,:fechaFestivo,:fechaFin)";
+	static public function mdlRegistrarDiaFestivo($tabla, $datos){
+		$sql = "INSERT INTO $tabla(nameFestivo, fechaFestivo, fechaFin) VALUES (:nameFestivo,:fechaFestivo,:fechaFin)";
 
-    	$stmt = Conexion::conectar()->prepare($sql);
-    	$stmt->bindParam(":nameFestivo",$datos['nameFestivo'],PDO::PARAM_STR);
-    	$stmt->bindParam(":fechaFestivo",$datos['fechaFestivo'],PDO::PARAM_STR);
-    	$stmt->bindParam(":fechaFin",$datos['fechaFin'],PDO::PARAM_STR);
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->bindParam(":nameFestivo",$datos['nameFestivo'],PDO::PARAM_STR);
+		$stmt->bindParam(":fechaFestivo",$datos['fechaFestivo'],PDO::PARAM_STR);
+		$stmt->bindParam(":fechaFin",$datos['fechaFin'],PDO::PARAM_STR);
 		if ($stmt->execute()) {
 			return "ok";
 		}else{
@@ -1478,14 +1478,14 @@ static public function mdlImagenNoticia($id, $name)
 		}
 		$stmt->close();
 		$stmt = null;
-    }
+	}
 
-    static public function mdlRegistrarPermisos($tabla, $datos){
-    	$sql = "INSERT INTO $tabla(namePermisos,colorPermisos) VALUES (:namePermisos,:colorPermisos)";
+	static public function mdlRegistrarPermisos($tabla, $datos){
+		$sql = "INSERT INTO $tabla(namePermisos,colorPermisos) VALUES (:namePermisos,:colorPermisos)";
 
-    	$stmt = Conexion::conectar()->prepare($sql);
-    	$stmt->bindParam(":namePermisos",$datos['namePermisos'],PDO::PARAM_STR);
-    	$stmt->bindParam(":colorPermisos",$datos['colorPermisos'],PDO::PARAM_STR);
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->bindParam(":namePermisos",$datos['namePermisos'],PDO::PARAM_STR);
+		$stmt->bindParam(":colorPermisos",$datos['colorPermisos'],PDO::PARAM_STR);
 		if ($stmt->execute()) {
 			return "ok";
 		}else{
@@ -1493,11 +1493,11 @@ static public function mdlImagenNoticia($id, $name)
 		}
 		$stmt->close();
 		$stmt = null;
-    }
+	}
 
-    static public function mdlVerPermisos($tabla,$item,$valor){
-	    if ($item == null && $valor == null) {	
-	    	$sql = "SELECT * FROM $tabla";
+	static public function mdlVerPermisos($tabla,$item,$valor){
+		if ($item == null && $valor == null) {	
+			$sql = "SELECT * FROM $tabla";
 
 			$stmt = Conexion::conectar()->prepare($sql);
 			$stmt->execute();
@@ -1515,7 +1515,7 @@ static public function mdlImagenNoticia($id, $name)
 
 		$stmt->close();
 		$stmt = null;
-    }
+	}
 
 	/*---------- Fin de ModeloFormularios ---------- */
 }
