@@ -1517,5 +1517,21 @@ static public function mdlImagenNoticia($id, $name)
 		$stmt = null;
 	}
 
+	static public function mdlCrearJustificante($tabla,$datos){
+		$sql = "INSERT INTO $tabla(Comentario, Empleados_idEmpleados, Asistencias_idAsistencias) VALUES (:Comentario, :Empleados_idEmpleados, :Asistencias_idAsistencias)";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->bindParam(":Comentario",$datos['Comentario'],PDO::PARAM_STR);
+		$stmt->bindParam(":Empleados_idEmpleados",$datos['Empleados_idEmpleados'],PDO::PARAM_INT);
+		$stmt->bindParam(":Asistencias_idAsistencias",$datos['Asistencias_idAsistencias'],PDO::PARAM_INT);
+		if ($stmt->execute()) {
+			return "ok";
+		}else{
+			return "error";
+		}
+		$stmt->close();
+		$stmt = null;
+	}
+
 	/*---------- Fin de ModeloFormularios ---------- */
 }

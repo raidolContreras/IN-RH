@@ -40,22 +40,29 @@ $(document).ready(function() {
 								    for (var i = 0; i < data.datos.length; i++) {
 								        var eventStart = moment(data.datos[i].start, 'YYYY-MM-DD');
 								        if (date.isSame(eventStart, 'day')) {
-								            cell.css("background-color", data.datos[i].color);
+								            cell.css("background-color", data.datos[i].colorFondo);
 								            break;
 								        }
 								    }
 								},
 						        eventClick: function (calEvent, jsEvent, view) {
-						        	if (calEvent.color === '#E7E199' || calEvent.color === '#EF8B8B' ) {
-						        		if (calEvent.color === '#E7E199') {
-							            	$('#event-title').text('Justificación del Retardo');
-							            	$('#hEntrada').html("Hora registrada: "+calEvent.hEntrada);
-						        		}
-						        		if (calEvent.color === '#EF8B8B') {
-							            	$('#event-title').text('Justificación de la Ausencia');
+						        	if (calEvent.colorFondo === '#D52E2E' || calEvent.colorFondo === '#DCD25B' ) {
+						        		
+						        		var startDate = new Date(calEvent.start);
+										var formattedStartDate = startDate.toISOString().slice(0, 10);
+
+						        		if (calEvent.colorFondo === '#D52E2E') {
+							            	$('#event-title').text('Justificación del Retardo: '+formattedStartDate);
 							            	$('#hEntrada').html("Hora registrada: -");
+							            	$('#hSalida').html("Hora registrada: -");
+						        		}
+						        		if (calEvent.colorFondo === '#DCD25B') {
+							            	$('#event-title').text('Justificación de la Ausencia: '+formattedStartDate);
+							            	$('#hEntrada').html("Hora registrada: "+calEvent.hEntrada);
+							            	$('#hSalida').html("Hora registrada: "+calEvent.hSalida);
 						        		}
 							            $('#entrada').html("Hora Esperada: "+calEvent.entrada);
+							            $('#salida').html("Hora Esperada: "+calEvent.salida);
 							            $('#asistencia').val(calEvent.description);
 							            $('#modal-event').modal();
 							        }
@@ -111,3 +118,44 @@ $(document).ready(function() {
 
 
  });
+
+
+    	
+	$(document).ready(function() {
+		$("#asistencia-btn").click(function() {
+		var formData = $("#asistencia-form").serialize(); // Obtener los datos del formulario
+
+			$.ajax({
+				url: "ajax/ajax.formularios.php", // Ruta al archivo PHP que procesará los datos del formulario
+				type: "POST",
+				data: formData,
+				success: function(response) {
+
+					if (response === '"ok"') {
+						$("#form-result").val("");
+						$("#form-result").parent().after(`
+							<div class='alert alert-success' role="alert" id="alerta">Jusificante enviado</div>
+							`);
+						deleteAlert();
+					}else{
+						$("#form-result").val("");
+						$("#form-result").parent().after(`
+							<div class='alert alert-danger' role="alert" id="alerta"><b>Error</b>, No se pudo enviar el justificante, intenta nuevamente</div>
+							`);
+							deleteAlert();
+					}
+
+				}
+			});
+		});
+	});
+
+
+function deleteAlert() {
+  setTimeout(function() {
+    var alert = $('#alerta');
+    alert.fadeOut('slow', function() {
+      alert.remove();
+    });
+  }, 1500);
+}

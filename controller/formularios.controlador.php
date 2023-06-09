@@ -952,5 +952,11 @@ class ControladorFormularios{
     	return $ver_Permiso;
     }
 
+    static public function ctrCrearJustificante($datos){
+    	$tabla = "justificantes";
+    	$registrar = ModeloFormularios::mdlCrearJustificante($tabla,$datos);
+    	return $registrar;
+    }
+
 	/*---------- Fin de ControladorFormularios ---------- */
 }

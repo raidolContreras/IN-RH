@@ -67,10 +67,8 @@
 							<?php endforeach ?>
 						</div>
 					</div>
-					<div class="col-12 card">
-						<div class="card-body">
-							
-						</div>
+					<div class="col-12">
+						<div id="form-result"></div>
 					</div>
 				</div>
 			</div>
@@ -96,14 +94,18 @@
 	                		<div class="col"><span id="entrada"></span></div>
 	                		<div class="col"><span id="hEntrada"></span></div>
 	                	</div>
+	                	<div class="row">
+	                		<div class="col"><span id="salida"></span></div>
+	                		<div class="col"><span id="hSalida"></span></div>
+	                	</div>
 	                		<label for="Comentario">Comentario</label>
-	                		<input class="form-control" type="text" name="Comentario" id="Comentario">
+	                		<input class="form-control" type="text" name="Comentario" id="Comentario" required>
 	                    <input type="hidden" id="asistencia" name="asistencia">
 	                </div>
                 </form>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" id="asistencia-btn">Enviar</button>
+                    <button type="submit" class="btn btn-primary" id="asistencia-btn" data-dismiss="modal">Enviar</button>
                 </div>
                 </div>
             </div>

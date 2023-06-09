@@ -354,6 +354,21 @@ class FormulariosAjax{
 		echo json_encode($cambiar);
 	}
 
+	public function CrearJustificanteHorario(){
+		session_start();
+		$Asistencias_idAsistencias = $this->Asistencias_idAsistencias;
+		$comentario = $this->comentario;
+
+		$datos = array(
+			"Empleados_idEmpleados" => $_SESSION['idEmpleado'],
+			"Asistencias_idAsistencias" => $Asistencias_idAsistencias,
+			"Comentario" => $comentario
+		);
+
+		$registrar = ControladorFormularios::ctrCrearJustificante($datos);
+		echo json_encode($registrar);
+	}
+
 
 }
 
@@ -566,4 +581,14 @@ if (isset($_POST['id'])) {
 	$cambiarPredeterminado = new FormulariosAjax();
 	$cambiarPredeterminado -> idHorarios = $idHorarios;
 	$cambiarPredeterminado -> CambiarPredeterminadoAjax();
+}
+
+if (isset($_POST['asistencia'])) {
+	$Asistencias_idAsistencias = $_POST['asistencia'];
+	$comentario = $_POST['Comentario'];
+
+	$crarJustificante = new FormulariosAjax();
+	$crarJustificante -> Asistencias_idAsistencias = $Asistencias_idAsistencias;
+	$crarJustificante -> comentario = $comentario;
+	$crarJustificante -> CrearJustificanteHorario();
 }

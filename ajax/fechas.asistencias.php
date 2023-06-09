@@ -75,28 +75,54 @@ foreach ($stmt_asistencias->fetchAll() as $asistencias) {
         if ($fecha['dia_Laborable'] == $dia_semana) {
 
             if ($asistencias['entrada'] <= $fecha['hora_Entrada'] && $asistencias['entrada'] != "00:00:00") {
-                $color = "#ACE799";
-                $url = "";
-                $title = $asistencias['entrada']." - ". $asistencias['salida'];
+
+                if ($asistencias['salida'] >= $fecha['hora_Salida'] && $asistencias['salida'] != "00:00:00") {
+                    $color = "#ACE799";
+                    $colorFondo = "#ACE799";
+                    $url = "";
+                    $className = "";
+                    $title = $asistencias['entrada']." - ". $asistencias['salida'];
+                }elseif($asistencias['salida'] == "00:00:00") {
+                    $color = "";
+                    $colorFondo = "#D52E2E";
+                    $url = $asistencias['idAsistencias'];
+                    $className = "btn btn-danger rounded";
+                    $title = "AUSENTE";
+                } else {
+                    $color = "";
+                    $colorFondo = "#DCD25B";
+                    $url = $asistencias['idAsistencias'];
+                    $className = "btn btn-warning rounded";
+                    $title = "RETARDO: ".$asistencias['entrada']." - ". $asistencias['salida'];
+                }
 
             } elseif($asistencias['entrada'] == "00:00:00") {
-                $color = "#EF8B8B";
+                $color = "";
+                $colorFondo = "#D52E2E";
                 $url = $asistencias['idAsistencias'];
+                $className = "btn btn-danger rounded";
                 $title = "AUSENTE";
             } else {
-                $color = "#E7E199";
+                $color = "";
+                $colorFondo = "#DCD25B";
                 $url = $asistencias['idAsistencias'];
+                $className = "btn btn-warning rounded";
                 $title = "RETARDO: ".$asistencias['entrada']." - ". $asistencias['salida'];
             }
+
             $datos[] = array(
                 "title" => $title,
                 "start" => $asistencias['fecha_asistencia'],
                 "end" => Null,
                 "color" => $color,
+                "colorFondo" => $colorFondo,
                 "textColor" => "#000",
                 "description" => $url,
+                "className" => $className,
                 "hEntrada" => $asistencias['entrada'],
-                "entrada" => $fecha['hora_Entrada']
+                "entrada" => $fecha['hora_Entrada'],
+                "hSalida" => $asistencias['salida'],
+                "salida" => $fecha['hora_Salida']
             );
             break;
         }
