@@ -43,7 +43,9 @@
 			<?php if (!empty($jefeDepartamento)): ?>
 	  		<div class="col-12">
 					<div class="card">
-						<div class="card-body">
+						<div class="float-right" style="z-index: 2 !important;" id="justify-result">
+						</div>
+						<div class="card-body" style="z-index: 0 !important;">
 							<?php include "view/pages/modulos/Peticiones.php" ?>
 						</div>
 					</div>

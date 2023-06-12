@@ -1573,5 +1573,21 @@ static public function mdlImagenNoticia($id, $name)
 
 	}
 
+	static public function mdlJustificarAsistencia($tabla,$datos){
+		$sql = "UPDATE $tabla SET valor=:valor WHERE idJustificantes = :idJustificantes";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->bindParam(":idJustificantes",$datos['idJustificantes'],PDO::PARAM_STR);
+		$stmt->bindParam(":valor",$datos['valor'],PDO::PARAM_INT);
+		if ($stmt->execute()) {
+			return "ok";
+		}else{
+			return "error";
+		}
+		$stmt->close();
+		$stmt = null;
+
+	}
+
 	/*---------- Fin de ModeloFormularios ---------- */
 }

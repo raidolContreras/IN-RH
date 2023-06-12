@@ -978,5 +978,25 @@ class ControladorFormularios{
     	return $verPeticiones;
     }
 
+    static public function ctrAprobarJustificante($idJustificantes){
+    	$tabla = "justificantes";
+    	$datos = array(
+    		"idJustificantes" => $idJustificantes,
+    		"valor" => 1
+    	);
+    	$justificar = ModeloFormularios::mdlJustificarAsistencia($tabla,$datos);
+    	return $justificar;
+    }
+
+    static public function ctrDeclinarJustificante($idJustificantes){
+    	$tabla = "justificantes";
+    	$datos = array(
+    		"idJustificantes" => $idJustificantes,
+    		"valor" => 2
+    	);
+    	$justificar = ModeloFormularios::mdlJustificarAsistencia($tabla,$datos);
+    	return $justificar;
+    }
+
 	/*---------- Fin de ControladorFormularios ---------- */
 }

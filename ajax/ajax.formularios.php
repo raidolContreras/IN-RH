@@ -369,6 +369,18 @@ class FormulariosAjax{
 		echo json_encode($registrar);
 	}
 
+	public function aprobarJustificacionAjax(){
+		$idJustificantes = $this->aprobar;
+		$aprobar = ControladorFormularios::ctrAprobarJustificante($idJustificantes);
+		echo json_encode($aprobar);
+	}
+
+	public function declinarJustificacionAjax(){
+		$idJustificantes = $this->declinar;
+		$declinar = ControladorFormularios::ctrDeclinarJustificante($idJustificantes);
+		echo json_encode($declinar);
+	}
+
 
 }
 
@@ -591,4 +603,20 @@ if (isset($_POST['asistencia'])) {
 	$crarJustificante -> Asistencias_idAsistencias = $Asistencias_idAsistencias;
 	$crarJustificante -> comentario = $comentario;
 	$crarJustificante -> CrearJustificanteHorario();
+}
+
+if (isset($_POST['aprobarJustificacion'])) {
+	$idJustificantes = $_POST['aprobarJustificacion'];
+
+	$justificar = new FormulariosAjax();
+	$justificar -> aprobar = $idJustificantes;
+	$justificar -> aprobarJustificacionAjax();
+}
+
+if (isset($_POST['declinarJustificacion'])) {
+	$idJustificantes = $_POST['declinarJustificacion'];
+
+	$justificar = new FormulariosAjax();
+	$justificar -> declinar = $idJustificantes;
+	$justificar -> declinarJustificacionAjax();
 }
