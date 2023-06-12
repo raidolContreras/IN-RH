@@ -1533,5 +1533,31 @@ static public function mdlImagenNoticia($id, $name)
 		$stmt = null;
 	}
 
+	static public function mdlVerPeticiones($tabla, $item, $valor){
+		$sql = "SELECT * FROM $tabla j
+				JOIN puesto p ON p.Empleados_idEmpleados = j.Empleados_idEmpleados
+				WHERE $item = :idDepartamentos";
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->bindParam(":idDepartamentos", $valor, PDO::PARAM_INT);
+		$stmt->execute();
+		return $stmt->fetchAll();
+
+		$stmt->close();
+		$stmt = null;
+
+	}
+
+	static public function mdlVerAsistencia($tabla,$item,$valor){
+		$sql = "SELECT * FROM $tabla WHERE $item = :$item";
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->bindParam(":".$item, $valor, PDO::PARAM_INT);
+		$stmt->execute();
+		return $stmt->fetch();
+		
+		$stmt->close();
+		$stmt = null;
+
+	}
+
 	/*---------- Fin de ModeloFormularios ---------- */
 }

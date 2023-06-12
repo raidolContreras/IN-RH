@@ -958,5 +958,18 @@ class ControladorFormularios{
     	return $registrar;
     }
 
+    static public function ctrVerAsistencia($item,$valor){
+    	$tabla = "asistencias";
+    	$asistencia = ModeloFormularios::mdlVerAsistencia($tabla,$item,$valor);
+    	return $asistencia;
+    }
+
+    static public function ctrVerPeticiones($idEmpleados){
+    	$tabla = "justificantes";
+    	$buscarDepartamento = ControladorFormularios::ctrVerDepartamentos("Empleados_idEmpleados", $idEmpleados);
+    	$verPeticiones = ModeloFormularios::mdlVerPeticiones($tabla, "p.Departamentos_idDepartamentos", $buscarDepartamento['idDepartamentos']);
+    	return $verPeticiones;
+    }
+
 	/*---------- Fin de ControladorFormularios ---------- */
 }

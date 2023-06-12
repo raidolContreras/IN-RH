@@ -1,9 +1,10 @@
 id,name,area,profileUrl,imageUrl,positionName,parentId
 5,"Rafael Flota Sanchez","JEFE DE LOGISTICA",Empleado&perfil=5,"view/fotos/thumbnails/Oscar Contrerah.png",Etiquetador,27
-3,"Oscar Contreras","JEFE DE ALMACÉN DE CAJA DE CAMPO",Empleado&perfil=3,"view/fotos/thumbnails/Oscar Contreras Flota.jpg","Auxiliar de Almacen de Caja de Campo",19
+3,"Oscar Contreras","JEFE DE COCINA",Empleado&perfil=3,"view/fotos/thumbnails/Oscar Contreras Flota.jpg","Auxiliar de Almacen de Caja de Campo",30
+30,"Carolina Sánchez","DIRECCIÓN RH",Empleado&perfil=30,"view/fotos/thumbnails/Carolina Sánchez.png","Director RH",23
 6,"ERICK NATIVIDAD","DIRECCIÓN ADMINISTRATIVA",Empleado&perfil=6,assets/images/general.jpg,"Director Aministrativo",23
 19,"Mayel Ortega Cambron","JEFE DE ALMACÉN DE CAJA DE CAMPO",Empleado&perfil=19,assets/images/general.jpg,"Jefe de Almacén de Caja de Campo",28
-20,"Yoan Adan Leon","JEFE DE LOGISTICA",Empleado&perfil=20,assets/images/general.jpg,Etiquetador,27
+20,"Yoan Adan Leon","JEFE DE COCINA",Empleado&perfil=20,assets/images/general.jpg,Etiquetador,3
 21,"ARMANDO ARCHUNDIA GONZALEZ","JEFE DE CORTES",Empleado&perfil=21,assets/images/general.jpg,"Jefe de Cortes",28
 22,"Gustavo Arreola","JEFE DE RECIBA",Empleado&perfil=22,assets/images/general.jpg,"Jefe de Reciba",28
 23,"Juan Pérez","DIRECCIÓN GENERAL",Empleado&perfil=23,assets/images/general.jpg,"Director General",
@@ -12,7 +13,6 @@ id,name,area,profileUrl,imageUrl,positionName,parentId
 27,"Andrés Hernández","JEFE OPERADOR DE MAQUINA",Empleado&perfil=27,assets/images/general.jpg,"Jefe de Operador de Maquinaria",32
 28,"Ana Martínez","DIRECCIÓN COMERCIAL",Empleado&perfil=28,assets/images/general.jpg,"Director Comercial",23
 29,"Ricardo Vargas","JEFE DE INOCUIDAD Y CALIDAD",Empleado&perfil=29,assets/images/general.jpg,"Supervisor de Calidad",36
-30,"Carolina Sánchez","DIRECCIÓN RH",Empleado&perfil=30,assets/images/general.jpg,"Director RH",23
 31,"Gabriela Ramírez","JEFE DE ALMACÉN DE ISNUMOS",Empleado&perfil=31,assets/images/general.jpg,"Jefe de Almacen de Insumos",28
 32,"LUIS  PEREZ CORONADO","DIRECCIÓN DE OPERACIONES",Empleado&perfil=32,assets/images/general.jpg,"Director de Operaciones",23
 33,"JOSE CARRILLO","JEFE DE ALMACÉN DE CAJA DE CAMPO",Empleado&perfil=33,assets/images/general.jpg,"Auxiliar de Reciba",19
@@ -20,5 +20,5 @@ id,name,area,profileUrl,imageUrl,positionName,parentId
 35,"DAVID BECERRA ALCAZAR","JEFE DE LOGISTICA",Empleado&perfil=35,assets/images/general.jpg,"Jefe de Logistica",27
 36,"JORGE MEDINA","JEFE DE INOCUIDAD Y CALIDAD",Empleado&perfil=36,assets/images/general.jpg,"Jefe de Inocuidad y Calidad",32
 43,"Fernando Tejeda","DIRECCIÓN RH",Empleado&perfil=43,assets/images/general.jpg,asistente,30
-44,"Fernando Tejeda","DIRECCIÓN RH",Empleado&perfil=44,assets/images/general.jpg,asistente,30
+44,"Luis Tejeda",TESORERÍA,Empleado&perfil=44,assets/images/general.jpg,Tesorero,3
 46,"lkjasd ljkh","JEFE DE RECIBA",Empleado&perfil=46,assets/images/general.jpg,321,22

@@ -8,10 +8,7 @@ jQuery(document).ready(function($) {
                 lengthChange: false,
                 scrollCollapse: true,
                 paging: true,
-                fixedColumns:   {
-                    left: 1,
-                    right: 1
-                },
+                fixedColumns: true,
                 buttons: [
                     {
                         extend: 'excelHtml5',
@@ -193,6 +190,30 @@ jQuery(document).ready(function($) {
                 fixedHeader: true,
                 scrollY: 375,
                 stateSave: true,
+            language: {
+                lengthMenu: 'Mostrar _MENU_ resultados por pagina',
+                zeroRecords: 'Sin resultados - lo siento',
+                info: 'Pagina _PAGE_ de _PAGES_',
+                infoEmpty: 'No se encontraron registros',
+                infoFiltered: '(Filtrado de _MAX_ registros totales)',
+                search: 'Buscar',
+            }
+            });
+
+            table.buttons().container()
+                .appendTo('#example_wrapper .col-md-6:eq(0)');
+        });
+    }
+
+    if ($("table.Peticiones").length) {
+
+        $(document).ready(function() {
+            var table = $('table.Peticiones').DataTable({
+                lengthChange: false,
+                fixedHeader: false,
+                scrollY: 300,
+                ordering: false,
+                searching: false,
             language: {
                 lengthMenu: 'Mostrar _MENU_ resultados por pagina',
                 zeroRecords: 'Sin resultados - lo siento',

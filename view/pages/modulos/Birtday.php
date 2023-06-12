@@ -1,11 +1,11 @@
 <?php 
 $empleados = ControladorEmpleados::ctrFechaNacimiento(null, null);  
 ?>
+<p class="titulo-tablero titulo">Próximos cumpleaños</p>
+<hr>
 <div class="row">
 	<div class="ml-4 pb-0">
 		<div class="">
-			<p class="titulo-tablero titulo">Próximos cumpleaños</p>
-
 				<?php foreach ($empleados as $key => $empleado): ?>
 					<div class="widget-container pb-3">
 							<div class="col-2">

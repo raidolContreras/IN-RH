@@ -43,7 +43,7 @@
 			<?php if (!empty($jefeDepartamento)): ?>
 	  		<div class="col-12">
 					<div class="card">
-						<div class="mt-2 ml-2">
+						<div class="card-body">
 							<?php include "view/pages/modulos/Peticiones.php" ?>
 						</div>
 					</div>

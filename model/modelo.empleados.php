@@ -248,7 +248,7 @@ class ModeloEmpleados{
 
 	static public function mdlEquipoDeTrabajo($tabla, $item,$pertenece){
 		if ($pertenece == null) {
-			$sql = "SELECT CONCAT( e.lastname, ' ', e.name) As Nombre, e.idEmpleados, d.Empleados_idEmpleados AS jefeDepa, f.namePhoto, e.genero, d.nameDepto AS Depto, p.namePuesto AS Puesto, CONCAT( ep.lastname, ' ', ep.name) AS NombrePertenencia, fp.namePhoto AS fotoPertenencia, dp.nameDepto AS Pertenencia, d.idDepartamentos AS depto
+			$sql = "SELECT CONCAT( e.lastname, ' ', e.name) As Nombre, e.idEmpleados, d.Empleados_idEmpleados AS jefeDepa, f.namePhoto, e.genero, d.nameDepto AS Depto, p.namePuesto AS Puesto, CONCAT( ep.lastname, ' ', ep.name) AS NombrePertenencia, fp.namePhoto AS fotoPertenencia, dp.nameDepto AS Pertenencia, d.idDepartamentos AS depto, d.Pertenencia
 					FROM $tabla e
 					LEFT JOIN foto_empleado f ON f.Empleados_idEmpleados = e.idEmpleados
 					JOIN puesto p ON p.Empleados_idEmpleados = e.idEmpleados
