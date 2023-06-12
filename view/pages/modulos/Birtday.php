@@ -4,7 +4,7 @@ $empleados = ControladorEmpleados::ctrFechaNacimiento(null, null);
 <div class="row">
 	<div class="ml-4 pb-0">
 		<div class="">
-			<p class="titulo-sup m-0">Futuros cumpleaños</p>
+			<p class="titulo-tablero titulo">Próximos cumpleaños</p>
 
 				<?php foreach ($empleados as $key => $empleado): ?>
 					<div class="widget-container pb-3">
