@@ -55,7 +55,7 @@ $pertenece = 0;
 							size="large"  alt="User Avatar" class="rounded-circle user-avatar-xl2">
 						</a>
 					</div>
-					<div class="col-8 align-items-center">
+				<div class="col-8 align-items-center" style="justify-content: flex-start;">
 						<div class="row">
 							<div class="col-12">
 							<p class="subtitulo-tablero titulo"><?php echo mb_strtoupper($etrabajo['Nombre']) ?></p>
@@ -105,7 +105,9 @@ $pertenece = 0;
 		<?php if ($pertenece != 0): 
 			$pertenencias = ControladorEmpleados::ctrEquipoDeTrabajo($pertenece);
 			?>
-			<hr>	
+			<?php if (!empty($pertenencias)): ?>
+				<hr>
+			<?php endif ?>
 		<?php foreach ($pertenencias as $pertenencia): ?>
 			<?php if ($pertenencia['idEmpleados'] == $pertenencia['jefeDepa']): ?>
 				<div class="row">

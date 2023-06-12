@@ -1547,6 +1547,20 @@ static public function mdlImagenNoticia($id, $name)
 
 	}
 
+	static public function mdlVerPeticionesDepartamentales($tabla, $item, $valor){
+		$sql = "SELECT j.* FROM $tabla j
+				RIGHT JOIN departamentos d ON d.Empleados_idEmpleados = j.Empleados_idEmpleados
+				WHERE $item = :Pertenencia";
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->bindParam(":Pertenencia", $valor, PDO::PARAM_INT);
+		$stmt->execute();
+		return $stmt->fetchAll();
+
+		$stmt->close();
+		$stmt = null;
+
+	}
+
 	static public function mdlVerAsistencia($tabla,$item,$valor){
 		$sql = "SELECT * FROM $tabla WHERE $item = :$item";
 		$stmt = Conexion::conectar()->prepare($sql);

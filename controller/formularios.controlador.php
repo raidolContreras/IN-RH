@@ -971,5 +971,12 @@ class ControladorFormularios{
     	return $verPeticiones;
     }
 
+    static public function ctrVerPeticionesDepartamentales($idEmpleados){
+    	$tabla = "justificantes";
+    	$buscarDepartamento = ControladorFormularios::ctrVerDepartamentos("Empleados_idEmpleados", $idEmpleados);
+    	$verPeticiones = ModeloFormularios::mdlVerPeticionesDepartamentales($tabla, "d.Pertenencia", $buscarDepartamento['idDepartamentos']);
+    	return $verPeticiones;
+    }
+
 	/*---------- Fin de ControladorFormularios ---------- */
 }
