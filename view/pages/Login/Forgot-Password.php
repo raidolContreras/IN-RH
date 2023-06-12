@@ -6,10 +6,9 @@
 		<img src="assets/images/logoinconsulting.png" alt="">
 	</div>
 	<div class="text-center mt-4 name">
-		Recuperar Contraseña
+		Estimado usuario
 	</div>
 	<div class="text-center mt-4">
-		<h2>Estimado usuario,</h2>
 			<p>Le informamos que hemos recibido su solicitud de restablecer su contraseña. Para completar el proceso, por favor revise el correo electrónico que le hemos enviado a la dirección que nos ha facilitado.</p> <p>En el mismo encontrará un enlace para acceder a una página segura donde podrá crear una nueva contraseña.</p>
 
 			<p>Gracias por confiar en nuestro servicio.</p>
