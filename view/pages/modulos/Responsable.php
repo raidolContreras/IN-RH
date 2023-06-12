@@ -6,7 +6,7 @@ $pertenece = 0;
 <hr class="titulo">
 <div class="row">
 	<div class="col-12 mt-2">
-		<?php if ($equipo_de_trabajo[0]['jefeDepa'] == $_SESSION['idEmpleado']): $pertenece = $equipo_de_trabajo[0]['depto'] ?>
+		<?php if ($equipo_de_trabajo[0]['jefeDepa'] == $_SESSION['idEmpleado'] && $equipo_de_trabajo[0]['idPertenencia'] != 0): $pertenece = $equipo_de_trabajo[0]['depto'] ?>
 			<p class="subtitulo-tablero titulo">Jefe inmediato</p>
 			<div class="row">
 				<div class="col-4">
