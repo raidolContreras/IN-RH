@@ -32,7 +32,7 @@ $peticionesDepartamentales = ControladorFormularios::ctrVerPeticionesDepartament
 								<td><?php echo date("d/m/Y", strtotime($asistencia['fecha_asistencia'])).$status; ?></td>
 								<td>
 									<?php if ($peticion['status_justificante'] == null): ?>
-										<div class="row">
+										<div class="row" style="margin-left: -15px; margin-right: -15px;">
 											<form id="approve-form-<?php echo $peticion['idJustificantes']; ?>" class="col-6">
 												<input type="hidden" name="aprobarJustificacion" value="<?php echo $peticion['idJustificantes']; ?>">
 												<button type="button" class="btn btn-outline-success btn-rounded approve-btn" data-id="<?php echo $peticion['idJustificantes']; ?>">
@@ -66,7 +66,7 @@ $peticionesDepartamentales = ControladorFormularios::ctrVerPeticionesDepartament
 								<td><?php echo date("d/m/Y", strtotime($asistencia['fecha_asistencia']))." (".$asistencia['entrada']." - ".$asistencia['salida'].")"; ?></td>
 								<td>
 									<?php if ($peticion['status_justificante'] == null): ?>
-										<div class="row">
+										<div class="row" style="margin-left: -15px; margin-right: -15px;">
 											<form id="approve-form-<?php echo $peticion['idJustificantes']; ?>" class="col-6">
 												<input type="hidden" name="aprobarJustificacion" value="<?php echo $peticion['idJustificantes']; ?>">
 												<button type="button" class="btn btn-outline-success btn-rounded approve-btn" data-id="<?php echo $peticion['idJustificantes']; ?>">

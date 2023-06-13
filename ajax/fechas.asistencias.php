@@ -113,17 +113,33 @@ foreach ($stmt_asistencias->fetchAll() as $asistencias) {
 					$title = "RETARDO";
 				}
 			}else{
-				$title = $asistencias['entrada']." - ". $asistencias['salida'];
 				if ($status_justificante == null) {
-					$color = "";
 					$colorFondo = "#DCDCDC";
+				
+					if ($asistencias['entrada'] == "00:00:00" || $asistencias['salida'] == "00:00:00") {
+						$title = "AUSENTE (pendiente)";
+					}else{
+						$title = "RETARDO (pendiente)";
+					}
+
 				}elseif ($status_justificante == 1) {
-					$color = "";
 					$colorFondo = "#52DC96";
+				
+					if ($asistencias['entrada'] == "00:00:00" || $asistencias['salida'] == "00:00:00") {
+						$title = "AUSENTE (aprobado)";
+					}else{
+						$title = "RETARDO (aprobado)";
+					}
 				}else{
-					$color = "";
 					$colorFondo = "#EEAB59";
+				
+					if ($asistencias['entrada'] == "00:00:00" || $asistencias['salida'] == "00:00:00") {
+						$title = "AUSENTE (rechazado)";
+					}else{
+						$title = "RETARDO (rechazado)";
+					}
 				}
+				$color = "";
 				$className = "";
 				$idAsistencia = $asistencias['idAsistencias'];
 			}
