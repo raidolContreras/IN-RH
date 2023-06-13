@@ -158,6 +158,7 @@ session_start();
 </div>
 </div>
 
+<div id="form-result" class="alerta-flotante"></div>
 <!-- JavaScript de Bootstrap 4 y jQuery -->
 <script src="assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
 <script src="assets/vendor/slimscroll/jquery.slimscroll.js"></script>

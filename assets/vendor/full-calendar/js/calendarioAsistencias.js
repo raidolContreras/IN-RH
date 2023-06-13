@@ -46,17 +46,17 @@ $(document).ready(function() {
 								    }
 								},
 						        eventClick: function (calEvent, jsEvent, view) {
-						        	if (calEvent.colorFondo === '#D52E2E' || calEvent.colorFondo === '#DCD25B' ) {
+						        	if (calEvent.colorFondo === '#EC5869' || calEvent.colorFondo === '#EF890C' ) {
 						        		
 						        		var startDate = new Date(calEvent.start);
 										var formattedStartDate = startDate.toISOString().slice(0, 10);
 
-						        		if (calEvent.colorFondo === '#D52E2E') {
+						        		if (calEvent.colorFondo === '#EC5869') {
 							            	$('#event-title').text('Justificación del Retardo: '+formattedStartDate);
 							            	$('#hEntrada').html("Hora registrada: -");
 							            	$('#hSalida').html("Hora registrada: -");
 						        		}
-						        		if (calEvent.colorFondo === '#DCD25B') {
+						        		if (calEvent.colorFondo === '#EF890C') {
 							            	$('#event-title').text('Justificación de la Ausencia: '+formattedStartDate);
 							            	$('#hEntrada').html("Hora registrada: "+calEvent.hEntrada);
 							            	$('#hSalida').html("Hora registrada: "+calEvent.hSalida);

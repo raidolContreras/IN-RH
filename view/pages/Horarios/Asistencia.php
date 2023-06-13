@@ -1,9 +1,44 @@
-<?php $permisos = ControladorFormularios::ctrVerPermisos(null,null); ?>
+<?php $permisos = ControladorFormularios::ctrVerPermisos(null,null); 
+$justificantes = ControladorEmpleados::ctrAsistenciasJustificantes();
+?>
 <link href='assets/vendor/full-calendar/css/fullcalendar.css' rel='stylesheet' />
 <link href='assets/vendor/full-calendar/css/fullcalendar.print.css' rel='stylesheet' media='print' />
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script><!-- Agrega esta línea en el head de tu HTML -->
 
 <style>
+
+.status{
+    display: flex;
+    letter-spacing: 0.6px;
+    justify-content: space-evenly;
+}
+
+.Aprobado{
+    margin-left: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-radius: 100px;
+    background-color: #52DC96;
+    color: #fff;
+}
+
+.Rechazado{
+    margin-left: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-radius: 100px;
+    background-color: #EEAB59;
+    color: #fff;
+}
+
+.Pendiente{
+    margin-left: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-radius: 100px;
+    background-color: #DCDCDC;
+    color: #5C5C5C;
+}
 
 .fc-nonbusiness {
   background: #BABABA;  
@@ -15,15 +50,15 @@
 	
 .badge-Presente {
 	color: #343;
-	background-color: #ACE799;
+	background-color: #0EE276;
 }
 .badge-Retardo {
 	color: #343;
-	background-color: #E7E199;
+	background-color: #EF890C;
 }
 .badge-Ausente {
 	color: #343;
-	background-color: #EF8B8B;
+	background-color: #EC5869;
 }
 
 <?php foreach ($permisos as $permiso): ?>
@@ -67,8 +102,22 @@
 							<?php endforeach ?>
 						</div>
 					</div>
-					<div class="col-12">
-						<div id="form-result" class="alerta-flotante"></div>
+					<div class="col-12 card">
+						<div class="card-body mb-2">
+							<p class="encabezado-h">Solicitudes</p>
+							<?php foreach ($justificantes as $justificante): ?>
+								<?php if ($justificante['Comentario'] != null): 
+
+									$estado = ($justificante['status_justificante'] == 1) ? 'Aprobado' : (($justificante['status_justificante'] !== null) ? 'Rechazado' : 'Pendiente');
+
+								?>
+									<hr>
+									<div class="status">
+										<?php echo $justificante['fecha_asistencia']." <span class='".$estado."'>".$estado."</span>"; ?>
+									</div>
+								<?php endif ?>
+							<?php endforeach ?>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -82,37 +131,38 @@
             <div class="modal fade" id="modal-event" tabindex="-1" role="dialog" aria-labelledby="modal-eventLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="event-title"></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form id="asistencia-form">
-	                <div class="modal-body">
-	                	<div class="row">
-	                		<div class="col"><span id="entrada"></span></div>
-	                		<div class="col"><span id="hEntrada"></span></div>
-	                	</div>
-	                	<div class="row">
-	                		<div class="col"><span id="salida"></span></div>
-	                		<div class="col"><span id="hSalida"></span></div>
-	                	</div>
-	                		<label for="Comentario">Comentario</label>
-	                		<input class="form-control" type="text" name="Comentario" id="Comentario" required>
-	                    <input type="hidden" id="asistencia" name="asistencia">
+	                <div class="modal-header">
+	                    <h5 class="modal-title" id="event-title"></h5>
+	                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	                    <span aria-hidden="true">&times;</span>
+	                    </button>
 	                </div>
-                </form>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" id="asistencia-btn" data-dismiss="modal">Enviar</button>
-                </div>
+	                <form id="asistencia-form">
+		                <div class="modal-body">
+		                	<div class="row">
+		                		<div class="col"><span id="entrada"></span></div>
+		                		<div class="col"><span id="hEntrada"></span></div>
+		                	</div>
+		                	<div class="row">
+		                		<div class="col"><span id="salida"></span></div>
+		                		<div class="col"><span id="hSalida"></span></div>
+		                	</div>
+		                		<label for="Comentario">Comentario</label>
+		                		<input class="form-control" type="text" name="Comentario" id="Comentario" required>
+		                    <input type="hidden" id="asistencia" name="asistencia">
+		                </div>
+	                </form>
+	                <div class="modal-footer">
+	                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	                    <button type="submit" class="btn btn-primary" id="asistencia-btn" data-dismiss="modal">Enviar</button>
+	                </div>
                 </div>
             </div>
             </div>
         </div>
     </div>
 
+<div id="form-result" class="alerta-flotante"></div>
 <script src='assets/vendor/full-calendar/js/moment.min.js'></script>
 <script src='assets/vendor/full-calendar/js/fullcalendar.js'></script>
 <script src='assets/vendor/full-calendar/js/jquery-ui.min.js'></script>

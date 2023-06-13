@@ -218,5 +218,11 @@ class ControladorEmpleados{
 		$EquipoDeTrabajo = ModeloEmpleados::mdlEquipoDeTrabajo($tabla, $puesto['Departamentos_idDepartamentos'],$pertenece);
 		return $EquipoDeTrabajo;
 	}
+
+	static public function ctrAsistenciasJustificantes(){
+		$tabla = "asistencias";
+		$buscarAsistenciasJustificantes = ModeloEmpleados::mdlAsustenciasJustificantes($tabla, "a.Empleados_idEmpleados", $_SESSION['idEmpleado']);
+		return $buscarAsistenciasJustificantes;
+	}
 	
 }

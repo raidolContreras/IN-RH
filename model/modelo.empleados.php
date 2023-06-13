@@ -275,13 +275,28 @@ class ModeloEmpleados{
 		$stmt->bindParam(":idDepartamentos", $item, PDO::PARAM_INT); // Modificación en esta línea
 		$stmt->execute();
 
-		$stmt->execute();
 		return $stmt->fetchAll();
 
 		$stmt->close();
 		$stmt = null;
 	}
 
+	static public function mdlAsustenciasJustificantes($tabla, $item, $valor){
+		$sql = "SELECT *
+				FROM $tabla a
+				LEFT JOIN justificantes j ON j.Asistencias_idAsistencias = a.idAsistencias
+				WHERE $item = :idEmpleados
+				AND a.fecha_asistencia >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH);";
 
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->bindParam(":idEmpleados", $valor, PDO::PARAM_INT);
+
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+
+		$stmt->close();
+		$stmt = null;
+	}
 
 }

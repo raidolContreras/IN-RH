@@ -80,49 +80,49 @@ foreach ($stmt_asistencias->fetchAll() as $asistencias) {
 				if ($asistencias['entrada'] <= $fecha['hora_Entrada'] && $asistencias['entrada'] != "00:00:00") {
 
 					if ($asistencias['salida'] >= $fecha['hora_Salida'] && $asistencias['salida'] != "00:00:00") {
-						$color = "#ACE799";
-						$colorFondo = "#ACE799";
+						$color = "#0EE276";
+						$colorFondo = "#0EE276";
 						$idAsistencia = "";
 						$className = "";
 						$title = $asistencias['entrada']." - ". $asistencias['salida'];
 					}elseif($asistencias['salida'] == "00:00:00") {
 						$color = "";
-						$colorFondo = "#D52E2E";
+						$colorFondo = "#EC5869";
 						$idAsistencia = $asistencias['idAsistencias'];
 						$className = "btn btn-danger rounded";
 						$title = "AUSENTE";
 					} else {
 						$color = "";
-						$colorFondo = "#DCD25B";
+						$colorFondo = "#EF890C";
 						$idAsistencia = $asistencias['idAsistencias'];
 						$className = "btn btn-warning rounded";
-						$title = "RETARDO: ".$asistencias['entrada']." - ". $asistencias['salida'];
+						$title = "RETARDO";
 					}
 
 				} elseif($asistencias['entrada'] == "00:00:00") {
 					$color = "";
-					$colorFondo = "#D52E2E";
+					$colorFondo = "#EC5869";
 					$idAsistencia = $asistencias['idAsistencias'];
 					$className = "btn btn-danger rounded";
 					$title = "AUSENTE";
 				} else {
 					$color = "";
-					$colorFondo = "#DCD25B";
+					$colorFondo = "#EF890C";
 					$idAsistencia = $asistencias['idAsistencias'];
 					$className = "btn btn-warning rounded";
-					$title = "RETARDO: ".$asistencias['entrada']." - ". $asistencias['salida'];
+					$title = "RETARDO";
 				}
 			}else{
 				$title = $asistencias['entrada']." - ". $asistencias['salida'];
 				if ($status_justificante == null) {
 					$color = "";
-					$colorFondo = "#B4B4B4";
+					$colorFondo = "#DCDCDC";
 				}elseif ($status_justificante == 1) {
 					$color = "";
-					$colorFondo = "#8DD377";
+					$colorFondo = "#52DC96";
 				}else{
 					$color = "";
-					$colorFondo = "#EF9840";
+					$colorFondo = "#EEAB59";
 				}
 				$className = "";
 				$idAsistencia = $asistencias['idAsistencias'];
