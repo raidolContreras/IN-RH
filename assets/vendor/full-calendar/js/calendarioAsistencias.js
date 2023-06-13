@@ -167,6 +167,6 @@ function deleteAlert() {
   }, 1500);
   
 	setTimeout(function() {
-    locale.reload();
+    location.reload();
   }, 1600);
 }
