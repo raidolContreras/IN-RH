@@ -133,13 +133,13 @@ $(document).ready(function() {
 
 					if (response === '"ok"') {
 						$("#form-result").val("");
-						$("#form-result").parent().after(`
+						$("#form-result").html(`
 							<div class='alert alert-success' role="alert" id="alerta">Jusificante enviado</div>
 							`);
 						deleteAlert();
 					}else{
 						$("#form-result").val("");
-						$("#form-result").parent().after(`
+						$("#form-result").html(`
 							<div class='alert alert-danger' role="alert" id="alerta"><b>Error</b>, No se pudo enviar el justificante, intenta nuevamente</div>
 							`);
 							deleteAlert();
