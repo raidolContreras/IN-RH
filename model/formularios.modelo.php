@@ -1549,7 +1549,7 @@ static public function mdlImagenNoticia($id, $name)
 
 	static public function mdlVerPeticionesDepartamentales($tabla, $item, $valor){
 		$sql = "SELECT j.* FROM $tabla j
-				RIGHT JOIN departamentos d ON d.Empleados_idEmpleados = j.Empleados_idEmpleados
+				LEFT JOIN departamentos d ON d.Empleados_idEmpleados = j.Empleados_idEmpleados
 				WHERE $item = :Pertenencia";
 		$stmt = Conexion::conectar()->prepare($sql);
 		$stmt->bindParam(":Pertenencia", $valor, PDO::PARAM_INT);
@@ -1574,11 +1574,11 @@ static public function mdlImagenNoticia($id, $name)
 	}
 
 	static public function mdlJustificarAsistencia($tabla,$datos){
-		$sql = "UPDATE $tabla SET valor=:valor WHERE idJustificantes = :idJustificantes";
+		$sql = "UPDATE $tabla SET status_justificante=:status_justificante WHERE idJustificantes = :idJustificantes";
 
 		$stmt = Conexion::conectar()->prepare($sql);
-		$stmt->bindParam(":idJustificantes",$datos['idJustificantes'],PDO::PARAM_STR);
-		$stmt->bindParam(":valor",$datos['valor'],PDO::PARAM_INT);
+		$stmt->bindParam(":idJustificantes",$datos['idJustificantes'],PDO::PARAM_INT);
+		$stmt->bindParam(":status_justificante",$datos['valor'],PDO::PARAM_INT);
 		if ($stmt->execute()) {
 			return "ok";
 		}else{

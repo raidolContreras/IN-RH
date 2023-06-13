@@ -216,7 +216,7 @@ jQuery(document).ready(function($) {
                 searching: false,
             language: {
                 lengthMenu: 'Mostrar _MENU_ resultados por pagina',
-                zeroRecords: 'Sin resultados - lo siento',
+                zeroRecords: 'Parece que no hay ninguna solicitud en el tablero.',
                 info: 'Pagina _PAGE_ de _PAGES_',
                 infoEmpty: 'No se encontraron registros',
                 infoFiltered: '(Filtrado de _MAX_ registros totales)',
