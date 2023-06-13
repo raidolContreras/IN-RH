@@ -22,11 +22,14 @@ $peticionesDepartamentales = ControladorFormularios::ctrVerPeticionesDepartament
 						<?php
 						$empleado = ControladorEmpleados::ctrVerEmpleados("idEmpleados", $peticion['Empleados_idEmpleados']);
 						$asistencia = ControladorFormularios::ctrVerAsistencia("idAsistencias", $peticion['Asistencias_idAsistencias']);
+
+						$status = ($asistencia['entrada'] == "00:00:00") ? "Ausencia" : " (".$asistencia['entrada']." - ".$asistencia['salida'].")";
+
 						?>
 							<tr>
 								<td><?php echo $empleado['lastname']." ".$empleado['name']; ?></td>
 								<td><?php echo $peticion['Comentario']; ?></td>
-								<td><?php echo date("d/m/Y", strtotime($asistencia['fecha_asistencia']))." (".$asistencia['entrada']." - ".$asistencia['salida'].")"; ?></td>
+								<td><?php echo date("d/m/Y", strtotime($asistencia['fecha_asistencia'])).$status; ?></td>
 								<td>
 									<?php if ($peticion['status_justificante'] == null): ?>
 										<div class="row">
