@@ -68,7 +68,7 @@
 						</div>
 					</div>
 					<div class="col-12">
-						<div id="form-result"></div>
+						<div id="form-result" class="alerta-flotante"></div>
 					</div>
 				</div>
 			</div>

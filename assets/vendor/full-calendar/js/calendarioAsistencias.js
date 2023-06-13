@@ -134,13 +134,20 @@ $(document).ready(function() {
 					if (response === '"ok"') {
 						$("#form-result").val("");
 						$("#form-result").html(`
-							<div class='alert alert-success' role="alert" id="alerta">Jusificante enviado</div>
+							<div class='alert alert-success' role="alert" id="alerta">
+							<i class="fas fa-check-circle"></i>
+        			<strong class="mx-2">¡Éxito!</strong> 
+								Jusificante enviado
+							</div>
 							`);
 						deleteAlert();
 					}else{
 						$("#form-result").val("");
 						$("#form-result").html(`
-							<div class='alert alert-danger' role="alert" id="alerta"><b>Error</b>, No se pudo enviar el justificante, intenta nuevamente</div>
+							<div class='alert alert-danger' role="alert" id="alerta">
+								<i class="fas fa-exclamation-triangle"></i>
+	        			<strong class="mx-2">Error!</strong> No se pudo enviar el justificante, intenta nuevamente
+							</div>
 							`);
 							deleteAlert();
 					}
@@ -150,7 +157,7 @@ $(document).ready(function() {
 		});
 	});
 
-
+	
 function deleteAlert() {
   setTimeout(function() {
     var alert = $('#alerta');
@@ -158,4 +165,8 @@ function deleteAlert() {
       alert.remove();
     });
   }, 1500);
+  
+	setTimeout(function() {
+    locale.reload();
+  }, 1600);
 }
