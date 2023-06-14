@@ -1,4 +1,5 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link href="assets/vendor/bootstrap-colorpicker/%40claviska/jquery-minicolors/jquery.minicolors.css" rel="stylesheet">
 <?php $permisos = ControladorFormularios::ctrVerPermisos(null,null); ?>
 <style>
 <?php foreach ($permisos as $permiso): ?>
@@ -294,7 +295,28 @@
 					    </div>
 					    <div class="col-12 col-md-6">
 					        <label for="colorPermiso">Color</label>
-					        <input type="color" class="form-control" id="colorPermiso" name="colorPermiso" value="#4DFF00" required>
+
+					        <div class="minicolors minicolors-theme-bootstrap minicolors-position-bottom minicolors-position-left">
+					        	<input type="hidden" id="colorPermiso" name="colorPermiso" class="demo minicolors-input" value="#4DFF00" size="7">
+					        <span class="minicolors-swatch minicolors-sprite minicolors-input-swatch">
+					        	<span class="minicolors-swatch-color" style="background-color: rgb(222, 222, 222); opacity: 1;">
+						        </span>
+						    </span>
+					        <div class="minicolors-panel minicolors-slider-hue" style="display: none;">
+					        	<div class="minicolors-slider minicolors-sprite">
+						        	<div class="minicolors-picker" style="top: 136.709px;"></div>
+							    </div>
+						        <div class="minicolors-opacity-slider minicolors-sprite">
+						        	<div class="minicolors-picker"></div>
+							    </div>
+						        <div class="minicolors-grid minicolors-sprite" style="background-color: rgb(255, 136, 0);">
+						        	<div class="minicolors-grid-inner"></div>
+							        <div class="minicolors-picker" style="top: 19px; left: 0px;">
+							        	<div></div>
+								    </div>
+							    </div>
+						    </div>
+					    </div>
 					    </div>
 					  </div>
 					</form>
@@ -313,3 +335,40 @@
 			</div>
 		</div>
 	</div>
+	<script src="assets/vendor/bootstrap-colorpicker/jquery-asColor/dist/jquery-asColor.min.js"></script>
+	<script src="assets/vendor/bootstrap-colorpicker/jquery-asGradient/dist/jquery-asGradient.js"></script>
+	<script src="assets/vendor/bootstrap-colorpicker/jquery-asColorPicker/dist/jquery-asColorPicker.min.js"></script>
+	<script src="assets/vendor/bootstrap-colorpicker/%40claviska/jquery-minicolors/jquery.minicolors.min.js"></script>
+	<script>
+    $('.demo').each(function() {
+        //
+        // Dear reader, it's actually very easy to initialize MiniColors. For example:
+        //
+        //  $(selector).minicolors();
+        //
+        // The way I've done it below is just for the demo, so don't get confused
+        // by it. Also, data- attributes aren't supported at this time...they're
+        // only used for this demo.
+        //
+        $(this).minicolors({
+            control: $(this).attr('data-control') || 'hue',
+            defaultValue: $(this).attr('data-defaultValue') || '',
+            format: $(this).attr('data-format') || 'hex',
+            keywords: $(this).attr('data-keywords') || '',
+            inline: $(this).attr('data-inline') === 'true',
+            letterCase: $(this).attr('data-letterCase') || 'lowercase',
+            opacity: $(this).attr('data-opacity'),
+            position: $(this).attr('data-position') || 'bottom left',
+            swatches: $(this).attr('data-swatches') ? $(this).attr('data-swatches').split('|') : [],
+            change: function(value, opacity) {
+                if (!value) return;
+                if (opacity) value += ', ' + opacity;
+                if (typeof console === 'object') {
+                    console.log(value);
+                }
+            },
+            theme: 'bootstrap'
+        });
+
+    });
+    </script>

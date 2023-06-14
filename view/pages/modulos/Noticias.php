@@ -86,7 +86,7 @@ if (isset($_GET['noticia'])) {
 		<div class="card">
 			<div class="card-footer p-0 text-center d-flex justify-content-center ">
 				<div class="card-footer-item card-footer-item-bordered">
-					<button class="card-link btn btn-outline-secondary">Cancelar</button>
+					<a href="Inicio" class="card-link btn btn-outline-secondary">Cancelar</a>
 				</div>
 				<div class="card-footer-item card-footer-item-bordered">
 					<button type="submit" name="noticia_btn" class="card-link btn btn-outline-primary">Enviar</button>

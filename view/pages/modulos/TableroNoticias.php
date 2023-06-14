@@ -64,8 +64,12 @@
 								  </div>
 								</div>
 								<div class="col-4 pr-4 pt-2 pb-4">
-								  <div class="card-into-card rounded">
-								   <center> <img src="view/noticias/<?php echo $noticia['name_foto']; ?>" class="img-fluid w-75" alt="Imagen de la noticia"></center>
+								  <div class="card-into-card rounded noticia">
+								  	<button class="btn btn-link" style="padding: 0 !important;"
+										  	data-toggle="modal" 
+											data-target="#noticia<?php echo $noticia['idNoticias']; ?>">
+										<img src="view/noticias/<?php echo $noticia['name_foto']; ?>" class="img-fluid w-75" alt="Imagen de la noticia">
+								  	</button>
 								  </div>
 								</div>
 
@@ -154,3 +158,16 @@
 		</div>
 	</div>
 <?php endif ?>
+
+<?php foreach ($noticias as $key => $noticia): ?>
+	<div class="modal fade" id="noticia<?php echo $noticia['idNoticias']; ?>">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<!-- Modal body -->
+				<div class="modal-body noticia">
+					<img src="view/noticias/<?php echo $noticia['name_foto']; ?>" class="img-fluid w-75" alt="Imagen de la noticia">
+				</div>
+			</div>
+		</div>
+	</div>
+<?php endforeach ?>
