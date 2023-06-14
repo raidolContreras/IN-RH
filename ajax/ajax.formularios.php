@@ -381,6 +381,12 @@ class FormulariosAjax{
 		echo json_encode($declinar);
 	}
 
+	public function crearExcelAjax(){
+		$idEmpleados = $this->idEmpleados;
+		$generarExcel = ControladorEmpleados::ctrGeneralExcelAsistencias($idEmpleados);
+		echo json_encode($generarExcel);
+	}
+
 
 }
 
@@ -619,4 +625,12 @@ if (isset($_POST['declinarJustificacion'])) {
 	$justificar = new FormulariosAjax();
 	$justificar -> declinar = $idJustificantes;
 	$justificar -> declinarJustificacionAjax();
+}
+
+if (isset($_POST['genExcel'])) {
+	$idEmpleados = $_POST['genExcel'];
+
+	$generarExcel = new FormulariosAjax();
+	$generarExcel -> idEmpleados = $idEmpleados;
+	$generarExcel -> crearExcelAjax();
 }

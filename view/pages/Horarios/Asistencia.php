@@ -87,9 +87,12 @@ $justificantes = ControladorEmpleados::ctrAsistenciasJustificantes();
 				<div class="row">
 					<div class="col-12 card">
 						<div class="card-body">
-							<button class="btn btn-outline-success btn-rounded btn-block btn-lg">
-								<i class="mdi mdi-download"></i> Exportar a Excel
-							</button>
+							<form id="exportarExcel-form">
+								<input type="hidden" name="genExcel" value="<?php echo $_SESSION['idEmpleado'] ?>">
+								<button type="button" class="btn btn-outline-success btn-rounded btn-block btn-lg" id="exportarExcel-btn">
+									<i class="mdi mdi-download"></i> Exportar a Excel
+								</button>
+							</form>
 						</div>
 					</div>
 					<div class="col-12 card">

@@ -141,12 +141,69 @@ $(document).ready(function() {
 							</div>
 							`);
 						deleteAlert();
+						setTimeout(function() {
+					    location.reload();
+					  }, 1600);
 					}else{
 						$("#form-result").val("");
 						$("#form-result").html(`
 							<div class='alert alert-danger' role="alert" id="alerta">
 								<i class="fas fa-exclamation-triangle"></i>
 	        			<strong class="mx-2">Error!</strong> No se pudo enviar el justificante, intenta nuevamente
+							</div>
+							`);
+							deleteAlert();
+							setTimeout(function() {
+						    location.reload();
+						  }, 1600);
+					}
+
+				}
+			});
+		});
+	});
+
+
+	$(document).ready(function() {
+		$("#exportarExcel-btn").click(function() {
+		var formData = $("#exportarExcel-form").serialize(); // Obtener los datos del formulario
+
+			$.ajax({
+				url: "ajax/ajax.formularios.php", // Ruta al archivo PHP que procesará los datos del formulario
+				type: "POST",
+				data: formData,
+				success: function(response) {
+
+					if (response !== '"Error"') {
+						$("#form-result").val("");
+						$("#form-result").html(`
+							<div class='alert alert-success' role="alert" id="alerta">
+							<i class="fas fa-check-circle"></i>
+        				<strong class="mx-2">¡Éxito!</strong>
+							</div>
+							`);
+								window.onload = function() {
+									// URL del archivo que se desea descargar
+									var fileUrl = "view/Asistencias/"+response+".xlsx";
+
+									// Nombre del archivo que se desea descargar
+									var fileName = response+".xlsx";
+
+									// Crear un enlace temporal
+									var link = document.createElement("a");
+									link.href = fileUrl;
+									link.download = fileName;
+
+									// Hacer clic en el enlace para iniciar la descarga
+									link.click();
+								};
+						deleteAlert();
+					}else{
+						$("#form-result").val("");
+						$("#form-result").html(`
+							<div class='alert alert-danger' role="alert" id="alerta">
+								<i class="fas fa-exclamation-triangle"></i>
+	        			<strong class="mx-2">Error!</strong> No se pudo generar el Excel, intenta nuevamente
 							</div>
 							`);
 							deleteAlert();
@@ -166,7 +223,4 @@ function deleteAlert() {
     });
   }, 1500);
   
-	setTimeout(function() {
-    location.reload();
-  }, 1600);
 }

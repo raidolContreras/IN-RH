@@ -230,5 +230,11 @@ class ControladorEmpleados{
 		$buscarAsistenciasJustificantes = ModeloEmpleados::mdlAsustenciasJustificantes($tabla, "a.Empleados_idEmpleados", $_SESSION['idEmpleado']);
 		return $buscarAsistenciasJustificantes;
 	}
+
+	static public function ctrGeneralExcelAsistencias($idEmpleados){
+		$tabla = "empleados";
+		$GenerarExcelAsistencia = ModeloEmpleados::mdlGenerarExcelAsistencias($tabla, $idEmpleados);
+		return $GenerarExcelAsistencia;
+	}
 	
 }

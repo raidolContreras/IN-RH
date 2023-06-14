@@ -2,6 +2,9 @@
 
 require_once "conexion.php";
 
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
 class ModeloEmpleados{
 
 	static public function mdlActualizarEmpleado($tabla, $datos){
@@ -312,6 +315,10 @@ class ModeloEmpleados{
 
 		$stmt->close();
 		$stmt = null;
+	}
+
+	static public function mdlGenerarExcelAsistencias($tabla, $idEmpleados){
+		return "ok";
 	}
 
 }
