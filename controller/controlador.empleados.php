@@ -183,6 +183,12 @@ class ControladorEmpleados{
 		return $fechaNacimiento;
 	}
 
+	static public function ctrFechaAniversario(){
+		$tabla = 'empleados';
+		$fechaNacimiento = ModeloEmpleados::mdlFechaAniversario($tabla);
+		return $fechaNacimiento;
+	}
+
 	static public function ctrCambioPassword($tabla,$data){
 		$cambioPassword = ModeloEmpleados::mdlCambioPassword($tabla,$data);
 		return $cambioPassword;

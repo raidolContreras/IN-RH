@@ -10,9 +10,9 @@ $peticionesDepartamentales = ControladorFormularios::ctrVerPeticionesDepartament
 			<thead>
 				<tr>
 					<th width="20%">Nombre</th>
-					<th>Comentario</th>
+					<th width="35%">Comentario</th>
 					<th width="20%">Horario</th>
-					<th width="10%"></th>
+					<th> 	 </th>
 				</tr>
 			</thead>
 			<tbody>
@@ -32,14 +32,14 @@ $peticionesDepartamentales = ControladorFormularios::ctrVerPeticionesDepartament
 								<td><?php echo date("d/m/Y", strtotime($asistencia['fecha_asistencia'])).$status; ?></td>
 								<td>
 									<?php if ($peticion['status_justificante'] == null): ?>
-										<div class="row" style="margin-left: -15px; margin-right: -15px;">
-											<form id="approve-form-<?php echo $peticion['idJustificantes']; ?>" class="col-6">
+										<div class="row" style="margin-left: -15px; margin-right: -5px;">
+											<form id="approve-form-<?php echo $peticion['idJustificantes']; ?>" class="col">
 												<input type="hidden" name="aprobarJustificacion" value="<?php echo $peticion['idJustificantes']; ?>">
 												<button type="button" class="btn btn-outline-success btn-rounded approve-btn" data-id="<?php echo $peticion['idJustificantes']; ?>">
 													<i class="fas fa-check"></i>
 												</button>
 											</form>
-											<form id="decline-form-<?php echo $peticion['idJustificantes']; ?>" class="col-6">
+											<form id="decline-form-<?php echo $peticion['idJustificantes']; ?>" class="col">
 												<input type="hidden" name="declinarJustificacion" value="<?php echo $peticion['idJustificantes']; ?>">
 												<button type="button" class="btn btn-outline-danger btn-rounded decline-btn" data-id="<?php echo $peticion['idJustificantes']; ?>">
 													<i class="fas fa-times"></i>
@@ -66,14 +66,14 @@ $peticionesDepartamentales = ControladorFormularios::ctrVerPeticionesDepartament
 								<td><?php echo date("d/m/Y", strtotime($asistencia['fecha_asistencia']))." (".$asistencia['entrada']." - ".$asistencia['salida'].")"; ?></td>
 								<td>
 									<?php if ($peticion['status_justificante'] == null): ?>
-										<div class="row" style="margin-left: -15px; margin-right: -15px;">
-											<form id="approve-form-<?php echo $peticion['idJustificantes']; ?>" class="col-6">
+										<div class="row" style="margin-left: -15px; margin-right: -5px;">
+											<form id="approve-form-<?php echo $peticion['idJustificantes']; ?>" class="col">
 												<input type="hidden" name="aprobarJustificacion" value="<?php echo $peticion['idJustificantes']; ?>">
 												<button type="button" class="btn btn-outline-success btn-rounded approve-btn" data-id="<?php echo $peticion['idJustificantes']; ?>">
 													<i class="fas fa-check"></i>
 												</button>
 											</form>
-											<form id="decline-form-<?php echo $peticion['idJustificantes']; ?>" class="col-6">
+											<form id="decline-form-<?php echo $peticion['idJustificantes']; ?>" class="col">
 												<input type="hidden" name="declinarJustificacion" value="<?php echo $peticion['idJustificantes']; ?>">
 												<button type="button" class="btn btn-outline-danger btn-rounded decline-btn" data-id="<?php echo $peticion['idJustificantes']; ?>">
 													<i class="fas fa-times"></i>

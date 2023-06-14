@@ -106,6 +106,21 @@ class ModeloEmpleados{
 		$stmt = null;
 	}
 
+	static public function mdlFechaAniversario($tabla){
+		$sql = "SELECT * FROM $tabla e
+				LEFT JOIN foto_empleado fe on e.idEmpleados = fe.Empleados_idEmpleados
+				WHERE DATE_FORMAT(e.fecha_contratado, '%m-%d') 
+				BETWEEN DATE_FORMAT(CURDATE(), '%m-%d') 
+				AND DATE_FORMAT(DATE_ADD(CURDATE(), INTERVAL 30 DAY), '%m-%d')";
+		$stmt = Conexion::conectar()->prepare($sql);
+
+		$stmt->execute();
+		return $stmt->fetchAll();
+
+		$stmt->close();
+		$stmt = null;
+	}
+
 	static public function mdlCambioPassword($tabla,$data){
 
 		$sql = "UPDATE $tabla SET password=:password, cambio_password=1 WHERE idEmpleados = :idEmpleados";
