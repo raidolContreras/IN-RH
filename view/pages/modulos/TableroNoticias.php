@@ -68,7 +68,7 @@
 								  	<button class="btn btn-link" style="padding: 0 !important;"
 										  	data-toggle="modal" 
 											data-target="#noticia<?php echo $noticia['idNoticias']; ?>">
-										<img src="view/noticias/<?php echo $noticia['name_foto']; ?>" class="img-fluid w-75" alt="Imagen de la noticia">
+										<img src="view/noticias/thumbnails/<?php echo $noticia['name_foto']; ?>" class="img-fluid w-75" alt="Imagen de la noticia">
 								  	</button>
 								  </div>
 								</div>
