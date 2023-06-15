@@ -2,6 +2,8 @@
 
 require_once "conexion.php";
 
+require 'assets/vendor/autoload.php';
+
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
@@ -250,7 +252,7 @@ class ModeloEmpleados{
 	}
 
 	static public function mdlVerEmpleadosHorariosDHorarios($tabla, $item, $valor){
-		$sql = "SELECT dh.dia_Laborable
+		$sql = "SELECT dh.dia_Laborable, dh.numero_Horas, dh.hora_Entrada, dh.hora_Salida
 				FROM $tabla e
 				RIGHT JOIN empleados_has_horarios eh ON e.idEmpleados = eh.Empleados_idEmpleados
 				RIGHT JOIN horarios h ON eh.Horarios_idHorarios = h.idHorarios
@@ -304,7 +306,7 @@ class ModeloEmpleados{
 				FROM $tabla a
 				LEFT JOIN justificantes j ON j.Asistencias_idAsistencias = a.idAsistencias
 				WHERE $item = :idEmpleados
-				AND a.fecha_asistencia >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH);";
+				AND MONTH(a.fecha_asistencia) = MONTH(CURRENT_DATE());";
 
 		$stmt = Conexion::conectar()->prepare($sql);
 		$stmt->bindParam(":idEmpleados", $valor, PDO::PARAM_INT);
@@ -317,8 +319,100 @@ class ModeloEmpleados{
 		$stmt = null;
 	}
 
+	static public function mdlDiasFestivos($tabla){
+		$sql = "SELECT * FROM $tabla";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+
+		$stmt->close();
+		$stmt = null;
+	}
+
+	static public function mdlAsistenciasMes($idEmpleados, $mes){
+		$sql = "SELECT *
+				FROM asistencias a
+				LEFT JOIN justificantes j ON j.Asistencias_idAsistencias = a.idAsistencias
+				WHERE a.Empleados_idEmpleados = :idEmpleados
+				AND MONTH(a.fecha_asistencia) = :mes";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->bindParam(":idEmpleados", $valor, PDO::PARAM_INT);
+		$stmt->bindParam(":mes", $mes, PDO::PARAM_INT);
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+
+		$stmt->close();
+		$stmt = null;
+	}
+
 	static public function mdlGenerarExcelAsistencias($tabla, $idEmpleados){
-		return "ok";
+		$dias = array("Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado");
+		$meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+
+		$mesActual = $meses[date('n')-1];
+
+	/*-------- Datos generales --------*/
+		$empleado = ControladorEmpleados::ctrVerEmpleados("idEmpleados", $idEmpleados);
+		$nombre = $empleado['lastname']." ".$empleado['name'];
+		$puesto = ControladorFormularios::ctrVerPuestos("Empleados_idEmpleados", $idEmpleados);
+		$departamento = ControladorFormularios::ctrVerDepartamentos("idDepartamentos", $puesto['Departamentos_idDepartamentos']);
+		$empresa = ControladorFormularios::ctrVerEmpresas("idEmpresas", $departamento['Empresas_idEmpresas']);
+
+
+	/*-------- Datos de los días (festivos, asistencias, horarios) --------*/
+		$festivos = ControladorEmpleados::ctrDiasFestivos();
+		$asistencias = ControladorEmpleados::ctrAsistenciasJustificantes($idEmpleados);
+		$horarios = ControladorEmpleados::ctrVerEmpleadosHorariosDHorarios("idEmpleados", $idEmpleados);
+
+		$dia_semana = array();
+		$horas_esperadas = 0;
+
+		while ($fila = $horarios->fetch(PDO::FETCH_ASSOC)) {
+		    $dia_semana[] = array(
+		    	"ndia" => $fila['dia_Laborable'],
+		    	"día" => $dias[$fila['dia_Laborable']],
+		    	"hora_dia" => $fila['numero_Horas'],
+		    	"entrada" => $fila['hora_Entrada'],
+		    	"salida" => $fila['hora_Salida']
+		    );
+		    $horas_esperadas = $horas_esperadas + $fila['numero_Horas']-1;
+		}
+
+		if ($dia_semana == []) {
+		    $horarios = ControladorEmpleados::ctrVerEmpleadosHorariosDHorarios("h.default", 1);
+		    while ($fila = $horarios->fetch(PDO::FETCH_ASSOC)) {
+			    $dia_semana[] = array(
+		    		"ndia" => $fila['dia_Laborable'],
+			    	"dia" => $dias[$fila['dia_Laborable']],
+		    		"hora_dia" => $fila['numero_Horas'],
+		    		"entrada" => $fila['hora_Entrada'],
+		    		"salida" => $fila['hora_Salida']
+			    );
+		    	$horas_esperadas = $horas_esperadas + $fila['numero_Horas']-1;
+		    }
+		}
+
+		$spreadsheet = new Spreadsheet();
+		$spreadsheet
+		->getProperties()
+		->setCreator("IN Consulting México")
+		->setLastModifiedBy('IN Consulting México')
+		->setTitle("Reporte de Asistencias IN Consulting")
+		->setDescription("Reporte de Asistencias del mes de ".$meses[date('n')-1]);
+		$activeWorksheet = $spreadsheet->getActiveSheet();
+
+		$activeWorksheet->setTitle($nombre);
+
+		$activeWorksheet->setCellValue('A1', 'Nombre:');
+
+		$writer = new Xlsx($spreadsheet);
+		$writer->save('../view/Asistencias/'.$nombre.'.xlsx');
+		return $nombre;
+
 	}
 
 }

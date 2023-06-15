@@ -225,9 +225,9 @@ class ControladorEmpleados{
 		return $EquipoDeTrabajo;
 	}
 
-	static public function ctrAsistenciasJustificantes(){
+	static public function ctrAsistenciasJustificantes($idEmpleados){
 		$tabla = "asistencias";
-		$buscarAsistenciasJustificantes = ModeloEmpleados::mdlAsustenciasJustificantes($tabla, "a.Empleados_idEmpleados", $_SESSION['idEmpleado']);
+		$buscarAsistenciasJustificantes = ModeloEmpleados::mdlAsustenciasJustificantes($tabla, "a.Empleados_idEmpleados", $idEmpleados);
 		return $buscarAsistenciasJustificantes;
 	}
 
@@ -235,6 +235,12 @@ class ControladorEmpleados{
 		$tabla = "empleados";
 		$GenerarExcelAsistencia = ModeloEmpleados::mdlGenerarExcelAsistencias($tabla, $idEmpleados);
 		return $GenerarExcelAsistencia;
+	}
+
+	static public function ctrDiasFestivos(){
+		$tabla = "festivos";
+		$DiasFestivos = ModeloEmpleados::mdlDiasFestivos($tabla);
+		return $DiasFestivos;
 	}
 	
 }

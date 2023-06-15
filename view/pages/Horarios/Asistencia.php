@@ -1,5 +1,5 @@
 <?php $permisos = ControladorFormularios::ctrVerPermisos(null,null); 
-$justificantes = ControladorEmpleados::ctrAsistenciasJustificantes();
+$justificantes = ControladorEmpleados::ctrAsistenciasJustificantes($_SESSION['idEmpleado']);
 ?>
 <link href='assets/vendor/full-calendar/css/fullcalendar.css' rel='stylesheet' />
 <link href='assets/vendor/full-calendar/css/fullcalendar.print.css' rel='stylesheet' media='print' />
