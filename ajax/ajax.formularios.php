@@ -5,6 +5,9 @@ require_once "../model/formularios.modelo.php";
 require_once "../model/modelo.empleados.php";
 require_once "../controller/controlador.empleados.php";
 
+require_once "../controller/controlador.excel.php";
+require_once "../model/modelo.excel.php";
+
 class FormulariosAjax{
 
 	public function citasAjax(){
@@ -383,7 +386,7 @@ class FormulariosAjax{
 
 	public function crearExcelAjax(){
 		$idEmpleados = $this->idEmpleados;
-		$generarExcel = ControladorEmpleados::ctrGeneralExcelAsistencias($idEmpleados);
+		$generarExcel = ControladorExcel::ctrGeneralExcelAsistencias($idEmpleados);
 		echo json_encode($generarExcel);
 	}
 

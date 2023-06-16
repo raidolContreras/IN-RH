@@ -12,8 +12,11 @@ require_once "controller/plantilla.controlador.php";
 require_once "controller/formularios.controlador.php";
 require_once "model/formularios.modelo.php";
 
-require_once "model/modelo.empleados.php";
 require_once "controller/controlador.empleados.php";
+require_once "model/modelo.empleados.php";
+
+require_once "controller/controlador.excel.php";
+require_once "model/modelo.excel.php";
 
 $plantilla = new ControladorPlantilla();
 $plantilla -> ctrTraerPlantilla();

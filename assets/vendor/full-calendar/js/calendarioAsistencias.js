@@ -175,6 +175,7 @@ $(document).ready(function() {
 				success: function(response) {
 
 					if (response !== '"Error"') {
+						var respuesta = response.replace(/"/g, '');
 						$("#form-result").val("");
 						$("#form-result").html(`
 							<div class='alert alert-success' role="alert" id="alerta">
@@ -182,21 +183,8 @@ $(document).ready(function() {
         				<strong class="mx-2">¡Éxito!</strong>
 							</div>
 							`);
-								window.onload = function() {
-									// URL del archivo que se desea descargar
-									var fileUrl = "view/Asistencias/"+response+".xlsx";
 
-									// Nombre del archivo que se desea descargar
-									var fileName = response+".xlsx";
-
-									// Crear un enlace temporal
-									var link = document.createElement("a");
-									link.href = fileUrl;
-									link.download = fileName;
-
-									// Hacer clic en el enlace para iniciar la descarga
-									link.click();
-								};
+      			window.location.href = "view/Asistencias/"+respuesta+".xlsx";
 						deleteAlert();
 					}else{
 						$("#form-result").val("");

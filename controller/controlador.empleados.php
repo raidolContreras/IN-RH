@@ -231,12 +231,6 @@ class ControladorEmpleados{
 		return $buscarAsistenciasJustificantes;
 	}
 
-	static public function ctrGeneralExcelAsistencias($idEmpleados){
-		$tabla = "empleados";
-		$GenerarExcelAsistencia = ModeloEmpleados::mdlGenerarExcelAsistencias($tabla, $idEmpleados);
-		return $GenerarExcelAsistencia;
-	}
-
 	static public function ctrDiasFestivos(){
 		$tabla = "festivos";
 		$DiasFestivos = ModeloEmpleados::mdlDiasFestivos($tabla);
