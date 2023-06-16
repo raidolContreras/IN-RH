@@ -247,12 +247,20 @@ class ModeloEmpleados{
 	}
 
 	static public function mdlVerEmpleadosHorariosDHorarios($tabla, $item, $valor){
-		$sql = "SELECT dh.dia_Laborable, dh.numero_Horas, dh.hora_Entrada, dh.hora_Salida
-				FROM $tabla e
-				RIGHT JOIN empleados_has_horarios eh ON e.idEmpleados = eh.Empleados_idEmpleados
-				RIGHT JOIN horarios h ON eh.Horarios_idHorarios = h.idHorarios
-				RIGHT JOIN dia_horario dh ON h.idHorarios = dh.Horarios_idHorarios
-				WHERE $item = :valor"; 
+		if ($item != "h.default") {
+			$sql = "SELECT dh.dia_Laborable, dh.numero_Horas, dh.hora_Entrada, dh.hora_Salida
+					FROM $tabla e
+					RIGHT JOIN empleados_has_horarios eh ON e.idEmpleados = eh.Empleados_idEmpleados
+					RIGHT JOIN horarios h ON eh.Horarios_idHorarios = h.idHorarios
+					RIGHT JOIN dia_horario dh ON h.idHorarios = dh.Horarios_idHorarios
+					WHERE $item = :valor"; 
+		}else{
+			$sql = "SELECT dh.dia_Laborable, dh.numero_Horas, dh.hora_Entrada, dh.hora_Salida
+					FROM horarios h
+					RIGHT JOIN dia_horario dh ON h.idHorarios = dh.Horarios_idHorarios
+					WHERE $item = :valor"; 
+
+		}
 
 		$stmt = Conexion::conectar()->prepare($sql);
 		$stmt->bindParam(":valor", $valor, PDO::PARAM_STR); // Modificación en esta línea
