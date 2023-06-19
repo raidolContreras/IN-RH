@@ -43,69 +43,62 @@ class ModeloExcel{
 		$datos_asistencia = array();
 		$horas_totales = 0;
 
-		$datos_asistencia = [];
-		$horas_totales = 0;
-
 		foreach ($asistencias as $asistencia) {
-		    $horaEntrada = $asistencia['entrada'];
-		    $horaSalida = $asistencia['salida'];
-		    $dEntrada = $asistencia['entrada_descanso'];
-		    $dSalida = $asistencia['salida_descanso'];
+			$horaEntrada = $asistencia['entrada'];
+			$horaSalida = $asistencia['salida'];
+			$dEntrada = $asistencia['entrada_descanso'];
+			$dSalida = $asistencia['salida_descanso'];
 
-		    $entrada = DateTime::createFromFormat('H:i:s', $horaEntrada);
-		    $salida = DateTime::createFromFormat('H:i:s', $horaSalida);
-		    $entrada_descanso = DateTime::createFromFormat('H:i:s', $dEntrada);
-		    $salida_descanso = DateTime::createFromFormat('H:i:s', $dSalida);
+			$entrada = DateTime::createFromFormat('H:i:s', $horaEntrada);
+			$salida = DateTime::createFromFormat('H:i:s', $horaSalida);
+			$entrada_descanso = DateTime::createFromFormat('H:i:s', $dEntrada);
+			$salida_descanso = DateTime::createFromFormat('H:i:s', $dSalida);
 
-		    $intervalo = $entrada->diff($salida);
-		    $intervalo_descanso = $entrada_descanso->diff($salida_descanso);
+			$intervalo = $entrada->diff($salida);
+			$intervalo_descanso = $entrada_descanso->diff($salida_descanso);
 
-		    $horasDecimales = $intervalo->h + ($intervalo->i / 60);
-		    $horasDecimales_descanso = $intervalo_descanso->h + ($intervalo_descanso->i / 60);
+			$horasDecimales = $intervalo->h + ($intervalo->i / 60);
+			$horasDecimales_descanso = $intervalo_descanso->h + ($intervalo_descanso->i / 60);
 
-		    $horas_diarias_totales = $horasDecimales - $horasDecimales_descanso;
-		    $horas_totales += $horas_diarias_totales;
+			$horas_diarias_totales = $horasDecimales - $horasDecimales_descanso;
+			$horas_totales += $horas_diarias_totales;
 
-		    $datos_asistencia[] = [
-		        "fecha_asistencia" => $asistencia['fecha_asistencia'],
-		        "hEntrada" => $horaEntrada,
-		        "hSalida" => $horaSalida,
-		        "dEntrada" => $dEntrada,
-		        "dSalida" => $dSalida,
-		        "pausa" => $horasDecimales_descanso,
-		        "idJustificantes" => $asistencia['idJustificantes'],
-		        "Comentario" => $asistencia['Comentario'],
-		        "status_justificante" => $asistencia['status_justificante'],
-		        "horas_diarias_totales" => $horas_diarias_totales
-		    ];
+			$datos_asistencia[] = [
+				"fecha_asistencia" => $asistencia['fecha_asistencia'],
+				"hEntrada" => $horaEntrada,
+				"hSalida" => $horaSalida,
+				"dEntrada" => $dEntrada,
+				"dSalida" => $dSalida,
+				"pausa" => $horasDecimales_descanso,
+				"idJustificantes" => $asistencia['idJustificantes'],
+				"Comentario" => $asistencia['Comentario'],
+				"status_justificante" => $asistencia['status_justificante'],
+				"horas_diarias_totales" => $horas_diarias_totales
+			];
 		}
 
-
 		$dia_semana = array();
-		$horas_esperadas = 0;
 
 		while ($fila = $horarios->fetch(PDO::FETCH_ASSOC)) {
-		    $dia_semana[] = array(
-		    	"ndia" => $fila['dia_Laborable'],
-		    	"día" => $dias[$fila['dia_Laborable']],
-		    	"hora_dia" => $fila['numero_Horas'],
-		    	"entrada" => $fila['hora_Entrada'],
-		    	"salida" => $fila['hora_Salida']
-		    );
-		    $horas_esperadas = $horas_esperadas + $fila['numero_Horas']-1;
+			$dia_semana[] = array(
+				"ndia" => $fila['dia_Laborable'],
+				"día" => $dias[$fila['dia_Laborable']],
+				"hora_dia" => $fila['numero_Horas'],
+				"entrada" => $fila['hora_Entrada'],
+				"salida" => $fila['hora_Salida']
+			);
 		}
 
 		if ($dia_semana == []) {
-		    while ($fila = $default->fetch(PDO::FETCH_ASSOC)) {
-			    $dia_semana[] = array(
-		    		"ndia" => $fila['dia_Laborable'],
-			    	"dia" => $dias[$fila['dia_Laborable']],
-		    		"hora_dia" => $fila['numero_Horas'],
-		    		"entrada" => $fila['hora_Entrada'],
-		    		"salida" => $fila['hora_Salida']
-			    );
-		    	$horas_esperadas = $horas_esperadas + $fila['numero_Horas']-1;
-		    }
+			while ($fila = $default->fetch(PDO::FETCH_ASSOC)) {
+				$dia_semana[] = array(
+					"ndia" => $fila['dia_Laborable'],
+					"dia" => $dias[$fila['dia_Laborable']],
+					"hora_dia" => $fila['numero_Horas'],
+					"entrada" => $fila['hora_Entrada'],
+					"salida" => $fila['hora_Salida']
+				);
+			}
 		}
 
 
@@ -143,8 +136,22 @@ class ModeloExcel{
 		$activeWorksheet->mergeCells('B2:E3');
 		$activeWorksheet->setCellValue('B2', $nombre);
 
+		$activeWorksheet->mergeCells('B5:E5');
+		$activeWorksheet->mergeCells('B6:E6');
+		$activeWorksheet->mergeCells('B7:E7');
+
+		$activeWorksheet->mergeCells('G5:L5');
+		$activeWorksheet->mergeCells('G6:L6');
+		$activeWorksheet->mergeCells('G7:L7');
+
 		$activeWorksheet->mergeCells('B8:C8');
 		$activeWorksheet->mergeCells('B9:C9');
+		$activeWorksheet->mergeCells('G8:I8');
+		$activeWorksheet->mergeCells('G9:I9');
+		$activeWorksheet->mergeCells('D8:F8');
+		$activeWorksheet->mergeCells('D9:F9');
+		$activeWorksheet->mergeCells('J8:K8');
+		$activeWorksheet->mergeCells('J9:K9');
 		$activeWorksheet->setCellValue('L3', 'Reporte de Asistencias IN Consulting');
 		$activeWorksheet->setCellValue('L4', $fecha);
 
@@ -182,61 +189,140 @@ class ModeloExcel{
 
 		$activeWorksheet->setCellValue('B8', $mesActual);
 		$activeWorksheet->setCellValue('B9', date("Y"));
-		$activeWorksheet->setCellValue('D8', 'Horas esperadas');
-		$activeWorksheet->setCellValue('D9', ModeloExcel::mdlformatearHora($horas_esperadas));
-		$activeWorksheet->setCellValue('F8', 'Horas registradas');
-		$activeWorksheet->setCellValue('F9', ModeloExcel::mdlformatearHora($horas_totales));
-		$activeWorksheet->setCellValue('H8', 'Diferencia');
-		$activeWorksheet->setCellValue('H9', ModeloExcel::mdlformatearHora($horas_totales-$horas_esperadas));
+		$activeWorksheet->setCellValue('D8', 'Horas esperadas (1er quincena)');
+		$activeWorksheet->setCellValue('G8', 'Horas esperadas (2da quincena)');
+		$activeWorksheet->setCellValue('J8', 'Horas registradas');
+		$activeWorksheet->setCellValue('L8', 'Diferencia');
 
 		$activeWorksheet->setCellValue('B10', '* Ausencias y festivos');
 
 		$activeWorksheet->mergeCells('B11:C11');
 		$activeWorksheet->mergeCells('E11:F11');
-		$activeWorksheet->mergeCells('I11:L11');
+		$activeWorksheet->mergeCells('G11:H11');
+		$activeWorksheet->mergeCells('J11:L11');
 		$activeWorksheet->setCellValue('B11', 'Fecha');
 		$activeWorksheet->setCellValue('D11', 'Esperado');
 		$activeWorksheet->setCellValue('E11', 'Inicio - Fin');
-		$activeWorksheet->setCellValue('G11', 'Pausa');
-		$activeWorksheet->setCellValue('H11', 'Registrado');
-		$activeWorksheet->setCellValue('I11', 'Comentario');
+		$activeWorksheet->setCellValue('G11', 'Descanso: Inicio - Fin');
+		$activeWorksheet->setCellValue('I11', 'Registrado');
+		$activeWorksheet->setCellValue('J11', 'Comentario');
 
 		$i=12;
 
-// Ordenar los datos de asistencia por fecha
-usort($datos_asistencia, function($a, $b) {
-    $fecha1 = DateTime::createFromFormat('Y-m-d', $a['fecha_asistencia']);
-    $fecha2 = DateTime::createFromFormat('Y-m-d', $b['fecha_asistencia']);
-    return $fecha1 <=> $fecha2;
-});
+	// Ordenar los datos de asistencia por fecha
+		usort($datos_asistencia, function($a, $b) {
+		$fecha1 = DateTime::createFromFormat('Y-m-d', $a['fecha_asistencia']);
+		$fecha2 = DateTime::createFromFormat('Y-m-d', $b['fecha_asistencia']);
+		return $fecha1 <=> $fecha2;
+	});
 
-// Generar celdas para cada dato de asistencia
-foreach ($datos_asistencia as $value) {
-    $relleno = ($value['status_justificante'] == null) ? 'ffeeeeee' : (($value['status_justificante'] == 1) ? 'ff52dc96' : 'ffeeab59');
+	$numeroDias = date('t');
 
-    $dia = date('N', strtotime($value['fecha_asistencia']));
+	// Obtener el número del día actual
+	$diaActual = date('j');
 
-    $activeWorksheet->mergeCells('E'.$i.':F'.$i);
-    $activeWorksheet->mergeCells('I'.$i.':L'.$i);
+	// Obtener el mes actual
+	$mesActual = date('m');
 
-    $activeWorksheet->setCellValue('B'.$i, $diasmin[$dia]);
-    $activeWorksheet->setCellValue('C'.$i, date("d/M/Y", strtotime($value['fecha_asistencia'])));
-    $activeWorksheet->setCellValue('D'.$i, ModeloExcel::mdlformatearHora($horas_esperadas));
-    $activeWorksheet->setCellValue('E'.$i, $value['hEntrada'].' - '.$value['hSalida']);
-    $activeWorksheet->setCellValue('G'.$i, ModeloExcel::mdlformatearHora($value['pausa']));
-    $activeWorksheet->setCellValue('H'.$i, ModeloExcel::mdlformatearHora($value['horas_diarias_totales']));
-    $activeWorksheet->getStyle('I'.$i.':L'.$i)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB($relleno);
-    $activeWorksheet->setCellValue('I'.$i, $value['Comentario']);
-    $i++;
-}
+	// Obtener el año actual
+	$añoActual = date('Y');
 
+	$primerQuincena = 0;
+	$segundaQuincena = 0;
+	$horasPrimerQuincena = 0;
+	$horasSegundaQuincena = 0;
+	// Generar celdas para cada día del mes
+	for ($dia = 1; $dia <= $numeroDias; $dia++) {
+
+		$activeWorksheet->setCellValue('E'.$i, ' - ');
+		$activeWorksheet->setCellValue('G'.$i, ' - ');
+		$status = 0;
+
+		// Formatear la fecha completa en el formato "dd/mm/yyyy"
+		$fechaCompleta = sprintf("%02d/%02d/%04d", $dia, $mesActual, $añoActual);
+		$fechasInformato = date('N', strtotime(sprintf("%04d-%02d-%02d", $añoActual, $mesActual, $dia)));
+
+		if ($fechasInformato == 7) {
+			$fechasInformato = 0;
+		}
+
+		foreach ($datos_asistencia as $value){
+			$relleno = ($value['status_justificante'] == null) ? 'ffeeeeee' : (($value['status_justificante'] == 1) ? 'ff52dc96' : 'ffeeab59');
+			if ($value['fecha_asistencia'] == sprintf("%04d-%02d-%02d", $añoActual, $mesActual, $dia)) {
+
+				if (date('d', strtotime($value['fecha_asistencia'])) <= 15) {
+					$horasPrimerQuincena += $value['horas_diarias_totales'];
+				}else{
+					$horasSegundaQuincena += $value['horas_diarias_totales'];
+				}
+
+				$activeWorksheet->setCellValue('E'.$i, $value['hEntrada'].' - '.$value['hSalida']);
+				$activeWorksheet->setCellValue('G'.$i, $value['dEntrada'].' - '.$value['dSalida']);
+				$activeWorksheet->setCellValue('I'.$i,  ModeloExcel::mdlformatearHora($value['horas_diarias_totales']));
+				$activeWorksheet->getStyle('J'.$i.':L'.$i)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB($relleno);
+				$activeWorksheet->setCellValue('J'.$i, $value['Comentario']);
+			}
+		}
+
+		foreach ($dia_semana as $value) {
+
+			if ($value['ndia'] == $fechasInformato) {
+				$activeWorksheet->setCellValue('D'.$i, ModeloExcel::mdlformatearHora($value['hora_dia']));
+				$primerQuincena += $value['hora_dia'];
+				$segundaQuincena += $value['hora_dia'];
+				$status = 1;
+			}
+
+			// Verificar si es el día 15 para agregar la línea divisoria
+			if ($dia === 15) {
+				// Agregar una línea divisoria
+				$activeWorksheet->setCellValue('D9', ModeloExcel::mdlformatearHora($primerQuincena));
+				$activeWorksheet->getStyle('B'.$i.':L'.$i)->getBorders()->getBottom()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_MEDIUM);
+				$activeWorksheet->getStyle('B'.$i.':L'.$i)->getBorders()->getBottom()->getColor()->setARGB('000000');
+				$segundaQuincena = 0;
+			}
+		}
+
+		$activeWorksheet->setCellValue('G9', ModeloExcel::mdlformatearHora($segundaQuincena));
+		$activeWorksheet->setCellValue('B'.$i, $diasmin[$fechasInformato]);
+		// Imprimir la fecha completa en la celda correspondiente
+		$activeWorksheet->setCellValue('C'.$i, $fechaCompleta);
+
+		if ($status == 0) {
+			$activeWorksheet->setCellValue('D'.$i, ' - ');
+			$activeWorksheet->getStyle('B'.$i.':L'.$i)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('ffbababa');
+		}else{
+			$activeWorksheet->mergeCells('E'.$i.':F'.$i);
+			$activeWorksheet->mergeCells('G'.$i.':H'.$i);
+			$activeWorksheet->mergeCells('J'.$i.':L'.$i);
+		}
+
+		// Incrementar el número de fila
+		$i++;
+	}
+	if (date('d') <= 15) {
+		$activeWorksheet->setCellValue('J9', ModeloExcel::mdlformatearHora($horasPrimerQuincena));
+
+		$activeWorksheet->setCellValue('L9', ModeloExcel::mdlformatearHora($primerQuincena - $horasPrimerQuincena));
+	}else{
+		$activeWorksheet->setCellValue('J9', ModeloExcel::mdlformatearHora($horasSegundaQuincena));
+
+		$activeWorksheet->setCellValue('L9', ModeloExcel::mdlformatearHora($segundaQuincena - $horasSegundaQuincena));
+	}
+		
+		$activeWorksheet->getColumnDimension('B')->setWidth(3);
+		$activeWorksheet->getColumnDimension('C')->setWidth(11);
+		$activeWorksheet->getColumnDimension('D')->setWidth(10);
+		$activeWorksheet->getColumnDimension('H')->setWidth(10);
+		$activeWorksheet->getColumnDimension('I')->setWidth(10);
+		$activeWorksheet->getColumnDimension('L')->setWidth(20);
 
 		$writer = new Xlsx($spreadsheet);
 		$writer->save('../view/Asistencias/'.$nombre.'.xlsx');
 
 		return $nombre;
 
-	}
+}
 
 	static public function mdlformatearHora($hora){
 		$horas = floor($hora); // Obtener la parte entera de las horas
@@ -255,11 +341,11 @@ foreach ($datos_asistencia as $value) {
 
 		// Contar los días de trabajo en el mes
 		for ($dia = 1; $dia <= $num_dias_mes; $dia++) {
-		    $num_dia_semana = date('w', strtotime("$anio-$mes-$dia")); // Obtener el número del día de la semana (0: domingo, 1: lunes, etc.)
-		    
-		    if (in_array($num_dia_semana, $ndia)) {
-		        $num_dias_trabajo++;
-		    }
+			$num_dia_semana = date('w', strtotime("$anio-$mes-$dia")); // Obtener el número del día de la semana (0: domingo, 1: lunes, etc.)
+			
+			if (in_array($num_dia_semana, $ndia)) {
+				$num_dias_trabajo++;
+			}
 		}
 
 		return $num_dias_trabajo;
