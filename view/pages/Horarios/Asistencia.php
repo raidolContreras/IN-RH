@@ -107,7 +107,7 @@ $justificantes = ControladorEmpleados::ctrAsistenciasJustificantes($_SESSION['id
 							<?php endforeach ?>
 						</div>
 					</div>
-					<div class="col-12 card">
+					<div class="col-12 card contenedor">
 						<div class="card-body mb-2">
 							<p class="encabezado-h">Solicitudes</p>
 							<?php foreach ($justificantes as $justificante): ?>
