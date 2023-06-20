@@ -43,7 +43,7 @@ $fotoEmpleado = ControladorFormularios::ctrVerFotos("Empleados_idEmpleados", $em
 			</div>
 			<h3 class="in-text"><?php echo $empleadoMes['lastname']." ".$empleadoMes['name'] ?></h3>
 		</div>
-		<div class="card-into-card rounded">
+		<div class="card-into-card h-75 rounded">
 			<?php echo $empleadoMes['mensaje']; ?>
 		</div>
 	</div>

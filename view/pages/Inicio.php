@@ -7,14 +7,14 @@
     <div class="row gx-1">
     	<div class="col-xl-12 col-lg-12">
 				<div class="card">
-					<div class="m-2">
+					<div class="mt-1 mb-1 contenedor">
 						<?php include "view/pages/modulos/EmpleadoMes.php" ?>
 					</div>
 				</div>
 			</div>
 	<!--Tablero de empleado del mes-->
 			<div class="col-xl-12 col-lg-12">
-				<div class="card">
+				<div class="card contenedor">
 					<div class="card-body">
 						<?php include "view/pages/modulos/Responsable.php" ?>
 					</div>
@@ -23,7 +23,7 @@
 	<!--Tablero de cumpleaños empleado-->
 			<div class="col-xl-12 col-lg-12">
 				<div class="card">
-					<div class="card-body">
+					<div class="card-body contenedor">
 						<?php include "view/pages/modulos/Birtday.php" ?>
 					</div>
 				</div>
@@ -35,28 +35,36 @@
   	<div class="row">
   		<div class="col-12 order-xl-1">
 				<div class="card">
-					<div class="m12">
+					<div class="m-2 altura">
 						<?php include "view/pages/modulos/TableroNoticias.php" ?>
 					</div>
 				</div>
 			</div>
+			<?php if (!empty($jefeDepartamento)): ?>
   		<div class="col-xl-4 col-lg-12 order-xl-2 order-lg-3">
 				<div class="card">
-					<div class="card-body">
+					<div class="card-body contenedor">
 						<?php include "view/pages/modulos/Aniversario.php" ?>
 					</div>
 				</div>
 			</div>
-			<?php if (!empty($jefeDepartamento)): ?>
-	  		<div class="col-xl-8 col-lg-12 order-xl-3 order-lg-2">
-					<div class="card">
-						<div class="float-right" style="z-index: 2 !important;" id="justify-result">
-						</div>
-						<div class="card-body" style="z-index: 0 !important;">
-							<?php include "view/pages/modulos/Peticiones.php" ?>
-						</div>
+  		<div class="col-xl-8 col-lg-12 order-xl-3 order-lg-2">
+				<div class="card">
+					<div class="float-right" style="z-index: 2 !important;" id="justify-result">
+					</div>
+					<div class="card-body contenedor" style="z-index: 0 !important;">
+						<?php include "view/pages/modulos/Peticiones.php" ?>
 					</div>
 				</div>
+			</div>
+			<?php else: ?>
+  		<div class="col-lg-12 order-xl-2">
+				<div class="card">
+					<div class="card-body contenedor">
+						<?php include "view/pages/modulos/Aniversario.php" ?>
+					</div>
+				</div>
+			</div>
 			<?php endif ?>
 
 		</div>

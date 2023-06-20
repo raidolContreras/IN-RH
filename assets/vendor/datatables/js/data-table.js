@@ -211,7 +211,6 @@ jQuery(document).ready(function($) {
             var table = $('table.Peticiones').DataTable({
                 lengthChange: false,
                 fixedHeader: false,
-                scrollY: 300,
                 ordering: false,
                 searching: false,
             language: {

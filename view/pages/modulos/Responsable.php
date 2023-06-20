@@ -9,7 +9,7 @@ $pertenece = 0;
 		<?php if ($equipo_de_trabajo[0]['jefeDepa'] == $_SESSION['idEmpleado'] && $equipo_de_trabajo[0]['idPertenencia'] != 0): $pertenece = $equipo_de_trabajo[0]['depto'] ?>
 			<p class="subtitulo-tablero titulo">Jefe inmediato</p>
 			<div class="row">
-				<div class="col-4">
+				<div class="col-4 pl-0">
 					<a class="btn btn-link float-left">
 						<?php if (isset($equipo_de_trabajo[0]['namePhoto'])): ?>
 							<img src="view/fotos/thumbnails/<?php echo $equipo_de_trabajo[0]['fotoPertenencia'] ?>"
@@ -40,7 +40,7 @@ $pertenece = 0;
 			<?php if ($etrabajo['idEmpleados'] == $etrabajo['jefeDepa']): ?>
 				<p class="subtitulo-tablero titulo">Jefe del departamento</p>
 				<div class="row">
-					<div class="col-4">
+					<div class="col-4 pl-0">
 						<a class="btn btn-link float-left">
 							<?php if (isset($etrabajo['namePhoto'])): ?>
 								<img src="view/fotos/thumbnails/<?php echo $etrabajo['namePhoto'] ?>"
