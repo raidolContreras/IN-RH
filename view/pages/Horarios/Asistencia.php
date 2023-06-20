@@ -117,7 +117,7 @@ $justificantes = ControladorEmpleados::ctrAsistenciasJustificantes($_SESSION['id
 									<hr>
 
 									<!-- Button trigger modal -->
-									<button type="button" class="btn btn-light btn-block" data-toggle="modal" data-target="#status<?php echo $justificante['idJustificantes'] ?>">
+									<button type="button" class="btn btn-light btn-block py-0" data-toggle="modal" data-target="#status<?php echo $justificante['idJustificantes'] ?>">
 										<div class="status">
 											<?php echo $justificante['fecha_asistencia']." <span class='".$estado."'>".$estado."</span>"; ?>
 										</div>
