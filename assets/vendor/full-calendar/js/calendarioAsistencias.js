@@ -53,16 +53,16 @@ $(document).ready(function() {
 
 						        		if (calEvent.colorFondo === '#EC5869') {
 							            	$('#event-title').text('Justificación del Retardo: '+formattedStartDate);
-							            	$('#hEntrada').html("Hora registrada: -");
-							            	$('#hSalida').html("Hora registrada: -");
+							            	$('#hEntrada').html("Entrada registrada: -");
+							            	$('#hSalida').html("Salida registrada: -");
 						        		}
 						        		if (calEvent.colorFondo === '#EF890C') {
 							            	$('#event-title').text('Justificación de la Ausencia: '+formattedStartDate);
-							            	$('#hEntrada').html("Hora registrada: "+calEvent.hEntrada);
-							            	$('#hSalida').html("Hora registrada: "+calEvent.hSalida);
+							            	$('#hEntrada').html("Entrada registrada: "+calEvent.hEntrada);
+							            	$('#hSalida').html("Salida registrada: "+calEvent.hSalida);
 						        		}
-							            $('#entrada').html("Hora Esperada: "+calEvent.entrada);
-							            $('#salida').html("Hora Esperada: "+calEvent.salida);
+							            $('#entrada').html("Entrada Esperada: "+calEvent.entrada);
+							            $('#salida').html("Salida Esperada: "+calEvent.salida);
 							            $('#asistencia').val(calEvent.description);
 							            $('#modal-event').modal();
 							        }
