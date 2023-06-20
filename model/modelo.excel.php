@@ -27,7 +27,8 @@ class ModeloExcel{
 
 	/*-------- Datos generales --------*/
 		$empleado = ControladorEmpleados::ctrVerEmpleados("idEmpleados", $idEmpleados);
-			$nombre = $empleado['lastname']." ".$empleado['name'];
+			$nombre = ucwords(mb_strtolower($empleado['lastname']." ".$empleado['name']));
+			$nombreDescarga = ModeloExcel::quitarAcentos($nombre);
 
 		$puesto = ControladorFormularios::ctrVerPuestos("Empleados_idEmpleados", $idEmpleados);
 		$departamento = ControladorFormularios::ctrVerDepartamentos("idDepartamentos", $puesto['Departamentos_idDepartamentos']);
@@ -258,7 +259,7 @@ class ModeloExcel{
 
 				$activeWorksheet->setCellValue('E'.$i, $value['hEntrada'].' - '.$value['hSalida']);
 				$activeWorksheet->setCellValue('G'.$i, $value['dEntrada'].' - '.$value['dSalida']);
-				$activeWorksheet->setCellValue('I'.$i,  ModeloExcel::mdlformatearHora($value['horas_diarias_totales']));
+				$activeWorksheet->setCellValue('I'.$i,ModeloExcel::mdlformatearHora($value['horas_diarias_totales']));
 				$activeWorksheet->getStyle('J'.$i.':L'.$i)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB($relleno);
 				$activeWorksheet->setCellValue('J'.$i, $value['Comentario']);
 			}
@@ -318,9 +319,9 @@ class ModeloExcel{
 		$activeWorksheet->getColumnDimension('L')->setWidth(20);
 
 		$writer = new Xlsx($spreadsheet);
-		$writer->save('../view/Asistencias/'.$nombre.'.xlsx');
+		$writer->save('../view/Asistencias/'.$nombreDescarga.'.xlsx');
 
-		return $nombre;
+		return $nombreDescarga;
 
 }
 
@@ -350,6 +351,58 @@ class ModeloExcel{
 
 		return $num_dias_trabajo;
 
+	}
+
+	static public function quitarAcentos($texto) {
+		$acentos = array(
+			'á' => 'a',
+			'é' => 'e',
+			'í' => 'i',
+			'ó' => 'o',
+			'ú' => 'u',
+			'Á' => 'A',
+			'É' => 'E',
+			'Í' => 'I',
+			'Ó' => 'O',
+			'Ú' => 'U',
+			'ä' => 'a',
+			'ë' => 'e',
+			'ï' => 'i',
+			'ö' => 'o',
+			'ü' => 'u',
+			'Ä' => 'A',
+			'Ë' => 'E',
+			'Ï' => 'I',
+			'Ö' => 'O',
+			'Ü' => 'U',
+			'à' => 'a',
+			'è' => 'e',
+			'ì' => 'i',
+			'ò' => 'o',
+			'ù' => 'u',
+			'À' => 'A',
+			'È' => 'E',
+			'Ì' => 'I',
+			'Ò' => 'O',
+			'Ù' => 'U',
+			'â' => 'a',
+			'ê' => 'e',
+			'î' => 'i',
+			'ô' => 'o',
+			'û' => 'u',
+			'Â' => 'A',
+			'Ê' => 'E',
+			'Î' => 'I',
+			'Ô' => 'O',
+			'Û' => 'U',
+			'ç' => 'c',
+			'Ç' => 'C',
+			'ñ' => 'n',
+			'Ñ' => 'N',
+			' ' => '_',
+		);
+
+		return strtr($texto, $acentos);
 	}
 
 }
