@@ -1,31 +1,53 @@
 <?php 
-$empleados = ControladorEmpleados::ctrVerEmpleados(null, null); 
+	$idEmpresas = 0;
 $empresas = ControladorFormularios::ctrVerEmpresas(null, null);
+if (isset($_GET['empresa'])) {
+	$idEmpresas = $_GET['empresa'];
+	$empleados = ControladorFormularios::ctrEmpleadosEspecial("idEmpresas", $idEmpresas);
+}else{
+	$empleados = ControladorEmpleados::ctrVerEmpleados(null, null);
+}
 ?>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <div class="container-fluid dashboard-content">
 	<div class="ecommerce-widget">
 		<div class="card mx-5">
-			<div class="card-header encabezado">Resumen de Asistencias</div>
+			<div class="card-header encabezado">
+				Resumen de Asistencias 
+				<form class="exportarExcelEmpresas-form float-right">
+					<input type="hidden" name="genExcelEmpresas" value="<?php echo $idEmpresas ?>">
+					<button type="button" class="btn btn-outline-success btn-rounded btn-lg exportarExcelEmpresas-btn">
+						<i class="mdi mdi-download"></i> Descargar Excel
+					</button>
+				</form>
+			</div>
 			<div class="row">
 				<div class="card-side-nav col-xl-2 col-lg-3 col-md-4 col-sm-4 lista-ajustes">
+					<?php if (isset($_GET['empresa'])): ?>
+						<div>
+					<?php else: ?>
 						<div class="active">
-							<button class="btn btn-block btn-in-consulting-link textos activo" data-id="General">
+					<?php endif ?>
+							<a href="Asistencia-resumen" class="btn btn-block btn-in-consulting-link textos activo">
 								GENERAL
-							</button>
+							</a>
 						</div>
 					<?php foreach ($empresas as $empresa): ?>
-						<div class="">
-							<button class="btn btn-block btn-in-consulting-link textos" data-id="empresa-<?php echo $empresa['idEmpresas'] ?>">
+						<?php if ($idEmpresas == $empresa['idEmpresas']): ?>
+						<div class="active">
+						<?php else: ?>
+						<div>
+						<?php endif ?>
+							<a href="Asistencia-resumen&empresa=<?php echo $empresa['idEmpresas'] ?>" class="btn btn-block btn-in-consulting-link textos">
 								<?php echo $empresa['nombre_razon_social'] ?>
-							</button>
+							</a>
 						</div>
 					<?php endforeach ?>
 				</div>
 					<div class=" col-xl-10 col-lg-9 col-md-8 col-sm-8" id="horarios">
 						<div class="row mr-4 ml-2 mt-3">
 							<div class="table-responsive tabla-contenedor">
-								<table class="table">
+								<table id="example" class="table ResumenAsistencias">
 									<thead>
 										<tr>
 											<th>Nombre</th>

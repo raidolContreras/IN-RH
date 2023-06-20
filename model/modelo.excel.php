@@ -405,4 +405,14 @@ class ModeloExcel{
 		return strtr($texto, $acentos);
 	}
 
+	static public function mdlGenerarExcelAsistenciasEmpresas($tabla, $idEmpresas){
+		$fecha= date("d/M/Y");
+		$dias = array("Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado");
+		$diasmin = array("Do","Lu","Ma","Mi","Ju","Vi","Sá");
+		$meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+
+		$mesActual = $meses[date('n')-1];
+
+	}
+
 }

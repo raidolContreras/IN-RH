@@ -7721,37 +7721,3 @@ table-in
 overflow: hidden;
 text-overflow: ellipsis;
 }
-
-
-.tabla-contenedor {
-    height: 645px;
-    overflow:auto;
-}
-
-/* Estilos para motores Webkit y blink (Chrome, Safari, Opera... )*/
-
-.tabla-contenedor::-webkit-scrollbar {
-    -webkit-appearance: none;
-}
-
-.tabla-contenedor::-webkit-scrollbar:vertical {
-    width:10px;
-}
-
-.tabla-contenedor::-webkit-scrollbar-button:increment,.tabla-contenedor::-webkit-scrollbar-button {
-    display: none;
-} 
-
-.tabla-contenedor::-webkit-scrollbar:horizontal {
-    height: 10px;
-}
-
-.tabla-contenedor::-webkit-scrollbar-thumb {
-    background-color: #797979;
-    border-radius: 20px;
-    border: 2px solid #f1f2f3;
-}
-
-.tabla-contenedor::-webkit-scrollbar-track {
-    border-radius: 10px;  
-}

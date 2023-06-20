@@ -8,5 +8,11 @@ class ControladorExcel{
 		return $GenerarExcelAsistencia;
 	}
 
+	static public function ctrGeneralExcelAsistenciasEmpresas($idEmpresas){
+		$tabla = "empleados";
+		$GenerarExcelAsistencia = ModeloExcel::mdlGenerarExcelAsistenciasEmpresas($tabla, $idEmpresas);
+		return $GenerarExcelAsistencia;
+	}
+
 
 }

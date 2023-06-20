@@ -390,6 +390,12 @@ class FormulariosAjax{
 		echo json_encode($generarExcel);
 	}
 
+	public function crearExcelEmpresasAjax(){
+		$idEmpresas = $this->idEmpresas;
+		$generarExcel = ControladorExcel::ctrGeneralExcelAsistenciasEmpresas($idEmpresas);
+		echo json_encode($generarExcel);
+	}
+
 
 }
 
@@ -636,4 +642,12 @@ if (isset($_POST['genExcel'])) {
 	$generarExcel = new FormulariosAjax();
 	$generarExcel -> idEmpleados = $idEmpleados;
 	$generarExcel -> crearExcelAjax();
+}
+
+if (isset($_POST['genExcelEmpresas'])) {
+	$idEmpresas = $_POST['genExcelEmpresas'];
+
+	$generarExcel = new FormulariosAjax();
+	$generarExcel -> idEmpresas = $idEmpresas;
+	$generarExcel -> crearExcelEmpresasAjax();
 }
