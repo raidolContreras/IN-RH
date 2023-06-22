@@ -7740,3 +7740,13 @@ table-in
 overflow: hidden;
 text-overflow: ellipsis;
 }
+
+.col-vacations-left{
+	 text-align: left;
+	 letter-spacing: 0.03125rem;"
+}
+
+.col-vacations-right{
+	 text-align: right;
+	 letter-spacing: 0.03125rem;"
+}

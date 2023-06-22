@@ -182,32 +182,27 @@ $puesto = ControladorFormularios::ctrVerPuestos("Empleados_idEmpleados", $_GET['
 		<div class="col-xl-9 col-lg-9 col-md-7 col-sm-12 col-12">
 			<div class="card p-3">
 				<div class="row pb-2">
-					<div class="col-4">
+					<div class="col-xl-4 col-md-6 col-12 mt-3">
 						<button class="btn btn-primary rounded btn-block" onClick="cargarContenido('Expedientes.php')">
 							<i class="icon-folder-alt"></i> Expedientes
 						</button>
 					</div>
-					<div class="col-4">
+					<div class="col-xl-4 col-md-6 col-12 mt-3">
 						<button class="btn btn-secondary rounded btn-block" onClick="cargarContenido('Incapacidades.php')">
 								<i class="icon-shield"></i> Incapacidades
 							</button>
 					</div>
-					<div class="col-4">
+					<div class="col-xl-4 col-md-6 col-12 mt-3">
 						<button class="btn btn-warning rounded btn-block" onClick="cargarContenido('ActaAdministrativa.php')">
 								<span class="indicator"></span><i class="icon-book-open"></i> Actas administrativas (2)
 							</button>
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-4">
+					<div class="col-xl-4 col-md-6 col-12 mt-3">
 						<button class="btn btn-dark rounded btn-block" onClick="cargarContenido('NominasEmpleado.php')">
 								<i class="icon-wallet"></i> Nominas
 							</button>
-					</div>
-					<div class="col-4">
-						<button class="btn btn-brand rounded btn-block" onClick="cargarContenido('Vacaciones.php')">
-							<i class="icon-social-dribbble"></i> Solicitud de Vacaciones
-						</button>
 					</div>
 				</div>
 			</div>
