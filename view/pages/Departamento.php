@@ -9,20 +9,20 @@ $departamento = ControladorFormularios::ctrVerDepartamentos(null, null);
 		<!-- data table	-->
 		<!-- ============================================================== -->
 		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-			<div class="card">
+			<div class="card menu-ajustes">
 				<div class="card-header tab-regular">
-					<ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
+					<ul class="nav nav-tabs card-header-tabs nav-empresas" id="myTab" role="tablist">
 						<?php if (!isset($_GET['depa'])): ?>
-							<li class="nav-item">
+							<li class="nav-item nav-item-empresas">
 								<a class="nav-link active" id="general" href="Departamento" role="tab" aria-controls="card-1" aria-selected="true">General</a>
 							</li>
 							<?php foreach ($empresas as $empresa): ?>
-								<li class="nav-item">
+								<li class="nav-item nav-item-empresas">
 									<a class="nav-link" id="card-tab-<?php echo $empresa['idEmpresas'] ?>" href="Departamento&depa=<?php echo $empresa['idEmpresas'] ?>"><?php echo $empresa['nombre_razon_social'] ?></a>
 								</li>
 							<?php endforeach ?>
 						<?php else: ?>
-							<li class="nav-item">
+							<li class="nav-item nav-item-empresas">
 								<a class="nav-link" id="general" href="Departamento">General</a>
 							</li>
 							<?php foreach ($empresas as $empresa): ?>

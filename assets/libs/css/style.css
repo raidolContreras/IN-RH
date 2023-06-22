@@ -4667,12 +4667,25 @@ Patterns - reusable parts of our design
 
 -------------------------------- */
 
+@media only screen and (max-width:1362px) {
+	.nav-empresas {
+		overflow: scroll;
+		align-items: center !important;
+		justify-content: flex-start !important;
+		flex-wrap: nowrap !important;
+	}
+	.nav-item-empresas{
+		min-width: 200px !important;
+		max-width: 200px !important;
+		text-overflow: ellipsis !important;
+	}
+}
+
 @media only screen and (min-width:1170px) {
 	.cd-is-hidden {
 		visibility: hidden;
 	}
 }
-
 
 /* --------------------------------
 
