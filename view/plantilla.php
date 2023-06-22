@@ -132,7 +132,6 @@ session_start();
 				 $_GET["pagina"] == "Asistencia-resumen" ||
 				 $_GET["pagina"] == "Asistencia-ajustes" ||
 				 $_GET["pagina"] == "Asistencia-importar" ||
-				 $_GET["pagina"] == "Asistencia-exportar" ||
 				 $_GET["pagina"] == "Asistencia-permisos" ||
 				 $_GET["pagina"] == "CrearHorario" ) {
 

@@ -998,5 +998,92 @@ class ControladorFormularios{
     	return $justificar;
     }
 
+    static public function ctrTotalHoras($empleado){
+
+		$nombre = ucwords(mb_strtolower($empleado['lastname']." ".$empleado['name'])); 
+		
+		$asistencias = ControladorEmpleados::ctrAsistenciasJustificantes($empleado['idEmpleados']);
+		$horarios = ControladorEmpleados::ctrVerEmpleadosHorariosDHorarios("Empleados_idEmpleados", $empleado['idEmpleados']);
+		$default = ControladorEmpleados::ctrVerEmpleadosHorariosDHorarios("h.default", 1);
+
+		$numeroDias = date('t');
+// Obtener el número del día actual
+		$diaActual = date('j');
+// Obtener el mes actual
+		$mesActual = date('m');
+// Obtener el año actual
+		$añoActual = date('Y');
+		$datos_asistencia = array();
+		$dia_semana = array();
+		$horas_totales = 0;
+		$horasRegistradas = 0;
+		$horasEsperadas = 0;
+
+		foreach ($asistencias as $asistencia) {
+			$horaEntrada = $asistencia['entrada'];
+			$horaSalida = $asistencia['salida'];
+			$dEntrada = $asistencia['entrada_descanso'];
+			$dSalida = $asistencia['salida_descanso'];
+
+			$entrada = DateTime::createFromFormat('H:i:s', $horaEntrada);
+			$salida = DateTime::createFromFormat('H:i:s', $horaSalida);
+			$entrada_descanso = DateTime::createFromFormat('H:i:s', $dEntrada);
+			$salida_descanso = DateTime::createFromFormat('H:i:s', $dSalida);
+
+			$intervalo = $entrada->diff($salida);
+			$intervalo_descanso = $entrada_descanso->diff($salida_descanso);
+
+			$horasDecimales = $intervalo->h + ($intervalo->i / 60);
+			$horasDecimales_descanso = $intervalo_descanso->h + ($intervalo_descanso->i / 60);
+
+			$horas_diarias_totales = $horasDecimales - $horasDecimales_descanso;
+			$horas_totales += $horas_diarias_totales;
+
+			$datos_asistencia[] = [
+				"fecha_asistencia" => $asistencia['fecha_asistencia'],
+				"horas_diarias_totales" => $horas_diarias_totales
+			];
+
+		}
+
+		while ($fila = $horarios->fetch(PDO::FETCH_ASSOC)) {
+			$dia_semana[] = array(
+				"ndia" => $fila['dia_Laborable'],
+				"hora_dia" => $fila['numero_Horas']
+			);
+		}
+
+		if ($dia_semana == []) {
+			while ($fila = $default->fetch(PDO::FETCH_ASSOC)) {
+				$dia_semana[] = array(
+					"ndia" => $fila['dia_Laborable'],
+					"hora_dia" => $fila['numero_Horas']
+				);
+			}
+		}
+// Generar celdas para cada día del mes
+		for ($dia = 1; $dia <= $numeroDias; $dia++) {
+
+			$fechasInformato = date('N', strtotime(sprintf("%04d-%02d-%02d", $añoActual, $mesActual, $dia)));
+			foreach ($datos_asistencia as $value){
+				if ($value['fecha_asistencia'] == sprintf("%04d-%02d-%02d", $añoActual, $mesActual, $dia)) {
+						$horasRegistradas += $value['horas_diarias_totales'];
+				}
+			}
+
+			foreach ($dia_semana as $value) {
+				if ($value['ndia'] == $fechasInformato) {
+					$horasEsperadas += $value['hora_dia'];
+				}
+			}
+		}
+		$datos = array(
+			"nombre" => $nombre,
+			"horasRegistradas" => ModeloExcel::mdlformatearHora($horasRegistradas),
+			"horasEsperadas" => ModeloExcel::mdlformatearHora($horasEsperadas)
+		);
+		return $datos;
+    }
+
 	/*---------- Fin de ControladorFormularios ---------- */
 }

@@ -23,26 +23,26 @@ if (isset($_GET['empresa'])) {
 			</div>
 			<div class="row">
 				<div class="card-side-nav col-xl-2 col-lg-3 col-md-4 col-sm-4 lista-ajustes">
-					<?php if (isset($_GET['empresa'])): ?>
+<?php if (isset($_GET['empresa'])): ?>
 						<div>
-					<?php else: ?>
+<?php else: ?>
 						<div class="active">
-					<?php endif ?>
+<?php endif ?>
 							<a href="Asistencia-resumen" class="btn btn-block btn-in-consulting-link textos activo">
 								GENERAL
 							</a>
 						</div>
-					<?php foreach ($empresas as $empresa): ?>
-						<?php if ($idEmpresas == $empresa['idEmpresas']): ?>
+<?php foreach ($empresas as $empresa): ?>
+	<?php if ($idEmpresas == $empresa['idEmpresas']): ?>
 						<div class="active">
-						<?php else: ?>
+	<?php else: ?>
 						<div>
-						<?php endif ?>
+	<?php endif ?>
 							<a href="Asistencia-resumen&empresa=<?php echo $empresa['idEmpresas'] ?>" class="btn btn-block btn-in-consulting-link textos">
 								<?php echo $empresa['nombre_razon_social'] ?>
 							</a>
 						</div>
-					<?php endforeach ?>
+<?php endforeach ?>
 				</div>
 					<div class=" col-xl-10 col-lg-9 col-md-8 col-sm-8" id="horarios">
 						<div class="row mr-4 ml-2 mt-3">
@@ -57,24 +57,25 @@ if (isset($_GET['empresa'])) {
 										</tr>
 									</thead>
 									<tbody>
-										<?php if (!empty($empleados)): ?>
-											<?php foreach ($empleados as $empleado): ?>
-												<?php $nombre = ucwords(mb_strtolower($empleado['lastname']." ".$empleado['name'])); ?>
-										<tr>
-											<td><a class="" href="Asistencia&perfil=<?php echo $empleado['idEmpleados'] ?>"><?php echo $nombre ?></a></td>
-											<td>117h 14min</td>
-											<td>110h 0min</td>
-											<td>
-												<form class="exportarExcel-form">
-													<input type="hidden" name="genExcel" value="<?php echo $empleado['idEmpleados'] ?>">
-													<button type="button" class="btn btn-outline-success btn-rounded btn-block btn-lg exportarExcel-btn">
-														<i class="mdi mdi-download"></i> Descargar Excel
-													</button>
-												</form>
-											</td>
-										</tr>
-											<?php endforeach ?>
-									<?php endif ?>
+<?php foreach ($empleados as $empleado): ?>
+
+<?php
+$Total_Horas = ControladorFormularios::ctrTotalHoras($empleado);
+?>
+									<tr>
+										<td><a class="" href="Asistencia&perfil=<?php echo $empleado['idEmpleados'] ?>"><?php echo $Total_Horas['nombre'] ?></a></td>
+										<td><?php echo $Total_Horas['horasRegistradas'] ?></td>
+										<td><?php echo $Total_Horas['horasEsperadas'] ?></td>
+										<td>
+											<form class="exportarExcel-form">
+												<input type="hidden" name="genExcel" value="<?php echo $empleado['idEmpleados'] ?>">
+												<button type="button" class="btn btn-outline-success btn-rounded btn-block btn-lg exportarExcel-btn">
+													<i class="mdi mdi-download"></i> Descargar Excel
+												</button>
+											</form>
+										</td>
+									</tr>
+<?php endforeach ?>
 									</tbody>
 								</table>
 							</div>

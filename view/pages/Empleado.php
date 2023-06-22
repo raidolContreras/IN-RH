@@ -206,8 +206,8 @@ $puesto = ControladorFormularios::ctrVerPuestos("Empleados_idEmpleados", $_GET['
 					</div>
 					<div class="col-4">
 						<button class="btn btn-brand rounded btn-block" onClick="cargarContenido('Vacaciones.php')">
-								<i class="icon-social-dribbble"></i> Formatos vacacionales
-							</button>
+							<i class="icon-social-dribbble"></i> Solicitud de Vacaciones
+						</button>
 					</div>
 				</div>
 			</div>

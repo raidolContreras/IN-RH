@@ -7038,7 +7038,14 @@ Media Query
 	.product-carousel .carousel-indicators{bottom: -30px;}
 	.simple-card .nav.nav-tabs .nav-item .nav-link {
 		padding: 17px 29px;}
+	
+	.menu-ajustes{
+		min-width: 870px;
 	}
+	.dashboard-content{
+		overflow: scroll;
+	}
+}
 
 
 
@@ -7398,7 +7405,6 @@ hr.titulo {
   }
 
   .lista-ajustes {
-	height: 700px;
 	-ms-flex: 1 1 auto;
 	flex: 1 1 auto;
   }

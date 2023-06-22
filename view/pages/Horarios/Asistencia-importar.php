@@ -7,7 +7,6 @@
 					<div><a href="Asistencia-ajustes" class="btn btn-block btn-in-consulting-link">Horarios de trabajo</a></div>
 					<div><a href="Asistencia-permisos" class="btn btn-block btn-in-consulting-link">Permisos</a></div>
 					<div><a href="Asistencia-importar" class="btn btn-block btn-in-consulting-link active">Importar horarios</a></div>
-					<div><a href="Asistencia-exportar" class="btn btn-block btn-in-consulting-link">Exportar resultados</a></div>
 				</div>
 				<div class=" col-xl-10 col-lg-9 col-md-8 col-sm-8" id="horarios">
 					<?php include "subir_csv.php" ?>
