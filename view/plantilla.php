@@ -133,12 +133,16 @@ session_start();
 				 $_GET["pagina"] == "Asistencia-ajustes" ||
 				 $_GET["pagina"] == "Asistencia-importar" ||
 				 $_GET["pagina"] == "Asistencia-permisos" ||
-				 $_GET["pagina"] == "Vacaciones" ||
+				 $_GET["pagina"] == "Asistencia-permisos-vacaciones" ||
 				 $_GET["pagina"] == "CrearHorario" ) {
 
 			include "pages/navs/navbar.php";
 			include "pages/navs/sidenav.php";
-			include "pages/Horarios/".$_GET["pagina"].".php";
+			if ($_GET['pagina'] == "Asistencia-permisos-vacaciones") {
+				include "pages/Horarios/Vacaciones.php";
+			}else{
+				include "pages/Horarios/".$_GET["pagina"].".php";
+			}
 
 		}else{
 			include "pages/404-page.html";

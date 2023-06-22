@@ -33,7 +33,7 @@ $perfil = $primerLetra.$segundaLetra;
 
 //Menu de horarios
 					$Asistencias = array('Asistencia-importar', 'Asistencia-exportar', 'Asistencia-permisos');
-					$horarios = array('Asistencia', 'Vacaciones', 'Asistencia-resumen', 'Asistencia-ajustes');
+					$horarios = array('Asistencia', 'Asistencia-permisos-vacaciones', 'Asistencia-resumen', 'Asistencia-ajustes');
 
 					if (!empty($paginaActual)) {
 						if (in_array($paginaActual, $Asistencias)) {
@@ -41,7 +41,7 @@ $perfil = $primerLetra.$segundaLetra;
 							echo '<a href="Asistencia"> Asistencias </a>';
 							echo '</li>';
 							echo '<li class="nav-item ml-3">';
-							echo '<a href="Vacaciones"> Vacaciones </a>';
+							echo '<a href="Asistencia-permisos-vacaciones"> Permisos </a>';
 							echo '</li>';
 							echo '<li class="nav-item ml-3">';
 							echo '<a href="Asistencia-resumen"> Resumen de asistencias </a>';
@@ -61,8 +61,8 @@ $perfil = $primerLetra.$segundaLetra;
 									echo '<a href="' . $pagina . '"> Resumen de asistencias </a>';
 								} elseif ($pagina == 'Asistencia-ajustes') {
 									echo '<a href="' . $pagina . '"> Ajustes </a>';
-								} elseif ($pagina == 'Vacaciones') {
-									echo '<a href="' . $pagina . '"> Vacaciones </a>';
+								} elseif ($pagina == 'Asistencia-permisos-vacaciones') {
+									echo '<a href="' . $pagina . '"> Permisos </a>';
 								}
 								echo '</li>';
 							}

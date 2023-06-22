@@ -163,10 +163,7 @@ jQuery(document).ready(function($) {
                         pageSize: 'LEGAL'
                     }
                     ],
-                fixedHeader: true,
-                scrollY: 375,
-                stateSave: true,
-                select: true,
+                fixedHeader: false,
             language: {
                 lengthMenu: 'Mostrar _MENU_ resultados por pagina',
                 zeroRecords: 'Sin resultados - lo siento',

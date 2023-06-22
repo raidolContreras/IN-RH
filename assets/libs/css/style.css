@@ -7750,3 +7750,9 @@ text-overflow: ellipsis;
 	 text-align: right;
 	 letter-spacing: 0.03125rem;"
 }
+
+.caja{
+	min-height: 300px;
+	max-height: 300px;
+	overflow: overlay;
+}
