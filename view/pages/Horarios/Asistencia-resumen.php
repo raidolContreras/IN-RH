@@ -11,7 +11,7 @@ if (isset($_GET['empresa'])) {
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <div class="container-fluid dashboard-content">
 	<div class="ecommerce-widget">
-		<div class="card mx-5">
+		<div class="card mx-5 menu-ajustes">
 			<div class="card-header encabezado">
 				Resumen de Asistencias 
 				<form class="exportarExcelEmpresas-form float-right">
@@ -22,7 +22,7 @@ if (isset($_GET['empresa'])) {
 				</form>
 			</div>
 			<div class="row">
-				<div class="card-side-nav col-xl-2 col-lg-3 col-md-4 col-sm-4 lista-ajustes">
+				<div class="card-side-nav col-xl-2 col-lg-3 col-md-4 col-3 lista-ajustes">
 <?php if (isset($_GET['empresa'])): ?>
 						<div>
 <?php else: ?>
@@ -44,7 +44,7 @@ if (isset($_GET['empresa'])) {
 						</div>
 <?php endforeach ?>
 				</div>
-					<div class=" col-xl-10 col-lg-9 col-md-8 col-sm-8" id="horarios">
+					<div class=" col-xl-10 col-lg-9 col-md-8 col-9" id="horarios">
 						<div class="row mr-4 ml-2 mt-3">
 							<div class="table-responsive tabla-contenedor">
 								<table id="example" class="table ResumenAsistencias">

@@ -13,15 +13,15 @@
 </style>
 <div class="container-fluid dashboard-content">
 	<div class="ecommerce-widget">
-		<div class="card mx-5">
+		<div class="card mx-5 menu-ajustes">
 			<div class="card-header encabezado">Configuración del registro de horas</div>
 			<div class="row">
-				<div class="card-side-nav col-xl-2 col-lg-3 col-md-4 col-sm-4 col-3 lista-ajustes">
+				<div class="card-side-nav col-xl-2 col-lg-3 col-md-4 col-3 lista-ajustes">
 					<div><a href="Asistencia-ajustes" class="btn btn-block btn-in-consulting-link">Horarios de trabajo</a></div>
 					<div><a href="Asistencia-permisos" class="btn btn-block btn-in-consulting-link active">Permisos</a></div>
 					<div><a href="Asistencia-importar" class="btn btn-block btn-in-consulting-link">Importar horarios</a></div>
 				</div>
-				<div class=" col-xl-10 col-lg-9 col-md-8 col-sm-8 col-9" id="permisos">
+				<div class=" col-xl-10 col-lg-9 col-md-8 col-9" id="permisos">
 					<div class="row mr-4 ml-2 mt-3">
 						<div class="card-header encabezado">
 							Permisos
@@ -31,40 +31,42 @@
 							<h3 class="encabezado-h">Tipo de permisos y días festivos
 							</h3>
 							<div class="row">
-								<div class="col-8">
+								<div class="col-xl-8 col-sm-12 ">
 									<div class="card">
-										<div class="card-body">
+										<div class="card-body order-xl-first order-last">
 											<?php include "Calendarios/calendario-permisos.php" ?>
 										</div>
 									</div>
 								</div>
-								<div class="col-2">
-									<h3 class="encabezado-h">Días festivos
-								<button type="button"
-												class="btn btn-in-consulting"
-												data-toggle="modal" 
-												data-target="#Festivo">
-									<i class="fas fa-plus-circle"></i>
-								</button></h3>
-									<div id="d-fest"></div>
-								</div>
-								<div class="col-2">
-									<h3 class="encabezado-h">Permisos
-								<button type="button"
-												class="btn btn-in-consulting"
-												data-toggle="modal" 
-												data-target="#Permisos">
-									<i class="fas fa-plus-circle"></i>
-								</button></h3>
-									<?php foreach ($permisos as $permiso): ?>
-									<div class="festivo">
-										<span class="mr-2 title">
-											<span class="badge-dot badge-<?php echo strtr($permiso['namePermisos'], " ", "-"); ?>">
-											</span>
-											<?php echo $permiso['namePermisos'] ?>
-										</span>
+								<div class="col-xl-4 col-12 row order-xl-last order-first" style="justify-content: space-between;">
+									<div class="">
+										<h3 class="encabezado-h">Días festivos
+									<button type="button"
+													class="btn btn-in-consulting"
+													data-toggle="modal" 
+													data-target="#Festivo">
+										<i class="fas fa-plus-circle"></i>
+									</button></h3>
+										<div id="d-fest"></div>
 									</div>
-									<?php endforeach ?>
+									<div class="">
+										<h3 class="encabezado-h">Permisos
+									<button type="button"
+													class="btn btn-in-consulting"
+													data-toggle="modal" 
+													data-target="#Permisos">
+										<i class="fas fa-plus-circle"></i>
+									</button></h3>
+										<?php foreach ($permisos as $permiso): ?>
+										<div class="festivo">
+											<span class="mr-2 title">
+												<span class="badge-dot badge-<?php echo strtr($permiso['namePermisos'], " ", "-"); ?>">
+												</span>
+												<?php echo $permiso['namePermisos'] ?>
+											</span>
+										</div>
+										<?php endforeach ?>
+									</div>
 								</div>
 							</div>
 						</div>
