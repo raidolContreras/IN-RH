@@ -92,11 +92,14 @@ class ModeloEmpleados{
 	}
 
 	static public function mdlFechaNacimiento($tabla){
-		$sql = "SELECT * FROM $tabla e
-				LEFT JOIN foto_empleado fe on e.idEmpleados = fe.Empleados_idEmpleados
-				WHERE DATE_FORMAT(e.fNac, '%m-%d') 
-				BETWEEN DATE_FORMAT(CURDATE(), '%m-%d') 
-				AND DATE_FORMAT(DATE_ADD(CURDATE(), INTERVAL 30 DAY), '%m-%d')";
+		$sql = "SELECT *
+				FROM $tabla e
+				LEFT JOIN foto_empleado fe ON e.idEmpleados = fe.Empleados_idEmpleados
+				WHERE DATE_FORMAT(e.fNac, '%m-%d')
+				  BETWEEN DATE_FORMAT(CURDATE(), '%m-%d')
+				  AND DATE_FORMAT(DATE_ADD(CURDATE(), INTERVAL 30 DAY), '%m-%d')
+				  AND e.status = 1
+				ORDER BY DAY(e.fNac)";
 		$stmt = Conexion::conectar()->prepare($sql);
 
 		$stmt->execute();
@@ -107,11 +110,12 @@ class ModeloEmpleados{
 	}
 
 	static public function mdlFechaAniversario($tabla){
-		$sql = "SELECT * FROM $tabla e
-				LEFT JOIN foto_empleado fe on e.idEmpleados = fe.Empleados_idEmpleados
-				WHERE DATE_FORMAT(e.fecha_contratado, '%m-%d') 
-				BETWEEN DATE_FORMAT(CURDATE(), '%m-%d') 
-				AND DATE_FORMAT(DATE_ADD(CURDATE(), INTERVAL 30 DAY), '%m-%d')";
+		$sql = "SELECT *
+				FROM $tabla e
+				LEFT JOIN foto_empleado fe ON e.idEmpleados = fe.Empleados_idEmpleados
+				WHERE YEAR(e.fecha_contratado) < YEAR(CURDATE())
+				  AND MONTH(e.fecha_contratado) = MONTH(CURDATE())
+				  AND e.status = 1";
 		$stmt = Conexion::conectar()->prepare($sql);
 
 		$stmt->execute();

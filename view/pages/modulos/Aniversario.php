@@ -23,7 +23,7 @@ $empleados = ControladorEmpleados::ctrFechaAniversario();
 							</div>
 							<div class="col-10 pt-2 ml-2">
 								<p class="titulo-sup mb-0" style="flex-direction: row;"><?php echo $empleado['name']." ".$empleado['lastname'] ?></p>
-								<p class="subtitulo-sup mt-0"><?php echo date("d-M", strtotime($empleado['fNac'])) ?></p>
+								<p class="subtitulo-sup mt-0"><?php echo date("d-M", strtotime($empleado['fecha_contratado'])) ?></p>
 							</div>
 					</div>
 
