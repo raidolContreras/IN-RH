@@ -21,6 +21,15 @@
 	$empresas = ControladorFormularios::ctrVerEmpresas(null,null);
 	$horarios = ControladorFormularios::ctrSeleccionarHorarios(null, null);
 
+// Leer el archivo JSON de estados
+$estadosJson = file_get_contents('view/pages/json/estados.json');
+
+// Leer el archivo JSON de ciudades
+$ciudadesJson = file_get_contents('view/pages/json/ciudades.json');
+
+// Convertir el JSON a un array asociativo
+$estadosArray = json_decode($estadosJson, true);
+$ciudadesArray = json_decode($ciudadesJson, true); 
 ?>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <div class="container-fluid dashboard-content ">
@@ -153,10 +162,17 @@
 											</div>
 											<div class="row mt-2">
 												<div class="col-md-6">
-													<input type="text" class="form-control" id="municipio" name="municipio" placeholder="Municipio" required>
+													<select class="form-control" id="estado" name="estado" required>
+														<option>Selecciona un estado</option>
+														<?php foreach ($estadosArray as $key => $estado): ?>
+															<option value="<?php echo $estado['clave'] ?>"><?php echo $estado['nombre'] ?></option>
+														<?php endforeach ?>
+													</select>
 												</div>
 												<div class="col-md-6">
-													<input type="text" class="form-control" id="estado" name="estado" placeholder="Estado" required>
+													<select class="form-control" id="municipio" name="municipio" required>
+														<option>Selecciona un estado primero</option>
+													</select>
 												</div>
 											</div>
 										</div>
@@ -438,4 +454,37 @@ $(document).ready(function() {
 			$(document).ready(function(){
 				$('[data-toggle="identificacion"]').popover();   
 			});
+
+
+// Obtener referencia a los elementos select
+var estadoSelect = document.getElementById('estado');
+var poblacionMunicipioSelect = document.getElementById('municipio');
+
+// Manejar el evento de cambio en el select de estado
+estadoSelect.addEventListener('change', function() {
+	// Obtener el valor seleccionado del estado
+	var estadoSeleccionado = estadoSelect.value;
+
+	// Obtener las ciudades correspondientes al estado seleccionado
+	var ciudades = <?php echo json_encode($ciudadesArray); ?>;
+	var ciudadesEstado = ciudades[estadoSeleccionado];
+
+	// Limpiar las opciones actuales del select de ciudades
+	poblacionMunicipioSelect.innerHTML = '';
+
+	// Agregar una opción predeterminada
+	var opcionPredeterminada = document.createElement('option');
+	opcionPredeterminada.text = 'Selecciona una ciudad';
+	poblacionMunicipioSelect.add(opcionPredeterminada);
+
+	// Agregar las opciones de ciudades correspondientes al estado seleccionado
+	if (ciudadesEstado) {
+		ciudadesEstado.forEach(function(ciudad) {
+			var opcionCiudad = document.createElement('option');
+			opcionCiudad.text = ciudad;
+			opcionCiudad.value = ciudad;
+			poblacionMunicipioSelect.add(opcionCiudad);
+		});
+	}
+});
 		</script>

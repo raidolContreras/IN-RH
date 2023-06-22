@@ -19,8 +19,18 @@
 	</script>';
 }
 
-?>
-<?php $parentesco = array("Padre" => "padre",
+
+// Leer el archivo JSON de estados
+$estadosJson = file_get_contents('view/pages/json/estados.json');
+
+// Leer el archivo JSON de ciudades
+$ciudadesJson = file_get_contents('view/pages/json/ciudades.json');
+
+// Convertir el JSON a un array asociativo
+$estadosArray = json_decode($estadosJson, true);
+$ciudadesArray = json_decode($ciudadesJson, true);
+
+$parentesco = array("Padre" => "padre",
 	"Madre" => "madre",
 	"Hermano" => "hermano",
 	"Amigo" => "amigo",
@@ -34,7 +44,7 @@
 							<form id="formulario" class="container mt-4" method="post">
 
 
-								<?php 
+	<?php 
 
 /*=============================================
 FORMA EN QUE SE INSTANCIA LA CLASE DE UN MÉTODO ESTÁTICO 
@@ -163,10 +173,21 @@ if($registro == "ok"){
 				</div>
 				<div class="row mt-2">
 					<div class="col-md-6">
-						<input type="text" class="form-control" id="municipio" name="municipio" placeholder="Municipio" value="<?php echo $empleado['municipio'] ?>" required>
+						<select class="form-control" id="estado" name="estado" required>
+							<option>Selecciona un estado</option>
+							<?php foreach ($estadosArray as $key => $estado): ?>
+								<?php if ($empleado['estado'] == $estado['clave']): ?>
+									<option value="<?php echo $estado['clave'] ?>" selected><?php echo $estado['nombre'] ?></option>
+								<?php else: ?>
+									<option value="<?php echo $estado['clave'] ?>"><?php echo $estado['nombre'] ?></option>
+								<?php endif ?>
+							<?php endforeach ?>
+						</select>
 					</div>
 					<div class="col-md-6">
-						<input type="text" class="form-control" id="estado" name="estado" placeholder="Estado" value="<?php echo $empleado['estado'] ?>" required>
+						<select class="form-control" id="municipio" name="municipio" required>
+							<option value="<?php echo $empleado['municipio'] ?>"><?php echo $empleado['municipio'] ?></option>
+						</select>
 					</div>
 				</div>
 			</div>
@@ -472,4 +493,37 @@ $(document).ready(function() {
 			alertContainer.style.display = 'none';
 		}, 300);
 	}
+
+
+// Obtener referencia a los elementos select
+var estadoSelect = document.getElementById('estado');
+var poblacionMunicipioSelect = document.getElementById('municipio');
+
+// Manejar el evento de cambio en el select de estado
+estadoSelect.addEventListener('change', function() {
+	// Obtener el valor seleccionado del estado
+	var estadoSeleccionado = estadoSelect.value;
+
+	// Obtener las ciudades correspondientes al estado seleccionado
+	var ciudades = <?php echo json_encode($ciudadesArray); ?>;
+	var ciudadesEstado = ciudades[estadoSeleccionado];
+
+	// Limpiar las opciones actuales del select de ciudades
+	poblacionMunicipioSelect.innerHTML = '';
+
+	// Agregar una opción predeterminada
+	var opcionPredeterminada = document.createElement('option');
+	opcionPredeterminada.text = 'Selecciona una ciudad';
+	poblacionMunicipioSelect.add(opcionPredeterminada);
+
+	// Agregar las opciones de ciudades correspondientes al estado seleccionado
+	if (ciudadesEstado) {
+		ciudadesEstado.forEach(function(ciudad) {
+			var opcionCiudad = document.createElement('option');
+			opcionCiudad.text = ciudad;
+			opcionCiudad.value = ciudad;
+			poblacionMunicipioSelect.add(opcionCiudad);
+		});
+	}
+});
 </script>
