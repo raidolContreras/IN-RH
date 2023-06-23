@@ -115,7 +115,8 @@ class ModeloEmpleados{
 				LEFT JOIN foto_empleado fe ON e.idEmpleados = fe.Empleados_idEmpleados
 				WHERE YEAR(e.fecha_contratado) < YEAR(CURDATE())
 				  AND MONTH(e.fecha_contratado) = MONTH(CURDATE())
-				  AND e.status = 1";
+				  AND e.status = 1
+				  ORDER BY DAY(e.fecha_contratado)";
 		$stmt = Conexion::conectar()->prepare($sql);
 
 		$stmt->execute();
