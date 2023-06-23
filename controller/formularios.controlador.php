@@ -1036,5 +1036,51 @@ class ControladorFormularios{
 		return $datos;
     }
 
+    static public function ctrVerPermisosEmpleados($idEmpleados){
+    	$respuesta = ModeloFormularios::mdlVerPermisosEmpleados($idEmpleados);
+    	return $respuesta;
+    }
+
+    static public function ctrEliminarHorarios(){
+    	$idHorarios = $_POST['horario'];
+    	$respuesta = ModeloFormularios::mdlEliminarHorarios($idHorarios);
+    	return $respuesta;
+    }
+
+    static public function ctrCalculoVacacional($aniosLaborados) {
+	    if ($aniosLaborados >= 1 && $aniosLaborados <= 5) {
+	        $diasVacaciones = $aniosLaborados * 2 + 10;
+	    } elseif ($aniosLaborados >= 6 && $aniosLaborados <= 10) {
+	        $diasVacaciones = 22;
+	    } elseif ($aniosLaborados >= 11 && $aniosLaborados <= 15) {
+	        $diasVacaciones = 24;
+	    } elseif ($aniosLaborados >= 16 && $aniosLaborados <= 20) {
+	        $diasVacaciones = 26;
+	    } elseif ($aniosLaborados >= 21 && $aniosLaborados <= 25) {
+	        $diasVacaciones = 28;
+	    } elseif ($aniosLaborados >= 26 && $aniosLaborados <= 30) {
+	        $diasVacaciones = 30;
+	    } elseif ($aniosLaborados >= 31 && $aniosLaborados <= 35) {
+	        $diasVacaciones = 32;
+	    } else {
+	        $diasVacaciones = 0; // Si los años laborados no están en ninguna de las categorías especificadas
+	    }
+
+	    return $diasVacaciones;
+	}
+
+	static public function ctrGenerarPermisos(){
+		$tabla = 'empleados_has_permisos';
+		$datos = array(
+			"fechaPermiso" => $_POST['inicio'],
+			"fechaFin" => $_POST['fin'],
+			"descripcion" => $_POST['descripcion'],
+			"Empleados_idEmpleados" => $_POST['empleado'],
+			"Permisos_idPermisos" => $_POST['permiso']
+		);
+		$generar = ModeloFormularios::mdlGenerarPermiso($tabla,$datos);
+		return $generar;
+	}
+
 	/*---------- Fin de ControladorFormularios ---------- */
 }

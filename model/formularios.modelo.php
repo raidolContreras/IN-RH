@@ -1590,5 +1590,67 @@ static public function mdlImagenNoticia($id, $name)
 
 	}
 
+	static public function mdlEliminarHorarios($idHorarios){
+		$sql = "DELETE FROM horarios WHERE idHorarios = :idHorarios;";
+		$sql .= "DELETE FROM empleados_has_horarios WHERE Horarios_idHorarios = :idHorarios;";
+		$sql .= "DELETE FROM dia_horario WHERE Horarios_idHorarios = :idHorarios;";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->bindParam(":idHorarios", $idHorarios, PDO::PARAM_INT);
+		if ($stmt->execute()) {
+			return "ok";
+		}else{
+			return "error";
+		}
+		$stmt->close();
+		$stmt = null;
+
+	}
+
+	static public function mdlVerPermisosEmpleados($idEmpleados){
+		$sql = "SELECT 
+				e.idEmpleados,
+				FLOOR(TIMESTAMPDIFF(MONTH, e.fecha_contratado, CURDATE()) / 12) AS tiempoContrato,
+				eh.idEm_has_Per AS idPermiso,
+				CONCAT(e.lastname, ' ', e.name) AS nombre,
+				CONCAT(DATE_FORMAT(eh.fechaPermiso, '%d/%m/%Y'), ' - ', DATE_FORMAT(eh.fechaFin, '%d/%m/%Y'), ' (', TIMESTAMPDIFF(DAY, eh.fechaPermiso, eh.fechaFin), ' días)') AS rango,
+				eh.statusPermiso,
+				eh.descripcion,
+				p.namePermisos AS permiso
+				FROM 
+				empleados e
+				LEFT JOIN empleados_has_permisos eh ON eh.Empleados_idEmpleados = e.idEmpleados
+				LEFT JOIN permisos p ON p.idPermisos = eh.Permisos_idPermisos
+				WHERE e.idEmpleados = :idEmpleados;";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->bindParam(":idEmpleados", $idEmpleados, PDO::PARAM_INT);
+		$stmt->execute();
+		return $stmt->fetchAll();
+		
+		$stmt->close();
+		$stmt = null;
+
+	}
+
+	static public function mdlGenerarPermiso($tabla,$datos){
+		$sql = "INSERT INTO $tabla (fechaPermiso, fechaFin, descripcion, Empleados_idEmpleados, Permisos_idPermisos) VALUES (:fechaPermiso, :fechaFin, :descripcion, :Empleados_idEmpleados, :Permisos_idPermisos);";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->bindParam(":fechaPermiso",$datos['fechaPermiso'],PDO::PARAM_STR);
+		$stmt->bindParam(":fechaFin",$datos['fechaFin'],PDO::PARAM_STR);
+		$stmt->bindParam(":descripcion",$datos['descripcion'],PDO::PARAM_STR);
+		$stmt->bindParam(":Empleados_idEmpleados",$datos['Empleados_idEmpleados'],PDO::PARAM_INT);
+		$stmt->bindParam(":Permisos_idPermisos",$datos['Permisos_idPermisos'],PDO::PARAM_INT);
+		if ($stmt->execute()) {
+			return "ok";
+		}else{
+			return "error";
+		}
+		$stmt->close();
+		$stmt = null;
+	}
+
+
 	/*---------- Fin de ModeloFormularios ---------- */
 }

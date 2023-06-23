@@ -7458,6 +7458,30 @@ btn-in-consulting-link
 	box-shadow: 0 0 0 0rem rgba(0,123,255,.25);
 }
 
+/*-----------------------
+btn-in-consulting-danger
+-------------------------*/
+
+.btn-in-consulting-danger {
+	background-color: transparent;
+	letter-spacing: 0.03125rem;
+	font-family: Nunito, sans-serif;
+	font-size: 0.85rem;
+	color: #ef172c !important;
+	text-align: left !important;
+}
+
+.btn-in-consulting-danger:hover {
+	text-decoration: none;
+	color: #da0419 !important;
+}
+
+.btn-in-consulting-danger:focus {
+	color: #da0419 !important;
+	outline: 0;
+	box-shadow: 0 0 0 0rem rgba(0,123,255,.25);
+}
+
 
 /*-----------------------
 btn-in-consulting

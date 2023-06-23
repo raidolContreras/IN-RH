@@ -44,19 +44,12 @@
 											?>
 											<tr>
 												<td>
-													<?php if ($horario['default'] == 1): ?>
-														<button type="button" 
-														class="btn btn-in-consulting disabled">
-														<span><?php echo $horario['nameHorario'] ?></span>
-													</button>
-												<?php else: ?>
 													<button type="button" 
 													class="btn btn-in-consulting" 
 													data-toggle="modal" 
 													data-target="#Horario<?php echo $horario['idHorarios'] ?>">
 													<span><?php echo $horario['nameHorario'] ?></span>
 												</button>
-											<?php endif ?>
 										</td>
 										<td><?php echo $resultado; ?></td>
 										<td>
@@ -140,9 +133,17 @@ $diaLaborableNombres = [
 			<div class="modal-content">
 				<div class="modal-header">
 					<h3 class="ml-2 mt-3"><?php echo $horario['nameHorario'] ?></h3>
-				<a class="btn btn-in-consulting" href="CrearHorario&plantilla=<?php echo $horario['idHorarios'] ?>">
-					<i class="fas fa-edit"></i>
-				</a>
+					<div>
+
+						<?php if ($horario['default'] != 1): ?>
+						<a class="btn btn-in-consulting-danger" href="CrearHorario&eliminar=<?php echo $horario['idHorarios'] ?>">
+							<i class="fa fa-trash"></i>
+						</a>
+						<?php endif ?>
+						<a class="btn btn-in-consulting" href="CrearHorario&plantilla=<?php echo $horario['idHorarios'] ?>">
+							<i class="fas fa-edit"></i>
+						</a>
+					</div>
 				</div>
 				<div class="modal-body">
 					<div class="card">
@@ -190,6 +191,7 @@ $diaLaborableNombres = [
 								</tfoot>
 							</table>
 						</div>
+						<?php if ($horario['default'] != 1): ?>
 						<div class="card-body">
 							<form class="mb-3" id="empleado-horario-form<?php echo $horario['idHorarios'] ?>">
 							  <?php $empleados = ControladorEmpleados::ctrVerEmpleados(null,null); ?>
@@ -231,6 +233,7 @@ $diaLaborableNombres = [
 								</div>
 							</div>
 						</div>
+						<?php endif ?>
 					</div>
 				</div>
 			</div>
