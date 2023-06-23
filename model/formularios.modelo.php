@@ -6,7 +6,7 @@ class ModeloFormularios{
 	static public function mdlRegistrarEmpleados($tabla1, $table2, $datos){
 
 		$pdo=Conexion::conectar();
-		$stmt = $pdo->prepare("INSERT INTO $tabla1(name, lastname, genero, fNac, phone, email, password, identificacion, CURP, NSS, RFC, street, numE, numI, colonia, CP, municipio, estado) VALUES (:nombre, :apellidos, :genero, :fecha_nacimiento, :telefono, :email, :passwordEncriptado, :num_identificacion, :curp, :num_seguro_social, :rfc, :calle, :num_exterior, :num_interior, :colonia, :cp, :municipio, :estado)");
+		$stmt = $pdo->prepare("INSERT INTO $tabla1(name, lastname, genero, fNac, phone, email, password, identificacion, CURP, NSS, RFC, street, numE, numI, colonia, CP, municipio, estado, fecha_contratado) VALUES (:nombre, :apellidos, :genero, :fecha_nacimiento, :telefono, :email, :passwordEncriptado, :num_identificacion, :curp, :num_seguro_social, :rfc, :calle, :num_exterior, :num_interior, :colonia, :cp, :municipio, :estado, :fecha_contratado)");
 
 		$stmt->bindParam(':nombre', $datos['nombre'], PDO::PARAM_STR);
 		$stmt->bindParam(':apellidos', $datos['apellidos'], PDO::PARAM_STR);
@@ -26,6 +26,7 @@ class ModeloFormularios{
 		$stmt->bindParam(':cp', $datos['cp'], PDO::PARAM_INT);
 		$stmt->bindParam(':municipio', $datos['municipio'], PDO::PARAM_STR);
 		$stmt->bindParam(':estado', $datos['estado'], PDO::PARAM_STR);
+		$stmt->bindParam(':fecha_contratado', $datos['fecha_contratado'], PDO::PARAM_STR);
 		$id_empleado = 0;
 		if($stmt->execute()){
 

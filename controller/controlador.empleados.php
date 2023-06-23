@@ -51,7 +51,8 @@ class ControladorEmpleados{
 				'Departamentos_idDepartamentos' => $departamento,
 				'postulante' => $_POST['postulante'],
 				'jefe_Departamento' => $jefe,
-				'horario' => $_POST['horarios']);
+				'horario' => $_POST['horarios'],
+				'fecha_contratado' => $_POST['fecha_contratado']);
 			$Registro = ModeloFormularios::mdlRegistrarEmpleados('empleados','emergencia', $datos);
 			if ($Registro == 'ok') {
 				return 'ok';
@@ -136,6 +137,7 @@ class ControladorEmpleados{
 				'emergencia' => $_POST['emergencia'],
 				'telefonoE' => $_POST['telefonoE'],
 				'parentesco' => $_POST['parentesco'],
+				'fecha_contratado' => $_POST['fecha_contratado'],
 				'idEmpleados' => $empleado
 			);
 

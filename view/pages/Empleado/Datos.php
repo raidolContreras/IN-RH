@@ -239,7 +239,7 @@ if($registro == "ok"){
 			<h3 class="hprofile">Datos del puesto</h3>
 			<hr>
 			<div class="row">
-				<div class="col-md-12">
+				<div class="col-md-4">
 					<div class="form-group">
 						<label for="namePuesto" class="col-form-label font-weight-bold">Nombre del puesto:</label>
 						<input type="text" class="form-control" id="namePuesto" name="namePuesto" value="<?php echo $puesto['namePuesto']; ?>" required>
@@ -257,7 +257,13 @@ if($registro == "ok"){
 							<input type="text"	maxlength="10" class="form-control form-control-lg" id="salario_integrado" name="salario_integrado" pattern="[0-9]+(\.[0-9]{1,2})?" title="Ingrese un número con hasta dos decimales" required onkeypress="return (event.charCode >= 46 && event.charCode <= 57 && event.charCode != 47)" min="1" value="<?php echo $puesto['salario_integrado'] ?>">
 							</div>
 						</div>
-						<div class="col-md-4">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for="salario_integrado" class="col-form-label font-weight-bold">Fecha de contratación:</label>
+								<input type="date" name="fecha_contratado" id="fecha_contratado" class="form-control" max="<?php echo date('Y-m-d'); ?>" value="<?php echo $empleado['fecha_contratado']; ?>">
+							</div>
+						</div>
+						<div class="col-md-6">
 							<div class="form-group">
 								<label for="horarios" class="col-form-label font-weight-bold">Horario:</label>
 								<select class="form-control" id="horarios" name="horarios">

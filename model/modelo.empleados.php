@@ -5,7 +5,7 @@ require_once "conexion.php";
 class ModeloEmpleados{
 
 	static public function mdlActualizarEmpleado($tabla, $datos){
-		$sql = "UPDATE empleados SET name=:name, lastname=:lastname, genero=:genero, fNac=:fNac, phone=:phone, email=:email, identificacion=:identificacion, CURP=:CURP, NSS=:NSS, RFC=:RFC, street=:street, numE=:numE, numI=:numI, colonia=:colonia, CP=:CP, municipio=:municipio, estado=:estado WHERE idEmpleados =:idEmpleados";
+		$sql = "UPDATE empleados SET name=:name, lastname=:lastname, genero=:genero, fNac=:fNac, phone=:phone, email=:email, identificacion=:identificacion, CURP=:CURP, NSS=:NSS, RFC=:RFC, street=:street, numE=:numE, numI=:numI, colonia=:colonia, CP=:CP, municipio=:municipio, estado=:estado, fecha_contratado=:fecha_contratado WHERE idEmpleados =:idEmpleados";
 		$stmt = Conexion::conectar()->prepare($sql);
 
 		$stmt->bindParam(":name", $datos['nombre'],PDO::PARAM_STR);
@@ -25,6 +25,7 @@ class ModeloEmpleados{
 		$stmt->bindParam(":CP", $datos['cp'],PDO::PARAM_STR);
 		$stmt->bindParam(":municipio", $datos['municipio'],PDO::PARAM_STR);
 		$stmt->bindParam(":estado", $datos['estado'],PDO::PARAM_STR);
+		$stmt->bindParam(":fecha_contratado", $datos['fecha_contratado'],PDO::PARAM_STR);
 		$stmt->bindParam(":idEmpleados", $datos['idEmpleados'],PDO::PARAM_INT);
 
 		if ($stmt->execute()) {
