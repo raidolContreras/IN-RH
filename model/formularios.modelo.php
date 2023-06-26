@@ -1640,13 +1640,48 @@ static public function mdlImagenNoticia($id, $name)
 		$stmt->bindParam(":fechaPermiso",$datos['fechaPermiso'],PDO::PARAM_STR);
 		$stmt->bindParam(":fechaFin",$datos['fechaFin'],PDO::PARAM_STR);
 		$stmt->bindParam(":descripcion",$datos['descripcion'],PDO::PARAM_STR);
-		$stmt->bindParam(":Empleados_idEmpleados",$datos['Empleados_idEmpleados'],PDO::PARAM_INT);
-		$stmt->bindParam(":Permisos_idPermisos",$datos['Permisos_idPermisos'],PDO::PARAM_INT);
+		$stmt->bindParam(":Empleados_idEmpleados",$datos['idEmpleados'],PDO::PARAM_INT);
+		$stmt->bindParam(":Permisos_idPermisos",$datos['idPeticiones'],PDO::PARAM_INT);
 		if ($stmt->execute()) {
 			return "ok";
 		}else{
 			return "error";
 		}
+		$stmt->close();
+		$stmt = null;
+	}
+
+	static public function mdlGenerarVacaciones($tabla,$datos){
+		$sql = "INSERT INTO $tabla (Empleados_idEmpleados, Jefe_idEmpleados, fecha_inicio_vacaciones, fecha_fin_vacaciones) VALUES (:Empleados_idEmpleados,:Jefe_idEmpleados,:fecha_inicio_vacaciones,:fecha_fin_vacaciones)";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->bindParam(":Empleados_idEmpleados",$datos['idEmpleados'],PDO::PARAM_INT);
+		$stmt->bindParam(":Jefe_idEmpleados",$datos['jefeDepartamento'],PDO::PARAM_INT);
+		$stmt->bindParam(":fecha_inicio_vacaciones",$datos['fechaPermiso'],PDO::PARAM_STR);
+		$stmt->bindParam(":fecha_fin_vacaciones",$datos['fechaFin'],PDO::PARAM_STR);
+
+		if ($stmt->execute()) {
+			return "vacaciones generadas";
+		}else{
+			return "error";
+		}
+
+		$stmt->close();
+		$stmt = null;
+	}
+
+	static public function mdlEliminarSolicitud($tabla,$idSolicitud){
+		$sql = "DELETE FROM $tabla WHERE idEm_has_Per = :idSolicitud";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->bindParam(":idSolicitud",$idSolicitud,PDO::PARAM_INT);
+
+		if ($stmt->execute()) {
+			return "eliminado";
+		}else{
+			return "error";
+		}
+		
 		$stmt->close();
 		$stmt = null;
 	}

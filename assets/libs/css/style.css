@@ -7780,3 +7780,25 @@ text-overflow: ellipsis;
 	max-height: 300px;
 	overflow: overlay;
 }
+
+.badge-Vacaciones {
+	background-color: #47AEDA;
+}
+
+.badge-Vacaciones[href]:focus,
+.badge-Vacaciones[href]:hover {
+	color: #fff;
+	background-color: #3775B4;
+	text-decoration: none;
+}
+
+.btn-vacaciones {
+	color: #fff;
+	background-color: #47AEDA;
+	border-color: #47AEDA;
+}
+.btn-vacaciones:hover{
+	color: #fff;
+	background-color: #3775B4;
+	border-color: #3775B4;
+}

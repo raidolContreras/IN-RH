@@ -396,6 +396,40 @@ class FormulariosAjax{
 		echo json_encode($generarExcel);
 	}
 
+	public function GenerarPeticionesAjax(){
+		session_start();
+		$idPeticiones = $this->idPeticiones;
+		$fechaPermiso = $this->fechaPermiso;
+		$fechaFin = $this->fechaFin;
+		$descripcion = $this->descripcion;
+		if (strtotime($fechaPermiso)>strtotime($fechaFin)) {
+			echo json_encode('error fecha');
+		}else{
+			$puesto = ControladorFormularios::ctrVerPuestos("Empleados_idEmpleados", $_SESSION['idEmpleado']);
+			$jefeDepartamento = ControladorFormularios::ctrVerDepartamentos("idDepartamentos", $puesto['Departamentos_idDepartamentos']);
+			$datos = array(
+				"idPeticiones" => $idPeticiones,
+				"fechaPermiso" => $fechaPermiso,
+				"fechaFin" => $fechaFin,
+				"descripcion" => $descripcion,
+				"jefeDepartamento" => $jefeDepartamento['Empleados_idEmpleados'],
+				"idEmpleados" => $_SESSION['idEmpleado']
+			);
+			if ($idPeticiones != 0) {
+				$generarPeticion = ControladorFormularios::ctrGenerarPermiso($datos);
+			}else{
+				$generarPeticion = ControladorFormularios::ctrGenerarVacaciones($datos);
+			}
+			echo json_encode($generarPeticion);
+		}
+	}
+
+	public function eliminarPeticionesAjax(){
+		$idPeticiones = $this->idPeticiones;
+		$eliminarSolicitud = ControladorFormularios::ctrEliminarSolicitud($idPeticiones);
+		echo json_encode($eliminarSolicitud);
+	}
+
 
 }
 
@@ -650,4 +684,26 @@ if (isset($_POST['genExcelEmpresas'])) {
 	$generarExcel = new FormulariosAjax();
 	$generarExcel -> idEmpresas = $idEmpresas;
 	$generarExcel -> crearExcelEmpresasAjax();
+}
+
+if (isset($_POST['generarPeticion'])) {
+	$idPeticiones = $_POST['generarPeticion'];
+	$fechaPermiso = $_POST['fechaPermiso'];
+	$fechaFin = $_POST['fechaFin'];
+	$descripcion = $_POST['descripcion'];
+
+	$GenerarPeticiones = new FormulariosAjax();
+	$GenerarPeticiones -> idPeticiones = $idPeticiones;
+	$GenerarPeticiones -> fechaPermiso = $fechaPermiso;
+	$GenerarPeticiones -> fechaFin = $fechaFin;
+	$GenerarPeticiones -> descripcion = $descripcion;
+	$GenerarPeticiones -> GenerarPeticionesAjax();
+}
+
+if (isset($_POST['eliminarSolicitud'])) {
+	$idPeticiones = $_POST['eliminarSolicitud'];
+
+	$GenerarPeticiones = new FormulariosAjax();
+	$GenerarPeticiones -> idPeticiones = $idPeticiones;
+	$GenerarPeticiones -> eliminarPeticionesAjax();
 }

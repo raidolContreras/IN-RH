@@ -1069,17 +1069,22 @@ class ControladorFormularios{
 	    return $diasVacaciones;
 	}
 
-	static public function ctrGenerarPermisos(){
+	static public function ctrGenerarPermiso($datos){
 		$tabla = 'empleados_has_permisos';
-		$datos = array(
-			"fechaPermiso" => $_POST['inicio'],
-			"fechaFin" => $_POST['fin'],
-			"descripcion" => $_POST['descripcion'],
-			"Empleados_idEmpleados" => $_POST['empleado'],
-			"Permisos_idPermisos" => $_POST['permiso']
-		);
 		$generar = ModeloFormularios::mdlGenerarPermiso($tabla,$datos);
 		return $generar;
+	}
+
+	static public function ctrGenerarVacaciones($datos){
+		$tabla = 'vacaciones';
+		$generar = ModeloFormularios::mdlGenerarVacaciones($tabla,$datos);
+		return $generar;
+	}
+
+	static public function ctrEliminarSolicitud($idSolicitud){
+		$tabla = 'empleados_has_permisos';
+		$eliminar = ModeloFormularios::mdlEliminarSolicitud($tabla,$idSolicitud);
+		return $eliminar;
 	}
 
 	/*---------- Fin de ControladorFormularios ---------- */
