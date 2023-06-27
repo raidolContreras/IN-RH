@@ -1686,6 +1686,43 @@ static public function mdlImagenNoticia($id, $name)
 		$stmt = null;
 	}
 
+	static public function mdlEliminarSolicitudVacaciones($tabla,$idVacaciones){
+		$sql = "UPDATE $tabla SET status_vacaciones=0 WHERE idVacaciones = :idVacaciones";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->bindParam(":idVacaciones",$idVacaciones,PDO::PARAM_INT);
+
+		if ($stmt->execute()) {
+			return "eliminado";
+		}else{
+			return "error";
+		}
+		
+		$stmt->close();
+		$stmt = null;
+	}
+
+	static public function mdlVerSolicitudesVacaciones($idEmpleados){
+		$sql = "SELECT 
+				e.idEmpleados, v.idVacaciones, v.respuesta, v.Jefe_idEmpleados as jefe, v.fecha_solicitud as solicitud, v.fecha_respuesta, v.fecha_aprobacion as aprobacion, e.fecha_contratado as contratado, v.status_vacaciones,
+				CONCAT(e.lastname, ' ', e.name) AS nombre,
+				CONCAT(DATE_FORMAT(v.fecha_inicio_vacaciones, '%d/%m/%Y'), ' - ', DATE_FORMAT(v.fecha_fin_vacaciones, '%d/%m/%Y'), ' (', TIMESTAMPDIFF(DAY, v.fecha_inicio_vacaciones, v.fecha_fin_vacaciones)+1, ' días)') AS rango,
+				TIMESTAMPDIFF(DAY, v.fecha_inicio_vacaciones, v.fecha_fin_vacaciones)+1 AS dias
+				FROM 
+				empleados e
+				LEFT JOIN vacaciones v ON v.Empleados_idEmpleados = e.idEmpleados
+				WHERE e.idEmpleados = :idEmpleados;";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->bindParam(":idEmpleados", $idEmpleados, PDO::PARAM_INT);
+		$stmt->execute();
+		return $stmt->fetchAll();
+		
+		$stmt->close();
+		$stmt = null;
+
+	}
+
 
 	/*---------- Fin de ModeloFormularios ---------- */
 }

@@ -430,6 +430,12 @@ class FormulariosAjax{
 		echo json_encode($eliminarSolicitud);
 	}
 
+	public function eliminarSolicitudVacacionAjax(){
+		$idVacaciones = $this->idVacaciones;
+		$eliminarSolicitud = ControladorFormularios::ctrEliminarSolicitudVacaciones($idVacaciones);
+		echo json_encode($eliminarSolicitud);
+	}
+
 
 }
 
@@ -706,4 +712,12 @@ if (isset($_POST['eliminarSolicitud'])) {
 	$GenerarPeticiones = new FormulariosAjax();
 	$GenerarPeticiones -> idPeticiones = $idPeticiones;
 	$GenerarPeticiones -> eliminarPeticionesAjax();
+}
+
+if (isset($_POST['eliminarVSolicitud'])) {
+	$idVacaciones = $_POST['eliminarVSolicitud'];
+
+	$GenerarPeticiones = new FormulariosAjax();
+	$GenerarPeticiones -> idVacaciones = $idVacaciones;
+	$GenerarPeticiones -> eliminarSolicitudVacacionAjax();
 }

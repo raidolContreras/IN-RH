@@ -3,6 +3,14 @@ $permisos = ControladorFormularios::ctrVerPermisos(null,null);
 $empleados_has_permisos = ControladorFormularios::ctrVerPermisosEmpleados($_SESSION['idEmpleado']);
 $tiempoContratado = $empleados_has_permisos[0]['tiempoContrato'];
 $calculo_vacaciones = ControladorFormularios::ctrCalculoVacacional($tiempoContratado);
+$vacaciones = ControladorFormularios::ctrVerSolicitudesVacaciones($_SESSION['idEmpleado']);
+$dias_consumidos = 0;
+foreach ($vacaciones as $value) {
+	if ($value['status_vacaciones'] == 1 || $value['respuesta'] != null) {
+		$dias_consumidos += $value['dias'];
+	}
+}
+$dias_disponibles = $calculo_vacaciones - $dias_consumidos;
 ?>
 
 <style>
@@ -45,23 +53,17 @@ $calculo_vacaciones = ControladorFormularios::ctrCalculoVacacional($tiempoContra
 					</div>
 					<div class="card-body">
 						<div class="row">
-							<div class="col-6 col-vacations-left p-0">
+							<div class="col-6 col-vacations-left p-0 mb-2">
 								Saldo inicial:
 							</div>
-							<div class="col-6 col-vacations-right">
+							<div class="col-6 col-vacations-right mb-2">
 								<?php echo $calculo_vacaciones; ?> días
 							</div>
-							<div class="col-6 col-vacations-left p-0 mt-3">
-								Disfrutadas:
+							<div class="col-6 col-vacations-left p-0 mt-4">
+								Aprobadas:
 							</div>
-							<div class="col-6 col-vacations-right mt-3">
-								0 días
-							</div>
-							<div class="col-6 col-vacations-left p-0 mt-3">
-								Planificado:
-							</div>
-							<div class="col-6 col-vacations-right mt-3">
-								0 días
+							<div class="col-6 col-vacations-right mt-4">
+								<?php echo $dias_consumidos ?> días
 							</div>
 						</div>
 					</div>
@@ -70,7 +72,7 @@ $calculo_vacaciones = ControladorFormularios::ctrCalculoVacacional($tiempoContra
 								<p class="titulo-tablero titulo">Disponibles</p>
 							</div>
 							<div class="col-6 col-vacations-right">
-								<p class="titulo-tablero titulo"><?php echo $calculo_vacaciones; ?> días</p>
+								<p class="titulo-tablero titulo"><?php echo $dias_disponibles; ?> días</p>
 							</div>
 						</div>
 					<div class="card-header">
@@ -149,6 +151,32 @@ $calculo_vacaciones = ControladorFormularios::ctrCalculoVacacional($tiempoContra
 									    	data-target="#eliminar"
 									    	data-name="<?php echo $value['rango']; ?>"
 									    	data-whatever="<?php echo $value['idPermiso']; ?>">
+											    	&times;
+											  </button>
+											</td>
+										</tr>
+										<?php endif ?>
+									<?php endforeach ?>
+									<?php foreach ($vacaciones as $vacacion): ?>
+										<?php if ($vacacion['status_vacaciones'] == 1): ?>
+										<tr>
+											<td><?php echo $vacacion['rango'] ?></td>
+											<td>Solicitud de vacaciones</td>
+											<td>
+												<?php if (empty($vacacion['respuesta'])): ?>
+													<span class="badge-dark p-1 rounded">Pendiente</span>
+												<?php elseif ($vacacion['respuesta'] == 1): ?>
+													<span class="badge-success p-1 rounded">Aprobado</span>
+												<?php else: ?>
+													<span class="badge-danger p-1 rounded">Rechazado</span>
+												<?php endif ?>
+											</td>
+											<td class="float-right">
+												<button class="btn btn-danger rounded-circle btn-sm"
+									    	data-toggle="modal"
+									    	data-target="#eliminarV"
+									    	data-name="<?php echo $vacacion['rango']; ?>"
+									    	data-whatever="<?php echo $vacacion['idVacaciones']; ?>">
 											    	&times;
 											  </button>
 											</td>
@@ -240,6 +268,35 @@ $calculo_vacaciones = ControladorFormularios::ctrCalculoVacacional($tiempoContra
 			<!-- Modal footer -->
 			<div class="modal-footer">
 				<button id="solicitud-eliminar-btn" type="button" class="btn btn-danger rounded" data-dismiss="modal">Eliminar</button>
+				<button type="button" class="btn btn-primary rounded" data-dismiss="modal">Cancelar</button>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+<!-- The Modal Eliminar Vacaciones -->
+<div class="modal fade rounded" id="eliminarV">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+
+		<!-- Modal Header -->
+			<div class="modal-header" style="flex-direction: column; align-items: center;">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<p class="titulo-tablero titulo" id="tituloV">
+					<span class="badge-dot"></span>
+				</p>
+				<p class="subtitulo-tablero ">Eliminar solicitud</p>
+			</div>
+			<div class="modal-body">
+				¿Estás seguro de eliminar la solicitud?
+				<form id="solicitud-eliminarV-form">
+					<input type="hidden" name="eliminarVSolicitud" id="eliminarVSolicitud">
+				</form>
+			</div>
+			<!-- Modal footer -->
+			<div class="modal-footer">
+				<button id="solicitud-eliminarV-btn" type="button" class="btn btn-danger rounded" data-dismiss="modal">Eliminar</button>
 				<button type="button" class="btn btn-primary rounded" data-dismiss="modal">Cancelar</button>
 			</div>
 

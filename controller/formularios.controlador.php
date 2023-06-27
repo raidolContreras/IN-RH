@@ -1076,15 +1076,58 @@ class ControladorFormularios{
 	}
 
 	static public function ctrGenerarVacaciones($datos){
-		$tabla = 'vacaciones';
-		$generar = ModeloFormularios::mdlGenerarVacaciones($tabla,$datos);
-		return $generar;
+
+		$empleados_has_permisos = ControladorFormularios::ctrVerPermisosEmpleados($_SESSION['idEmpleado']);
+		$tiempoContratado = $empleados_has_permisos[0]['tiempoContrato'];
+		$calculo_vacaciones = ControladorFormularios::ctrCalculoVacacional($tiempoContratado);
+		$vacaciones = ControladorFormularios::ctrVerSolicitudesVacaciones($_SESSION['idEmpleado']);
+		$dias_consumidos = 0;
+		foreach ($vacaciones as $value) {
+			if ($value['status_vacaciones'] == 1 || $value['respuesta'] != null) {
+				$dias_consumidos += $value['dias'];
+			}
+		}
+
+		$dias_disponibles = $calculo_vacaciones - $dias_consumidos;
+
+		$fechaInicio = $datos['fechaPermiso'];
+		$fechaFin = $datos['fechaFin'];
+
+		// Convierte las fechas a representación de tiempo
+		$tiempoInicio = strtotime($fechaInicio);
+		$tiempoFin = strtotime($fechaFin);
+
+		// Calcula la diferencia en segundos
+		$diferencia = $tiempoFin - $tiempoInicio;
+
+		// Convierte la diferencia de segundos a días
+		$numDias = floor($diferencia / (60 * 60 * 24)) + 1;
+
+		if ($dias_disponibles >= $numDias) {
+			$tabla = 'vacaciones';
+			$generar = ModeloFormularios::mdlGenerarVacaciones($tabla,$datos);
+			return $generar;
+		}else{
+			return 'dias';
+		}
+
 	}
 
 	static public function ctrEliminarSolicitud($idSolicitud){
 		$tabla = 'empleados_has_permisos';
 		$eliminar = ModeloFormularios::mdlEliminarSolicitud($tabla,$idSolicitud);
 		return $eliminar;
+	}
+
+	static public function ctrEliminarSolicitudVacaciones($idVacaciones){
+		$tabla = 'vacaciones';
+		$eliminar = ModeloFormularios::mdlEliminarSolicitudVacaciones($tabla,$idVacaciones);
+		return $eliminar;
+	}
+
+	static public function ctrVerSolicitudesVacaciones($idEmpleados){
+		$vacaciones = ModeloFormularios::mdlVerSolicitudesVacaciones($idEmpleados);
+		return $vacaciones;
 	}
 
 	/*---------- Fin de ControladorFormularios ---------- */
