@@ -1704,7 +1704,7 @@ static public function mdlImagenNoticia($id, $name)
 
 	static public function mdlVerSolicitudesVacaciones($idEmpleados){
 		$sql = "SELECT 
-				e.idEmpleados, v.idVacaciones, v.respuesta, v.Jefe_idEmpleados as jefe, v.fecha_solicitud as solicitud, v.fecha_respuesta, v.fecha_aprobacion as aprobacion, e.fecha_contratado as contratado, v.status_vacaciones,
+				e.idEmpleados, e.lastname, e.name, v.idVacaciones, v.respuesta, v.Jefe_idEmpleados as jefe, v.fecha_solicitud as solicitud, v.fecha_respuesta, v.fecha_aprobacion as aprobacion, e.fecha_contratado as contratado, v.status_vacaciones,
 				CONCAT(e.lastname, ' ', e.name) AS nombre,
 				CONCAT(DATE_FORMAT(v.fecha_inicio_vacaciones, '%d/%m/%Y'), ' - ', DATE_FORMAT(v.fecha_fin_vacaciones, '%d/%m/%Y'), ' (', TIMESTAMPDIFF(DAY, v.fecha_inicio_vacaciones, v.fecha_fin_vacaciones)+1, ' días)') AS rango,
 				TIMESTAMPDIFF(DAY, v.fecha_inicio_vacaciones, v.fecha_fin_vacaciones)+1 AS dias

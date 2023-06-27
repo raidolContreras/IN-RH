@@ -1,6 +1,14 @@
 <?php
 $peticiones = ControladorFormularios::ctrVerPeticiones($_SESSION['idEmpleado']);
 $peticionesDepartamentales = ControladorFormularios::ctrVerPeticionesDepartamentales($_SESSION['idEmpleado']);
+$departamento = ControladorFormularios::ctrVerDepartamentos('Empleados_idEmpleados',$_SESSION['idEmpleado']);
+$puestos = ControladorFormularios::ctrVerPuestos(null,null);
+$empleados = array();
+foreach ($puestos as $puesto) {
+	if ($puesto['Departamentos_idDepartamentos'] == $departamento['idDepartamentos'] && $_SESSION['idEmpleado'] != $puesto[4]) {
+		$empleados[] = ($puesto[4]);
+	}
+}
 ?>
 
 <p class="titulo-tablero titulo">Peticiones de asistencia</p>
@@ -85,6 +93,43 @@ $peticionesDepartamentales = ControladorFormularios::ctrVerPeticionesDepartament
 							</tr>
 						<?php endif ?>
 					<?php endif ?>
+				<?php endforeach ?>
+
+				<?php foreach ($empleados as $value): ?>
+					<?php
+						$empleado = ControladorEmpleados::ctrVerEmpleados("idEmpleados", $value);
+						$vacaciones = ControladorFormularios::ctrVerSolicitudesVacaciones($value);
+					?>
+					<?php foreach ($vacaciones as $vacacion): ?>
+
+					<?php if ($vacacion[12] != null): ?>
+
+					<tr>
+						<td><?php echo $empleado['lastname']." ".$empleado['name']; ?></td>
+						<td>Solicitud de vacaciones</td>
+						<td><?php echo $vacacion[12]; ?></td>
+						<td>
+							<?php if ($vacacion['respuesta'] == null): ?>
+								<div class="row" style="margin-left: -15px; margin-right: -5px;">
+									<form id="approve-form-<?php echo $vacacion['idVacaciones']; ?>" class="col">
+										<input type="hidden" name="aprobarVacaciones" value="<?php echo $vacacion['idVacaciones']; ?>">
+										<button type="button" class="btn btn-outline-success btn-rounded approve-btn" data-id="<?php echo $vacacion['idVacaciones']; ?>">
+											<i class="fas fa-check"></i>
+										</button>
+									</form>
+									<form id="decline-form-<?php echo $vacacion['idVacaciones']; ?>" class="col">
+										<input type="hidden" name="declinarVacaciones" value="<?php echo $vacacion['idVacaciones']; ?>">
+										<button type="button" class="btn btn-outline-danger btn-rounded decline-btn" data-id="<?php echo $vacacion['idVacaciones']; ?>">
+											<i class="fas fa-times"></i>
+										</button>
+									</form>
+								</div>
+							<?php endif ?>
+						</td>
+					</tr>
+					<?php endif ?>
+						
+					<?php endforeach ?>
 				<?php endforeach ?>
 
 			</tbody>
