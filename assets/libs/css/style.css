@@ -3236,6 +3236,9 @@ btn-link
 
 .btn-secondary-link {
 	color: #ff407b !important;
+	font-size: 14px;
+	opacity: 90%;
+	padding: 0;
 }
 
 

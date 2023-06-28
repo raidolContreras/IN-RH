@@ -160,7 +160,11 @@ $dias_disponibles = $calculo_vacaciones - $dias_consumidos;
 									<?php foreach ($vacaciones as $vacacion): ?>
 										<?php if ($vacacion['status_vacaciones'] == 1): ?>
 										<tr>
-											<td><?php echo $vacacion['rango'] ?></td>
+											<?php if ($vacacion['respuesta'] == 2): ?>
+												<td><button class="btn btn-secondary-link"><?php echo $vacacion['rango'] ?></button></td>
+											<?php else: ?>
+												<td><?php echo $vacacion['rango'] ?></td>
+											<?php endif ?>
 											<td>Solicitud de vacaciones</td>
 											<td>
 												<?php if (empty($vacacion['respuesta'])): ?>

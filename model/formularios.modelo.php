@@ -1647,7 +1647,7 @@ static public function mdlImagenNoticia($id, $name)
 				FLOOR(TIMESTAMPDIFF(MONTH, e.fecha_contratado, CURDATE()) / 12) AS tiempoContrato,
 				eh.idEm_has_Per AS idPermiso,
 				CONCAT(e.lastname, ' ', e.name) AS nombre,
-				CONCAT(DATE_FORMAT(eh.fechaPermiso, '%d/%m/%Y'), ' - ', DATE_FORMAT(eh.fechaFin, '%d/%m/%Y'), ' (', TIMESTAMPDIFF(DAY, eh.fechaPermiso, eh.fechaFin), ' días)') AS rango,
+				CONCAT(DATE_FORMAT(eh.fechaPermiso, '%d/%m/%Y'), ' - ', DATE_FORMAT(eh.fechaFin, '%d/%m/%Y'), ' (', TIMESTAMPDIFF(DAY, eh.fechaPermiso, eh.fechaFin)+1, ' días)') AS rango,
 				eh.statusPermiso,
 				eh.descripcion,
 				p.namePermisos AS permiso
@@ -1673,7 +1673,7 @@ static public function mdlImagenNoticia($id, $name)
 				FLOOR(TIMESTAMPDIFF(MONTH, e.fecha_contratado, CURDATE()) / 12) AS tiempoContrato,
 				eh.idEm_has_Per AS idPermiso,
 				CONCAT(e.lastname, ' ', e.name) AS nombre,
-				CONCAT(DATE_FORMAT(eh.fechaPermiso, '%d/%m/%Y'), ' - ', DATE_FORMAT(eh.fechaFin, '%d/%m/%Y'), ' (', TIMESTAMPDIFF(DAY, eh.fechaPermiso, eh.fechaFin), ' días)') AS rango,
+				CONCAT(DATE_FORMAT(eh.fechaPermiso, '%d/%m/%Y'), ' - ', DATE_FORMAT(eh.fechaFin, '%d/%m/%Y'), ' (', TIMESTAMPDIFF(DAY, eh.fechaPermiso, eh.fechaFin)+1, ' días)') AS rango,
 				eh.statusPermiso,
 				eh.descripcion,
 				p.namePermisos AS permiso
