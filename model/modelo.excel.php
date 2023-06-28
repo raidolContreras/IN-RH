@@ -2,6 +2,8 @@
 
 require_once "conexion.php";
 
+require_once($_SERVER['DOCUMENT_ROOT'].'/IN-RH/assets/vendor/autoload.php'); //Cambiar en el servidor /IN-RH/assets/vendor/autoload.php, por /assets/vendor/autoload.php
+
 //Librerias
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
