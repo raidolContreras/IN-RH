@@ -384,6 +384,29 @@ class FormulariosAjax{
 		echo json_encode($declinar);
 	}
 
+	public function aprobarVacacionesAjax(){
+		$idVacaciones = $this->aprobar;
+		$aprobar = ControladorFormularios::ctrAprobarVacaciones($idVacaciones);
+		echo json_encode($aprobar);
+	}
+
+	public function declinarVacacionesAjax(){
+		$idVacaciones = $this->declinar;
+		$declinar = ControladorFormularios::ctrDeclinarVacaciones($idVacaciones);
+		echo json_encode($declinar);
+	}
+
+	public function responderPermisoAjax(){
+		$idEm_has_Per = $this->idEm_has_Per;
+		$valor = $this->valor;
+		$datos = array(
+			"idEm_has_Per" => $idEm_has_Per,
+			"valor" => $valor
+		);
+		$permiso = ControladorFormularios::ctrResponderPermisos($datos);
+		echo json_encode($permiso);
+	}
+
 	public function crearExcelAjax(){
 		$idEmpleados = $this->idEmpleados;
 		$generarExcel = ControladorExcel::ctrGeneralExcelAsistencias($idEmpleados);
@@ -674,6 +697,42 @@ if (isset($_POST['declinarJustificacion'])) {
 	$justificar = new FormulariosAjax();
 	$justificar -> declinar = $idJustificantes;
 	$justificar -> declinarJustificacionAjax();
+}
+
+if (isset($_POST['aprobarVacaciones'])) {
+	$idVacaciones = $_POST['aprobarVacaciones'];
+
+	$respuestaVacaciones = new FormulariosAjax();
+	$respuestaVacaciones -> aprobar = $idVacaciones;
+	$respuestaVacaciones -> aprobarVacacionesAjax();
+}
+
+if (isset($_POST['declinarVacaciones'])) {
+	$idVacaciones = $_POST['declinarVacaciones'];
+
+	$respuestaVacaciones = new FormulariosAjax();
+	$respuestaVacaciones -> declinar = $idVacaciones;
+	$respuestaVacaciones -> declinarVacacionesAjax();
+}
+
+if (isset($_POST['aprobarPermiso'])) {
+	$idEm_has_Per = $_POST['aprobarPermiso'];
+	$valor = 1;
+
+	$permiso = new FormulariosAjax();
+	$permiso -> idEm_has_Per = $idEm_has_Per;
+	$permiso -> valor = $valor;
+	$permiso -> responderPermisoAjax();
+}
+
+if (isset($_POST['declinarPermiso'])) {
+	$idEm_has_Per = $_POST['declinarPermiso'];
+	$valor = 2;
+
+	$permiso = new FormulariosAjax();
+	$permiso -> idEm_has_Per = $idEm_has_Per;
+	$permiso -> valor = $valor;
+	$permiso -> responderPermisoAjax();
 }
 
 if (isset($_POST['genExcel'])) {

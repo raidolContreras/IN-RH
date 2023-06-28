@@ -949,6 +949,32 @@ class ControladorFormularios{
     	return $justificar;
     }
 
+    static public function ctrAprobarVacaciones($idVacaciones){
+    	$tabla = "vacaciones";
+    	$datos = array(
+    		"idVacaciones" => $idVacaciones,
+    		"valor" => 1
+    	);
+    	$justificar = ModeloFormularios::mdlResponderVacaciones($tabla,$datos);
+    	return $justificar;
+    }
+
+    static public function ctrDeclinarVacaciones($idVacaciones){
+    	$tabla = "vacaciones";
+    	$datos = array(
+    		"idVacaciones" => $idVacaciones,
+    		"valor" => 2
+    	);
+    	$justificar = ModeloFormularios::mdlResponderVacaciones($tabla,$datos);
+    	return $justificar;
+    }
+
+    static public function ctrResponderPermisos($datos){
+    	$tabla = "empleados_has_permisos";
+    	$permiso = ModeloFormularios::mdlResponderPermisos($tabla,$datos);
+    	return $permiso;
+    }
+
     static public function ctrTotalHoras($empleado){
 
 		$nombre = ucwords(mb_strtolower($empleado['lastname']." ".$empleado['name'])); 

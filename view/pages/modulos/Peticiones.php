@@ -98,18 +98,48 @@ foreach ($puestos as $puesto) {
 				<?php foreach ($empleados as $value): ?>
 					<?php
 						$empleado = ControladorEmpleados::ctrVerEmpleados("idEmpleados", $value);
+						$empleados_has_permisos = ControladorFormularios::ctrVerPermisosEmpleados($value);
 						$vacaciones = ControladorFormularios::ctrVerSolicitudesVacaciones($value);
 					?>
+					<?php foreach ($empleados_has_permisos as $emPermiso): ?>
+						<?php if ($emPermiso['statusPermiso'] == null): ?>
+							
+						<tr>
+							<td><?php echo $empleado['lastname']." ".$empleado['name']; ?></td>
+							<td><?php echo $emPermiso['descripcion']; ?></td>
+							<td><?php echo $emPermiso['rango']; ?></td>
+							<td>
+								<div class="row" style="margin-left: -15px; margin-right: -5px;">
+									<form id="approve-form-<?php echo $emPermiso['idPermiso']; ?>" class="col">
+										<input type="hidden" name="aprobarPermiso" value="<?php echo $emPermiso['idPermiso']; ?>">
+										<button type="button" class="btn btn-outline-success btn-rounded approve-btn" data-id="<?php echo $emPermiso['idPermiso']; ?>">
+											<i class="fas fa-check"></i>
+										</button>
+									</form>
+									<form id="decline-form-<?php echo $emPermiso['idPermiso']; ?>" class="col">
+										<input type="hidden" name="declinarPermiso" value="<?php echo $emPermiso['idPermiso']; ?>">
+										<button type="button" class="btn btn-outline-danger btn-rounded decline-btn" data-id="<?php echo $emPermiso['idPermiso']; ?>">
+											<i class="fas fa-times"></i>
+										</button>
+									</form>
+								</div>
+							</td>
+						</tr>
+
+						<?php endif ?>
+						
+					<?php endforeach ?>
+
 					<?php foreach ($vacaciones as $vacacion): ?>
 
 					<?php if ($vacacion[12] != null): ?>
-
-					<tr>
-						<td><?php echo $empleado['lastname']." ".$empleado['name']; ?></td>
-						<td>Solicitud de vacaciones</td>
-						<td><?php echo $vacacion[12]; ?></td>
-						<td>
-							<?php if ($vacacion['respuesta'] == null): ?>
+						<?php if ($vacacion['respuesta'] == null): ?>
+							<?php if ($vacacion['status_vacaciones'] == 1): ?>
+						<tr>
+							<td><?php echo $empleado['lastname']." ".$empleado['name']; ?></td>
+							<td>Solicitud de vacaciones</td>
+							<td><?php echo $vacacion[12]; ?></td>
+							<td>
 								<div class="row" style="margin-left: -15px; margin-right: -5px;">
 									<form id="approve-form-<?php echo $vacacion['idVacaciones']; ?>" class="col">
 										<input type="hidden" name="aprobarVacaciones" value="<?php echo $vacacion['idVacaciones']; ?>">
@@ -124,9 +154,10 @@ foreach ($puestos as $puesto) {
 										</button>
 									</form>
 								</div>
+							</td>
+						</tr>
 							<?php endif ?>
-						</td>
-					</tr>
+						<?php endif ?>
 					<?php endif ?>
 						
 					<?php endforeach ?>
@@ -149,15 +180,25 @@ foreach ($puestos as $puesto) {
 				data: value,
 				success: function(response) {
 					if (response === '"ok"') {
-						$("#justify-result").val("");
-						$("#justify-result").html(`
-							<div class='alert alert-success' role="alert" id="alerta">Asistencia justificada</div>
+						$("#form-result").val("");
+						$("#form-result").html(`
+						<div class='alert alert-success' role="alert" id="alerta">
+						  <i class="fas fa-check-circle"></i>
+						  Solicitud Aprobada Exitosamente
+						</div>
 						`);
 						deleteAlert();
+
+						setTimeout(function() {
+							location.reload();
+						}, 1700);
 					} else {
-						$("#justify-result").val("");
-						$("#justify-result").html(`
-							<div class='alert alert-danger' role="alert" id="alerta"><b>Error</b>, no se pudo justificar la asistencia, intenta nuevamente</div>
+						$("#form-result").val("");
+						$("#form-result").html(`
+						<div class='alert alert-danger' role="alert" id="alerta">
+						  <i class="fas fa-exclamation-triangle"></i>
+						  <b>Error</b>, no se pudo aprobar la solicitud, intenta nuevamente
+						</div>
 						`);
 						deleteAlert();
 					}
@@ -175,15 +216,19 @@ foreach ($puestos as $puesto) {
 				data: value,
 				success: function(response) {
 					if (response === '"ok"') {
-						$("#justify-result").val("");
-						$("#justify-result").html(`
-							<div class='alert alert-success' role="alert" id="alerta">Asistencia Rechazada</div>
+						$("#form-result").val("");
+						$("#form-result").html(`
+						<div class='alert alert-success' role="alert" id="alerta">
+						  <i class="fas fa-check-circle"></i>
+						  Solicitud Rechazada Correctamente</div>
 						`);
 						deleteAlert();
 					} else {
-						$("#justify-result").val("");
-						$("#justify-result").html(`
-							<div class='alert alert-danger' role="alert" id="alerta"><b>Error</b>, no se pudo rechazar la asistencia, intenta nuevamente</div>
+						$("#form-result").val("");
+						$("#form-result").html(`
+						<div class='alert alert-danger' role="alert" id="alerta">
+						  <i class="fas fa-exclamation-triangle"></i>
+						  <b>Error</b>, no se pudo rechazar la solicitud, intenta nuevamente</div>
 						`);
 						deleteAlert();
 					}
@@ -198,10 +243,6 @@ foreach ($puestos as $puesto) {
 					alert.remove();
 				});
 			}, 1500);
-
-			setTimeout(function() {
-				location.reload();
-			}, 1700);
 		}
 	});
 </script>

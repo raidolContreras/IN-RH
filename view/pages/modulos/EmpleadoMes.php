@@ -6,7 +6,6 @@ $fotoEmpleado = ControladorFormularios::ctrVerFotos("Empleados_idEmpleados", $em
 <?php if (isset($empleadoMes['name'])): ?>
 	<?php $datosPublicante = ControladorEmpleados::ctrVerEmpleados("idEmpleados", $empleadoMes['Publicado_idEmpleados']);  ?>
 <div class="row">
-	<div id="form-result"></div>
 	<div class="col-12">
 		<div class="float-left m-0">
 			<p class="titulo-sup m-0"><?php echo $datosPublicante['name']." ".$datosPublicante['lastname'] ?></p>
@@ -151,21 +150,40 @@ $fotoEmpleado = ControladorFormularios::ctrVerFotos("Empleados_idEmpleados", $em
 					if (response === '"ok"') {
 						$("#form-result").val("");
 						$("#form-result").parent().after(`
-							<div class='alert alert-success'>Nuevo empleado del mes</div>
+						<div class='alert alert-success' role="alert" id="alerta">
+						  <i class="fas fa-check-circle"></i>
+						  Nuevo empleado del mes
+						</div>
 							`);
+						deleteAlert();
 						setTimeout(function() {
 							location.reload();
-						}, 500);
+						}, 1600);
 					}else{
 						$("#form-result").val("");
 						$("#form-result").parent().after(`
-							<div class='alert alert-danger'><b>Error</b>, no se elegir al empleado del mes, intenta nuevamente</div>
+						<div class='alert alert-danger' role="alert" id="alerta">
+						  <i class="fas fa-exclamation-triangle"></i>
+						  <b>Error</b>, no se elegir al empleado del mes, intenta nuevamente
+						</div>
 							`);
+						
+						deleteAlert();
 					}
 
 				}
 			});
 		});
+
+
+		function deleteAlert() {
+			setTimeout(function() {
+				var alert = $('#alerta');
+				alert.fadeOut('slow', function() {
+					alert.remove();
+				});
+			}, 1500);
+		}
 	});
 	$(document).ready(function() {
 	  // Manejar el evento de cambio del select de empresas

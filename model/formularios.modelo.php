@@ -1590,6 +1590,40 @@ static public function mdlImagenNoticia($id, $name)
 
 	}
 
+	static public function mdlResponderVacaciones($tabla,$datos){
+		$date = date('Y-m-d h:i:s', time());
+		$sql = "UPDATE $tabla SET fecha_respuesta=:fecha_respuesta, respuesta=:respuesta WHERE idVacaciones = :idVacaciones";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->bindParam(":fecha_respuesta",$date,PDO::PARAM_STR);
+		$stmt->bindParam(":respuesta",$datos['valor'],PDO::PARAM_INT);
+		$stmt->bindParam(":idVacaciones",$datos['idVacaciones'],PDO::PARAM_INT);
+		if ($stmt->execute()) {
+			return "ok";
+		}else{
+			return "error";
+		}
+		$stmt->close();
+		$stmt = null;
+
+	}
+
+	static public function mdlResponderPermisos($tabla,$datos){
+		$sql = "UPDATE $tabla SET statusPermiso=:statusPermiso WHERE idEm_has_Per = :idEm_has_Per";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->bindParam(":statusPermiso",$datos['valor'],PDO::PARAM_INT);
+		$stmt->bindParam(":idEm_has_Per",$datos['idEm_has_Per'],PDO::PARAM_INT);
+		if ($stmt->execute()) {
+			return "ok";
+		}else{
+			return "error";
+		}
+		$stmt->close();
+		$stmt = null;
+
+	}
+
 	static public function mdlEliminarHorarios($idHorarios){
 		$sql = "DELETE FROM horarios WHERE idHorarios = :idHorarios;";
 		$sql .= "DELETE FROM empleados_has_horarios WHERE Horarios_idHorarios = :idHorarios;";
