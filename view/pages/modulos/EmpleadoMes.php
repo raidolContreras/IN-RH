@@ -49,7 +49,6 @@ $fotoEmpleado = ControladorFormularios::ctrVerFotos("Empleados_idEmpleados", $em
 </div>
 <?php else: ?>
 <div class="row">
-	<div id="form-result"></div>
 	<div class="col-12">
 		<div class="float-left m-0">
 		</div>
@@ -149,7 +148,7 @@ $fotoEmpleado = ControladorFormularios::ctrVerFotos("Empleados_idEmpleados", $em
 
 					if (response === '"ok"') {
 						$("#form-result").val("");
-						$("#form-result").parent().after(`
+						$("#form-result").html(`
 						<div class='alert alert-success' role="alert" id="alerta">
 						  <i class="fas fa-check-circle"></i>
 						  Nuevo empleado del mes
@@ -161,13 +160,13 @@ $fotoEmpleado = ControladorFormularios::ctrVerFotos("Empleados_idEmpleados", $em
 						}, 1600);
 					}else{
 						$("#form-result").val("");
-						$("#form-result").parent().after(`
+						$("#form-result").html(`
 						<div class='alert alert-danger' role="alert" id="alerta">
 						  <i class="fas fa-exclamation-triangle"></i>
 						  <b>Error</b>, no se elegir al empleado del mes, intenta nuevamente
 						</div>
 							`);
-						
+
 						deleteAlert();
 					}
 
