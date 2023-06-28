@@ -1067,6 +1067,11 @@ class ControladorFormularios{
     	return $respuesta;
     }
 
+    static public function ctrVerSolicutudesPermisosEmpleados($idEmpleados){
+    	$respuesta = ModeloFormularios::mdlVerSolicutudesPermisosEmpleados($idEmpleados);
+    	return $respuesta;
+    }
+
     static public function ctrEliminarHorarios(){
     	$idHorarios = $_POST['horario'];
     	$respuesta = ModeloFormularios::mdlEliminarHorarios($idHorarios);

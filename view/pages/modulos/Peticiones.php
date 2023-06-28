@@ -3,7 +3,14 @@ $peticiones = ControladorFormularios::ctrVerPeticiones($_SESSION['idEmpleado']);
 $peticionesDepartamentales = ControladorFormularios::ctrVerPeticionesDepartamentales($_SESSION['idEmpleado']);
 $departamento = ControladorFormularios::ctrVerDepartamentos('Empleados_idEmpleados',$_SESSION['idEmpleado']);
 $puestos = ControladorFormularios::ctrVerPuestos(null,null);
+
+$pertenencias = ControladorEmpleados::ctrEquipoDeTrabajo($departamento['idDepartamentos']);
 $empleados = array();
+foreach ($pertenencias as $value) {
+	if ($value['idEmpleados'] == $value['jefeDepa']) {
+		$empleados[] = $value['idEmpleados'];
+	}
+}
 foreach ($puestos as $puesto) {
 	if ($puesto['Departamentos_idDepartamentos'] == $departamento['idDepartamentos'] && $_SESSION['idEmpleado'] != $puesto[4]) {
 		$empleados[] = ($puesto[4]);
@@ -98,37 +105,8 @@ foreach ($puestos as $puesto) {
 				<?php foreach ($empleados as $value): ?>
 					<?php
 						$empleado = ControladorEmpleados::ctrVerEmpleados("idEmpleados", $value);
-						$empleados_has_permisos = ControladorFormularios::ctrVerPermisosEmpleados($value);
 						$vacaciones = ControladorFormularios::ctrVerSolicitudesVacaciones($value);
 					?>
-					<?php foreach ($empleados_has_permisos as $emPermiso): ?>
-						<?php if ($emPermiso['statusPermiso'] == null): ?>
-							
-						<tr>
-							<td><?php echo $empleado['lastname']." ".$empleado['name']; ?></td>
-							<td><?php echo $emPermiso['descripcion']; ?></td>
-							<td><?php echo $emPermiso['rango']; ?></td>
-							<td>
-								<div class="row" style="margin-left: -15px; margin-right: -5px;">
-									<form id="approve-form-<?php echo $emPermiso['idPermiso']; ?>" class="col">
-										<input type="hidden" name="aprobarPermiso" value="<?php echo $emPermiso['idPermiso']; ?>">
-										<button type="button" class="btn btn-outline-success btn-rounded approve-btn" data-id="<?php echo $emPermiso['idPermiso']; ?>">
-											<i class="fas fa-check"></i>
-										</button>
-									</form>
-									<form id="decline-form-<?php echo $emPermiso['idPermiso']; ?>" class="col">
-										<input type="hidden" name="declinarPermiso" value="<?php echo $emPermiso['idPermiso']; ?>">
-										<button type="button" class="btn btn-outline-danger btn-rounded decline-btn" data-id="<?php echo $emPermiso['idPermiso']; ?>">
-											<i class="fas fa-times"></i>
-										</button>
-									</form>
-								</div>
-							</td>
-						</tr>
-
-						<?php endif ?>
-						
-					<?php endforeach ?>
 
 					<?php foreach ($vacaciones as $vacacion): ?>
 
@@ -161,6 +139,43 @@ foreach ($puestos as $puesto) {
 					<?php endif ?>
 						
 					<?php endforeach ?>
+				<?php endforeach ?>
+
+				<?php foreach ($empleados as $value): ?>
+					<?php
+						$empleado = ControladorEmpleados::ctrVerEmpleados("idEmpleados", $value);
+						$empleados_has_permisos = ControladorFormularios::ctrVerSolicutudesPermisosEmpleados($value);
+					?>
+					<?php if (!empty($empleados_has_permisos)): ?>
+						<?php foreach ($empleados_has_permisos as $emPermiso): ?>
+							<?php if ($emPermiso['statusPermiso'] == null): ?>
+								
+							<tr>
+								<td><?php echo $empleado['lastname']." ".$empleado['name']; ?></td>
+								<td><?php echo $emPermiso['descripcion']; ?></td>
+								<td><?php echo $emPermiso['rango']; ?></td>
+								<td>
+									<div class="row" style="margin-left: -15px; margin-right: -5px;">
+										<form id="approve-form-<?php echo $emPermiso['idPermiso']; ?>" class="col">
+											<input type="hidden" name="aprobarPermiso" value="<?php echo $emPermiso['idPermiso']; ?>">
+											<button type="button" class="btn btn-outline-success btn-rounded approve-btn" data-id="<?php echo $emPermiso['idPermiso']; ?>">
+												<i class="fas fa-check"></i>
+											</button>
+										</form>
+										<form id="decline-form-<?php echo $emPermiso['idPermiso']; ?>" class="col">
+											<input type="hidden" name="declinarPermiso" value="<?php echo $emPermiso['idPermiso']; ?>">
+											<button type="button" class="btn btn-outline-danger btn-rounded decline-btn" data-id="<?php echo $emPermiso['idPermiso']; ?>">
+												<i class="fas fa-times"></i>
+											</button>
+										</form>
+									</div>
+								</td>
+							</tr>
+
+							<?php endif ?>
+							
+						<?php endforeach ?>
+					<?php endif ?>
 				<?php endforeach ?>
 
 			</tbody>
@@ -223,6 +238,10 @@ foreach ($puestos as $puesto) {
 						  Solicitud Rechazada Correctamente</div>
 						`);
 						deleteAlert();
+
+						setTimeout(function() {
+							location.reload();
+						}, 1700);
 					} else {
 						$("#form-result").val("");
 						$("#form-result").html(`

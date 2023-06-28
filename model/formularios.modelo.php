@@ -1667,6 +1667,32 @@ static public function mdlImagenNoticia($id, $name)
 
 	}
 
+	static public function mdlVerSolicutudesPermisosEmpleados($idEmpleados){
+		$sql = "SELECT 
+				e.idEmpleados,
+				FLOOR(TIMESTAMPDIFF(MONTH, e.fecha_contratado, CURDATE()) / 12) AS tiempoContrato,
+				eh.idEm_has_Per AS idPermiso,
+				CONCAT(e.lastname, ' ', e.name) AS nombre,
+				CONCAT(DATE_FORMAT(eh.fechaPermiso, '%d/%m/%Y'), ' - ', DATE_FORMAT(eh.fechaFin, '%d/%m/%Y'), ' (', TIMESTAMPDIFF(DAY, eh.fechaPermiso, eh.fechaFin), ' días)') AS rango,
+				eh.statusPermiso,
+				eh.descripcion,
+				p.namePermisos AS permiso
+				FROM 
+				empleados e
+				RIGHT JOIN empleados_has_permisos eh ON eh.Empleados_idEmpleados = e.idEmpleados
+				LEFT JOIN permisos p ON p.idPermisos = eh.Permisos_idPermisos
+				WHERE e.idEmpleados = :idEmpleados;";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->bindParam(":idEmpleados", $idEmpleados, PDO::PARAM_INT);
+		$stmt->execute();
+		return $stmt->fetchAll();
+		
+		$stmt->close();
+		$stmt = null;
+
+	}
+
 	static public function mdlGenerarPermiso($tabla,$datos){
 		$sql = "INSERT INTO $tabla (fechaPermiso, fechaFin, descripcion, Empleados_idEmpleados, Permisos_idPermisos) VALUES (:fechaPermiso, :fechaFin, :descripcion, :Empleados_idEmpleados, :Permisos_idPermisos);";
 
