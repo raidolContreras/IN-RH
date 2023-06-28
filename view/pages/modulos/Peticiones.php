@@ -152,7 +152,7 @@ foreach ($puestos as $puesto) {
 								
 							<tr>
 								<td><?php echo $empleado['lastname']." ".$empleado['name']; ?></td>
-								<td><?php echo $emPermiso['descripcion']; ?></td>
+								<td><?php echo $emPermiso['descripcion']." (".$emPermiso['permiso'].")"; ?></td>
 								<td><?php echo $emPermiso['rango']; ?></td>
 								<td>
 									<div class="row" style="margin-left: -15px; margin-right: -5px;">
