@@ -7,7 +7,7 @@ $conexion = Conexion::conectar();
 
 // Realizamos la consulta de fechas
 
-$sql = "SELECT * FROM vacaciones WHERE Empleados_idEmpleados = ".$_SESSION['idEmpleado']." AND status_vacaciones <> 0 AND (respuesta is null OR respuesta = 1)";
+$sql = "SELECT * FROM vacaciones WHERE Empleados_idEmpleados = ".$_SESSION['idEmpleado'];
 $resultado = $conexion->query($sql);
 
 // Creamos un array para almacenar los datos de fecha
@@ -15,27 +15,32 @@ $fechas = array();
 
 // Recorremos los resultados de la consulta
 while ($fila = $resultado->fetch(PDO::FETCH_ASSOC)) {
-    if ($fila['fecha_fin_vacaciones'] != null) {
-        $fila['fecha_fin_vacaciones'] = $fila['fecha_fin_vacaciones'].' 23:59:59';
-    }
-    if ($fila['respuesta'] == null) {
-        $title = 'Vacaciones (Pendiente)';
-        $color = '#BABABA';
-        $textColor = '#000';
-    }elseif ($fila['respuesta'] == 1){
-        $title = 'Vacaciones (Aprobadas)';
-        $color = '#47AEDA';
-        $textColor = '#000';
-    }
+    if ($fila['status_vacaciones'] != 2) {
+        if ($fila['respuesta'] != 2) {
+            if ($fila['fecha_fin_vacaciones'] != null) {
+                $fila['fecha_fin_vacaciones'] = $fila['fecha_fin_vacaciones'].' 23:59:59';
+            }
 
-    $fechas[] = array(
-        "title" => $title,
-        "start" => $fila['fecha_inicio_vacaciones'],
-        "end" => $fila['fecha_fin_vacaciones'],
-        "colorFondo" => $color,
-        "textColor" => $textColor,
-        "color" => $color
-    );
+            if ($fila['respuesta'] == null) {
+                $title = 'Vacaciones (Pendiente)';
+                $color = '#BABABA';
+                $textColor = '#000';
+            }elseif ($fila['respuesta'] == 1){
+                $title = 'Vacaciones (Aprobadas)';
+                $color = '#47AEDA';
+                $textColor = '#000';
+            }
+
+            $fechas[] = array(
+                "title" => $title,
+                "start" => $fila['fecha_inicio_vacaciones'],
+                "end" => $fila['fecha_fin_vacaciones'],
+                "colorFondo" => $color,
+                "textColor" => $textColor,
+                "color" => $color
+            );
+        }
+    }
 }
 
 // Convertimos el array de fechas a formato JSON

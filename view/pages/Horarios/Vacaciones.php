@@ -5,14 +5,18 @@ $tiempoContratado = $empleados_has_permisos[0]['tiempoContrato'];
 $calculo_vacaciones = ControladorFormularios::ctrCalculoVacacional($tiempoContratado);
 $vacaciones = ControladorFormularios::ctrVerSolicitudesVacaciones($_SESSION['idEmpleado']);
 $dias_consumidos = 0;
+$dias_pendientes = 0;
 foreach ($vacaciones as $value) {
 	if ($value['status_vacaciones'] == 1) {
-		if ($value['respuesta'] != 2) {
+		if ($value['respuesta'] == 1) {
 			$dias_consumidos += $value['dias'];
+		}
+		if ($value['respuesta'] == null) {
+			$dias_pendientes += $value['dias'];
 		}
 	}
 }
-$dias_disponibles = $calculo_vacaciones - $dias_consumidos;
+$dias_disponibles = $calculo_vacaciones - $dias_consumidos - $dias_pendientes;
 ?>
 
 <style>
@@ -61,11 +65,17 @@ $dias_disponibles = $calculo_vacaciones - $dias_consumidos;
 							<div class="col-6 col-vacations-right mb-2">
 								<?php echo $calculo_vacaciones; ?> días
 							</div>
-							<div class="col-6 col-vacations-left p-0 mt-4">
+							<div class="col-6 col-vacations-left p-0 mt-2">
 								Aprobadas:
 							</div>
-							<div class="col-6 col-vacations-right mt-4">
+							<div class="col-6 col-vacations-right mt-2">
 								<?php echo $dias_consumidos ?> días
+							</div>
+							<div class="col-6 col-vacations-left p-0 mt-3">
+								Pendientes:
+							</div>
+							<div class="col-6 col-vacations-right mt-3">
+								<?php echo $dias_pendientes ?> días
 							</div>
 						</div>
 					</div>

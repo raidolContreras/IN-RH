@@ -1113,13 +1113,19 @@ class ControladorFormularios{
 		$calculo_vacaciones = ControladorFormularios::ctrCalculoVacacional($tiempoContratado);
 		$vacaciones = ControladorFormularios::ctrVerSolicitudesVacaciones($_SESSION['idEmpleado']);
 		$dias_consumidos = 0;
+		$dias_pendientes = 0;
+				
 		foreach ($vacaciones as $value) {
-			if ($value['status_vacaciones'] == 1 || $value['respuesta'] != null) {
-				$dias_consumidos += $value['dias'];
+			if ($value['status_vacaciones'] == 1) {
+				if ($value['respuesta'] == 1) {
+					$dias_consumidos += $value['dias'];
+				}
+				if ($value['respuesta'] == null) {
+					$dias_pendientes += $value['dias'];
+				}
 			}
 		}
-
-		$dias_disponibles = $calculo_vacaciones - $dias_consumidos;
+		$dias_disponibles = $calculo_vacaciones - $dias_consumidos - $dias_pendientes;
 
 		$fechaInicio = $datos['fechaPermiso'];
 		$fechaFin = $datos['fechaFin'];
