@@ -6,7 +6,8 @@ require_once "../model/conexion.php";
 $conexion = Conexion::conectar();
 
 // Realizamos la consulta de fechas
-$sql = "SELECT * FROM vacaciones WHERE Empleados_idEmpleados = ".$_SESSION['idEmpleado']." AND status_vacaciones <> 0 AND respuesta <> 2";
+
+$sql = "SELECT * FROM vacaciones WHERE Empleados_idEmpleados = ".$_SESSION['idEmpleado']." AND status_vacaciones <> 0 AND (respuesta is null OR respuesta = 1)";
 $resultado = $conexion->query($sql);
 
 // Creamos un array para almacenar los datos de fecha

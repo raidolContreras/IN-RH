@@ -6,8 +6,10 @@ $calculo_vacaciones = ControladorFormularios::ctrCalculoVacacional($tiempoContra
 $vacaciones = ControladorFormularios::ctrVerSolicitudesVacaciones($_SESSION['idEmpleado']);
 $dias_consumidos = 0;
 foreach ($vacaciones as $value) {
-	if ($value['status_vacaciones'] == 1 || $value['respuesta'] != null) {
-		$dias_consumidos += $value['dias'];
+	if ($value['status_vacaciones'] == 1) {
+		if ($value['respuesta'] != 2) {
+			$dias_consumidos += $value['dias'];
+		}
 	}
 }
 $dias_disponibles = $calculo_vacaciones - $dias_consumidos;
