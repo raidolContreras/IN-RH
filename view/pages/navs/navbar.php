@@ -38,7 +38,7 @@ $perfil = $primerLetra.$segundaLetra;
 					if (!empty($paginaActual)) {
 						if (in_array($paginaActual, $Asistencias)) {
 							echo '<li class="nav-item">';
-							echo '<a href="Asistencia"> Asistencias </a>';
+							echo '<a href="Asistencia"> Calendario </a>';
 							echo '</li>';
 							echo '<li class="nav-item ml-3">';
 							echo '<a href="Asistencia-permisos-vacaciones"> Permisos </a>';
@@ -56,7 +56,7 @@ $perfil = $primerLetra.$segundaLetra;
 
 								echo '<li class="nav-item' . $activeClass . $marginLeftClass . '">';
 								if ($pagina == 'Asistencia') {
-									echo '<a href="' . $pagina . '"> Asistencias </a>';
+									echo '<a href="' . $pagina . '"> Calendario </a>';
 								} elseif ($pagina == 'Asistencia-resumen') {
 									echo '<a href="' . $pagina . '"> Resumen de asistencias </a>';
 								} elseif ($pagina == 'Asistencia-ajustes') {
