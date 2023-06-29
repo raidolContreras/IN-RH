@@ -37,6 +37,7 @@ class ModeloExcel{
 		$asistencias = ControladorEmpleados::ctrAsistenciasJustificantes($idEmpleados);
 		$horarios = ControladorEmpleados::ctrVerEmpleadosHorariosDHorarios("idEmpleados", $idEmpleados);
 		$default = ControladorEmpleados::ctrVerEmpleadosHorariosDHorarios("h.default", 1);
+		$vacaciones = ControladorFormularios::ctrVerSolicitudesVacaciones($idEmpleados);
 
 		$datos_asistencia = array();
 		$horas_totales = 0;
@@ -226,6 +227,12 @@ class ModeloExcel{
 		$segundaQuincena = 0;
 		$horasPrimerQuincena = 0;
 		$horasSegundaQuincena = 0;
+
+		$diasVacaciones = 0;
+		$vacacionesAprobadas = 0;
+		$vacacionesEntrada = '';
+		$vacacionesSalida = '';
+		$HorasEsperadasPermisos = '';
 // Generar celdas para cada día del mes
 		for ($dia = 1; $dia <= $numeroDias; $dia++) {
 
@@ -265,6 +272,9 @@ class ModeloExcel{
 					$activeWorksheet->setCellValue('D'.$i, ModeloExcel::mdlformatearHora($value['hora_dia']));
 					$primerQuincena += $value['hora_dia'];
 					$segundaQuincena += $value['hora_dia'];
+					$vacacionesEntrada = $value['entrada'];
+					$vacacionesSalida = $value['salida'];
+					$HorasEsperadasPermisos = ModeloExcel::mdlformatearHora($value['hora_dia']);
 					$status = 1;
 				}
 
@@ -291,6 +301,43 @@ class ModeloExcel{
 				$activeWorksheet->mergeCells('G'.$i.':H'.$i);
 				$activeWorksheet->mergeCells('J'.$i.':L'.$i);
 			}
+
+			if ($diasVacaciones == 0) {
+				foreach ($vacaciones as $vacacion) {
+					if ($vacacion['inicio'] == sprintf("%04d-%02d-%02d", $añoActual, $mesActual, $dia)) {
+						if ($vacacion['status_vacaciones'] == 1) {
+							if ($vacacion['respuesta'] == 1) {
+								$diasVacaciones = $vacacion['dias']-1;
+								$activeWorksheet->setCellValue('E'.$i, $vacacionesEntrada.' - '.$vacacionesSalida);
+								$activeWorksheet->setCellValue('G'.$i, ' - ');
+								$activeWorksheet->setCellValue('I'.$i, $HorasEsperadasPermisos);
+								$activeWorksheet->getStyle('B'.$i.':L'.$i)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('ff47aeda');
+								$activeWorksheet->setCellValue('J'.$i, 'Vacaciones Aprobadas');
+								$vacacionesAprobadas = 1;
+							}elseif ($vacacion['respuesta'] != 2){
+								$diasVacaciones = $vacacion['dias']-1;
+								$activeWorksheet->getStyle('B'.$i.':L'.$i)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('ffbababa');
+								$activeWorksheet->setCellValue('J'.$i, 'Vacaciones Pendientes de aprobación');
+								$vacacionesAprobadas = 0;
+							}
+						}
+					}
+				}
+			}else{
+				if ($vacacionesAprobadas == 1) {
+					$activeWorksheet->setCellValue('E'.$i, $vacacionesEntrada.' - '.$vacacionesSalida);
+					$activeWorksheet->setCellValue('G'.$i, ' - ');
+					$activeWorksheet->setCellValue('I'.$i, $HorasEsperadasPermisos);
+					$activeWorksheet->getStyle('B'.$i.':L'.$i)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('ff47aeda');
+					$activeWorksheet->setCellValue('J'.$i, 'Vacaciones Aprobadas');
+					$diasVacaciones--;
+				}else{
+					$activeWorksheet->getStyle('B'.$i.':L'.$i)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('ffbababa');
+					$activeWorksheet->setCellValue('J'.$i, 'Vacaciones Pendientes de aprobación');
+					$diasVacaciones--;
+				}
+			}
+				
 
 // Incrementar el número de fila
 			$i++;
