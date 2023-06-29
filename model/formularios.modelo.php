@@ -1783,6 +1783,21 @@ static public function mdlImagenNoticia($id, $name)
 
 	}
 
+	static public function mdlVerSolicitudesPermisos($idEmpleados){
+		$sql = "SELECT *, TIMESTAMPDIFF(DAY, ep.fechaPermiso, ep.fechaFin)+1 AS rango
+				FROM empleados_has_permisos ep
+		        RIGHT JOIN permisos p ON p.idPermisos = ep.Permisos_idPermisos
+		        WHERE Empleados_idEmpleados = :idEmpleados;";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->bindParam(":idEmpleados", $idEmpleados, PDO::PARAM_INT);
+		$stmt->execute();
+		return $stmt->fetchAll();
+		
+		$stmt->close();
+		$stmt = null;
+	}
+
 
 	/*---------- Fin de ModeloFormularios ---------- */
 }

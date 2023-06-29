@@ -38,6 +38,7 @@ class ModeloExcel{
 		$horarios = ControladorEmpleados::ctrVerEmpleadosHorariosDHorarios("idEmpleados", $idEmpleados);
 		$default = ControladorEmpleados::ctrVerEmpleadosHorariosDHorarios("h.default", 1);
 		$vacaciones = ControladorFormularios::ctrVerSolicitudesVacaciones($idEmpleados);
+		$permisos = ControladorFormularios::ctrVerSolicitudesPermisos($idEmpleados);
 
 		$datos_asistencia = array();
 		$horas_totales = 0;
@@ -230,9 +231,17 @@ class ModeloExcel{
 
 		$diasVacaciones = 0;
 		$vacacionesAprobadas = 0;
-		$vacacionesEntrada = '';
-		$vacacionesSalida = '';
+		$Entrada = '';
+		$Salida = '';
+
+		$diasPermiso = 0;
+		$permisosAprobados = 0;
+
+		$diasFestivos = 0;
+
 		$HorasEsperadasPermisos = '';
+
+
 // Generar celdas para cada día del mes
 		for ($dia = 1; $dia <= $numeroDias; $dia++) {
 
@@ -272,8 +281,8 @@ class ModeloExcel{
 					$activeWorksheet->setCellValue('D'.$i, ModeloExcel::mdlformatearHora($value['hora_dia']));
 					$primerQuincena += $value['hora_dia'];
 					$segundaQuincena += $value['hora_dia'];
-					$vacacionesEntrada = $value['entrada'];
-					$vacacionesSalida = $value['salida'];
+					$Entrada = $value['entrada'];
+					$Salida = $value['salida'];
 					$HorasEsperadasPermisos = ModeloExcel::mdlformatearHora($value['hora_dia']);
 					$status = 1;
 				}
@@ -308,7 +317,7 @@ class ModeloExcel{
 						if ($vacacion['status_vacaciones'] == 1) {
 							if ($vacacion['respuesta'] == 1) {
 								$diasVacaciones = $vacacion['dias']-1;
-								$activeWorksheet->setCellValue('E'.$i, $vacacionesEntrada.' - '.$vacacionesSalida);
+								$activeWorksheet->setCellValue('E'.$i, $Entrada.' - '.$Salida);
 								$activeWorksheet->setCellValue('G'.$i, ' - ');
 								$activeWorksheet->setCellValue('I'.$i, $HorasEsperadasPermisos);
 								$activeWorksheet->getStyle('B'.$i.':L'.$i)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('ff47aeda');
@@ -325,7 +334,7 @@ class ModeloExcel{
 				}
 			}else{
 				if ($vacacionesAprobadas == 1) {
-					$activeWorksheet->setCellValue('E'.$i, $vacacionesEntrada.' - '.$vacacionesSalida);
+					$activeWorksheet->setCellValue('E'.$i, $Entrada.' - '.$Salida);
 					$activeWorksheet->setCellValue('G'.$i, ' - ');
 					$activeWorksheet->setCellValue('I'.$i, $HorasEsperadasPermisos);
 					$activeWorksheet->getStyle('B'.$i.':L'.$i)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('ff47aeda');
@@ -337,7 +346,62 @@ class ModeloExcel{
 					$diasVacaciones--;
 				}
 			}
-				
+
+			if ($diasPermiso == 0) {
+				foreach ($permisos as $permiso) {
+					if ($permiso['fechaPermiso'] == sprintf("%04d-%02d-%02d", $añoActual, $mesActual, $dia)) {
+						if ($permiso['statusPermiso'] == 1) {
+								$colorTransformado = 'ff' . substr($permiso['colorPermisos'], 1);
+								$diasPermiso = $permiso['rango']-1;
+								$activeWorksheet->setCellValue('E'.$i, $Entrada.' - '.$Salida);
+								$activeWorksheet->setCellValue('G'.$i, ' - ');
+								$activeWorksheet->setCellValue('I'.$i, $HorasEsperadasPermisos);
+								$activeWorksheet->getStyle('B'.$i.':L'.$i)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB($colorTransformado);
+								$activeWorksheet->setCellValue('J'.$i, $permiso['namePermisos'].': '.$permiso['descripcion']);
+								$permisosAprobados = 1;
+						}elseif ($permiso['statusPermiso'] != 2){
+							$diasPermiso = $permiso['rango']-1;
+							$activeWorksheet->getStyle('B'.$i.':L'.$i)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('ffbababa');
+							$activeWorksheet->setCellValue('J'.$i, 'Permiso Pendiente de aprobación');
+							$permisosAprobados = 0;
+						}
+					}
+				}
+			}else{
+				if ($permisosAprobados == 1) {
+					$activeWorksheet->setCellValue('E'.$i, $Entrada.' - '.$Salida);
+					$activeWorksheet->setCellValue('G'.$i, ' - ');
+					$activeWorksheet->setCellValue('I'.$i, $HorasEsperadasPermisos);
+					$activeWorksheet->getStyle('B'.$i.':L'.$i)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB($colorTransformado);
+					$activeWorksheet->setCellValue('J'.$i, $permiso['namePermisos'].': '.$permiso['descripcion']);
+					$diasPermiso--;
+				}else{
+					$activeWorksheet->getStyle('B'.$i.':L'.$i)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('ffbababa');
+					$activeWorksheet->setCellValue('J'.$i, 'Permiso Pendiente de aprobación');
+					$diasPermiso--;
+				}
+			}
+
+			if ($diasFestivos == 0) {
+				foreach ($festivos as $festivo) {
+					if ($festivo['fechaFestivo'] == sprintf("%04d-%02d-%02d", $añoActual, $mesActual, $dia)) {
+						$colorTransformado = 'FFDCDCDC';
+						$diasPermiso = $festivo['rango']-1;
+						$activeWorksheet->setCellValue('E'.$i, $Entrada.' - '.$Salida);
+						$activeWorksheet->setCellValue('G'.$i, ' - ');
+						$activeWorksheet->setCellValue('I'.$i, $HorasEsperadasPermisos);
+						$activeWorksheet->getStyle('B'.$i.':L'.$i)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB($colorTransformado);
+						$activeWorksheet->setCellValue('J'.$i, 'Dia Festivo: '.$festivo['nameFestivo']);
+					}
+				}
+			}else{
+					$activeWorksheet->setCellValue('E'.$i, $Entrada.' - '.$Salida);
+					$activeWorksheet->setCellValue('G'.$i, ' - ');
+					$activeWorksheet->setCellValue('I'.$i, $HorasEsperadasPermisos);
+					$activeWorksheet->getStyle('B'.$i.':L'.$i)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB($colorTransformado);
+					$activeWorksheet->setCellValue('J'.$i, 'Dia Festivo: '.$festivo['nameFestivo']);
+					$diasPermiso--;
+			}
 
 // Incrementar el número de fila
 			$i++;

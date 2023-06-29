@@ -1167,5 +1167,10 @@ class ControladorFormularios{
 		return $vacaciones;
 	}
 
+	static public function ctrVerSolicitudesPermisos($idEmpleados){
+		$vacaciones = ModeloFormularios::mdlVerSolicitudesPermisos($idEmpleados);
+		return $vacaciones;
+	}
+
 	/*---------- Fin de ControladorFormularios ---------- */
 }

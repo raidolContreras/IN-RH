@@ -329,7 +329,8 @@ class ModeloEmpleados{
 	}
 
 	static public function mdlDiasFestivos($tabla){
-		$sql = "SELECT * FROM $tabla";
+		$sql = "SELECT *, IF(TIMESTAMPDIFF(DAY, fechaFestivo, fechaFin)+1 is null, 1, TIMESTAMPDIFF(DAY, fechaFestivo, fechaFin)+1) as rango
+				FROM $tabla";
 
 		$stmt = Conexion::conectar()->prepare($sql);
 		$stmt->execute();
