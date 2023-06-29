@@ -17,3 +17,4 @@ class Conexion{
   }
 
 }
+require_once ("autoload.php");

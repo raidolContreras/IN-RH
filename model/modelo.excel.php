@@ -2,8 +2,6 @@
 
 require_once "conexion.php";
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/IN-RH/assets/vendor/autoload.php'); //Cambiar en el servidor /IN-RH/assets/vendor/autoload.php, por /assets/vendor/autoload.php
-
 //Librerias
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -15,7 +13,6 @@ use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\Style\Style;
 
 class ModeloExcel{
-
 
 	static public function mdlGenerarExcelAsistencias($tabla, $idEmpleados){
 		$fecha= date("d/M/Y");
@@ -323,32 +320,32 @@ class ModeloExcel{
 	}
 
 	static public function mdlformatearHora($hora){
-$horas = floor($hora); // Obtener la parte entera de las horas
-$minutos = round(($hora - $horas) * 60); // Obtener los minutos y redondearlos
+		$horas = floor($hora); // Obtener la parte entera de las horas
+		$minutos = round(($hora - $horas) * 60); // Obtener los minutos y redondearlos
 
-$hora_formateada = $horas.'h '. $minutos . 'min';
-return $hora_formateada;
-}
+		$hora_formateada = $horas.'h '. $minutos . 'min';
+		return $hora_formateada;
+	}
 
-static public function mdlTotalDiasLaborables($mes,$anio,$ndia){
+	static public function mdlTotalDiasLaborables($mes,$anio,$ndia){
 
-// Obtener el número de días en el mes
-	$num_dias_mes = cal_days_in_month(CAL_GREGORIAN, $mes, $anio);
+	// Obtener el número de días en el mes
+		$num_dias_mes = cal_days_in_month(CAL_GREGORIAN, $mes, $anio);
 
-	$num_dias_trabajo = 0;
+		$num_dias_trabajo = 0;
 
-// Contar los días de trabajo en el mes
-	for ($dia = 1; $dia <= $num_dias_mes; $dia++) {
-$num_dia_semana = date('w', strtotime("$anio-$mes-$dia")); // Obtener el número del día de la semana (0: domingo, 1: lunes, etc.)
+	// Contar los días de trabajo en el mes
+		for ($dia = 1; $dia <= $num_dias_mes; $dia++) {
+			$num_dia_semana = date('w', strtotime("$anio-$mes-$dia")); // Obtener el número del día de la semana (0: domingo, 1: lunes, etc.)
 
-if (in_array($num_dia_semana, $ndia)) {
-	$num_dias_trabajo++;
-}
-}
+			if (in_array($num_dia_semana, $ndia)) {
+				$num_dias_trabajo++;
+			}
+		}
 
-return $num_dias_trabajo;
+	return $num_dias_trabajo;
 
-}
+	}
 
 static public function quitarAcentos($texto) {
 	$acentos = array(
