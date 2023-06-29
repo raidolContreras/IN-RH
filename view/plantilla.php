@@ -34,6 +34,9 @@ session_start();
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/fixedcolumns/4.2.2/js/dataTables.fixedColumns.min.js"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/4.2.2/css/fixedColumns.dataTables.min.css">
+
+	<script src="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone-min.js"></script>
+	<link href="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone.css" rel="stylesheet" type="text/css" />
 	
 	<?php if (isset($_GET["pagina"])): ?>
 		<title><?php echo 'IN Consulting México - '.$_GET["pagina"]; ?></title>
@@ -70,6 +73,7 @@ session_start();
 			$_GET["pagina"] == "RegistroEmpresa" ||
 			$_GET["pagina"] == "Talento" ||
 			$_GET["pagina"] == "Nominas" ||
+			$_GET["pagina"] == "Tareas" ||
 			$_GET["pagina"] == "somos" 
 
 		){

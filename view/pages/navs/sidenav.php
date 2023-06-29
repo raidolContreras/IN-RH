@@ -28,8 +28,6 @@
 						<i class="fas fa-handshake"></i>RECLUTAMIENTO</a>
 					</li>
 
-
-
 					<li class="nav-item">
 						<?php if (isset($_GET['pagina']) && in_array($_GET['pagina'], array('Asistencia', 'Asistencia-resumen', 'Asistencia-ajustes'))): ?>
 							<a class="nav-link active" href="Asistencia">
@@ -40,7 +38,12 @@
 					</li>
 
 					<li class="nav-item">
-						<a class="nav-link" href="#"><i class=" fas fa-check-square"></i>TAREAS</a>
+						<?php if (isset($_GET['pagina']) && in_array($_GET['pagina'], array('Tareas', 'Tareas-ajustes'))): ?>
+							<a class="nav-link active" href="Tareas">
+						<?php else: ?>
+							<a class="nav-link" href="Tareas">
+						<?php endif ?>
+						<i class=" fas fa-check-square"></i>TAREAS</a>
 					</li>
 
 					<li class="nav-item">
