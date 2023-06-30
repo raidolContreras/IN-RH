@@ -1,5 +1,17 @@
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.css" />
+<style>
+	.dropzone {
+		border: 2px dashed #ccc;
+		padding: 20px;
+	}
 
+	.dropzone .dz-message {
+		text-align: center;
+		font-size: 1.5em;
+		color: #999;
+	}
+</style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <div class="container-fluid dashboard-content">
 	<div class="ecommerce-widget">
 		<div class="row">
@@ -86,38 +98,151 @@
 			</div>
 			<div class="col-xl-4">
 				<div class="card p-3">
-					<form id="tarea-form"  enctype="multipart/form-data">
-						<div class="row">
-							<div class="col-xl-12">
-								<label for="nameTarea">Nombre de la tarea</label>
-								<input type="text" id="nameTarea" name="nameTarea" class="form-control" required>
+						<form id="tarea-form">
+							<div class="row">
+								<div class="col-xl-12">
+									<label for="nameTarea">Nombre de la tarea</label>
+									<input type="text" id="nameTarea" name="nameTarea" class="form-control" required>
+								</div>
+								<div class="col-xl-12 mt-2">
+									<label for="descripcion">Descripción de la tarea</label>
+									<textarea id="descripcion" name="descripcion" class="form-control" required></textarea>
+								</div>
+								<div class="col-xl-12 mt-2">
+									<label for="empleado">Asignado a</label>
+									<select type="text" id="empleado" name="empleado" class="form-control" required>
+										<option>Selecciona un Empleado</option>
+										<option value="1">Contreras Oscar</option>
+										<option value="2">Natividad Erick</option>
+									</select>
+								</div>
+								<div class="col-xl-12 mt-2">
+									<label for="vencimiento">Vencimiento</label>
+									<input type="date" id="vencimiento" name="vencimiento" class="form-control" min="<?php echo date('Y-m-d'); ?>" required>
+								</div>
+								<input type="hidden" id="nameArchivos" name="nameArchivos">
 							</div>
-							<div class="col-xl-12 mt-2">
-								<label for="descripcion">Descripción de la tarea</label>
-								<textarea id="descripcion" name="descripcion" class="form-control" required></textarea>
-							</div>
-							<div class="col-xl-12 mt-2">
-								<label for="empleado">Asignado a</label>
-								<select type="text" id="empleado" name="empleado" class="form-control" required>
-									<option>Selecciona un Empleado</option>
-									<option value="1">Contreras Oscar</option>
-									<option value="2">Natividad Erick</option>
-								</select>
-							</div>
-							<div class="col-xl-12 mt-2">
-								<label for="vencimiento">Vencimiento</label>
-								<input type="date" id="vencimiento" name="vencimiento" class="form-control" min="<?php echo date('Y-m-d'); ?>" required>
-							</div>
-							<div class="col-xl-12 mt-2 dropzone">
-<input type="file" name="file" />
-							</div>
-							<div class="col-xl-12 mt-2">
-								<button class="btn btn-outline-primary btn-block rounded">Asignar tarea</button>
+						</form>
+						<div class="row mt-3">
+							<div class="col-xl-12 card">
+								<form class="dropzone my-3" id="documentos-dropzone" enctype="multipart/form-data">
+									<div class="dz-message">
+										Arrastra y suelta archivos aquí o haz clic para seleccionar archivos para cargar.
+										<p class="subtitulo-sup">Tipos de archivo permitidos .xlsx,.xls,.pdf (Tamaño máximo 10 MB)</p>
+									</div>
+								</form>
 							</div>
 						</div>
-					</form>
+						<div class="col-xl-12 mt-2">
+							<button class="btn btn-outline-primary btn-block rounded" id="submit-btn" type="button">Asignar tarea</button>
+						</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.js"></script>
+
+<script>
+var nameTarea = document.getElementById('nameTarea');
+var descripcion = document.getElementById('descripcion');
+var empleado = document.getElementById('empleado');
+var vencimiento = document.getElementById('vencimiento');
+Dropzone.autoDiscover = false;
+
+$(document).ready(function() {
+		var myDropzone = new Dropzone("#documentos-dropzone", {
+				url: "ajax/upload.documents.php",
+				paramName: "file",
+				maxFilesize: 10,
+				acceptedFiles: ".xlsx,.xls,.pdf",
+				addRemoveLinks: true,
+				uploadMultiple: true,
+				dictRemoveFile: "Eliminar archivo",
+				autoProcessQueue: false // Habilita la carga automática de archivos
+		});
+		
+		$("#submit-btn").click(function() {
+			if (nameTarea !== 0 && descripcion !== 0 && empleado !== 0 && vencimiento !== 0 ) {
+
+				myDropzone.processQueue();
+
+				myDropzone.on("success", function(file, archivos) {
+						if (archivos === "error_tamano") {
+								// Mensaje de error: tamaño de archivo excedido
+								console.log("Error: Tamaño de archivo excedido.");
+						} else if (archivos === "error_tipo") {
+								// Mensaje de error: tipo de archivo no permitido
+								console.log("Error: Tipo de archivo no permitido.");
+						} else {
+								console.log("Archivo cargado correctamente.");
+								var nameArchivos = document.getElementById("nameArchivos");
+								nameArchivos.value = archivos;
+						}
+				});
+
+			}else{
+				$("#form-result").val("");
+				$("#form-result").html(`
+				<div class='alert alert-danger' role="alert" id="alerta">
+					<i class="fas fa-exclamation-triangle"></i>
+					<b>Error</b>, no se pudo asignar la tarea, intenta nuevamente
+				</div>
+					`);
+				deleteAlert();
+			}
+
+			var formData = $("#tarea-form").serialize(); // Obtener los datos del formulario
+			$.ajax({
+				url: "ajax/ajax.formularios.php", // Ruta al archivo PHP que procesará los datos del formulario
+				type: "POST",
+				data: formData,
+				success: function(response) {
+					if (response === 'error') {
+						$("#form-result").val("");
+						$("#form-result").html(`
+						<div class='alert alert-danger' role="alert" id="alerta">
+							<i class="fas fa-exclamation-triangle"></i>
+							<b>Error</b>, no se pudo asignar la tarea, intenta nuevamente
+						</div>
+							`);
+						deleteAlert();
+					}else if(response === 'campos vacios'){
+						$("#form-result").val("");
+						$("#form-result").html(`
+						<div class='alert alert-danger' role="alert" id="alerta">
+							<i class="fas fa-exclamation-triangle"></i>
+							<b>Error</b>, Rellena los campos vacios e intenta nuevamente
+						</div>
+							`);
+						deleteAlert();
+					}else{
+						$("#form-result").val("");
+						$("#form-result").html(`
+						<div class='alert alert-success' role="alert" id="alerta">
+							<i class="fas fa-check-circle"></i>
+							Nueva tarea asignada correctamente
+						</div>
+							`);
+
+						deleteAlert();
+						/*setTimeout(function() {
+							location.reload();
+						}, 1600);*/
+					}
+				}
+			});
+
+		});
+	});
+
+	function deleteAlert() {
+		setTimeout(function() {
+			var alert = $('#alerta');
+			alert.fadeOut('slow', function() {
+				alert.remove();
+			});
+		}, 1500);
+	}
+</script>

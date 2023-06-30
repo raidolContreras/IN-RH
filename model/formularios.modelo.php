@@ -1798,6 +1798,27 @@ static public function mdlImagenNoticia($id, $name)
 		$stmt = null;
 	}
 
+	static public function mdlAsignarTarea($datos){
+		$pdo =Conexion::conectar();
+		$sql = "INSERT INTO tareas(nameTarea, descripcion, Empleados_idEmpleados, Vencimiento, Jefe_idEmpleados) VALUES (:nameTarea,:descripcion,:Empleados_idEmpleados,:Vencimiento,:Jefe_idEmpleados)";
+
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(":nameTarea", $datos['nameTarea'], PDO::PARAM_STR);
+		$stmt->bindParam(":descripcion", $datos['descripcion'], PDO::PARAM_STR);
+		$stmt->bindParam(":Empleados_idEmpleados", $datos['Empleados_idEmpleados'], PDO::PARAM_INT);
+		$stmt->bindParam(":Vencimiento", $datos['vencimiento'], PDO::PARAM_STR);
+		$stmt->bindParam(":Jefe_idEmpleados", $datos['Jefe_idEmpleados'], PDO::PARAM_INT);
+		
+		if ($stmt->execute()) {
+			return $pdo->lastInsertId();
+		}else{
+			return "error";
+		}
+
+		$stmt->close();
+		$stmt = null;
+	}
+
 
 	/*---------- Fin de ModeloFormularios ---------- */
 }

@@ -459,6 +459,25 @@ class FormulariosAjax{
 		echo json_encode($eliminarSolicitud);
 	}
 
+	public function asignarTareaAjax(){
+		session_start();
+		$nameTarea = $this->nameTarea;
+		$descripcion = $this->descripcion;
+		$empleado = $this->empleado;
+		$vencimiento = $this->vencimiento;
+		$archivos = $this->archivos;
+		$datos = array(
+			"nameTarea" => $nameTarea,
+			"descripcion" => $descripcion,
+			"Empleados_idEmpleados" => $empleado,
+			"vencimiento" => $vencimiento,
+			"archivos" => $archivos,
+			"Jefe_idEmpleados" => $_SESSION['idEmpleado']
+		);
+		//$asignarTarea = ControladorFormularios::ctrAsignarTarea($datos);
+		echo json_encode($archivos);
+	}
+
 
 }
 
@@ -779,4 +798,20 @@ if (isset($_POST['eliminarVSolicitud'])) {
 	$GenerarPeticiones = new FormulariosAjax();
 	$GenerarPeticiones -> idVacaciones = $idVacaciones;
 	$GenerarPeticiones -> eliminarSolicitudVacacionAjax();
+}
+
+if (isset($_POST['nameTarea'])) {
+	$nameTarea = $_POST['nameTarea'];
+	$descripcion = $_POST['descripcion'];
+	$empleado = $_POST['empleado'];
+	$vencimiento = $_POST['vencimiento'];
+	$archivos = $_POST['nameArchivos'];
+
+	$asignarTarea = new FormulariosAjax();
+	$asignarTarea -> nameTarea = $nameTarea;
+	$asignarTarea -> descripcion = $descripcion;
+	$asignarTarea -> empleado = $empleado;
+	$asignarTarea -> vencimiento = $vencimiento;
+	$asignarTarea -> archivos = $archivos;
+	$asignarTarea -> asignarTareaAjax();
 }
