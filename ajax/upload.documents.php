@@ -3,7 +3,7 @@ session_start();
 require_once "../controller/formularios.controlador.php";
 require_once "../model/formularios.modelo.php";
 
-$response = array();
+$response = "";
 
 if (!empty($_FILES['file']['name'])) {
     $targetDir = "../view/tareas/";
@@ -28,30 +28,31 @@ if (!empty($_FILES['file']['name'])) {
 
         // Verificar el tamaño máximo del archivo (10MB)
         if ($uploadedFiles["size"][$key] > 10 * 1024 * 1024) {
-            $response[] = $fileName;
+            $response .= $fileName;
             $uploadOk = 0;
         }
 
         // Verificar los tipos de archivo permitidos (.xlsx, .xls, .pdf)
         $allowedExtensions = array("xlsx", "xls", "pdf");
         if (!in_array($fileType, $allowedExtensions)) {
-            $response[] = $fileName;
+            $response .= $fileName;
             $uploadOk = 0;
         }
 
         if ($uploadOk == 0) {
-            $response[] = $fileName;
+            $response .= $fileName;
         } else {
             // Mover el archivo cargado al directorio de destino
             if (move_uploaded_file($tmpName, $targetFilePath)) {
-                $response[] = $fileName;
+                $response .= $fileName;
             } else {
-                $response[] = $fileName;
+                $response .= $fileName;
             }
         }
+        $response .= ", ";
     }
 } else {
-    $response[] = "No se encontraron archivos";
+    $response = "No se encontraron archivos";
 }
 
-echo json_encode($response);
+echo $response;

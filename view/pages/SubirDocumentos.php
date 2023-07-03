@@ -1,7 +1,16 @@
-<?php 
-	$empresas = ControladorFormularios::ctrVerEmpresas(null,null);
-	$empleados = ControladorEmpleados::ctrVerEmpleados(null,null);
-?>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.css" />
+<style>
+	.dropzone {
+		border: 2px dashed #ccc;
+		padding: 20px;
+	}
+
+	.dropzone .dz-message {
+		text-align: center;
+		font-size: 1.5em;
+		color: #999;
+	}
+</style>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <div class="container-fluid dashboard-content">
 	<div class="ecommerce-widget">
@@ -99,33 +108,12 @@
 									<label for="descripcion">Descripción de la tarea</label>
 									<textarea id="descripcion" name="descripcion" class="form-control" required></textarea>
 								</div>
-								
-								<div class="col-xl-12 mt-2">
-									<label for="empresa" class="col-form-label font-weight-bold">Empresa:</label>
-									<select class="form-control form-control-lg" id="empresa" name="empresasSeleccion" required>
-										<option>
-											Seleccionar empresa
-										</option>
-									<?php foreach ($empresas as $empresa): ?>
-										<?php if ($empresasSelect['idEmpresas'] == $empresa['idEmpresas']): ?>
-										<option value="<?php echo $empresa['idEmpresas']; ?>" selected>
-											<?php echo mb_strtoupper($empresa['nombre_razon_social']." (".$empresa['rfc'].")"); ?>
-										</option>
-										<?php else: ?>
-										<option value="<?php echo $empresa['idEmpresas']; ?>">
-											<?php echo mb_strtoupper($empresa['nombre_razon_social']." (".$empresa['rfc'].")"); ?>
-										</option>
-										<?php endif ?>
-									<?php endforeach ?>
-									</select>
-								</div>
-
 								<div class="col-xl-12 mt-2">
 									<label for="empleado">Asignado a</label>
 									<select type="text" id="empleado" name="empleado" class="form-control" required>
-										<option>
-											Selecciona una empresa
-										</option>
+										<option>Selecciona un Empleado</option>
+										<option value="1">Contreras Oscar</option>
+										<option value="2">Natividad Erick</option>
 									</select>
 								</div>
 								<div class="col-xl-12 mt-2">
@@ -146,49 +134,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.js"></script>
 
 <script>
-
 var nameTarea = document.getElementById('nameTarea');
 var descripcion = document.getElementById('descripcion');
 var empleado = document.getElementById('empleado');
 var vencimiento = document.getElementById('vencimiento');
-var empresa = document.getElementById('empresa');
 
 $(document).ready(function() {
-
-	$("#empresa").change(function() {
-		var empresaId = $(this).val();
-		$.ajax({
-			url: "ajax/ajax.formularios.php",
-			type: "POST",
-			data: {
-			empresaEmpleadoID: empresaId
-			},
-			success: function(response) {
-			var perteneceDepa = JSON.parse(response);
-
-			// Limpiar las opciones actuales del select de ciudades
-			empleado.innerHTML = '';
-
-			// Agregar una opción predeterminada
-			var opcionPredeterminada = document.createElement('option');
-			opcionPredeterminada.text = 'Sin departamento';
-			empleado.add(opcionPredeterminada);
-
-			// Agregar las opciones de ciudades correspondientes al estado seleccionado
-			perteneceDepa.forEach(function(datos) {
-				var opcionDepartamento = document.createElement('option');
-				var nombreEmpleado = datos.lastname + " " + datos.name;
-				var nombreEmpleadoMayusculas = nombreEmpleado.toLocaleUpperCase();
-				opcionDepartamento.text = nombreEmpleadoMayusculas;
-
-
-				opcionDepartamento.value = datos.idEmpleados;
-				empleado.add(opcionDepartamento);
-			});
-			}
-		});
-	});
-
 	$("#submit-btn").click(function() {
 		if (nameTarea !== 0 && descripcion !== 0 && empleado !== 0 && vencimiento !== 0 ) {
 
@@ -234,7 +185,7 @@ $(document).ready(function() {
 			});
 		}
 	});
-});
+}
 
 	function deleteAlert() {
 		setTimeout(function() {

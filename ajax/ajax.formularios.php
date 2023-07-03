@@ -341,13 +341,23 @@ class FormulariosAjax{
 	}
 
 	public function buscarDepasAjax(){
-	    $idEmpresas = $this->idEmpresas;
-	    $buscarDepas = ControladorFormularios::ctrDeptosEspecial2("Empresas_idEmpresas", $idEmpresas);
-	    $departamentos = array();
-	    foreach($buscarDepas as $departamento){
-	        $departamentos[] = $departamento;
-	    }
-	    echo json_encode($departamentos);
+		$idEmpresas = $this->idEmpresas;
+		$buscarDepas = ControladorFormularios::ctrDeptosEspecial2("Empresas_idEmpresas", $idEmpresas);
+		$departamentos = array();
+		foreach($buscarDepas as $departamento){
+			$departamentos[] = $departamento;
+		}
+		echo json_encode($departamentos);
+	}
+
+	public function buscarEmpleadosAjax(){
+		$idEmpresas = $this->idEmpresas;
+		$empleadosSeleccionados = ControladorFormularios::ctrEmpleadosEspecial("idEmpresas", $idEmpresas);
+		$empleados = array();
+		foreach($empleadosSeleccionados as $empleado){
+			$empleados[] = $empleado;
+		}
+		echo json_encode($empleados);
 	}
 
 	public function CambiarPredeterminadoAjax(){
@@ -465,17 +475,15 @@ class FormulariosAjax{
 		$descripcion = $this->descripcion;
 		$empleado = $this->empleado;
 		$vencimiento = $this->vencimiento;
-		$archivos = $this->archivos;
 		$datos = array(
 			"nameTarea" => $nameTarea,
 			"descripcion" => $descripcion,
 			"Empleados_idEmpleados" => $empleado,
 			"vencimiento" => $vencimiento,
-			"archivos" => $archivos,
 			"Jefe_idEmpleados" => $_SESSION['idEmpleado']
 		);
-		//$asignarTarea = ControladorFormularios::ctrAsignarTarea($datos);
-		echo json_encode($archivos);
+		$asignarTarea = ControladorFormularios::ctrAsignarTarea($datos);
+		echo $asignarTarea;
 	}
 
 
@@ -684,6 +692,16 @@ if (isset($_POST['empresaId'])) {
 
 }
 
+if (isset($_POST['empresaEmpleadoID'])) {
+
+	$empresaEmpleadoID = $_POST['empresaEmpleadoID'];
+
+	$generarDepas = new FormulariosAjax();
+	$generarDepas -> idEmpresas = $empresaEmpleadoID;
+	$generarDepas -> buscarEmpleadosAjax();
+
+}
+
 if (isset($_POST['id'])) {
 	$idHorarios = $_POST['id'];
 
@@ -805,13 +823,11 @@ if (isset($_POST['nameTarea'])) {
 	$descripcion = $_POST['descripcion'];
 	$empleado = $_POST['empleado'];
 	$vencimiento = $_POST['vencimiento'];
-	$archivos = $_POST['nameArchivos'];
 
 	$asignarTarea = new FormulariosAjax();
 	$asignarTarea -> nameTarea = $nameTarea;
 	$asignarTarea -> descripcion = $descripcion;
 	$asignarTarea -> empleado = $empleado;
 	$asignarTarea -> vencimiento = $vencimiento;
-	$asignarTarea -> archivos = $archivos;
 	$asignarTarea -> asignarTareaAjax();
 }
