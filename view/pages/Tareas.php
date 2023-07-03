@@ -1,6 +1,7 @@
 <?php 
 	$empresas = ControladorFormularios::ctrVerEmpresas(null,null);
 	$empleados = ControladorEmpleados::ctrVerEmpleados(null,null);
+	$tareas = ControladorFormularios::ctrVerTareas("Jefe_idEmpleados", $_SESSION['idEmpleado']);
 ?>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <div class="container-fluid dashboard-content">
@@ -21,66 +22,40 @@
 									</tr>
 								</thead>
 								<tbody>
+									<?php foreach ($tareas as $tarea): ?>
+										<?php
+											$empleado = ControladorEmpleados::ctrVerEmpleados('idEmpleados', $tarea['Empleados_idEmpleados']);
+											$statusBadge = '';
+											
+											if ($tarea['status_tarea'] == 0 && $tarea['Vencimiento'] <= date('Y-m-d')) {
+												$statusBadge = '<span class="badge badge-danger">Retrasado</span>';
+											} elseif ($tarea['status_tarea'] == 0 && $tarea['Vencimiento'] >= date('Y-m-d')) {
+												$statusBadge = '<span class="badge badge-dark">Pendiente</span>';
+											} elseif ($tarea['status_tarea'] == 1) {
+												if ($tarea['fecha_envio'] <= $tarea['Vencimiento']) {
+													$statusBadge = '<span class="badge badge-warning">Pendiente de revisar</span>';
+												} else {
+													$statusBadge = '<span class="badge badge-danger">Pendiente de revisar</span>';
+												}
+											} elseif ($tarea['status_tarea'] == 2) {
+												if ($tarea['fecha_envio'] <= $tarea['Vencimiento']) {
+													$statusBadge = '<span class="badge badge-success">Entregado</span>';
+												} else {
+													$statusBadge = '<span class="badge badge-warning">Entregado</span>';
+												}
+											} elseif ($tarea['status_tarea'] == 3) {
+												$statusBadge = '<span class="badge badge-warning">Incompleto o incorrecto</span>';
+											}
+										?>
+
 										<tr>
-											<td>Creación de documentos de Excel</td>
-											<td>Contreras Oscar</td>
-											<td>17/Jul/2023</td>
-											<td><span class="badge badge-success">Entregado</span></td>
+											<td><button class="btn btn-in-consulting"><span><?php echo $tarea['nameTarea'] ?></span></button></td>
+											<td><?php echo mb_strtoupper($empleado['lastname']." ".$empleado['name']); ?></td>
+											<td><?php echo date('d/m/Y', strtotime($tarea['Vencimiento'])); ?></td>
+											<td><?php echo $statusBadge; ?></td>
 										</tr>
-										<tr>
-											<td>Desarrollo de sitio web</td>
-											<td>López María</td>
-											<td>25/Jun/2023</td>
-											<td><span class="badge badge-warning">En proceso</span></td>
-										</tr>
-										<tr>
-											<td>Revisión de informe</td>
-											<td>Gómez Juan</td>
-											<td>10/Ago/2023</td>
-											<td><span class="badge badge-success">Entregado</span></td>
-										</tr>
-										<tr>
-											<td>Actualización de base de datos</td>
-											<td>Rodríguez Ana</td>
-											<td>30/Jul/2023</td>
-											<td><span class="badge badge-success">Entregado</span></td>
-										</tr>
-										<tr>
-											<td>Elaboración de presentación</td>
-											<td>Pérez Luis</td>
-											<td>05/Sep/2023</td>
-											<td><span class="badge badge-danger">Pendiente</span></td>
-										</tr>
-										<tr>
-											<td>Redacción de informe técnico</td>
-											<td>Martínez Carlos</td>
-											<td>20/Ago/2023</td>
-											<td><span class="badge badge-warning">En proceso</span></td>
-										</tr>
-										<tr>
-											<td>Configuración de servidor</td>
-											<td>Hernández Laura</td>
-											<td>15/Sep/2023</td>
-											<td><span class="badge badge-danger">Pendiente</span></td>
-										</tr>
-										<tr>
-											<td>Retraso en la entrega</td>
-											<td>Ramírez Alejandro</td>
-											<td>10/Jun/2023</td>
-											<td><span class="badge badge-danger">Retrasado</span></td>
-										</tr>
-										<tr>
-											<td>Análisis de datos</td>
-											<td>Gutiérrez Sofia</td>
-											<td>28/Ago/2023</td>
-											<td><span class="badge badge-success">Entregado</span></td>
-										</tr>
-										<tr>
-											<td>Configuración de red</td>
-											<td>Ortega Manuel</td>
-											<td>18/Sep/2023</td>
-											<td><span class="badge badge-success">Entregado</span></td>
-										</tr>
+									<?php endforeach ?>
+
 								</tbody>
 							</table>
 						</div>

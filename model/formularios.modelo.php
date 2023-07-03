@@ -1819,6 +1819,28 @@ static public function mdlImagenNoticia($id, $name)
 		$stmt = null;
 	}
 
+	static public function mdlVerTareas($item, $valor){
+
+		if ($item == null && $valor == null) {
+
+			$sql = "SELECT * FROM tareas ORDER BY idTareas;";
+			$stmt = Conexion::conectar()->prepare($sql);
+			$stmt->execute();
+			return $stmt -> fetchAll();
+		}
+		else{
+
+			$sql = "SELECT * FROM tareas WHERE $item = :$item ORDER BY idTareas";
+			$stmt = Conexion::conectar()->prepare($sql);
+			$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
+			$stmt->execute();
+			return $stmt -> fetchAll();
+		}
+
+		$stmt->close();
+		$stmt = null;
+	}
+
 
 	/*---------- Fin de ModeloFormularios ---------- */
 }

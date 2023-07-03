@@ -1172,6 +1172,11 @@ class ControladorFormularios{
 		return $vacaciones;
 	}
 
+	static public function ctrVerTareas($item, $valor){
+		$tareas = ModeloFormularios::mdlVerTareas($item, $valor);
+		return $tareas;
+	}
+
 	static public function ctrAsignarTarea($datos){
 		if ($datos['nameTarea'] != '' && $datos['descripcion'] != '' && $datos['Empleados_idEmpleados'] != '' && $datos['vencimiento'] != '') {
 			$asignarTarea = ModeloFormularios::mdlAsignarTarea($datos);
