@@ -1841,6 +1841,36 @@ static public function mdlImagenNoticia($id, $name)
 		$stmt = null;
 	}
 
+	static public function mdlVerDocumentosTareas($idTareas){
+
+		$sql = "SELECT * FROM documento_tarea WHERE Tareas_idTareas = :idTareas ORDER BY idDocumentoTarea";
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->bindParam(":idTareas", $idTareas, PDO::PARAM_INT);
+		$stmt->execute();
+		return $stmt -> fetchAll();
+		$stmt->close();
+		$stmt = null;
+	}
+
+	static public function mdlRegistrarDocumentosTareas($data){
+		$pdo =Conexion::conectar();
+		$sql = "INSERT INTO documento_tarea(Tareas_idTareas, tipo, nameDocumento) VALUES (:Tareas_idTareas,:tipo,:nameDocumento)";
+
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(":Tareas_idTareas", $data['Tareas_idTareas'], PDO::PARAM_INT);
+		$stmt->bindParam(":tipo", $data['tipo'], PDO::PARAM_STR);
+		$stmt->bindParam(":nameDocumento", $data['nameDocumento'], PDO::PARAM_STR);
+		
+		if ($stmt->execute()) {
+			return 'ok';
+		}else{
+			return "error";
+		}
+
+		$stmt->close();
+		$stmt = null;
+	}
+
 
 	/*---------- Fin de ModeloFormularios ---------- */
 }

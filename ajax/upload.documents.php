@@ -3,18 +3,19 @@ session_start();
 require_once "../controller/formularios.controlador.php";
 require_once "../model/formularios.modelo.php";
 
-$response = "";
-
-if (!empty($_FILES['file']['name'])) {
-    $targetDir = "../view/tareas/";
-
-    // Procesar cada archivo individualmente
-    $uploadedFiles = $_FILES['file'];
-
-    foreach ($uploadedFiles['tmp_name'] as $key => $tmpName) {
-        $fileName = basename($uploadedFiles["name"][$key]);
+if (isset($_POST['idTarea'])) {
+    $idTareas = $_POST['idTarea'];
+    $tipo = '';
+    if (!empty($_FILES['file']['name'])) {
+        $targetDir = "../view/tareas/";
+        $fileName = basename($_FILES["file"]["name"]);
         $targetFilePath = $targetDir . $fileName;
         $fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
+        if ($fileType == 'pdf') {
+            $tipo = 'pdf';
+        }else{
+            $tipo = 'excel';
+        }
 
         $uploadOk = 1;
         $i = 1;
@@ -27,32 +28,36 @@ if (!empty($_FILES['file']['name'])) {
         }
 
         // Verificar el tamaño máximo del archivo (10MB)
-        if ($uploadedFiles["size"][$key] > 10 * 1024 * 1024) {
-            $response .= $fileName;
+        if ($_FILES["file"]["size"] > 10 * 1024 * 1024) {
+            echo "error_tamano";
             $uploadOk = 0;
         }
 
         // Verificar los tipos de archivo permitidos (.xlsx, .xls, .pdf)
         $allowedExtensions = array("xlsx", "xls", "pdf");
         if (!in_array($fileType, $allowedExtensions)) {
-            $response .= $fileName;
+            echo "error_tipo";
             $uploadOk = 0;
         }
 
         if ($uploadOk == 0) {
-            $response .= $fileName;
+            echo "error";
         } else {
             // Mover el archivo cargado al directorio de destino
-            if (move_uploaded_file($tmpName, $targetFilePath)) {
-                $response .= $fileName;
+            if (move_uploaded_file($_FILES["file"]["tmp_name"], $targetFilePath)) {
+                $data = array(
+                    "Tareas_idTareas" => $idTareas,
+                    "tipo" => $tipo,
+                    "nameDocumento" => $fileName
+                );
+                $registrarDocumentos = ControladorFormularios::ctrRegistrarDocumentosTareas($data);
+                echo $registrarDocumentos;
             } else {
-                $response .= $fileName;
+                echo "error";
             }
         }
-        $response .= ", ";
+    } else {
+        echo "error";
     }
-} else {
-    $response = "No se encontraron archivos";
-}
 
-echo $response;
+}

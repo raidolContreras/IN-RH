@@ -26,6 +26,7 @@
 										<?php
 											$empleado = ControladorEmpleados::ctrVerEmpleados('idEmpleados', $tarea['Empleados_idEmpleados']);
 											$statusBadge = '';
+											$nombre = mb_strtoupper($empleado['lastname']." ".$empleado['name']);
 											
 											if ($tarea['status_tarea'] == 0 && $tarea['Vencimiento'] <= date('Y-m-d')) {
 												$statusBadge = '<span class="badge badge-danger">Retrasado</span>';
@@ -49,8 +50,15 @@
 										?>
 
 										<tr>
-											<td><button class="btn btn-in-consulting"><span><?php echo $tarea['nameTarea'] ?></span></button></td>
-											<td><?php echo mb_strtoupper($empleado['lastname']." ".$empleado['name']); ?></td>
+											<td><button type="button" 
+													class="btn btn-in-consulting" 
+													data-toggle="modal" 
+													data-target="#tarea<?php echo $tarea['idTareas'] ?>"
+													data-name=<?php echo $nombre; ?>>
+													<span><?php echo $tarea['nameTarea'] ?></span>
+												</button>
+											</td>
+											<td><?php echo $nombre; ?></td>
 											<td><?php echo date('d/m/Y', strtotime($tarea['Vencimiento'])); ?></td>
 											<td><?php echo $statusBadge; ?></td>
 										</tr>
@@ -118,10 +126,95 @@
 	</div>
 </div>
 
+<?php foreach ($tareas as $tarea): 
+	$empleado = ControladorEmpleados::ctrVerEmpleados('idEmpleados', $tarea['Empleados_idEmpleados']);
+	$documentos = ControladorFormularios::ctrVerDocumentosTareas($tarea['idTareas']);
+	$nombre = mb_strtoupper($empleado['lastname']." ".$empleado['name']);
+?>
+	<div class="modal fade" id="tarea<?php echo $tarea['idTareas'] ?>">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header" style="align-items: center;">
+					<h3 class="ml-2 mt-3">Detalles de la tarea</h3>
+					<div>
+						<a href="#" class=""><i class="fas fa-edit"></i></a>
+						<a href="#" class="px-2 "><i class="fas fa-trash"></i></a>
+					</div>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-xl-12 pb-5">
+							<p class="titulo titulo-tablero pb-2">Nombre de la tarea</p>
+							<p class="titulo"><?php echo mb_strtoupper($tarea['nameTarea']) ?></p>
+						</div>
+						<div class="col-xl-4">
+							<p class="titulo titulo-tablero pb-2">Asignado a</p>
+							<p class="titulo"><?php echo $nombre ?></p>
+						</div>
+						<div class="col-xl-4">
+							<p class="titulo titulo-tablero pb-2">Entregado</p>
+							<?php if ($tarea['fecha_envio']!= null): ?>
+								<p class="titulo"><?php echo date('d/m/Y', strtotime($tarea['fecha_envio'])) ?></p>
+							<?php endif ?>
+						</div>
+						<div class="col-xl-4">
+							<p class="titulo titulo-tablero pb-2">Vencimiento</p>
+							<p class="titulo"><?php echo date('d/m/Y', strtotime($tarea['Vencimiento'])) ?></p>
+						</div>
+						<div class="col-xl-12 pt-5">
+							<p class="titulo titulo-tablero pb-2">Descripción de la tarea</p>
+							<p class="titulo"><?php echo mb_strtoupper($tarea['descripcion']) ?></p>
+						</div>
+						<?php if (empty($documentos)): ?>
+						<div class="col-xl-12 pt-5">
+							<p class="titulo titulo-tablero pb-2">Adjuntados</p>
+							<p class="titulo">Sin documentos adjuntados</p>
+						</div>
+						<?php else: ?>
+							<div class="col-xl-12 row pt-5">
+								<?php foreach ($documentos as $documento): ?>
+									<div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+									<div class="card card-figure" style="overflow: hidden; text-overflow: ellipsis;">
+										<figure class="figure">
+											<div class="figure-attachment">
+												<span class="fa-stack fa-lg">
+													<i class="fa fa-square fa-stack-2x text-primary"></i>
+													<?php if ($documento['tipo'] == 'excel'): ?>
+														<i class="fas fa-file-excel fa-stack-1x fa-inverse"></i>
+													<?php else: ?>
+														<i class="fa fa-file-pdf fa-stack-1x fa-inverse"></i>
+													<?php endif ?>
+												</span>
+											</div>
+											<figcaption class="figure-caption">
+												<ul class="list-inline d-flex text-muted mb-0">
+													<li class="list-inline-item text-truncate mr-auto">
+														<a href="view/tareas/<?php echo $documento['nameDocumento'] ?>" download><?php echo $documento['nameDocumento'] ?></a>
+													</li>
+												</ul>
+											</figcaption>
+										</figure>
+									</div>
+								</div>
+								<?php endforeach ?>
+							</div>
+						<?php endif ?>
+						<div class="col-xl-6">
+							<a class="btn btn-outline-primary rounded btn-block" href="SubirDocumentos&tarea=<?php echo $tarea['idTareas'] ?>">Subir Documentos</a>
+						</div>
+						<div class="col-xl-6">
+							<a class="btn btn-outline-secondary rounded btn-block">Marcar como finalizado</a>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+<?php endforeach ?>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.js"></script>
-
 <script>
-
 var nameTarea = document.getElementById('nameTarea');
 var descripcion = document.getElementById('descripcion');
 var empleado = document.getElementById('empleado');
