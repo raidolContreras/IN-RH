@@ -1200,6 +1200,11 @@ class ControladorFormularios{
 		return $documentosTareas;
 	}
 
+	static public function ctrVerDocumentosEntregas($idTareas){
+		$documentosTareas = ModeloFormularios::mdlVerDocumentosEntregas($idTareas);
+		return $documentosTareas;
+	}
+
 	static public function ctrRegistrarDocumentosTareas($data){
 		$registrarDocumentosTareas = ModeloFormularios::mdlRegistrarDocumentosTareas($data);
 		return $registrarDocumentosTareas;

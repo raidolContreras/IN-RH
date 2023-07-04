@@ -137,6 +137,11 @@ $(document).ready(function() {
 									deleteAlert();
 								}
 							});
+
+						setTimeout(function() {
+							location.href = 'Inicio';
+						}, 1600);
+
 						}else if (response === 'campos vacios') {
 							$("#form-result").html(`
 							<div class='alert alert-warning' role="alert" id="alerta">

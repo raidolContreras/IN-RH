@@ -1856,18 +1856,22 @@ static public function mdlImagenNoticia($id, $name)
 
 	static public function mdlVerTareas($item, $valor){
 
+		$fechaLimite = date('Y-m-d', strtotime('-60 days'));
+
 		if ($item == null && $valor == null) {
 
-			$sql = "SELECT * FROM tareas ORDER BY idTareas;";
+			$sql = "SELECT * FROM tareas ORDER BY idTareas WHERE fecha_creacion >= :fechaLimite;";
 			$stmt = Conexion::conectar()->prepare($sql);
+			$stmt->bindParam(":fechaLimite", $fechaLimite);
 			$stmt->execute();
 			return $stmt -> fetchAll();
 		}
 		else{
 
-			$sql = "SELECT * FROM tareas WHERE $item = :$item ORDER BY idTareas";
+			$sql = "SELECT * FROM tareas WHERE $item = :$item AND fecha_creacion >= :fechaLimite ORDER BY idTareas";
 			$stmt = Conexion::conectar()->prepare($sql);
 			$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
+			$stmt->bindParam(":fechaLimite", $fechaLimite);
 			$stmt->execute();
 			return $stmt -> fetchAll();
 		}
@@ -1885,6 +1889,19 @@ static public function mdlImagenNoticia($id, $name)
 		return $stmt -> fetchAll();
 		$stmt->close();
 		$stmt = null;
+
+	}
+
+	static public function mdlVerDocumentosEntregas($idTareas){
+
+		$sql = "SELECT * FROM documentos_tarea_entregas WHERE Tareas_idTareas = :idTareas ORDER BY idDocumentoTareaEntregas";
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->bindParam(":idTareas", $idTareas, PDO::PARAM_INT);
+		$stmt->execute();
+		return $stmt -> fetchAll();
+		$stmt->close();
+		$stmt = null;
+
 	}
 
 	static public function mdlRegistrarDocumentosTareas($data){
