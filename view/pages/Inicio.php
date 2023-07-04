@@ -216,14 +216,16 @@ foreach ($tareas as $tarea):
 					<?php endif ?>
 
 				</div>
-				<div class="modal-footer">
-					<div class="col-xl-6">
-						<a class="btn btn-outline-primary rounded btn-block" href="SubirDocumentos&tarea=<?php echo $tarea['idTareas'] ?>">Subir Documentos</a>
+				<?php if ($tarea['status_tarea'] != 2): ?>
+					<div class="modal-footer">
+						<div class="col-xl-6">
+							<a class="btn btn-outline-primary rounded btn-block" href="SubirDocumentos&tarea=<?php echo $tarea['idTareas'] ?>">Subir Documentos</a>
+						</div>
+						<div class="col-xl-6">
+							<a class="btn btn-outline-success rounded btn-block" href="FinalizarTarea&tarea=<?php echo $tarea['idTareas'] ?>">Marcar como finalizado</a>
+						</div>
 					</div>
-					<div class="col-xl-6">
-						<a class="btn btn-outline-success rounded btn-block" href="SubirDocumentos&tarea=<?php echo $tarea['idTareas'] ?>">Marcar como finalizado</a>
-					</div>
-				</div>
+				<?php endif ?>
 			</div>
 		</div>
 	</div>

@@ -499,6 +499,19 @@ class FormulariosAjax{
 		echo $EntregarTarea;
 	}
 
+	public function finalizarTareaAjax(){
+		session_start();
+		$opinion = $this->opinion;
+		$idTarea = $this->idTarea;
+		$datos = array(
+			"opinion" => $opinion,
+			"idTarea" => $idTarea,
+			"Jefe_idEmpleados" => $_SESSION['idEmpleado']
+		);
+		$EntregarTarea = ControladorFormularios::ctrFinalizarTarea($datos);
+		echo $EntregarTarea;
+	}
+
 
 }
 
@@ -853,4 +866,14 @@ if (isset($_POST['descripcionEntrega'])) {
 	$asignarTarea -> idTarea = $idTarea;
 	$asignarTarea -> descripcionEntrega = $descripcionEntrega;
 	$asignarTarea -> entregarTareaAjax();
+}
+
+if (isset($_POST['resultadoTarea'])) {
+	$opinion = $_POST['opinionTarea'];
+	$idTarea = $_POST['resultadoTarea'];
+
+	$asignarTarea = new FormulariosAjax();
+	$asignarTarea -> opinion = $opinion;
+	$asignarTarea -> idTarea = $idTarea;
+	$asignarTarea -> finalizarTareaAjax();
 }

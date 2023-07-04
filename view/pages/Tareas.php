@@ -125,14 +125,15 @@
 		</div>
 	</div>
 </div>
-
-<?php foreach ($tareas as $tarea): 
+<?php 
+$tareas = ControladorFormularios::ctrVerTareas("Jefe_idEmpleados", $_SESSION['idEmpleado']);
+foreach ($tareas as $tarea): 
 	$empleado = ControladorEmpleados::ctrVerEmpleados('idEmpleados', $tarea['Empleados_idEmpleados']);
 	$documentos = ControladorFormularios::ctrVerDocumentosTareas($tarea['idTareas']);
 	$nombre = mb_strtoupper($empleado['lastname']." ".$empleado['name']);
-?>
+	?>
 	<div class="modal fade" id="tarea<?php echo $tarea['idTareas'] ?>">
-		<div class="modal-dialog modal-lg">
+		<div class="modal-dialog modal-xl">
 			<div class="modal-content">
 				<div class="modal-header" style="align-items: center;">
 					<h3 class="ml-2 mt-3">Detalles de la tarea</h3>
@@ -141,7 +142,7 @@
 						<a href="#" class="px-2 "><i class="fas fa-trash"></i></a>
 					</div>
 				</div>
-				<div class="modal-body">
+				<div class="modal-header">
 					<div class="row">
 						<div class="col-xl-12 pb-5">
 							<p class="titulo titulo-tablero pb-2">Nombre de la tarea</p>
@@ -166,48 +167,88 @@
 							<p class="titulo"><?php echo mb_strtoupper($tarea['descripcion']) ?></p>
 						</div>
 						<?php if (empty($documentos)): ?>
-						<div class="col-xl-12 pt-5">
-							<p class="titulo titulo-tablero pb-2">Adjuntados</p>
-							<p class="titulo">Sin documentos adjuntados</p>
-						</div>
+							<div class="col-xl-12 pt-5">
+								<p class="titulo titulo-tablero pb-2">Adjuntados</p>
+								<p class="titulo">Sin documentos adjuntados</p>
+							</div>
 						<?php else: ?>
 							<div class="col-xl-12 row pt-5">
 								<?php foreach ($documentos as $documento): ?>
 									<div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
-									<div class="card card-figure" style="overflow: hidden; text-overflow: ellipsis;">
-										<figure class="figure">
-											<div class="figure-attachment">
-												<span class="fa-stack fa-lg">
-													<i class="fa fa-square fa-stack-2x text-primary"></i>
-													<?php if ($documento['tipo'] == 'excel'): ?>
-														<i class="fas fa-file-excel fa-stack-1x fa-inverse"></i>
-													<?php else: ?>
-														<i class="fa fa-file-pdf fa-stack-1x fa-inverse"></i>
-													<?php endif ?>
-												</span>
-											</div>
-											<figcaption class="figure-caption">
-												<ul class="list-inline d-flex text-muted mb-0">
-													<li class="list-inline-item text-truncate mr-auto">
-														<a href="view/tareas/<?php echo $documento['nameDocumento'] ?>" download><?php echo $documento['nameDocumento'] ?></a>
-													</li>
-												</ul>
-											</figcaption>
-										</figure>
+										<div class="card card-figure" style="overflow: hidden; text-overflow: ellipsis;">
+											<figure class="figure">
+												<div class="figure-attachment">
+													<span class="fa-stack fa-lg">
+														<i class="fa fa-square fa-stack-2x text-primary"></i>
+														<?php if ($documento['tipo'] == 'excel'): ?>
+															<i class="fas fa-file-excel fa-stack-1x fa-inverse"></i>
+														<?php else: ?>
+															<i class="fa fa-file-pdf fa-stack-1x fa-inverse"></i>
+														<?php endif ?>
+													</span>
+												</div>
+												<figcaption class="figure-caption">
+													<ul class="list-inline d-flex text-muted mb-0">
+														<li class="list-inline-item text-truncate mr-auto">
+															<a href="view/tareas/<?php echo $documento['nameDocumento'] ?>" download><?php echo $documento['nameDocumento'] ?></a>
+														</li>
+													</ul>
+												</figcaption>
+											</figure>
+										</div>
 									</div>
-								</div>
 								<?php endforeach ?>
 							</div>
 						<?php endif ?>
-						<div class="col-xl-6">
-							<a class="btn btn-outline-primary rounded btn-block" href="SubirDocumentos&tarea=<?php echo $tarea['idTareas'] ?>">Subir Documentos</a>
-						</div>
-						<div class="col-xl-6">
-							<a class="btn btn-outline-secondary rounded btn-block">Marcar como finalizado</a>
-						</div>
 					</div>
 				</div>
+				<div class="modal-body">
+					<?php $documentos = ControladorFormularios::ctrVerDocumentosEntregas($tarea['idTareas']);
 
+						if (empty($documentos)): ?>
+							<div class="col-xl-12 pt-5">
+								<p class="titulo titulo-tablero pb-2">Adjuntados</p>
+								<p class="titulo">Sin documentos adjuntados</p>
+							</div>
+						<?php else: ?>
+							<div class="col-xl-12 row">
+								<p class="titulo titulo-tablero mb-0 col-xl-12">Archivos Subidos</p>
+								<?php foreach ($documentos as $documento): ?>
+									<div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+										<div class="card card-figure" style="overflow: hidden; text-overflow: ellipsis;">
+											<figure class="figure">
+												<div class="figure-attachment">
+													<span class="fa-stack fa-lg">
+														<i class="fa fa-square fa-stack-2x text-primary"></i>
+														<?php if ($documento['tipo'] == 'excel'): ?>
+															<i class="fas fa-file-excel fa-stack-1x fa-inverse"></i>
+														<?php else: ?>
+															<i class="fa fa-file-pdf fa-stack-1x fa-inverse"></i>
+														<?php endif ?>
+													</span>
+												</div>
+												<figcaption class="figure-caption">
+													<ul class="list-inline d-flex text-muted mb-0">
+														<li class="list-inline-item text-truncate mr-auto">
+															<a href="view/tareas/<?php echo $tarea['idTareas'] ?>/<?php echo $documento['nameDocumento'] ?>" download><?php echo $documento['nameDocumento'] ?></a>
+														</li>
+													</ul>
+												</figcaption>
+											</figure>
+										</div>
+									</div>
+								<?php endforeach ?>
+							</div>
+						<?php endif ?>
+				</div>
+				<div class="modal-footer">
+					<div class="col-xl-6">
+						<a class="btn btn-outline-primary rounded btn-block" href="SubirDocumentos&tarea=<?php echo $tarea['idTareas'] ?>">Subir Documentos</a>
+					</div>
+					<div class="col-xl-6">
+						<a class="btn btn-outline-success rounded btn-block" href="FinalizarTarea&tarea=<?php echo $tarea['idTareas'] ?>">Marcar como finalizado</a>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

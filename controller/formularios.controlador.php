@@ -1215,5 +1215,10 @@ class ControladorFormularios{
 		return $registrarDocumentosEntrega;
 	}
 
+	static public function ctrFinalizarTarea($data){
+		$finalizarTarea = ModeloFormularios::mdlFinalizarTarea($data);
+		return $finalizarTarea;
+	}
+
 	/*---------- Fin de ControladorFormularios ---------- */
 }

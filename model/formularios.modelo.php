@@ -1942,6 +1942,25 @@ static public function mdlImagenNoticia($id, $name)
 		$stmt = null;
 	}
 
+	static public function mdlFinalizarTarea($data){
+		$pdo =Conexion::conectar();
+		$sql = "UPDATE tareas SET opinion = :opinion, status_tarea = 2 WHERE Jefe_idEmpleados = :Jefe_idEmpleados AND idTareas = :idTarea;";
+
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(":opinion", $data['opinion'], PDO::PARAM_STR);
+		$stmt->bindParam(":idTarea", $data['idTarea'], PDO::PARAM_INT);
+		$stmt->bindParam(":Jefe_idEmpleados", $data['Jefe_idEmpleados'], PDO::PARAM_INT);
+		
+		if ($stmt->execute()) {
+			return 'ok';
+		}else{
+			return "error";
+		}
+
+		$stmt->close();
+		$stmt = null;
+	}
+
 
 	/*---------- Fin de ModeloFormularios ---------- */
 }

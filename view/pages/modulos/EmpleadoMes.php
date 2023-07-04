@@ -104,17 +104,17 @@ $fotoEmpleado = ControladorFormularios::ctrVerFotos("Empleados_idEmpleados", $em
 						<textarea class="form-control texteditor" name="mensaje" id="mensaje" rows="3" required></textarea>
 							 
 						<script>
-						tinymce.init({
-						selector: '.texteditor',
-							plugins: [
-							'textcolor colorpicker autoresize'
-							],
-							toolbar: 'undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link'
-						});
+							tinymce.init({
+							selector: '.texteditor',
+								plugins: [
+								'textcolor colorpicker autoresize'
+								],
+								toolbar: 'undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link'
+							});
 
-						document.getElementById('mce_0_ifr').contentWindow.document.getElementById('tinymce').innerHTML
+							document.getElementById('mce_0_ifr').contentWindow.document.getElementById('tinymce').innerHTML
 
-					</script>
+						</script>
 						<input type="hidden" name="publicado" value="<?php echo $_SESSION['idEmpleado'] ?>">
 						<!---->
 						<div class="card">
