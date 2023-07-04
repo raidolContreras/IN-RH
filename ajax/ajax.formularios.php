@@ -486,6 +486,19 @@ class FormulariosAjax{
 		echo $asignarTarea;
 	}
 
+	public function entregarTareaAjax(){
+		session_start();
+		$idTarea = $this->idTarea;
+		$descripcionEntrega = $this->descripcionEntrega;
+		$datos = array(
+			"idTarea" => $idTarea,
+			"descripcionEntrega" => $descripcionEntrega,
+			"Empleados_idEmpleados" => $_SESSION['idEmpleado']
+		);
+		$EntregarTarea = ControladorFormularios::ctrEntregarTarea($datos);
+		echo $EntregarTarea;
+	}
+
 
 }
 
@@ -830,4 +843,14 @@ if (isset($_POST['nameTarea'])) {
 	$asignarTarea -> empleado = $empleado;
 	$asignarTarea -> vencimiento = $vencimiento;
 	$asignarTarea -> asignarTareaAjax();
+}
+
+if (isset($_POST['descripcionEntrega'])) {
+	$idTarea = $_POST['idTarea'];
+	$descripcionEntrega = $_POST['descripcionEntrega'];
+
+	$asignarTarea = new FormulariosAjax();
+	$asignarTarea -> idTarea = $idTarea;
+	$asignarTarea -> descripcionEntrega = $descripcionEntrega;
+	$asignarTarea -> entregarTareaAjax();
 }

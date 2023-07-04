@@ -44,7 +44,7 @@
 					<td><button type="button" 
 							class="btn btn-in-consulting" 
 							data-toggle="modal" 
-							data-target="#tarea<?php echo $tarea['idTareas'] ?>"
+							data-target="#encargos<?php echo $tarea['idTareas'] ?>"
 							data-name=<?php echo $nombre; ?>>
 							<span><?php echo $tarea['nameTarea'] ?></span>
 						</button>

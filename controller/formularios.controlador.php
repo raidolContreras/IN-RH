@@ -1186,6 +1186,15 @@ class ControladorFormularios{
 		return $asignarTarea;
 	}
 
+	static public function ctrEntregarTarea($datos){
+		if ($datos['idTarea'] != '' && $datos['descripcionEntrega'] != '' && $datos['Empleados_idEmpleados'] != '') {
+			$asignarTarea = ModeloFormularios::mdlEntregarTarea($datos);
+		}else{
+			$asignarTarea = 'campos vacios';
+		}
+		return $asignarTarea;
+	}
+
 	static public function ctrVerDocumentosTareas($idTareas){
 		$documentosTareas = ModeloFormularios::mdlVerDocumentosTareas($idTareas);
 		return $documentosTareas;
@@ -1194,6 +1203,11 @@ class ControladorFormularios{
 	static public function ctrRegistrarDocumentosTareas($data){
 		$registrarDocumentosTareas = ModeloFormularios::mdlRegistrarDocumentosTareas($data);
 		return $registrarDocumentosTareas;
+	}
+
+	static public function ctrRegistrarDocumentosEntrega($data){
+		$registrarDocumentosEntrega = ModeloFormularios::mdlRegistrarDocumentosEntrega($data);
+		return $registrarDocumentosEntrega;
 	}
 
 	/*---------- Fin de ControladorFormularios ---------- */

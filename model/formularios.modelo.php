@@ -1819,6 +1819,41 @@ static public function mdlImagenNoticia($id, $name)
 		$stmt = null;
 	}
 
+	static public function mdlEntregarTarea($datos){
+		$pdo =Conexion::conectar();
+		$sql_busqueda = 'SELECT * FROM tarea_entregas WHERE Tareas_idTareas = :idTarea';
+
+		$stmt_busqueda = $pdo->prepare($sql_busqueda);
+		$stmt_busqueda->bindParam(":idTarea", $datos['idTarea'], PDO::PARAM_INT);
+		
+		$stmt_busqueda->execute();
+
+		if (empty($stmt_busqueda->fetchAll())) {
+			$sql = "INSERT INTO tarea_entregas(Tareas_idTareas, descripcion) VALUES (:idTarea, :descripcionEntrega);";
+
+		}else{
+			$sql = "UPDATE tarea_entregas SET descripcion = :descripcionEntrega WHERE Tareas_idTareas = :idTarea;";
+		}
+
+		$sql .= "UPDATE tareas SET status_tarea=1, fecha_envio = CURRENT_TIMESTAMP WHERE idTareas = :idTarea AND Empleados_idEmpleados=:Empleados_idEmpleados;";
+		
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(":idTarea", $datos['idTarea'], PDO::PARAM_INT);
+		$stmt->bindParam(":descripcionEntrega", $datos['descripcionEntrega'], PDO::PARAM_STR);
+		$stmt->bindParam(":Empleados_idEmpleados", $datos['Empleados_idEmpleados'], PDO::PARAM_INT);
+		
+		if ($stmt->execute()) {
+			return 'ok';
+		}else{
+			return "error";
+		}
+
+		$stmt_busqueda->close();
+		$stmt_busqueda = null;
+		$stmt->close();
+		$stmt = null;
+	}
+
 	static public function mdlVerTareas($item, $valor){
 
 		if ($item == null && $valor == null) {
@@ -1855,6 +1890,25 @@ static public function mdlImagenNoticia($id, $name)
 	static public function mdlRegistrarDocumentosTareas($data){
 		$pdo =Conexion::conectar();
 		$sql = "INSERT INTO documento_tarea(Tareas_idTareas, tipo, nameDocumento) VALUES (:Tareas_idTareas,:tipo,:nameDocumento)";
+
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(":Tareas_idTareas", $data['Tareas_idTareas'], PDO::PARAM_INT);
+		$stmt->bindParam(":tipo", $data['tipo'], PDO::PARAM_STR);
+		$stmt->bindParam(":nameDocumento", $data['nameDocumento'], PDO::PARAM_STR);
+		
+		if ($stmt->execute()) {
+			return 'ok';
+		}else{
+			return "error";
+		}
+
+		$stmt->close();
+		$stmt = null;
+	}
+
+	static public function mdlRegistrarDocumentosEntrega($data){
+		$pdo =Conexion::conectar();
+		$sql = "INSERT INTO documentos_tarea_entregas(Tareas_idTareas, tipo, nameDocumento) VALUES (:Tareas_idTareas,:tipo,:nameDocumento)";
 
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(":Tareas_idTareas", $data['Tareas_idTareas'], PDO::PARAM_INT);
