@@ -329,10 +329,16 @@ class FormulariosAjax{
 	public function eliminarEmpleadoAjax(){
 		$fecha_baja = $this->fecha_baja;
 		$idEmpleados = $this->idEmpleados;
+		$causaBaja = $this->causaBaja;
+		$detalles_baja = $this->detalles_baja;
+		$crear_vacante = $this->crear_vacante;
 
 		$datos = array(
 			"fecha_baja" => $fecha_baja,
-			"idEmpleados" => $idEmpleados
+			"idEmpleados" => $idEmpleados,
+			"causaBaja" => $causaBaja,
+			"detalles_baja" => $detalles_baja,
+			"crear_vacante" => $crear_vacante
 		);
 
 		$eliminarEmpleado = ControladorEmpleados::ctrEliminarEmpleado($datos);
@@ -700,10 +706,16 @@ if (isset($_POST['EliminarEmpleado'])) {
 	if ($_POST['EliminarEmpleado'] == 1) {
 		$idEmpleados = $_POST['empleado'];
 		$fecha_baja = $_POST['fecha_baja'];
+		$causaBaja = $_POST['causaBaja'];
+		$detalles_baja = $_POST['detalles_baja'];
+		$crear_vacante = $_POST['crear_vacante'];
 
 		$EliminarEmpleado = new FormulariosAjax();
 		$EliminarEmpleado -> idEmpleados = $idEmpleados;
 		$EliminarEmpleado -> fecha_baja = $fecha_baja;
+		$EliminarEmpleado -> causaBaja = $causaBaja;
+		$EliminarEmpleado -> detalles_baja = $detalles_baja;
+		$EliminarEmpleado -> crear_vacante = $crear_vacante;
 		$EliminarEmpleado -> eliminarEmpleadoAjax();
 	}
 }

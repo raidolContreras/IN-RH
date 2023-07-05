@@ -97,7 +97,7 @@ $puesto = ControladorFormularios::ctrVerPuestos("Empleados_idEmpleados", $_GET['
 							<?php endif ?>
 
 							<div class="modal fade" id="eliminar">
-								<div class="modal-dialog">
+								<div class="modal-dialog modal-lg">
 									<div class="modal-content">
 
 										<div class="modal-header">
@@ -108,8 +108,39 @@ $puesto = ControladorFormularios::ctrVerPuestos("Empleados_idEmpleados", $_GET['
 											<form method="POST" id="baja-form">
 										<div class="modal-body">
 											<p>Seguro que deseas dar de baja a <?php echo strtoupper($colaborador['name']." ".$colaborador['lastname']); ?>, esta acción <strong>si </strong>puede deshacerse</p>
-
-												<input type="date" class="form-control" min="<?php echo date("Y-m-d", strtotime($colaborador['fecha_contratado'])); ?>" name="fecha_baja" required>
+												<div class="pb-3">
+													<label for="fecha_baja">Día de la baja</label>
+													<input type="date" class="form-control" min="<?php echo date("Y-m-d", strtotime($colaborador['fecha_contratado'])); ?>" id="fecha_baja" name="fecha_baja" required>
+												</div>
+												<div class="pb-3">
+													<label for="causaBaja">Motivo baja</label>
+													<select class="form-control" tabindex="17" id="causaBaja" name="causaBaja" size="1" style="display: inline;" required>
+														<option>SELECCIONA UN MOTIVO</option>
+														<option value="1">TERMINO DE CONTRATO</option>
+														<option value="2">SEPARACION VOLUNTARIA</option>
+														<option value="3">ABANDONO DE EMPLEO</option>
+														<option value="4">DEFUNCION</option>
+														<option value="5">CLAUSURA</option>
+														<option value="6">OTRAS</option>
+														<option value="7">AUSENTISMO</option>
+														<option value="8">RESCISION DE CONTRATO</option>
+														<option value="9">JUBILACION</option>
+														<option value="10">PENSION</option>
+													</select>
+												</div>
+												<div class="pb-3">
+													<label for="detalles_baja">Detalla la causa</label>
+													<textarea class="form-control" name="detalles_baja" id="detalles_baja"></textarea>
+												</div>
+													<p class="titulo-tablero" style="display: flex; justify-content: center;">¿Deseas abrir una vacante?</p>
+												<div style="display: flex; justify-content: center;">
+													<label class="custom-control custom-radio custom-control-inline">
+														<input type="radio" name="crear_vacante" class="custom-control-input" value="1" checked><span class="custom-control-label">Sí</span>
+													</label>
+													<label class="custom-control custom-radio custom-control-inline">
+														<input type="radio" name="crear_vacante" class="custom-control-input" value="2"><span class="custom-control-label">No</span>
+													</label>
+												</div>
 										</div>
 
 										<div class="modal-footer">

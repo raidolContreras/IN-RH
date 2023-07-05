@@ -191,14 +191,16 @@ class ModeloEmpleados{
 
 	static public function mdlEliminarEmpleado($tabla, $datos){
 
-		$sql = "UPDATE $tabla SET status = 0, fecha_baja = :fecha_baja WHERE idEmpleados = :idEmpleados";
+		$sql = "UPDATE $tabla SET status = 0, fecha_baja = :fecha_baja, causaBaja = :causaBaja, detalles_baja = :detalles_baja WHERE idEmpleados = :idEmpleados";
 
 		$stmt = Conexion::conectar()->prepare($sql);
 		$stmt->bindParam(":idEmpleados", $datos['idEmpleados'], PDO::PARAM_INT);
 		$stmt->bindParam(":fecha_baja", $datos['fecha_baja'], PDO::PARAM_STR);
+		$stmt->bindParam(":causaBaja", $datos['causaBaja'], PDO::PARAM_INT);
+		$stmt->bindParam(":detalles_baja", $datos['detalles_baja'], PDO::PARAM_STR);
 
 		if ($stmt->execute()) {
-			$eliminarPuesto = ModeloEmpleados::mdlEliminarPuesto("puesto", $datos['idEmpleados']);
+			$eliminarPuesto = ModeloEmpleados::mdlEliminarPuesto("puesto", $datos['idEmpleados'], $datos['crear_vacante']);
 			if ($eliminarPuesto == "ok") {
 				return "ok";
 			}
@@ -210,7 +212,7 @@ class ModeloEmpleados{
 		$stmt = null;
 	}
 
-	static public function mdlEliminarPuesto($tabla, $idEmpleados){
+	static public function mdlEliminarPuesto($tabla, $idEmpleados, $crear_vacante){
 
 		$puesto = ControladorFormularios::ctrVerPuestos("Empleados_idEmpleados", $idEmpleados);
 		$tablaVacantes = "vacantes";
@@ -235,14 +237,22 @@ class ModeloEmpleados{
 				);
 				$updateDataDepto = ModeloEmpleados::mdlActualizarjefatura('departamentos', $datosDepto);
 					if ($updateDataDepto == 'ok') {
-						$registro = ModeloFormularios::mdlRegistrarVacantes($tablaVacantes,$data);
-						return $registro;
+						if ($crear_vacante == 1) {
+							$registro = ModeloFormularios::mdlRegistrarVacantes($tablaVacantes,$data);
+							return $registro;
+						}else{
+							return 'ok';
+						}
 					}else{
 						print_r(Conexion::conectar()->errorInfo());
 					}
 			}else{
-				$registro = ModeloFormularios::mdlRegistrarVacantes($tablaVacantes,$data);
-				return $registro;
+				if ($crear_vacante == 1) {
+					$registro = ModeloFormularios::mdlRegistrarVacantes($tablaVacantes,$data);
+					return $registro;
+				}else{
+					return 'ok';
+				}
 			}
 		} else {
 			print_r(Conexion::conectar()->errorInfo()); 
