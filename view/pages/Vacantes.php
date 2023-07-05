@@ -7,7 +7,7 @@
 		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 			<div class="card">
 				<div class="card-body">
-					<a href="Vacantes-CrearVacante" class="btb btn-success p-2 rounded mb-3 float-right animacion">
+					<a href="Vacantes-CrearVacante" class="btb btn-success p-2 rounded mb-3 float-right">
 						Crear Oferta de Empleo <i class="icon-briefcase"></i>
 					</a>
 					<div class="table-responsive">
