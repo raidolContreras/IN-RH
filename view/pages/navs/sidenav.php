@@ -57,6 +57,10 @@
 					<li class="nav-item">
 						<a class="nav-link" href="#"><i class="fas fa-newspaper"></i>ANALISÍS E INFORMES</a>
 					</li>
+
+					<li class="nav-item">
+						<a class="nav-link" href="#"><i class="fas fa-newspaper"></i>CURSOS Y CAPACITACIONES</a>
+					</li>
 				</ul>
 			</div>
 		</nav>
