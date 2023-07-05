@@ -16,7 +16,7 @@
 						<?php else: ?>
 							<a class="nav-link" href="Empleados">
 						<?php endif ?>
-						<i class="fas fa-address-card"></i>EMPLEADOS</a>
+						<i class="fa fa-users"></i>EMPLEADOS</a>
 					</li>
 
 					<li class="nav-item">
@@ -25,7 +25,7 @@
 						<?php else: ?>
 							<a class="nav-link" href="Vacantes">
 						<?php endif ?>
-						<i class="fas fa-handshake"></i>RECLUTAMIENTO</a>
+						<i class="fa fa-bullhorn"></i>RECLUTAMIENTO</a>
 					</li>
 
 					<li class="nav-item">
@@ -34,7 +34,7 @@
 						<?php else: ?>
 							<a class="nav-link" href="Asistencia">
 						<?php endif ?>
-							<i class="fas fa-clock"></i>REGISTRO DE HORAS</a>
+							<i class="fas fa-pencil-alt"></i>REGISTRO DE HORAS</a>
 					</li>
 
 					<li class="nav-item">
@@ -43,23 +43,23 @@
 						<?php else: ?>
 							<a class="nav-link" href="Tareas">
 						<?php endif ?>
-						<i class=" fas fa-check-square"></i>TAREAS</a>
+						<i class="fa fa-tasks"></i>TAREAS</a>
 					</li>
 
 					<li class="nav-item">
-						<a class="nav-link" href="#"><i class="fas fa-clipboard-check"></i>EVALUACIONES</a>
+						<a class="nav-link" href="#"><i class="far fa-star"></i>EVALUACIONES</a>
 					</li>
 
 					<li class="nav-item">
-						<a class="nav-link" href="#"><i class="fas fa-newspaper"></i>GASTOS</a>
+						<a class="nav-link" href="#"><i class="fas fa-money-bill-alt"></i>GASTOS</a>
 					</li>
 
 					<li class="nav-item">
-						<a class="nav-link" href="#"><i class="fas fa-newspaper"></i>ANALISÍS E INFORMES</a>
+						<a class="nav-link" href="#"><i class="fas fa-chart-bar"></i>ANALISÍS E INFORMES</a>
 					</li>
 
 					<li class="nav-item">
-						<a class="nav-link" href="#"><i class="fas fa-newspaper"></i>CURSOS Y CAPACITACIONES</a>
+						<a class="nav-link" href="#"><i class="fa fa-graduation-cap"></i>CURSOS Y CAPACITACIONES</a>
 					</li>
 				</ul>
 			</div>
