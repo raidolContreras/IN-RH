@@ -5,6 +5,18 @@ $Numbero = ControladorFormularios::ctrNumeroTelefonico($colaborador['phone']);
 $emergencia = ControladorFormularios::ctrNumeroTelefonico($colaborador['phoneEmer']);
 $foto = ControladorFormularios::ctrVerFotos("Empleados_idEmpleados", $colaborador['idEmpleados']);
 $puesto = ControladorFormularios::ctrVerPuestos("Empleados_idEmpleados", $_GET['perfil']);
+$causaBaja = array(
+	1 => 'TERMINO DE CONTRATO',
+	2 => 'SEPARACION VOLUNTARIA',
+	3 => 'ABANDONO DE EMPLEO',
+	4 => 'DEFUNCION',
+	5 => 'CLAUSURA',
+	6 => 'OTRAS',
+	7 => 'AUSENTISMO',
+	8 => 'RESCISION DE CONTRATO',
+	9 => 'JUBILACION',
+	10 => 'PENSION'
+);
 ?>
 <div class="container-fluid dashboard-content ">
 	<div class="row">
@@ -77,24 +89,33 @@ $puesto = ControladorFormularios::ctrVerPuestos("Empleados_idEmpleados", $_GET['
 					</div>
 				</div>
 				<div class="card-body border-top">
-							<?php if ($colaborador['status'] == 1): ?>
+					<?php if ($colaborador['status'] == 1): ?>
 					<h3 class="font-16 hprofile">Acciones</h3>
 
 						<form method="POST" action="Documento" class="container pb-2">
 							<button class="btn btn-primary rounded btn-block " name="empleado" value="<?php echo $colaborador['idEmpleados'];?>">
 								<i class="ti-upload"></i> Subir Documentos
 							</button>
-						</form>
-							<?php endif ?>
-
-					<div>
-						<div class="container">
-							<?php if ($colaborador['status'] == 1): ?>
-								
 							<button type="button" class="btn btn-danger rounded btn-block" data-toggle="modal" data-target="#eliminar">
 								Dar de baja
 							</button>
+						</form>
+					<?php else: ?>
+						<h3 class="font-16 hprofile">Motivo de baja</h3>
+						<div>
+							<ul class="mb-0 list-unstyled">
+						<?php foreach ($causaBaja as $key => $value): ?>
+							<?php if ($key == $colaborador['causaBaja']): ?>
+								<li class="header-li"><?php echo $value ?></li>
 							<?php endif ?>
+						<?php endforeach ?>
+								<li><?php echo $colaborador['detalles_baja'] ?></li>
+							</ul>
+						</div>
+					<?php endif ?>
+
+					<div>
+						<div class="container">
 
 							<div class="modal fade" id="eliminar">
 								<div class="modal-dialog modal-lg">
@@ -116,16 +137,9 @@ $puesto = ControladorFormularios::ctrVerPuestos("Empleados_idEmpleados", $_GET['
 													<label for="causaBaja">Motivo baja</label>
 													<select class="form-control" tabindex="17" id="causaBaja" name="causaBaja" size="1" style="display: inline;" required>
 														<option>SELECCIONA UN MOTIVO</option>
-														<option value="1">TERMINO DE CONTRATO</option>
-														<option value="2">SEPARACION VOLUNTARIA</option>
-														<option value="3">ABANDONO DE EMPLEO</option>
-														<option value="4">DEFUNCION</option>
-														<option value="5">CLAUSURA</option>
-														<option value="6">OTRAS</option>
-														<option value="7">AUSENTISMO</option>
-														<option value="8">RESCISION DE CONTRATO</option>
-														<option value="9">JUBILACION</option>
-														<option value="10">PENSION</option>
+														<?php foreach ($causaBaja as $key => $value): ?>
+															<option value="<?php echo $key ?>"><?php echo $value ?></option>
+														<?php endforeach ?>
 													</select>
 												</div>
 												<div class="pb-3">
@@ -152,7 +166,7 @@ $puesto = ControladorFormularios::ctrVerPuestos("Empleados_idEmpleados", $_GET['
 												</button>
 											</form>
 
-											<button class="btn btn-success rounded float-right">
+											<button class="btn btn-success rounded float-right" data-dismiss="modal">
 												Cancelar
 											</button>
 
