@@ -518,6 +518,37 @@ class FormulariosAjax{
 		echo $EntregarTarea;
 	}
 
+	public function crearVacanteAjax(){
+		session_start();
+		$nameVacante = $this->nameVacante;
+		$salarioVacante = $this->salarioVacante;
+		$empresaVacante = $this->empresaVacante;
+		$departamentoVacante = $this->departamentoVacante;
+		$requisitosVacante = $this->requisitosVacante;
+		$datos = array(
+			"nameVacante" => $nameVacante,
+			"salarioVacante" => $salarioVacante,
+			"empresaVacante" => $empresaVacante,
+			"departamentoVacante" => $departamentoVacante,
+			"requisitosVacante" => $requisitosVacante,
+			"idEmpleados" => $_SESSION['idEmpleado']
+		);
+		$registro = ControladorFormularios::ctrRegistrarVacantes($datos);
+		echo $registro;
+	}
+
+	public function activarVacante(){
+		session_start();
+		$idVacantes = $this->idVacantes;
+		$valor = $this->valor;
+		$datos = array(
+			"idVacantes" => $idVacantes,
+			"aprobado" => $valor,
+			"Jefe_idEmpleados" => $_SESSION['idEmpleado']
+		);
+		$activarVacante = ControladorFormularios::ctrActivarVacante($datos);
+		echo $activarVacante;
+	}
 
 }
 
@@ -888,4 +919,36 @@ if (isset($_POST['resultadoTarea'])) {
 	$asignarTarea -> opinion = $opinion;
 	$asignarTarea -> idTarea = $idTarea;
 	$asignarTarea -> finalizarTareaAjax();
+}
+
+if (isset($_POST['nameVacante'])) {
+	if (preg_match('/^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["nameVacante"])){
+
+		$nameVacante = $_POST['nameVacante'];
+		$salarioVacante = $_POST['salarioVacante'];
+		$empresaVacante = $_POST['empresaVacante'];
+		$departamentoVacante = $_POST['departamentoVacante'];
+		$requisitosVacante = $_POST['requisitosVacante'];
+
+		$crearVacante = new FormulariosAjax();
+		$crearVacante -> nameVacante = $nameVacante;
+		$crearVacante -> salarioVacante = $salarioVacante;
+		$crearVacante -> empresaVacante = $empresaVacante;
+		$crearVacante -> departamentoVacante = $departamentoVacante;
+		$crearVacante -> requisitosVacante = $requisitosVacante;
+		$crearVacante -> crearVacanteAjax();
+
+	}else{
+		echo "2";
+	}
+}
+
+if (isset($_POST['idVacantes'])) {
+	$idVacantes = $_POST['idVacantes'];
+	$valor = $_POST['respuestaVacante'];
+
+	$crearVacante = new FormulariosAjax();
+	$crearVacante -> idVacantes = $idVacantes;
+	$crearVacante -> valor = $valor;
+	$crearVacante -> activarVacante();
 }

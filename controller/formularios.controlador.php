@@ -290,26 +290,16 @@ class ControladorFormularios{
 		}
 	}
 	
-	static public function ctrRegistrarVacantes(){
-
-		if (isset($_POST['name'])) {
-			if (preg_match('/^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["name"])){
-				$tabla = "vacantes";
-				$datos = array("nameVacante" => $_POST['name'],
-							   "salarioVacante" => $_POST['salario'],
-							   "Departamentos_idDepartamentos" => $_POST['departamento'],
-							   "requisitos" => $_POST['requisitos']);
-				$registro = ModeloFormularios::mdlRegistrarVacantes($tabla,$datos);
-				if ($registro == 'ok') {
-					return 'ok';
-				}else{
-					return 'Error';
-				}
-
-			}else{
-				return "2";
-			}
-		}
+	static public function ctrRegistrarVacantes($datos){
+		$tabla = "vacantes";
+		$registro = ModeloFormularios::mdlRegistrarVacantes($tabla,$datos);	
+		return $registro;
+	}
+	
+	static public function ctrActivarVacante($datos){
+		$tabla = "vacantes";
+		$registro = ModeloFormularios::mdlActivarVacante($tabla,$datos);	
+		return $registro;
 	}
 	
 	static public function ctrActualizarVacantes($idVacante){
@@ -564,6 +554,7 @@ class ControladorFormularios{
 			if($respuesta["email"] == $loginEmail && $respuesta["password"] == $encriptarPassword){
 
 				if ($respuesta["status"] == 1) {
+					$nivel = 0;
 					$_SESSION["validarIngreso"] = "ok";
 					$_SESSION["idEmpleado"] = $respuesta["idEmpleados"];
 					$_SESSION["genero"] = $respuesta["genero"];
@@ -572,6 +563,16 @@ class ControladorFormularios{
 					$_SESSION["status"] = $respuesta["status"];
 					$_SESSION["loginEmail"] = $respuesta["email"];
 					$_SESSION["cambio_password"] = $respuesta["cambio_password"];
+					$_SESSION["idPuesto"] = $respuesta["idPuesto"];
+					$_SESSION["idDepartamentos"] = $respuesta["idDepartamentos"];
+					$_SESSION["idEmpresas"] = $respuesta["idEmpresas"];
+					$_SESSION["Pertenencia"] = $respuesta["Pertenencia"];
+
+					if ($respuesta["idEmpleadoDepa"] == $respuesta["idEmpleados"]) {
+						$nivel = 1;
+					}
+					
+					$_SESSION["nivel"] = $nivel;
 
 					if ($respuesta['cambio_password'] == 0) {
 						return 'Cambio';

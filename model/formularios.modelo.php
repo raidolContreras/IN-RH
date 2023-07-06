@@ -207,10 +207,13 @@ class ModeloFormularios{
 		}
 		else{
 
-			$stmt = Conexion::conectar()->prepare("SELECT * 
-				FROM empleados e 
-				INNER JOIN emergencia m ON e.idEmpleados = m.Empleados_idEmpleados 
-				WHERE $item = :$item");
+			$stmt = Conexion::conectar()->prepare("SELECT *, d.Empleados_idEmpleados AS idEmpleadoDepa
+			FROM empleados e
+			INNER JOIN emergencia m ON e.idEmpleados = m.Empleados_idEmpleados
+			LEFT JOIN puesto p ON e.idEmpleados = p.Empleados_idEmpleados
+			LEFT JOIN departamentos d ON d.idDepartamentos = p.Departamentos_idDepartamentos
+			LEFT JOIN empresas em ON em.idEmpresas = d.Empresas_idEmpresas
+			WHERE $item = :$item");
 			$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
 			$stmt->execute();
 			return $stmt -> fetch();
@@ -571,19 +574,21 @@ class ModeloFormularios{
 	static public function mdlRegistrarVacantes($tabla, $datos){
 
 		$color = '#' . str_pad(dechex(mt_rand(0, 0xFFFFFF)), 6, '0', STR_PAD_LEFT);
-		$sql = "INSERT INTO $tabla(nameVacante, salarioVacante, requisitos, Departamentos_idDepartamentos, color) VALUES (:nameVacante, :salarioVacante, :requisitos, :Departamentos_idDepartamentos, :color)";
+
+		$sql = "INSERT INTO $tabla(nameVacante, salarioVacante, requisitos, Empresas_idEmpresas, Departamentos_idDepartamentos, Empleados_idEmpleados, color) VALUES (:nameVacante, :salarioVacante, :requisitosVacante, :empresaVacante, :departamentoVacante, :idEmpleados, :color)";
+
 		$stmt = Conexion::conectar()->prepare($sql);
 		$stmt->bindParam(":nameVacante", $datos['nameVacante'], PDO::PARAM_STR);
 		$stmt->bindParam(":salarioVacante", $datos['salarioVacante'], PDO::PARAM_STR);
-		$stmt->bindParam(":requisitos", $datos['requisitos'], PDO::PARAM_STR);
-		$stmt->bindParam(":Departamentos_idDepartamentos", $datos['Departamentos_idDepartamentos'], PDO::PARAM_STR);
+		$stmt->bindParam(":requisitosVacante", $datos['requisitosVacante'], PDO::PARAM_STR);
+		$stmt->bindParam(":empresaVacante", $datos['empresaVacante'], PDO::PARAM_INT);
+		$stmt->bindParam(":departamentoVacante", $datos['departamentoVacante'], PDO::PARAM_INT);
+		$stmt->bindParam(":idEmpleados", $datos['idEmpleados'], PDO::PARAM_INT);
 		$stmt->bindParam(":color", $color, PDO::PARAM_STR);
 		if ($stmt->execute()) {
-
 			return 'ok';
 		}
 		else{
-
 			print_r(Conexion::conectar()->errorInfo());
 		}
 
@@ -614,6 +619,27 @@ class ModeloFormularios{
 		$stmt = null;
 	}
 
+	static public function mdlActivarVacante($tabla, $datos){
+
+		$sql = "UPDATE $tabla SET aprobado = :aprobado, Jefe_idEmpleados = :Jefe_idEmpleados WHERE idVacantes = :idVacante";
+		$stmt = Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":aprobado", $datos['aprobado'], PDO::PARAM_INT);
+		$stmt->bindParam(":Jefe_idEmpleados", $datos['Jefe_idEmpleados'], PDO::PARAM_INT);
+		$stmt->bindParam(":idVacante", $datos['idVacantes'], PDO::PARAM_INT);
+
+		if ($stmt->execute()) {
+			return 'ok';
+		}
+		else{
+
+			print_r(Conexion::conectar()->errorInfo());
+		}
+
+		$stmt->close();
+		$stmt = null;
+	}
+
 	/*---------- Función hecha para ver a los empleados---------- */
 	static public function mdlVerTabla($tabla, $item, $valor){
 
@@ -628,9 +654,10 @@ class ModeloFormularios{
 			}
 			elseif ($tabla == "vacantes") {
 
-				$sql = "SELECT * FROM $tabla 
-				JOIN departamentos ON $tabla.Departamentos_idDepartamentos = departamentos.idDepartamentos 
-				WHERE $tabla.status = 1;";
+				$sql = "SELECT * FROM vacantes v
+				JOIN departamentos d ON v.Departamentos_idDepartamentos = d.idDepartamentos 
+				JOIN empresas e ON e.idEmpresas = v.Empresas_idEmpresas 
+				WHERE v.status = 1;";
 			}
 
 			$stmt = Conexion::conectar()->prepare($sql);
@@ -1029,7 +1056,7 @@ static public function mdlImagenNoticia($id, $name)
 
 	static public function mdlRegistrarEmpresas($tabla, $datos){
 		$sql = "INSERT INTO $tabla
-		(registro_patronal, rfc, nombre_razon_social, regimen, actividad_economica, calle, numero, numero_interior, colonia, cp, entidad, poblacion_municipio, telefono, convenio_reembolso, delegacion_imss, subdelegacion, clave_subdelegacion, dia_inicio_afiliacion,  mes_inicio_afiliacion, anio_inicio_afiliacion) 
+		(registro_patronal, rfc, nombre_razon_social, regimen, actividad_economica, calle, numero, numero_interior, colonia, cp, entidad, poblacion_municipio, telefono, convenio_reembolso, delegacion_imss, subdelegacion, clave_subdelegacion, dia_inicio_afiliacion, mes_inicio_afiliacion, anio_inicio_afiliacion) 
 		VALUES (:registro_patronal,:rfc,:nombre_razon_social,:regimen,:actividad_economica,:calle,:numero,:numero_interior,:colonia,:cp,:entidad,:poblacion_municipio,:telefono,:convenio_reembolso,:delegacion_imss,:subdelegacion,:clave_subdelegacion,:dia_inicio_afiliacion, :mes_inicio_afiliacion,:anio_inicio_afiliacion)";
 		$stmt = Conexion::conectar()->prepare($sql);
 
@@ -1143,17 +1170,17 @@ static public function mdlImagenNoticia($id, $name)
 		$conexion = Conexion::conectar();
 
 		$sql = "SELECT DISTINCT e.idEmpleados AS id, CONCAT(e.name, ' ', e.lastname) AS name, d.nameDepto AS area, 
-				    CONCAT('Empleado&perfil=', e.idEmpleados) AS profileUrl, p.namePuesto AS positionName, 
-				    CASE 
-				        WHEN d.Empleados_idEmpleados = e.idEmpleados THEN
-				            (SELECT Empleados_idEmpleados FROM departamentos WHERE idDepartamentos = d.Pertenencia)
-				        ELSE
-				            (SELECT Empleados_idEmpleados FROM departamentos WHERE idDepartamentos = p.Departamentos_idDepartamentos)
-				    END AS parentId,
-				    CASE 
-				        WHEN f.namePhoto IS NULL THEN 'assets/images/general.jpg'
-				        ELSE CONCAT('view/fotos/thumbnails/', f.namePhoto)
-				    END AS imageUrl
+					CONCAT('Empleado&perfil=', e.idEmpleados) AS profileUrl, p.namePuesto AS positionName, 
+					CASE 
+						WHEN d.Empleados_idEmpleados = e.idEmpleados THEN
+							(SELECT Empleados_idEmpleados FROM departamentos WHERE idDepartamentos = d.Pertenencia)
+						ELSE
+							(SELECT Empleados_idEmpleados FROM departamentos WHERE idDepartamentos = p.Departamentos_idDepartamentos)
+					END AS parentId,
+					CASE 
+						WHEN f.namePhoto IS NULL THEN 'assets/images/general.jpg'
+						ELSE CONCAT('view/fotos/thumbnails/', f.namePhoto)
+					END AS imageUrl
 				FROM empleados e
 				INNER JOIN puesto p ON e.idEmpleados = p.Empleados_idEmpleados
 				INNER JOIN departamentos d ON p.Departamentos_idDepartamentos = d.idDepartamentos
@@ -1786,8 +1813,8 @@ static public function mdlImagenNoticia($id, $name)
 	static public function mdlVerSolicitudesPermisos($idEmpleados){
 		$sql = "SELECT *, TIMESTAMPDIFF(DAY, ep.fechaPermiso, ep.fechaFin)+1 AS rango
 				FROM empleados_has_permisos ep
-		        RIGHT JOIN permisos p ON p.idPermisos = ep.Permisos_idPermisos
-		        WHERE Empleados_idEmpleados = :idEmpleados;";
+				RIGHT JOIN permisos p ON p.idPermisos = ep.Permisos_idPermisos
+				WHERE Empleados_idEmpleados = :idEmpleados;";
 
 		$stmt = Conexion::conectar()->prepare($sql);
 		$stmt->bindParam(":idEmpleados", $idEmpleados, PDO::PARAM_INT);
@@ -1957,6 +1984,21 @@ static public function mdlImagenNoticia($id, $name)
 			return "error";
 		}
 
+		$stmt->close();
+		$stmt = null;
+	}
+
+	static public function mdlActivadoresVacantes($idDepto){
+		$pdo =Conexion::conectar();
+		$sql = "SELECT e.idEmpleados, d.Pertenencia FROM departamentos d
+				JOIN empleados e ON e.idEmpleados = d.Empleados_idEmpleados
+				WHERE e.status = 1 AND d.status = 1 AND d.idDepartamentos = :idDepto;";
+
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(":idDepto", $idDepto, PDO::PARAM_INT);
+		
+		$stmt->execute();
+		return $stmt -> fetch();
 		$stmt->close();
 		$stmt = null;
 	}
