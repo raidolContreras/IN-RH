@@ -149,6 +149,12 @@ session_start();
 				include "pages/Horarios/".$_GET["pagina"].".php";
 			}
 
+		}elseif ($_GET["pagina"] == "crearEvaluacion") {
+
+			include "pages/navs/navbar.php";
+			include "pages/navs/sidenav.php";
+			include "pages/Examenes/".$_GET["pagina"].".php";
+
 		}else{
 			include "pages/404-page.html";
 		}
