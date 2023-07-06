@@ -18,6 +18,7 @@ $i = 0; ?>
 									<th>Nombre vacante</th>
 									<th>Empresa</th>
 									<th>Departamento</th>
+									<th>Aprobado</th>
 									<th width="10%">Salario</th>
 									<th width="5%">Postulantes</th>
 									<th width="5%">Acciones</th>
@@ -51,6 +52,13 @@ $i = 0; ?>
 												<td><?php echo $vacante['nameVacante'] ?></td>
 												<td><?php echo $vacante['nombre_razon_social'] ?></td>
 												<td><?php echo $vacante['nameDepto'] ?></td>
+												<?php if ($vacante['Jefe_idEmpleados'] == null): ?>
+													<td></td>
+												<?php else:
+												$jefe_aprobado = ControladorEmpleados::ctrVerEmpleados( 'idEmpleados',$vacante['Jefe_idEmpleados']);
+												echo "<td>".$jefe_aprobado['lastname']." ".$jefe_aprobado['name']."</td>";
+												?>
+												<?php endif ?>
 												<td><?php echo $vacante['salarioVacante'] ?></td>
 											<?php if ($vacante['aprobado'] == 1): ?>
 												<td>
