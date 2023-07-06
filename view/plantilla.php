@@ -74,6 +74,7 @@ session_start();
 			$_GET["pagina"] == "SubirDocumentos" ||
 			$_GET["pagina"] == "EntregarTarea" ||
 			$_GET["pagina"] == "FinalizarTarea" ||
+			$_GET["pagina"] == "Evaluaciones"  ||
 			$_GET["pagina"] == "somos" 
 
 		){

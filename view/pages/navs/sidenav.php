@@ -47,7 +47,12 @@
 					</li>
 
 					<li class="nav-item">
-						<a class="nav-link" href="#"><i class="far fa-star"></i>EVALUACIONES</a>
+						<?php if (isset($_GET['pagina']) && in_array($_GET['pagina'], array('Evaluaciones', 'Preguntas'))): ?>
+							<a class="nav-link active" href="Evaluaciones">
+						<?php else: ?>
+							<a class="nav-link" href="Evaluaciones">
+						<?php endif ?>
+						<i class="far fa-star"></i>EVALUACIONES</a>
 					</li>
 
 					<li class="nav-item">
