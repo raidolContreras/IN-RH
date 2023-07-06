@@ -89,7 +89,7 @@ $causaBaja = array(
 					</div>
 				</div>
 				<div class="card-body border-top">
-					<?php if ($colaborador['status'] == 1): ?>
+					<?php if ($colaborador['eStatus'] == 1): ?>
 					<h3 class="font-16 hprofile">Acciones</h3>
 
 						<form method="POST" action="Documento" class="container pb-2">

@@ -28,8 +28,6 @@ jQuery(document).ready(function($) {
                     }
                     ],
                 fixedHeader: true,
-                scrollY: 375,
-                scrollX: 400,
                 stateSave: true,
                 select: true,
             language: {

@@ -207,7 +207,7 @@ class ModeloFormularios{
 		}
 		else{
 
-			$stmt = Conexion::conectar()->prepare("SELECT *, d.Empleados_idEmpleados AS idEmpleadoDepa
+			$stmt = Conexion::conectar()->prepare("SELECT *, d.Empleados_idEmpleados AS idEmpleadoDepa, e.status AS eStatus
 			FROM empleados e
 			INNER JOIN emergencia m ON e.idEmpleados = m.Empleados_idEmpleados
 			LEFT JOIN puesto p ON e.idEmpleados = p.Empleados_idEmpleados
