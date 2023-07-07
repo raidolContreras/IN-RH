@@ -51,15 +51,6 @@ $empresas = ControladorFormularios::ctrVerEmpresas(null,null);
 								<textarea class="form-control texteditor" name="requisitosVacante" id="requisitosVacante" rows="3" required>
 									
 								</textarea>
-								<script>
-									tinymce.init({
-										selector: '.texteditor',
-										toolbar: 'undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link'
-									});
-
-									document.getElementById('mce_0_ifr').contentWindow.document.getElementById('tinymce').innerHTML
-
-								</script>
 								<!---->
 							</div>
 						</div>
@@ -75,7 +66,15 @@ $empresas = ControladorFormularios::ctrVerEmpresas(null,null);
 	</div>
 </div>
 <script>
-$(document).ready(function() {
+
+	tinymce.init({
+	selector: '.texteditor',
+	plugins: 'advlist lists',
+	menubar: '',
+	toolbar: 'bold italic underline | fontfamily fontsize blocks | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat'
+
+	});
+	$(document).ready(function() {
 	var empresa = document.getElementById('empresa');
 	var departamento = document.getElementById('departamentoVacante');
 	$("#empresa").change(function() {

@@ -106,13 +106,11 @@ $fotoEmpleado = ControladorFormularios::ctrVerFotos("Empleados_idEmpleados", $em
 						<script>
 							tinymce.init({
 							selector: '.texteditor',
-								plugins: [
-								'textcolor colorpicker autoresize'
-								],
-								toolbar: 'undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link'
-							});
+							plugins: 'advlist lists',
+							menubar: '',
+							toolbar: 'bold italic underline | fontfamily fontsize blocks | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat'
 
-							document.getElementById('mce_0_ifr').contentWindow.document.getElementById('tinymce').innerHTML
+							});
 
 						</script>
 						<input type="hidden" name="publicado" value="<?php echo $_SESSION['idEmpleado'] ?>">
@@ -184,6 +182,7 @@ $fotoEmpleado = ControladorFormularios::ctrVerFotos("Empleados_idEmpleados", $em
 			}, 1500);
 		}
 	});
+	
 	$(document).ready(function() {
 	  // Manejar el evento de cambio del select de empresas
 	  $("#empresas").change(function() {

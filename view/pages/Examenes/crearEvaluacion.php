@@ -5,7 +5,6 @@
 			<div class="col-lg-12">
 				<div class="card">
 					<div class="card-body">
-						<div id="form-result"></div>
 						<form id="examen-form" class="container mt-4">
 							<div class="form-row">
 								<div class="col-md-12">
@@ -16,8 +15,12 @@
 								</div>
 								<div class="col-md-12 p-0">
 									<div class="form-group">
+
+										<!---->
 										<label class="control-label sr-only" for="summernote">Descripciones:</label>
-										<textarea class="form-control" id="summernote" name="editordata" rows="6" placeholder="Escribe descripciones"></textarea>
+										<textarea class="form-control texteditor" name="mensaje" id="mensaje" rows="3" placeholder="Describe las instrucciones"></textarea>
+										<!---->
+
 									</div>
 								</div>
 								<div class="col-md-3">
@@ -85,17 +88,13 @@
 	</div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="assets/vendor/summernote/js/summernote-bs4.js"></script>
 <script>
-	$(document).ready(function() {
-		$('.js-example-basic-multiple').select2({ tags: true });
-	});
+	tinymce.init({
+	selector: '.texteditor',
+	plugins: 'advlist lists',
+	menubar: '',
+	toolbar: 'bold italic underline | fontfamily fontsize blocks | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat'
 
-	$(document).ready(function() {
-		$('#summernote').summernote({
-			height: 300
-		});
 	});
 
 	$(document).ready(function() {
@@ -130,5 +129,75 @@
 				$('#intentos_maximos').prop('disabled', true).val('');
 			}
 		});
+
+		$("#examen-btn").click(function() {
+		var contenidoEditor = tinymce.get('mensaje').getContent();
+		$("#mensaje").val(contenidoEditor);
+
+		if ($("#mensaje").val() === "") {
+			$("#mensaje").val("null");
+		}
+		
+		if ($("#tiempo_limite").val() === "") {
+			$("#tiempo_limite").val("null");
+		}
+		
+		if ($("#fecha_inicio").val() === "") {
+			$("#fecha_inicio").val("null");
+		}
+		
+		if ($("#fecha_fin").val() === "") {
+			$("#fecha_fin").val("null");
+		}
+		
+		if ($("#intentos_maximos").val() === "") {
+			$("#intentos_maximos").val("null");
+		}
+		
+		var formData = $("#examen-form").serialize(); // Obtener los datos del formulario
+
+			$.ajax({
+				url: "ajax/ajax.formularios.php", // Ruta al archivo PHP que procesará los datos del formulario
+				type: "POST",
+				data: formData,
+				success: function(response) {
+
+					if (response !== 'error') {
+						$("#form-result").val("");
+						$("#form-result").html(`
+						<div class='alert alert-success' role="alert" id="alerta">
+							<i class="fas fa-check-circle"></i>
+							Se creo el examen <p class='Titulo'>"`+response+`".</p>
+						</div>
+							`);
+						deleteAlert();
+						setTimeout(function() {
+							location.href = 'Evaluaciones';
+						}, 900);
+					}else{
+						$("#form-result").val("");
+						$("#form-result").html(`
+						<div class='alert alert-danger' role="alert" id="alerta">
+							<i class="fas fa-exclamation-triangle"></i>
+							<b>Error</b>, no se crear el examen, intenta nuevamente.
+						</div>
+							`);
+
+						deleteAlert();
+					}
+
+				}
+			});
+		});
+
 	});
+
+		function deleteAlert() {
+			setTimeout(function() {
+				var alert = $('#alerta');
+				alert.fadeOut('slow', function() {
+					alert.remove();
+				});
+			}, 800);
+		}
 </script>

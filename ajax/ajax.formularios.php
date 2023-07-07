@@ -550,6 +550,27 @@ class FormulariosAjax{
 		echo $activarVacante;
 	}
 
+	public function crearExamenesAjax(){
+		$titulo = $this->titulo;
+		$mensaje = $this->mensaje;
+		$tiempo_limite = $this->tiempo_limite;
+		$fecha_inicio = $this->fecha_inicio;
+		$fecha_fin = $this->fecha_fin;
+		$intentos_maximos = $this->intentos_maximos;
+
+		$datos = array(
+			"titulo" => $titulo,
+			"mensaje" => $mensaje,
+			"tiempo_limite" => $tiempo_limite,
+			"fecha_inicio" => $fecha_inicio,
+			"fecha_fin" => $fecha_fin,
+			"intentos_maximos" => $intentos_maximos
+		);
+
+		$crearExamen = ControladorFormularios::ctrCrearExamen($datos);
+		echo $crearExamen;
+	}
+
 }
 
 if(isset($_POST["validate"])){
@@ -951,4 +972,40 @@ if (isset($_POST['idVacantes'])) {
 	$crearVacante -> idVacantes = $idVacantes;
 	$crearVacante -> valor = $valor;
 	$crearVacante -> activarVacante();
+}
+
+if (isset($_POST['titulo'])) {
+
+	$mensaje = null;
+	$tiempo_limite = null;
+	$fecha_inicio = null;
+	$fecha_fin = null;
+	$intentos_maximos = null;
+
+	$titulo = $_POST['titulo'];
+
+	if (isset($_POST['mensaje'])) {
+		$mensaje = $_POST['mensaje'];
+	}
+	if (isset($_POST['tiempo_limite'])) {
+		$tiempo_limite = $_POST['tiempo_limite'];
+	}
+	if (isset($_POST['fecha_inicio'])) {
+		$fecha_inicio = $_POST['fecha_inicio'];
+	}
+	if (isset($_POST['fecha_fin'])) {
+		$fecha_fin = $_POST['fecha_fin'];
+	}
+	if (isset($_POST['intentos_maximos'])) {
+		$intentos_maximos = $_POST['intentos_maximos'];
+	}
+
+	$crearExamenes = new FormulariosAjax();
+	$crearExamenes -> titulo = $titulo;
+	$crearExamenes -> mensaje = $mensaje;
+	$crearExamenes -> tiempo_limite = $tiempo_limite;
+	$crearExamenes -> fecha_inicio = $fecha_inicio;
+	$crearExamenes -> fecha_fin = $fecha_fin;
+	$crearExamenes -> intentos_maximos = $intentos_maximos;
+	$crearExamenes -> crearExamenesAjax();
 }

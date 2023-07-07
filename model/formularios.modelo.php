@@ -2003,6 +2003,28 @@ static public function mdlImagenNoticia($id, $name)
 		$stmt = null;
 	}
 
+	static public function mdlCrearExamen($datos){
+		$pdo =Conexion::conectar();
+		$sql = "INSERT INTO examenes(titulo, Descripcion, tiempo_limite, fecha_inicio, fecha_fin, intentos_maximos) VALUES (:titulo, :mensaje, :tiempo_limite, :fecha_inicio, :fecha_fin, :intentos_maximos)";
+
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(":titulo", $datos['titulo']);
+		$stmt->bindParam(":mensaje", $datos['mensaje']);
+		$stmt->bindParam(":tiempo_limite", $datos['tiempo_limite']);
+		$stmt->bindParam(":fecha_inicio", $datos['fecha_inicio']);
+		$stmt->bindParam(":fecha_fin", $datos['fecha_fin']);
+		$stmt->bindParam(":intentos_maximos", $datos['intentos_maximos']);
+		
+		if ($stmt->execute()) {
+			return $datos['titulo'];
+		}else{
+			return "error";
+		}
+
+		$stmt->close();
+		$stmt = null;
+	}
+
 
 	/*---------- Fin de ModeloFormularios ---------- */
 }

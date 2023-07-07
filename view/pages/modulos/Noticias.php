@@ -69,16 +69,6 @@ if (isset($_GET['noticia'])) {
 		<!---->
 		<textarea class="form-control noticia_text" name="mensaje_noticia" id="mensaje_noticia" rows="3"><?php echo $mensaje ?></textarea>
 
-		<script>
-			tinymce.init({
-				selector: '.noticia_text',
-				plugins: [
-					'textcolor colorpicker autoresize'
-				],
-				toolbar: 'undo redo | styleselect | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link'
-			});
-		</script>
-
 		<input type="hidden" name="noticia" value="<?php echo $idNoticia ?>">
 		<input type="hidden" name="publicado" value="<?php echo $_SESSION['idEmpleado'] ?>">
 		<input type="hidden" id="foto_noticia" name="foto_noticia" value="<?php echo $foto_noticia ?>">
@@ -98,6 +88,14 @@ if (isset($_GET['noticia'])) {
 </div>
 
 <script>
+	
+	tinymce.init({
+	selector: '.noticia_text',
+	plugins: 'advlist lists',
+	menubar: '',
+	toolbar: 'bold italic underline | fontfamily fontsize blocks | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat'
+
+	});
 	$(document).ready(function() {
 		// Por defecto, ocultar el campo de imagen si foto_noticia es igual a 0
 		if ($("#foto_noticia").val() == 0) {

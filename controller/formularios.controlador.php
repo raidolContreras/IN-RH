@@ -1221,5 +1221,10 @@ class ControladorFormularios{
 		return $finalizarTarea;
 	}
 
+	static public function ctrCrearExamen($data){
+		$crearExamen = ModeloFormularios::mdlCrearExamen($data);
+		return $crearExamen;
+	}
+
 	/*---------- Fin de ControladorFormularios ---------- */
 }
