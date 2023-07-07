@@ -149,7 +149,8 @@ session_start();
 				include "pages/Horarios/".$_GET["pagina"].".php";
 			}
 
-		}elseif ($_GET["pagina"] == "crearEvaluacion") {
+		}elseif ($_GET["pagina"] == "crearEvaluacion" ||
+				 $_GET["pagina"] == "eliminarExamen" ) {
 
 			include "pages/navs/navbar.php";
 			include "pages/navs/sidenav.php";

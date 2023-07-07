@@ -557,6 +557,7 @@ class FormulariosAjax{
 		$fecha_inicio = $this->fecha_inicio;
 		$fecha_fin = $this->fecha_fin;
 		$intentos_maximos = $this->intentos_maximos;
+		$idExamen = $this->idExamen;
 
 		$datos = array(
 			"titulo" => $titulo,
@@ -564,7 +565,8 @@ class FormulariosAjax{
 			"tiempo_limite" => $tiempo_limite,
 			"fecha_inicio" => $fecha_inicio,
 			"fecha_fin" => $fecha_fin,
-			"intentos_maximos" => $intentos_maximos
+			"intentos_maximos" => $intentos_maximos,
+			"idExamen" => $idExamen
 		);
 
 		$crearExamen = ControladorFormularios::ctrCrearExamen($datos);
@@ -983,8 +985,9 @@ if (isset($_POST['titulo'])) {
 	$intentos_maximos = null;
 
 	$titulo = $_POST['titulo'];
+	$idExamen = $_POST['idExamen'];
 
-	if (isset($_POST['mensaje'])) {
+	if ($_POST['mensaje'] != 'null') {
 		$mensaje = $_POST['mensaje'];
 	}
 	if (isset($_POST['tiempo_limite'])) {
@@ -1007,5 +1010,6 @@ if (isset($_POST['titulo'])) {
 	$crearExamenes -> fecha_inicio = $fecha_inicio;
 	$crearExamenes -> fecha_fin = $fecha_fin;
 	$crearExamenes -> intentos_maximos = $intentos_maximos;
+	$crearExamenes -> idExamen = $idExamen;
 	$crearExamenes -> crearExamenesAjax();
 }

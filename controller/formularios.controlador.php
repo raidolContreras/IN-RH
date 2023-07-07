@@ -1222,8 +1222,13 @@ class ControladorFormularios{
 	}
 
 	static public function ctrCrearExamen($data){
-		$crearExamen = ModeloFormularios::mdlCrearExamen($data);
-		return $crearExamen;
+
+		if ($data['idExamen'] == 0) {
+			$respuesta = ModeloFormularios::mdlCrearExamen($data);
+		}else{
+			$respuesta = ModeloFormularios::mdlActualizarExamenes($data);
+		}
+		return $respuesta;
 	}
 
 	static public function ctrVerEvaluaciones($item, $dato){

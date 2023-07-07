@@ -492,7 +492,7 @@ class ModeloFormularios{
 
 	static public function mdlActualizarDepto($tabla, $datos){
 
-		$sql = "UPDATE $tabla SET nameDepto=:nameDepto ,Empleados_idEmpleados=:Empleados_idEmpleados, Empresas_idEmpresas=:Empresas_idEmpresas WHERE idDepartamentos = :idDepartamentos";
+		$sql = "UPDATE $tabla SET nameDepto=:nameDepto, Empleados_idEmpleados=:Empleados_idEmpleados, Empresas_idEmpresas=:Empresas_idEmpresas WHERE idDepartamentos = :idDepartamentos";
 		$stmt = Conexion::conectar()->prepare($sql);
 		$stmt->bindParam(":nameDepto", $datos['name'], PDO::PARAM_STR);
 		$stmt->bindParam(":Empleados_idEmpleados", $datos['idEmpleado'], PDO::PARAM_INT);
@@ -2014,6 +2014,29 @@ static public function mdlImagenNoticia($id, $name)
 		$stmt->bindParam(":fecha_inicio", $datos['fecha_inicio']);
 		$stmt->bindParam(":fecha_fin", $datos['fecha_fin']);
 		$stmt->bindParam(":intentos_maximos", $datos['intentos_maximos']);
+		
+		if ($stmt->execute()) {
+			return $datos['titulo'];
+		}else{
+			return "error";
+		}
+
+		$stmt->close();
+		$stmt = null;
+	}
+
+	static public function mdlActualizarExamenes($datos){
+		$pdo =Conexion::conectar();
+		$sql = "UPDATE examenes SET titulo = :titulo, descripcion = :mensaje, tiempo_limite = :tiempo_limite, fecha_inicio = :fecha_inicio, fecha_fin = :fecha_fin, intentos_maximos = :intentos_maximos WHERE idExamen=:idExamen";
+
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(":titulo", $datos['titulo']);
+		$stmt->bindParam(":mensaje", $datos['mensaje']);
+		$stmt->bindParam(":tiempo_limite", $datos['tiempo_limite']);
+		$stmt->bindParam(":fecha_inicio", $datos['fecha_inicio']);
+		$stmt->bindParam(":fecha_fin", $datos['fecha_fin']);
+		$stmt->bindParam(":intentos_maximos", $datos['intentos_maximos']);
+		$stmt->bindParam(":idExamen", $datos['idExamen'],PDO::PARAM_INT);
 		
 		if ($stmt->execute()) {
 			return $datos['titulo'];

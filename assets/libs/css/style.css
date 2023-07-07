@@ -1532,16 +1532,10 @@ Top Header
 
 .nav-user-dropdown .dropdown-item {
 	display: block;
-	width: 100%;
 	padding: 12px 22px 15px;
-	clear: both;
-	font-weight: 400;
-	color: #686972;
-	text-align: inherit;
+	color: #3A3A3A;
 	white-space: nowrap;
-	background-color: transparent;
 	border: 0;
-	font-size: 13px;
 	line-height: 0.4;
 }
 
@@ -1940,31 +1934,25 @@ Sidebar Page Navigations
 	border: 1px solid #e6e6f2;
 }
 
-.dropdown-item {
+.IN-dropdown-item {
 	display: block;
-	width: 100%;
-	padding: .25rem 1.5rem;
-	clear: both;
-	font-weight: 400;
-	color: #654aa2;
-	text-align: inherit;
+	padding: 10px 15px 10px;
+	color: #3A3A3A;
 	white-space: nowrap;
-	background-color: transparent;
 	border: 0;
+	line-height: 0.4;
 }
 
-.dropdown-item:hover {
-	color: #5969ff;
+.IN-dropdown-item:hover {
 	background: #efeff6;
 }
 
 .page-section {}
 
-.dropdown-item.active,
-.dropdown-item:active {
+.IN-dropdown-item.active,
+.IN-dropdown-item:active {
 	color: #fff;
 	text-decoration: none;
-	background-color: #5969ff;
 }
 
 
