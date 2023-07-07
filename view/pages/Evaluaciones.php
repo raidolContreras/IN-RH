@@ -1,4 +1,6 @@
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<?php
+$Evaluaciones = ControladorFormularios::ctrVerEvaluaciones(null, null);
+?>
 <div class="container-fluid dashboard-content">
 	<div class="ecommerce-widget">
 		<div class="card mx-5 menu-ajustes">
@@ -14,46 +16,55 @@
 			</div>
 			<div class="card-body">
 				<div class="table-responsive">
-					<table class="table second">
+					<table class="table examenes">
 						<thead>
 							<tr>
 								<th>#</th>
 								<th>Nombre del examen</th>
 								<th>Rango de fechas</th>
 								<th>Tiempo límite</th>
+								<th></th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>01</td>
-								<td>Evaluación de desempeño</td>
-								<td>7 de julio de 2023, 00:00 al 9 de julio de 2023, 23:59</td>
-								<td>50 min</td>
-							</tr>
-							<tr>
-								<td>02</td>
-								<td>Examen de matemáticas</td>
-								<td>15 de julio de 2023, 08:00 al 16 de julio de 2023, 20:00</td>
-								<td>90 min</td>
-							</tr>
-							<tr>
-								<td>03</td>
-								<td>Examen de historia</td>
-								<td>20 de julio de 2023, 14:00 al 22 de julio de 2023, 14:00</td>
-								<td>120 min</td>
-							</tr>
-							<tr>
-								<td>04</td>
-								<td>Examen de ciencias</td>
-								<td>25 de julio de 2023, 09:00 al 27 de julio de 2023, 18:00</td>
-								<td>75 min</td>
-							</tr>
-							<tr>
-								<td>05</td>
-								<td>Examen de idiomas</td>
-								<td>1 de agosto de 2023, 10:00 al 3 de agosto de 2023, 10:00</td>
-								<td>60 min</td>
-							</tr>
+							<?php $i=1; foreach ($Evaluaciones as $Evaluacion):
+								$tiempo = ControladorFormularios::ctrFormatearTiempo($Evaluacion['tiempo_limite']);
+							?>
+								<tr>
+									<td>
+										<?php if (strlen($i)==1) {
+											echo '0'.$i;
+										}else{
+											echo $i;
+										}$i++;?>
+									</td>
+									<td><?php echo $Evaluacion['titulo']; ?></td>
+									<td>
+										<?php
+										if ($Evaluacion['fecha_inicio'] == null) {
+											if ($Evaluacion['fecha_fin'] == null) {
+												echo 'Siempre Abierto';
+											}else{
+												$fecha_fin = ControladorFormularios::ctrFormatearMes($Evaluacion['fecha_fin']);
+												echo 'Hasta el '.$fecha_fin;
+											}
+										}else{
+
+											$fecha_inicio = ControladorFormularios::ctrFormatearMes($Evaluacion['fecha_inicio']);
+
+											echo $fecha_inicio;
+
+											if ($Evaluacion['fecha_fin'] != null) {
+												$fecha_fin = ControladorFormularios::ctrFormatearMes($Evaluacion['fecha_fin']);
+												echo ' al '.$fecha_fin;
+											}
+										}
+										?>
+									</td>
+									<td><?php echo $tiempo; ?></td>
+									<td></td>
+								</tr>
+							<?php endforeach ?>
 						</tbody>
 					</table>
 				</div>

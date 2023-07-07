@@ -2025,6 +2025,29 @@ static public function mdlImagenNoticia($id, $name)
 		$stmt = null;
 	}
 
+	static public function mdlVerEvaluaciones($item, $dato){
+		$pdo =Conexion::conectar();
+		if ($item == null && $dato == null) {
+			$sql = "SELECT * FROM examenes";
+
+			$stmt = $pdo->prepare($sql);
+			
+			$stmt->execute();
+			return $stmt -> fetchAll();
+		}else{
+			$sql = "SELECT * FROM examenes WHERE $item = :$item";
+
+			$stmt = $pdo->prepare($sql);
+			$stmt->bindParam(":".$item, $dato);
+			
+			$stmt->execute();
+			return $stmt -> fetch();
+		}
+
+		$stmt->close();
+		$stmt = null;
+	}
+
 
 	/*---------- Fin de ModeloFormularios ---------- */
 }

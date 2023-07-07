@@ -1,15 +1,15 @@
 <?php
 
 function generarPassword() {
-    $caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    $password = '';
+	$caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+	$password = '';
 
-    for ($i = 0; $i < 8; $i++) {
-        $indice = rand(0, strlen($caracteres) - 1);
-        $password .= $caracteres[$indice];
-    }
+	for ($i = 0; $i < 8; $i++) {
+		$indice = rand(0, strlen($caracteres) - 1);
+		$password .= $caracteres[$indice];
+	}
 
-    return $password;
+	return $password;
 }
 
 class ControladorFormularios{
@@ -767,216 +767,216 @@ class ControladorFormularios{
 	}
 
 	static public function generarArchivoCSV($empresaId,$nameEmpresa)
-    {
-        $datosEmpresa = ModeloFormularios::obtenerDatosEmpresa($empresaId);
+	{
+		$datosEmpresa = ModeloFormularios::obtenerDatosEmpresa($empresaId);
 
-        if (!empty($datosEmpresa)) {
-            $directorio = "assets/organigrama/".$nameEmpresa;
-            if (!is_dir($directorio)) {
-                mkdir($directorio, 0777, true);
-            }
+		if (!empty($datosEmpresa)) {
+			$directorio = "assets/organigrama/".$nameEmpresa;
+			if (!is_dir($directorio)) {
+				mkdir($directorio, 0777, true);
+			}
 
-            $archivo = fopen($directorio . "/org.csv", "w");
+			$archivo = fopen($directorio . "/org.csv", "w");
 
-            $encabezado = array("id", "name", "area", "profileUrl", "imageUrl", "positionName", "parentId");
-            fputcsv($archivo, $encabezado);
+			$encabezado = array("id", "name", "area", "profileUrl", "imageUrl", "positionName", "parentId");
+			fputcsv($archivo, $encabezado);
 
-            foreach ($datosEmpresa as $fila) {
-			    $parentId = ($fila["parentId"] == 0 ? '' : $fila["parentId"]);
+			foreach ($datosEmpresa as $fila) {
+				$parentId = ($fila["parentId"] == 0 ? '' : $fila["parentId"]);
 
-			    $datos = array(
-			        $fila["id"],
-			        $fila["name"],
-			        $fila["area"],
-			        $fila["profileUrl"],
-			        $fila["imageUrl"],
-			        $fila["positionName"],
-			        $parentId
-			    );
+				$datos = array(
+					$fila["id"],
+					$fila["name"],
+					$fila["area"],
+					$fila["profileUrl"],
+					$fila["imageUrl"],
+					$fila["positionName"],
+					$parentId
+				);
 
-			    // Eliminar las comillas de cada valor
-			    $datosSinComillas = array_map(function ($valor) {
-			        return str_replace('"', '', $valor);
-			    }, $datos);
+				// Eliminar las comillas de cada valor
+				$datosSinComillas = array_map(function ($valor) {
+					return str_replace('"', '', $valor);
+				}, $datos);
 
-			    fputcsv($archivo, $datosSinComillas);
+				fputcsv($archivo, $datosSinComillas);
 			}
 
 
-            fclose($archivo);
+			fclose($archivo);
 
-            return "ok";
-        } else {
-            return "Error";
-        }
-    }
+			return "ok";
+		} else {
+			return "Error";
+		}
+	}
 
-    static public function ctrEmpleadosEspecial($item,$valor){
-    	$tabla = "empleados";
-    	$respuesta = ModeloFormularios::mdlEmpleadosEspecial($tabla,$item,$valor);
-    	return $respuesta;
-    }
+	static public function ctrEmpleadosEspecial($item,$valor){
+		$tabla = "empleados";
+		$respuesta = ModeloFormularios::mdlEmpleadosEspecial($tabla,$item,$valor);
+		return $respuesta;
+	}
 
-    static public function ctrForgotPasswordEmail($datos){
+	static public function ctrForgotPasswordEmail($datos){
 
-    	$busqueda = ControladorEmpleados::ctrCambioPasswordOlvidado("Empleados_idEmpleados", $datos['idEmpleados']);
-    	if (isset($busqueda[0]) && $busqueda[0] == $datos['idEmpleados']) {
-    		return 'existente';
-    	}else{
-	    	$respuesta = ModeloFormularios::mdlForgotPasswordEmail($datos);
-	    	return $respuesta;
-    	}
-    }
+		$busqueda = ControladorEmpleados::ctrCambioPasswordOlvidado("Empleados_idEmpleados", $datos['idEmpleados']);
+		if (isset($busqueda[0]) && $busqueda[0] == $datos['idEmpleados']) {
+			return 'existente';
+		}else{
+			$respuesta = ModeloFormularios::mdlForgotPasswordEmail($datos);
+			return $respuesta;
+		}
+	}
 
-    static public function ctrGuardarHorario($nameHorario, $horarios){
-    	$tabla = "horarios";
-    	$registrarNombreHorario = ModeloFormularios::mdlGuardarHorario($tabla,$nameHorario,$horarios);
-    	return $registrarNombreHorario;
-    }
+	static public function ctrGuardarHorario($nameHorario, $horarios){
+		$tabla = "horarios";
+		$registrarNombreHorario = ModeloFormularios::mdlGuardarHorario($tabla,$nameHorario,$horarios);
+		return $registrarNombreHorario;
+	}
 
-    static public function ctrSeleccionarHorarios($item,$valor){
-    	$tabla = "horarios";
-    	if ($item == "Horarios_idHorarios") {
-    		$tabla = "dia_horario";
-    	}
-    	$horarios = ModeloFormularios::mdlSeleccionarHorarios($tabla,$item,$valor);
-    	return $horarios;
-    }
+	static public function ctrSeleccionarHorarios($item,$valor){
+		$tabla = "horarios";
+		if ($item == "Horarios_idHorarios") {
+			$tabla = "dia_horario";
+		}
+		$horarios = ModeloFormularios::mdlSeleccionarHorarios($tabla,$item,$valor);
+		return $horarios;
+	}
 
-    static public function ctrCambiarHorarioDefault($idHorarios){
-    	$tabla = "horarios";
-    	$cambio = ModeloFormularios::mdlCambiarHorarioDefault($tabla,$idHorarios);
-    	return $cambio;
-    }
+	static public function ctrCambiarHorarioDefault($idHorarios){
+		$tabla = "horarios";
+		$cambio = ModeloFormularios::mdlCambiarHorarioDefault($tabla,$idHorarios);
+		return $cambio;
+	}
 
-    static public function ctrVerEmpleadosHorarios($item,$valor){
-    	$tabla = "empleados_has_horarios";
-    	$empleadosHorarios = ModeloFormularios::mdlVerEmpleadosHorarios($tabla,$item,$valor);
-    	return $empleadosHorarios;
-    }
+	static public function ctrVerEmpleadosHorarios($item,$valor){
+		$tabla = "empleados_has_horarios";
+		$empleadosHorarios = ModeloFormularios::mdlVerEmpleadosHorarios($tabla,$item,$valor);
+		return $empleadosHorarios;
+	}
 
-    static public function ctrEmpleadosHasHorarios($empleados,$idHorario){
+	static public function ctrEmpleadosHasHorarios($empleados,$idHorario){
 
-    	$tabla = "empleados_has_horarios";
+		$tabla = "empleados_has_horarios";
 
-    	$validar = "cambio";
+		$validar = "cambio";
 
-    	foreach ($empleados as $empleado) {
+		foreach ($empleados as $empleado) {
 
-    		if ($validar == "cambio") {
+			if ($validar == "cambio") {
 
 				$registrarEmpleadosHorario = ModeloFormularios::mdlregistrarEmpleadosHorario($tabla,$empleado,$idHorario);
 				$validar = $registrarEmpleadosHorario;
 
-    		}
-    	}
-    	return $validar;
+			}
+		}
+		return $validar;
 
-    }
+	}
 
-    static public function ctrActualizarHorario($datos){
-    	$tabla = "horarios";
-    	$actualizarNombreHorario = ModeloFormularios::mdlActualizarNombreHorario($tabla, $datos);
-    	if ($actualizarNombreHorario == 'ok') {
-    		$tabla = "dia_horario";
-    		$actualizarDiasLaborables = ModeloFormularios::mdlActualizarDiasLaborables($tabla, $datos);
-    		return $actualizarDiasLaborables;
-    	}else{
-    		return 'error';
-    	}
-    }
+	static public function ctrActualizarHorario($datos){
+		$tabla = "horarios";
+		$actualizarNombreHorario = ModeloFormularios::mdlActualizarNombreHorario($tabla, $datos);
+		if ($actualizarNombreHorario == 'ok') {
+			$tabla = "dia_horario";
+			$actualizarDiasLaborables = ModeloFormularios::mdlActualizarDiasLaborables($tabla, $datos);
+			return $actualizarDiasLaborables;
+		}else{
+			return 'error';
+		}
+	}
 
-    static public function ctrRegistrarDiaFestivo($datos){
-    	$tabla = "festivos";
-    	$registrar_dia_festivo = ModeloFormularios::mdlRegistrarDiaFestivo($tabla, $datos);
-    	return $registrar_dia_festivo;
-    }
+	static public function ctrRegistrarDiaFestivo($datos){
+		$tabla = "festivos";
+		$registrar_dia_festivo = ModeloFormularios::mdlRegistrarDiaFestivo($tabla, $datos);
+		return $registrar_dia_festivo;
+	}
 
-    static public function ctrRegistrarPermisos($datos){
-    	$tabla = "permisos";
-    	$registrar_Permiso = ModeloFormularios::mdlRegistrarPermisos($tabla, $datos);
-    	return $registrar_Permiso;
-    }
+	static public function ctrRegistrarPermisos($datos){
+		$tabla = "permisos";
+		$registrar_Permiso = ModeloFormularios::mdlRegistrarPermisos($tabla, $datos);
+		return $registrar_Permiso;
+	}
 
-    static public function ctrVerPermisos($item,$valor){
-    	$tabla = "permisos";
-    	$ver_Permiso = ModeloFormularios::mdlVerPermisos($tabla,$item,$valor);
-    	return $ver_Permiso;
-    }
+	static public function ctrVerPermisos($item,$valor){
+		$tabla = "permisos";
+		$ver_Permiso = ModeloFormularios::mdlVerPermisos($tabla,$item,$valor);
+		return $ver_Permiso;
+	}
 
-    static public function ctrCrearJustificante($datos){
-    	$tabla = "justificantes";
-    	$registrar = ModeloFormularios::mdlCrearJustificante($tabla,$datos);
-    	return $registrar;
-    }
+	static public function ctrCrearJustificante($datos){
+		$tabla = "justificantes";
+		$registrar = ModeloFormularios::mdlCrearJustificante($tabla,$datos);
+		return $registrar;
+	}
 
-    static public function ctrVerAsistencia($item,$valor){
-    	$tabla = "asistencias";
-    	$asistencia = ModeloFormularios::mdlVerAsistencia($tabla,$item,$valor);
-    	return $asistencia;
-    }
+	static public function ctrVerAsistencia($item,$valor){
+		$tabla = "asistencias";
+		$asistencia = ModeloFormularios::mdlVerAsistencia($tabla,$item,$valor);
+		return $asistencia;
+	}
 
-    static public function ctrVerPeticiones($idEmpleados){
-    	$tabla = "justificantes";
-    	$buscarDepartamento = ControladorFormularios::ctrVerDepartamentos("Empleados_idEmpleados", $idEmpleados);
-    	$verPeticiones = ModeloFormularios::mdlVerPeticiones($tabla, "p.Departamentos_idDepartamentos", $buscarDepartamento['idDepartamentos']);
-    	return $verPeticiones;
-    }
+	static public function ctrVerPeticiones($idEmpleados){
+		$tabla = "justificantes";
+		$buscarDepartamento = ControladorFormularios::ctrVerDepartamentos("Empleados_idEmpleados", $idEmpleados);
+		$verPeticiones = ModeloFormularios::mdlVerPeticiones($tabla, "p.Departamentos_idDepartamentos", $buscarDepartamento['idDepartamentos']);
+		return $verPeticiones;
+	}
 
-    static public function ctrVerPeticionesDepartamentales($idEmpleados){
-    	$tabla = "justificantes";
-    	$buscarDepartamento = ControladorFormularios::ctrVerDepartamentos("Empleados_idEmpleados", $idEmpleados);
-    	$verPeticiones = ModeloFormularios::mdlVerPeticionesDepartamentales($tabla, "d.Pertenencia", $buscarDepartamento['idDepartamentos']);
-    	return $verPeticiones;
-    }
+	static public function ctrVerPeticionesDepartamentales($idEmpleados){
+		$tabla = "justificantes";
+		$buscarDepartamento = ControladorFormularios::ctrVerDepartamentos("Empleados_idEmpleados", $idEmpleados);
+		$verPeticiones = ModeloFormularios::mdlVerPeticionesDepartamentales($tabla, "d.Pertenencia", $buscarDepartamento['idDepartamentos']);
+		return $verPeticiones;
+	}
 
-    static public function ctrAprobarJustificante($idJustificantes){
-    	$tabla = "justificantes";
-    	$datos = array(
-    		"idJustificantes" => $idJustificantes,
-    		"valor" => 1
-    	);
-    	$justificar = ModeloFormularios::mdlJustificarAsistencia($tabla,$datos);
-    	return $justificar;
-    }
+	static public function ctrAprobarJustificante($idJustificantes){
+		$tabla = "justificantes";
+		$datos = array(
+			"idJustificantes" => $idJustificantes,
+			"valor" => 1
+		);
+		$justificar = ModeloFormularios::mdlJustificarAsistencia($tabla,$datos);
+		return $justificar;
+	}
 
-    static public function ctrDeclinarJustificante($idJustificantes){
-    	$tabla = "justificantes";
-    	$datos = array(
-    		"idJustificantes" => $idJustificantes,
-    		"valor" => 2
-    	);
-    	$justificar = ModeloFormularios::mdlJustificarAsistencia($tabla,$datos);
-    	return $justificar;
-    }
+	static public function ctrDeclinarJustificante($idJustificantes){
+		$tabla = "justificantes";
+		$datos = array(
+			"idJustificantes" => $idJustificantes,
+			"valor" => 2
+		);
+		$justificar = ModeloFormularios::mdlJustificarAsistencia($tabla,$datos);
+		return $justificar;
+	}
 
-    static public function ctrAprobarVacaciones($idVacaciones){
-    	$tabla = "vacaciones";
-    	$datos = array(
-    		"idVacaciones" => $idVacaciones,
-    		"valor" => 1
-    	);
-    	$justificar = ModeloFormularios::mdlResponderVacaciones($tabla,$datos);
-    	return $justificar;
-    }
+	static public function ctrAprobarVacaciones($idVacaciones){
+		$tabla = "vacaciones";
+		$datos = array(
+			"idVacaciones" => $idVacaciones,
+			"valor" => 1
+		);
+		$justificar = ModeloFormularios::mdlResponderVacaciones($tabla,$datos);
+		return $justificar;
+	}
 
-    static public function ctrDeclinarVacaciones($idVacaciones){
-    	$tabla = "vacaciones";
-    	$datos = array(
-    		"idVacaciones" => $idVacaciones,
-    		"valor" => 2
-    	);
-    	$justificar = ModeloFormularios::mdlResponderVacaciones($tabla,$datos);
-    	return $justificar;
-    }
+	static public function ctrDeclinarVacaciones($idVacaciones){
+		$tabla = "vacaciones";
+		$datos = array(
+			"idVacaciones" => $idVacaciones,
+			"valor" => 2
+		);
+		$justificar = ModeloFormularios::mdlResponderVacaciones($tabla,$datos);
+		return $justificar;
+	}
 
-    static public function ctrResponderPermisos($datos){
-    	$tabla = "empleados_has_permisos";
-    	$permiso = ModeloFormularios::mdlResponderPermisos($tabla,$datos);
-    	return $permiso;
-    }
+	static public function ctrResponderPermisos($datos){
+		$tabla = "empleados_has_permisos";
+		$permiso = ModeloFormularios::mdlResponderPermisos($tabla,$datos);
+		return $permiso;
+	}
 
-    static public function ctrTotalHoras($empleado){
+	static public function ctrTotalHoras($empleado){
 
 		$nombre = ucwords(mb_strtolower($empleado['lastname']." ".$empleado['name'])); 
 		
@@ -1061,44 +1061,44 @@ class ControladorFormularios{
 			"horasEsperadas" => ModeloExcel::mdlformatearHora($horasEsperadas)
 		);
 		return $datos;
-    }
+	}
 
-    static public function ctrVerPermisosEmpleados($idEmpleados){
-    	$respuesta = ModeloFormularios::mdlVerPermisosEmpleados($idEmpleados);
-    	return $respuesta;
-    }
+	static public function ctrVerPermisosEmpleados($idEmpleados){
+		$respuesta = ModeloFormularios::mdlVerPermisosEmpleados($idEmpleados);
+		return $respuesta;
+	}
 
-    static public function ctrVerSolicutudesPermisosEmpleados($idEmpleados){
-    	$respuesta = ModeloFormularios::mdlVerSolicutudesPermisosEmpleados($idEmpleados);
-    	return $respuesta;
-    }
+	static public function ctrVerSolicutudesPermisosEmpleados($idEmpleados){
+		$respuesta = ModeloFormularios::mdlVerSolicutudesPermisosEmpleados($idEmpleados);
+		return $respuesta;
+	}
 
-    static public function ctrEliminarHorarios(){
-    	$idHorarios = $_POST['horario'];
-    	$respuesta = ModeloFormularios::mdlEliminarHorarios($idHorarios);
-    	return $respuesta;
-    }
+	static public function ctrEliminarHorarios(){
+		$idHorarios = $_POST['horario'];
+		$respuesta = ModeloFormularios::mdlEliminarHorarios($idHorarios);
+		return $respuesta;
+	}
 
-    static public function ctrCalculoVacacional($aniosLaborados) {
-	    if ($aniosLaborados >= 1 && $aniosLaborados <= 5) {
-	        $diasVacaciones = $aniosLaborados * 2 + 10;
-	    } elseif ($aniosLaborados >= 6 && $aniosLaborados <= 10) {
-	        $diasVacaciones = 22;
-	    } elseif ($aniosLaborados >= 11 && $aniosLaborados <= 15) {
-	        $diasVacaciones = 24;
-	    } elseif ($aniosLaborados >= 16 && $aniosLaborados <= 20) {
-	        $diasVacaciones = 26;
-	    } elseif ($aniosLaborados >= 21 && $aniosLaborados <= 25) {
-	        $diasVacaciones = 28;
-	    } elseif ($aniosLaborados >= 26 && $aniosLaborados <= 30) {
-	        $diasVacaciones = 30;
-	    } elseif ($aniosLaborados >= 31 && $aniosLaborados <= 35) {
-	        $diasVacaciones = 32;
-	    } else {
-	        $diasVacaciones = 0; // Si los años laborados no están en ninguna de las categorías especificadas
-	    }
+	static public function ctrCalculoVacacional($aniosLaborados) {
+		if ($aniosLaborados >= 1 && $aniosLaborados <= 5) {
+			$diasVacaciones = $aniosLaborados * 2 + 10;
+		} elseif ($aniosLaborados >= 6 && $aniosLaborados <= 10) {
+			$diasVacaciones = 22;
+		} elseif ($aniosLaborados >= 11 && $aniosLaborados <= 15) {
+			$diasVacaciones = 24;
+		} elseif ($aniosLaborados >= 16 && $aniosLaborados <= 20) {
+			$diasVacaciones = 26;
+		} elseif ($aniosLaborados >= 21 && $aniosLaborados <= 25) {
+			$diasVacaciones = 28;
+		} elseif ($aniosLaborados >= 26 && $aniosLaborados <= 30) {
+			$diasVacaciones = 30;
+		} elseif ($aniosLaborados >= 31 && $aniosLaborados <= 35) {
+			$diasVacaciones = 32;
+		} else {
+			$diasVacaciones = 0; // Si los años laborados no están en ninguna de las categorías especificadas
+		}
 
-	    return $diasVacaciones;
+		return $diasVacaciones;
 	}
 
 	static public function ctrGenerarPermiso($datos){
@@ -1224,6 +1224,75 @@ class ControladorFormularios{
 	static public function ctrCrearExamen($data){
 		$crearExamen = ModeloFormularios::mdlCrearExamen($data);
 		return $crearExamen;
+	}
+
+	static public function ctrVerEvaluaciones($item, $dato){
+		$verExamen = ModeloFormularios::mdlVerEvaluaciones($item, $dato);
+		return $verExamen;
+	}
+
+	static public function ctrFormatearMes($fecha){
+
+		$diaMes = date('N', strtotime($fecha));
+		$numeroMes = date('m', strtotime($fecha));
+		$hora = date('g:i a', strtotime($fecha));
+		$year = date('Y', strtotime($fecha));
+
+		$meses = array(
+			'01' => 'enero',
+			'02' => 'febrero',
+			'03' => 'marzo',
+			'04' => 'abril',
+			'05' => 'mayo',
+			'06' => 'junio',
+			'07' => 'julio',
+			'08' => 'agosto',
+			'09' => 'septiembre',
+			'10' => 'octubre',
+			'11' => 'noviembre',
+			'12' => 'diciembre'
+		);
+		$dias = array(
+			1 => 'Lunes',
+			2 => 'Martes',
+			3 => 'Miércoles',
+			4 => 'Jueves',
+			5 => 'Viernes',
+			6 => 'Sábado',
+			7 => 'Domingo'
+		);
+
+		$mes = $meses[$numeroMes];
+
+		$diaSemana = $dias[$diaMes];
+		$formato = $diaSemana." ".$diaMes. " de ".$mes." de ".$year.", ".$hora;
+
+		return $formato;
+	}
+
+	static public function ctrFormatearTiempo($minutos){
+		if ($minutos != null) {
+			$horas = floor($minutos / 60);
+			$minutosRestantes = $minutos % 60;
+
+			$formato = "";
+
+			if ($horas > 0) {
+				$formato .= $horas . " hora";
+				if ($horas > 1) {
+					$formato .= "s";
+				}
+				$formato .= " ";
+			}
+
+			if ($minutosRestantes > 0) {
+				$formato .= $minutosRestantes . " min";
+			}
+
+			return $formato;
+		}else{
+			return 'Sin limite de tiempo';
+		}
 	}
 
 	/*---------- Fin de ControladorFormularios ---------- */

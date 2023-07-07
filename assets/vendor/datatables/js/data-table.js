@@ -245,6 +245,28 @@ jQuery(document).ready(function($) {
         });
     }
 
+    if ($("table.examenes").length) {
+
+        $(document).ready(function() {
+            var table = $('table.examenes').DataTable({
+                lengthChange: false,
+                fixedHeader: false,
+                ordering: false,
+            language: {
+                lengthMenu: 'Mostrar _MENU_ resultados por pagina',
+                zeroRecords: 'Parece que no hay ninguna solicitud en el tablero.',
+                info: 'Pagina _PAGE_ de _PAGES_',
+                infoEmpty: 'No se encontraron registros',
+                infoFiltered: '(Filtrado de _MAX_ registros totales)',
+                search: 'Buscar',
+            }
+            });
+
+            table.buttons().container()
+                .appendTo('#example_wrapper .col-md-6:eq(0)');
+        });
+    }
+
 
 });
 function createCellPos( n ){
