@@ -550,6 +550,13 @@ class FormulariosAjax{
 		echo $activarVacante;
 	}
 
+
+	public function borrarExamenAjax(){
+		$idExamen = $this->idExamen;
+		$borrarExamen = ControladorFormularios::ctrBorrarExamen($idExamen);
+		echo $borrarExamen;
+	}
+
 	public function crearExamenesAjax(){
 		$titulo = $this->titulo;
 		$mensaje = $this->mensaje;
@@ -974,6 +981,14 @@ if (isset($_POST['idVacantes'])) {
 	$crearVacante -> idVacantes = $idVacantes;
 	$crearVacante -> valor = $valor;
 	$crearVacante -> activarVacante();
+}
+
+if (isset($_POST['eliminarExamen'])) {
+	$idExamen = $_POST['eliminarExamen'];
+
+	$borrarExamen = new FormulariosAjax();
+	$borrarExamen -> idExamen = $idExamen;
+	$borrarExamen -> borrarExamenAjax();
 }
 
 if (isset($_POST['titulo'])) {

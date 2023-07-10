@@ -1235,6 +1235,10 @@ class ControladorFormularios{
 		$verExamen = ModeloFormularios::mdlVerEvaluaciones($item, $dato);
 		return $verExamen;
 	}
+	static public function ctrBorrarExamen($idExamen){
+		$borrarExamen = ModeloFormularios::mdlBorrarExamen($idExamen);
+		return $borrarExamen;
+	}
 
 	static public function ctrFormatearMes($fecha){
 

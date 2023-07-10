@@ -2025,6 +2025,23 @@ static public function mdlImagenNoticia($id, $name)
 		$stmt = null;
 	}
 
+	static public function mdlBorrarExamen($idExamen){
+		$pdo =Conexion::conectar();
+		$sql = "DELETE FROM examenes WHERE idExamen = :idExamen";
+
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(":idExamen", $idExamen, PDO::PARAM_INT);
+		
+		if ($stmt->execute()) {
+			return 'ok';
+		}else{
+			return "error";
+		}
+
+		$stmt->close();
+		$stmt = null;
+	}
+
 	static public function mdlActualizarExamenes($datos){
 		$pdo =Conexion::conectar();
 		$sql = "UPDATE examenes SET titulo = :titulo, descripcion = :mensaje, tiempo_limite = :tiempo_limite, fecha_inicio = :fecha_inicio, fecha_fin = :fecha_fin, intentos_maximos = :intentos_maximos WHERE idExamen=:idExamen";

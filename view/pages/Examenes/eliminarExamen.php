@@ -18,8 +18,8 @@ if (isset($_GET['evaluacion'])) {
 						</div>
 						<div class="row mt-5 rounded float-right">
 							<div class="text-center">
-								<input type="hidden" name="eliminarExamen" value="<?php echo $_GET['evaluacion']; ?>">
-								<button type="button" name="accion" class="btn btn-primary rounded mr-2">Eliminar</button>
+								<input type="hidden" id="eliminarExamen" value="<?php echo $_GET['evaluacion']; ?>">
+								<button type="button"id="examen-btn" class="btn btn-primary rounded mr-2">Eliminar</button>
 							</div>
 							<div class="text-center">
 								<a href="Evaluaciones" class="btn btn-danger rounded">Cancelar</a>
@@ -33,50 +33,47 @@ if (isset($_GET['evaluacion'])) {
 </div>
 <script>
 	
-	$(document).ready(function() {
-		
-		$("#examen-btn").click(function() {
-			var eliminarExamen = document.getElementById('eliminarExamen');
-			var mensaje = `<div class='alert alert-success' role="alert" id="alerta">
-								<i class="fas fa-check-circle"></i>
-								Se elimino el examen <p class='Titulo'>"`;
-			var error = `<div class='alert alert-danger' role="alert" id="alerta">
-							<i class="fas fa-exclamation-triangle"></i>
-							<b>Error</b>, no se elimino el examen, intenta nuevamente.
-						</div>`;
-			$.ajax({
-				url: "ajax/ajax.formularios.php", // Ruta al archivo PHP que procesará los datos del formulario
-				type: "POST",
-				data: {eliminarExamen: eliminarExamen},
-				success: function(response) {
+$(document).ready(function() {
+    $("#examen-btn").click(function() {
+        var Examen = $('#eliminarExamen').val();
+        var mensaje = `<div class='alert alert-success' role="alert" id="alerta">
+                            <i class="fas fa-check-circle"></i>
+                            ¡Se eliminó el examen con éxito!
+                        </div>`;
+        var error = `<div class='alert alert-danger' role="alert" id="alerta">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <b>Error</b>, no se eliminó el examen, intenta nuevamente.
+                    </div>`;
+        $.ajax({
+            url: "ajax/ajax.formularios.php",
+            type: "POST",
+            data: { eliminarExamen: Examen },
+            success: function(response) {
+                if (response === 'ok') {
+                    $("#form-result").val("");
+                    $("#form-result").html(mensaje);
+                    deleteAlert();
+                    setTimeout(function() {
+                        location.href = 'Evaluaciones';
+                    }, 900);
+                } else {
+                    $("#form-result").val("");
+                    $("#form-result").html(error);
+                    deleteAlert();
+                }
+            }
+        });
+    });
+});
 
-					if (response !== 'error') {
-						$("#form-result").val("");
-						$("#form-result").html(mensaje+response+`".</p>
-						</div>
-							`);
-						deleteAlert();
-						setTimeout(function() {
-							location.href = 'Evaluaciones';
-						}, 900);
-					}else{
-						$("#form-result").val("");
-						$("#form-result").html(error);
+function deleteAlert() {
+    var alert = $('#alerta');
+    setTimeout(function() {
+        alert.fadeOut('slow', function() {
+            alert.remove();
+        });
+    }, 800);
+}
 
-						deleteAlert();
-					}
 
-				}
-			});
-		});
-	});
-
-	function deleteAlert() {
-		setTimeout(function() {
-			var alert = $('#alerta');
-			alert.fadeOut('slow', function() {
-				alert.remove();
-			});
-		}, 800);
-	}
 </script>
