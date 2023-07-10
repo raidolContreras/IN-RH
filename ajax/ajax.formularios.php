@@ -550,11 +550,23 @@ class FormulariosAjax{
 		echo $activarVacante;
 	}
 
-
 	public function borrarExamenAjax(){
 		$idExamen = $this->idExamen;
 		$borrarExamen = ControladorFormularios::ctrBorrarExamen($idExamen);
 		echo $borrarExamen;
+	}
+
+	public function crearPreguntaAjax(){
+		$pregunta = $this->pregunta;
+		$idExamen = $this->idExamen;
+		$tipo_pregunta = $this->tipo_pregunta;
+		$datos = array(
+			"pregunta" => $pregunta,
+			"idExamen" => $idExamen,
+			"tipo_pregunta" => $tipo_pregunta
+		);
+		$crearPregunta = ControladorFormularios::ctrCrearPregunta($datos);
+		echo $crearPregunta;
 	}
 
 	public function crearExamenesAjax(){
@@ -989,6 +1001,22 @@ if (isset($_POST['eliminarExamen'])) {
 	$borrarExamen = new FormulariosAjax();
 	$borrarExamen -> idExamen = $idExamen;
 	$borrarExamen -> borrarExamenAjax();
+}
+
+if (isset($_POST['pregunta'])) {
+	if ($_POST['pregunta'] == '' || $_POST['tipo_pregunta'] == '') {
+		return 'campos vacios';
+	}else{
+		$pregunta = $_POST['pregunta'];
+		$tipo_pregunta = $_POST['tipo_pregunta'];
+		$idExamen = $_POST['examen'];
+
+		$crearPregunta = new FormulariosAjax();
+		$crearPregunta -> pregunta = $pregunta;
+		$crearPregunta -> tipo_pregunta = $tipo_pregunta;
+		$crearPregunta -> idExamen = $idExamen;
+		$crearPregunta -> crearPreguntaAjax();
+	}
 }
 
 if (isset($_POST['titulo'])) {

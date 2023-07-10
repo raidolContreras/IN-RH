@@ -1239,6 +1239,14 @@ class ControladorFormularios{
 		$borrarExamen = ModeloFormularios::mdlBorrarExamen($idExamen);
 		return $borrarExamen;
 	}
+	static public function ctrCrearPregunta($datos){
+		$crearPregunta = ModeloFormularios::mdlCrearPregunta($datos);
+		return $crearPregunta;
+	}
+	static public function ctrVerPreguntas($datos){
+		$verPregunta = ModeloFormularios::mdlVerPreguntas($datos);
+		return $verPregunta;
+	}
 
 	static public function ctrFormatearMes($fecha){
 

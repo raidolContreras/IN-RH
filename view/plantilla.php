@@ -150,7 +150,9 @@ session_start();
 			}
 
 		}elseif ($_GET["pagina"] == "crearEvaluacion" ||
-				 $_GET["pagina"] == "eliminarExamen" ) {
+				 $_GET["pagina"] == "eliminarExamen" ||
+				 $_GET["pagina"] == "AddPregunta" ||
+				 $_GET["pagina"] == "Pregunta" ) {
 
 			include "pages/navs/navbar.php";
 			include "pages/navs/sidenav.php";
