@@ -32,7 +32,6 @@ session_start();
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 	<script src="https://cdn.tiny.cloud/1/ojrrit6i20fvuzvl2sioxzrflc9dh7gpi3gosuyrwgzfa18y/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.datatables.net/fixedcolumns/4.2.2/js/dataTables.fixedColumns.min.js"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/4.2.2/css/fixedColumns.dataTables.min.css">
 	
 	<?php if (isset($_GET["pagina"])): ?>
@@ -152,7 +151,8 @@ session_start();
 		}elseif ($_GET["pagina"] == "crearEvaluacion" ||
 				 $_GET["pagina"] == "eliminarExamen" ||
 				 $_GET["pagina"] == "AddPregunta" ||
-				 $_GET["pagina"] == "Pregunta" ) {
+				 $_GET["pagina"] == "CrearRespuesta" ||
+				 $_GET["pagina"] == "Preguntas" ) {
 
 			include "pages/navs/navbar.php";
 			include "pages/navs/sidenav.php";
@@ -187,6 +187,7 @@ session_start();
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
 <script src="assets/vendor/datatables/js/buttons.bootstrap4.min.js"></script>
 <script src="assets/vendor/datatables/js/data-table.js"></script>
+<script src="assets/vendor/datatables/js/dataTables.fixedColumns.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>

@@ -2061,6 +2061,25 @@ static public function mdlImagenNoticia($id, $name)
 		$stmt = null;
 	}
 
+	static public function mdlRegistrarRespuestas($datos){
+		$pdo =Conexion::conectar();
+		$sql = "INSERT INTO respuestas(idPregunta, respuesta, valor) VALUES (:idPregunta, :respuesta, :valor)";
+
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(":idPregunta", $datos['idPregunta'], PDO::PARAM_INT);
+		$stmt->bindParam(":respuesta", $datos['respuesta'], PDO::PARAM_STR);
+		$stmt->bindParam(":valor", $datos['valor'], PDO::PARAM_INT);
+		
+		if ($stmt->execute()) {
+		    return 'ok';
+		} else {
+		    return "error";
+		}
+
+		$stmt->close();
+		$stmt = null;
+	}
+
 	static public function mdlActualizarExamenes($datos){
 		$pdo =Conexion::conectar();
 		$sql = "UPDATE examenes SET titulo = :titulo, descripcion = :mensaje, tiempo_limite = :tiempo_limite, fecha_inicio = :fecha_inicio, fecha_fin = :fecha_fin, intentos_maximos = :intentos_maximos WHERE idExamen=:idExamen";
@@ -2110,14 +2129,14 @@ static public function mdlImagenNoticia($id, $name)
 	static public function mdlVerPreguntas($item, $dato){
 		$pdo =Conexion::conectar();
 		if ($item == null && $dato == null) {
-			$sql = "SELECT * FROM examenes";
+			$sql = "SELECT * FROM preguntas";
 
 			$stmt = $pdo->prepare($sql);
 			
 			$stmt->execute();
 			return $stmt -> fetchAll();
 		}else{
-			$sql = "SELECT * FROM examenes WHERE $item = :$item";
+			$sql = "SELECT * FROM preguntas WHERE $item = :$item";
 
 			$stmt = $pdo->prepare($sql);
 			$stmt->bindParam(":".$item, $dato);

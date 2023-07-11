@@ -107,7 +107,7 @@ if (isset($_GET['evaluacion'])) {
 						</div>
 							`);
 						deleteAlert();
-						window.location.href='Pregunta&pregunta='+response
+						window.location.href='CrearRespuesta&pregunta='+response
 					}
 
 				}

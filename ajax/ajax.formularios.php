@@ -592,6 +592,32 @@ class FormulariosAjax{
 		echo $crearExamen;
 	}
 
+	public function registrarRespuestasMultipleAjax(){
+		$formData = $this->formData;
+		$numRespuestas = $this->numRespuestas;
+		$idPregunta = $this->idPregunta;
+
+	    // Convertir la cadena formData en un arreglo asociativo
+	    parse_str($formData, $respuestas);
+	    $respuesta = array();
+	    // Acceder a las respuestas individuales
+	    for ($i = 1; $i <= $numRespuestas; $i++) {
+
+	        $correcta = isset($respuestas['Correcta' . $i]) ? 1 : 0;
+	        $respuesta[] = array(
+	        	'respuesta' => $respuestas['Respuesta' . $i],
+	        	'valor' => $correcta
+	        );
+	    }
+	    $datos = array(
+	    	'respuestas' => $respuesta,
+	    	'idPregunta' =>$idPregunta
+	    );
+	    $registrarRespuestas = ControladorFormularios::ctrRegistrarRespuestasMultiple($datos);
+	    //echo $registrarRespuestas;
+	    echo $registrarRespuestas;
+	}
+
 }
 
 if(isset($_POST["validate"])){
@@ -1055,4 +1081,16 @@ if (isset($_POST['titulo'])) {
 	$crearExamenes -> intentos_maximos = $intentos_maximos;
 	$crearExamenes -> idExamen = $idExamen;
 	$crearExamenes -> crearExamenesAjax();
+}
+
+if (isset($_POST['numRespuestas'])) {
+	$formData = $_POST['formData'];
+    $numRespuestas = $_POST['numRespuestas'];
+    $idPregunta = $_POST['idPregunta'];
+
+    $registrarRespuestas = new FormulariosAjax();
+    $registrarRespuestas -> formData = $formData;
+    $registrarRespuestas -> numRespuestas = $numRespuestas;
+    $registrarRespuestas -> idPregunta = $idPregunta;
+    $registrarRespuestas -> registrarRespuestasMultipleAjax();
 }

@@ -75,8 +75,11 @@ $Evaluaciones = ControladorFormularios::ctrVerEvaluaciones(null, null);
 												href="eliminarExamen&evaluacion=<?php echo $Evaluacion['idExamen']; ?>">
 													<i class="fas fa-trash"></i> Eliminar
 												</a>
+												<a class="IN-dropdown-item" href="Preguntas&evaluacion=<?php echo $Evaluacion['idExamen']; ?>">
+													<i class="fas fa-clipboard-list"></i> Ver preguntas
+												</a>
 												<a class="IN-dropdown-item" href="AddPregunta&evaluacion=<?php echo $Evaluacion['idExamen']; ?>">
-													<i class="fas fa-user-plus"></i> Agregar preguntas
+													<i class="fas fa-tasks"></i> Agregar preguntas
 												</a>
 											</div>
 										</div>

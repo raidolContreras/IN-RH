@@ -1243,9 +1243,24 @@ class ControladorFormularios{
 		$crearPregunta = ModeloFormularios::mdlCrearPregunta($datos);
 		return $crearPregunta;
 	}
-	static public function ctrVerPreguntas($datos){
-		$verPregunta = ModeloFormularios::mdlVerPreguntas($datos);
+	static public function ctrVerPreguntas($item, $dato){
+		$verPregunta = ModeloFormularios::mdlVerPreguntas($item, $dato);
 		return $verPregunta;
+	}
+	static public function ctrRegistrarRespuestasMultiple($datos){
+		$registarRespuestas = 'ok';
+		$idPregunta = $datos['idPregunta'];
+		foreach ($datos['respuestas'] as $respuestas) {
+			if ($registarRespuestas == 'ok') {
+				$data = array(
+					'respuesta' => $respuestas['respuesta'],
+					'valor' => $respuestas['valor'],
+					'idPregunta' => $idPregunta
+				);
+				$registarRespuestas = ModeloFormularios::mdlRegistrarRespuestas($data);
+			}
+		}
+		return $registarRespuestas;
 	}
 
 	static public function ctrFormatearMes($fecha){
