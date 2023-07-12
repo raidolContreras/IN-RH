@@ -48,17 +48,64 @@ foreach ($preguntas as $pregunta) {
 			<div class="card-body">
 				<div class="list-group">
 					<?php foreach ($datos as $dato): ?>
-						<a href="#" class="list-group-item list-group-item-action">
+						<button data-toggle="modal" 
+								data-target="#Pregunta<?php echo $dato['idPregunta']; ?>"
+								class="list-group-item list-group-item-action">
 							<div class="d-flex justify-content-between align-items-center">
 								<h6 class="mb-0"><?php echo $dato['pregunta']; ?></h6>
-								<span class="badge badge-primary"><?php echo ucwords(str_replace('_', ' ', $dato['tipo_pregunta'])); ?></span>
+								<span class="badge badge-primary">
+									<?php echo ucwords(str_replace('_', ' ', $dato['tipo_pregunta'])); ?>
+								</span>
 							</div>
-							<small class="text-muted">ID Pregunta: <?php echo $dato['idPregunta']; ?></small>
-						</a>
+						</button>
 					<?php endforeach; ?>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+<?php
+ 	foreach ($datos as $dato): 
+	$datosRespuesta = array();
+	$respuestas = ControladorFormularios::ctrVerRespuestas(null, null);
+		foreach ($respuestas as $respuesta) {
+			if ($respuesta['idPregunta'] == $dato['idPregunta']) {
+				$datosRespuesta[] = array(
+					'idRespuesta' => $respuesta['idRespuesta'],
+					'respuesta' => $respuesta['respuesta'],
+					'valor' => $respuesta['valor']
+				);
+			}
+		}
+	?>
+	<div class="modal fade" id="Pregunta<?php echo $dato['idPregunta']; ?>">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h3><?php echo $dato['pregunta']; ?></h3>
+				</div>
+				<div class="modal-body">
+					<p class="titulo">Respuestas</p>
+					<hr>
+					<form>
+						
+						<?php foreach ($datosRespuesta as $value): ?>
 
+							<label class="custom-control custom-radio">
+							<?php if ($value['valor'] == 1): ?>
+								<input type="radio" name="radio-inline" class="custom-control-input" checked disabled>
+							<?php else: ?>
+								<input type="radio" name="radio-inline" class="custom-control-input" disabled>
+							<?php endif ?>
+								<span class="custom-control-label">
+									<?php echo $value['respuesta']; ?>
+								</span>
+							</label>
+
+						<?php endforeach ?>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+<?php endforeach; ?>

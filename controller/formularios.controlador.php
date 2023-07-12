@@ -1241,10 +1241,22 @@ class ControladorFormularios{
 	}
 	static public function ctrCrearPregunta($datos){
 		$crearPregunta = ModeloFormularios::mdlCrearPregunta($datos);
+		if ($datos['tipo_pregunta'] != 'opcion_multiple') {
+			$data = array(
+				'respuesta' => $datos['tipo_pregunta'],
+				'valor' => 0,
+				'idPregunta' => $crearPregunta
+			);
+			$registarRespuestas = ModeloFormularios::mdlRegistrarRespuestas($data);
+		}
 		return $crearPregunta;
 	}
 	static public function ctrVerPreguntas($item, $dato){
 		$verPregunta = ModeloFormularios::mdlVerPreguntas($item, $dato);
+		return $verPregunta;
+	}
+	static public function ctrVerRespuestas($item, $dato){
+		$verPregunta = ModeloFormularios::mdlVerRespuestas($item, $dato);
 		return $verPregunta;
 	}
 	static public function ctrRegistrarRespuestasMultiple($datos){
