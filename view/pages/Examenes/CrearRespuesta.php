@@ -8,6 +8,6 @@ if (isset($_GET['pregunta'])) {
 if ($Evaluaciones['tipo_pregunta'] == 'opcion_multiple'){
 	include('view/pages/Examenes/Preguntas/opcion_multiple.php');
 }else {
-	echo '<script>window.location.href="Evaluaciones"</script>';
+	echo '<script>window.location.href="Preguntas&evaluacion='.$Evaluaciones['idExamen'].'"</script>';
 }
 

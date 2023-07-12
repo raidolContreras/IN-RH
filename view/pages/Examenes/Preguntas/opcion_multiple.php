@@ -80,7 +80,7 @@ $(document).ready(function() {
 				</div>`);
 					deleteAlert();
 					setTimeout(function() {
-						location.href = 'Evaluaciones';
+						location.href = 'Preguntas&evaluacion='+<?php echo $Evaluaciones['idExamen'] ?>;
 					}, 900);
 				}else{
 					$("#form-result").html(`<div class='alert alert-danger' role="alert" id="alerta">

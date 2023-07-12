@@ -1,6 +1,7 @@
 <?php 
 $preguntas = ControladorFormularios::ctrVerPreguntas(null, null);
 $datos = array();
+$nombre = '';
 foreach ($preguntas as $pregunta) {
 	if ($pregunta['idExamen'] == $_GET['evaluacion']) {
 		$datos[] = array(
@@ -15,15 +16,15 @@ foreach ($preguntas as $pregunta) {
 
 <style>
 	.card-header {
-		background-color: #007bff;
-		color: #fff;
-		border-bottom: none;
+		background-color: #fefefe;
+		color: #A4A4A4;
+		border-bottom: 1px solid #BABABA;
 		padding: 15px;
 	}
 
 	.card-header h5 {
 		margin-bottom: 0;
-		color: #fff;
+		color: #949494;
 	}
 
 	.list-group-item {
@@ -43,8 +44,9 @@ foreach ($preguntas as $pregunta) {
 <div class="container-fluid dashboard-content">
 	<div class="ecommerce-widget">
 		<div class="card mx-5 menu-ajustes">
-			<div class="card-header">
+			<div class="card-header row" style="justify-content: space-between; align-items: center;">
 				<h5>Preguntas</h5>
+				<a class="btn btn-outline-primary rounded" href="AddPregunta&evaluacion=<?php echo $_GET['evaluacion']; ?>">Agregar preguntas</a>
 			</div>
 			<div class="card-body">
 				<div class="list-group">
