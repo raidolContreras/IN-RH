@@ -1239,6 +1239,10 @@ class ControladorFormularios{
 		$borrarExamen = ModeloFormularios::mdlBorrarExamen($idExamen);
 		return $borrarExamen;
 	}
+	static public function ctrBorrarPregunta($idPregunta){
+		$borrarPregunta = ModeloFormularios::mdlBorrarPregunta($idPregunta);
+		return $borrarPregunta;
+	}
 	static public function ctrCrearPregunta($datos){
 		$crearPregunta = ModeloFormularios::mdlCrearPregunta($datos);
 		if ($datos['tipo_pregunta'] != 'opcion_multiple') {

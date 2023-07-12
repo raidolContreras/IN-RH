@@ -556,6 +556,12 @@ class FormulariosAjax{
 		echo $borrarExamen;
 	}
 
+	public function borrarPreguntaAjax(){
+		$idPregunta = $this->idPregunta;
+		$borrarPregunta = ControladorFormularios::ctrBorrarPregunta($idPregunta);
+		echo $borrarPregunta;
+	}
+
 	public function crearPreguntaAjax(){
 		$pregunta = $this->pregunta;
 		$idExamen = $this->idExamen;
@@ -1027,6 +1033,14 @@ if (isset($_POST['eliminarExamen'])) {
 	$borrarExamen = new FormulariosAjax();
 	$borrarExamen -> idExamen = $idExamen;
 	$borrarExamen -> borrarExamenAjax();
+}
+
+if (isset($_POST['delPregunta'])) {
+	$idPregunta = $_POST['delPregunta'];
+
+	$borrarPregunta = new FormulariosAjax();
+	$borrarPregunta -> idPregunta = $idPregunta;
+	$borrarPregunta -> borrarPreguntaAjax();
 }
 
 if (isset($_POST['pregunta'])) {

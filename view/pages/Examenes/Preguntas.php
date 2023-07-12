@@ -6,7 +6,8 @@ foreach ($preguntas as $pregunta) {
 		$datos[] = array(
 			'idPregunta' => $pregunta['idPregunta'],
 			'tipo_pregunta' => $pregunta['tipo_pregunta'],
-			'pregunta' => $pregunta['pregunta']
+			'pregunta' => $pregunta['pregunta'],
+			'idExamen' => $pregunta['idExamen']
 		);
 	}
 }
@@ -83,12 +84,18 @@ foreach ($preguntas as $pregunta) {
 			<div class="modal-content">
 				<div class="modal-header">
 					<h3><?php echo $dato['pregunta']; ?></h3>
+					<a href="EliminarPregunta&pregunta=<?php echo $dato['idPregunta']; ?>&examen=<?php echo $dato['idExamen']; ?>" class="btn btn-outline-danger rounded"><i class="fas fa-trash"></i></a>
 				</div>
 				<div class="modal-body">
-					<p class="titulo">Respuestas</p>
+					<div class="row" style="justify-content: space-between; align-items: center;">
+						<div><p class="titulo">Respuestas</p></div>
+					<?php if ($dato['tipo_pregunta'] == 'opcion_multiple'): ?>
+						<div class="float-right"><button class="btn btn-outline-primary rounded"><span>Agregar Respuesta</span></button></div>
+					<?php endif ?>
+					</div>
 					<hr>
 					<form>
-						
+
 						<?php foreach ($datosRespuesta as $value): ?>
 
 							<label class="custom-control custom-radio">

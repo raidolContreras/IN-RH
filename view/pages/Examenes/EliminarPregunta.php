@@ -1,8 +1,12 @@
 <?php 
-if (isset($_GET['evaluacion'])) {
-	$Evaluaciones = ControladorFormularios::ctrVerEvaluaciones('idExamen', $_GET['evaluacion']);
-	if (!empty($Evaluaciones)) {
-		$titulo = $Evaluaciones['titulo'];
+if (isset($_GET['pregunta'])) {
+	$Evaluaciones = ControladorFormularios::ctrVerPreguntas('idPregunta', $_GET['pregunta']);
+	if (empty($Evaluaciones)) {
+		echo "    <script>
+                    setTimeout(function() {
+                        location.href = 'Evaluaciones';
+                    }, 900);
+                </script>";
 	}
 }
 ?>
@@ -12,17 +16,17 @@ if (isset($_GET['evaluacion'])) {
 		<div class="container">
 			<div class="card">
 				<div class="card-body">
-					<form method="POST">
+					<form>
 						<div class="form-group">
-							<p style="font-size: 20px;">Antes de continuar, por favor confirme que desea eliminar la evaluación <strong>"<?php echo $titulo; ?>"</strong>. Esta acción es irreversible y se perderán los registros de las calificaciones. Si está seguro, haga clic en el botón "Eliminar". De lo contrario, de clic en "Cancelar".</p>
+							<p style="font-size: 20px;">Antes de continuar, por favor confirme que desea eliminar la pregunta seleccionada. Esta acción es irreversible y eliminará permanentemente la pregunta junto con todas las respuestas recibidas. Esta acción puede afectar el funcionamiento de la organización. Si está seguro, haga clic en el botón 'Eliminar'. De lo contrario, haga clic en 'Cancelar'.</p>
 						</div>
 						<div class="row mt-3 rounded float-right">
 							<div class="text-center">
-								<input type="hidden" id="eliminarExamen" value="<?php echo $_GET['evaluacion']; ?>">
-								<button type="button"id="examen-btn" class="btn btn-primary rounded mr-2">Eliminar</button>
+								<input type="hidden" id="delPregunta" value="<?php echo $_GET['pregunta']; ?>">
+								<button type="button" class="btn btn-primary mr-1 rounded" id="examen-btn">Eliminar</button>
 							</div>
 							<div class="text-center">
-								<a href="Evaluaciones" class="btn btn-danger rounded">Cancelar</a>
+								<a href="Preguntas&evaluacion=<?php echo $_GET['examen']; ?>" class="btn btn-danger mr-3 rounded">Cancelar</a>
 							</div>
 						</div>
 					</form>
@@ -35,26 +39,26 @@ if (isset($_GET['evaluacion'])) {
 	
 $(document).ready(function() {
     $("#examen-btn").click(function() {
-        var Examen = $('#eliminarExamen').val();
+        var Pregunta = $('#delPregunta').val();
         var mensaje = `<div class='alert alert-success' role="alert" id="alerta">
                             <i class="fas fa-check-circle"></i>
-                            ¡Se eliminó el examen con éxito!
+                            ¡Se eliminó la pregunta con éxito!
                         </div>`;
         var error = `<div class='alert alert-danger' role="alert" id="alerta">
                         <i class="fas fa-exclamation-triangle"></i>
-                        <b>Error</b>, no se eliminó el examen, intenta nuevamente.
+                        <b>Error</b>, no se eliminó la pregunta, intenta nuevamente.
                     </div>`;
         $.ajax({
             url: "ajax/ajax.formularios.php",
             type: "POST",
-            data: { eliminarExamen: Examen },
+            data: { delPregunta: Pregunta },
             success: function(response) {
                 if (response === 'ok') {
                     $("#form-result").val("");
                     $("#form-result").html(mensaje);
                     deleteAlert();
                     setTimeout(function() {
-                        location.href = 'Evaluaciones';
+                        location.href = 'Preguntas&evaluacion='+<?php echo $_GET['examen']; ?>;
                     }, 900);
                 } else {
                     $("#form-result").val("");
@@ -74,6 +78,5 @@ function deleteAlert() {
         });
     }, 800);
 }
-
 
 </script>

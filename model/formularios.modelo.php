@@ -2042,6 +2042,23 @@ static public function mdlImagenNoticia($id, $name)
 		$stmt = null;
 	}
 
+	static public function mdlBorrarPregunta($idPregunta){
+		$pdo =Conexion::conectar();
+		$sql = "DELETE FROM preguntas WHERE idPregunta = :idPregunta";
+
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(":idPregunta", $idPregunta, PDO::PARAM_INT);
+		
+		if ($stmt->execute()) {
+			return 'ok';
+		}else{
+			return "error";
+		}
+
+		$stmt->close();
+		$stmt = null;
+	}
+
 	static public function mdlCrearPregunta($datos){
 		$pdo =Conexion::conectar();
 		$sql = "INSERT INTO preguntas(pregunta, idExamen, tipo_pregunta) VALUES (:pregunta, :idExamen, :tipo_pregunta)";
