@@ -81,6 +81,9 @@ $Evaluaciones = ControladorFormularios::ctrVerEvaluaciones(null, null);
 												<a class="IN-dropdown-item" href="AddPregunta&evaluacion=<?php echo $Evaluacion['idExamen']; ?>">
 													<i class="fas fa-tasks"></i> Agregar preguntas
 												</a>
+												<a class="IN-dropdown-item" href="AddEmpleados&evaluacion=<?php echo $Evaluacion['idExamen']; ?>">
+													<i class="fas fa-user-plus"></i> Agregar empleados
+												</a>
 											</div>
 										</div>
 									</td>
