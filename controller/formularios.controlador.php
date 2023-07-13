@@ -1278,6 +1278,10 @@ class ControladorFormularios{
 		}
 		return $registarRespuestas;
 	}
+	static public function ctrRegistrarRespuesta($datos){
+		$registarRespuestas = ModeloFormularios::mdlRegistrarRespuestas($datos);
+		return $registarRespuestas;
+	}
 
 	static public function ctrFormatearMes($fecha){
 

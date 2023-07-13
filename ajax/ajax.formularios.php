@@ -620,8 +620,29 @@ class FormulariosAjax{
 	    	'idPregunta' =>$idPregunta
 	    );
 	    $registrarRespuestas = ControladorFormularios::ctrRegistrarRespuestasMultiple($datos);
-	    //echo $registrarRespuestas;
 	    echo $registrarRespuestas;
+	}
+
+	public function registrarRespuestaAjax(){
+		$Respuesta = $this->Respuesta;
+		$Correcta = $this->Correcta;
+		$idPregunta = $this->idPregunta;
+
+	    $datos = array(
+        	'respuesta' => $Respuesta,
+        	'valor' => $Correcta,
+	    	'idPregunta' =>$idPregunta
+        );
+
+	    $registrarRespuesta = ControladorFormularios::ctrRegistrarRespuesta($datos);
+	    echo $registrarRespuesta;
+	}
+
+	public function eliminarRespuestaAjax(){
+		$idRespuesta = $this->idRespuesta;
+
+	    $eliminarRespuesta = ModeloFormularios::mdlEliminarRespuesta($idRespuesta);
+	    print_r($eliminarRespuesta);
 	}
 
 }
@@ -1107,4 +1128,28 @@ if (isset($_POST['numRespuestas'])) {
     $registrarRespuestas -> numRespuestas = $numRespuestas;
     $registrarRespuestas -> idPregunta = $idPregunta;
     $registrarRespuestas -> registrarRespuestasMultipleAjax();
+}
+
+if (isset($_POST['idAddRespuesta'])) {
+	$Respuesta = $_POST['Respuesta'];
+	if (isset($_POST['Correcta'])) {
+		$Correcta = 1;
+	}else{
+		$Correcta = 0;
+	}
+    $idPregunta = $_POST['idAddRespuesta'];
+
+    $registrarRespuesta = new FormulariosAjax();
+    $registrarRespuesta -> Respuesta = $Respuesta;
+    $registrarRespuesta -> Correcta = $Correcta;
+    $registrarRespuesta -> idPregunta = $idPregunta;
+    $registrarRespuesta -> registrarRespuestaAjax();
+}
+
+if (isset($_POST['eliminarRespuesta'])) {
+	$idRespuesta = $_POST['eliminarRespuesta'];
+
+    $eliminarRespuesta = new FormulariosAjax();
+    $eliminarRespuesta -> idRespuesta = $idRespuesta;
+    $eliminarRespuesta -> eliminarRespuestaAjax();
 }
