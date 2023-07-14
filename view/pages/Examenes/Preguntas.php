@@ -109,7 +109,7 @@ foreach ($preguntas as $pregunta) {
 																		<i class="fas fa-check-circle"></i>
 																		¡Respuesta añadida!
 																	</div>`;
-								  var error = `<div class='alert alert-danger' role="alert" id="alerta">
+									var error = `<div class='alert alert-danger' role="alert" id="alerta">
 																	<i class="fas fa-exclamation-triangle"></i>
 																	<b>Error</b>, no se añadio la respuesta, intenta nuevamente.
 																</div>`;
@@ -165,9 +165,9 @@ foreach ($preguntas as $pregunta) {
 												enviarDatosBtn.type = 'button';
 												enviarDatosBtn.id = 'AddRespuesta-btn';
 												enviarDatosBtn.innerHTML = 'Registrar respuesta';
-										    enviarDatosBtn.addEventListener('click', function () {
-										      crearRespuesta<?php echo $dato['idPregunta']; ?>();
-										    });
+												enviarDatosBtn.addEventListener('click', function () {
+													crearRespuesta<?php echo $dato['idPregunta']; ?>();
+												});
 
 									// Crear el contenedor para la respuesta y la marca de correcta
 											var respuestaContainer = document.createElement('div');
@@ -213,7 +213,7 @@ foreach ($preguntas as $pregunta) {
 								</span>
 							</label>
 							<?php endif ?>
-							<?php echo $value['respuesta']; ?>
+							<?php echo ucwords($value['respuesta']); ?>
 							<?php if ($dato['tipo_pregunta'] == 'opcion_multiple'): ?>
 							<button 
 							class="btn btn-in-consulting float-left"
@@ -222,6 +222,55 @@ foreach ($preguntas as $pregunta) {
 							</button>
 							<?php endif ?>
 						</div>
+							<?php if ($value['respuesta'] == 'binario'): ?>
+								
+							<div class="row" style="flex-direction: column;">
+								<div class="col-12">
+									<label class="custom-control custom-radio">
+										<?php if ($value['valor'] == 4): ?>
+											<input type="radio" class="custom-control-input" checked disabled>
+										<?php else: ?>
+											<input type="radio" class="custom-control-input" disabled>
+										<?php endif ?>
+										<span class="custom-control-label">
+											Verdadero
+										</span>
+									</label>
+									<label class="custom-control custom-radio">
+										<?php if ($value['valor'] == 5): ?>
+											<input type="radio" class="custom-control-input" checked disabled>
+										<?php else: ?>
+											<input type="radio" class="custom-control-input" disabled>
+										<?php endif ?>
+										<span class="custom-control-label">
+											Falso
+										</span>
+									</label>
+								</div>
+
+							</div>
+
+							<?php elseif ($value['respuesta'] == 'escala'): ?>
+								<?php
+									$escalaFile = file_get_contents('view/pages/json/escalas.json');
+									$escala = json_decode($escalaFile, true);
+
+									$opciones = $escala[$value['valor']];
+
+									echo '<div class="row" style="flex-direction: column;">';
+										foreach ($opciones as $key => $opcion) {
+											echo '<div class="col-12">';
+											echo '<label class="custom-control custom-radio">';
+											echo '<input type="radio" class="custom-control-input" disabled>';
+											echo '<span class="custom-control-label">';
+											echo $opcion;
+											echo '</span>';
+											echo '</label>';
+											echo '</div>';
+										}
+									echo '</div>';
+								?>
+							<?php endif ?>
 						<?php endforeach ?>
 						<div id="Add<?php echo $dato['idPregunta']; ?>"></div>
 					</div>
@@ -260,7 +309,7 @@ foreach ($preguntas as $pregunta) {
 										<i class="fas fa-check-circle"></i>
 										¡Respuesta eliminada!
 									</div>`;
-  var error2 = `<div class='alert alert-danger' role="alert" id="alerta">
+	var error2 = `<div class='alert alert-danger' role="alert" id="alerta">
 									<i class="fas fa-exclamation-triangle"></i>
 									<b>Error</b>, no se elimino la respuesta, intenta nuevamente.
 								</div>`;

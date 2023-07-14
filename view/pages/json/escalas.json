@@ -1,0 +1,23 @@
+{
+	"0": {
+		"0": "Totalmente en desacuerdo",
+		"1": "En desacuerdo",
+		"2": "Ni de acuerdo ni en desacuerdo",
+		"3": "De acuerdo",
+		"4": "Totalmente de acuerdo"
+	},
+	"1": {
+		"0": "Muy bueno",
+		"1": "Bueno",
+		"2": "Regular",
+		"3": "Malo",
+		"4": "Muy malo"
+	},
+	"3": {
+		"0": "Nunca",
+		"1": "Raramente",
+		"2": "A veces",
+		"3": "Frecuentemente",
+		"4": "Siempre"
+	}
+}
