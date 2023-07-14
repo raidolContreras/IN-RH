@@ -1177,7 +1177,11 @@ if (isset($_POST['eliminarRespuesta'])) {
 
 if (isset($_POST['empleados_examenes'])) {
 	$idExamen = $_POST['empleados_examenes'];
-	$empleados = $_POST['empleados_has_examenes'];
+	if (isset($_POST['empleados_has_examenes'])) {
+		$empleados = $_POST['empleados_has_examenes'];
+	}else{
+		$empleados = array();
+	}
 
     $empleados_has_examenes = new FormulariosAjax();
     $empleados_has_examenes -> idExamen = $idExamen;

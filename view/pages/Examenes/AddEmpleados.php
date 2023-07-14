@@ -98,6 +98,15 @@ $('#my-select, #pre-selected-options').multiSelect({
 							`);
 						deleteAlert();
 						window.location.href='CrearRespuesta&pregunta='+response;
+					}else if (response === 'eliminado') {
+						$("#form-result").html(`
+						<div class='alert alert-warning' role="alert" id="alerta">
+						  <i class="fas fa-check-circle"></i>
+						  Empleados eliminados correctamente
+						</div>
+							`);
+						deleteAlert();
+						window.location.href='CrearRespuesta&pregunta='+response;
 					}else{
 						$("#form-result").html(`
 						<div class='alert alert-danger' role="alert" id="alerta">
