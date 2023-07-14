@@ -638,6 +638,24 @@ class FormulariosAjax{
 	    echo $registrarRespuesta;
 	}
 
+	public function crearRespuestaEscalaAjax(){
+		$Respuesta = 'escala';
+		$Correcta = $this->escalaRespuestas;
+		$idPregunta = $this->idPreguntaEscala;
+		if ($Correcta == 4 || $Correcta == 5) {
+			$Respuesta = 'binario';
+		}
+
+	    $datos = array(
+        	'respuesta' => $Respuesta,
+        	'valor' => $Correcta,
+	    	'idPregunta' =>$idPregunta
+        );
+
+	    $registrarRespuesta = ControladorFormularios::ctrRegistrarRespuesta($datos);
+	    echo $registrarRespuesta;
+	}
+
 	public function eliminarRespuestaAjax(){
 		$idRespuesta = $this->idRespuesta;
 
@@ -1187,4 +1205,17 @@ if (isset($_POST['empleados_examenes'])) {
     $empleados_has_examenes -> idExamen = $idExamen;
     $empleados_has_examenes -> empleados = $empleados;
     $empleados_has_examenes -> inscribirEmpleadosExamenesAjax();
+}
+
+if (isset($_POST['idPreguntaEscala'])) {
+	$idPreguntaEscala = $_POST['idPreguntaEscala'];
+	$escalaRespuestas = $_POST['escalaRespuestas'];
+	if ($escalaRespuestas == 2) {
+		$escalaRespuestas = $_POST['binario'];
+	}
+
+    $crearRespuesta = new FormulariosAjax();
+    $crearRespuesta -> idPreguntaEscala = $idPreguntaEscala;
+    $crearRespuesta -> escalaRespuestas = $escalaRespuestas;
+    $crearRespuesta -> crearRespuestaEscalaAjax();
 }

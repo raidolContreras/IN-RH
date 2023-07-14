@@ -1265,7 +1265,7 @@ class ControladorFormularios{
 
 	static public function ctrCrearPregunta($datos){
 		$crearPregunta = ModeloFormularios::mdlCrearPregunta($datos);
-		if ($datos['tipo_pregunta'] != 'opcion_multiple') {
+		if ($datos['tipo_pregunta'] != 'opcion_multiple' && $datos['tipo_pregunta'] != 'escala') {
 			$data = array(
 				'respuesta' => $datos['tipo_pregunta'],
 				'valor' => 0,

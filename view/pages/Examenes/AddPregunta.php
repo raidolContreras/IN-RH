@@ -34,7 +34,7 @@ if (isset($_GET['evaluacion'])) {
 											<select class="form-control selectpicker" name="tipo_pregunta" id="tipo_pregunta">
 												<option>Elije el tipo de pregunta</option>
 												<option value="opcion_multiple">Opción multiple</option>
-												<option value="escala">Escala</option>
+												<option value="escala">Escala o verdadero y falso</option>
 												<option value="abierta">Abierta</option>
 											</select>
 										</div>
