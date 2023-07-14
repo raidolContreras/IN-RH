@@ -1402,6 +1402,22 @@ static public function mdlImagenNoticia($id, $name)
 
 	}
 
+	static public function mdlBorrarEmpleadosExamenes($idExamen){
+
+		$sql = "DELETE FROM empleados_has_examenes WHERE idExamen = :idExamen";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->bindParam(":idExamen", $idExamen, PDO::PARAM_INT);
+		if ($stmt->execute()) {
+			return "eliminado";
+		}else{
+			return "error";
+		}
+		$stmt->close();
+		$stmt = null;
+
+	}
+
 	static public function mdlregistrarEmpleadosHorario($tabla,$empleado,$idHorario){
 
 		$sql = "DELETE FROM $tabla WHERE Empleados_idEmpleados = :empleado;";
@@ -1412,6 +1428,24 @@ static public function mdlImagenNoticia($id, $name)
 		$stmt->bindParam(":idHorario", $idHorario, PDO::PARAM_INT);
 		if ($stmt->execute()) {
 			return "cambio";
+		}else{
+			return "error";
+		}
+		$stmt->close();
+		$stmt = null;
+	}
+
+	static public function mdlregistrarEmpleadosExamenes($empleado,$idExamen){
+
+		$sql = "DELETE FROM empleados_has_examenes WHERE idExamen = :idExamen AND idEmpleado = :empleado;";
+
+		$sql .= "INSERT INTO empleados_has_examenes (idExamen, idEmpleado, fecha_inicio, fecha_fin, tiempo_utilizado) VALUES (:idExamen, :empleado, NULL, NULL, NULL);";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->bindParam(":idExamen", $idExamen, PDO::PARAM_INT);
+		$stmt->bindParam(":empleado", $empleado, PDO::PARAM_INT);
+		if ($stmt->execute()) {
+			return "ok";
 		}else{
 			return "error";
 		}
@@ -2201,6 +2235,25 @@ static public function mdlImagenNoticia($id, $name)
 			$stmt->execute();
 			return $stmt -> fetch();
 		}
+
+		$stmt->close();
+		$stmt = null;
+	}
+
+	static public function mdlEmpleadosExamenes($dato){
+		$pdo = Conexion::conectar();
+
+		$sql = "SELECT ee.*
+				FROM empleados_has_examenes ee
+				JOIN examenes ex ON ee.idExamen = ex.idExamen
+				JOIN empleados em ON ee.idEmpleado = em.idEmpleados
+				WHERE ex.idExamen = :dato";
+
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(":dato", $dato, PDO::PARAM_INT);
+		$stmt->execute();
+
+		return $stmt -> fetchAll();
 
 		$stmt->close();
 		$stmt = null;

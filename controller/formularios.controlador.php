@@ -874,6 +874,23 @@ class ControladorFormularios{
 
 	}
 
+	static public function ctrEmpleadosHasExamenes($empleados,$idExamen){
+
+		$validar = "ok";
+
+		foreach ($empleados as $empleado) {
+
+			if ($validar == "ok") {
+
+				$registrarEmpleadosHorario = ModeloFormularios::mdlregistrarEmpleadosExamenes($empleado,$idExamen);
+				$validar = $registrarEmpleadosHorario;
+
+			}
+		}
+		return $validar;
+
+	}
+
 	static public function ctrActualizarHorario($datos){
 		$tabla = "horarios";
 		$actualizarNombreHorario = ModeloFormularios::mdlActualizarNombreHorario($tabla, $datos);
@@ -1235,14 +1252,17 @@ class ControladorFormularios{
 		$verExamen = ModeloFormularios::mdlVerEvaluaciones($item, $dato);
 		return $verExamen;
 	}
+
 	static public function ctrBorrarExamen($idExamen){
 		$borrarExamen = ModeloFormularios::mdlBorrarExamen($idExamen);
 		return $borrarExamen;
 	}
+
 	static public function ctrBorrarPregunta($idPregunta){
 		$borrarPregunta = ModeloFormularios::mdlBorrarPregunta($idPregunta);
 		return $borrarPregunta;
 	}
+
 	static public function ctrCrearPregunta($datos){
 		$crearPregunta = ModeloFormularios::mdlCrearPregunta($datos);
 		if ($datos['tipo_pregunta'] != 'opcion_multiple') {
@@ -1255,14 +1275,17 @@ class ControladorFormularios{
 		}
 		return $crearPregunta;
 	}
+
 	static public function ctrVerPreguntas($item, $dato){
 		$verPregunta = ModeloFormularios::mdlVerPreguntas($item, $dato);
 		return $verPregunta;
 	}
+
 	static public function ctrVerRespuestas($item, $dato){
 		$verPregunta = ModeloFormularios::mdlVerRespuestas($item, $dato);
 		return $verPregunta;
 	}
+
 	static public function ctrRegistrarRespuestasMultiple($datos){
 		$registarRespuestas = 'ok';
 		$idPregunta = $datos['idPregunta'];
@@ -1278,6 +1301,7 @@ class ControladorFormularios{
 		}
 		return $registarRespuestas;
 	}
+
 	static public function ctrRegistrarRespuesta($datos){
 		$registarRespuestas = ModeloFormularios::mdlRegistrarRespuestas($datos);
 		return $registarRespuestas;

@@ -153,6 +153,7 @@ session_start();
 				 $_GET["pagina"] == "AddPregunta" ||
 				 $_GET["pagina"] == "CrearRespuesta" ||
 				 $_GET["pagina"] == "EliminarPregunta" ||
+				 $_GET["pagina"] == "AddEmpleados" ||
 				 $_GET["pagina"] == "Preguntas" ) {
 
 			include "pages/navs/navbar.php";

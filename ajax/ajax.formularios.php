@@ -645,6 +645,27 @@ class FormulariosAjax{
 	    print_r($eliminarRespuesta);
 	}
 
+	public function inscribirEmpleadosExamenesAjax(){
+		$idExamen = $this->idExamen;
+		$empleados = $this->empleados;
+
+		// Borrar los empleados asociados al horario
+		$borrarEmpleados = ModeloFormularios::mdlBorrarEmpleadosExamenes($idExamen);
+
+		if (empty($empleados)) {
+			echo $borrarEmpleados;
+		} else {
+			if ($borrarEmpleados == 'eliminado') {				
+
+				// Asociar los empleados al horario
+				$empleados_has_examenes = ControladorFormularios::ctrEmpleadosHasExamenes($empleados, $idExamen);
+				echo $empleados_has_examenes;
+			} else {
+				echo $borrarEmpleados;
+			}
+		}
+	}
+
 }
 
 if(isset($_POST["validate"])){
@@ -1152,4 +1173,14 @@ if (isset($_POST['eliminarRespuesta'])) {
     $eliminarRespuesta = new FormulariosAjax();
     $eliminarRespuesta -> idRespuesta = $idRespuesta;
     $eliminarRespuesta -> eliminarRespuestaAjax();
+}
+
+if (isset($_POST['empleados_examenes'])) {
+	$idExamen = $_POST['empleados_examenes'];
+	$empleados = $_POST['empleados_has_examenes'];
+
+    $empleados_has_examenes = new FormulariosAjax();
+    $empleados_has_examenes -> idExamen = $idExamen;
+    $empleados_has_examenes -> empleados = $empleados;
+    $empleados_has_examenes -> inscribirEmpleadosExamenesAjax();
 }
