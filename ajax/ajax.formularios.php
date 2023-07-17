@@ -663,6 +663,19 @@ class FormulariosAjax{
 	    print_r($eliminarRespuesta);
 	}
 
+	public function crearIniciarExamenAjax(){
+		session_start();
+		$idExamen = $this->idExamen;
+		$idEmpleado = $_SESSION['idEmpleado'];
+		$datos = array(
+			"idExamen" => $idExamen,
+			"idEmpleado" => $idEmpleado
+		);
+
+	    $iniciarExamen = ModeloFormularios::mdlIniciarExamen($datos);
+	    echo $iniciarExamen;
+	}
+
 	public function inscribirEmpleadosExamenesAjax(){
 		$idExamen = $this->idExamen;
 		$empleados = $this->empleados;
@@ -1218,4 +1231,12 @@ if (isset($_POST['idPreguntaEscala'])) {
     $crearRespuesta -> idPreguntaEscala = $idPreguntaEscala;
     $crearRespuesta -> escalaRespuestas = $escalaRespuestas;
     $crearRespuesta -> crearRespuestaEscalaAjax();
+}
+
+if (isset($_POST['iniciar_examen'])) {
+	$idExamen = $_POST['iniciar_examen'];
+
+    $iniciarExamen = new FormulariosAjax();
+    $iniciarExamen -> idExamen = $idExamen;
+    $iniciarExamen -> crearIniciarExamenAjax();
 }

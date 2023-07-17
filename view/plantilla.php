@@ -154,7 +154,9 @@ session_start();
 				 $_GET["pagina"] == "CrearRespuesta" ||
 				 $_GET["pagina"] == "EliminarPregunta" ||
 				 $_GET["pagina"] == "AddEmpleados" ||
-				 $_GET["pagina"] == "Preguntas" ) {
+				 $_GET["pagina"] == "Evaluaciones_Asignadas" ||
+				 $_GET["pagina"] == "Examen" ||
+				 $_GET["pagina"] == "Preguntas") {
 
 			include "pages/navs/navbar.php";
 			include "pages/navs/sidenav.php";

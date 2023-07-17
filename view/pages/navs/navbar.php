@@ -69,6 +69,26 @@ $perfil = $primerLetra.$segundaLetra;
 						}
 					}
 
+//Menu de Evaluaciones
+					$evaluaciones = array('Evaluaciones', 'Evaluaciones_Asignadas');
+
+					if (!empty($paginaActual) && in_array($paginaActual, $evaluaciones)) {
+						foreach ($evaluaciones as $pagina) {
+							$activeClass = ($paginaActual == $pagina) ? ' active' : '';
+							$marginLeftClass = ($pagina != $evaluaciones[0]) ? ' ml-3' : '';
+
+							echo '<li class="nav-item' . $activeClass . $marginLeftClass . '">';
+							if ($pagina == 'Evaluaciones') {
+								echo '<a href="' . $pagina . '"> Evaluaciones </a>';
+							}elseif($pagina == 'Evaluaciones_Asignadas'){
+								echo '<a href="' . $pagina . '"> Evaluaciones Asignadas </a>';
+							}else{
+								echo '<a href="' . $pagina . '">' . ucfirst($pagina) . '</a>';
+							}
+							echo '</li>';
+						}
+					}
+
 //Menu de empleados
 					$empleados = array('Empleados', 'Departamento', 'Nominas', 'Organigrama');
 

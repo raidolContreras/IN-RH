@@ -1286,6 +1286,11 @@ class ControladorFormularios{
 		return $verPregunta;
 	}
 
+	static public function ctrVerEvaluacionesEmpleados($item, $dato){
+		$VerEvaluacionesEmpleados = ModeloFormularios::mdlVerEvaluacionesEmpleados($item, $dato);
+		return $VerEvaluacionesEmpleados;
+	}
+
 	static public function ctrRegistrarRespuestasMultiple($datos){
 		$registarRespuestas = 'ok';
 		$idPregunta = $datos['idPregunta'];
@@ -1341,7 +1346,7 @@ class ControladorFormularios{
 		$mes = $meses[$numeroMes];
 
 		$diaSemana = $dias[$diaMes];
-		$formato = $diaSemana." ".$diaMes. " de ".$mes." de ".$year.", ".$hora;
+		$formato = $diaSemana.", ".$diaMes. " de ".$mes." de ".$year.", ".$hora;
 
 		return $formato;
 	}

@@ -47,7 +47,7 @@
 					</li>
 
 					<li class="nav-item">
-						<?php if (isset($_GET['pagina']) && in_array($_GET['pagina'], array('Evaluaciones', 'Preguntas'))): ?>
+						<?php if (isset($_GET['pagina']) && in_array($_GET['pagina'], array('Evaluaciones', 'Preguntas', 'Evaluaciones_Asignadas', 'Examen', 'AddEmpleados', 'crearEvaluacion', 'eliminarExamen'))): ?>
 							<a class="nav-link active" href="Evaluaciones">
 						<?php else: ?>
 							<a class="nav-link" href="Evaluaciones">

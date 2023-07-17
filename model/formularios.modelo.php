@@ -2259,6 +2259,37 @@ static public function mdlImagenNoticia($id, $name)
 		$stmt = null;
 	}
 
+	static public function mdlVerEvaluacionesEmpleados($item, $dato){
+		$pdo =Conexion::conectar();
+		$sql = "SELECT * FROM empleados_has_examenes WHERE $item = :$item";
+
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(":".$item, $dato, PDO::PARAM_INT);
+		
+		$stmt->execute();
+		return $stmt -> fetchAll();
+
+		$stmt->close();
+		$stmt = null;
+	}
+
+	static public function mdlIniciarExamen($datos){
+		$pdo = Conexion::conectar();
+		$sql = "UPDATE empleados_has_examenes SET fecha_inicio = NOW() WHERE idExamen = :idExamen AND idEmpleado = :idEmpleado";
+
+		$stmt = $pdo -> prepare($sql);
+		$stmt->bindParam(":idExamen",$datos['idExamen'], PDO::PARAM_INT);
+		$stmt->bindParam(":idEmpleado",$datos['idEmpleado'], PDO::PARAM_INT);
+
+		if ($stmt->execute()) {
+			return 'ok';
+		}else{
+			return "error";
+		}
+
+		$stmt->close();
+		$stmt = null;
+	}
 
 	/*---------- Fin de ModeloFormularios ---------- */
 }
