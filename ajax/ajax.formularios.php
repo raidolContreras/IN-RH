@@ -697,6 +697,27 @@ class FormulariosAjax{
 		}
 	}
 
+	public function responderPreguntaExamenAjax(){
+		session_start();
+		$preguntaId = $this->preguntaId;
+		$respuestaExamen = $this->respuestaExamen;
+		$idExamen = $this->examen;
+		$idEmpleado = $_SESSION['idEmpleado'];
+		$datos = array(
+			"idPregunta" => $preguntaId,
+			"respuesta" => $respuestaExamen,
+			"idExamen" => $idExamen,
+			"idEmpleado" => $idEmpleado
+		);
+		$buscarRespuestas = ModeloFormularios::mdlBuscarRespuestas($datos);
+		if (empty($buscarRespuestas)) {
+	    	$responderPreguntaExamen = ModeloFormularios::mdlResponderPreguntaExamen($datos);
+		}else{
+			$responderPreguntaExamen = ModeloFormularios::mdlActualizarPreguntaExamen($datos);
+		}
+	    echo $responderPreguntaExamen;
+	}
+
 }
 
 if(isset($_POST["validate"])){
@@ -1239,4 +1260,16 @@ if (isset($_POST['iniciar_examen'])) {
     $iniciarExamen = new FormulariosAjax();
     $iniciarExamen -> idExamen = $idExamen;
     $iniciarExamen -> crearIniciarExamenAjax();
+}
+
+if (isset($_POST['preguntaId'])) {
+	$preguntaId = $_POST['preguntaId'];
+	$respuestaExamen = $_POST['respuestaExamen'];
+	$examen = $_POST['examen'];
+
+    $responderPreguntaExamen = new FormulariosAjax();
+    $responderPreguntaExamen -> preguntaId = $preguntaId;
+    $responderPreguntaExamen -> respuestaExamen = $respuestaExamen;
+    $responderPreguntaExamen -> examen = $examen;
+    $responderPreguntaExamen -> responderPreguntaExamenAjax();
 }

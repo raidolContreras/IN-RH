@@ -2304,14 +2304,74 @@ static public function mdlImagenNoticia($id, $name)
 
 	static public function mdlIniciarExamen($datos){
 		$pdo = Conexion::conectar();
-		$sql = "UPDATE empleados_has_examenes SET fecha_inicio = NOW() WHERE idExamen = :idExamen AND idEmpleado = :idEmpleado";
+
+		date_default_timezone_set("America/Mexico_City");
+		$fecha_inicio = date("Y-m-d H:i:s");
+		$sql = "UPDATE empleados_has_examenes SET fecha_inicio = :fecha_inicio WHERE idExamen = :idExamen AND idEmpleado = :idEmpleado";
 
 		$stmt = $pdo -> prepare($sql);
+		$stmt->bindParam(":fecha_inicio",$fecha_inicio, PDO::PARAM_STR);
 		$stmt->bindParam(":idExamen",$datos['idExamen'], PDO::PARAM_INT);
 		$stmt->bindParam(":idEmpleado",$datos['idEmpleado'], PDO::PARAM_INT);
 
 		if ($stmt->execute()) {
 			return 'ok';
+		}else{
+			return "error";
+		}
+
+		$stmt->close();
+		$stmt = null;
+	}
+
+	static public function mdlResponderPreguntaExamen($datos){
+		$pdo = Conexion::conectar();
+		$sql = "INSERT INTO empleado_examen_respuesta(idEmpleado, idPregunta, respuesta, idExamen) VALUES (:idEmpleado, :idPregunta, :respuesta, :idExamen)";
+
+		$stmt = $pdo -> prepare($sql);
+		$stmt->bindParam(":idEmpleado",$datos['idEmpleado'], PDO::PARAM_INT);
+		$stmt->bindParam(":idPregunta",$datos['idPregunta'], PDO::PARAM_INT);
+		$stmt->bindParam(":idExamen",$datos['idExamen'], PDO::PARAM_INT);
+		$stmt->bindParam(":respuesta",$datos['respuesta'], PDO::PARAM_STR);
+
+		if ($stmt->execute()) {
+			return 'ok';
+		}else{
+			return "error";
+		}
+
+		$stmt->close();
+		$stmt = null;
+	}
+
+	static public function mdlBuscarRespuestas($datos){
+		$pdo =Conexion::conectar();
+		$sql = "SELECT * FROM empleado_examen_respuesta WHERE idEmpleado = :idEmpleado AND idPregunta = :idPregunta AND idExamen = :idExamen";
+
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(":idEmpleado",$datos['idEmpleado'], PDO::PARAM_INT);
+		$stmt->bindParam(":idPregunta",$datos['idPregunta'], PDO::PARAM_INT);
+		$stmt->bindParam(":idExamen",$datos['idExamen'], PDO::PARAM_INT);
+		
+		$stmt->execute();
+		return $stmt -> fetch();
+
+		$stmt->close();
+		$stmt = null;
+	}
+
+	static public function mdlActualizarPreguntaExamen($datos){
+		$pdo = Conexion::conectar();
+		$sql = "UPDATE empleado_examen_respuesta SET respuesta = :respuesta WHERE idEmpleado = :idEmpleado AND idPregunta = :idPregunta AND idExamen = :idExamen";
+
+		$stmt = $pdo -> prepare($sql);
+		$stmt->bindParam(":idEmpleado",$datos['idEmpleado'], PDO::PARAM_INT);
+		$stmt->bindParam(":idPregunta",$datos['idPregunta'], PDO::PARAM_INT);
+		$stmt->bindParam(":idExamen",$datos['idExamen'], PDO::PARAM_INT);
+		$stmt->bindParam(":respuesta",$datos['respuesta'], PDO::PARAM_STR);
+
+		if ($stmt->execute()) {
+			return $datos['respuesta'];
 		}else{
 			return "error";
 		}
