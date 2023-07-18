@@ -17,8 +17,8 @@ if (isset($_GET['verExamen'])) {
 	$estado = 0;
 }
 
-if ((isset($_GET['inicio']) && $_GET['inicio'] == $_SESSION['idEmpleado']) || $fecha_inicio_examen != null) {
-	$estado = 1;
+if ((isset($_GET['inicio']) && $_GET['inicio'] == $_SESSION['idEmpleado']) && $fecha_inicio_examen != null) {
+		$estado = 1;
 }
 
 if ($Evaluaciones['fecha_fin'] == null) {

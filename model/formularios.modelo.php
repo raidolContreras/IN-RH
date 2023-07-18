@@ -2217,6 +2217,21 @@ static public function mdlImagenNoticia($id, $name)
 		$stmt = null;
 	}
 
+	static public function mdlVerPreguntasExamen($item, $dato){
+		$pdo =Conexion::conectar();
+
+		$sql = "SELECT * FROM preguntas WHERE $item = :$item";
+
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(":".$item, $dato);
+		
+		$stmt->execute();
+		return $stmt -> fetchAll();
+
+		$stmt->close();
+		$stmt = null;
+	}
+
 	static public function mdlVerRespuestas($item, $dato){
 		$pdo =Conexion::conectar();
 		if ($item == null && $dato == null) {
@@ -2235,6 +2250,20 @@ static public function mdlImagenNoticia($id, $name)
 			$stmt->execute();
 			return $stmt -> fetch();
 		}
+
+		$stmt->close();
+		$stmt = null;
+	}
+
+	static public function mdlVerRespuestasExamen($item, $dato){
+		$pdo =Conexion::conectar();
+			$sql = "SELECT * FROM respuestas WHERE $item = :$item";
+
+			$stmt = $pdo->prepare($sql);
+			$stmt->bindParam(":".$item, $dato);
+			
+			$stmt->execute();
+			return $stmt -> fetchAll();
 
 		$stmt->close();
 		$stmt = null;

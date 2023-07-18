@@ -19,5 +19,13 @@
 		"2": "A veces",
 		"3": "Frecuentemente",
 		"4": "Siempre"
+	},
+	"4": {
+		"0": "Verdadero",
+		"1": "Falso"
+	},
+	"5": {
+		"0": "Verdadero",
+		"1": "Falso"
 	}
 }

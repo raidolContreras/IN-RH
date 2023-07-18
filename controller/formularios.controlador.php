@@ -1281,8 +1281,18 @@ class ControladorFormularios{
 		return $verPregunta;
 	}
 
+	static public function ctrVerPreguntasExamen($item, $dato){
+		$verPregunta = ModeloFormularios::mdlVerPreguntasExamen($item, $dato);
+		return $verPregunta;
+	}
+
 	static public function ctrVerRespuestas($item, $dato){
 		$verPregunta = ModeloFormularios::mdlVerRespuestas($item, $dato);
+		return $verPregunta;
+	}
+
+	static public function ctrVerRespuestasExamen($item, $dato){
+		$verPregunta = ModeloFormularios::mdlVerRespuestasExamen($item, $dato);
 		return $verPregunta;
 	}
 
