@@ -1439,7 +1439,7 @@ static public function mdlImagenNoticia($id, $name)
 
 		$sql = "DELETE FROM empleados_has_examenes WHERE idExamen = :idExamen AND idEmpleado = :empleado;";
 
-		$sql .= "INSERT INTO empleados_has_examenes (idExamen, idEmpleado, fecha_inicio, fecha_fin, tiempo_utilizado) VALUES (:idExamen, :empleado, NULL, NULL, NULL);";
+		$sql .= "INSERT INTO empleados_has_examenes (idExamen, idEmpleado, fecha_inicio, fecha_fin, tiempo_utilizado) VALUES (:idExamen, :empleado, NULL, NULL, 0);";
 
 		$stmt = Conexion::conectar()->prepare($sql);
 		$stmt->bindParam(":idExamen", $idExamen, PDO::PARAM_INT);

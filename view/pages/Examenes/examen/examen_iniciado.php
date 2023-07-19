@@ -110,13 +110,45 @@ $i = 1;
 	</div>
 </div>
 
-	<script>
+<script>
+	
+		const examen = <?php echo $_GET['evaluacion']; ?>;
+
 <?php if ($tiempo == 'Sin limite de tiempo'): ?>
 		document.getElementById("timer").innerHTML = "Sin limite de tiempo";
+		const timeMax = 99999;
 <?php else: ?>
-	
 		const timeMax = <?php echo $Evaluaciones['tiempo_limite']; ?>;
-		const examen = <?php echo $_GET['evaluacion']; ?>;
+
+		// Establecer las fechas de inicio y fin
+		var fechaInicio = new Date("<?php echo $fecha_inicio_examen ?>");
+		var fechaFin = new Date(fechaInicio.getTime() + timeMax * 60000); // Tiempo límite en minutos en milisegundos
+
+		// Función para mostrar el contador
+		function mostrarContador() {
+			// Obtener la fecha y hora actual
+			var fechaActual = new Date();
+			
+			// Calcular el tiempo restante en milisegundos
+			var tiempoRestante = fechaFin - fechaActual;
+			
+			// Verificar si se ha alcanzado la fecha de fin
+			if (tiempoRestante <= 0) {
+				// Se ha alcanzado la fecha de fin, realizar la petición AJAX
+				realizarPeticionAJAX();
+			} else {
+				// Convertir el tiempo restante a minutos y segundos
+				var minutos = Math.floor(tiempoRestante / 60000);
+				var segundos = Math.floor((tiempoRestante % 60000) / 1000);
+				
+				// Mostrar el contador en el elemento HTML
+				document.getElementById("timer").innerHTML = "Tiempo restante: " + minutos + " min " + segundos + " seg";
+				
+				// Actualizar el contador cada segundo
+				setTimeout(mostrarContador, 1000);
+			}
+		}
+<?php endif ?>
 
 		document.addEventListener('DOMContentLoaded', function() {
 			// Función para enviar la respuesta por AJAX
@@ -149,35 +181,6 @@ $i = 1;
 				});
 			});
 		});
-
-		// Establecer las fechas de inicio y fin
-		var fechaInicio = new Date("<?php echo $fecha_inicio_examen ?>");
-		var fechaFin = new Date(fechaInicio.getTime() + timeMax * 60000); // Tiempo límite en minutos en milisegundos
-
-		// Función para mostrar el contador
-		function mostrarContador() {
-			// Obtener la fecha y hora actual
-			var fechaActual = new Date();
-			
-			// Calcular el tiempo restante en milisegundos
-			var tiempoRestante = fechaFin - fechaActual;
-			
-			// Verificar si se ha alcanzado la fecha de fin
-			if (tiempoRestante <= 0) {
-				// Se ha alcanzado la fecha de fin, realizar la petición AJAX
-				realizarPeticionAJAX();
-			} else {
-				// Convertir el tiempo restante a minutos y segundos
-				var minutos = Math.floor(tiempoRestante / 60000);
-				var segundos = Math.floor((tiempoRestante % 60000) / 1000);
-				
-				// Mostrar el contador en el elemento HTML
-				document.getElementById("timer").innerHTML = "Tiempo restante: " + minutos + " min " + segundos + " seg";
-				
-				// Actualizar el contador cada segundo
-				setTimeout(mostrarContador, 1000);
-			}
-		}
 
 		// Función para realizar la petición AJAX
 		function realizarPeticionAJAX() {
@@ -216,5 +219,4 @@ $i = 1;
 			});
 		});
 	});
-	</script>
-<?php endif ?>
+</script>
