@@ -98,10 +98,6 @@ $i = 1;
 			</div>
 
 			<div class="row float-right">
-				<form id="terminar-examen-btn">
-					<input type="hidden" name="terminar-examen" value="<?php echo $_GET['evaluacion'] ?>">
-					<input type="hidden" name="terminar-examen" value="<?php echo $_GET['evaluacion'] ?>">
-				</form>
 				<button class="btn btn-primary rounded btn-block" id="terminar-examen-btn">Terminar examen</button>
 			</div>
 		</div>
@@ -118,6 +114,7 @@ $i = 1;
 <?php if ($tiempo == 'Sin limite de tiempo'): ?>
 		document.getElementById("timer").innerHTML = "Sin limite de tiempo";
 <?php else: ?>
+	
 		const timeMax = <?php echo $Evaluaciones['tiempo_limite']; ?>;
 		const examen = <?php echo $_GET['evaluacion']; ?>;
 
@@ -131,7 +128,7 @@ $i = 1;
 					type: "POST",
 					data: { preguntaId: preguntaId, respuestaExamen: respuesta, examen: examen },
 					success: function(response) {
-            $("#"+preguntaId).val("");
+			$("#"+preguntaId).val("");
 						$("#"+preguntaId).html(`Respondido`);
 					},
 					error: function(xhr, status, error) {
@@ -201,5 +198,23 @@ $i = 1;
 
 		// Iniciar el contador
 		mostrarContador();
+
+	$(document).ready(function() {
+		$("#terminar-examen-btn").click(function() {
+			$.ajax({
+				url: "ajax/ajax.formularios.php",
+				type: "POST",
+				data: { timeMax: timeMax, examen: examen, examenFinalizado: true },
+				success: function(response) {
+					if (response === 'ok') {
+						setTimeout(function() {
+							location.href = 'Examen&verExamen='+examen;
+						}, 900);
+					} else {
+					}
+				}
+			});
+		});
+	});
 	</script>
 <?php endif ?>

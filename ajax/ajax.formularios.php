@@ -1300,3 +1300,15 @@ if (isset($_POST['tiempoTerminado'])) {
 	    $terminarExamen -> terminarExamenAjax();
 	}
 }
+
+if (isset($_POST['examenFinalizado'])) {
+	if ($_POST['examenFinalizado'] == true) {
+		$examen = $_POST['examen'];
+		$timeMax = $_POST['timeMax'];
+
+	    $terminarExamen = new FormulariosAjax();
+	    $terminarExamen -> examen = $examen;
+	    $terminarExamen -> timeMax = $timeMax;
+	    $terminarExamen -> terminarExamenAjax();
+	}
+}
