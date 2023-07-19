@@ -1,8 +1,18 @@
 <?php
 if (isset($_GET['verExamen'])) {
 	$Evaluaciones = ControladorFormularios::ctrVerEvaluaciones('idExamen', $_GET['verExamen']);
+	$Evaluacion = ControladorFormularios::ctrVerEvaluacionesEmpleados('idExamen', $_GET['verExamen']);
+
 	$examen = $_GET['verExamen'];
+
+	foreach ($Evaluacion as $value) {
+		if ($value['idEmpleado'] == $_SESSION['idEmpleado']) {
+			$fecha_inicio_examen = $value['fecha_inicio'];
+		}
+	}
+
 	$estado = 2;
+
 }elseif (isset($_GET['evaluacion'])) {
 	$Evaluaciones = ControladorFormularios::ctrVerEvaluaciones('idExamen', $_GET['evaluacion']);
 	$Evaluacion = ControladorFormularios::ctrVerEvaluacionesEmpleados('idExamen', $_GET['evaluacion']);
@@ -44,6 +54,8 @@ if ($Evaluaciones['intentos_maximos'] != null) {
 				<?php include 'view/pages/Examenes/examen/comenzar_examen.php'; ?>
 			<?php elseif ($estado == 1): ?>
 				<?php include 'view/pages/Examenes/examen/examen_iniciado.php'; ?>
+			<?php elseif ($estado == 2): ?>
+				<?php include 'view/pages/Examenes/examen/examen_terminado.php'; ?>
 			<?php endif ?>
 		</div>
 	</div>

@@ -2380,5 +2380,62 @@ static public function mdlImagenNoticia($id, $name)
 		$stmt = null;
 	}
 
+	static public function mdlBuscarEvaluacionAsignada($datos){
+		$pdo =Conexion::conectar();
+		$sql = "SELECT * FROM empleados_has_examenes WHERE idEmpleado = :idEmpleado AND idExamen = :idExamen";
+
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(":idEmpleado",$datos['idEmpleado'], PDO::PARAM_INT);
+		$stmt->bindParam(":idExamen",$datos['idExamen'], PDO::PARAM_INT);
+		
+		$stmt->execute();
+		return $stmt -> fetch();
+
+		$stmt->close();
+		$stmt = null;
+	}
+
+	static public function mdlTerminarExamen($datos){
+		$pdo = Conexion::conectar();
+
+		date_default_timezone_set("America/Mexico_City");
+		$fecha_fin = date("Y-m-d H:i:s");
+		$fecha_Inicio = $datos['fecha_inicio'];
+
+		// Convertir las fechas a objetos DateTime
+		$inicio = new DateTime($fecha_Inicio);
+		$fin = new DateTime($fecha_fin);
+
+		// Calcular la diferencia entre las fechas
+		$diferencia = $inicio->diff($fin);
+
+		// Obtener la diferencia en minutos
+		$minutos = $diferencia->days * 24 * 60 + $diferencia->h * 60 + $diferencia->i;
+
+		if ($datos['timeMax'] <= $minutos) {
+			$minutos = $datos['timeMax'];
+			// Sumar los minutos adicionales al objeto $inicio
+		    $inicio->add(new DateInterval('PT' . $datos['timeMax'] . 'M'));
+		    // Obtener la nueva fecha de fin en formato Y-m-d H:i:s
+		    $fecha_fin = $inicio->format('Y-m-d H:i:s');
+		}
+
+		$sql = "UPDATE empleados_has_examenes SET fecha_fin = :fecha_fin, tiempo_utilizado = :tiempo_utilizado WHERE idEmpleados_has_Examenes = :idEmpleados_has_Examenes";
+
+		$stmt = $pdo -> prepare($sql);
+		$stmt->bindParam(":fecha_fin",$fecha_fin, PDO::PARAM_STR);
+		$stmt->bindParam(":tiempo_utilizado",$minutos, PDO::PARAM_STR);
+		$stmt->bindParam(":idEmpleados_has_Examenes",$datos['idExamenEmpleados'], PDO::PARAM_INT);
+
+		if ($stmt->execute()) {
+			return 'ok';
+		}else{
+			return "error";
+		}
+
+		$stmt->close();
+		$stmt = null;
+	}
+
 	/*---------- Fin de ModeloFormularios ---------- */
 }

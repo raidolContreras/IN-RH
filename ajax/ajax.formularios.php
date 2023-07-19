@@ -718,6 +718,21 @@ class FormulariosAjax{
 	    echo $responderPreguntaExamen;
 	}
 
+	public function terminarExamenAjax(){
+		session_start();
+		$examen = $this->examen;
+		$timeMax = $this->timeMax;
+		$idEmpleado = $_SESSION['idEmpleado'];
+		$datos = array(
+			"idExamen" => $examen,
+			"timeMax" => $timeMax,
+			"idEmpleado" => $idEmpleado
+		);
+
+	    $terminarExamen = ControladorFormularios::ctrTerminarExamen($datos);
+	    echo $terminarExamen;
+	}
+
 }
 
 if(isset($_POST["validate"])){
@@ -1272,4 +1287,16 @@ if (isset($_POST['preguntaId'])) {
     $responderPreguntaExamen -> respuestaExamen = $respuestaExamen;
     $responderPreguntaExamen -> examen = $examen;
     $responderPreguntaExamen -> responderPreguntaExamenAjax();
+}
+
+if (isset($_POST['tiempoTerminado'])) {
+	if ($_POST['tiempoTerminado'] == true) {
+		$examen = $_POST['examen'];
+		$timeMax = $_POST['timeMax'];
+
+	    $terminarExamen = new FormulariosAjax();
+	    $terminarExamen -> examen = $examen;
+	    $terminarExamen -> timeMax = $timeMax;
+	    $terminarExamen -> terminarExamenAjax();
+	}
 }

@@ -94,7 +94,7 @@ class ControladorFormularios{
 	static public function ctrSubirPDF(){
 		if (isset($_POST['archivo'])) {
 			if ($_FILES['file']['error'] > 0) {
-			  echo 'Error al cargar el archivo: ' . $_FILES['file']['error'] . '<br>';
+				echo 'Error al cargar el archivo: ' . $_FILES['file']['error'] . '<br>';
 			}else{
 
 				// Crear la carpeta con el id del empleado
@@ -273,10 +273,10 @@ class ControladorFormularios{
 			if (preg_match('/^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["name"])){
 				$tabla = "puesto";
 				$datos = array("namePuesto" => $_POST['name'],
-							   "salario" => $_POST['salario'],
-							   "salario_integrado" => $_POST['salario_integrado'],
-							   "Empleados_idEmpleados" => $_POST['empleado'],
-							   "Departamentos_idDepartamentos" => $_POST['departamento']);
+								 "salario" => $_POST['salario'],
+								 "salario_integrado" => $_POST['salario_integrado'],
+								 "Empleados_idEmpleados" => $_POST['empleado'],
+								 "Departamentos_idDepartamentos" => $_POST['departamento']);
 				$registro = ModeloFormularios::mdlRegistrarPuestos($tabla,$datos);
 				if ($registro == 'ok') {
 					return 'ok';
@@ -308,10 +308,10 @@ class ControladorFormularios{
 			if (preg_match('/^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["name"])){
 				$tabla = "vacantes";
 				$datos = array("nameVacante" => $_POST['name'],
-							   "salarioVacante" => $_POST['salario'],
-							   "Departamentos_idDepartamentos" => $_POST['departamento'],
-							   "requisitos" => $_POST['requisitos'],
-							   "idVacante" => $idVacante);
+								 "salarioVacante" => $_POST['salario'],
+								 "Departamentos_idDepartamentos" => $_POST['departamento'],
+								 "requisitos" => $_POST['requisitos'],
+								 "idVacante" => $idVacante);
 				$registro = ModeloFormularios::mdlActualizarVacantes($tabla,$datos);
 				if ($registro == 'ok') {
 					return 'ok';
@@ -394,14 +394,14 @@ class ControladorFormularios{
 									 "File" => $_FILES['file']);
 						$registro = ModeloFormularios::mdlRegistroPostulante($tabla, $datos);
 						if ($registro != "error") {
-						 		$ctrSubirPDF = ControladorFormularios::ctrSubirPDFPostulante($registro,$datos);
-						 		if ($ctrSubirPDF == "ok") {
-						 			return $ctrSubirPDF;
-						 		}else{
-						 			return "Error: 5";
-						 		}
+								$ctrSubirPDF = ControladorFormularios::ctrSubirPDFPostulante($registro,$datos);
+								if ($ctrSubirPDF == "ok") {
+									return $ctrSubirPDF;
+								}else{
+									return "Error: 5";
+								}
 						 }else{
-						 	return "Error: 4";
+							return "Error: 4";
 						 } 
 					}else{
 						return "Error: 3";
@@ -419,7 +419,7 @@ class ControladorFormularios{
 	static public function ctrSubirPDFPostulante($idPostulante, $datos){
 		if (isset($datos['nameDocPost'])) {
 			if ($datos['File']['error'] > 0) {
-			  echo 'Error al cargar el archivo: ' . $datos['File']['error'] . '<br>';
+				echo 'Error al cargar el archivo: ' . $datos['File']['error'] . '<br>';
 			}else{
 
 				// Crear la carpeta con el id del empleado
@@ -498,7 +498,7 @@ class ControladorFormularios{
 	static public function ctrAgendarCitas($idPostulante, $fechaReunion){
 		$tabla = "reuniones";
 		$datos = array("fechaReunion" => $fechaReunion,
-					   "Postulantes_idPostulantes" => $idPostulante);
+						 "Postulantes_idPostulantes" => $idPostulante);
 		$agendar = ModeloFormularios::mdlAgendarCitas($tabla, $datos);
 		if ($agendar == "ok") {
 			return "ok";
@@ -619,9 +619,9 @@ class ControladorFormularios{
 		if (isset($_POST['fecha_fin'])) {
 			$tabla = 'noticias';
 			$datos = array("fecha_fin" => $_POST['fecha_fin'],
-						   "mensaje" => $_POST['mensaje_noticia'],
-						   "Empleados_idEmpleados" => $_POST['publicado'],
-						   "foto_noticia" => $_POST['foto_noticia']);
+							 "mensaje" => $_POST['mensaje_noticia'],
+							 "Empleados_idEmpleados" => $_POST['publicado'],
+							 "foto_noticia" => $_POST['foto_noticia']);
 			$noticia = ModeloFormularios::mdlCrearNoticia($tabla,$datos);
 
 			if ($_POST['foto_noticia'] == 1 && $noticia > 0) {
@@ -1322,6 +1322,23 @@ class ControladorFormularios{
 		return $registarRespuestas;
 	}
 
+	static public function ctrTerminarExamen($datos){
+		$buscarEvaluacionAsignada = ModeloFormularios::mdlBuscarEvaluacionAsignada($datos);
+		if (!empty($buscarEvaluacionAsignada)) {
+			$fecha_inicio = $buscarEvaluacionAsignada['fecha_inicio'];
+			$idExamenEmpleados = $buscarEvaluacionAsignada['idEmpleados_has_Examenes'];
+			$datosTermino = array(
+				"fecha_inicio" => $fecha_inicio,
+				"timeMax" => $datos['timeMax'],
+				"idExamenEmpleados" => $idExamenEmpleados
+			);
+			$registarRespuestas = ModeloFormularios::mdlTerminarExamen($datosTermino);
+				return $registarRespuestas;
+		}else{
+			return 'Sin datos';
+		}
+	}
+
 	static public function ctrFormatearMes($fecha){
 
 		$diaMes = date('N', strtotime($fecha));
@@ -1384,6 +1401,21 @@ class ControladorFormularios{
 		}else{
 			return 'Sin limite de tiempo';
 		}
+	}
+
+	static public function calcularCalificacion($respuestasCorrectas, $totalPreguntas) {
+		// Calcular el porcentaje de respuestas correctas
+		$porcentajeCorrectas = ($respuestasCorrectas / $totalPreguntas) * 100;
+
+		// Calcular la calificación en base al porcentaje de respuestas correctas
+		$calificacion = ($porcentajeCorrectas / 100) * 10;
+
+		// Formatear la calificación con dos decimales y el porcentaje
+		$calificacionFormateada = '<strong>' . number_format($calificacion, 2) . '</strong> de un total de 10.00 ('
+				. '<strong>' .number_format($porcentajeCorrectas, 0) . '</strong>%)';
+
+		return $calificacionFormateada;
+		
 	}
 
 	/*---------- Fin de ControladorFormularios ---------- */

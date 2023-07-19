@@ -98,7 +98,11 @@ $i = 1;
 			</div>
 
 			<div class="row float-right">
-				<button class="btn btn-primary rounded btn-block">Terminar examen</button>
+				<form id="terminar-examen-btn">
+					<input type="hidden" name="terminar-examen" value="<?php echo $_GET['evaluacion'] ?>">
+					<input type="hidden" name="terminar-examen" value="<?php echo $_GET['evaluacion'] ?>">
+				</form>
+				<button class="btn btn-primary rounded btn-block" id="terminar-examen-btn">Terminar examen</button>
 			</div>
 		</div>
 
@@ -110,13 +114,13 @@ $i = 1;
 	</div>
 </div>
 
+	<script>
 <?php if ($tiempo == 'Sin limite de tiempo'): ?>
-	<script>
 		document.getElementById("timer").innerHTML = "Sin limite de tiempo";
-	</script>
 <?php else: ?>
-	<script>
+		const timeMax = <?php echo $Evaluaciones['tiempo_limite']; ?>;
 		const examen = <?php echo $_GET['evaluacion']; ?>;
+
 		document.addEventListener('DOMContentLoaded', function() {
 			// Función para enviar la respuesta por AJAX
 			function enviarRespuesta(preguntaId, respuesta) {
@@ -151,7 +155,7 @@ $i = 1;
 
 		// Establecer las fechas de inicio y fin
 		var fechaInicio = new Date("<?php echo $fecha_inicio_examen ?>");
-		var fechaFin = new Date(fechaInicio.getTime() + <?php echo $Evaluaciones['tiempo_limite']; ?> * 60000); // Tiempo límite en minutos en milisegundos
+		var fechaFin = new Date(fechaInicio.getTime() + timeMax * 60000); // Tiempo límite en minutos en milisegundos
 
 		// Función para mostrar el contador
 		function mostrarContador() {
@@ -186,12 +190,11 @@ $i = 1;
 			$.ajax({
 				url: "ajax/ajax.formularios.php",
 				type: "POST",
-				data: { tiempoTerminado: true },
+				data: { tiempoTerminado: true, examen: examen, timeMax: timeMax },
 				success: function(response) {
-					// Manejar la respuesta de la petición AJAX
-				},
-				error: function(xhr, status, error) {
-					// Manejar los errores de la petición AJAX
+					$("#form-result").val("");
+					if (response === 'ok') {}
+						window.location.href='Examen&verExamen='+examen+'&terminado=ok';
 				}
 			});
 		}
