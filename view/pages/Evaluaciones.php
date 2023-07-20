@@ -71,18 +71,18 @@ $Evaluaciones = ControladorFormularios::ctrVerEvaluaciones(null, null);
 												<a class="IN-dropdown-item" href="crearEvaluacion&evaluacion=<?php echo $Evaluacion['idExamen']; ?>">
 													<i class="fas fa-edit"></i> Editar
 												</a>
-												<a class="IN-dropdown-item"
-												href="eliminarExamen&evaluacion=<?php echo $Evaluacion['idExamen']; ?>">
-													<i class="fas fa-trash"></i> Eliminar
+												<a class="IN-dropdown-item" href="AddEmpleados&evaluacion=<?php echo $Evaluacion['idExamen']; ?>">
+													<i class="fas fa-user-plus"></i> Agregar empleados
 												</a>
 												<a class="IN-dropdown-item" href="Preguntas&evaluacion=<?php echo $Evaluacion['idExamen']; ?>">
 													<i class="fas fa-clipboard-list"></i> Ver preguntas
 												</a>
-												<a class="IN-dropdown-item" href="AddPregunta&evaluacion=<?php echo $Evaluacion['idExamen']; ?>">
-													<i class="fas fa-tasks"></i> Agregar preguntas
+												<a class="IN-dropdown-item" href="Calificaciones&evaluacion=<?php echo $Evaluacion['idExamen']; ?>">
+													<i class="fas fa-tasks"></i> Calificaciones
 												</a>
-												<a class="IN-dropdown-item" href="AddEmpleados&evaluacion=<?php echo $Evaluacion['idExamen']; ?>">
-													<i class="fas fa-user-plus"></i> Agregar empleados
+												<a class="IN-dropdown-item"
+												href="eliminarExamen&evaluacion=<?php echo $Evaluacion['idExamen']; ?>">
+													<i class="fas fa-trash"></i> Eliminar
 												</a>
 											</div>
 										</div>
