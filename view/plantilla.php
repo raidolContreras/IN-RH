@@ -14,9 +14,7 @@ session_start();
 	<link href="assets/vendor/fonts/circular-std/style.css" rel="stylesheet">
 	<link rel="stylesheet" href="assets/libs/css/style.css">
 	<link rel="stylesheet" href="assets/vendor/fonts/fontawesome/css/fontawesome-all.css">
-	<link rel="stylesheet" href="assets/vendor/charts/chartist-bundle/chartist.css">
 	<link rel="stylesheet" href="assets/vendor/charts/morris-bundle/morris.css">
-	<link rel="stylesheet" href="assets/vendor/fonts/material-design-iconic-font/css/materialdesignicons.min.css">
 	<link rel="stylesheet" href="assets/vendor/charts/c3charts/c3.css">
 	<link rel="stylesheet" href="assets/vendor/fonts/flag-icon-css/flag-icon.min.css">
 	<link rel="stylesheet" type="text/css" href="assets/vendor/datatables/css/dataTables.bootstrap4.css">
@@ -33,6 +31,7 @@ session_start();
 	<script src="https://cdn.tiny.cloud/1/ojrrit6i20fvuzvl2sioxzrflc9dh7gpi3gosuyrwgzfa18y/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/4.2.2/css/fixedColumns.dataTables.min.css">
+
 	
 	<?php if (isset($_GET["pagina"])): ?>
 		<title><?php echo 'IN Consulting México - '.$_GET["pagina"]; ?></title>
@@ -156,6 +155,7 @@ session_start();
 				 $_GET["pagina"] == "AddEmpleados" ||
 				 $_GET["pagina"] == "Evaluaciones_Asignadas" ||
 				 $_GET["pagina"] == "Examen" ||
+				 $_GET["pagina"] == "Calificaciones" ||
 				 $_GET["pagina"] == "Preguntas") {
 
 			include "pages/navs/navbar.php";

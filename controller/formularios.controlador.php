@@ -1418,5 +1418,15 @@ class ControladorFormularios{
 		
 	}
 
+	static public function ctrExamenesEmpleados($idExamen){
+		$examen = ModeloFormularios::mdlExamenesEmpleados($idExamen);
+		return $examen;
+	}
+
+	static public function ctrExamenesPreguntas($idExamen){
+		$examen = ModeloFormularios::mdlExamenesPreguntas($idExamen);
+		return $examen;
+	}
+
 	/*---------- Fin de ControladorFormularios ---------- */
 }

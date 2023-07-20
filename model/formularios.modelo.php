@@ -2437,5 +2437,53 @@ static public function mdlImagenNoticia($id, $name)
 		$stmt = null;
 	}
 
+	static public function mdlExamenesEmpleados($idExamen){
+		$sql = "SELECT e.idEmpleados, CONCAT(e.lastname, ' ', e.name) AS nombre FROM examenes ex
+				JOIN empleados_has_examenes ee ON ee.idExamen = ex.idExamen
+				JOIN empleados e ON e.idEmpleados = ee.idEmpleado
+				WHERE ex.idExamen = :idExamen
+				ORDER BY ee.idEmpleado ASC;";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->bindParam(':idExamen', $idExamen, PDO::PARAM_INT);
+
+		$stmt->execute();
+		return $stmt->fetchAll();
+
+		$stmt->close();
+		$stmt = null;
+	}
+
+	static public function mdlExamenesPreguntas($idExamen){
+		$sql = "SELECT p.idPregunta, p.pregunta, p.tipo_pregunta FROM examenes ex
+				JOIN preguntas p ON p.idExamen = ex.idExamen
+				WHERE ex.idExamen = :idExamen;";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->bindParam(':idExamen', $idExamen, PDO::PARAM_INT);
+
+		$stmt->execute();
+		return $stmt->fetchAll();
+
+		$stmt->close();
+		$stmt = null;
+	}
+
+	static public function mdlEmpleadoPreguntas($idPregunta, $idEmpleado){
+		$sql = "SELECT er.respuesta FROM preguntas p 
+				JOIN empleado_examen_respuesta er ON er.idPregunta = p.idPregunta
+				WHERE p.idPregunta = :idPregunta AND er.idEmpleado = :idEmpleado;";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->bindParam(':idPregunta', $idPregunta, PDO::PARAM_INT);
+		$stmt->bindParam(':idEmpleado', $idEmpleado, PDO::PARAM_INT);
+
+		$stmt->execute();
+		return $stmt->fetch();
+
+		$stmt->close();
+		$stmt = null;
+	}
+
 	/*---------- Fin de ModeloFormularios ---------- */
 }

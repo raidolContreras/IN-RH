@@ -8,7 +8,6 @@ jQuery(document).ready(function($) {
                 lengthChange: false,
                 scrollCollapse: true,
                 paging: true,
-                fixedColumns: true,
                 buttons: [
                     {
                         extend: 'excelHtml5',
@@ -77,7 +76,6 @@ jQuery(document).ready(function($) {
                     }
                 ],
                 fixedHeader: true,
-                scrollY: 375,
                 select: true,
             language: {
                 lengthMenu: 'Mostrar _MENU_ resultados por pagina',
@@ -119,7 +117,6 @@ jQuery(document).ready(function($) {
                     }
                     ],
                 fixedHeader: true,
-                scrollY: 375,
                 stateSave: true,
                 select: true,
             language: {
@@ -183,7 +180,6 @@ jQuery(document).ready(function($) {
             var table = $('table.Extras').DataTable({
                 lengthChange: false,
                 fixedHeader: true,
-                scrollY: 375,
                 stateSave: true,
             language: {
                 lengthMenu: 'Mostrar _MENU_ resultados por pagina',
@@ -229,7 +225,6 @@ jQuery(document).ready(function($) {
                 lengthChange: false,
                 fixedHeader: false,
                 ordering: false,
-                scrollY: 500,
             language: {
                 lengthMenu: 'Mostrar _MENU_ resultados por pagina',
                 zeroRecords: 'Parece que no hay ninguna solicitud en el tablero.',
@@ -264,6 +259,27 @@ jQuery(document).ready(function($) {
 
             table.buttons().container()
                 .appendTo('#example_wrapper .col-md-6:eq(0)');
+        });
+    }
+
+    if ($("table.examenes_empleados").length) {
+
+        $(document).ready(function() {
+            var table = $('table.examenes_empleados').DataTable({
+                lengthChange: false,
+                scrollCollapse: true,
+                paging: false,
+                fixedHeader: true,
+                ordering: false,
+            language: {
+                lengthMenu: 'Mostrar _MENU_ resultados por pagina',
+                zeroRecords: 'Sin resultados - lo siento',
+                info: 'Pagina _PAGE_ de _PAGES_',
+                infoEmpty: 'No se encontraron registros',
+                infoFiltered: '(Filtrado de _MAX_ registros totales)',
+                search: 'Buscar',
+            }
+            });
         });
     }
 
