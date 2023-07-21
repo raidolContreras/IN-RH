@@ -7,6 +7,9 @@
 	$empleados_has_examenes = ModeloFormularios::mdlEmpleadosExamenes($_GET['evaluacion']);
 
 ?>
+<style>
+  select {height: 30px;}
+</style>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link rel="stylesheet" href="assets/vendor/multi-select/css/multi-select.css">
 <div class="container-fluid dashboard-content">
@@ -20,9 +23,14 @@
 				<form
 					class="mb-3"
 					id="empleado-evaluaciones-form">
-					<select id='pre-selected-options'
-							multiple='multiple'
-							name='empleados_has_examenes[]'>
+
+					<select name="empleados_has_examenes[]"
+							class="col-12" 
+							id="field1"
+							multiple multiselect-search="true"
+							multiselect-select-all="true"
+							multiselect-max-items="3"
+							onchange="console.log(this.selectedOptions)">
 					<?php
 						foreach ($empleados as $empleado){
 							$selected = false; 
@@ -35,11 +43,11 @@
 							}
 							if ($selected){
 								echo "<option value='".$empleado['idEmpleados']."' selected>"
-								.mb_strtoupper($empleado['name']." ".$empleado['lastname'])
+								.mb_strtoupper($empleado['lastname']." ".$empleado['name'])
 								."</option>";
 							}else{
 								echo "<option value='".$empleado['idEmpleados']."'>"
-								.mb_strtoupper($empleado['name']." ".$empleado['lastname'])
+								.mb_strtoupper($empleado['lastname']." ".$empleado['name'])
 								."</option>";
 							}
 						}
@@ -72,12 +80,10 @@
 		</div>
 	</div>
 </div>
-<script src="assets/vendor/multi-select/js/jquery.multi-select.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
+<script src="assets/libs/js/multiselect-dropdown.js"></script>
 <script>
-$('#my-select, #pre-selected-options').multiSelect({
-	selectableHeader: "<div class='card-header'>Fuera del examen</div>",
-	selectionHeader: "<div class='card-header'>Dentro del examen</div>"
-});
 	$(document).ready(function() {
 		$("#empleado-evaluaciones-btn").click(function() {
 		var formData = $("#empleado-evaluaciones-form").serialize(); // Obtener los datos del formulario
