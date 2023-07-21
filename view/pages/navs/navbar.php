@@ -2,13 +2,6 @@
 <!-- main wrapper -->
 <!-- ============================================================== -->
 <div class="dashboard-main-wrapper">
-	<?php if (!isset($_SESSION['validarIngreso'])): ?>
-		<script>
-			setTimeout(function() {
-				location.href='Login';
-			}, 500);
-		</script>
-	<?php endif ?>
 	<?php 
 $primerLetra = strtoupper(substr($_SESSION["name"], 0, 1)); // Extrae la primer letra del texto
 $segundaLetra = strtoupper(substr($_SESSION["lastname"], 0, 1)); // Extrae la primer letra del texto

@@ -44,126 +44,133 @@ session_start();
 	<?php
 
 	if(isset($_GET["pagina"])){
+		if (!isset($_SESSION['validarIngreso']) && $_GET["pagina"] != 'Login'){
+			echo "<script>
+					setTimeout(function() {
+						location.href='Login';
+					}, 500);
+				</script>";
+		}else{
+			if($_GET["pagina"] == "Empleados" ||
+				$_GET["pagina"] == "Inicio" ||
+				$_GET["pagina"] == "RegistroEmpleados" ||
+				$_GET["pagina"] == "InformacionLaboral" ||
+				$_GET["pagina"] == "Formacion" ||
+				$_GET["pagina"] == "Departamento" ||
+				$_GET["pagina"] == "CrearDepartamentos" ||
+				$_GET["pagina"] == "Empleado" ||
+				$_GET["pagina"] == "Foto" ||
+				$_GET["pagina"] == "Documento" ||
+				$_GET["pagina"] == "EditarDepto" ||
+				$_GET["pagina"] == "EliminarDepto" ||
+				$_GET["pagina"] == "Puestos" ||
+				$_GET["pagina"] == "CrearPuestos" ||
+				$_GET["pagina"] == "Vacantes" ||
+				$_GET["pagina"] == "Postulantes" ||
+				$_GET["pagina"] == "Reuniones" ||
+				$_GET["pagina"] == "VerPdf" ||
+				$_GET["pagina"] == "Configuraciones" ||
+				$_GET["pagina"] == "Empresas" ||
+				$_GET["pagina"] == "RegistroEmpresa" ||
+				$_GET["pagina"] == "Talento" ||
+				$_GET["pagina"] == "Nominas" ||
+				$_GET["pagina"] == "Tareas" ||
+				$_GET["pagina"] == "SubirDocumentos" ||
+				$_GET["pagina"] == "EntregarTarea" ||
+				$_GET["pagina"] == "FinalizarTarea" ||
+				$_GET["pagina"] == "Evaluaciones"  ||
+				$_GET["pagina"] == "somos" 
 
-		if($_GET["pagina"] == "Empleados" ||
-			$_GET["pagina"] == "Inicio" ||
-			$_GET["pagina"] == "RegistroEmpleados" ||
-			$_GET["pagina"] == "InformacionLaboral" ||
-			$_GET["pagina"] == "Formacion" ||
-			$_GET["pagina"] == "Departamento" ||
-			$_GET["pagina"] == "CrearDepartamentos" ||
-			$_GET["pagina"] == "Empleado" ||
-			$_GET["pagina"] == "Foto" ||
-			$_GET["pagina"] == "Documento" ||
-			$_GET["pagina"] == "EditarDepto" ||
-			$_GET["pagina"] == "EliminarDepto" ||
-			$_GET["pagina"] == "Puestos" ||
-			$_GET["pagina"] == "CrearPuestos" ||
-			$_GET["pagina"] == "Vacantes" ||
-			$_GET["pagina"] == "Postulantes" ||
-			$_GET["pagina"] == "Reuniones" ||
-			$_GET["pagina"] == "VerPdf" ||
-			$_GET["pagina"] == "Configuraciones" ||
-			$_GET["pagina"] == "Empresas" ||
-			$_GET["pagina"] == "RegistroEmpresa" ||
-			$_GET["pagina"] == "Talento" ||
-			$_GET["pagina"] == "Nominas" ||
-			$_GET["pagina"] == "Tareas" ||
-			$_GET["pagina"] == "SubirDocumentos" ||
-			$_GET["pagina"] == "EntregarTarea" ||
-			$_GET["pagina"] == "FinalizarTarea" ||
-			$_GET["pagina"] == "Evaluaciones"  ||
-			$_GET["pagina"] == "somos" 
+			){
+				include "pages/navs/navbar.php";
+				include "pages/navs/sidenav.php"; 
 
-		){
-			include "pages/navs/navbar.php";
-			include "pages/navs/sidenav.php"; 
+				include "pages/".$_GET["pagina"].".php";
+				echo '<a href="Empresas" class="configuration-button"><i class="fas fa-cog rotate-center"></i></a>';
 
-			include "pages/".$_GET["pagina"].".php";
-			echo '<a href="Empresas" class="configuration-button"><i class="fas fa-cog rotate-center"></i></a>';
+			}elseif(strpos($_GET["pagina"], "Vacantes-") !== false){
 
-		}elseif(strpos($_GET["pagina"], "Vacantes-") !== false){
+				$pagina = str_replace("Vacantes-", "", $_GET["pagina"]);
+				if ($pagina == 'Postulantes'||
+					$pagina == "CrearVacante" ||
+					$pagina == "EliminarVacante") {
 
-			$pagina = str_replace("Vacantes-", "", $_GET["pagina"]);
-			if ($pagina == 'Postulantes'||
-				$pagina == "CrearVacante" ||
-				$pagina == "EliminarVacante") {
+					include "pages/navs/navbar.php";
+					include "pages/navs/sidenav.php";
+
+					include "pages/Vacantes/".$pagina.".php";
+				}
+
+			}elseif ($_GET["pagina"] == "Postulacion") {
+
+				include "pages/navs/navbar.php";
+				include "pages/navs/sidenav.php"; 
+				include "pages/Vacantes/".$_GET["pagina"].".php";
+
+			}elseif ($_GET["pagina"] == "Datos") {
+
+				include "pages/navs/navbar.php";
+				include "pages/navs/sidenav.php"; 
+				include "pages/Empleado/".$_GET["pagina"].".php";
+
+			}elseif ($_GET["pagina"] == "Login" ||
+					 $_GET["pagina"] == "Salir" ||
+					 $_GET["pagina"] == "Forgot-Password") {
+
+				include "pages/Login/".$_GET["pagina"].".php";
+
+			}elseif ($_GET["pagina"] == "Organigrama" ||
+						$_GET["pagina"] == "Perfil") {
+
+				include "pages/navs/navbar.php";
+				include "pages/".$_GET["pagina"].".php";
+
+			}elseif ($_GET["pagina"] == "Noticias" ||
+					 $_GET["pagina"] == "TableroNoticias" ||
+					 $_GET["pagina"] == "EliminarNoticia"	) {
+
+				include "pages/navs/navbar.php";
+				include "pages/navs/sidenav.php"; 
+				include "pages/modulos/".$_GET["pagina"].".php";
+
+			}elseif ($_GET["pagina"] == "Password") {
+
+				include "pages/".$_GET["pagina"].".php";
+
+			}elseif ($_GET["pagina"] == "Asistencia" ||
+					 $_GET["pagina"] == "Asistencia-resumen" ||
+					 $_GET["pagina"] == "Asistencia-ajustes" ||
+					 $_GET["pagina"] == "Asistencia-importar" ||
+					 $_GET["pagina"] == "Asistencia-permisos" ||
+					 $_GET["pagina"] == "Asistencia-permisos-vacaciones" ||
+					 $_GET["pagina"] == "CrearHorario" ) {
 
 				include "pages/navs/navbar.php";
 				include "pages/navs/sidenav.php";
+				if ($_GET['pagina'] == "Asistencia-permisos-vacaciones") {
+					include "pages/Horarios/Vacaciones.php";
+				}else{
+					include "pages/Horarios/".$_GET["pagina"].".php";
+				}
 
-				include "pages/Vacantes/".$pagina.".php";
-			}
+			}elseif ($_GET["pagina"] == "crearEvaluacion" ||
+					 $_GET["pagina"] == "eliminarExamen" ||
+					 $_GET["pagina"] == "AddPregunta" ||
+					 $_GET["pagina"] == "CrearRespuesta" ||
+					 $_GET["pagina"] == "EliminarPregunta" ||
+					 $_GET["pagina"] == "AddEmpleados" ||
+					 $_GET["pagina"] == "Evaluaciones_Asignadas" ||
+					 $_GET["pagina"] == "Examen" ||
+					 $_GET["pagina"] == "Calificaciones" ||
+					 $_GET["pagina"] == "Preguntas") {
 
-		}elseif ($_GET["pagina"] == "Postulacion") {
+				include "pages/navs/navbar.php";
+				include "pages/navs/sidenav.php";
+				include "pages/Examenes/".$_GET["pagina"].".php";
 
-			include "pages/navs/navbar.php";
-			include "pages/navs/sidenav.php"; 
-			include "pages/Vacantes/".$_GET["pagina"].".php";
-
-		}elseif ($_GET["pagina"] == "Datos") {
-
-			include "pages/navs/navbar.php";
-			include "pages/navs/sidenav.php"; 
-			include "pages/Empleado/".$_GET["pagina"].".php";
-
-		}elseif ($_GET["pagina"] == "Login" ||
-				 $_GET["pagina"] == "Salir" ||
-				 $_GET["pagina"] == "Forgot-Password") {
-
-			include "pages/Login/".$_GET["pagina"].".php";
-
-		}elseif ($_GET["pagina"] == "Organigrama" ||
-					$_GET["pagina"] == "Perfil") {
-
-			include "pages/navs/navbar.php";
-			include "pages/".$_GET["pagina"].".php";
-
-		}elseif ($_GET["pagina"] == "Noticias" ||
-				 $_GET["pagina"] == "TableroNoticias" ||
-				 $_GET["pagina"] == "EliminarNoticia"	) {
-
-			include "pages/navs/navbar.php";
-			include "pages/navs/sidenav.php"; 
-			include "pages/modulos/".$_GET["pagina"].".php";
-
-		}elseif ($_GET["pagina"] == "Password") {
-
-			include "pages/".$_GET["pagina"].".php";
-
-		}elseif ($_GET["pagina"] == "Asistencia" ||
-				 $_GET["pagina"] == "Asistencia-resumen" ||
-				 $_GET["pagina"] == "Asistencia-ajustes" ||
-				 $_GET["pagina"] == "Asistencia-importar" ||
-				 $_GET["pagina"] == "Asistencia-permisos" ||
-				 $_GET["pagina"] == "Asistencia-permisos-vacaciones" ||
-				 $_GET["pagina"] == "CrearHorario" ) {
-
-			include "pages/navs/navbar.php";
-			include "pages/navs/sidenav.php";
-			if ($_GET['pagina'] == "Asistencia-permisos-vacaciones") {
-				include "pages/Horarios/Vacaciones.php";
 			}else{
-				include "pages/Horarios/".$_GET["pagina"].".php";
+				include "pages/404-page.html";
 			}
-
-		}elseif ($_GET["pagina"] == "crearEvaluacion" ||
-				 $_GET["pagina"] == "eliminarExamen" ||
-				 $_GET["pagina"] == "AddPregunta" ||
-				 $_GET["pagina"] == "CrearRespuesta" ||
-				 $_GET["pagina"] == "EliminarPregunta" ||
-				 $_GET["pagina"] == "AddEmpleados" ||
-				 $_GET["pagina"] == "Evaluaciones_Asignadas" ||
-				 $_GET["pagina"] == "Examen" ||
-				 $_GET["pagina"] == "Calificaciones" ||
-				 $_GET["pagina"] == "Preguntas") {
-
-			include "pages/navs/navbar.php";
-			include "pages/navs/sidenav.php";
-			include "pages/Examenes/".$_GET["pagina"].".php";
-
-		}else{
-			include "pages/404-page.html";
 		}
 
 	}else{
