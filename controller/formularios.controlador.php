@@ -1405,16 +1405,20 @@ class ControladorFormularios{
 
 	static public function calcularCalificacion($respuestasCorrectas, $totalPreguntas) {
 		// Calcular el porcentaje de respuestas correctas
-		$porcentajeCorrectas = ($respuestasCorrectas / $totalPreguntas) * 100;
+		if ($totalPreguntas == 0) {
+			return '';
+		}else{
+			$porcentajeCorrectas = ($respuestasCorrectas / $totalPreguntas) * 100;
 
-		// Calcular la calificación en base al porcentaje de respuestas correctas
-		$calificacion = ($porcentajeCorrectas / 100) * 10;
+			// Calcular la calificación en base al porcentaje de respuestas correctas
+			$calificacion = ($porcentajeCorrectas / 100) * 10;
 
-		// Formatear la calificación con dos decimales y el porcentaje
-		$calificacionFormateada = '<strong>' . number_format($calificacion, 2) . '</strong> de un total de 10.00 ('
-				. '<strong>' .number_format($porcentajeCorrectas, 0) . '</strong>%)';
+			// Formatear la calificación con dos decimales y el porcentaje
+			$calificacionFormateada = '<strong>' . number_format($calificacion, 2) . '</strong> de un total de 10.00 ('
+					. '<strong>' .number_format($porcentajeCorrectas, 0) . '</strong>%)';
 
-		return $calificacionFormateada;
+			return $calificacionFormateada;
+		}
 		
 	}
 

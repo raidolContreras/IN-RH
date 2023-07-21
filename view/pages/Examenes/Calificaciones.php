@@ -26,6 +26,7 @@ $escala = json_decode($escalaFile, true);
 							<tr>
 								<th rowspan="2">#</th>
 								<th rowspan="2">Empleado</th>
+								<th rowspan="2">Total</th>
 								<th colspan="<?php echo $i; ?>" style="text-align:center">Preguntas</th>
 							</tr>
 							<tr>
@@ -41,9 +42,8 @@ $escala = json_decode($escalaFile, true);
 							<?php 
 								$i=1; 
 								foreach ($empleados as $empleado){
-
-									echo "<tr>
-											<td>";
+									$total_preguntas = 0;
+									$total_correctas = 0;
 
 									if (strlen($i)==1) {
 										$num = '0'.$i;
@@ -51,36 +51,49 @@ $escala = json_decode($escalaFile, true);
 										$num = $i;
 									}$i++;
 
-									echo "$num</td>
-										<td>".mb_strtoupper($empleado['nombre'])."</td>";
-
+									echo "<tr>
+										<td>$num</td>
+										<td>".mb_strtoupper($empleado['nombre'])."</td>
+										<td id='".$empleado['idEmpleados']."'></td>";
 									foreach ($preguntas as $pregunta){
 										$respuesta = ModeloFormularios::mdlEmpleadoPreguntas($pregunta['idPregunta'], $empleado['idEmpleados']);
 										$respuestasExamen = ControladorFormularios::ctrVerRespuestasExamen('idPregunta', $pregunta['idPregunta']);
-
-										if (!empty($respuesta)) {
-											$resultado = $respuesta['respuesta'];
+										$total_preguntas = $total_preguntas + 1;
+										$total_correctas = $total_correctas + 1;
+											if (empty($respuesta['respuesta'])) {
+												$resultado = '';
+											}else{
+												$resultado = $respuesta['respuesta'];
+											}
 											if ($pregunta['tipo_pregunta'] == 'escala') {
 
 												foreach ($respuestasExamen as $respuestaExamen){
 													if ($respuestaExamen['respuesta'] == 'escala') {
+														$total_preguntas = $total_preguntas - 1;
+														$total_correctas = $total_correctas - 1;
 														$opciones = $escala[$respuestaExamen['valor']];
-														foreach ($opciones as $key => $opcion) {
-															if ($key == $resultado) {
-																$resultado = $opcion;
-																echo "<td style='text-align: center !important;'>$resultado</td>";
+														if ($resultado == ''){
+																echo "<td style='background-color: #BABABA; color: #020202; text-align: center !important;'></td>";
+														}else{
+															foreach ($opciones as $key => $opcion) {
+																if ($key == $resultado) {
+																	$resultado = $opcion;
+																	echo "<td style='text-align: center !important;'>$resultado</td>";
+																}
 															}
 														}
 													}else{
 														$opciones = $escala[$respuestaExamen['valor']];
-														foreach ($opciones as $key => $opcion) {
-															if ($key == $resultado) {
-																if ($respuestaExamen['valor'] == $key) {
-																	$resultado = $opcion;
-																	echo "<td style='background-color: #3CC7B6; color: #FEFEFE; text-align: center !important;'>$resultado</td>";
-																}else{
-																	$resultado = $opcion;
-																	echo "<td style='background-color: #EC3927; color: #FEFEFE; text-align: center !important;'>$resultado</td>";
+														if ($resultado == '') {
+															$total_correctas = $total_correctas - 1;
+															echo "<td style='background-color: #BABABA; color: #020202; text-align: center !important;'></td>";
+														}else{
+															foreach ($opciones as $key => $opcion) {
+																if ($key == $resultado) {
+																	if ($respuestaExamen['valor'] == $key) {
+																		$resultado = $opcion;
+																		echo "<td style='background-color: #3CC7B6; color: #FEFEFE; text-align: center !important;'>$resultado</td>";
+																	}
 																}
 															}
 														}
@@ -88,22 +101,39 @@ $escala = json_decode($escalaFile, true);
 												}
 
 											}elseif ($pregunta['tipo_pregunta'] == 'abierta') {
-												echo "<td style='text-align: center !important;'>$resultado</td>";
-											}else{
-												foreach ($respuestasExamen as $respuestaExamen){
-													if ($respuestaExamen['valor'] == 1 && $respuestaExamen['respuesta'] == $resultado) {
-														echo "<td style='background-color: #3CC7B6; color: #FEFEFE; text-align: center !important;'>$resultado</td>";
-													}elseif ($respuestaExamen['valor'] == 0 && $respuestaExamen['respuesta'] == $resultado) {
-														echo "<td style='background-color: #EC3927; color: #FEFEFE; text-align: center !important;'>$resultado</td>";
-													}
-												}
-											}
-										}else{
-											echo "<td style='background-color: #BABABA; color: #020202; text-align: center !important;'>NA</td>";
-										}
-									}
 
+												$total_preguntas = $total_preguntas - 1;
+												$total_correctas = $total_correctas - 1;
+												if ($resultado != '') {
+													echo "<td style='text-align: center !important;'>$resultado</td>";
+												}else{
+													echo "<td style='background-color: #BABABA; color: #020202; text-align: center !important;'></td>";
+												}
+
+											}else{
+
+												if ($resultado != '') {
+													foreach ($respuestasExamen as $respuestaExamen){
+														if ($respuestaExamen['valor'] == 1 && $respuestaExamen['respuesta'] == $resultado) {
+															echo "<td style='background-color: #3CC7B6; color: #FEFEFE; text-align: center !important;'>$resultado</td>";
+														}elseif ($respuestaExamen['valor'] == 0 && $respuestaExamen['respuesta'] == $resultado) {
+															$total_correctas = $total_correctas - 1;
+															echo "<td style='background-color: #EC3927; color: #FEFEFE; text-align: center !important;'>$resultado</td>";
+														}
+													}
+												}else{
+													$total_correctas = $total_correctas - 1;
+													echo "<td style='background-color: #BABABA; color: #020202; text-align: center !important;'></td>";
+												}
+
+											}
+									}
 									echo "</tr>";
+
+									$promedios[] = array(
+										"idEmpleado" => $empleado['idEmpleados'],
+										"total_correctas" => $total_correctas
+									);
 								} 
 							?>
 
@@ -114,4 +144,11 @@ $escala = json_decode($escalaFile, true);
 		</div>
 	</div>
 </div>
+<?php foreach ($promedios as $promedio): ?>
+	<?php $promedioFinal = ControladorFormularios::calcularCalificacion($promedio['total_correctas'],$total_preguntas) ?>
+<script>
+	$("#<?php echo $promedio['idEmpleado'] ?>").html(`<?php echo $promedioFinal; ?>`);
+</script>
+
+<?php endforeach ?>
 <?php endif ?>

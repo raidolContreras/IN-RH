@@ -8,6 +8,7 @@ jQuery(document).ready(function($) {
                 lengthChange: false,
                 scrollCollapse: true,
                 paging: true,
+                scrollY: 350,
                 buttons: [
                     {
                         extend: 'excelHtml5',
@@ -51,6 +52,7 @@ jQuery(document).ready(function($) {
                 dom: 'Bfrtip',
                 lengthChange: false,
                 "ordering": false,
+                scrollY: 350,
                 buttons: [
                     {
                         extend: 'excelHtml5',
@@ -98,6 +100,7 @@ jQuery(document).ready(function($) {
             var table = $('table.Postulantes').DataTable({
                 lengthChange: false,
                 dom: 'Bfrtip',
+                scrollY: 350,
                 buttons: [
                     {
                         extend: 'excelHtml5',
@@ -140,6 +143,7 @@ jQuery(document).ready(function($) {
             var table = $('table.Puestos').DataTable({
                 lengthChange: false,
                 dom: 'Bfrtip',
+                scrollY: 350,
                 buttons: [
                     {
                         extend: 'excelHtml5',
@@ -181,6 +185,7 @@ jQuery(document).ready(function($) {
                 lengthChange: false,
                 fixedHeader: true,
                 stateSave: true,
+                scrollY: 350,
             language: {
                 lengthMenu: 'Mostrar _MENU_ resultados por pagina',
                 zeroRecords: 'Sin resultados - lo siento',
@@ -203,6 +208,7 @@ jQuery(document).ready(function($) {
                 lengthChange: false,
                 fixedHeader: false,
                 ordering: false,
+                scrollY: 350,
             language: {
                 lengthMenu: 'Mostrar _MENU_ resultados por pagina',
                 zeroRecords: 'Parece que no hay ninguna solicitud en el tablero.',
@@ -225,6 +231,7 @@ jQuery(document).ready(function($) {
                 lengthChange: false,
                 fixedHeader: false,
                 ordering: false,
+                scrollY: 350,
             language: {
                 lengthMenu: 'Mostrar _MENU_ resultados por pagina',
                 zeroRecords: 'Parece que no hay ninguna solicitud en el tablero.',
@@ -247,6 +254,7 @@ jQuery(document).ready(function($) {
                 lengthChange: false,
                 fixedHeader: false,
                 ordering: false,
+                scrollY: 350,
             language: {
                 lengthMenu: 'Mostrar _MENU_ resultados por pagina',
                 zeroRecords: 'Parece que no hay ninguna solicitud en el tablero.',
@@ -270,7 +278,27 @@ jQuery(document).ready(function($) {
                 scrollCollapse: true,
                 paging: false,
                 fixedHeader: true,
-                ordering: false,
+                fixedColumns: true,
+                scrollY: 350,
+                buttons: [
+                    {
+                        extend: 'excelHtml5',
+                        text: 'Exportar a Excel',
+                        className: 'btn btn-outline-success rounded',
+                        customize: function( xlsx ) {
+                            var sheet = xlsx.xl.worksheets['Datos.xml'];
+                            $('row:first c', sheet).attr( 's', '42' );
+                        }
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        text: 'Exportar a PDF',
+                        className: 'btn btn-outline-danger rounded',
+                        orientation: 'landscape',
+                        pageSize: 'LEGAL'
+                    }
+                    ],
+                fixedHeader: true,
             language: {
                 lengthMenu: 'Mostrar _MENU_ resultados por pagina',
                 zeroRecords: 'Sin resultados - lo siento',
@@ -280,6 +308,9 @@ jQuery(document).ready(function($) {
                 search: 'Buscar',
             }
             });
+
+            table.buttons().container()
+                .appendTo('#example_wrapper .col-md-6:eq(0)');
         });
     }
 
