@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 03-07-2023 a las 14:43:06
+-- Tiempo de generación: 21-07-2023 a las 12:39:46
 -- Versión del servidor: 5.6.51-cll-lve
 -- Versión de PHP: 7.4.33
 
@@ -21,6 +21,8 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `inconsulting`
 --
+CREATE DATABASE IF NOT EXISTS `inconsulting` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `inconsulting`;
 
 -- --------------------------------------------------------
 
@@ -245,6 +247,27 @@ INSERT INTO `documento` (`idDocumento`, `nameDoc`, `Empleados_idEmpleados`, `fec
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `documentos_tarea_entregas`
+--
+
+CREATE TABLE `documentos_tarea_entregas` (
+  `idDocumentoTareaEntregas` int(11) NOT NULL,
+  `nameDocumento` text NOT NULL,
+  `tipo` varchar(6) NOT NULL,
+  `Tareas_idTareas` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `documentos_tarea_entregas`
+--
+
+INSERT INTO `documentos_tarea_entregas` (`idDocumentoTareaEntregas`, `nameDocumento`, `tipo`, `Tareas_idTareas`) VALUES
+(1, 'curriculum.pdf', 'pdf', 1),
+(2, 'IN Consulting México - Empleados (3) (2).pdf', 'pdf', 2);
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `documento_postulante`
 --
 
@@ -457,6 +480,8 @@ CREATE TABLE `empleados` (
   `status` int(1) NOT NULL DEFAULT '1',
   `fecha_contratado` date NOT NULL,
   `fecha_baja` date DEFAULT NULL,
+  `causaBaja` int(11) DEFAULT NULL,
+  `detalles_baja` text,
   `cambio_password` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -464,126 +489,166 @@ CREATE TABLE `empleados` (
 -- Volcado de datos para la tabla `empleados`
 --
 
-INSERT INTO `empleados` (`idEmpleados`, `name`, `lastname`, `genero`, `fNac`, `phone`, `email`, `password`, `identificacion`, `CURP`, `NSS`, `RFC`, `street`, `numE`, `numI`, `colonia`, `CP`, `municipio`, `estado`, `status`, `fecha_contratado`, `fecha_baja`, `cambio_password`) VALUES
-(3, 'Oscar Rafael', 'Contreras Flota', '1', '1991-12-19', '4435398291', 'oscarcontrerasf91@gmail.com', '$2a$07$asxx54ahjppf45sd87a5aubbQpcQrXYn9ZKDUEfe01oXXasks7XAG', '554025566656', 'COFO911219HMNNLS06', '654321965432', 'COFO911219925', 'Palomas', '149', '', 'La hacienda', '58330', 'morelia', 'Selecciona un estado', 1, '2021-06-28', NULL, 1),
-(5, 'Rafael', 'Flota Sanchez', '1', '1995-05-30', '3213216565', 'rafa@gmail.com', '', '3ASD354', 'CASD321533654DASD22', '64641323156', '65465sdasd65', 'alsjkh', '654', '1', '32132', '32132', 'sasd', 'asdad', 1, '2023-04-16', NULL, 0),
-(6, 'ERICK', 'NATIVIDAD', '1', '1993-05-16', '4433900175', 'ericknatividad93@hotmail.com', '$2a$07$asxx54ahjppf45sd87a5au3jMxNjqSyn3ov6ZS7NtPJvp5DE/f/.C', '8', 'CASD321533654DASD22', '53029875477', 'NABE9304168D3', 'FACULTAD DE PSICOLOGIA', '45', '', 'REAL UNIVERSIDAD', '58088', 'MORELIA', 'Selecciona un estado', 1, '2019-06-28', NULL, 1),
-(10, 'Prueba', 'Prueba', '0', '2023-05-17', '4425362514', 'prueba@gmail.com', '', '44555855685', 'PRUE25252MNNLS54', '1234567899875', 'PRUE25252', 'PRUEBA', '5', '1', 'ASD', '321654', 'Morelia', 'Michoacán', 0, '2023-05-08', NULL, 0),
-(19, 'Mayel', 'Ortega Cambron', '0', '1998-07-23', '5526553212', 'mayel_ortega@gmail.com', '$2a$07$asxx54ahjppf45sd87a5auFoxjRU8oL9T7K8WJPF8iklsi8G3kHCe', '456789789456', 'ORCM321654987654', '3216541651', 'ORCM32165331', 'Rey Moctezuma', '64', '', 'Mil cumbres', '58290', 'Morelia', 'Michoacán', 1, '2023-05-15', NULL, 0),
-(20, 'Yoan Adan', 'Leon', '1', '1960-01-01', '4430000001', 'presidente@presi.com', '$2a$07$asxx54ahjppf45sd87a5au09Xobz.kcMYEWZUX7DpLSM2UYd4GUHq', '100000001', 'gepr600101hmnnlq50', '1000000002', 'gepr600101252', 'Loma dorada', '01', '', 'Las lomas', '53001', 'Morelia', 'Michoacán', 1, '2023-05-17', NULL, 0),
-(21, 'ARMANDO', 'ARCHUNDIA GONZALEZ', '1', '1991-05-11', '4433900175', 'armando.archundia@asdasd.com', '$2a$07$asxx54ahjppf45sd87a5aurddAI2BXhiv9mPV1Ckqwr5MLxhkjq9y', '7253762', 'GOAA910511HMNTCR07', '93725481921', 'GOAA910511HMNTC', 'OLIMPIADA', '34', '', 'UNIVERSIDAD', '89990', 'MORELIA', 'MICHOACAN', 1, '2023-05-17', NULL, 0),
-(22, 'Gustavo', 'Arreola', '1', '1984-05-25', '4465986587', 'gus@gmail.com', '$2a$07$asxx54ahjppf45sd87a5auuULuOA7.yjgcURqGzZXUeaY.w1/n3.i', '321654321654', 'ARGU840525hmnfd05', '32132165498', 'argu840525', 'asd', '321', '', '32', '58260', 'Morelia', 'Michoacán', 1, '2023-05-18', NULL, 0),
-(23, 'Juan', 'Pérez', '1', '1985-05-15', '5551234567', 'juan.perez@example.com', '$2a$07$asxx54ahjppf45sd87a5aubbQpcQrXYn9ZKDUEfe01oXXasks7XAG', '1234567890', 'PERJ850512HDFXXX01', '9876543210', 'PERJ850512XXX', 'Calle Principal', '123', '1A', 'Centro', '12345', 'Ciudad de México', 'CDMX', 1, '2023-05-19', NULL, 1),
-(24, 'María', 'López', '0', '1990-09-28', '5559876543', 'maria.lopez@example.com', '$2a$07$asxx54ahjppf45sd87a5autRLTQuEDFjtDghTEl2HCO.NFslgg7Tu', '0987654321', 'LOPM900928MDFXXX02', '1234567890', 'LOPM900928XXX', 'Avenida Juárez', '456', '2B', 'Reforma', '54321', 'Ciudad de México', 'CDMX', 0, '2023-05-19', '2023-05-24', 0),
-(25, 'Roberto', 'García', '1', '1982-11-02', '5555555555', 'roberto.garcia@example.com', '$2a$07$asxx54ahjppf45sd87a5aujd4UPYbNfEZcue0P6yyIPgFYafH1fea', '1357924680', 'GARR821102MDFXXX03', '9876543210', 'GARR821102XXX', 'GARR821102XXX', '789', '3C', 'Del Valle', '67890', 'Ciudad de México', 'CDMX', 1, '2023-05-19', NULL, 0),
-(26, 'Laura', 'Rodríguez', '0', '1995-03-15', '5552223333', 'laura.rodriguez@example.com', '$2a$07$asxx54ahjppf45sd87a5aunPLtscj8Bj2VjY3Dod1v5EHrVjGV2vG', '8642097531', 'RODL950315MDFXXX04', '1234567890', 'RODL950315XXX', 'Avenida Reforma', '321', '4D', 'Polanco', '45678', 'Ciudad de México', 'CDMX', 0, '2023-05-19', '2023-05-18', 0),
-(27, 'Andrés', 'Hernández', '1', '1988-08-20', '5553332222', 'andres.hernandez@example.com', '$2a$07$asxx54ahjppf45sd87a5auRti6saKEkyuQmdvUYFTh6h0huW4haHu', '9753108642', 'HERA880720MDFXXX05', '9876543210', 'HERA880720XXX', 'Calle de la Luna', '654', '5E', 'Condes', '59789', 'Ciudad de méxico', 'CDMX', 1, '2021-06-19', NULL, 0),
-(28, 'Ana', 'Martínez', '0', '1992-12-10', '5558889999', 'ana.martinez@example.com', '$2a$07$asxx54ahjppf45sd87a5auX9vEJcqQWeK8sk/j9eWWzclmoCXBfM6', '8642097531', 'MART921210MDFXXX06', '1234567890', 'MART921210XXX', 'Avenida Insurgentes', '987', '6F', 'Roma', '45678', 'Ciudad de méxico', 'CDMX', 1, '2023-05-19', NULL, 0),
-(29, 'Ricardo', 'Vargas', '1', '1980-08-05', '5556667777', 'ricardo.vargas@example.com', '$2a$07$asxx54ahjppf45sd87a5auMUDk16Ed3i64oCHjw4GAZHe/3sB2Ww.', '9876543210', 'VARR800805MDFXXX07', '9876543210', 'VARR800805XXX', ' Calle de los Pinos', '321', '7G', 'Del bosque', '56789', 'Ciudad de móxico', 'CDMX', 1, '2023-05-19', NULL, 0),
-(30, 'Carolina', 'Sánchez', '0', '1993-09-25', '5557778888', 'carolina.sanchez@example.com', '$2a$07$asxx54ahjppf45sd87a5au/wc8C7a69DzqmuOV5qViEl83KeRyWTW', '9753108642', 'SANC930925MDFXXX08', '1234567890', 'SANC930925XXX', 'Avenida Morelos', '654', '8H', 'Tlalpan', '45678', 'Ciudad de México', 'CDMX', 1, '2022-06-19', NULL, 0),
-(31, 'Gabriela', 'Ramírez', '0', '1991-04-02', '4569028625', 'gabriela.ramirez@example.com', '$2a$07$asxx54ahjppf45sd87a5auL3BOJdw5UlTjafqj16lFITe.7zA0hUa', '8642097531', 'RAMG910402MDFXXX10', '1234567890', 'RAMG910402XXX', 'Avenida Hidalgo', '321', '10J', 'Cuauhtémoc', '45678', 'Ciudad de México', 'CDMX', 1, '2023-05-19', NULL, 0),
-(32, 'LUIS ', 'PEREZ CORONADO', '1', '1980-03-21', '4521654147', 'LUISPALEO@hotmail.com', '$2a$07$asxx54ahjppf45sd87a5auRMnmjBx9AnWTWsMCgZjzMGf05185z9y', '183639494', 'PAZL900321HMNTCR07', '725439009761', 'PAZL900321JCA', 'DOMICILIO CONOCIDO', '1222', '12', 'JUANA PAVON', '60490', 'MORELIA', 'Michoacan', 1, '2023-05-24', NULL, 0),
-(33, 'JOSE', 'CARRILLO', '1', '1987-09-18', '4521679799', 'JOSECARRILLO@GMAIL.COM', '$2a$07$asxx54ahjppf45sd87a5auMejtr5RryVTdsj9ADRi8siKCbPtSbkG', '173532618251', 'CALP730912HMNTCR07', '72653736272', 'CALP730908LC0', 'EDUCACION ESQUINA MATAMOROS', 'SN', '12', 'REAL UNIVERSIDAD', '60490', 'MORELIA', 'Michoacan', 1, '2023-05-24', NULL, 0),
-(34, 'RAUL', 'MOLINA', '1', '1993-09-07', '4521654147', 'gumor@gmail.com', '$2a$07$asxx54ahjppf45sd87a5auuw4GnAVLVXyEv.uAxdYPcOz79VHrdGG', 'W727373U', 'VEME790916MMNNRR07', '22222233', 'MPR14091822A', 'HERMANOS FLORES MAGON', '1584', '', 'JUANA PAVON', '60180', 'MORELIA', 'Michoacan', 1, '2023-05-24', NULL, 0),
-(35, 'DAVID', 'BECERRA ALCAZAR', '1', '1995-03-06', '4400998866', 'contabilidadgdl@inconsultingmexico.com', '$2a$07$asxx54ahjppf45sd87a5auAE9lF7pz/rTfj4HYna.BEJ2O86mBkdq', '10', 'BEAD950306HMNTCR07', '8763519036', 'BEAD950306765', 'PASEO LAZARO CARDENAS', '45', '', 'LA SOLEDAD', '60180', 'MORELIA', 'MICHOACAN', 1, '2023-05-30', NULL, 0),
-(36, 'JORGE', 'MEDINA', '1', '1989-07-25', '4521654147', 'jorgemedina@example.com', '$2a$07$asxx54ahjppf45sd87a5auHzjdMXdXdTVcWPVWk5D7KG.Fa/4l22.', '92726267', 'MEAJ890725HMNTVR07', '729374516199', 'MEAJ890725TU8', 'DOMICILIO CONOCIDO', 'SN', '12', 'FUENTES DE MORELIA', '60490', 'MORELIA', 'MICHOACAN', 1, '2023-05-30', NULL, 0),
-(37, 'GILBERTO', 'LOPEZ PEREZ', '1', '1991-09-16', '4521679799', 'gilbertoperez@example.com', '$2a$07$asxx54ahjppf45sd87a5aubtIMcZD8YqhMkGMi2xMlulTc6dEucHC', '927DJHD82', 'LOPG910916HMNTRDS09', '90654195392', 'LOPG9109169O8', 'HERMANOS FLORES MAGON', '1584', '12', 'JUANA PAVON', '60180', 'MORELIA', 'Michoacan', 1, '2023-05-31', NULL, 0),
-(38, 'FREDDY', 'PAZ ONOFRE', '1', '0000-00-00', '4466880022', 'freddypaz@example.com', '$2a$07$asxx54ahjppf45sd87a5au4pC/aOp8siU1b4rh/hpu9QG/CRMd/Eq', 'SKDHDJD7394', 'PAOF860515HMNTCR07', '84663399001', 'PAOF8605159O0', 'MANANTIALES', '64', '', 'CONSTITUYENTES', '58060', 'MORELIA', 'MICHOACAN', 1, '2023-05-31', NULL, 0),
-(39, 'GABRIEL ESTEBAN', 'PAREDES QUEZADA', '1', '1993-05-11', '4528990909', 'esteban@example.com', '$2a$07$asxx54ahjppf45sd87a5auGGJ0ptNmr/kDbID0OENBxvR9T3BXI5y', '9OIW54389I', 'PAQG930511HMNJKO07', '98482046291', 'PAQG930511JU9', 'HOLANDA', '62', '', 'REAL UNIVERSIDAD', '58088', 'MORELIA', 'MICHOACAN', 1, '2022-07-31', NULL, 0),
-(40, 'OSVALDO', 'HUERTA CHAVEZ', '1', '1967-09-09', '4521654147', 'osvaldohuerta@example.com', '$2a$07$asxx54ahjppf45sd87a5aukBFxYPcXeBQjAMXQxzE2JyuMe5DYAiy', 'W727373I44', 'HUCO670909HMNYUO07', '98367482196', 'HUCO6709098D3', 'HERMANOS FLORES MAGON', '1584', '12', 'FUENTES DE MORELIA', '60180', 'MORELIA', 'Michoacan', 1, '2023-05-31', NULL, 0),
-(41, 'RUTH', 'ESTRADA GARCIA', '0', '1995-09-05', '4521654147', 'ruthestrada@example.com', '$2a$07$asxx54ahjppf45sd87a5aujos.veKbGkKTS9uOllJqaidI2Ee50jK', '099875432', 'ESGR950905MMNDGE73', '98437401748', 'ESGR950905098', 'DOMICILIO CONOCIDO', 'SN', '', 'VERDE VALLE', '60490', 'MORELIA', 'Michoacan', 1, '2023-05-31', NULL, 0),
-(42, 'ANA LILIA', 'NATIVIDAD MORALES', '0', '1989-05-08', '4499887766', 'analilia@example.com', '$2a$07$asxx54ahjppf45sd87a5auvOb8duE2QA7zm0uvIOBUHgPl1Cunq/e', '84KDGEUDBDYE', 'NAMA890508MMNYUO97', '9754872929', 'NAMA890508987', 'HERMANOS FLORES MAGON', '1584', '', 'VERDE VALLE', '60180', 'MORELIA', 'Michoacan', 1, '2023-05-31', NULL, 0),
-(43, 'IVAN', 'OROZCO SOTO', '1', '1995-12-31', '3332500902', 'ivan.orozco@example.com', '$2a$07$asxx54ahjppf45sd87a5auUgLFp/b6Ee.8BiRCuH7jWYgqApJcL6i', '9873652HD8', 'ORSI951231HMNTCR09', '9836284619', 'ORSI9512319T6', 'OBSERVATORIO', '890', '', 'LA ROMA', '58088', 'MORELIA', 'MICHOACAN', 1, '2023-06-01', NULL, 0),
-(44, 'ENRIQUE', 'VILLA RANGEL', '1', '1993-01-08', '4433071539', 'enriquevilla@example.com', '$2a$07$asxx54ahjppf45sd87a5auNUjH3inFFub/dmY2sf22xdF0RYBZp7y', '0987654321', 'VIRE930108HMNUJK87', '90362789511', 'VIRE930108JH6', 'ROBLE', '99', '', 'COLORADO', '58610', 'MORELIA', 'MICHOACAN', 1, '2023-06-01', NULL, 0),
-(45, 'JORDI', 'ROSAS ZULUAGA', '1', '1999-08-09', '4499000076', 'jordi@example.com', '$2a$07$asxx54ahjppf45sd87a5aumD8TViLnS2Oash8.GUQL.sfWF7QztOW', '9IOD538SJ7', 'ZURJ990809HMNHJ809', '93626188905', 'ZURJ9908099IO', 'ENCINOS', '987', '', 'SOLEDAD', '58337', 'MORELIA', 'MICHOACAN', 1, '2023-06-01', NULL, 0),
-(46, 'GERARDO', 'ROMERO GARCIA', '1', '1999-06-29', '6677889900', 'gerardo.garcia@example.com', '$2a$07$asxx54ahjppf45sd87a5auGxTbWFsfM6tK8MMOh6ZlreYGnrS9CkC', '98365TY86H', 'ROGG990629', '90765498712', 'ROGG990629JKL', 'PROLONGACION', '76', '', 'ZUMPIMITO', '58338', 'MORELIA', 'MICHOACAN', 1, '2023-06-01', NULL, 0),
-(47, 'KEVIN', 'ALVAREZ CASTILLO', '1', '1980-09-08', '5556090234', 'kevin.alvarez@example.com', '$2a$07$asxx54ahjppf45sd87a5auICu7AWV0bR8hugNWOH.tkGwVjk6kj62', '0OI87UY65T', 'ALCK800908HMNTVI89', '98527132843', 'ALCK800908LO9', 'LIMONES', '78', '', 'ROMITA', '58445', 'MORELIA', 'Selecciona un estado', 1, '2022-03-16', NULL, 0),
-(48, 'LUIS FRANCISCO', 'REYES RODRIGUEZ', '1', '1993-07-15', '4521679799', 'luis.francisco@example.com', '$2a$07$asxx54ahjppf45sd87a5aukNRkyQorxw8KWx2MVKmz6wdXSTdPIAW', '0937654201', 'RERF9300715HMNTCD89', '28936781561', 'RERF9300715JH7', 'MARTIN CARRERA', '90', '', 'PASEO DE LA REFORMA', '58900', 'MORELIA', 'Michoacan', 1, '2023-06-01', NULL, 0),
-(49, 'SONIA', 'MARTINEZ PLIEGO', '0', '1998-05-16', '4455667788', 'sonia.martinez@example.com', '$2a$07$asxx54ahjppf45sd87a5au3Ma6fwWMKiz.G4ZOf940hYICbZ8By1m', '98726YE548', 'MAPS980516HMNTKI89', '98452781327', 'MAPS980516O98', 'HERMANOS FLORES MAGON', '9876', '', 'ROBLE', '58336', 'MORELIA', 'MICHOACANA', 1, '2023-06-01', NULL, 0),
-(50, 'PABLO', 'GARCIA ESTRADA', '1', '1997-08-09', '4521654147', 'pablo@example.com', '$2a$07$asxx54ahjppf45sd87a5auYymGR6xUYaDAp1vv9LQnrhxz5mO6vay', 'I876TG5S5471', 'GAEP970809HDF98623', '17498276531', 'GAEP970809UT6', 'HERMANOS FLORES MAGON', '1584', '12', 'LA LOMA', '60180', 'MORELIA', 'Michoacan', 1, '2023-06-01', NULL, 0),
-(51, 'SELENE', 'ORTEGA GONZALEZ', '1', '1998-09-08', '4521679799', 'selene.ortega@example.com', '$2a$07$asxx54ahjppf45sd87a5au5l98RAGGiFN9rDg8YrZSa/y6c0W/74G', 'I987UY65T6', 'ORGS980908HMNTVO90', '98376251462', 'ORGS9809088G6', 'FACULTAD DE INGENIERIA CIVIL', '35', '', 'LA SOLEDAD', '58767', 'MORELIA', 'MICHOACAN', 1, '2023-06-01', NULL, 0),
-(52, 'ELIZABETH', 'GOMEZ ARREOLA', '0', '1998-05-07', '4455669900', 'elizabeth.gomez@example.com', '$2a$07$asxx54ahjppf45sd87a5au6wWTkaWwOMM8Q3K1oHnZr1.FfYzpkiu', 'OLK897654', 'GOAE980507HMNTCR07', '89362732111', 'GOAE980507987', 'NARANJO', '132', '', 'PEDREGAL', '58000', 'MORELIA', 'MICHOACAN', 0, '2023-06-01', '2023-06-01', 0),
-(53, 'ELIZABETH', 'GOMEZ ARREOLA', '0', '1998-05-07', '4455669900', 'elizabeth.gomez@example.com', '$2a$07$asxx54ahjppf45sd87a5aubWETtXtVJwayj7HJb0WTCiOtye7SMIa', 'OLK897654', 'GOAE980507HMNTCR07', '89362732111', 'GOAE980507987', 'NARANJO', '132', '', 'PEDREGAL', '58000', 'MORELIA', 'MICHOACAN', 1, '2023-06-01', NULL, 0),
-(54, 'OMAR', 'PACHECO MERINO', '1', '1998-07-09', '4521679799', 'omar.merino@example.com', '$2a$07$asxx54ahjppf45sd87a5auM7KA0Z0E4pfeiONLuakqCusqU9fvhlO', '98JU765452', 'PAMO980709HMNYHU87', '98725123349', 'PAMO980709', 'TULIPAN', '888', '', 'JACARANDAS', '58000', 'MORELIA', 'Michoacan', 1, '2023-06-01', NULL, 0),
-(55, 'HUGO', 'REYNEL LOPEZ', '1', '1998-07-07', '6677990033', 'hugoreynel@example.com', '$2a$07$asxx54ahjppf45sd87a5aumvCI8ZHaB7bDL.z71XlF1rFRxQe4HB.', 'IEY768S9I7', 'RELH980707HGTU89', '16289036512', 'RELH980707876', 'FRESNO', '67', '', 'MICHOACANA', '58000', 'MORELIA', 'MICHOACAN', 1, '2023-06-01', NULL, 0),
-(56, 'OSCAR', 'RENDON VILLEGAS', '1', '1990-01-30', '4521679799', 'oscar@example.com', '$2a$07$asxx54ahjppf45sd87a5aui0B03QzE3AB1aFIxoNtjnoOMkf2bH0K', '98367IY5E4', 'REVO900130HMNYU8', '93761552188', 'REVO9001308U7', 'HERMANOS FLORES MAGON', '1584', '', 'JUANA PAVON', '50180', 'MORELIA', 'Michoacan', 1, '2023-06-01', NULL, 0),
-(57, 'ADAM', 'ORTEGA CRISOSTOMO', '1', '1985-07-20', '4521679799', 'adamortega@exmple.com', '$2a$07$asxx54ahjppf45sd87a5auq8k5jj0xr7bTE82OZSQwzN6d7JtjtfS', 'DJ876S43UE', 'ORCA850720HMNTCR76', '17265333987', 'ORCA850720', 'EDUCACION ESQUINA MATAMOROS', '8', '', 'UNIVERSIDAD', '58088', 'MORELIA', 'Michoacan', 1, '2023-06-01', NULL, 0),
-(58, 'JAVIER', 'MORALES LEMUS', '1', '1993-03-27', '4521679799', 'javiermorales@example.com', '$2a$07$asxx54ahjppf45sd87a5auek3ICyszBapgtRg5cSm5RsalYcBmnNC', '8U7665E420', 'MOLJ930327HMNTCR98', '98221683625', 'MOLJ930327KI7', 'HERMANOS FLORES MAGON', '1584', '', 'VERDE VALLE', '60180', 'MORELIA', 'MICHOACAN', 1, '2023-06-01', NULL, 0),
-(59, 'ESTEFANIA', 'CHAGOLLA RUIZ', '1', '1987-04-01', '4521679799', 'estefania.chagolla@example.com', '$2a$07$asxx54ahjppf45sd87a5au0b/uaLtRretmkI/WoZzG35RIF434D7C', '9876D73I89', 'CHRE870401HMNTGI87', '89098645321', 'CHRE870401987', 'EDUCACION ESQUINA MATAMOROS', 'SN', '', 'LA LOMA', '60490', 'MORELIA', 'MICHOACAN', 1, '2023-06-06', NULL, 0),
-(60, 'ESTEFANIA', 'CHAGOLLA RUIZ', '1', '1987-04-01', '4521679799', 'estefania.chagolla@example.com', '$2a$07$asxx54ahjppf45sd87a5au/jLIzsPfYeVfRx1GnXfx2Vu1ukAP4uG', '9876D73I89', 'CHRE870401HMNTGI87', '89098645321', 'CHRE870401987', 'EDUCACION ESQUINA MATAMOROS', 'SN', '', 'LA LOMA', '60490', 'MORELIA', 'MICHOACAN', 0, '2023-06-06', '2023-06-05', 0),
-(61, 'MARCELINO', 'PEREZ SANCHEZ', '1', '1993-09-07', '4433900175', 'marcelina.perez@example.com', '$2a$07$asxx54ahjppf45sd87a5auLnIjI/VIgYf5lri6Lmw4dS2QUdd9Nwi', '98037625D8', 'PESM930907HMNYU8', '90936544671', 'PESM930907ZQ9', 'MOZART', '245', '', 'LA LOMA', '58290', 'MORELIA', 'MICHOACAN', 1, '2023-06-08', NULL, 0),
-(62, 'EDIBERTO', 'PONCE SANDOVAL', '1', '1998-07-09', '4521654147', 'ediberto@example.com', '$2a$07$asxx54ahjppf45sd87a5au54Jbm7/8aXhLC2.eFYo.MTPUBi4pZIu', '98IU76YT54', 'POSE9807HMNVFR56', '17390098763', 'POSE980987', 'MARIANO OTERO', '3431', 'A', 'VERDE VALLE', '58000', 'MORELIA', 'MICHOACAN', 1, '2023-06-08', NULL, 0),
-(63, 'RODOLFO', 'REYES RENDON', '1', '1994-07-26', '4521654147', 'reyes@example.com', '$2a$07$asxx54ahjppf45sd87a5auXWJW3y3cDAYB0I4Nzw.1bTuU.GXme.S', '83987637818', 'RERR940726HHY789', '74893727192', 'RERR940726987', 'MORELOS', '31', '', 'LA MICHOACANA', '58990', 'MORELIA', 'MICHOACAN', 1, '2023-06-08', NULL, 0),
-(64, 'PAULINA', 'VELAZQUEZ CORTES', '0', '1993-04-11', '4521679799', 'paulina@example.com', '$2a$07$asxx54ahjppf45sd87a5auSYYIkM6Jn1SY/1j4DbrmboIQmEugiwO', '98367D5438', 'VECP930411MMNTYU09', '11238946722', 'VECP930411ZJ4', 'HERMANOS FLORES MAGON', '1584', '', 'FUENTES DE MORELIA', '60180', 'MORELIA', 'Michoacan', 1, '2023-06-08', NULL, 0),
-(65, 'GUADALUPE', 'FARIAS UGALDE', '0', '1992-07-21', '4521654147', 'guadalupe@example.com', '$2a$07$asxx54ahjppf45sd87a5auQqeq5MdR9/OzXIWmGGiGf6STiR2Rkk.', '8928S7Y655', 'FAUG920721MMNIUY67', '119834782081', 'FAUG920721GT7', 'DOMICILIO CONOCIDO', 'SN', '', 'MATAMOROS', '60490', 'MORELIA', 'Michoacan', 1, '2023-06-08', NULL, 0),
-(66, 'NADIA', 'PAZ TREJO', '0', '1987-08-09', '4521654147', 'nadiapa@example.com', '$2a$07$asxx54ahjppf45sd87a5auhqrfWBlvqc1gBcvo6NY2i03N3RG9B5i', '9OD8776283', 'PATN870809MJUY78', '92873618383', 'PATN870809998', 'FAUNA', '2381', '', 'RINCONADA DEL BOSQUE', '58000', 'MORELIA', 'MICHAOCAN', 1, '2023-06-08', NULL, 0),
-(67, 'MONSERRAT', 'OLIMPIA REYES', '0', '1993-04-16', '4521654147', 'olimpia@example.com', '$2a$07$asxx54ahjppf45sd87a5auNe.ipRgAR2xVbTMfCfKeQioMrtFq7Cu', 'IEK83765D6', 'OLRM930416MMNYUI89', '93872819283', 'OLRM9304167J4', 'PROLONGACION VERACRUZ', '90', '', 'REAL UNIVERSIDAD', '60490', 'MORELIA', 'Michoacan', 1, '2023-06-08', NULL, 0),
-(68, 'RODRIGO', 'GONZALEZ ROMERO', '1', '1997-01-01', '4433900175', 'rodrigo@example.com', '$2a$07$asxx54ahjppf45sd87a5au4qL1S7JrXTe9y5AmcVNCSmCuaF23nl2', '983KD7644Y6', 'GORR970101HMNKJU89', '93938271203', 'GORR970101987', 'Tepeyac', '45', '', 'REAL UNIVERSIDAD', '58090', 'MORELIA', 'Michoacan', 1, '2023-06-08', NULL, 0),
-(69, 'CARLOS', 'GUTIERREZ PEREZ', '1', '1997-01-01', '4433900165', 'carlos.gutierrez@example.com', '$2a$07$asxx54ahjppf45sd87a5auMFdn4TxVNBv2xQZJnXqXPFRFLCes9Qe', '98EGT73948H', 'GUPC970101HMNTVY89', '38761201110', 'GUPC970101987', 'MICAELA MONTES DE ALLENDE', '45', '', 'ROMA', '59000', 'MORELIA', 'MICHOACAN', 1, '2023-06-08', NULL, 0),
-(70, 'OCTAVIO', 'SOTO AGUILAR', '1', '1993-12-26', '4433900175', 'octavio.soto@example.com', '$2a$07$asxx54ahjppf45sd87a5auKBYsMAImNv7kUSRMpMRzBHlmtIhxnHK', '8I7U6Y5T4R', 'SOAO931226HMNTCR08', '53719287989', 'SOAO931226567', 'ROMERO', '56', '', 'BERNARDO ABARCA', '58090', 'MORELIA', 'MICHOACAN', 1, '2023-06-08', NULL, 0),
-(71, 'JOAQUIN', 'CONTRERAS GUZMAN', '1', '1998-08-01', '5556090826', 'joaquin@example.com', '$2a$07$asxx54ahjppf45sd87a5au2.HgmXNsNo.DsPIPqds7E8DcJM.KSgy', 'UDJ76YT5RR', 'COGJ980801HMNTCR06', '53040389976', 'COGJ98080JL9', 'BERNARDO ABARCA', '98', '', 'IBARRA', '58337', 'MORELIA', 'MICHOACAN', 1, '2023-06-08', NULL, 0),
-(72, 'LARISA', 'MAGAÑA OLIVERA', '0', '1998-07-01', '4521679799', 'larisa@example.com', '$2a$07$asxx54ahjppf45sd87a5auqtOU256b43rtR7NMsV8pnjZ1FLIp3yS', 'UH678D934GD6', 'MAOL980701MMNUYI89', '92839283741', 'MAOL980701987', 'MICAELA MONTES DE ALLENDE', 'SN', '', 'REAL OVIEDO', '60490', 'MORELIA', 'MICHOACAN', 1, '2023-06-08', NULL, 0),
-(73, 'ROBERTO', 'GARCIA ZEPEDA', '1', '1993-01-01', '4521679799', 'roberto@example.com', '$2a$07$asxx54ahjppf45sd87a5auxGpGrKsUrKyoUQvS1FNHmnaPa1A2az2', '98IKJMNV56', 'GAZR930101HMNTCR87', '28726152811', 'GAZR930101980', 'MICAELA MONTES DE ALLENDE', '45', '', 'LA LOMA', '58000', 'MORELIA', 'Michoacan', 1, '2023-06-08', NULL, 0),
-(74, 'MANUEL', 'MOLINA BECERRA', '1', '1993-04-02', '4521679799', 'manuel@example.com', '$2a$07$asxx54ahjppf45sd87a5auJL5ihRaN9SoPAKbCcD8qXtK7V1tbPPS', '987UJ6587W8', 'MOBM930402HMNYVT76', '54543987672', 'MOBM930402574', 'EDUCACION ESQUINA MATAMOROS', 'SN', '', 'IBARRA', '60490', 'MORELIA', 'MICHOACAN', 1, '2023-06-08', NULL, 0),
-(75, 'RAMON', 'VELEZ CHAVEZ', '1', '1988-07-17', '4521679799', 'ramon.velez@example.com', '$2a$07$asxx54ahjppf45sd87a5auXH3ZQC9OcAPA.jjlJIsrLvX9p3cHrGy', '8377483029', 'VECR880717HMNTCR09', '98761529371', 'VECR880717JLO', 'MOZART', '245', '', 'LA LOMA', '58290', 'MORELIA', 'MICHOACAN', 1, '2023-06-08', NULL, 0),
-(76, 'ALEJANDRO', 'SANCHEZ PEREZ', '1', '1987-07-21', '4521654147', 'alejandro@example.com', '$2a$07$asxx54ahjppf45sd87a5au5RbnJ/LzlAPzK.rVH1jVnhPpE4oUdPe', '8I9O07654E', 'SAPA870721HMNYUO09', '55632919110', 'SAPA870721897', 'ROMERO', '98', '', 'LA SOLEDAD', '58000', 'MORELIA', 'MICHOACAN', 1, '2023-06-22', NULL, 0),
-(77, 'VALENTIN', 'PEREZ SANCHEZ', '1', '1982-05-15', '4433071530', 'vperezsanchez@example.com', '$2a$07$asxx54ahjppf45sd87a5ausmCwiu4kDkMnc8vzk5Vpy1jDZ3SuQ72', '9OIUJSH653', 'PESV820515HMNHYU87', '55341890002', 'PESV820515908', 'ISAC ARRIAGA', '67', '', 'ZUMPUMITO', '58060', 'MORELIA', 'MICHOACAN', 1, '2023-06-22', NULL, 0),
-(78, 'SANDRA', 'CASTILLEJO GOMEZ', '0', '1998-07-12', '4433900175', 'sandra.castillejo@example.com', '$2a$07$asxx54ahjppf45sd87a5au9ZuiVa8SbbVejVPjmXJJthFGlUIKIma', '8PO7O65542', 'CAGS981207MMNHUI09', '56545289911', 'CAGS981207JU8', 'MANANTIALES', '15', '', 'LINDAVISTA', '58337', 'MORELIA', 'MICHOACAN', 1, '2023-06-22', NULL, 0),
-(79, 'SAUL', 'CONTRERAS CARAGLIO', '1', '1978-06-17', '4433900175', 'saulcc@example.com', '$2a$07$asxx54ahjppf45sd87a5auxiYekEM9lTVjV17ROEt3mJr9c/Aovam', '879OISG672', 'COCS780617HMNTC02', '5678923191', 'COCS7806178H6', 'MONTEVIDEO', '1987', '', 'TEPEYAC', '58090', 'MORELIA', 'MICHOACAN', 1, '2023-06-22', NULL, 0),
-(80, 'OSCAR', 'NATIVIDAD ROSAS', '1', '1993-10-12', '5512071545', 'oscar.natividad@example.com', '$2a$07$asxx54ahjppf45sd87a5auTaOejD8TPqQfokgsPjwiXOxRZ.TAUVS', '9I76TY7654', 'NARO931012HMNTCR09', '56092187900', 'NARO931012JUO', 'TLATELOLCO', '67', '', 'SAN JUAN IXHUATEPEC', '58000', 'MORELIA', 'MICHOACAN', 1, '2023-06-22', NULL, 0),
-(81, 'MIGUEL ANGEL', 'SUAREZ ACOSTA', '1', '1997-09-08', '4521679799', 'miguel.suarez@exmple.com', '$2a$07$asxx54ahjppf45sd87a5auAUOTb8i/EA/Lw6M6zKYZa7S25v.9jlq', '0O9I8U7Y6T5', 'SUAM970908HMNTCR09', '55094736101', 'SUAM970908YUT', 'HERMANOS FLORES MAGON', '1584', '', 'UNIVERSIDAD', '60180', 'Morelia', 'MCH', 1, '2023-06-22', NULL, 0),
-(82, 'DANIEL', 'GONZALEZ GONZALEZ', '1', '1997-06-15', '4521654147', 'daniel.gonzalez@example.com', '$2a$07$asxx54ahjppf45sd87a5au5dUk17DKn1AjkkTL2PiiINb6U6ams/C', '87UJHY6TT54', 'GOGD970615HMNYHG67', '5080976541', 'GOGD970615UY6', 'DOMICILIO CONOCIDO', 'SN', '', 'VERDE VALLE', '60490', 'Morelia', 'MCH', 1, '2023-06-22', NULL, 0),
-(83, 'RICARDO', 'NUÑEZ FLORES', '1', '1990-04-18', '4521679799', 'ricardo.nunez@example.com', '$2a$07$asxx54ahjppf45sd87a5audf5E1umeV1Kk6GfjxhingjbqW6Nw8l.', 'IUYH678903', 'NUFR900418HMNJKL09', '5678251011', 'NUFR900418897', 'EDUCACION ESQUINA MATAMOROS', 'SN', '', 'JUANA PAVON', '60490', 'Morelia', 'MCH', 1, '2023-06-22', NULL, 0),
-(84, 'YANETH', 'YESCAS MOLINA', '0', '1992-11-15', '5566778899', 'yaneth@example.com', '$2a$07$asxx54ahjppf45sd87a5auUwxIREuTivx4lN8t7p7LuqjWX38fF6O', '8IUYTHGSM7', 'YEMY921115MMNYUI98', '5768920111', 'YEMY9211157Y6', 'ROMERO', '67', '', 'ISAC ARRIAGA', '59338', 'Morelia', 'MCH', 1, '2023-06-22', NULL, 0),
-(85, 'NORA', 'DE LA MORA CATALAN', '1', '1999-09-14', '7538900765', 'nora@example.com', '$2a$07$asxx54ahjppf45sd87a5auSIHuUDAdU/xOh35GZtEDtDGMtz6n/xa', '9087653HDY6', 'MOCN990914MMH7U809', '56095428191', 'MOCN990914UJ8', 'FUENTES D MORELIA', '45', '67', 'MATAMOROS', '58337', 'Morelia', 'MCH', 1, '2023-06-22', NULL, 0),
-(86, 'JULIO', 'MEZA ZAVALA', '1', '1998-07-20', '5556090826', 'julio.meza@example.com', '$2a$07$asxx54ahjppf45sd87a5au5kMLZEHJwyXhoxYo8o5RjGrYKVRINiW', '98IU766567', 'MEZJ980720HMNTCR07', '5679102981', 'MEZJ980720JAU', 'LIMONES', '56', '', 'TEPEYAC', '58456', 'Morelia', 'MCH', 1, '2023-06-22', NULL, 0),
-(87, 'LUCERO', 'ALVAREZ ROCHA', '0', '1978-01-02', '4445890976', 'lucero@example.com', '$2a$07$asxx54ahjppf45sd87a5au/6rV297fRdIsfc5zjK7J9Fnt6NcQEvi', 'UJY67UY65T', 'ALRL780102MMNDRA56', '56092317891', 'ALRL7801028U7', 'TEPEYAC', '678', '', 'CHAPALITA', '58000', 'Morelia', 'MCH', 1, '2023-06-22', NULL, 0),
-(88, 'FIDEL OCTAVIO ', 'VAZQUEZ PINEDA', '1', '1998-09-15', '5678093767', 'octavio.fidel@example.com', '$2a$07$asxx54ahjppf45sd87a5aubTH6vha7pMuxYxAQJDhDHjuw07j5gNW', 'IUJH6754FR', 'VAPF980915HMNYUI98', '56238192871', 'VAPF980915DAE', 'SOLEDAD', '78', '', 'HOLANDA', '58000', 'Morelia', 'MCH', 1, '2023-06-22', NULL, 0),
-(89, 'SOFIA', 'MUJICA RIVERA', '0', '1999-12-29', '4433780925', 'sofia.reviera@exmaple.com', '$2a$07$asxx54ahjppf45sd87a5aujNaC/c/w7LCesxCITRX.SNuFlwNL3Ae', 'IKJU765TY9', 'MURS991229MMNVU809', '56092673849', 'MURS991229MY6', 'HOLANDA', '62', '', 'UNIVERSIDAD', '58060', 'Morelia', 'MCH', 1, '2023-06-22', NULL, 0),
-(90, 'AIME', 'CARVAJAL BARRIGA', '1', '1998-09-15', '5529631215', 'aime.car@example.com', '$2a$07$asxx54ahjppf45sd87a5ausGjM0IvbJ6/Nr2jiYMukxdxMwxbOWyy', '98IKJ76542', 'CABA980915MMNHUL09', '5047898341', 'CABA980915546', 'PRICA PRESEA', '56', '', 'LA LOMA', '58337', 'Morelia', 'MCH', 1, '2023-06-22', NULL, 0),
-(91, 'EVA', 'ROMERO GARCIA', '0', '1990-05-14', '4521654147', 'eva.rg@example.com', '$2a$07$asxx54ahjppf45sd87a5auPjX5m.qLgvksPoW5cNc01P4RBS5oeeq', 'IKJUDGTE78', 'ROGE900514MMNYHU09', '55780909090', 'ROGE9005148G5', 'JOSE STALIN', '76', '', 'TLALPEÑA', '58560', 'Morelia', 'MCH', 1, '2023-06-22', NULL, 0),
-(92, 'ROSA MARIA', 'HERNANDEZ CHAVEZ', '1', '1998-07-15', '5544890998', 'rosa.maria@example.com', '$2a$07$asxx54ahjppf45sd87a5auPyeybUxiCj3UXqYfqGJXGGkobgGFInW', 'U876Y5T4R6', 'HECR980715MMNUHY78', '55096798561', 'HECR9807158JU', 'MICAELA MONTES DE ALLENDE', '98', '', 'POLICIA Y TRANSITO', '58780', 'Morelia', 'MCH', 1, '2023-06-22', NULL, 0),
-(93, 'LUIS', 'FUENTES GALLEGOS', '1', '1998-07-09', '4521654147', 'luis.fuentes@example.com', '$2a$07$asxx54ahjppf45sd87a5auZ7YFvYOh7huxroOXKRmQcjMJdRn1yt.', 'KSJYE63U8W8', 'FUGL980709HMNJCA09', '56097623111', 'FUGL980709987', 'ROCAS DE LA LOMA', 'S/N', '', 'ZUMPIMITO', '58000', 'Morelia', 'MCH', 1, '2023-06-22', NULL, 0),
-(94, 'YOSELINE', 'GOMEZ ARREOLA', '0', '1999-01-01', '4521679799', 'yoseline@example.com', '$2a$07$asxx54ahjppf45sd87a5audExtdKCiSS0qPXxpZ6EwG8pnBn.ag.W', 'KDKDKKDKDK', 'GOAY990101MMNTCR07', '5069897891', 'GOAY9901018D3', 'EDUCACION ESQUINA MATAMOROS', 'SN', '', 'LA LOMA', '60490', 'Morelia', 'MCH', 1, '2023-06-23', NULL, 0),
-(95, 'SILVIA', 'RIOS FLORES', '0', '1998-01-15', '4433900175', 'silvia@example.com', '$2a$07$asxx54ahjppf45sd87a5aumU.PuonlKsGtpPPhsicKpX3rkdkaQ/q', 'KDJD6Y7U88', 'RIFS980115MMNULI09', '5558778901', 'RIFS980115JUL', 'MIRAMONTE', '78', '', 'VASCO DE QUIROGA', '587090', 'Morelia', 'MCH', 1, '2023-06-23', NULL, 0),
-(96, 'ESMERALDA', 'GONZALEZ RODRIGUEZ', '0', '1992-09-01', '4521654147', 'esmeralda.gozalez@example.com', '$2a$07$asxx54ahjppf45sd87a5au57kPVJZ720CxNUBVE995xJJdCXuo81i', 'IJUY78S526', 'GORE920901MMNSDO09', '56010723781', 'GORE920901JCA', 'LAGO', '123', '', 'LAGO 1', '58088', 'Morelia', 'MCH', 1, '2023-06-23', NULL, 0),
-(97, 'LAURA', 'PEREZ VAZQUEZ', '0', '1998-08-09', '4455669900', 'laura.perez@example.com', '$2a$07$asxx54ahjppf45sd87a5aun5.UUjoIeDtcnXXgrTEM0OsMfV0M7J6', 'JSHY7U9W65', 'PEVL980809MMNYUI98', '5578909091', 'PEVL9808097D6', 'REALITO', '78', '', 'RINCONADA DEL BOSQUE', '58000', 'Morelia', 'MCH', 1, '2023-06-23', NULL, 0),
-(98, 'LORENA ', 'CASTILLO DOMINGUEZ', '0', '1998-01-01', '4433900876', 'lorena.castillo@example.com', '$2a$07$asxx54ahjppf45sd87a5aujGhfIV54wARLQHK0jQJHU.PwEcppzQa', 'IDJUE73655', 'CADL980101MMNUIO09', '56010908187', 'CADL980101JLA', 'CAMELINAS', '1574', '', 'LINDAVISTA', '58090', 'Morelia', 'MCH', 1, '2023-06-23', NULL, 0),
-(99, 'HUMBERTO', 'URRUTIA VIÑEDOS', '1', '1999-08-01', '5529136312', 'humberto@example.com', '$2a$07$asxx54ahjppf45sd87a5auCbFVpxLv3QBsPKpLVtDOblVSkhp10La', 'KDJIE87UY6', 'UUVH990801HMNTCR07', '55010987671', 'UUVH990801JH7', 'VALLE DE BRAVO', '345', '', 'VASCO DE QUIROGA', '58127', 'Morelia', 'MCH', 1, '2023-06-23', NULL, 0),
-(100, 'JOSE', 'VILLASEÑOR RIOS', '1', '1978-04-13', '4433900175', 'jose.villasenor@example.com', '$2a$07$asxx54ahjppf45sd87a5auZ9ZAMu3uFdaXO5DnB3aTzWYiPkA9l6K', '1234567891', 'VIRJ780413HMNGHY78', '15687230910', 'VIRJ780413JCA', 'COLIBRI', '14', '', 'REALITO', '58456', 'Morelia', 'MCH', 1, '2023-06-23', NULL, 0),
-(101, 'PABLO', 'FARIAS ESPINOZA', '1', '1997-05-17', '4433900176', 'pablo@example.com', '$2a$07$asxx54ahjppf45sd87a5au/mopLx/3YcvTzh7a4NG1ktFOcaDIomC', 'KSJUE7352HD', 'FAEP970517HMNKJU87', '5679899161', 'FAEP970517HUL09', 'FAUNA', '3134', '', 'RINCONADA DEL BOSQUE', '58336', 'Morelia', 'MCH', 1, '2023-06-23', NULL, 0),
-(102, 'REYNA', 'CABRERA DUARTE', '0', '1995-07-18', '7541178902', 'reyba.cab@example.com', '$2a$07$asxx54ahjppf45sd87a5auxDC3pHZL7B24zq6Hl8t1/F8onlTsHim', 'KDJUWYSG673', 'CADR950718MMNTCU90', '1567898291', 'CADR950718JCA', 'MOTAMOROS', '14', '', 'LA PAZ', '58765', 'Morelia', 'MCH', 1, '2023-06-05', NULL, 0),
-(103, 'JUAN MANUEL', 'ROJAS MARTINEZ', '1', '1985-11-14', '4521145609', 'juan.manuel@example.com', '$2a$07$asxx54ahjppf45sd87a5auiwiIaatav.4jrvCpMnocFZ9ScDIawmG', 'HSUW726EJD7', 'ROMJ851114HMNYUO09', '56018756241', 'ROMJ851114BLO', 'ESPINACA', '3', '', 'FLORES MAGON', '58090', 'Morelia', 'MCH', 1, '2023-06-15', NULL, 0),
-(104, 'CAROLINA', 'PANTOJA ASCENCIO', '0', '1986-09-09', '4433876525', 'carolina@example.com', '$2a$07$asxx54ahjppf45sd87a5auUvJrmHWIrNYNgfhFydcigAfeJWWpzbi', 'KD894DHY63', 'PAAC860909MMNASD12', '1782345091', 'PAAC860909BL9', 'RICARDO FLORES MAGON', '789', '', 'JOSE VASCONCELOS', '58779', 'Morelia', 'MCH', 1, '2023-06-23', NULL, 0),
-(105, 'JOANA', 'NAVARRO BUSQUETS', '0', '1990-04-14', '4455668909', 'joana@example.com', '$2a$07$asxx54ahjppf45sd87a5auYBck4WjRJfXHqTWGFsoPk9UnCKnL..C', 'KDI876E57U', 'NABJ900414MMNHJU89', '56092587901', 'NABJ900414BH8', 'OYAMEL ', '67', '', 'LA PAZ', '58990', 'Morelia', 'MCH', 1, '2023-06-26', NULL, 0),
-(106, 'BLANCA', 'ALCANTAR CRUZ', '0', '1991-05-16', '4455679801', 'blanca.alcantar@example.com', '$2a$07$asxx54ahjppf45sd87a5aue56AqB8z8HhBgseIssqH6eBrr9DU9hW', 'I8SY6W5445', 'ALCB910516MMHJLO90', '561029825611', 'ALCB910516JKO', 'ROBLE', '175', '', 'ESPINACA', '58660', 'Morelia', 'MCH', 1, '2023-06-26', NULL, 0),
-(107, 'JUAN CARLOS', 'BARRERA ESPINO', '1', '1999-07-25', '4433900175', 'jc.barrera@example.com', '$2a$07$asxx54ahjppf45sd87a5autZ.OBs6zmT/RViJ9ylaOa3aVgGukRui', 'KSI837DY67', 'BAEJ990725HMNJLO90', '561029381711', 'BAEJ990725JLO', 'ESPINACA', '1789', '', 'EL ROBLE', '58336', 'Morelia', 'MCH', 1, '2023-06-26', NULL, 0),
-(108, 'ALBERTO', 'PORTILLO SANCHEZ', '1', '1989-01-01', '3344900186', 'alberto.portillo@example.com', '$2a$07$asxx54ahjppf45sd87a5auM7a98G7OiF6CUPfhS56Z3/G26m2CBYW', '89SKJEU729', 'POSA900101HMNTCR09', '783928361422', 'POSA900101HUK', 'PINO SUAREZ', '45', '', 'LOS PINOS', '58337', 'Morelia', 'MCH', 1, '2023-06-26', NULL, 0),
-(109, 'LUIS', 'REYES OÑATE', '1', '1987-06-17', '4433900175', 'luis.reyes@example.com', '$2a$07$asxx54ahjppf45sd87a5auvwfZPNpaaCH6GRM88HNzO.P5t.eBYZK', '8DI7E635Q41', 'REOL870617HMNJUI09', '56123182765', 'REOL870617890', 'TUPILANES', '900', '', 'JACARANDAS', '58337', 'Morelia', 'MCH', 1, '2023-06-26', NULL, 0),
-(110, 'MIGUEL', 'PAHUA CASTAÑEDA', '1', '1999-07-13', '4433900175', 'miguel.pahua@example.com', '$2a$07$asxx54ahjppf45sd87a5auNBgQQ3t8H2NsneGcrJmZ0UhEynw/.K6', 'SKJDJY8976', 'PACM990713HMNTCR07', '56102873562', 'PACM9907138D3', 'MICAELA MONTES DE ALLENDE', '45', '', 'JUANA PAVON', '58000', 'Morelia', 'MCH', 1, '2023-06-26', NULL, 0),
-(111, 'GRISELDA', 'CABALLERO DIAZ', '0', '1980-09-10', '4433127890', 'g.caballero@exmaple.com', '$2a$07$asxx54ahjppf45sd87a5auKZkx2imDO4dcwd7bS7jioy7yhKQmPU6', 'HJSU876E5W', 'CADG800910MMNDHO09', '10283648311', 'CADG800910KLO', 'MOZART', '245', '', 'LA LOMA', '58290', 'Morelia', 'MCH', 1, '2023-06-26', NULL, 0),
-(112, 'RAUL', 'ORNELAS CHAVEZ', '1', '1987-09-10', '5545098909', 'raul.ornelas@example.com', '$2a$07$asxx54ahjppf45sd87a5au4veylAJN4lHmgSCObD.f3t4IkM26Zje', '9IDKJWU7890O', 'ORCR870910HMN908', '56098976781', 'ORCR870910HJLO', 'CASA BLANCA', '1876', '', 'LA LOMA', '58000', 'Morelia', 'MCH', 1, '2023-06-26', NULL, 0),
-(113, 'JULIO', 'ARREOLA GARNICA', '1', '1999-09-10', '4433900187', 'julio.ar@example.com', '$2a$07$asxx54ahjppf45sd87a5auTr8dTDPR5lVC9T1N38DgbGe1NOW2YpC', 'LSKO908IU7', 'ARGJ990910HMNJLO90', '56098727651', 'ARGJ990910KJU', 'MORELOS', '45', '', 'REALITO', '58000', 'Morelia', 'MCH', 1, '2023-06-26', NULL, 0),
-(114, 'PAMELA', 'GERBACIO PEREZ', '0', '1989-09-09', '4433900197', 'pamela@example.com', '$2a$07$asxx54ahjppf45sd87a5auXzTxCnimM0MScp2cXf0wC4uRJ8Da9ia', 'KDK89EY367', 'GEPP890909MMNUIO76', '56290378181', 'GEPP890909KLO', 'MANANTIALES', '78', '', 'MANANTIALES', '58900', 'Morelia', 'MCH', 1, '2023-06-26', NULL, 0),
-(115, 'VANIA', 'MANRIQUEZ CALDERON', '0', '1989-09-01', '4433900197', 'vania@example.com', '$2a$07$asxx54ahjppf45sd87a5auE2TyD1FeWT9/Ah9tt3YS.Wx3no09LCu', 'SH78D9I87U', 'MACV890901HMNTCR09', '65091456781', 'MACV8909018G6', 'MOZART', '245', '', 'LA LOMA', '58337', 'Morelia', 'MCH', 1, '2023-06-26', NULL, 0),
-(116, 'TOMAS', 'PANIAGUA PEREZ', '1', '1990-09-01', '4521679799', 'tomas@example.com', '$2a$07$asxx54ahjppf45sd87a5auNmGNXsPsDvvSkSegWVCVEJVgD2GUmpq', 'KDJUSJBKCBL', 'PAPT900901MMNTCF89', '56392837261', 'PAPT900901890', 'MOZART', 'SN', '', 'UNIVERSIDAD', '60490', 'Morelia', 'MCH', 1, '2023-06-26', NULL, 0),
-(117, 'GEOVANNY', 'ROJAS GARCIA', '1', '1993-12-19', '6655667788', 'g.rojas@example.com', '$2a$07$asxx54ahjppf45sd87a5auIDmNYd1ie6bJCMFHRGxqRJyPAGlf5De', 'KS839DI487D', 'ROGG931219MMNJKI90', '56019283711', 'ROGG931219908', 'MONTE RUBIO', '1267', '', 'BELLAS ARTES', '58000', 'Morelia', 'MCH', 1, '2023-06-26', NULL, 0),
-(118, 'HUGO', 'GUTIERREZ SANCHEZ', '1', '1991-02-03', '4433900187', 'hugo.g@example.com', '$2a$07$asxx54ahjppf45sd87a5aumRJyJu.m4qM./JRZsuy545fvqRxlxgK', '0LDK98EU7', 'GUSH910203HMNKLO90', '56029374819', 'GUSH910203JNO', 'ROCAS DE LA LOMA', '34', '', 'CAMINO VIEJO', '58338', 'Morelia', 'MCH', 1, '2023-06-26', NULL, 0),
-(119, 'GUSTAVO', 'MONTAÑO FARIAS', '1', '1990-01-01', '4433890283', 'gustavo@example.com', '$2a$07$asxx54ahjppf45sd87a5aux.Giy6NTDhoKyDx/M.3NEluCAVUnhhS', 'KJBKJDS21', 'MOFG900101HMNYVT78', '560291827251', 'MOFG9001018H7', 'MONTERREY', '67', '', 'REP. MEXICANA', '58337', 'Morelia', 'MCH', 1, '2023-06-26', NULL, 0),
-(120, 'RAMIRO', 'ZUÑIGA AVELLANEDA', '1', '1990-08-17', '4433900187', 'ramiro@example.com', '$2a$07$asxx54ahjppf45sd87a5auuAXTcNxwx1V5UNMlaY1ZTq1U6xiRXF6', 'SYEHSYA7829', 'ZUAR900817HMNYUO23', '56087898121', 'ZUAR900817989', 'CADENA', '65', '', 'LAS TROJES', '58337', 'Morelia', 'MCH', 0, '2023-06-26', '2023-06-29', 0),
-(121, 'RUBEN', 'PEDRAZA PEÑALOZA', '1', '1992-03-09', '4521654147', 'ruben@example.com', '$2a$07$asxx54ahjppf45sd87a5auB6wmrMwMDkBYi45fSYRPBRb0mt/mKUW', 'EJD873KDOW9', 'PEPR920309HMNYUI90', '56098912341', 'PEPR920309JCA', 'PEDREGAL', 'SN', '', 'CENTRAL DE ABASTOS', '58237', 'Morelia', 'MCH', 1, '2023-06-26', NULL, 0),
-(122, 'JOAQUIN', 'MONTESINOS MORALES', '1', '1998-09-09', '3339837371', 'joaq.mont@example.com', '$2a$07$asxx54ahjppf45sd87a5auWAgROM1gdqQBVmh00lRk78wXyAXFxmG', 'JD7EJD6SST', 'MOMJ980909HMNYUO90', '56092078911', 'MOMJ980909878', 'MONTERUBIO', '174', '', 'ANDARES', '58765', 'Morelia', 'MCH', 1, '2023-06-26', NULL, 0),
-(123, 'MAURICIO', 'MARTINEZ ROMERO', '1', '2000-11-15', '4341768990', 'mauricio@example.com', '$2a$07$asxx54ahjppf45sd87a5au.jF7.S43L855TwOD7OPHBWtuHcVugpa', 'LSKDIE83761', 'MARM001115HMNTCR09', '56099087241', 'MARM001115HFD5', 'TIERRA Y LIBERTAD', '67', '', 'REFORMA', '58337', 'Morelia', 'MCH', 1, '2023-06-26', NULL, 0),
-(124, 'SEBASTÍAN', 'AGUIRRE LOPEZ', '1', '1999-06-09', '4521654147', 'sebastian@exmaple.com', '$2a$07$asxx54ahjppf45sd87a5au0fTPWUXUCUViOX2xS8lQVmhrpNdeQm2', 'KDIEKDJ938', 'AGLS990609HMNYHI98', '56092654131', 'AGLS990609987', 'MALDONADO', '789', '', ' ROMERO RUBIO', '56890', 'Morelia', 'MCH', 1, '2023-06-26', NULL, 0),
-(125, 'ALEX', 'TORNER ACOSTA', '1', '1998-05-12', '3332890909', 'alex@example.com', '$2a$07$asxx54ahjppf45sd87a5aux4ykHDmxO5WnjG0ewLfJhUsc7HQBfJ2', 'KDJEUFJDLDG', 'TOAA980512HMNSDE56', '1237936451', 'TOAA980512876', 'PSICOLOGIA', '45', '', 'REAL UNIVERSIDAD', '58090', 'Morelia', 'MCH', 1, '2023-06-26', NULL, 0),
-(126, 'RICARDO DAVID', 'CASTRO NUÑEZ', '1', '1994-02-22', '4521654147', 'r.d.castro@example.com', '$2a$07$asxx54ahjppf45sd87a5au3S0H3ECoPKczEkIqmovdy4u8WTWcBfO', 'IEKD736DHE5', 'CANR940222HMNYJO09', '56093514221', 'CANR940222HMNYJ', 'rROBLE', '67', '', 'EL SAUZ', '58765', 'Morelia', 'MCH', 1, '2023-06-26', NULL, 0),
-(127, 'JUAN PABLO', 'BECERRIL GUERRERO', '1', '1990-11-30', '4433099876', 'jpbece@example.com', '$2a$07$asxx54ahjppf45sd87a5aurBDkcIFOEx8ZAxzQPx.N0DIrp.JPzVC', 'OWID729309Q', 'BEGJ901130HMNGDO72', '56937261549', 'BEGJ901131901', 'TULIPAN', '78', '', 'MANANTIALES', '58990', 'Morelia', 'MCH', 1, '2023-06-26', NULL, 0),
-(128, 'FLOR', 'LOPEZ ARREOLA', '0', '1989-07-09', '3322890874', 'flor@exmaple.com', '$2a$07$asxx54ahjppf45sd87a5au.anINKtyy7lQW0K9btq4nXJc3ob8R2a', 'MDJEIR847U', 'LOAF890709HMN89087', '56938472198', 'LOAF890709890', 'CALABZA', '88', '', 'RUBI', '58776', 'Morelia', 'MCH', 1, '2023-06-26', NULL, 0),
-(129, 'SALVADOR', 'ZAVALA ESPEJEL', '1', '1999-09-09', '4521654147', 'salvador@example.com', '$2a$07$asxx54ahjppf45sd87a5auV//RLtynkHYebkkCR0hoaNyb1eHpSRm', 'JDUIR89376', 'ZAES990909HMNTCU89', '56231839401', 'ZAES990909765', 'CAMELINAS', '1584', '', 'FUENTES DE MORELIA', '60180', 'Morelia', 'MCH', 1, '2023-06-26', NULL, 0),
-(130, 'JOAQUIN', 'FONSECA PALOMINOS', '1', '1980-01-18', '4433900187', 'jfpalominos@example.com', '$2a$07$asxx54ahjppf45sd87a5auqAnOYJtPVd6D7E6.UIHn8AV7Oc73M26', 'KDJDYE749WK', 'FOPJ800118HMNYUI90', '54389026182', 'FOPJ800118980', 'HERMANOS FLORES MAGON', '1584', '', 'FUENTES DE MORELIA', '60180', 'Morelia', 'MCH', 1, '2023-06-26', NULL, 0),
-(131, 'PEDRO', 'BARAJAS ORTEGA', '1', '1990-12-12', '4521679799', 'pbortega@example.com', '$2a$07$asxx54ahjppf45sd87a5auL49KXMkrZFY6JWGf4qzWUkWW8oBxgzC', 'KDJKEUKDUF', 'BAOP901212HMNUKO09', '56092763541', 'BAOP901212KLO09', 'ESPINACA', '78', '', 'REALITO', '58990', 'Morelia', 'MCH', 1, '2023-06-26', NULL, 0),
-(132, 'RODOLFO', 'AGUILAR CHAVEZ', '1', '1994-08-09', '4455338909', 'rodolfo@example.com', '$2a$07$asxx54ahjppf45sd87a5auSQth3dCpgLZRGxjrT8DnypiBTGWqjY6', '89094736153', 'AGCR940809HMNUVO09', '56340989765', 'AGCR940809JLO', 'ROCAS DE LA LOMA', 'SN', '', 'LINDAVISTA', '58900', 'Morelia', 'MCH', 1, '2023-06-27', NULL, 0),
-(133, 'CAROLINA', 'CHAVEZ PEREZ', '0', '1990-07-09', '4521654147', 'carolina@example.com', '$2a$07$asxx54ahjppf45sd87a5auwWUK1oxt9Rx5TRcHi6Vj2k2czea9MxW', 'JDUR7492ODO', 'CHPC900709MMNUIO09', '56092837162', 'CHPC900709PLO', 'CHIAPAS', '78', '', 'UNIVERSIDAD', '58760', 'Morelia', 'MCH', 1, '2023-06-27', NULL, 0);
+INSERT INTO `empleados` (`idEmpleados`, `name`, `lastname`, `genero`, `fNac`, `phone`, `email`, `password`, `identificacion`, `CURP`, `NSS`, `RFC`, `street`, `numE`, `numI`, `colonia`, `CP`, `municipio`, `estado`, `status`, `fecha_contratado`, `fecha_baja`, `causaBaja`, `detalles_baja`, `cambio_password`) VALUES
+(3, 'Oscar Rafael', 'Contreras Flota', '1', '1991-12-19', '4435398291', 'oscarcontrerasf91@gmail.com', '$2a$07$asxx54ahjppf45sd87a5aubbQpcQrXYn9ZKDUEfe01oXXasks7XAG', '554025566656', 'COFO911219HMNNLS06', '654321965432', 'COFO911219925', 'Palomas', '149', '', 'La hacienda', '58330', 'morelia', 'Selecciona un estado', 1, '2021-06-28', NULL, NULL, NULL, 1),
+(5, 'Rafael', 'Flota Sanchez', '1', '1995-05-30', '3213216565', 'rafa@gmail.com', '', '3ASD354', 'CASD321533654DASD22', '64641323156', '65465sdasd65', 'alsjkh', '654', '1', '32132', '32132', 'sasd', 'asdad', 1, '2023-04-16', NULL, NULL, NULL, 0),
+(6, 'ERICK', 'NATIVIDAD', '1', '1993-05-16', '4433900175', 'ericknatividad93@hotmail.com', '$2a$07$asxx54ahjppf45sd87a5au3jMxNjqSyn3ov6ZS7NtPJvp5DE/f/.C', '8', 'CASD321533654DASD22', '53029875477', 'NABE9304168D3', 'FACULTAD DE PSICOLOGIA', '45', '', 'REAL UNIVERSIDAD', '58088', 'MORELIA', 'Selecciona un estado', 1, '2019-06-28', NULL, NULL, NULL, 1),
+(10, 'Prueba', 'Prueba', '0', '2023-05-17', '4425362514', 'prueba@gmail.com', '', '44555855685', 'PRUE25252MNNLS54', '1234567899875', 'PRUE25252', 'PRUEBA', '5', '1', 'ASD', '321654', 'Morelia', 'Michoacán', 0, '2023-05-08', NULL, NULL, NULL, 0),
+(19, 'Mayel', 'Ortega Cambron', '0', '1998-07-23', '5526553212', 'mayel_ortega@gmail.com', '$2a$07$asxx54ahjppf45sd87a5auFoxjRU8oL9T7K8WJPF8iklsi8G3kHCe', '456789789456', 'ORCM321654987654', '3216541651', 'ORCM32165331', 'Rey Moctezuma', '64', '', 'Mil cumbres', '58290', 'Morelia', 'Michoacán', 1, '2023-05-15', NULL, NULL, NULL, 0),
+(20, 'Yoan Adan', 'Leon', '1', '1960-01-01', '4430000001', 'presidente@presi.com', '$2a$07$asxx54ahjppf45sd87a5au09Xobz.kcMYEWZUX7DpLSM2UYd4GUHq', '100000001', 'gepr600101hmnnlq50', '1000000002', 'gepr600101252', 'Loma dorada', '01', '', 'Las lomas', '53001', 'Morelia', 'Michoacán', 1, '2023-05-17', NULL, NULL, NULL, 0),
+(21, 'ARMANDO', 'ARCHUNDIA GONZALEZ', '1', '1991-05-11', '4433900175', 'armando.archundia@asdasd.com', '$2a$07$asxx54ahjppf45sd87a5aurddAI2BXhiv9mPV1Ckqwr5MLxhkjq9y', '7253762', 'GOAA910511HMNTCR07', '93725481921', 'GOAA910511HMNTC', 'OLIMPIADA', '34', '', 'UNIVERSIDAD', '89990', 'MORELIA', 'MICHOACAN', 1, '2023-05-17', NULL, NULL, NULL, 0),
+(22, 'Gustavo', 'Arreola', '1', '1984-05-25', '4465986587', 'gus@gmail.com', '$2a$07$asxx54ahjppf45sd87a5auuULuOA7.yjgcURqGzZXUeaY.w1/n3.i', '321654321654', 'ARGU840525hmnfd05', '32132165498', 'argu840525', 'asd', '321', '', '32', '58260', 'Morelia', 'Michoacán', 1, '2023-05-18', NULL, NULL, NULL, 0),
+(23, 'Juan', 'Pérez', '1', '1985-05-15', '5551234567', 'juan.perez@example.com', '$2a$07$asxx54ahjppf45sd87a5aubbQpcQrXYn9ZKDUEfe01oXXasks7XAG', '1234567890', 'PERJ850512HDFXXX01', '9876543210', 'PERJ850512XXX', 'Calle Principal', '123', '1A', 'Centro', '12345', 'Ciudad de México', 'CDMX', 1, '2023-05-19', NULL, NULL, NULL, 1),
+(24, 'María', 'López', '0', '1990-09-28', '5559876543', 'maria.lopez@example.com', '$2a$07$asxx54ahjppf45sd87a5autRLTQuEDFjtDghTEl2HCO.NFslgg7Tu', '0987654321', 'LOPM900928MDFXXX02', '1234567890', 'LOPM900928XXX', 'Avenida Juárez', '456', '2B', 'Reforma', '54321', 'Ciudad de México', 'CDMX', 0, '2023-05-19', '2023-05-24', NULL, NULL, 0),
+(25, 'Roberto', 'García', '1', '1982-11-02', '5555555555', 'roberto.garcia@example.com', '$2a$07$asxx54ahjppf45sd87a5aujd4UPYbNfEZcue0P6yyIPgFYafH1fea', '1357924680', 'GARR821102MDFXXX03', '9876543210', 'GARR821102XXX', 'GARR821102XXX', '789', '3C', 'Del Valle', '67890', 'Ciudad de México', 'CDMX', 1, '2023-05-19', NULL, NULL, NULL, 0),
+(26, 'Laura', 'Rodríguez', '0', '1995-03-15', '5552223333', 'laura.rodriguez@example.com', '$2a$07$asxx54ahjppf45sd87a5aunPLtscj8Bj2VjY3Dod1v5EHrVjGV2vG', '8642097531', 'RODL950315MDFXXX04', '1234567890', 'RODL950315XXX', 'Avenida Reforma', '321', '4D', 'Polanco', '45678', 'Ciudad de México', 'CDMX', 0, '2023-05-19', '2023-05-18', NULL, NULL, 0),
+(27, 'Andrés', 'Hernández', '1', '1988-08-20', '5553332222', 'andres.hernandez@example.com', '$2a$07$asxx54ahjppf45sd87a5auRti6saKEkyuQmdvUYFTh6h0huW4haHu', '9753108642', 'HERA880720MDFXXX05', '9876543210', 'HERA880720XXX', 'Calle de la Luna', '654', '5E', 'Condes', '59789', 'Ciudad de méxico', 'CDMX', 1, '2021-06-19', NULL, NULL, NULL, 0),
+(28, 'Ana', 'Martínez', '0', '1992-12-10', '5558889999', 'ana.martinez@example.com', '$2a$07$asxx54ahjppf45sd87a5auX9vEJcqQWeK8sk/j9eWWzclmoCXBfM6', '8642097531', 'MART921210MDFXXX06', '1234567890', 'MART921210XXX', 'Avenida Insurgentes', '987', '6F', 'Roma', '45678', 'Ciudad de méxico', 'CDMX', 1, '2023-05-19', NULL, NULL, NULL, 0),
+(29, 'Ricardo', 'Vargas', '1', '1980-08-05', '5556667777', 'ricardo.vargas@example.com', '$2a$07$asxx54ahjppf45sd87a5auMUDk16Ed3i64oCHjw4GAZHe/3sB2Ww.', '9876543210', 'VARR800805MDFXXX07', '9876543210', 'VARR800805XXX', ' Calle de los Pinos', '321', '7G', 'Del bosque', '56789', 'Ciudad de móxico', 'CDMX', 1, '2023-05-19', NULL, NULL, NULL, 0),
+(30, 'Carolina', 'Sánchez', '0', '1993-09-25', '5557778888', 'carolina.sanchez@example.com', '$2a$07$asxx54ahjppf45sd87a5au/wc8C7a69DzqmuOV5qViEl83KeRyWTW', '9753108642', 'SANC930925MDFXXX08', '1234567890', 'SANC930925XXX', 'Avenida Morelos', '654', '8H', 'Tlalpan', '45678', 'Ciudad de México', 'CDMX', 1, '2022-06-19', NULL, NULL, NULL, 0),
+(31, 'Gabriela', 'Ramírez', '0', '1991-04-02', '4569028625', 'gabriela.ramirez@example.com', '$2a$07$asxx54ahjppf45sd87a5auL3BOJdw5UlTjafqj16lFITe.7zA0hUa', '8642097531', 'RAMG910402MDFXXX10', '1234567890', 'RAMG910402XXX', 'Avenida Hidalgo', '321', '10J', 'Cuauhtémoc', '45678', 'Ciudad de México', 'CDMX', 1, '2023-05-19', NULL, NULL, NULL, 0),
+(32, 'LUIS ', 'PEREZ CORONADO', '1', '1980-03-21', '4521654147', 'LUISPALEO@hotmail.com', '$2a$07$asxx54ahjppf45sd87a5auRMnmjBx9AnWTWsMCgZjzMGf05185z9y', '183639494', 'PAZL900321HMNTCR07', '725439009761', 'PAZL900321JCA', 'DOMICILIO CONOCIDO', '1222', '12', 'JUANA PAVON', '60490', 'MORELIA', 'Michoacan', 1, '2023-05-24', NULL, NULL, NULL, 0),
+(33, 'JOSE', 'CARRILLO', '1', '1987-09-18', '4521679799', 'JOSECARRILLO@GMAIL.COM', '$2a$07$asxx54ahjppf45sd87a5auMejtr5RryVTdsj9ADRi8siKCbPtSbkG', '173532618251', 'CALP730912HMNTCR07', '72653736272', 'CALP730908LC0', 'EDUCACION ESQUINA MATAMOROS', 'SN', '12', 'REAL UNIVERSIDAD', '60490', 'MORELIA', 'Michoacan', 1, '2023-05-24', NULL, NULL, NULL, 0),
+(34, 'RAUL', 'MOLINA', '1', '1993-09-07', '4521654147', 'gumor@gmail.com', '$2a$07$asxx54ahjppf45sd87a5auuw4GnAVLVXyEv.uAxdYPcOz79VHrdGG', 'W727373U', 'VEME790916MMNNRR07', '22222233', 'MPR14091822A', 'HERMANOS FLORES MAGON', '1584', '', 'JUANA PAVON', '60180', 'MORELIA', 'Michoacan', 1, '2023-05-24', NULL, NULL, NULL, 0),
+(35, 'DAVID', 'BECERRA ALCAZAR', '1', '1995-03-06', '4400998866', 'contabilidadgdl@inconsultingmexico.com', '$2a$07$asxx54ahjppf45sd87a5auAE9lF7pz/rTfj4HYna.BEJ2O86mBkdq', '10', 'BEAD950306HMNTCR07', '8763519036', 'BEAD950306765', 'PASEO LAZARO CARDENAS', '45', '', 'LA SOLEDAD', '60180', 'MORELIA', 'MICHOACAN', 1, '2023-05-30', NULL, NULL, NULL, 0),
+(36, 'JORGE', 'MEDINA', '1', '1989-07-25', '4521654147', 'jorgemedina@example.com', '$2a$07$asxx54ahjppf45sd87a5auHzjdMXdXdTVcWPVWk5D7KG.Fa/4l22.', '92726267', 'MEAJ890725HMNTVR07', '729374516199', 'MEAJ890725TU8', 'DOMICILIO CONOCIDO', 'SN', '12', 'FUENTES DE MORELIA', '60490', 'MORELIA', 'MICHOACAN', 1, '2023-05-30', NULL, NULL, NULL, 0),
+(37, 'GILBERTO', 'LOPEZ PEREZ', '1', '1991-09-16', '4521679799', 'gilbertoperez@example.com', '$2a$07$asxx54ahjppf45sd87a5aubtIMcZD8YqhMkGMi2xMlulTc6dEucHC', '927DJHD82', 'LOPG910916HMNTRDS09', '90654195392', 'LOPG9109169O8', 'HERMANOS FLORES MAGON', '1584', '12', 'JUANA PAVON', '60180', 'MORELIA', 'Michoacan', 1, '2023-05-31', NULL, NULL, NULL, 0),
+(38, 'FREDDY', 'PAZ ONOFRE', '1', '0000-00-00', '4466880022', 'freddypaz@example.com', '$2a$07$asxx54ahjppf45sd87a5au4pC/aOp8siU1b4rh/hpu9QG/CRMd/Eq', 'SKDHDJD7394', 'PAOF860515HMNTCR07', '84663399001', 'PAOF8605159O0', 'MANANTIALES', '64', '', 'CONSTITUYENTES', '58060', 'MORELIA', 'MICHOACAN', 1, '2023-05-31', NULL, NULL, NULL, 0),
+(39, 'GABRIEL ESTEBAN', 'PAREDES QUEZADA', '1', '1993-05-11', '4528990909', 'esteban@example.com', '$2a$07$asxx54ahjppf45sd87a5auGGJ0ptNmr/kDbID0OENBxvR9T3BXI5y', '9OIW54389I', 'PAQG930511HMNJKO07', '98482046291', 'PAQG930511JU9', 'HOLANDA', '62', '', 'REAL UNIVERSIDAD', '58088', 'MORELIA', 'MICHOACAN', 1, '2022-07-31', NULL, NULL, NULL, 0),
+(40, 'OSVALDO', 'HUERTA CHAVEZ', '1', '1967-09-09', '4521654147', 'osvaldohuerta@example.com', '$2a$07$asxx54ahjppf45sd87a5aukBFxYPcXeBQjAMXQxzE2JyuMe5DYAiy', 'W727373I44', 'HUCO670909HMNYUO07', '98367482196', 'HUCO6709098D3', 'HERMANOS FLORES MAGON', '1584', '12', 'FUENTES DE MORELIA', '60180', 'MORELIA', 'Michoacan', 0, '2023-05-31', '2023-07-06', 2, 'SEPARACIÓN VOLUNTARIA', 0),
+(41, 'RUTH', 'ESTRADA GARCIA', '0', '1995-09-05', '4521654147', 'ruthestrada@example.com', '$2a$07$asxx54ahjppf45sd87a5aujos.veKbGkKTS9uOllJqaidI2Ee50jK', '099875432', 'ESGR950905MMNDGE73', '98437401748', 'ESGR950905098', 'DOMICILIO CONOCIDO', 'SN', '', 'VERDE VALLE', '60490', 'MORELIA', 'Michoacan', 1, '2023-05-31', NULL, NULL, NULL, 0),
+(42, 'ANA LILIA', 'NATIVIDAD MORALES', '0', '1989-05-08', '4499887766', 'analilia@example.com', '$2a$07$asxx54ahjppf45sd87a5auvOb8duE2QA7zm0uvIOBUHgPl1Cunq/e', '84KDGEUDBDYE', 'NAMA890508MMNYUO97', '9754872929', 'NAMA890508987', 'HERMANOS FLORES MAGON', '1584', '', 'VERDE VALLE', '60180', 'MORELIA', 'Michoacan', 1, '2023-05-31', NULL, NULL, NULL, 0),
+(43, 'IVAN', 'OROZCO SOTO', '1', '1995-12-31', '3332500902', 'ivan.orozco@example.com', '$2a$07$asxx54ahjppf45sd87a5auUgLFp/b6Ee.8BiRCuH7jWYgqApJcL6i', '9873652HD8', 'ORSI951231HMNTCR09', '9836284619', 'ORSI9512319T6', 'OBSERVATORIO', '890', '', 'LA ROMA', '58088', 'MORELIA', 'MICHOACAN', 1, '2023-06-01', NULL, NULL, NULL, 0),
+(44, 'ENRIQUE', 'VILLA RANGEL', '1', '1993-01-08', '4433071539', 'enriquevilla@example.com', '$2a$07$asxx54ahjppf45sd87a5auNUjH3inFFub/dmY2sf22xdF0RYBZp7y', '0987654321', 'VIRE930108HMNUJK87', '90362789511', 'VIRE930108JH6', 'ROBLE', '99', '', 'COLORADO', '58610', 'MORELIA', 'MICHOACAN', 1, '2023-06-01', NULL, NULL, NULL, 0),
+(45, 'JORDI', 'ROSAS ZULUAGA', '1', '1999-08-09', '4499000076', 'jordi@example.com', '$2a$07$asxx54ahjppf45sd87a5aumD8TViLnS2Oash8.GUQL.sfWF7QztOW', '9IOD538SJ7', 'ZURJ990809HMNHJ809', '93626188905', 'ZURJ9908099IO', 'ENCINOS', '987', '', 'SOLEDAD', '58337', 'MORELIA', 'MICHOACAN', 1, '2023-06-01', NULL, NULL, NULL, 0),
+(46, 'GERARDO', 'ROMERO GARCIA', '1', '1999-06-29', '6677889900', 'gerardo.garcia@example.com', '$2a$07$asxx54ahjppf45sd87a5auGxTbWFsfM6tK8MMOh6ZlreYGnrS9CkC', '98365TY86H', 'ROGG990629', '90765498712', 'ROGG990629JKL', 'PROLONGACION', '76', '', 'ZUMPIMITO', '58338', 'MORELIA', 'MICHOACAN', 1, '2023-06-01', NULL, NULL, NULL, 0),
+(47, 'KEVIN', 'ALVAREZ CASTILLO', '1', '1980-09-08', '5556090234', 'kevin.alvarez@example.com', '$2a$07$asxx54ahjppf45sd87a5auICu7AWV0bR8hugNWOH.tkGwVjk6kj62', '0OI87UY65T', 'ALCK800908HMNTVI89', '98527132843', 'ALCK800908LO9', 'LIMONES', '78', '', 'ROMITA', '58445', 'MORELIA', 'Selecciona un estado', 1, '2022-03-16', NULL, NULL, NULL, 0),
+(48, 'LUIS FRANCISCO', 'REYES RODRIGUEZ', '1', '1993-07-15', '4521679799', 'luis.francisco@example.com', '$2a$07$asxx54ahjppf45sd87a5aukNRkyQorxw8KWx2MVKmz6wdXSTdPIAW', '0937654201', 'RERF9300715HMNTCD89', '28936781561', 'RERF9300715JH7', 'MARTIN CARRERA', '90', '', 'PASEO DE LA REFORMA', '58900', 'MORELIA', 'Michoacan', 1, '2023-06-01', NULL, NULL, NULL, 0),
+(49, 'SONIA', 'MARTINEZ PLIEGO', '0', '1998-05-16', '4455667788', 'sonia.martinez@example.com', '$2a$07$asxx54ahjppf45sd87a5au3Ma6fwWMKiz.G4ZOf940hYICbZ8By1m', '98726YE548', 'MAPS980516HMNTKI89', '98452781327', 'MAPS980516O98', 'HERMANOS FLORES MAGON', '9876', '', 'ROBLE', '58336', 'MORELIA', 'MICHOACANA', 1, '2023-06-01', NULL, NULL, NULL, 0),
+(50, 'PABLO', 'GARCIA ESTRADA', '1', '1997-08-09', '4521654147', 'pablo@example.com', '$2a$07$asxx54ahjppf45sd87a5auYymGR6xUYaDAp1vv9LQnrhxz5mO6vay', 'I876TG5S5471', 'GAEP970809HDF98623', '17498276531', 'GAEP970809UT6', 'HERMANOS FLORES MAGON', '1584', '12', 'LA LOMA', '60180', 'MORELIA', 'Michoacan', 1, '2023-06-01', NULL, NULL, NULL, 0),
+(51, 'SELENE', 'ORTEGA GONZALEZ', '1', '1998-09-08', '4521679799', 'selene.ortega@example.com', '$2a$07$asxx54ahjppf45sd87a5au5l98RAGGiFN9rDg8YrZSa/y6c0W/74G', 'I987UY65T6', 'ORGS980908HMNTVO90', '98376251462', 'ORGS9809088G6', 'FACULTAD DE INGENIERIA CIVIL', '35', '', 'LA SOLEDAD', '58767', 'MORELIA', 'MICHOACAN', 1, '2023-06-01', NULL, NULL, NULL, 0),
+(52, 'ELIZABETH', 'GOMEZ ARREOLA', '0', '1998-05-07', '4455669900', 'elizabeth.gomez@example.com', '$2a$07$asxx54ahjppf45sd87a5au6wWTkaWwOMM8Q3K1oHnZr1.FfYzpkiu', 'OLK897654', 'GOAE980507HMNTCR07', '89362732111', 'GOAE980507987', 'NARANJO', '132', '', 'PEDREGAL', '58000', 'MORELIA', 'MICHOACAN', 0, '2023-06-01', '2023-07-15', 3, 'Dejo de presentarse por 5 días, se intento comunicar con ella, contesto su familiar diciendo que ya esta en otro empleo.', 0),
+(53, 'ELIZABETH', 'GOMEZ ARREOLA', '0', '1998-05-07', '4455669900', 'elizabeth.gomez@example.com', '$2a$07$asxx54ahjppf45sd87a5aubWETtXtVJwayj7HJb0WTCiOtye7SMIa', 'OLK897654', 'GOAE980507HMNTCR07', '89362732111', 'GOAE980507987', 'NARANJO', '132', '', 'PEDREGAL', '58000', 'MORELIA', 'MICHOACAN', 1, '2023-06-01', NULL, NULL, NULL, 0),
+(54, 'OMAR', 'PACHECO MERINO', '1', '1998-07-09', '4521679799', 'omar.merino@example.com', '$2a$07$asxx54ahjppf45sd87a5auM7KA0Z0E4pfeiONLuakqCusqU9fvhlO', '98JU765452', 'PAMO980709HMNYHU87', '98725123349', 'PAMO980709', 'TULIPAN', '888', '', 'JACARANDAS', '58000', 'MORELIA', 'Michoacan', 1, '2023-06-01', NULL, NULL, NULL, 0),
+(55, 'HUGO', 'REYNEL LOPEZ', '1', '1998-07-07', '6677990033', 'hugoreynel@example.com', '$2a$07$asxx54ahjppf45sd87a5aumvCI8ZHaB7bDL.z71XlF1rFRxQe4HB.', 'IEY768S9I7', 'RELH980707HGTU89', '16289036512', 'RELH980707876', 'FRESNO', '67', '', 'MICHOACANA', '58000', 'MORELIA', 'MICHOACAN', 1, '2023-06-01', NULL, NULL, NULL, 0),
+(56, 'OSCAR', 'RENDON VILLEGAS', '1', '1990-01-30', '4521679799', 'oscar@example.com', '$2a$07$asxx54ahjppf45sd87a5aui0B03QzE3AB1aFIxoNtjnoOMkf2bH0K', '98367IY5E4', 'REVO900130HMNYU8', '93761552188', 'REVO9001308U7', 'HERMANOS FLORES MAGON', '1584', '', 'JUANA PAVON', '50180', 'MORELIA', 'Michoacan', 1, '2023-06-01', NULL, NULL, NULL, 0),
+(57, 'ADAM', 'ORTEGA CRISOSTOMO', '1', '1985-07-20', '4521679799', 'adamortega@exmple.com', '$2a$07$asxx54ahjppf45sd87a5auq8k5jj0xr7bTE82OZSQwzN6d7JtjtfS', 'DJ876S43UE', 'ORCA850720HMNTCR76', '17265333987', 'ORCA850720', 'EDUCACION ESQUINA MATAMOROS', '8', '', 'UNIVERSIDAD', '58088', 'MORELIA', 'Michoacan', 0, '2023-06-01', '2023-07-06', 1, 'TERMINO DE CONTRATO', 0),
+(58, 'JAVIER', 'MORALES LEMUS', '1', '1993-03-27', '4521679799', 'javiermorales@example.com', '$2a$07$asxx54ahjppf45sd87a5auek3ICyszBapgtRg5cSm5RsalYcBmnNC', '8U7665E420', 'MOLJ930327HMNTCR98', '98221683625', 'MOLJ930327KI7', 'HERMANOS FLORES MAGON', '1584', '', 'VERDE VALLE', '60180', 'MORELIA', 'MICHOACAN', 1, '2023-06-01', NULL, NULL, NULL, 0),
+(59, 'ESTEFANIA', 'CHAGOLLA RUIZ', '1', '1987-04-01', '4521679799', 'estefania.chagolla@example.com', '$2a$07$asxx54ahjppf45sd87a5au0b/uaLtRretmkI/WoZzG35RIF434D7C', '9876D73I89', 'CHRE870401HMNTGI87', '89098645321', 'CHRE870401987', 'EDUCACION ESQUINA MATAMOROS', 'SN', '', 'LA LOMA', '60490', 'MORELIA', 'MICHOACAN', 1, '2023-06-06', NULL, NULL, NULL, 0),
+(60, 'ESTEFANIA', 'CHAGOLLA RUIZ', '1', '1987-04-01', '4521679799', 'estefania.chagolla@example.com', '$2a$07$asxx54ahjppf45sd87a5au/jLIzsPfYeVfRx1GnXfx2Vu1ukAP4uG', '9876D73I89', 'CHRE870401HMNTGI87', '89098645321', 'CHRE870401987', 'EDUCACION ESQUINA MATAMOROS', 'SN', '', 'LA LOMA', '60490', 'MORELIA', 'MICHOACAN', 0, '2023-06-06', '2023-06-05', NULL, NULL, 0),
+(61, 'MARCELINO', 'PEREZ SANCHEZ', '1', '1993-09-07', '4433900175', 'marcelina.perez@example.com', '$2a$07$asxx54ahjppf45sd87a5auLnIjI/VIgYf5lri6Lmw4dS2QUdd9Nwi', '98037625D8', 'PESM930907HMNYU8', '90936544671', 'PESM930907ZQ9', 'MOZART', '245', '', 'LA LOMA', '58290', 'MORELIA', 'MICHOACAN', 1, '2023-06-08', NULL, NULL, NULL, 0),
+(62, 'EDIBERTO', 'PONCE SANDOVAL', '1', '1998-07-09', '4521654147', 'ediberto@example.com', '$2a$07$asxx54ahjppf45sd87a5au54Jbm7/8aXhLC2.eFYo.MTPUBi4pZIu', '98IU76YT54', 'POSE9807HMNVFR56', '17390098763', 'POSE980987', 'MARIANO OTERO', '3431', 'A', 'VERDE VALLE', '58000', 'MORELIA', 'MICHOACAN', 1, '2023-06-08', NULL, NULL, NULL, 0),
+(63, 'RODOLFO', 'REYES RENDON', '1', '1994-07-26', '4521654147', 'reyes@example.com', '$2a$07$asxx54ahjppf45sd87a5auXWJW3y3cDAYB0I4Nzw.1bTuU.GXme.S', '83987637818', 'RERR940726HHY789', '74893727192', 'RERR940726987', 'MORELOS', '31', '', 'LA MICHOACANA', '58990', 'MORELIA', 'MICHOACAN', 1, '2023-06-08', NULL, NULL, NULL, 0),
+(64, 'PAULINA', 'VELAZQUEZ CORTES', '0', '1993-04-11', '4521679799', 'paulina@example.com', '$2a$07$asxx54ahjppf45sd87a5auSYYIkM6Jn1SY/1j4DbrmboIQmEugiwO', '98367D5438', 'VECP930411MMNTYU09', '11238946722', 'VECP930411ZJ4', 'HERMANOS FLORES MAGON', '1584', '', 'FUENTES DE MORELIA', '60180', 'MORELIA', 'Michoacan', 1, '2023-06-08', NULL, NULL, NULL, 0),
+(65, 'GUADALUPE', 'FARIAS UGALDE', '0', '1992-07-21', '4521654147', 'guadalupe@example.com', '$2a$07$asxx54ahjppf45sd87a5auQqeq5MdR9/OzXIWmGGiGf6STiR2Rkk.', '8928S7Y655', 'FAUG920721MMNIUY67', '119834782081', 'FAUG920721GT7', 'DOMICILIO CONOCIDO', 'SN', '', 'MATAMOROS', '60490', 'MORELIA', 'Michoacan', 1, '2023-06-08', NULL, NULL, NULL, 0),
+(66, 'NADIA', 'PAZ TREJO', '0', '1987-08-09', '4521654147', 'nadiapa@example.com', '$2a$07$asxx54ahjppf45sd87a5auhqrfWBlvqc1gBcvo6NY2i03N3RG9B5i', '9OD8776283', 'PATN870809MJUY78', '92873618383', 'PATN870809998', 'FAUNA', '2381', '', 'RINCONADA DEL BOSQUE', '58000', 'MORELIA', 'MICHAOCAN', 1, '2023-06-08', NULL, NULL, NULL, 0),
+(67, 'MONSERRAT', 'OLIMPIA REYES', '0', '1993-04-16', '4521654147', 'olimpia@example.com', '$2a$07$asxx54ahjppf45sd87a5auNe.ipRgAR2xVbTMfCfKeQioMrtFq7Cu', 'IEK83765D6', 'OLRM930416MMNYUI89', '93872819283', 'OLRM9304167J4', 'PROLONGACION VERACRUZ', '90', '', 'REAL UNIVERSIDAD', '60490', 'MORELIA', 'Michoacan', 1, '2023-06-08', NULL, NULL, NULL, 0),
+(68, 'RODRIGO', 'GONZALEZ ROMERO', '1', '1997-01-01', '4433900175', 'rodrigo@example.com', '$2a$07$asxx54ahjppf45sd87a5au4qL1S7JrXTe9y5AmcVNCSmCuaF23nl2', '983KD7644Y6', 'GORR970101HMNKJU89', '93938271203', 'GORR970101987', 'Tepeyac', '45', '', 'REAL UNIVERSIDAD', '58090', 'MORELIA', 'Michoacan', 1, '2023-06-08', NULL, NULL, NULL, 0),
+(69, 'CARLOS', 'GUTIERREZ PEREZ', '1', '1997-01-01', '4433900165', 'carlos.gutierrez@example.com', '$2a$07$asxx54ahjppf45sd87a5auMFdn4TxVNBv2xQZJnXqXPFRFLCes9Qe', '98EGT73948H', 'GUPC970101HMNTVY89', '38761201110', 'GUPC970101987', 'MICAELA MONTES DE ALLENDE', '45', '', 'ROMA', '59000', 'MORELIA', 'MICHOACAN', 1, '2023-06-08', NULL, NULL, NULL, 0),
+(70, 'OCTAVIO', 'SOTO AGUILAR', '1', '1993-12-26', '4433900175', 'octavio.soto@example.com', '$2a$07$asxx54ahjppf45sd87a5auKBYsMAImNv7kUSRMpMRzBHlmtIhxnHK', '8I7U6Y5T4R', 'SOAO931226HMNTCR08', '53719287989', 'SOAO931226567', 'ROMERO', '56', '', 'BERNARDO ABARCA', '58090', 'MORELIA', 'MICHOACAN', 1, '2023-06-08', NULL, NULL, NULL, 0),
+(71, 'JOAQUIN', 'CONTRERAS GUZMAN', '1', '1998-08-01', '5556090826', 'joaquin@example.com', '$2a$07$asxx54ahjppf45sd87a5au2.HgmXNsNo.DsPIPqds7E8DcJM.KSgy', 'UDJ76YT5RR', 'COGJ980801HMNTCR06', '53040389976', 'COGJ98080JL9', 'BERNARDO ABARCA', '98', '', 'IBARRA', '58337', 'MORELIA', 'MICHOACAN', 1, '2023-06-08', NULL, NULL, NULL, 0),
+(72, 'LARISA', 'MAGAÑA OLIVERA', '0', '1998-07-01', '4521679799', 'larisa@example.com', '$2a$07$asxx54ahjppf45sd87a5auqtOU256b43rtR7NMsV8pnjZ1FLIp3yS', 'UH678D934GD6', 'MAOL980701MMNUYI89', '92839283741', 'MAOL980701987', 'MICAELA MONTES DE ALLENDE', 'SN', '', 'REAL OVIEDO', '60490', 'MORELIA', 'MICHOACAN', 1, '2023-06-08', NULL, NULL, NULL, 0),
+(73, 'ROBERTO', 'GARCIA ZEPEDA', '1', '1993-01-01', '4521679799', 'roberto@example.com', '$2a$07$asxx54ahjppf45sd87a5auxGpGrKsUrKyoUQvS1FNHmnaPa1A2az2', '98IKJMNV56', 'GAZR930101HMNTCR87', '28726152811', 'GAZR930101980', 'MICAELA MONTES DE ALLENDE', '45', '', 'LA LOMA', '58000', 'MORELIA', 'Michoacan', 1, '2023-06-08', NULL, NULL, NULL, 0),
+(74, 'MANUEL', 'MOLINA BECERRA', '1', '1993-04-02', '4521679799', 'manuel@example.com', '$2a$07$asxx54ahjppf45sd87a5auJL5ihRaN9SoPAKbCcD8qXtK7V1tbPPS', '987UJ6587W8', 'MOBM930402HMNYVT76', '54543987672', 'MOBM930402574', 'EDUCACION ESQUINA MATAMOROS', 'SN', '', 'IBARRA', '60490', 'MORELIA', 'MICHOACAN', 1, '2023-06-08', NULL, NULL, NULL, 0),
+(75, 'RAMON', 'VELEZ CHAVEZ', '1', '1988-07-17', '4521679799', 'ramon.velez@example.com', '$2a$07$asxx54ahjppf45sd87a5auXH3ZQC9OcAPA.jjlJIsrLvX9p3cHrGy', '8377483029', 'VECR880717HMNTCR09', '98761529371', 'VECR880717JLO', 'MOZART', '245', '', 'LA LOMA', '58290', 'MORELIA', 'MICHOACAN', 1, '2023-06-08', NULL, NULL, NULL, 0),
+(76, 'ALEJANDRO', 'SANCHEZ PEREZ', '1', '1987-07-21', '4521654147', 'alejandro@example.com', '$2a$07$asxx54ahjppf45sd87a5au5RbnJ/LzlAPzK.rVH1jVnhPpE4oUdPe', '8I9O07654E', 'SAPA870721HMNYUO09', '55632919110', 'SAPA870721897', 'ROMERO', '98', '', 'LA SOLEDAD', '58000', 'MORELIA', 'MICHOACAN', 1, '2023-06-22', NULL, NULL, NULL, 0),
+(77, 'VALENTIN', 'PEREZ SANCHEZ', '1', '1982-05-15', '4433071530', 'vperezsanchez@example.com', '$2a$07$asxx54ahjppf45sd87a5ausmCwiu4kDkMnc8vzk5Vpy1jDZ3SuQ72', '9OIUJSH653', 'PESV820515HMNHYU87', '55341890002', 'PESV820515908', 'ISAC ARRIAGA', '67', '', 'ZUMPUMITO', '58060', 'MORELIA', 'MICHOACAN', 1, '2023-06-22', NULL, NULL, NULL, 0),
+(78, 'SANDRA', 'CASTILLEJO GOMEZ', '0', '1998-07-12', '4433900175', 'sandra.castillejo@example.com', '$2a$07$asxx54ahjppf45sd87a5au9ZuiVa8SbbVejVPjmXJJthFGlUIKIma', '8PO7O65542', 'CAGS981207MMNHUI09', '56545289911', 'CAGS981207JU8', 'MANANTIALES', '15', '', 'LINDAVISTA', '58337', 'MORELIA', 'MICHOACAN', 1, '2023-06-22', NULL, NULL, NULL, 0),
+(79, 'SAUL', 'CONTRERAS CARAGLIO', '1', '1978-06-17', '4433900175', 'saulcc@example.com', '$2a$07$asxx54ahjppf45sd87a5auxiYekEM9lTVjV17ROEt3mJr9c/Aovam', '879OISG672', 'COCS780617HMNTC02', '5678923191', 'COCS7806178H6', 'MONTEVIDEO', '1987', '', 'TEPEYAC', '58090', 'MORELIA', 'MICHOACAN', 1, '2023-06-22', NULL, NULL, NULL, 0),
+(80, 'OSCAR', 'NATIVIDAD ROSAS', '1', '1993-10-12', '5512071545', 'oscar.natividad@example.com', '$2a$07$asxx54ahjppf45sd87a5auTaOejD8TPqQfokgsPjwiXOxRZ.TAUVS', '9I76TY7654', 'NARO931012HMNTCR09', '56092187900', 'NARO931012JUO', 'TLATELOLCO', '67', '', 'SAN JUAN IXHUATEPEC', '58000', 'MORELIA', 'MICHOACAN', 1, '2023-06-22', NULL, NULL, NULL, 0),
+(81, 'MIGUEL ANGEL', 'SUAREZ ACOSTA', '1', '1997-09-08', '4521679799', 'miguel.suarez@exmple.com', '$2a$07$asxx54ahjppf45sd87a5auAUOTb8i/EA/Lw6M6zKYZa7S25v.9jlq', '0O9I8U7Y6T5', 'SUAM970908HMNTCR09', '55094736101', 'SUAM970908YUT', 'HERMANOS FLORES MAGON', '1584', '', 'UNIVERSIDAD', '60180', 'Morelia', 'MCH', 1, '2023-06-22', NULL, NULL, NULL, 0),
+(82, 'DANIEL', 'GONZALEZ GONZALEZ', '1', '1997-06-15', '4521654147', 'daniel.gonzalez@example.com', '$2a$07$asxx54ahjppf45sd87a5au5dUk17DKn1AjkkTL2PiiINb6U6ams/C', '87UJHY6TT54', 'GOGD970615HMNYHG67', '5080976541', 'GOGD970615UY6', 'DOMICILIO CONOCIDO', 'SN', '', 'VERDE VALLE', '60490', 'Morelia', 'MCH', 1, '2023-06-22', NULL, NULL, NULL, 0),
+(83, 'RICARDO', 'NUÑEZ FLORES', '1', '1990-04-18', '4521679799', 'ricardo.nunez@example.com', '$2a$07$asxx54ahjppf45sd87a5audf5E1umeV1Kk6GfjxhingjbqW6Nw8l.', 'IUYH678903', 'NUFR900418HMNJKL09', '5678251011', 'NUFR900418897', 'EDUCACION ESQUINA MATAMOROS', 'SN', '', 'JUANA PAVON', '60490', 'Morelia', 'MCH', 1, '2023-06-22', NULL, NULL, NULL, 0),
+(84, 'YANETH', 'YESCAS MOLINA', '0', '1992-11-15', '5566778899', 'yaneth@example.com', '$2a$07$asxx54ahjppf45sd87a5auUwxIREuTivx4lN8t7p7LuqjWX38fF6O', '8IUYTHGSM7', 'YEMY921115MMNYUI98', '5768920111', 'YEMY9211157Y6', 'ROMERO', '67', '', 'ISAC ARRIAGA', '59338', 'Morelia', 'MCH', 1, '2023-06-22', NULL, NULL, NULL, 0),
+(85, 'NORA', 'DE LA MORA CATALAN', '1', '1999-09-14', '7538900765', 'nora@example.com', '$2a$07$asxx54ahjppf45sd87a5auSIHuUDAdU/xOh35GZtEDtDGMtz6n/xa', '9087653HDY6', 'MOCN990914MMH7U809', '56095428191', 'MOCN990914UJ8', 'FUENTES D MORELIA', '45', '67', 'MATAMOROS', '58337', 'Morelia', 'MCH', 1, '2023-06-22', NULL, NULL, NULL, 0),
+(86, 'JULIO', 'MEZA ZAVALA', '1', '1998-07-20', '5556090826', 'julio.meza@example.com', '$2a$07$asxx54ahjppf45sd87a5au5kMLZEHJwyXhoxYo8o5RjGrYKVRINiW', '98IU766567', 'MEZJ980720HMNTCR07', '5679102981', 'MEZJ980720JAU', 'LIMONES', '56', '', 'TEPEYAC', '58456', 'Morelia', 'MCH', 1, '2023-06-22', NULL, NULL, NULL, 0),
+(87, 'LUCERO', 'ALVAREZ ROCHA', '0', '1978-01-02', '4445890976', 'lucero@example.com', '$2a$07$asxx54ahjppf45sd87a5au/6rV297fRdIsfc5zjK7J9Fnt6NcQEvi', 'UJY67UY65T', 'ALRL780102MMNDRA56', '56092317891', 'ALRL7801028U7', 'TEPEYAC', '678', '', 'CHAPALITA', '58000', 'Morelia', 'MCH', 1, '2023-06-22', NULL, NULL, NULL, 0),
+(88, 'FIDEL OCTAVIO ', 'VAZQUEZ PINEDA', '1', '1998-09-15', '5678093767', 'octavio.fidel@example.com', '$2a$07$asxx54ahjppf45sd87a5aubTH6vha7pMuxYxAQJDhDHjuw07j5gNW', 'IUJH6754FR', 'VAPF980915HMNYUI98', '56238192871', 'VAPF980915DAE', 'SOLEDAD', '78', '', 'HOLANDA', '58000', 'Morelia', 'MCH', 1, '2023-06-22', NULL, NULL, NULL, 0),
+(89, 'SOFIA', 'MUJICA RIVERA', '0', '1999-12-29', '4433780925', 'sofia.reviera@exmaple.com', '$2a$07$asxx54ahjppf45sd87a5aujNaC/c/w7LCesxCITRX.SNuFlwNL3Ae', 'IKJU765TY9', 'MURS991229MMNVU809', '56092673849', 'MURS991229MY6', 'HOLANDA', '62', '', 'UNIVERSIDAD', '58060', 'Morelia', 'MCH', 1, '2023-06-22', NULL, NULL, NULL, 0),
+(90, 'AIME', 'CARVAJAL BARRIGA', '1', '1998-09-15', '5529631215', 'aime.car@example.com', '$2a$07$asxx54ahjppf45sd87a5ausGjM0IvbJ6/Nr2jiYMukxdxMwxbOWyy', '98IKJ76542', 'CABA980915MMNHUL09', '5047898341', 'CABA980915546', 'PRICA PRESEA', '56', '', 'LA LOMA', '58337', 'Morelia', 'MCH', 1, '2023-06-22', NULL, NULL, NULL, 0),
+(91, 'EVA', 'ROMERO GARCIA', '0', '1990-05-14', '4521654147', 'eva.rg@example.com', '$2a$07$asxx54ahjppf45sd87a5auPjX5m.qLgvksPoW5cNc01P4RBS5oeeq', 'IKJUDGTE78', 'ROGE900514MMNYHU09', '55780909090', 'ROGE9005148G5', 'JOSE STALIN', '76', '', 'TLALPEÑA', '58560', 'Morelia', 'MCH', 1, '2023-06-22', NULL, NULL, NULL, 0),
+(92, 'ROSA MARIA', 'HERNANDEZ CHAVEZ', '1', '1998-07-15', '5544890998', 'rosa.maria@example.com', '$2a$07$asxx54ahjppf45sd87a5auPyeybUxiCj3UXqYfqGJXGGkobgGFInW', 'U876Y5T4R6', 'HECR980715MMNUHY78', '55096798561', 'HECR9807158JU', 'MICAELA MONTES DE ALLENDE', '98', '', 'POLICIA Y TRANSITO', '58780', 'Morelia', 'MCH', 1, '2023-06-22', NULL, NULL, NULL, 0),
+(93, 'LUIS', 'FUENTES GALLEGOS', '1', '1998-07-09', '4521654147', 'luis.fuentes@example.com', '$2a$07$asxx54ahjppf45sd87a5auZ7YFvYOh7huxroOXKRmQcjMJdRn1yt.', 'KSJYE63U8W8', 'FUGL980709HMNJCA09', '56097623111', 'FUGL980709987', 'ROCAS DE LA LOMA', 'S/N', '', 'ZUMPIMITO', '58000', 'Morelia', 'MCH', 1, '2023-06-22', NULL, NULL, NULL, 0),
+(94, 'YOSELINE', 'GOMEZ ARREOLA', '0', '1999-01-01', '4521679799', 'yoseline@example.com', '$2a$07$asxx54ahjppf45sd87a5audExtdKCiSS0qPXxpZ6EwG8pnBn.ag.W', 'KDKDKKDKDK', 'GOAY990101MMNTCR07', '5069897891', 'GOAY9901018D3', 'EDUCACION ESQUINA MATAMOROS', 'SN', '', 'LA LOMA', '60490', 'Morelia', 'MCH', 1, '2023-06-23', NULL, NULL, NULL, 0),
+(95, 'SILVIA', 'RIOS FLORES', '0', '1998-01-15', '4433900175', 'silvia@example.com', '$2a$07$asxx54ahjppf45sd87a5aumU.PuonlKsGtpPPhsicKpX3rkdkaQ/q', 'KDJD6Y7U88', 'RIFS980115MMNULI09', '5558778901', 'RIFS980115JUL', 'MIRAMONTE', '78', '', 'VASCO DE QUIROGA', '587090', 'Morelia', 'MCH', 1, '2023-06-23', NULL, NULL, NULL, 0),
+(96, 'ESMERALDA', 'GONZALEZ RODRIGUEZ', '0', '1992-09-01', '4521654147', 'esmeralda.gozalez@example.com', '$2a$07$asxx54ahjppf45sd87a5au57kPVJZ720CxNUBVE995xJJdCXuo81i', 'IJUY78S526', 'GORE920901MMNSDO09', '56010723781', 'GORE920901JCA', 'LAGO', '123', '', 'LAGO 1', '58088', 'Morelia', 'MCH', 1, '2023-06-23', NULL, NULL, NULL, 0),
+(97, 'LAURA', 'PEREZ VAZQUEZ', '0', '1998-08-09', '4455669900', 'laura.perez@example.com', '$2a$07$asxx54ahjppf45sd87a5aun5.UUjoIeDtcnXXgrTEM0OsMfV0M7J6', 'JSHY7U9W65', 'PEVL980809MMNYUI98', '5578909091', 'PEVL9808097D6', 'REALITO', '78', '', 'RINCONADA DEL BOSQUE', '58000', 'Morelia', 'MCH', 1, '2023-06-23', NULL, NULL, NULL, 0),
+(98, 'LORENA ', 'CASTILLO DOMINGUEZ', '0', '1998-01-01', '4433900876', 'lorena.castillo@example.com', '$2a$07$asxx54ahjppf45sd87a5aujGhfIV54wARLQHK0jQJHU.PwEcppzQa', 'IDJUE73655', 'CADL980101MMNUIO09', '56010908187', 'CADL980101JLA', 'CAMELINAS', '1574', '', 'LINDAVISTA', '58090', 'Morelia', 'MCH', 1, '2023-06-23', NULL, NULL, NULL, 0),
+(99, 'HUMBERTO', 'URRUTIA VIÑEDOS', '1', '1999-08-01', '5529136312', 'humberto@example.com', '$2a$07$asxx54ahjppf45sd87a5auCbFVpxLv3QBsPKpLVtDOblVSkhp10La', 'KDJIE87UY6', 'UUVH990801HMNTCR07', '55010987671', 'UUVH990801JH7', 'VALLE DE BRAVO', '345', '', 'VASCO DE QUIROGA', '58127', 'Morelia', 'MCH', 1, '2023-06-23', NULL, NULL, NULL, 0),
+(100, 'JOSE', 'VILLASEÑOR RIOS', '1', '1978-04-13', '4433900175', 'jose.villasenor@example.com', '$2a$07$asxx54ahjppf45sd87a5auZ9ZAMu3uFdaXO5DnB3aTzWYiPkA9l6K', '1234567891', 'VIRJ780413HMNGHY78', '15687230910', 'VIRJ780413JCA', 'COLIBRI', '14', '', 'REALITO', '58456', 'Morelia', 'MCH', 1, '2023-06-23', NULL, NULL, NULL, 0),
+(101, 'PABLO', 'FARIAS ESPINOZA', '1', '1997-05-17', '4433900176', 'pablo@example.com', '$2a$07$asxx54ahjppf45sd87a5au/mopLx/3YcvTzh7a4NG1ktFOcaDIomC', 'KSJUE7352HD', 'FAEP970517HMNKJU87', '5679899161', 'FAEP970517HUL09', 'FAUNA', '3134', '', 'RINCONADA DEL BOSQUE', '58336', 'Morelia', 'MCH', 1, '2023-06-23', NULL, NULL, NULL, 0),
+(102, 'REYNA', 'CABRERA DUARTE', '0', '1995-07-18', '7541178902', 'reyba.cab@example.com', '$2a$07$asxx54ahjppf45sd87a5auxDC3pHZL7B24zq6Hl8t1/F8onlTsHim', 'KDJUWYSG673', 'CADR950718MMNTCU90', '1567898291', 'CADR950718JCA', 'MOTAMOROS', '14', '', 'LA PAZ', '58765', 'Morelia', 'MCH', 1, '2023-06-05', NULL, NULL, NULL, 0),
+(103, 'JUAN MANUEL', 'ROJAS MARTINEZ', '1', '1985-11-14', '4521145609', 'juan.manuel@example.com', '$2a$07$asxx54ahjppf45sd87a5auiwiIaatav.4jrvCpMnocFZ9ScDIawmG', 'HSUW726EJD7', 'ROMJ851114HMNYUO09', '56018756241', 'ROMJ851114BLO', 'ESPINACA', '3', '', 'FLORES MAGON', '58090', 'Morelia', 'MCH', 1, '2023-06-15', NULL, NULL, NULL, 0),
+(104, 'CAROLINA', 'PANTOJA ASCENCIO', '0', '1986-09-09', '4433876525', 'carolina@example.com', '$2a$07$asxx54ahjppf45sd87a5auUvJrmHWIrNYNgfhFydcigAfeJWWpzbi', 'KD894DHY63', 'PAAC860909MMNASD12', '1782345091', 'PAAC860909BL9', 'RICARDO FLORES MAGON', '789', '', 'JOSE VASCONCELOS', '58779', 'Morelia', 'MCH', 1, '2023-06-23', NULL, NULL, NULL, 0),
+(105, 'JOANA', 'NAVARRO BUSQUETS', '0', '1990-04-14', '4455668909', 'joana@example.com', '$2a$07$asxx54ahjppf45sd87a5auYBck4WjRJfXHqTWGFsoPk9UnCKnL..C', 'KDI876E57U', 'NABJ900414MMNHJU89', '56092587901', 'NABJ900414BH8', 'OYAMEL ', '67', '', 'LA PAZ', '58990', 'Morelia', 'MCH', 1, '2023-06-26', NULL, NULL, NULL, 0),
+(106, 'BLANCA', 'ALCANTAR CRUZ', '0', '1991-05-16', '4455679801', 'blanca.alcantar@example.com', '$2a$07$asxx54ahjppf45sd87a5aue56AqB8z8HhBgseIssqH6eBrr9DU9hW', 'I8SY6W5445', 'ALCB910516MMHJLO90', '561029825611', 'ALCB910516JKO', 'ROBLE', '175', '', 'ESPINACA', '58660', 'Morelia', 'MCH', 1, '2023-06-26', NULL, NULL, NULL, 0),
+(107, 'JUAN CARLOS', 'BARRERA ESPINO', '1', '1999-07-25', '4433900175', 'jc.barrera@example.com', '$2a$07$asxx54ahjppf45sd87a5autZ.OBs6zmT/RViJ9ylaOa3aVgGukRui', 'KSI837DY67', 'BAEJ990725HMNJLO90', '561029381711', 'BAEJ990725JLO', 'ESPINACA', '1789', '', 'EL ROBLE', '58336', 'Morelia', 'MCH', 1, '2023-06-26', NULL, NULL, NULL, 0),
+(108, 'ALBERTO', 'PORTILLO SANCHEZ', '1', '1989-01-01', '3344900186', 'alberto.portillo@example.com', '$2a$07$asxx54ahjppf45sd87a5auM7a98G7OiF6CUPfhS56Z3/G26m2CBYW', '89SKJEU729', 'POSA900101HMNTCR09', '783928361422', 'POSA900101HUK', 'PINO SUAREZ', '45', '', 'LOS PINOS', '58337', 'Morelia', 'MCH', 1, '2023-06-26', NULL, NULL, NULL, 0),
+(109, 'LUIS', 'REYES OÑATE', '1', '1987-06-17', '4433900175', 'luis.reyes@example.com', '$2a$07$asxx54ahjppf45sd87a5auvwfZPNpaaCH6GRM88HNzO.P5t.eBYZK', '8DI7E635Q41', 'REOL870617HMNJUI09', '56123182765', 'REOL870617890', 'TUPILANES', '900', '', 'JACARANDAS', '58337', 'Morelia', 'MCH', 1, '2023-06-26', NULL, NULL, NULL, 0),
+(110, 'MIGUEL', 'PAHUA CASTAÑEDA', '1', '1999-07-13', '4433900175', 'miguel.pahua@example.com', '$2a$07$asxx54ahjppf45sd87a5auNBgQQ3t8H2NsneGcrJmZ0UhEynw/.K6', 'SKJDJY8976', 'PACM990713HMNTCR07', '56102873562', 'PACM9907138D3', 'MICAELA MONTES DE ALLENDE', '45', '', 'JUANA PAVON', '58000', 'Morelia', 'MCH', 1, '2023-06-26', NULL, NULL, NULL, 0),
+(111, 'GRISELDA', 'CABALLERO DIAZ', '0', '1980-09-10', '4433127890', 'g.caballero@exmaple.com', '$2a$07$asxx54ahjppf45sd87a5auKZkx2imDO4dcwd7bS7jioy7yhKQmPU6', 'HJSU876E5W', 'CADG800910MMNDHO09', '10283648311', 'CADG800910KLO', 'MOZART', '245', '', 'LA LOMA', '58290', 'Morelia', 'MCH', 1, '2023-06-26', NULL, NULL, NULL, 0),
+(112, 'RAUL', 'ORNELAS CHAVEZ', '1', '1987-09-10', '5545098909', 'raul.ornelas@example.com', '$2a$07$asxx54ahjppf45sd87a5au4veylAJN4lHmgSCObD.f3t4IkM26Zje', '9IDKJWU7890O', 'ORCR870910HMN908', '56098976781', 'ORCR870910HJLO', 'CASA BLANCA', '1876', '', 'LA LOMA', '58000', 'Morelia', 'MCH', 1, '2023-06-26', NULL, NULL, NULL, 0),
+(113, 'JULIO', 'ARREOLA GARNICA', '1', '1999-09-10', '4433900187', 'julio.ar@example.com', '$2a$07$asxx54ahjppf45sd87a5auTr8dTDPR5lVC9T1N38DgbGe1NOW2YpC', 'LSKO908IU7', 'ARGJ990910HMNJLO90', '56098727651', 'ARGJ990910KJU', 'MORELOS', '45', '', 'REALITO', '58000', 'Morelia', 'MCH', 1, '2023-06-26', NULL, NULL, NULL, 0),
+(114, 'PAMELA', 'GERBACIO PEREZ', '0', '1989-09-09', '4433900197', 'pamela@example.com', '$2a$07$asxx54ahjppf45sd87a5auXzTxCnimM0MScp2cXf0wC4uRJ8Da9ia', 'KDK89EY367', 'GEPP890909MMNUIO76', '56290378181', 'GEPP890909KLO', 'MANANTIALES', '78', '', 'MANANTIALES', '58900', 'Morelia', 'MCH', 1, '2023-06-26', NULL, NULL, NULL, 0),
+(115, 'VANIA', 'MANRIQUEZ CALDERON', '0', '1989-09-01', '4433900197', 'vania@example.com', '$2a$07$asxx54ahjppf45sd87a5auE2TyD1FeWT9/Ah9tt3YS.Wx3no09LCu', 'SH78D9I87U', 'MACV890901HMNTCR09', '65091456781', 'MACV8909018G6', 'MOZART', '245', '', 'LA LOMA', '58337', 'Morelia', 'MCH', 1, '2023-06-26', NULL, NULL, NULL, 0),
+(116, 'TOMAS', 'PANIAGUA PEREZ', '1', '1990-09-01', '4521679799', 'tomas@example.com', '$2a$07$asxx54ahjppf45sd87a5auNmGNXsPsDvvSkSegWVCVEJVgD2GUmpq', 'KDJUSJBKCBL', 'PAPT900901MMNTCF89', '56392837261', 'PAPT900901890', 'MOZART', 'SN', '', 'UNIVERSIDAD', '60490', 'Morelia', 'MCH', 1, '2023-06-26', NULL, NULL, NULL, 0),
+(117, 'GEOVANNY', 'ROJAS GARCIA', '1', '1993-12-19', '6655667788', 'g.rojas@example.com', '$2a$07$asxx54ahjppf45sd87a5auIDmNYd1ie6bJCMFHRGxqRJyPAGlf5De', 'KS839DI487D', 'ROGG931219MMNJKI90', '56019283711', 'ROGG931219908', 'MONTE RUBIO', '1267', '', 'BELLAS ARTES', '58000', 'Morelia', 'MCH', 1, '2023-06-26', NULL, NULL, NULL, 0),
+(118, 'HUGO', 'GUTIERREZ SANCHEZ', '1', '1991-02-03', '4433900187', 'hugo.g@example.com', '$2a$07$asxx54ahjppf45sd87a5aumRJyJu.m4qM./JRZsuy545fvqRxlxgK', '0LDK98EU7', 'GUSH910203HMNKLO90', '56029374819', 'GUSH910203JNO', 'ROCAS DE LA LOMA', '34', '', 'CAMINO VIEJO', '58338', 'Morelia', 'MCH', 1, '2023-06-26', NULL, NULL, NULL, 0),
+(119, 'GUSTAVO', 'MONTAÑO FARIAS', '1', '1990-01-01', '4433890283', 'gustavo@example.com', '$2a$07$asxx54ahjppf45sd87a5aux.Giy6NTDhoKyDx/M.3NEluCAVUnhhS', 'KJBKJDS21', 'MOFG900101HMNYVT78', '560291827251', 'MOFG9001018H7', 'MONTERREY', '67', '', 'REP. MEXICANA', '58337', 'Morelia', 'MCH', 1, '2023-06-26', NULL, NULL, NULL, 0),
+(120, 'RAMIRO', 'ZUÑIGA AVELLANEDA', '1', '1990-08-17', '4433900187', 'ramiro@example.com', '$2a$07$asxx54ahjppf45sd87a5auuAXTcNxwx1V5UNMlaY1ZTq1U6xiRXF6', 'SYEHSYA7829', 'ZUAR900817HMNYUO23', '56087898121', 'ZUAR900817989', 'CADENA', '65', '', 'LAS TROJES', '58337', 'Morelia', 'MCH', 0, '2023-06-26', '2023-06-29', NULL, NULL, 0),
+(121, 'RUBEN', 'PEDRAZA PEÑALOZA', '1', '1992-03-09', '4521654147', 'ruben@example.com', '$2a$07$asxx54ahjppf45sd87a5auB6wmrMwMDkBYi45fSYRPBRb0mt/mKUW', 'EJD873KDOW9', 'PEPR920309HMNYUI90', '56098912341', 'PEPR920309JCA', 'PEDREGAL', 'SN', '', 'CENTRAL DE ABASTOS', '58237', 'Morelia', 'MCH', 1, '2023-06-26', NULL, NULL, NULL, 0),
+(122, 'JOAQUIN', 'MONTESINOS MORALES', '1', '1998-09-09', '3339837371', 'joaq.mont@example.com', '$2a$07$asxx54ahjppf45sd87a5auWAgROM1gdqQBVmh00lRk78wXyAXFxmG', 'JD7EJD6SST', 'MOMJ980909HMNYUO90', '56092078911', 'MOMJ980909878', 'MONTERUBIO', '174', '', 'ANDARES', '58765', 'Morelia', 'MCH', 1, '2023-06-26', NULL, NULL, NULL, 0),
+(123, 'MAURICIO', 'MARTINEZ ROMERO', '1', '2000-11-15', '4341768990', 'mauricio@example.com', '$2a$07$asxx54ahjppf45sd87a5au.jF7.S43L855TwOD7OPHBWtuHcVugpa', 'LSKDIE83761', 'MARM001115HMNTCR09', '56099087241', 'MARM001115HFD5', 'TIERRA Y LIBERTAD', '67', '', 'REFORMA', '58337', 'Morelia', 'MCH', 1, '2023-06-26', NULL, NULL, NULL, 0),
+(124, 'SEBASTÍAN', 'AGUIRRE LOPEZ', '1', '1999-06-09', '4521654147', 'sebastian@exmaple.com', '$2a$07$asxx54ahjppf45sd87a5au0fTPWUXUCUViOX2xS8lQVmhrpNdeQm2', 'KDIEKDJ938', 'AGLS990609HMNYHI98', '56092654131', 'AGLS990609987', 'MALDONADO', '789', '', ' ROMERO RUBIO', '56890', 'Morelia', 'MCH', 1, '2023-06-26', NULL, NULL, NULL, 0),
+(125, 'ALEX', 'TORNER ACOSTA', '1', '1998-05-12', '3332890909', 'alex@example.com', '$2a$07$asxx54ahjppf45sd87a5aux4ykHDmxO5WnjG0ewLfJhUsc7HQBfJ2', 'KDJEUFJDLDG', 'TOAA980512HMNSDE56', '1237936451', 'TOAA980512876', 'PSICOLOGIA', '45', '', 'REAL UNIVERSIDAD', '58090', 'Morelia', 'MCH', 1, '2023-06-26', NULL, NULL, NULL, 0),
+(126, 'RICARDO DAVID', 'CASTRO NUÑEZ', '1', '1994-02-22', '4521654147', 'r.d.castro@example.com', '$2a$07$asxx54ahjppf45sd87a5au3S0H3ECoPKczEkIqmovdy4u8WTWcBfO', 'IEKD736DHE5', 'CANR940222HMNYJO09', '56093514221', 'CANR940222HMNYJ', 'rROBLE', '67', '', 'EL SAUZ', '58765', 'Morelia', 'MCH', 1, '2023-06-26', NULL, NULL, NULL, 0),
+(127, 'JUAN PABLO', 'BECERRIL GUERRERO', '1', '1990-11-30', '4433099876', 'jpbece@example.com', '$2a$07$asxx54ahjppf45sd87a5aurBDkcIFOEx8ZAxzQPx.N0DIrp.JPzVC', 'OWID729309Q', 'BEGJ901130HMNGDO72', '56937261549', 'BEGJ901131901', 'TULIPAN', '78', '', 'MANANTIALES', '58990', 'Morelia', 'MCH', 1, '2023-06-26', NULL, NULL, NULL, 0),
+(128, 'FLOR', 'LOPEZ ARREOLA', '0', '1989-07-09', '3322890874', 'flor@exmaple.com', '$2a$07$asxx54ahjppf45sd87a5au.anINKtyy7lQW0K9btq4nXJc3ob8R2a', 'MDJEIR847U', 'LOAF890709HMN89087', '56938472198', 'LOAF890709890', 'CALABZA', '88', '', 'RUBI', '58776', 'Morelia', 'MCH', 1, '2023-06-26', NULL, NULL, NULL, 0),
+(129, 'SALVADOR', 'ZAVALA ESPEJEL', '1', '1999-09-09', '4521654147', 'salvador@example.com', '$2a$07$asxx54ahjppf45sd87a5auV//RLtynkHYebkkCR0hoaNyb1eHpSRm', 'JDUIR89376', 'ZAES990909HMNTCU89', '56231839401', 'ZAES990909765', 'CAMELINAS', '1584', '', 'FUENTES DE MORELIA', '60180', 'Morelia', 'MCH', 1, '2023-06-26', NULL, NULL, NULL, 0),
+(130, 'JOAQUIN', 'FONSECA PALOMINOS', '1', '1980-01-18', '4433900187', 'jfpalominos@example.com', '$2a$07$asxx54ahjppf45sd87a5auqAnOYJtPVd6D7E6.UIHn8AV7Oc73M26', 'KDJDYE749WK', 'FOPJ800118HMNYUI90', '54389026182', 'FOPJ800118980', 'HERMANOS FLORES MAGON', '1584', '', 'FUENTES DE MORELIA', '60180', 'Morelia', 'MCH', 1, '2023-06-26', NULL, NULL, NULL, 0),
+(131, 'PEDRO', 'BARAJAS ORTEGA', '1', '1990-12-12', '4521679799', 'pbortega@example.com', '$2a$07$asxx54ahjppf45sd87a5auL49KXMkrZFY6JWGf4qzWUkWW8oBxgzC', 'KDJKEUKDUF', 'BAOP901212HMNUKO09', '56092763541', 'BAOP901212KLO09', 'ESPINACA', '78', '', 'REALITO', '58990', 'Morelia', 'MCH', 1, '2023-06-26', NULL, NULL, NULL, 0),
+(132, 'RODOLFO', 'AGUILAR CHAVEZ', '1', '1994-08-09', '4455338909', 'rodolfo@example.com', '$2a$07$asxx54ahjppf45sd87a5auSQth3dCpgLZRGxjrT8DnypiBTGWqjY6', '89094736153', 'AGCR940809HMNUVO09', '56340989765', 'AGCR940809JLO', 'ROCAS DE LA LOMA', 'SN', '', 'LINDAVISTA', '58900', 'Morelia', 'MCH', 1, '2023-06-27', NULL, NULL, NULL, 0),
+(133, 'CAROLINA', 'CHAVEZ PEREZ', '0', '1990-07-09', '4521654147', 'carolina@example.com', '$2a$07$asxx54ahjppf45sd87a5auwWUK1oxt9Rx5TRcHi6Vj2k2czea9MxW', 'JDUR7492ODO', 'CHPC900709MMNUIO09', '56092837162', 'CHPC900709PLO', 'CHIAPAS', '78', '', 'UNIVERSIDAD', '58760', 'Morelia', 'MCH', 1, '2023-06-27', NULL, NULL, NULL, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `empleados_has_examenes`
+--
+
+CREATE TABLE `empleados_has_examenes` (
+  `idEmpleados_has_Examenes` int(11) NOT NULL,
+  `idExamen` int(11) NOT NULL,
+  `idEmpleado` int(11) NOT NULL,
+  `fecha_inicio` datetime DEFAULT NULL,
+  `fecha_fin` datetime DEFAULT NULL,
+  `tiempo_utilizado` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `empleados_has_examenes`
+--
+
+INSERT INTO `empleados_has_examenes` (`idEmpleados_has_Examenes`, `idExamen`, `idEmpleado`, `fecha_inicio`, `fecha_fin`, `tiempo_utilizado`) VALUES
+(99, 2, 6, '2023-07-19 15:53:32', '2023-07-19 15:57:27', 3),
+(123, 3, 84, NULL, NULL, 0),
+(124, 1, 107, NULL, NULL, 0),
+(125, 1, 127, NULL, NULL, 0),
+(126, 1, 111, NULL, NULL, 0),
+(127, 1, 102, NULL, NULL, 0),
+(128, 1, 90, NULL, NULL, 0),
+(129, 1, 98, NULL, NULL, 0),
+(130, 1, 126, NULL, NULL, 0),
+(131, 1, 3, NULL, NULL, 0),
+(132, 1, 101, NULL, NULL, 0),
+(133, 1, 5, NULL, NULL, 0),
+(134, 1, 130, NULL, NULL, 0),
+(135, 1, 93, NULL, NULL, 0),
+(136, 1, 114, NULL, NULL, 0),
+(137, 1, 94, NULL, NULL, 0),
+(138, 1, 96, NULL, NULL, 0),
+(139, 1, 118, NULL, NULL, 0),
+(140, 1, 6, NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -721,6 +786,45 @@ INSERT INTO `empleados_has_permisos` (`idEm_has_Per`, `fechaPermiso`, `fechaFin`
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `empleado_examen_respuesta`
+--
+
+CREATE TABLE `empleado_examen_respuesta` (
+  `idEmpleado_Examen_Respuesta` int(11) NOT NULL,
+  `idEmpleado` int(11) NOT NULL,
+  `idPregunta` int(11) NOT NULL,
+  `idExamen` int(11) NOT NULL,
+  `respuesta` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `empleado_examen_respuesta`
+--
+
+INSERT INTO `empleado_examen_respuesta` (`idEmpleado_Examen_Respuesta`, `idEmpleado`, `idPregunta`, `idExamen`, `respuesta`) VALUES
+(1, 3, 4, 1, 'POLLO'),
+(2, 3, 9, 1, 'Morelia'),
+(3, 6, 4, 1, 'AZUL'),
+(4, 6, 9, 1, 'Uruapan'),
+(5, 6, 15, 3, '4.0'),
+(6, 6, 16, 3, '17 de cada mes'),
+(7, 6, 17, 3, '3'),
+(8, 6, 18, 3, '207.44'),
+(9, 6, 19, 3, '31 de marzo'),
+(10, 6, 20, 3, 'IA-DA=BASE'),
+(11, 6, 21, 3, 'VENTA DE MEDICAMENTO'),
+(12, 6, 6, 2, 'BUENO'),
+(13, 6, 7, 2, '1'),
+(14, 6, 8, 2, 'ROJO'),
+(15, 6, 10, 2, 'AMARILLO'),
+(16, 6, 12, 2, '4'),
+(17, 6, 13, 2, '5'),
+(18, 6, 14, 2, '1'),
+(19, 6, 22, 2, 'REGULAR');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `empleado_mes`
 --
 
@@ -789,25 +893,27 @@ INSERT INTO `empresas` (`idEmpresas`, `registro_patronal`, `rfc`, `nombre_razon_
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `evaluaciones`
+-- Estructura de tabla para la tabla `examenes`
 --
 
-CREATE TABLE `evaluaciones` (
-  `idEvaluaciones` int(11) NOT NULL,
-  `nombreEvaluacion` varchar(45) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
+CREATE TABLE `examenes` (
+  `idExamen` int(11) NOT NULL,
+  `titulo` text NOT NULL,
+  `Descripcion` text,
+  `fecha_inicio` datetime DEFAULT NULL,
+  `fecha_fin` datetime DEFAULT NULL,
+  `tiempo_limite` int(11) DEFAULT NULL,
+  `intentos_maximos` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Estructura de tabla para la tabla `evaluaciones_has_empleados`
+-- Volcado de datos para la tabla `examenes`
 --
 
-CREATE TABLE `evaluaciones_has_empleados` (
-  `status` tinyint(4) NOT NULL DEFAULT '0',
-  `Empleados_idEmpleados` int(11) NOT NULL,
-  `Evaluaciones_idEvaluaciones` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+INSERT INTO `examenes` (`idExamen`, `titulo`, `Descripcion`, `fecha_inicio`, `fecha_fin`, `tiempo_limite`, `intentos_maximos`) VALUES
+(1, 'Evaluación psicométrica 2', '<p><strong>Instrucciones:</strong></p>\r\n<p>Este examen tiene como objetivo evaluar tus habilidades y caracter&iacute;sticas psicom&eacute;tricas. Aseg&uacute;rate de leer cuidadosamente cada pregunta y proporcionar respuestas honestas y reflexivas.</p>\r\n<p><strong>Duraci&oacute;n: </strong>El examen consta de 50 preguntas y tendr&aacute;s un tiempo m&aacute;ximo de 60 minutos para completarlo.</p>\r\n<p><strong>Formato:</strong> El examen consta de tres secciones: habilidades cognitivas, personalidad y habilidades emocionales.</p>\r\n<ul>\r\n<li>\r\n<p>Secci&oacute;n 1: Habilidades cognitivas (20 preguntas): Responde a cada pregunta seleccionando la opci&oacute;n que consideres correcta. Marca la respuesta seleccionada en la hoja de respuestas.</p>\r\n</li>\r\n<li>\r\n<p>Secci&oacute;n 2: Personalidad (20 preguntas): Para cada pregunta, elige la opci&oacute;n que mejor refleje tu comportamiento y preferencias. Marca la respuesta seleccionada en la hoja de respuestas.</p>\r\n</li>\r\n<li>\r\n<p>Secci&oacute;n 3: Habilidades emocionales (10 preguntas): Responde a cada pregunta proporcionando una breve descripci&oacute;n o reacci&oacute;n a una situaci&oacute;n emocional dada. Escribe tus respuestas en las l&iacute;neas provistas en el examen.</p>\r\n</li>\r\n</ul>\r\n<p><strong>Puntuaci&oacute;n:</strong> Cada pregunta de habilidades cognitivas y personalidad tiene un valor de 1 punto, y cada pregunta de habilidades emocionales tiene un valor de 2 puntos. La puntuaci&oacute;n total del examen es de 50 puntos.</p>\r\n<p><strong>Consejos:</strong></p>\r\n<ol>\r\n<li>Lee cada pregunta cuidadosamente antes de responder.</li>\r\n<li>Responde de manera honesta y sincera, no hay respuestas correctas o incorrectas.</li>\r\n<li>Trata de responder a todas las preguntas dentro del l&iacute;mite de tiempo asignado.</li>\r\n<li>No te preocupes por las respuestas perfectas, simplemente s&eacute; t&uacute; mismo/a.</li>\r\n<li>Mant&eacute;n la concentraci&oacute;n y evita distracciones durante el examen.</li>\r\n</ol>\r\n<p>Recuerda que este examen es una oportunidad para explorar tus habilidades y caracter&iacute;sticas psicom&eacute;tricas. &iexcl;Buena suerte y disfruta del proceso!</p>', '2023-07-10 09:00:00', '2023-07-31 23:59:00', 120, 1),
+(2, 'EVALUACIÓN A JEFES', '<p>Evaluaci&oacute;n al desempe&ntilde;o de jefes de area</p>', '2023-07-10 10:00:00', '2023-07-10 16:00:00', 10, NULL),
+(3, 'EVALUACIÓN CONOCIMIENTOS CONTABLES Y FISCALES', '<ul>\r\n<li>Periodo de tiempo 30 min.</li>\r\n<li>Selecciona la respuesta correcta</li>\r\n</ul>', '2023-07-18 16:00:00', NULL, 30, NULL);
 
 -- --------------------------------------------------------
 
@@ -1038,28 +1144,41 @@ CREATE TABLE `postulantes` (
   `fRegistro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Volcado de datos para la tabla `postulantes`
---
-
-INSERT INTO `postulantes` (`idPostulantes`, `namePostulante`, `lastnamePostulante`, `phonePostulante`, `emailPostulante`, `colorPostulante`, `Vacantes_idVacantes`, `statusPostulante`, `fRegistro`) VALUES
-(13, 'Mayel', 'Ortega Cambrón', '4434655955', 'mayelortega07@gmail.com', '2', 1, 1, '2023-05-03 17:51:56'),
-(14, 'Prueba', 'Prueba', '4425362514', 'prueba@gmail.com', '1', 1, 1, '2023-05-04 17:54:45'),
-(15, 'Oscar', 'Contreras', '4435398291', 'ocontreras@gmail.com', NULL, 3, 1, '2023-05-05 22:05:21'),
-(16, 'YOSELINE', 'GOMEZ ARREOLA', '4433900175', 'yoseline@example.com', NULL, 14, 1, '2023-06-23 16:14:18'),
-(17, 'ERICK', 'LOPEZ GONZALEZ', '4433900175', 'erick@example.com', NULL, 15, 0, '2023-06-23 16:22:40');
-
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `preguntasevaluacion`
+-- Estructura de tabla para la tabla `preguntas`
 --
 
-CREATE TABLE `preguntasevaluacion` (
-  `idPreguntasEvaluacion` int(11) NOT NULL,
-  `pregunta` varchar(255) NOT NULL,
-  `Evaluaciones_idEvaluaciones` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `preguntas` (
+  `idPregunta` int(11) NOT NULL,
+  `idExamen` int(11) NOT NULL,
+  `tipo_pregunta` enum('opcion_multiple','escala','abierta') NOT NULL,
+  `pregunta` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `preguntas`
+--
+
+INSERT INTO `preguntas` (`idPregunta`, `idExamen`, `tipo_pregunta`, `pregunta`) VALUES
+(4, 1, 'opcion_multiple', '<p>&iquest;Cu&aacute;l e stu comida favorita?</p>'),
+(6, 2, 'abierta', '<p>&iquest;Como evaluas el desempe&ntilde;o de tu jefe directo?</p>'),
+(7, 2, 'escala', '<p>&iquest;Que tan buena es la comunicacion con el jefe de departamento?</p>'),
+(8, 2, 'opcion_multiple', '<p>&iquest;cu&aacute;l es tu comida favorita?</p>'),
+(9, 1, 'abierta', '<p>&iquest;Donde vives?</p>'),
+(10, 2, 'opcion_multiple', '<p>&iquest;DONDE NACISTE?</p>'),
+(12, 2, 'escala', '<p>5+5 = 7</p>'),
+(13, 2, 'escala', '<p>prueba</p>'),
+(14, 2, 'escala', '<p>prueba 2</p>'),
+(15, 3, 'opcion_multiple', '<p>&iquest;Cual es la versi&oacute;n de CFDI actual?</p>'),
+(16, 3, 'opcion_multiple', '<p>Fecha L&iacute;mite de la presentaci&oacute;n de pagos provisionales</p>'),
+(17, 3, 'opcion_multiple', '<p>D&iacute;as adicionales al RFC terminaci&oacute;n 06</p>'),
+(18, 3, 'opcion_multiple', '<p>&iquest;Cual es el salario m&iacute;nimo?</p>'),
+(19, 3, 'opcion_multiple', '<p>Fecha limite de presentaci&oacute;n de declaraci&oacute;n anual personas morales</p>'),
+(20, 3, 'opcion_multiple', '<p>F&oacute;rmula determinaci&oacute;n ISR resico PM</p>'),
+(21, 3, 'opcion_multiple', '<p>Selecciona la actividad exenta de IVA</p>'),
+(22, 2, 'opcion_multiple', '<p>COMO CONSIDERAS EL DESEMPE&Ntilde;O DE TU JEFE DIRECTO?</p>');
 
 -- --------------------------------------------------------
 
@@ -1106,7 +1225,7 @@ INSERT INTO `puesto` (`idPuesto`, `namePuesto`, `salario`, `salario_integrado`, 
 (26, 'Auxiliar Cámaras Frias', 8000, 212.33, 37, 52, 1),
 (27, 'Flejador', 8000, 207.44, 38, 52, 1),
 (28, 'Auxiliar Operador de Maquina', 8000, 207.44, 39, 62, 1),
-(29, 'Empacador', 6000, 207.44, 40, 62, 1),
+(29, 'Empacador', 6000, 207.44, 40, 62, 0),
 (30, 'Empacadora', 6000, 207.44, 41, 62, 1),
 (31, 'Empacadora', 6000, 207.44, 42, 62, 1),
 (32, 'Empacador', 6000, 207.44, 43, 62, 1),
@@ -1123,7 +1242,7 @@ INSERT INTO `puesto` (`idPuesto`, `namePuesto`, `salario`, `salario_integrado`, 
 (43, 'Vigilante', 6000, 207.44, 54, 57, 1),
 (44, 'Mensajeria y Mantenimiento', 7000, 212.09, 55, 58, 1),
 (45, 'CONTADOR', 12000, 207.44, 56, 59, 1),
-(46, 'Auxiliar Contable', 8000, 207.44, 57, 59, 1),
+(46, 'Auxiliar Contable', 8000, 207.44, 57, 59, 0),
 (47, 'TESORERO', 18000, 207.44, 58, 61, 1),
 (48, 'DIRECTOR GENERAL', 20000, 1201.98, 59, 64, 1),
 (49, 'DIRECTOR GENERAL', 20000, 1201.98, 60, 64, 0),
@@ -1204,6 +1323,75 @@ INSERT INTO `puesto` (`idPuesto`, `namePuesto`, `salario`, `salario_integrado`, 
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `respuestas`
+--
+
+CREATE TABLE `respuestas` (
+  `idRespuesta` int(11) NOT NULL,
+  `idPregunta` int(11) NOT NULL,
+  `respuesta` text NOT NULL,
+  `valor` int(3) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `respuestas`
+--
+
+INSERT INTO `respuestas` (`idRespuesta`, `idPregunta`, `respuesta`, `valor`) VALUES
+(1, 4, 'AZUL', 0),
+(2, 4, 'ROJO', 0),
+(3, 4, 'AMARILLO', 0),
+(4, 4, 'POLLO', 1),
+(5, 4, 'VERDE', 0),
+(7, 6, 'abierta', 0),
+(8, 7, 'escala', 0),
+(9, 8, 'AZUL', 0),
+(10, 8, 'ROJO', 0),
+(11, 8, 'AMARILLO', 0),
+(12, 8, 'POLLO', 1),
+(13, 9, 'abierta', 0),
+(15, 10, 'ROJO', 0),
+(16, 10, 'AMARILLO', 0),
+(17, 10, 'MORELIA', 1),
+(18, 10, 'VERDE', 0),
+(26, 12, 'binario', 5),
+(27, 13, 'binario', 4),
+(28, 14, 'escala', 1),
+(29, 15, '2.5', 0),
+(30, 15, '4.0', 1),
+(31, 15, '3.0', 0),
+(32, 15, '3.3', 0),
+(33, 16, '17 de cada mes', 1),
+(34, 16, '18 de cada mes', 0),
+(35, 16, '25 de cada mes', 0),
+(36, 16, '27 de cada mes', 0),
+(37, 17, '9', 0),
+(38, 17, '8', 0),
+(39, 17, '3', 1),
+(40, 17, '5', 0),
+(41, 18, '290.09', 0),
+(42, 18, '203.77', 0),
+(43, 18, '207.34', 0),
+(44, 18, '207.44', 1),
+(45, 19, '31 de marzo', 1),
+(46, 19, '30 de abril', 0),
+(47, 19, '29 de febrero', 0),
+(48, 19, '30 de marzo', 0),
+(49, 20, 'IA-DA=BASE', 1),
+(50, 20, 'IA*CU=BASE', 0),
+(51, 20, 'I-D=BASE', 0),
+(52, 20, 'I*CU=BASE', 0),
+(53, 21, 'VENTA DE MEDICAMENTO', 1),
+(54, 21, 'VENTA DE FERTILIZANTES', 0),
+(55, 21, 'VENTA DE COMIDA PREPARADA', 0),
+(56, 21, 'VENTA DE BEBIDAS ALCOHÓLICAS', 0),
+(57, 22, 'BUENO', 0),
+(58, 22, 'REGULAR', 0),
+(59, 22, 'MALO', 0);
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `reuniones`
 --
 
@@ -1219,20 +1407,6 @@ CREATE TABLE `reuniones` (
   `fechaCreacion` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `status` int(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Volcado de datos para la tabla `reuniones`
---
-
-INSERT INTO `reuniones` (`idReuniones`, `fechaReunion`, `pregunta1`, `pregunta2`, `pregunta3`, `pregunta4`, `comentariosReunion`, `Postulantes_idPostulantes`, `fechaCreacion`, `status`) VALUES
-(1, '2023-01-01 00:00:00', 1, 2, 3, 1, 'Prueba', 14, '2023-05-04 21:41:29', 1),
-(2, '2023-01-01 00:00:00', 1, 1, 1, 1, '', 13, '2023-05-04 21:41:31', 1),
-(3, '2023-01-01 00:00:00', NULL, NULL, NULL, NULL, NULL, 14, '2023-05-04 21:41:32', 0),
-(4, '2023-01-01 00:00:00', NULL, NULL, NULL, NULL, NULL, 14, '2023-05-04 21:41:34', 0),
-(5, '2023-01-01 00:00:00', 2, 2, 3, 2, 'puede ser', 13, '2023-05-04 21:41:49', 1),
-(6, '2023-05-10 06:00:00', NULL, NULL, NULL, NULL, NULL, 13, '2023-05-05 21:18:39', 0),
-(7, '2023-05-17 12:00:00', NULL, NULL, NULL, NULL, NULL, 15, '2023-05-05 22:05:38', 0),
-(8, '2023-06-26 12:00:00', NULL, NULL, NULL, NULL, NULL, 16, '2023-06-23 16:15:09', 0);
 
 -- --------------------------------------------------------
 
@@ -1263,6 +1437,7 @@ CREATE TABLE `tareas` (
   `Vencimiento` date NOT NULL,
   `status_tarea` tinyint(1) NOT NULL DEFAULT '0',
   `fecha_envio` datetime DEFAULT NULL,
+  `opinion` text,
   `fecha_creacion` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -1270,9 +1445,29 @@ CREATE TABLE `tareas` (
 -- Volcado de datos para la tabla `tareas`
 --
 
-INSERT INTO `tareas` (`idTareas`, `nameTarea`, `descripcion`, `Empleados_idEmpleados`, `Jefe_idEmpleados`, `Vencimiento`, `status_tarea`, `fecha_envio`, `fecha_creacion`) VALUES
-(1, 'Generación de facturas', 'Genera las facturas del mes de Marzo de la empresa PHAWA ', 6, 3, '2023-07-06', 0, NULL, '2023-07-03 17:37:30'),
-(2, 'DESARROLLO PROGRAMA RH', 'Realizar un sistema de registro, que sirva como apoyo para el área de recursos humanos.', 74, 6, '2023-07-07', 0, NULL, '2023-07-03 21:32:21');
+INSERT INTO `tareas` (`idTareas`, `nameTarea`, `descripcion`, `Empleados_idEmpleados`, `Jefe_idEmpleados`, `Vencimiento`, `status_tarea`, `fecha_envio`, `opinion`, `fecha_creacion`) VALUES
+(1, 'Generación de facturas', 'Genera las facturas del mes de Marzo de la empresa PHAWA ', 3, 6, '2023-07-06', 2, '2023-07-04 11:12:42', '', '2023-07-03 17:37:30'),
+(2, 'DESARROLLO PROGRAMA RH', 'Realizar un sistema de registro, que sirva como apoyo para el área de recursos humanos.', 6, 3, '2023-07-07', 2, '2023-07-04 15:02:17', '', '2023-07-03 21:32:21');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tarea_entregas`
+--
+
+CREATE TABLE `tarea_entregas` (
+  `idTarea_Entrega` int(11) NOT NULL,
+  `Tareas_idTareas` int(11) NOT NULL,
+  `descripcion` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `tarea_entregas`
+--
+
+INSERT INTO `tarea_entregas` (`idTarea_Entrega`, `Tareas_idTareas`, `descripcion`) VALUES
+(1, 1, 'Facturas generadas'),
+(2, 2, 'ENTREGADO');
 
 -- --------------------------------------------------------
 
@@ -1316,29 +1511,25 @@ CREATE TABLE `vacantes` (
   `salarioVacante` float NOT NULL,
   `requisitos` varchar(255) NOT NULL,
   `Empleados_idEmpleados` int(11) DEFAULT NULL,
+  `Empresas_idEmpresas` int(11) NOT NULL,
   `Departamentos_idDepartamentos` int(11) NOT NULL,
   `status` int(11) NOT NULL DEFAULT '1',
-  `color` varchar(7) NOT NULL
+  `color` varchar(7) NOT NULL,
+  `aprobado` tinyint(1) NOT NULL DEFAULT '0',
+  `Jefe_idEmpleados` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `vacantes`
 --
 
-INSERT INTO `vacantes` (`idVacantes`, `nameVacante`, `salarioVacante`, `requisitos`, `Empleados_idEmpleados`, `Departamentos_idDepartamentos`, `status`, `color`) VALUES
-(1, 'Contador', 10500, 'Contador Publico', 0, 1, 0, '#5969ff'),
-(2, 'Diseñador Grafico', 9200, 'Diseñador grafico que sepa manejar, paqueteria de adobe', 0, 1, 1, '#c2c8ff'),
-(3, 'Auxiliar Contable', 9200, 'Auxiliar contable con conocimientos en Compac', NULL, 1, 1, '#8fb7ba'),
-(4, 'Licenciado en econimia', 15000, 'Licenciado egresado\r\nCon cedula\r\n2 años de experiencia en el área de analista de datos', NULL, 4, 1, '#f9227a'),
-(5, 'Contador', 11550, 'Se requiere de un Contadora Capacitado para el puesto', NULL, 1, 1, '#ad6265'),
-(6, 'AUXILIAR CONTABLE', 10000, 'SER RESPONSABLES\r\n\r\n\r\n\r\n\r\n', NULL, 28, 1, '#d3503f'),
-(10, 'oferta', 10000, 'asdasd', NULL, 42, 0, '#1ecf8b'),
-(11, 'Recepcionista', 7000, 'Nueva Vacante', NULL, 56, 1, '#3149dc'),
-(12, 'DIRECTOR GENERAL', 20000, 'Nueva Vacante', NULL, 64, 1, '#605dce'),
-(13, 'Auxiliar de Almacen', 80000, 'Nueva Vacante', NULL, 48, 1, '#5e083b'),
-(14, 'Auxiliar RH', 7000, 'Buscamos a una persona que tenga estas experiencias y habilidades:\r\n\r\n+Que tenga experiencia en manejo de documentos (copias) de incapacidades, vacaciones, cortesías.\r\n+Solicitar, controlar y entregar los requerimientos de uniformes de servicio al cliente', NULL, 88, 0, '#11ec53'),
-(15, 'Auxiliar Contabilidad', 7000, 'Conciliaciones bancarias.\r\nConciliaciones de cobranza.\r\nManejo del portal Sat.\r\nManejo de tablas contables en excel.\r\nFacturacion.\r\nCaptura de informacion contable.-Requerimientos- Educación mínima: Educación superior - Licenciatura\r\nMenos de 1 año de exp', NULL, 89, 1, '#e17452'),
-(16, 'ENGORDA', 9000, 'Nueva Vacante', NULL, 101, 1, '#d37b92');
+INSERT INTO `vacantes` (`idVacantes`, `nameVacante`, `salarioVacante`, `requisitos`, `Empleados_idEmpleados`, `Empresas_idEmpresas`, `Departamentos_idDepartamentos`, `status`, `color`, `aprobado`, `Jefe_idEmpleados`) VALUES
+(18, 'CONTADOR', 12000, '<p>Descripci&oacute;n del puesto: Estamos buscando un auxiliar contable para unirse a nuestro equipo. Nuestro candidato ideal debe tener un conocimiento s&oacute;lido de los principios contables y experiencia previa en funciones similares. Responsabilidad', 6, 6, 59, 1, '#9fb5a1', 1, 6),
+(19, 'Prueba', 10000, '<p style=\"text-align: center;\">Prueba de datos</p>', 3, 6, 45, 1, '#a6576e', 2, 6),
+(20, 'ADMINISTRADOR', 12000, '<p>PRUEBA</p>', 6, 7, 65, 1, '#e79c2b', 0, NULL),
+(21, 'Empacador', 6000, 'Nueva Vacante', 6, 6, 62, 1, '#eae34f', 0, NULL),
+(22, 'Auxiliar Contable', 8000, 'Nueva Vacante', 6, 6, 59, 1, '#22cfe8', 1, 6),
+(23, 'CONTADOR', 12000, '<p>prueba</p>', 6, 3, 89, 1, '#df12c9', 0, NULL);
 
 --
 -- Índices para tablas volcadas
@@ -1370,6 +1561,12 @@ ALTER TABLE `documento`
   ADD KEY `Empleados_idEmpleados` (`Empleados_idEmpleados`);
 
 --
+-- Indices de la tabla `documentos_tarea_entregas`
+--
+ALTER TABLE `documentos_tarea_entregas`
+  ADD PRIMARY KEY (`idDocumentoTareaEntregas`);
+
+--
 -- Indices de la tabla `documento_postulante`
 --
 ALTER TABLE `documento_postulante`
@@ -1396,10 +1593,27 @@ ALTER TABLE `empleados`
   ADD PRIMARY KEY (`idEmpleados`);
 
 --
+-- Indices de la tabla `empleados_has_examenes`
+--
+ALTER TABLE `empleados_has_examenes`
+  ADD PRIMARY KEY (`idEmpleados_has_Examenes`),
+  ADD KEY `idExamen` (`idExamen`),
+  ADD KEY `idEmpleado` (`idEmpleado`);
+
+--
 -- Indices de la tabla `empleados_has_permisos`
 --
 ALTER TABLE `empleados_has_permisos`
   ADD PRIMARY KEY (`idEm_has_Per`);
+
+--
+-- Indices de la tabla `empleado_examen_respuesta`
+--
+ALTER TABLE `empleado_examen_respuesta`
+  ADD PRIMARY KEY (`idEmpleado_Examen_Respuesta`),
+  ADD KEY `idPregunta` (`idPregunta`),
+  ADD KEY `idEmpleado` (`idEmpleado`),
+  ADD KEY `idExamen` (`idExamen`);
 
 --
 -- Indices de la tabla `empleado_mes`
@@ -1414,10 +1628,10 @@ ALTER TABLE `empresas`
   ADD PRIMARY KEY (`idEmpresas`);
 
 --
--- Indices de la tabla `evaluaciones`
+-- Indices de la tabla `examenes`
 --
-ALTER TABLE `evaluaciones`
-  ADD PRIMARY KEY (`idEvaluaciones`);
+ALTER TABLE `examenes`
+  ADD PRIMARY KEY (`idExamen`);
 
 --
 -- Indices de la tabla `festivos`
@@ -1476,10 +1690,11 @@ ALTER TABLE `postulantes`
   ADD KEY `Vacantes_idVacantes` (`Vacantes_idVacantes`);
 
 --
--- Indices de la tabla `preguntasevaluacion`
+-- Indices de la tabla `preguntas`
 --
-ALTER TABLE `preguntasevaluacion`
-  ADD PRIMARY KEY (`idPreguntasEvaluacion`);
+ALTER TABLE `preguntas`
+  ADD PRIMARY KEY (`idPregunta`),
+  ADD KEY `idExamen` (`idExamen`);
 
 --
 -- Indices de la tabla `puesto`
@@ -1488,6 +1703,13 @@ ALTER TABLE `puesto`
   ADD PRIMARY KEY (`idPuesto`),
   ADD KEY `Empleados_idEmpleados` (`Empleados_idEmpleados`),
   ADD KEY `Departamentos_idDepartamentos` (`Departamentos_idDepartamentos`);
+
+--
+-- Indices de la tabla `respuestas`
+--
+ALTER TABLE `respuestas`
+  ADD PRIMARY KEY (`idRespuesta`),
+  ADD KEY `idPregunta` (`idPregunta`);
 
 --
 -- Indices de la tabla `reuniones`
@@ -1506,6 +1728,12 @@ ALTER TABLE `solicitud_cambio_password`
 --
 ALTER TABLE `tareas`
   ADD PRIMARY KEY (`idTareas`);
+
+--
+-- Indices de la tabla `tarea_entregas`
+--
+ALTER TABLE `tarea_entregas`
+  ADD PRIMARY KEY (`idTarea_Entrega`);
 
 --
 -- Indices de la tabla `vacaciones`
@@ -1549,6 +1777,12 @@ ALTER TABLE `documento`
   MODIFY `idDocumento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
+-- AUTO_INCREMENT de la tabla `documentos_tarea_entregas`
+--
+ALTER TABLE `documentos_tarea_entregas`
+  MODIFY `idDocumentoTareaEntregas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT de la tabla `documento_postulante`
 --
 ALTER TABLE `documento_postulante`
@@ -1573,10 +1807,22 @@ ALTER TABLE `empleados`
   MODIFY `idEmpleados` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=134;
 
 --
+-- AUTO_INCREMENT de la tabla `empleados_has_examenes`
+--
+ALTER TABLE `empleados_has_examenes`
+  MODIFY `idEmpleados_has_Examenes` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=141;
+
+--
 -- AUTO_INCREMENT de la tabla `empleados_has_permisos`
 --
 ALTER TABLE `empleados_has_permisos`
   MODIFY `idEm_has_Per` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT de la tabla `empleado_examen_respuesta`
+--
+ALTER TABLE `empleado_examen_respuesta`
+  MODIFY `idEmpleado_Examen_Respuesta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT de la tabla `empleado_mes`
@@ -1591,10 +1837,10 @@ ALTER TABLE `empresas`
   MODIFY `idEmpresas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT de la tabla `evaluaciones`
+-- AUTO_INCREMENT de la tabla `examenes`
 --
-ALTER TABLE `evaluaciones`
-  MODIFY `idEvaluaciones` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `examenes`
+  MODIFY `idExamen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `festivos`
@@ -1648,13 +1894,13 @@ ALTER TABLE `permisos`
 -- AUTO_INCREMENT de la tabla `postulantes`
 --
 ALTER TABLE `postulantes`
-  MODIFY `idPostulantes` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `idPostulantes` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `preguntasevaluacion`
+-- AUTO_INCREMENT de la tabla `preguntas`
 --
-ALTER TABLE `preguntasevaluacion`
-  MODIFY `idPreguntasEvaluacion` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `preguntas`
+  MODIFY `idPregunta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT de la tabla `puesto`
@@ -1663,22 +1909,34 @@ ALTER TABLE `puesto`
   MODIFY `idPuesto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=124;
 
 --
+-- AUTO_INCREMENT de la tabla `respuestas`
+--
+ALTER TABLE `respuestas`
+  MODIFY `idRespuesta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+
+--
 -- AUTO_INCREMENT de la tabla `reuniones`
 --
 ALTER TABLE `reuniones`
-  MODIFY `idReuniones` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `idReuniones` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `solicitud_cambio_password`
 --
 ALTER TABLE `solicitud_cambio_password`
-  MODIFY `idSolicitudPassword` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idSolicitudPassword` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `tareas`
 --
 ALTER TABLE `tareas`
   MODIFY `idTareas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de la tabla `tarea_entregas`
+--
+ALTER TABLE `tarea_entregas`
+  MODIFY `idTarea_Entrega` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `vacaciones`
@@ -1690,7 +1948,7 @@ ALTER TABLE `vacaciones`
 -- AUTO_INCREMENT de la tabla `vacantes`
 --
 ALTER TABLE `vacantes`
-  MODIFY `idVacantes` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `idVacantes` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- Restricciones para tablas volcadas
@@ -1715,6 +1973,21 @@ ALTER TABLE `emergencia`
   ADD CONSTRAINT `emergencia_ibfk_1` FOREIGN KEY (`Empleados_idEmpleados`) REFERENCES `empleados` (`idEmpleados`);
 
 --
+-- Filtros para la tabla `empleados_has_examenes`
+--
+ALTER TABLE `empleados_has_examenes`
+  ADD CONSTRAINT `empleados_has_examenes_ibfk_1` FOREIGN KEY (`idExamen`) REFERENCES `examenes` (`idExamen`) ON DELETE CASCADE,
+  ADD CONSTRAINT `empleados_has_examenes_ibfk_2` FOREIGN KEY (`idEmpleado`) REFERENCES `empleados` (`idEmpleados`) ON DELETE CASCADE;
+
+--
+-- Filtros para la tabla `empleado_examen_respuesta`
+--
+ALTER TABLE `empleado_examen_respuesta`
+  ADD CONSTRAINT `empleado_examen_respuesta_ibfk_1` FOREIGN KEY (`idPregunta`) REFERENCES `preguntas` (`idPregunta`) ON DELETE CASCADE,
+  ADD CONSTRAINT `empleado_examen_respuesta_ibfk_2` FOREIGN KEY (`idEmpleado`) REFERENCES `empleados` (`idEmpleados`) ON DELETE CASCADE,
+  ADD CONSTRAINT `empleado_examen_respuesta_ibfk_3` FOREIGN KEY (`idExamen`) REFERENCES `examenes` (`idExamen`) ON DELETE CASCADE;
+
+--
 -- Filtros para la tabla `foto_empleado`
 --
 ALTER TABLE `foto_empleado`
@@ -1727,11 +2000,23 @@ ALTER TABLE `postulantes`
   ADD CONSTRAINT `postulantes_ibfk_1` FOREIGN KEY (`Vacantes_idVacantes`) REFERENCES `vacantes` (`idVacantes`);
 
 --
+-- Filtros para la tabla `preguntas`
+--
+ALTER TABLE `preguntas`
+  ADD CONSTRAINT `preguntas_ibfk_1` FOREIGN KEY (`idExamen`) REFERENCES `examenes` (`idExamen`) ON DELETE CASCADE;
+
+--
 -- Filtros para la tabla `puesto`
 --
 ALTER TABLE `puesto`
   ADD CONSTRAINT `puesto_ibfk_1` FOREIGN KEY (`Empleados_idEmpleados`) REFERENCES `empleados` (`idEmpleados`),
   ADD CONSTRAINT `puesto_ibfk_2` FOREIGN KEY (`Departamentos_idDepartamentos`) REFERENCES `departamentos` (`idDepartamentos`);
+
+--
+-- Filtros para la tabla `respuestas`
+--
+ALTER TABLE `respuestas`
+  ADD CONSTRAINT `respuestas_ibfk_1` FOREIGN KEY (`idPregunta`) REFERENCES `preguntas` (`idPregunta`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
