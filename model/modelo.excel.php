@@ -975,27 +975,27 @@ static public function mdlGenerarExcelAsistenciasEmpresas($tabla, $idEmpresas){
 				$i++;
 				$respuesta = ModeloFormularios::mdlEmpleadoPreguntas($pregunta['idPregunta'], $empleado['idEmpleados']);
 				$respuestasExamen = ControladorFormularios::ctrVerRespuestasExamen('idPregunta', $pregunta['idPregunta']);
-				$total_preguntas = $total_preguntas + 1;
-				$total_correctas = $total_correctas + 1;
+				$total_preguntas++;
+				$total_correctas++;
 
 				$preguntaName = strip_tags($pregunta['pregunta']);
 
 				if (empty($respuesta['respuesta'])) {
 					if ($pregunta['tipo_pregunta'] == 'abierta') {
-						$total_preguntas = $total_preguntas - 1;
-						$total_correctas = $total_correctas - 1;
+						$total_preguntas--;
+						$total_correctas--;
 						$valor = 'abierta';
 					}elseif ($pregunta['tipo_pregunta'] == 'escala') {
 						foreach ($respuestasExamen as $respuestaExamen) {
 							if ($respuestaExamen['respuesta'] == 'escala') {
-								$total_preguntas = $total_preguntas - 1;
-								$total_correctas = $total_correctas - 1;
+								$total_preguntas--;
+								$total_correctas--;
 								$valor = 'escala';
 							}else{
 								foreach ($opciones as $key => $opcion) {
 									$resultados = $respuestaExamen['valor'];
 									if ($key == $resultados) {
-											$total_correctas = $total_correctas - 1;
+											$total_correctas--;
 											$valor = 'binario';
 									}
 								}
@@ -1004,7 +1004,7 @@ static public function mdlGenerarExcelAsistenciasEmpresas($tabla, $idEmpresas){
 					}else{
 						foreach ($respuestasExamen as $respuestaExamen) {
 							if ($respuestaExamen['valor'] == 1) {
-									$total_correctas = $total_correctas - 1;
+									$total_correctas--;
 									$valor = 0;
 							}
 						}
@@ -1016,17 +1016,22 @@ static public function mdlGenerarExcelAsistenciasEmpresas($tabla, $idEmpresas){
 					);
 				}else{
 					if ($pregunta['tipo_pregunta'] == 'abierta') {
-						$total_preguntas = $total_preguntas - 1;
-						$total_correctas = $total_correctas - 1;
+						$total_preguntas--;
+						$total_correctas--;
 						$valor = 'abierta';
 					}elseif ($pregunta['tipo_pregunta'] == 'escala') {
 						foreach ($respuestasExamen as $respuestaExamen) {
 							$opciones = $escala[$respuestaExamen['valor']];
 							$resultados = $respuesta['respuesta'];
 							if ($respuestaExamen['respuesta'] == 'escala') {
-								$total_preguntas = $total_preguntas - 1;
-								$total_correctas = $total_correctas - 1;
+								$total_preguntas--;
+								$total_correctas--;
 								$valor = 'escala';
+								foreach ($opciones as $key => $opcion){
+									if ($respuesta['respuesta'] == $key) {
+										$respuesta['respuesta'] = $opcion;
+									}
+								}
 							}else{
 								foreach ($opciones as $key => $opcion) {
 									if ($key == $resultados) {
@@ -1034,7 +1039,7 @@ static public function mdlGenerarExcelAsistenciasEmpresas($tabla, $idEmpresas){
 											$resultados = $opcion;
 											$valor = 1;
 										}else{
-											$total_correctas = $total_correctas - 1;
+											$total_correctas--;
 											$valor = 'binario';
 										}
 										if ($respuesta['respuesta'] == 4) {
