@@ -1106,7 +1106,6 @@ static public function mdlGenerarExcelAsistenciasEmpresas($tabla, $idEmpresas){
 		$activeWorksheet->setCellValue('D3', $Evaluaciones['titulo']);
 		$activeWorksheet->setCellValue('D4', $num);
 
-
 		$activeWorksheet->mergeCells('B3:C3');
 		$activeWorksheet->mergeCells('B4:C4');
 		$activeWorksheet->mergeCells('B6:B7');
