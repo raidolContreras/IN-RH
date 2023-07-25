@@ -948,7 +948,6 @@ static public function mdlGenerarExcelAsistenciasEmpresas($tabla, $idEmpresas){
 		$barra = 0;
 		$barra2 = 0;
 
-
 		foreach ($preguntas as $pregunta) {
 			$preguntaSinHTML = strip_tags($pregunta['pregunta']);
 			$letraPregunta = ModeloExcel::sumarLetra('F', $i); // Sumamos 'A' más el número de pregunta
@@ -970,11 +969,9 @@ static public function mdlGenerarExcelAsistenciasEmpresas($tabla, $idEmpresas){
 			}else{
 				$num = $e;
 			}
-
 			$resultado = array();
 			foreach ($preguntas as $pregunta) {
 				$valor = '';
-				$letraPregunta = ModeloExcel::sumarLetra('D', $i); // Sumamos 'A' más el número de pregunta
 				$i++;
 				$respuesta = ModeloFormularios::mdlEmpleadoPreguntas($pregunta['idPregunta'], $empleado['idEmpleados']);
 				$respuestasExamen = ControladorFormularios::ctrVerRespuestasExamen('idPregunta', $pregunta['idPregunta']);
@@ -1039,6 +1036,11 @@ static public function mdlGenerarExcelAsistenciasEmpresas($tabla, $idEmpresas){
 										}else{
 											$total_correctas = $total_correctas - 1;
 											$valor = 'binario';
+										}
+										if ($respuesta['respuesta'] == 4) {
+											$respuesta['respuesta'] = 'Verdadero';
+										}else{
+											$respuesta['respuesta'] = 'Falso';
 										}
 									}
 								}
