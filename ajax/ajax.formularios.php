@@ -733,6 +733,12 @@ class FormulariosAjax{
 	    echo $terminarExamen;
 	}
 
+	public function crearExcelCalificacionesAjax(){
+		$idExamen = $this->idExamen;
+		$generarExcel = ControladorExcel::ctrGeneralExcelCalificaciones($idExamen);
+		echo $generarExcel;
+	}
+
 }
 
 if(isset($_POST["validate"])){
@@ -1311,4 +1317,12 @@ if (isset($_POST['examenFinalizado'])) {
 	    $terminarExamen -> timeMax = $timeMax;
 	    $terminarExamen -> terminarExamenAjax();
 	}
+}
+
+if (isset($_POST['genExcelExamen'])) {
+	$idExamen = $_POST['genExcelExamen'];
+
+    $responderPreguntaExamen = new FormulariosAjax();
+    $responderPreguntaExamen -> idExamen = $idExamen;
+    $responderPreguntaExamen -> crearExcelCalificacionesAjax();
 }

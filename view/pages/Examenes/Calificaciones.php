@@ -17,6 +17,9 @@ $escala = json_decode($escalaFile, true);
 			<div class="row card-header" style="align-items: center;">
 				<div class="encabezado">
 					<?php echo $Evaluaciones['titulo'] ?>
+					<button class="btn btn-outline-success btn-rounded btn-lg float-right" id="crearExcelCalificaciones-btn">
+						<i class="fas fa-download"></i> Descargar Calificaciones
+					</button>
 				</div>
 			</div>
 			<div class="card-body">
@@ -93,6 +96,10 @@ $escala = json_decode($escalaFile, true);
 																	if ($respuestaExamen['valor'] == $key) {
 																		$resultado = $opcion;
 																		echo "<td style='background-color: #3CC7B6; color: #FEFEFE; text-align: center !important;'>$resultado</td>";
+																	}else{
+																		$total_correctas = $total_correctas - 1;
+																		$resultado = $opcion;
+																		echo "<td style='background-color: #EC3927; color: #FEFEFE; text-align: center !important;'>$resultado</td>";
 																	}
 																}
 															}
@@ -151,4 +158,50 @@ $escala = json_decode($escalaFile, true);
 </script>
 
 <?php endforeach ?>
+<script>
+	
+	$(document).ready(function() {
+		$("#crearExcelCalificaciones-btn").click(function() {
+
+			$.ajax({
+				url: "ajax/ajax.formularios.php", // Ruta al archivo PHP que procesará los datos del formulario
+				type: "POST",
+				data: {genExcelExamen: <?php echo $_GET['evaluacion'] ?>},
+				success: function(response) {
+					$("#form-result").val("");
+					if (response !== 'error') {
+						$("#form-result").html(`
+							<div class='alert alert-success' role="alert" id="alerta">
+								<i class="fas fa-check-circle"></i>
+								Descargando calificaciones
+							`+response+`</div>
+						`);
+						window.location.href = "view/Calificaciones/"+response+".xlsx";
+						deleteAlert();
+					}else{
+						$("#form-result").html(`
+							<div class='alert alert-danger' role="alert" id="alerta">
+								<i class="fas fa-exclamation-triangle"></i>
+								<b>Error al generar el reporte</b>, intenta nuevamente.
+							</div>
+						`);
+
+						deleteAlert();
+					}
+
+				}
+			});
+		});
+
+	});
+
+	function deleteAlert() {
+		setTimeout(function() {
+			var alert = $('#alerta');
+			alert.fadeOut('slow', function() {
+				alert.remove();
+			});
+		}, 1000);
+	}
+</script>
 <?php endif ?>

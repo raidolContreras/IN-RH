@@ -280,24 +280,6 @@ jQuery(document).ready(function($) {
                 fixedHeader: true,
                 fixedColumns: true,
                 scrollY: 350,
-                buttons: [
-                    {
-                        extend: 'excelHtml5',
-                        text: 'Exportar a Excel',
-                        className: 'btn btn-outline-success rounded',
-                        customize: function( xlsx ) {
-                            var sheet = xlsx.xl.worksheets['Datos.xml'];
-                            $('row:first c', sheet).attr( 's', '42' );
-                        }
-                    },
-                    {
-                        extend: 'pdfHtml5',
-                        text: 'Exportar a PDF',
-                        className: 'btn btn-outline-danger rounded',
-                        orientation: 'landscape',
-                        pageSize: 'LEGAL'
-                    }
-                    ],
                 fixedHeader: true,
             language: {
                 lengthMenu: 'Mostrar _MENU_ resultados por pagina',
@@ -308,9 +290,6 @@ jQuery(document).ready(function($) {
                 search: 'Buscar',
             }
             });
-
-            table.buttons().container()
-                .appendTo('#example_wrapper .col-md-6:eq(0)');
         });
     }
 

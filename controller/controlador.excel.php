@@ -14,5 +14,10 @@ class ControladorExcel{
 		return $GenerarExcelAsistencia;
 	}
 
+	static public function ctrGeneralExcelCalificaciones($idExamen){
+		$GenerarExcelCalificaciones = ModeloExcel::mdlGeneralExcelCalificaciones($idExamen);
+		return $GenerarExcelCalificaciones;
+	}
+
 
 }

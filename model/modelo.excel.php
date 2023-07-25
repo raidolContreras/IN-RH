@@ -932,4 +932,254 @@ static public function mdlGenerarExcelAsistenciasEmpresas($tabla, $idEmpresas){
 	return $nombreArchivo;
 }
 
+	static public function mdlGeneralExcelCalificaciones($idExamen){
+		$datos_preguntas = array();
+		$datos_empleados = array();
+
+		$escalaFile = file_get_contents('../view/pages/json/escalas.json');
+		$escala = json_decode($escalaFile, true);
+
+		$Evaluaciones = ControladorFormularios::ctrVerEvaluaciones('idExamen', $idExamen);
+		$empleados = ControladorFormularios::ctrExamenesEmpleados($idExamen);
+		$preguntas = ControladorFormularios::ctrExamenesPreguntas($idExamen);
+		$i = 0;
+		$e = 0;
+		$a = 8;
+		$barra = 0;
+		$barra2 = 0;
+
+
+		foreach ($preguntas as $pregunta) {
+			$preguntaSinHTML = strip_tags($pregunta['pregunta']);
+			$letraPregunta = ModeloExcel::sumarLetra('F', $i); // Sumamos 'A' más el número de pregunta
+			$i++;
+			$datos_preguntas[] = array(
+				"pregunta" => $preguntaSinHTML,
+				"tipo_pregunta" => $pregunta['tipo_pregunta'],
+				"letra_Pregunta" => $letraPregunta // Guardamos la letra resultante
+			);
+		}
+
+		foreach ($empleados as $empleado) {
+			$total_preguntas = 0;
+			$total_correctas = 0;
+			$e++;
+
+			if (strlen($e)==1) {
+				$num = '0'.$e;
+			}else{
+				$num = $e;
+			}
+
+			$resultado = array();
+			foreach ($preguntas as $pregunta) {
+				$valor = '';
+				$letraPregunta = ModeloExcel::sumarLetra('D', $i); // Sumamos 'A' más el número de pregunta
+				$i++;
+				$respuesta = ModeloFormularios::mdlEmpleadoPreguntas($pregunta['idPregunta'], $empleado['idEmpleados']);
+				$respuestasExamen = ControladorFormularios::ctrVerRespuestasExamen('idPregunta', $pregunta['idPregunta']);
+				$total_preguntas = $total_preguntas + 1;
+				$total_correctas = $total_correctas + 1;
+
+				$preguntaName = strip_tags($pregunta['pregunta']);
+
+				if (empty($respuesta['respuesta'])) {
+					if ($pregunta['tipo_pregunta'] == 'abierta') {
+						$total_preguntas = $total_preguntas - 1;
+						$total_correctas = $total_correctas - 1;
+						$valor = 'abierta';
+					}elseif ($pregunta['tipo_pregunta'] == 'escala') {
+						foreach ($respuestasExamen as $respuestaExamen) {
+							if ($respuestaExamen['respuesta'] == 'escala') {
+								$total_preguntas = $total_preguntas - 1;
+								$total_correctas = $total_correctas - 1;
+								$valor = 'escala';
+							}else{
+								foreach ($opciones as $key => $opcion) {
+									$resultados = $respuestaExamen['valor'];
+									if ($key == $resultados) {
+											$total_correctas = $total_correctas - 1;
+											$valor = 'binario';
+									}
+								}
+							}
+						}
+					}else{
+						foreach ($respuestasExamen as $respuestaExamen) {
+							if ($respuestaExamen['valor'] == 1) {
+									$total_correctas = $total_correctas - 1;
+									$valor = 0;
+							}
+						}
+					}
+					$resultado[] = array(
+						'pregunta' => $preguntaName,
+						'respuesta' => "-",
+						'valor' => $valor
+					);
+				}else{
+					if ($pregunta['tipo_pregunta'] == 'abierta') {
+						$total_preguntas = $total_preguntas - 1;
+						$total_correctas = $total_correctas - 1;
+						$valor = 'abierta';
+					}elseif ($pregunta['tipo_pregunta'] == 'escala') {
+						foreach ($respuestasExamen as $respuestaExamen) {
+							$opciones = $escala[$respuestaExamen['valor']];
+							$resultados = $respuesta['respuesta'];
+							if ($respuestaExamen['respuesta'] == 'escala') {
+								$total_preguntas = $total_preguntas - 1;
+								$total_correctas = $total_correctas - 1;
+								$valor = 'escala';
+							}else{
+								foreach ($opciones as $key => $opcion) {
+									if ($key == $resultados) {
+										if ($respuestaExamen['valor'] == $key) {
+											$resultados = $opcion;
+											$valor = 1;
+										}else{
+											$total_correctas = $total_correctas - 1;
+											$valor = 'binario';
+										}
+									}
+								}
+							}
+						}
+					}else{
+						foreach ($respuestasExamen as $respuestaExamen) {
+							if ($respuestaExamen['valor'] == 1) {
+								if ($respuestaExamen['respuesta'] == $respuesta['respuesta']) {
+									$valor = $respuestaExamen['valor'];
+								}else{
+									$total_correctas = $total_correctas - 1;
+									$valor = 0;
+								}
+							}
+						}
+					}
+					$resultado[] = array(
+						'pregunta' => $preguntaName,
+						'respuesta' => $respuesta['respuesta'],
+						'valor' => $valor
+					);
+				}
+			}
+
+			$datos_empleados[] = array(
+				"nombre" => mb_strtoupper($empleado['nombre']),
+				"idEmpleado" => $empleado['idEmpleados'],
+				"num_empleado" => $num,
+				"tupla" => $a,
+				"total_preguntas" => $total_preguntas,
+				"total_correctas" => $total_correctas,
+				"respuestas" => $resultado
+			);
+
+			$a++;
+		}
+
+		//print_r($datos_empleados);
+
+		$spreadsheet = new Spreadsheet();
+		$spreadsheet
+		->getProperties()
+		->setCreator("IN Consulting México")
+		->setLastModifiedBy('IN Consulting México')
+		->setTitle("Reporte de Calificaciones IN Consulting")
+		->setDescription("Reporte de Calificaciones de ".$Evaluaciones['titulo']);
+
+		$spreadsheet->setActiveSheetIndex(0);
+
+		$activeWorksheet = $spreadsheet->getActiveSheet();
+
+// Set the print header
+		$activeWorksheet->getHeaderFooter()->setOddHeader('&L&G');
+
+		$activeWorksheet->setCellValue('B3', 'Reporte de Calificaciones:');
+		$activeWorksheet->setCellValue('B4', 'Total de empleados:');
+		$activeWorksheet->setCellValue('D3', $Evaluaciones['titulo']);
+		$activeWorksheet->setCellValue('D4', $num);
+
+
+		$activeWorksheet->mergeCells('B3:C3');
+		$activeWorksheet->mergeCells('B4:C4');
+		$activeWorksheet->mergeCells('B6:B7');
+		$activeWorksheet->mergeCells('C6:C7');
+		$activeWorksheet->mergeCells('D6:D7');
+		$activeWorksheet->mergeCells('E6:E7');
+		$activeWorksheet->mergeCells('F6:'.$letraPregunta.'6');
+		$activeWorksheet->setCellValue('B6', '#');
+		$activeWorksheet->setCellValue('C6', 'Empleado');
+		$activeWorksheet->setCellValue('D6', 'Total preguntas');
+		$activeWorksheet->setCellValue('E6', 'Preguntas correctas');
+		$activeWorksheet->setCellValue('F6', 'Preguntas');
+		foreach ($datos_preguntas as $pregunta) {
+			$activeWorksheet->setCellValue($pregunta['letra_Pregunta'].'7', html_entity_decode($pregunta['pregunta']));
+		}
+		foreach ($datos_empleados as $empleado) {
+			$activeWorksheet->setCellValue('B'.$empleado['tupla'], $empleado['num_empleado']);
+			$activeWorksheet->setCellValue('C'.$empleado['tupla'], $empleado['nombre']);
+			$activeWorksheet->setCellValue('D'.$empleado['tupla'], $empleado['total_preguntas']);
+			$activeWorksheet->setCellValue('E'.$empleado['tupla'], $empleado['total_correctas']);
+			$promedioFinal = ControladorFormularios::calcularCalificacion($empleado['total_correctas'],$empleado['total_preguntas']);
+			$promedioFinal = strip_tags($promedioFinal);
+			$r = 0;
+			if ($barra == 1) {
+				$activeWorksheet->getStyle('B'.$empleado['tupla'].':'.$pregunta['letra_Pregunta'].$empleado['tupla'])->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('ffc1c1c1');
+				$barra = 0;
+			}else{
+				$barra = 1;
+			}
+			foreach ($datos_preguntas as $pregunta) {
+				$activeWorksheet->setCellValue($pregunta['letra_Pregunta'].$empleado['tupla'], $empleado['respuestas'][$r]['respuesta']);
+				if ($empleado['respuestas'][$r]['valor'] == 1) {
+					$activeWorksheet->getStyle($pregunta['letra_Pregunta'].$empleado['tupla'])->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('ffa4ffa4');
+				}elseif ($empleado['respuestas'][$r]['valor'] == 0 || $empleado['respuestas'][$r]['valor'] == 'binario') {
+					$activeWorksheet->getStyle($pregunta['letra_Pregunta'].$empleado['tupla'])->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('EB3737');
+				}
+
+				$activeWorksheet->getColumnDimension($pregunta['letra_Pregunta'])->setWidth(30);
+				$r++;
+			}
+			$lastLetra = ModeloExcel::sumarLetra($pregunta['letra_Pregunta'], 1);
+			$activeWorksheet->setCellValue($lastLetra.$empleado['tupla'], $promedioFinal);
+			if ($barra2 == 1) {
+				$activeWorksheet->getStyle($lastLetra.$empleado['tupla'].':'.$lastLetra.$empleado['tupla'])->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('ffc1c1c1');
+				$barra2 = 0;
+			}else{
+				$barra2 = 1;
+			}
+		}
+		$activeWorksheet->setCellValue($lastLetra.'6', 'Total');
+		$activeWorksheet->mergeCells($lastLetra.'6:'.$lastLetra.'7');
+		$activeWorksheet->getColumnDimension($lastLetra)->setWidth(30);
+		$activeWorksheet->getStyle($lastLetra.'6')->getAlignment()->setHorizontal('center')->setVertical('center');
+
+		$activeWorksheet->getStyle('B6:'.$lastLetra.'7')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('ffeeeeee');
+
+		$activeWorksheet->getStyle('B6')->getAlignment()->setHorizontal('center')->setVertical('center');
+		$activeWorksheet->getStyle('C6')->getAlignment()->setHorizontal('center')->setVertical('center');
+		$activeWorksheet->getStyle('D6')->getAlignment()->setHorizontal('center')->setVertical('center');
+		$activeWorksheet->getStyle('E6')->getAlignment()->setHorizontal('center')->setVertical('center');
+		$activeWorksheet->getStyle('F6')->getAlignment()->setHorizontal('center')->setVertical('center');
+		$activeWorksheet->getColumnDimension('B')->setWidth(3);
+		$activeWorksheet->getColumnDimension('C')->setWidth(30);
+		$activeWorksheet->getColumnDimension('D')->setWidth(20);
+		$activeWorksheet->getColumnDimension('E')->setWidth(20);
+
+
+		$writer = new Xlsx($spreadsheet);
+		$writer->save('../view/Calificaciones/'.$Evaluaciones['titulo'].'.xlsx');
+
+		return $Evaluaciones['titulo'];
+	}
+
+	static public function sumarLetra($letra, $numero) {
+		$asciiBase = ord(ctype_upper($letra) ? 'A' : 'a');
+		$asciiSumado = ord($letra) + $numero - $asciiBase;
+		$asciiFinal = ($asciiSumado % 26) + $asciiBase;
+		$letraResultado = chr($asciiFinal);
+		return $letraResultado;
+	}
+
+
 }
