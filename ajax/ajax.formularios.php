@@ -739,6 +739,19 @@ class FormulariosAjax{
 		echo $generarExcel;
 	}
 
+	public function addDivisaAjax(){
+		$nameDivisa = $this->nameDivisa;
+		$divisa = $this->divisa;
+		$addDivisa = ControladorFormularios::ctrAddDivisa($nameDivisa, $divisa);
+		echo $addDivisa;
+	}
+
+	public function delDivisaAjax(){
+		$eliminarDivisa = $this->eliminarDivisa;
+		$delDivisa = ControladorFormularios::ctrDelDivisa($eliminarDivisa);
+		echo $delDivisa;
+	}
+
 }
 
 if(isset($_POST["validate"])){
@@ -1325,4 +1338,22 @@ if (isset($_POST['genExcelExamen'])) {
     $responderPreguntaExamen = new FormulariosAjax();
     $responderPreguntaExamen -> idExamen = $idExamen;
     $responderPreguntaExamen -> crearExcelCalificacionesAjax();
+}
+
+if (isset($_POST['nameDivisa'])) {
+	$nameDivisa = $_POST['nameDivisa'];
+	$divisa = mb_strtoupper($_POST['divisa']);
+
+    $addDivisa = new FormulariosAjax();
+    $addDivisa -> nameDivisa = $nameDivisa;
+    $addDivisa -> divisa = $divisa;
+    $addDivisa -> addDivisaAjax();
+}
+
+if (isset($_POST['eliminarDivisa'])) {
+	$eliminarDivisa = $_POST['eliminarDivisa'];
+
+    $delDivisa = new FormulariosAjax();
+    $delDivisa -> eliminarDivisa = $eliminarDivisa;
+    $delDivisa -> delDivisaAjax();
 }

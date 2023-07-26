@@ -2485,5 +2485,65 @@ static public function mdlImagenNoticia($id, $name)
 		$stmt = null;
 	}
 
+	static public function mdlAddDivisa($nameDivisa, $divisa){
+		$sql = "INSERT INTO divisas (nameDivisa, divisa) VALUES (:nameDivisa, :divisa)";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->bindParam(':nameDivisa', $nameDivisa, PDO::PARAM_STR);
+		$stmt->bindParam(':divisa', $divisa, PDO::PARAM_STR);
+
+		if ($stmt->execute()) {
+			return 'ok';
+		}else{
+			return 'error';
+		}
+
+		$stmt->close();
+		$stmt = null;
+	}
+
+	static public function mdlVerDivisa($item, $value){
+		$pdo = Conexion::conectar();
+		if ($item == null && $value == null) {
+			$sql = "SELECT * FROM divisas";
+
+			$stmt = $pdo->prepare($sql);
+
+			$stmt->execute();
+			return $stmt->fetchAll();
+
+		}else{
+			$sql = "SELECT * FROM divisas WHERE $item = :$item";
+
+			$stmt = $pdo->prepare($sql);
+			$stmt->bindParam(':'.$item, $value);
+
+			$stmt = $pdo->prepare($sql);
+
+			$stmt->execute();
+			return $stmt->fetch();
+		}
+
+		$stmt->close();
+		$stmt = null;
+	}
+
+	static public function mdlDelDivisa($idDivisa){
+		$pdo =Conexion::conectar();
+		$sql = "DELETE FROM divisas WHERE idDivisa = :idDivisa";
+
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(":idDivisa", $idDivisa, PDO::PARAM_INT);
+		
+		if ($stmt->execute()) {
+			return 'ok';
+		}else{
+			return "error";
+		}
+
+		$stmt->close();
+		$stmt = null;
+	}
+
 	/*---------- Fin de ModeloFormularios ---------- */
 }

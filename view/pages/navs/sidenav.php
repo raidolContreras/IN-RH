@@ -56,7 +56,12 @@
 					</li>
 
 					<li class="nav-item">
-						<a class="nav-link" href="#"><i class="fas fa-money-bill-alt"></i>GASTOS</a>
+						<?php if (isset($_GET['pagina']) && in_array($_GET['pagina'], array('Gastos'))): ?>
+							<a class="nav-link active" href="Gastos">
+						<?php else: ?>
+							<a class="nav-link" href="Gastos">
+						<?php endif ?>
+						<i class="fas fa-money-bill-alt"></i>GASTOS</a>
 					</li>
 
 					<li class="nav-item">

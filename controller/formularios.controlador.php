@@ -1432,5 +1432,20 @@ class ControladorFormularios{
 		return $examen;
 	}
 
+	static public function ctrAddDivisa($nameDivisa, $divisa){
+		$addDivisa = ModeloFormularios::mdlAddDivisa($nameDivisa, $divisa);
+		return $addDivisa;
+	}
+
+	static public function ctrVerDivisa($item, $value){
+		$verDivisa = ModeloFormularios::mdlVerDivisa($item, $value);
+		return $verDivisa;
+	}
+
+	static public function ctrDelDivisa($idDivisa){
+		$delDivisa = ModeloFormularios::mdlDelDivisa($idDivisa);
+		return $delDivisa;
+	}
+
 	/*---------- Fin de ControladorFormularios ---------- */
 }

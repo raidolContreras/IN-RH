@@ -4096,6 +4096,11 @@ Pills vertical
 	text-decoration: none;
 }
 
+.badge-success-dot {
+	background-color: #77EBDF;
+	color: #4E4E4E;
+}
+
 .badge-success {
 	background-color: #21ae41;
 }

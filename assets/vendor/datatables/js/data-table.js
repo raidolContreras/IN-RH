@@ -277,10 +277,9 @@ jQuery(document).ready(function($) {
                 lengthChange: false,
                 scrollCollapse: true,
                 paging: false,
-                fixedHeader: true,
+                fixedHeader: false,
                 fixedColumns: true,
                 scrollY: 350,
-                fixedHeader: true,
             language: {
                 lengthMenu: 'Mostrar _MENU_ resultados por pagina',
                 zeroRecords: 'Sin resultados - lo siento',
@@ -289,6 +288,31 @@ jQuery(document).ready(function($) {
                 infoFiltered: '(Filtrado de _MAX_ registros totales)',
                 search: 'Buscar',
             }
+            });
+        });
+    }
+
+    if ($("table.gastos").length) {
+
+        $(document).ready(function() {
+            var table = $('table.gastos').DataTable({
+                lengthChange: false,
+                scrollCollapse: true,
+                paging: false,
+                fixedHeader: false,
+                fixedColumns: true,
+                language: {
+                    lengthMenu: 'Mostrar _MENU_ resultados por pagina',
+                    zeroRecords: 'Sin resultados - lo siento',
+                    info: 'Pagina _PAGE_ de _PAGES_',
+                    infoEmpty: 'No se encontraron registros',
+                    infoFiltered: '(Filtrado de _MAX_ registros totales)',
+                    search: 'Buscar',
+                },
+                columnDefs: [{
+                    targets: -1, // Última columna (puedes cambiar el índice si no es la última columna)
+                    orderable: false, // Desactivar el ordenado
+                }]
             });
         });
     }
