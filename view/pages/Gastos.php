@@ -67,7 +67,8 @@
 	role="dialog"
 	aria-labelledby="exampleModalLabel"
 	aria-hidden="true">
-	
+	<?php $divisas = ControladorFormularios::ctrVerDivisa(null, null); ?>
+	<?php $categorias = ControladorFormularios::ctrVerCategoria(null, null); ?>
 	<div class="modal-dialog modal-xl" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -80,23 +81,16 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<div class="row" style="align-items: center;">
-					<form class="col-xl-6">
+				<form class="row" style="align-items: center;" id="subirGasto-form" enctype="multipart/form-data">
+					<div class="col-xl-6">
 						<div class="row">
 							<div class="form-group col-xl-12">
 								<label for="recipient-name" class="col-form-label">Categoría:</label>
-								<select class="form-control" id="categorias">
+								<select class="form-control" id="categoria" name="categoria">
 									<option value="">Selecciona una categoría</option>
-									<option value="Vivienda">Vivienda</option>
-									<option value="Alimentación">Alimentación</option>
-									<option value="Transporte">Transporte</option>
-									<option value="Salud">Salud</option>
-									<option value="Educación">Educación</option>
-									<option value="Entretenimiento">Entretenimiento</option>
-									<option value="Ropa y calzado">Ropa y calzado</option>
-									<option value="Ahorros e inversiones">Ahorros e inversiones</option>
-									<option value="Gastos de viaje">Gastos de viaje</option>
-									<option value="Seguros">Seguros</option>
+									<?php foreach ($categorias as $categoria): ?>
+										<option value="<?php echo $categoria['idCategoria'] ?>"><?php echo $categoria['nameCategoria'] ?></option>
+									<?php endforeach ?>
 								</select>
 							</div>
 							<div class="form-group col-xl-12">
@@ -105,48 +99,51 @@
 							</div>
 							<div class="form-group col-xl-6">
 								<label for="recipient-name" class="col-form-label">Divisas:</label>
-								<select class="form-control" id="categorias">
+								<select class="form-control" id="divisa" name="divisa">
 									<option value="">Selecciona una divisa</option>
-									<option value="MXN">MXN (peso mexicano)</option>
+									<?php foreach ($divisas as $divisa): ?>
+										<option value="<?php echo $divisa['idDivisa'] ?>"><?php echo $divisa['divisa']." (".$divisa['nameDivisa'].")"; ?></option>
+									<?php endforeach ?>
 								</select>
 							</div>
 							<div class="form-group col-xl-6">
 								<label for="message-text" class="col-form-label">Importe total:</label>
-								<input type="number" class="form-control" name="nameVendedor" id="nameVendedor">
+								<input type="number" class="form-control" name="importeTotal" id="importeTotal">
 							</div>
 							<div class="form-group col-xl-6">
 								<label for="message-text" class="col-form-label">Importe del IVA:</label>
-								<input type="number" class="form-control" name="nameVendedor" id="nameVendedor">
+								<input type="number" class="form-control" name="importeIVA" id="importeIVA">
 							</div>
 							<div class="form-group col-xl-6">
 								<label for="message-text" class="col-form-label">Fecha del documento:</label>
-								<input type="date" class="form-control" name="nameVendedor" id="nameVendedor">
+								<input type="date" class="form-control" name="fechaDocumento" id="fechaDocumento">
 							</div>
 							<div class="form-group col-xl-12">
 								<label for="message-text" class="col-form-label">Descripción:</label>
-								<textarea class="form-control" id="message-text"></textarea>
+								<textarea class="form-control" id="descripcionGasto" name="descripcionGasto"></textarea>
 							</div>
 							<div class="form-group col-xl-12">
 								<label for="message-text" class="col-form-label">Referencia interna:</label>
-								<input type="text" class="form-control" name="nameVendedor" id="nameVendedor" placeholder="Agregar una referencia interna (opcional)">
+								<input type="text" class="form-control" name="referenciaInterna" id="referenciaInterna" placeholder="Agregar una referencia interna (opcional)">
 							</div>
 							<input type="hidden" name="CrearGasto" id="CrearGasto">
 						</div>
-					</form>
+					</div>
 					<div class="col-xl-6">
-						<form class="dropzone my-3" id="documentos-dropzone" enctype="multipart/form-data">
-							<input type="hidden" id="idTarea" name="idTarea" value="<?php echo $tareas[0]['idTareas']; ?>">
+						<div class="dropzone my-3" id="documentos-dropzone">
 							<div class="dz-message">
 								Arrastra y suelta archivos aquí o haz clic para seleccionar archivos para cargar.
-								<p class="subtitulo-sup">Tipos de archivo permitidos .xlsx,.xls,.pdf (Tamaño máximo 10 MB)</p>
+								<p class="subtitulo-sup">
+									Tipos de archivo permitidos .xlsx,.xls,.pdf (Tamaño máximo 10 MB)
+								</p>
 							</div>
-						</form>
+						</div>
 					</div>
-				</div>
+				</form>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary rounded" data-dismiss="modal">Cerrar</button>
-				<button type="button" class="btn btn-primary rounded">Subir gasto</button>
+				<button type="button" class="btn btn-primary rounded" id="subirGasto-btn">Subir gasto</button>
 			</div>
 		</div>
 	</div>
@@ -155,28 +152,78 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.js"></script>
 
 <script>
-var idTarea = document.getElementById("idTarea");
 Dropzone.autoDiscover = false;
 
 $(document).ready(function() {
 	var myDropzone = new Dropzone("#documentos-dropzone", {
-		url: "ajax/upload.documents.php",
+		url: "ajax/ajax.formularios.php",
 		type: "POST",
-		data: idTarea,
 		paramName: "file",
 		maxFilesize: 10,
 		acceptedFiles: ".xlsx,.xls,.pdf",
 		addRemoveLinks: true,
 		dictRemoveFile: "Eliminar archivo",
+		parallelUploads: 100,
+		maxFiles: 10,
+		uploadMultiple: true,
 		autoProcessQueue: false // Habilita la carga automática de archivos
 	});
+
+	var idGasto; // Variable para almacenar el ID del gasto
+
+	$("#subirGasto-btn").click(function() {
+		var formData = $("#subirGasto-form").serialize(); // Obtener los datos del formulario
+		$.ajax({
+			url: "ajax/ajax.formularios.php",
+			type: "POST",
+			data: formData,
+			success: function(response) {
+				$("#form-result").val("");
+				if (response !== 'error') {
+					$("#form-result").html(`
+						<div class='alert alert-success' role="alert" id="alerta">
+						<i class="fas fa-check-circle"></i>
+						Gasto subido exitosamente
+						</div>
+						`);
+
+					// Almacenar el ID del gasto en la variable idGasto
+					idGasto = response;
+
+					myDropzone.processQueue();
+					deleteAlert();
+					setTimeout(function() {
+						location.href = 'Gastos';
+					}, 900);
+				} else {
+					$("#form-result").html(`
+						<div class='alert alert-danger' role="alert" id="alerta">
+						<i class="fas fa-exclamation-triangle"></i>
+						<b>Error</b>, no se pudo subir el gasto, intenta nuevamente.
+						</div>
+						`);
+					deleteAlert();
+				}
+			}
+		});
+	});
+
+	// Configuración del evento 'sending' del Dropzone
+	myDropzone.on("sending", function(file, xhr, formData) {
+		// Solo agregar el campo idGasto si se cumple la condición response !== "error"
+		if (idGasto !== 'error') {
+			formData.append("idGasto", idGasto);
+		}
+	});
 });
-$('#exampleModal').on('show.bs.modal', function (event) {
-	var button = $(event.relatedTarget) // Button that triggered the modal
-	var recipient = button.data('whatever') // Extract info from data-* attributes
-	// If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-	// Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-	var modal = $(this)
-	modal.find('#CrearGasto').val(recipient)
-})
+
+function deleteAlert() {
+	setTimeout(function() {
+		var alert = $('#alerta');
+		alert.fadeOut('slow', function() {
+			alert.remove();
+		});
+	}, 1500);
+}
+
 </script>

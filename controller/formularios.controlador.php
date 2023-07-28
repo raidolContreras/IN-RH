@@ -1447,5 +1447,20 @@ class ControladorFormularios{
 		return $delDivisa;
 	}
 
+	static public function ctrAddCategoria($nameCategoria){
+		$addCategoria = ModeloFormularios::mdlAddCategoria($nameCategoria);
+		return $addCategoria;
+	}
+
+	static public function ctrVerCategoria($item, $value){
+		$verCategoria = ModeloFormularios::mdlVerCategoria($item, $value);
+		return $verCategoria;
+	}
+
+	static public function ctrDelCategoria($idCategoria){
+		$delCategoria = ModeloFormularios::mdlDelCategoria($idCategoria);
+		return $delCategoria;
+	}
+
 	/*---------- Fin de ControladorFormularios ---------- */
 }

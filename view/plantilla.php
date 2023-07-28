@@ -169,6 +169,13 @@ session_start();
 				include "pages/navs/sidenav.php";
 				include "pages/Examenes/".$_GET["pagina"].".php";
 
+			}elseif ($_GET["pagina"] == "Configuraciones-Divisas" ||
+					 $_GET["pagina"] == "Configuraciones-Categorias") {
+
+				include "pages/navs/navbar.php";
+				include "pages/navs/sidenav.php";
+				include "pages/Configuraciones/".$_GET["pagina"].".php";
+
 			}else{
 				include "pages/404-page.html";
 			}

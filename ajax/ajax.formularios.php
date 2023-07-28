@@ -752,6 +752,18 @@ class FormulariosAjax{
 		echo $delDivisa;
 	}
 
+	public function addCategoriaAjax(){
+		$nameCategoria = $this->nameCategoria;
+		$addCategoria = ControladorFormularios::ctrAddCategoria($nameCategoria);
+		echo $addCategoria;
+	}
+
+	public function delCategoriaAjax(){
+		$eliminarCategoria = $this->eliminarCategoria;
+		$delCategoria = ControladorFormularios::ctrDelCategoria($eliminarCategoria);
+		echo $delCategoria;
+	}
+
 }
 
 if(isset($_POST["validate"])){
@@ -1356,4 +1368,20 @@ if (isset($_POST['eliminarDivisa'])) {
     $delDivisa = new FormulariosAjax();
     $delDivisa -> eliminarDivisa = $eliminarDivisa;
     $delDivisa -> delDivisaAjax();
+}
+
+if (isset($_POST['nameCategoria'])) {
+	$nameCategoria = $_POST['nameCategoria'];
+
+    $addCategoria = new FormulariosAjax();
+    $addCategoria -> nameCategoria = $nameCategoria;
+    $addCategoria -> addCategoriaAjax();
+}
+
+if (isset($_POST['eliminarCategoria'])) {
+	$eliminarCategoria = $_POST['eliminarCategoria'];
+
+    $delCategoria = new FormulariosAjax();
+    $delCategoria -> eliminarCategoria = $eliminarCategoria;
+    $delCategoria -> delCategoriaAjax();
 }
