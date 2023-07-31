@@ -2668,5 +2668,29 @@ static public function mdlImagenNoticia($id, $name)
 		$stmt = null;
 	}
 
+	static public function mdlVerDocGastos($item, $valor){
+		$pdo =Conexion::conectar();
+		if ($item == null && $valor == null) {
+			$sql = "SELECT * FROM documentos_gastos ORDER BY idDocumento_Gasto ASC";
+
+			$stmt = $pdo->prepare($sql);
+
+			$stmt->execute();
+			return $stmt->fetchAll();
+
+		}else{
+			$sql = "SELECT * FROM documentos_gastos WHERE $item = :$item";
+			$stmt = $pdo->prepare($sql);
+			
+			$stmt->bindParam(':'.$item, $valor);
+
+			$stmt->execute();
+			return $stmt->fetchAll();
+		}
+
+		$stmt->close();
+		$stmt = null;
+	}
+
 	/*---------- Fin de ModeloFormularios ---------- */
 }

@@ -12,13 +12,12 @@
 		color: #999;
 	}
 </style>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <div class="container-fluid dashboard-content">
 	<div class="container">
 		<div class="card mx-3">
 			<div class="card-header">
 				Resumen de gastos
-				<button type="button" class="btn btn-outline-primary rounded float-right" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap"><i class="fas fa-plus"></i> Agregar gastos</button>
+				<button type="button" class="btn btn-outline-primary rounded float-right" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-plus"></i> Agregar gastos</button>
 			</div>
 			<div class="card-body">
 				<div class="table-responsive">
@@ -39,7 +38,7 @@
 								$categoria = ControladorFormularios::ctrVerCategoria('idCategoria', $gasto['categoria']);
 							?>
 							<tr>
-								<td><?php echo $gasto['nameVendedor'] ?></td>
+								<td><button class="btn btn-in-consulting" data-toggle="modal" data-target="#gasto<?php echo $gasto['idGastos'] ?>"><span><?php echo $gasto['nameVendedor'] ?></span></button></td>
 								<td><?php echo date('d/m/Y', strtotime($gasto['fechaDocumento'])) ?></td>
 								<td><?php echo ControladorFormularios::formatearNumero($gasto['importeTotal'], $divisa['divisa']) ?></td>
 								<td><?php echo $categoria['nameCategoria'] ?></td>
@@ -72,10 +71,9 @@
 											<i class="fas fa-ellipsis-v"></i>
 										</button>
 										<div class="dropdown-menu mr-0" aria-labelledby="dropdownMenuButton">
-											<a class="dropdown-item" href="#"><i class="fas fa-edit"></i> Editar</a>
+											<!-- <a class="dropdown-item" href="#"><i class="fas fa-edit"></i> Editar</a>
+											<a class="dropdown-item" href="#"><i class="fas fa-user-plus"></i> Aprobar</a>-->
 											<a class="dropdown-item" href="#"><i class="fas fa-trash"></i> Eliminar</a>
-											<a class="dropdown-item" href="#">
-											<i class="fas fa-user-plus"></i> Aprobar</a>
 										</div>
 									</div>
 								</td>
@@ -176,6 +174,65 @@
 		</div>
 	</div>
 </div>
+
+<?php foreach ($gastos as $gasto): 
+	$divisa = ControladorFormularios::ctrVerDivisa('idDivisa', $gasto['divisa']);
+	$categoria = ControladorFormularios::ctrVerCategoria('idCategoria', $gasto['categoria']);
+	$importe = ControladorFormularios::formatearNumero($gasto['importeTotal'], $divisa['divisa']);
+	$documentos = ControladorFormularios::ctrVerDocGastos('Gastos_idGastos', $gasto['idGastos']);
+?>
+
+	<div
+	class="modal fade"
+	id="gasto<?php echo $gasto['idGastos'] ?>"
+	tabindex="-1"
+	role="dialog"
+	aria-labelledby="exampleModalLabel"
+	aria-hidden="true">
+		<div class="modal-dialog modal-xl" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<div class="row" style="flex-direction: column;">
+						<p class="titulo-tablero mb-0" id="exampleModalLabel">Información del gasto: </p>
+						<p class="subtitulo-sup" id="exampleModalLabel"><?php echo $gasto['nameVendedor']." (".$importe.")"; ?></p>
+					</div>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<?php foreach ($documentos as $documento): ?>
+						<div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+							<div class="card card-figure">
+								<figure class="figure">
+									<div class="figure-attachment">
+										<span class="fa-stack fa-lg">
+											<i class="fa fa-square fa-stack-2x text-primary"></i>
+										<?php if ($documento['tipo'] == 'excel'): ?>
+											<i class="fas fa-file-excel fa-stack-1x fa-inverse"></i>
+										<?php else: ?>
+											<i class="fa fa-file-pdf fa-stack-1x fa-inverse"></i>
+										<?php endif ?>
+										</span>
+									</div>
+									<figcaption class="figure-caption">
+										<ul class="list-inline d-flex text-muted mb-0">
+											<li class="list-inline-item text-truncate mr-auto">
+												<a href="view/Gastos/<?php echo $gasto['idGastos'] ?>/<?php echo $documento['nameDocumento'] ?>" download><?php echo $documento['nameDocumento'] ?></a>
+											</li>
+										</ul>
+									</figcaption>
+								</figure>
+							</div>
+						</div>
+						<?php endforeach ?>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+<?php endforeach ?>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.js"></script>
 

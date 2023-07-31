@@ -1477,6 +1477,11 @@ class ControladorFormularios{
 		return $VerGastos;
 	}
 
+	static public function ctrVerDocGastos($item, $valor){
+		$VerDocGastos = ModeloFormularios::mdlVerDocGastos($item, $valor);
+		return $VerDocGastos;
+	}
+
 	static public function formatearNumero($numero, $divisa) {
 		return '$ '. number_format($numero, 2, '.', ',') . ' ' . $divisa;
 	}
