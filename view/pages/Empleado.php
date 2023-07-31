@@ -37,7 +37,7 @@ $causaBaja = array(
 					<div class="text-center">
 						<h2 class="font-24 mb-0 hprofile"><?php echo ucwords($colaborador["name"]." ".$colaborador["lastname"]) ?></h2>
 						<p>Puesto: <?php echo $puesto['namePuesto'] ?> <br>
-							Salario: <?php echo $puesto['salario'] ?></p>
+							Salario: <?php echo ControladorFormularios::formatearNumero($puesto['salario'], 'MXN') ?></p>
 					</div>
 				</div>
 				<div class="card-body border-top">

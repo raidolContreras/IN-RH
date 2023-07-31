@@ -180,6 +180,17 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.js"></script>
 
 <script>
+
+const errorMessages = {
+  'error-categoria': 'El campo de categoría está vacío. Por favor, selecciona una categoría.',
+  'error-nameVendedor': 'El campo del nombre del vendedor está vacío. Por favor, ingresa el nombre del vendedor.',
+  'error-divisa': 'El campo de la divisa está vacío. Por favor, selecciona una divisa.',
+  'error-importeTotal': 'El campo de importe total está vacío. Por favor, ingresa el importe total.',
+  'error-importeIVA': 'El campo del importe del IVA está vacío. Por favor, ingresa el importe del IVA.',
+  'error-fechaDocumento': 'El campo de fecha de documento está vacío. Por favor, selecciona la fecha del documento.',
+  'error-descripcionGasto': 'El campo de descripción está vacío. Por favor, ingresa una descripción del gasto.'
+};
+
 Dropzone.autoDiscover = false;
 
 $(document).ready(function() {
@@ -207,61 +218,8 @@ $(document).ready(function() {
 			data: formData,
 			success: function(response) {
 				$("#form-result").val("");
-				if (response === 'error-categoria') {
-					$("#form-result").html(`
-						<div class='alert alert-danger' role="alert" id="alerta">
-						<i class="fas fa-exclamation-triangle"></i>
-						<b>Error</b>, el campo de categoria esta vacio, intenta nuevamente.
-						</div>
-						`);
-					deleteAlert();
-				} else if (response === 'error-nameVendedor') {
-					$("#form-result").html(`
-						<div class='alert alert-danger' role="alert" id="alerta">
-						<i class="fas fa-exclamation-triangle"></i>
-						<b>Error</b>, el campo del nombre del vendedor esta vacio, intenta nuevamente.
-						</div>
-						`);
-					deleteAlert();
-				} else if (response === 'error-divisa') {
-					$("#form-result").html(`
-						<div class='alert alert-danger' role="alert" id="alerta">
-						<i class="fas fa-exclamation-triangle"></i>
-						<b>Error</b>, el campo de la divisa esta vacio, intenta nuevamente.
-						</div>
-						`);
-					deleteAlert();
-				} else if (response === 'error-importeTotal') {
-					$("#form-result").html(`
-						<div class='alert alert-danger' role="alert" id="alerta">
-						<i class="fas fa-exclamation-triangle"></i>
-						<b>Error</b>, el campo de importe total esta vacio, intenta nuevamente.
-						</div>
-						`);
-					deleteAlert();
-				} else if (response === 'error-importeIVA') {
-					$("#form-result").html(`
-						<div class='alert alert-danger' role="alert" id="alerta">
-						<i class="fas fa-exclamation-triangle"></i>
-						<b>Error</b>, el campo del importe del IVA esta vacio, intenta nuevamente.
-						</div>
-						`);
-					deleteAlert();
-				} else if (response === 'error-fechaDocumento') {
-					$("#form-result").html(`
-						<div class='alert alert-danger' role="alert" id="alerta">
-						<i class="fas fa-exclamation-triangle"></i>
-						<b>Error</b>, el campo de fecha de documento esta vacio, intenta nuevamente.
-						</div>
-						`);
-					deleteAlert();
-				} else if (response === 'error-descripcionGasto') {
-					$("#form-result").html(`
-						<div class='alert alert-danger' role="alert" id="alerta">
-						<i class="fas fa-exclamation-triangle"></i>
-						<b>Error</b>, el campo de descripción esta vacio, intenta nuevamente.
-						</div>
-						`);
+				if (response === 'error-categoria' || response === 'error-nameVendedor' || response === 'error-divisa' ||response === 'error-importeTotal' || response === 'error-importeIVA' || response === 'error-fechaDocumento'|| response === 'error-descripcionGasto') {
+					showErrorAlert(response);
 					deleteAlert();
 				}else {
 					$("#form-result").html(`
@@ -312,6 +270,20 @@ function deleteAlert() {
 			alert.remove();
 		});
 	}, 1500);
+}
+
+// Función para mostrar el mensaje de error
+function showErrorAlert(response) {
+  const errorMessage = errorMessages[response];
+  if (errorMessage) {
+    $("#form-result").html(`
+      <div class='alert alert-danger' role="alert" id="alerta">
+        <i class="fas fa-exclamation-triangle"></i>
+        <b>Error</b>, ${errorMessage}
+      </div>
+    `);
+    deleteAlert();
+  }
 }
 
 </script>
