@@ -301,6 +301,7 @@ jQuery(document).ready(function($) {
                 paging: false,
                 fixedHeader: false,
                 fixedColumns: true,
+                ordering: false,
                 language: {
                     lengthMenu: 'Mostrar _MENU_ resultados por pagina',
                     zeroRecords: 'Sin resultados - lo siento',

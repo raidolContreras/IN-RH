@@ -603,24 +603,24 @@ class FormulariosAjax{
 		$numRespuestas = $this->numRespuestas;
 		$idPregunta = $this->idPregunta;
 
-	    // Convertir la cadena formData en un arreglo asociativo
-	    parse_str($formData, $respuestas);
-	    $respuesta = array();
-	    // Acceder a las respuestas individuales
-	    for ($i = 1; $i <= $numRespuestas; $i++) {
+		// Convertir la cadena formData en un arreglo asociativo
+		parse_str($formData, $respuestas);
+		$respuesta = array();
+		// Acceder a las respuestas individuales
+		for ($i = 1; $i <= $numRespuestas; $i++) {
 
-	        $correcta = isset($respuestas['Correcta' . $i]) ? 1 : 0;
-	        $respuesta[] = array(
-	        	'respuesta' => $respuestas['Respuesta' . $i],
-	        	'valor' => $correcta
-	        );
-	    }
-	    $datos = array(
-	    	'respuestas' => $respuesta,
-	    	'idPregunta' =>$idPregunta
-	    );
-	    $registrarRespuestas = ControladorFormularios::ctrRegistrarRespuestasMultiple($datos);
-	    echo $registrarRespuestas;
+			$correcta = isset($respuestas['Correcta' . $i]) ? 1 : 0;
+			$respuesta[] = array(
+				'respuesta' => $respuestas['Respuesta' . $i],
+				'valor' => $correcta
+			);
+		}
+		$datos = array(
+			'respuestas' => $respuesta,
+			'idPregunta' =>$idPregunta
+		);
+		$registrarRespuestas = ControladorFormularios::ctrRegistrarRespuestasMultiple($datos);
+		echo $registrarRespuestas;
 	}
 
 	public function registrarRespuestaAjax(){
@@ -628,14 +628,14 @@ class FormulariosAjax{
 		$Correcta = $this->Correcta;
 		$idPregunta = $this->idPregunta;
 
-	    $datos = array(
-        	'respuesta' => $Respuesta,
-        	'valor' => $Correcta,
-	    	'idPregunta' =>$idPregunta
-        );
+		$datos = array(
+			'respuesta' => $Respuesta,
+			'valor' => $Correcta,
+			'idPregunta' =>$idPregunta
+		);
 
-	    $registrarRespuesta = ControladorFormularios::ctrRegistrarRespuesta($datos);
-	    echo $registrarRespuesta;
+		$registrarRespuesta = ControladorFormularios::ctrRegistrarRespuesta($datos);
+		echo $registrarRespuesta;
 	}
 
 	public function crearRespuestaEscalaAjax(){
@@ -646,21 +646,21 @@ class FormulariosAjax{
 			$Respuesta = 'binario';
 		}
 
-	    $datos = array(
-        	'respuesta' => $Respuesta,
-        	'valor' => $Correcta,
-	    	'idPregunta' =>$idPregunta
-        );
+		$datos = array(
+			'respuesta' => $Respuesta,
+			'valor' => $Correcta,
+			'idPregunta' =>$idPregunta
+		);
 
-	    $registrarRespuesta = ControladorFormularios::ctrRegistrarRespuesta($datos);
-	    echo $registrarRespuesta;
+		$registrarRespuesta = ControladorFormularios::ctrRegistrarRespuesta($datos);
+		echo $registrarRespuesta;
 	}
 
 	public function eliminarRespuestaAjax(){
 		$idRespuesta = $this->idRespuesta;
 
-	    $eliminarRespuesta = ModeloFormularios::mdlEliminarRespuesta($idRespuesta);
-	    print_r($eliminarRespuesta);
+		$eliminarRespuesta = ModeloFormularios::mdlEliminarRespuesta($idRespuesta);
+		print_r($eliminarRespuesta);
 	}
 
 	public function crearIniciarExamenAjax(){
@@ -672,8 +672,8 @@ class FormulariosAjax{
 			"idEmpleado" => $idEmpleado
 		);
 
-	    $iniciarExamen = ModeloFormularios::mdlIniciarExamen($datos);
-	    echo $iniciarExamen;
+		$iniciarExamen = ModeloFormularios::mdlIniciarExamen($datos);
+		echo $iniciarExamen;
 	}
 
 	public function inscribirEmpleadosExamenesAjax(){
@@ -711,11 +711,11 @@ class FormulariosAjax{
 		);
 		$buscarRespuestas = ModeloFormularios::mdlBuscarRespuestas($datos);
 		if (empty($buscarRespuestas)) {
-	    	$responderPreguntaExamen = ModeloFormularios::mdlResponderPreguntaExamen($datos);
+			$responderPreguntaExamen = ModeloFormularios::mdlResponderPreguntaExamen($datos);
 		}else{
 			$responderPreguntaExamen = ModeloFormularios::mdlActualizarPreguntaExamen($datos);
 		}
-	    echo $responderPreguntaExamen;
+		echo $responderPreguntaExamen;
 	}
 
 	public function terminarExamenAjax(){
@@ -729,8 +729,8 @@ class FormulariosAjax{
 			"idEmpleado" => $idEmpleado
 		);
 
-	    $terminarExamen = ControladorFormularios::ctrTerminarExamen($datos);
-	    echo $terminarExamen;
+		$terminarExamen = ControladorFormularios::ctrTerminarExamen($datos);
+		echo $terminarExamen;
 	}
 
 	public function crearExcelCalificacionesAjax(){
@@ -762,6 +762,31 @@ class FormulariosAjax{
 		$eliminarCategoria = $this->eliminarCategoria;
 		$delCategoria = ControladorFormularios::ctrDelCategoria($eliminarCategoria);
 		echo $delCategoria;
+	}
+
+	public function addGastoAjax(){
+		$categoria = $this->categoria;
+		$nameVendedor = $this->nameVendedor;
+		$divisa = $this->divisa;
+		$importeTotal = $this->importeTotal;
+		$importeIVA = $this->importeIVA;
+		$fechaDocumento = $this->fechaDocumento;
+		$descripcionGasto = $this->descripcionGasto;
+		$referenciaInterna = $this->referenciaInterna;
+
+		$datos = array(
+			"categoria" => $categoria,
+			"nameVendedor" => $nameVendedor,
+			"divisa" => $divisa,
+			"importeTotal" => $importeTotal,
+			"importeIVA" => $importeIVA,
+			"fechaDocumento" => $fechaDocumento,
+			"descripcionGasto" => $descripcionGasto,
+			"referenciaInterna" => $referenciaInterna
+		);
+
+		$addGasto = ControladorFormularios::ctrAddGasto($datos);
+		echo $addGasto;
 	}
 
 }
@@ -1239,14 +1264,14 @@ if (isset($_POST['titulo'])) {
 
 if (isset($_POST['numRespuestas'])) {
 	$formData = $_POST['formData'];
-    $numRespuestas = $_POST['numRespuestas'];
-    $idPregunta = $_POST['idPregunta'];
+	$numRespuestas = $_POST['numRespuestas'];
+	$idPregunta = $_POST['idPregunta'];
 
-    $registrarRespuestas = new FormulariosAjax();
-    $registrarRespuestas -> formData = $formData;
-    $registrarRespuestas -> numRespuestas = $numRespuestas;
-    $registrarRespuestas -> idPregunta = $idPregunta;
-    $registrarRespuestas -> registrarRespuestasMultipleAjax();
+	$registrarRespuestas = new FormulariosAjax();
+	$registrarRespuestas -> formData = $formData;
+	$registrarRespuestas -> numRespuestas = $numRespuestas;
+	$registrarRespuestas -> idPregunta = $idPregunta;
+	$registrarRespuestas -> registrarRespuestasMultipleAjax();
 }
 
 if (isset($_POST['idAddRespuesta'])) {
@@ -1256,21 +1281,21 @@ if (isset($_POST['idAddRespuesta'])) {
 	}else{
 		$Correcta = 0;
 	}
-    $idPregunta = $_POST['idAddRespuesta'];
+	$idPregunta = $_POST['idAddRespuesta'];
 
-    $registrarRespuesta = new FormulariosAjax();
-    $registrarRespuesta -> Respuesta = $Respuesta;
-    $registrarRespuesta -> Correcta = $Correcta;
-    $registrarRespuesta -> idPregunta = $idPregunta;
-    $registrarRespuesta -> registrarRespuestaAjax();
+	$registrarRespuesta = new FormulariosAjax();
+	$registrarRespuesta -> Respuesta = $Respuesta;
+	$registrarRespuesta -> Correcta = $Correcta;
+	$registrarRespuesta -> idPregunta = $idPregunta;
+	$registrarRespuesta -> registrarRespuestaAjax();
 }
 
 if (isset($_POST['eliminarRespuesta'])) {
 	$idRespuesta = $_POST['eliminarRespuesta'];
 
-    $eliminarRespuesta = new FormulariosAjax();
-    $eliminarRespuesta -> idRespuesta = $idRespuesta;
-    $eliminarRespuesta -> eliminarRespuestaAjax();
+	$eliminarRespuesta = new FormulariosAjax();
+	$eliminarRespuesta -> idRespuesta = $idRespuesta;
+	$eliminarRespuesta -> eliminarRespuestaAjax();
 }
 
 if (isset($_POST['empleados_examenes'])) {
@@ -1281,10 +1306,10 @@ if (isset($_POST['empleados_examenes'])) {
 		$empleados = array();
 	}
 
-    $empleados_has_examenes = new FormulariosAjax();
-    $empleados_has_examenes -> idExamen = $idExamen;
-    $empleados_has_examenes -> empleados = $empleados;
-    $empleados_has_examenes -> inscribirEmpleadosExamenesAjax();
+	$empleados_has_examenes = new FormulariosAjax();
+	$empleados_has_examenes -> idExamen = $idExamen;
+	$empleados_has_examenes -> empleados = $empleados;
+	$empleados_has_examenes -> inscribirEmpleadosExamenesAjax();
 }
 
 if (isset($_POST['idPreguntaEscala'])) {
@@ -1294,18 +1319,18 @@ if (isset($_POST['idPreguntaEscala'])) {
 		$escalaRespuestas = $_POST['binario'];
 	}
 
-    $crearRespuesta = new FormulariosAjax();
-    $crearRespuesta -> idPreguntaEscala = $idPreguntaEscala;
-    $crearRespuesta -> escalaRespuestas = $escalaRespuestas;
-    $crearRespuesta -> crearRespuestaEscalaAjax();
+	$crearRespuesta = new FormulariosAjax();
+	$crearRespuesta -> idPreguntaEscala = $idPreguntaEscala;
+	$crearRespuesta -> escalaRespuestas = $escalaRespuestas;
+	$crearRespuesta -> crearRespuestaEscalaAjax();
 }
 
 if (isset($_POST['iniciar_examen'])) {
 	$idExamen = $_POST['iniciar_examen'];
 
-    $iniciarExamen = new FormulariosAjax();
-    $iniciarExamen -> idExamen = $idExamen;
-    $iniciarExamen -> crearIniciarExamenAjax();
+	$iniciarExamen = new FormulariosAjax();
+	$iniciarExamen -> idExamen = $idExamen;
+	$iniciarExamen -> crearIniciarExamenAjax();
 }
 
 if (isset($_POST['preguntaId'])) {
@@ -1313,11 +1338,11 @@ if (isset($_POST['preguntaId'])) {
 	$respuestaExamen = $_POST['respuestaExamen'];
 	$examen = $_POST['examen'];
 
-    $responderPreguntaExamen = new FormulariosAjax();
-    $responderPreguntaExamen -> preguntaId = $preguntaId;
-    $responderPreguntaExamen -> respuestaExamen = $respuestaExamen;
-    $responderPreguntaExamen -> examen = $examen;
-    $responderPreguntaExamen -> responderPreguntaExamenAjax();
+	$responderPreguntaExamen = new FormulariosAjax();
+	$responderPreguntaExamen -> preguntaId = $preguntaId;
+	$responderPreguntaExamen -> respuestaExamen = $respuestaExamen;
+	$responderPreguntaExamen -> examen = $examen;
+	$responderPreguntaExamen -> responderPreguntaExamenAjax();
 }
 
 if (isset($_POST['tiempoTerminado'])) {
@@ -1325,10 +1350,10 @@ if (isset($_POST['tiempoTerminado'])) {
 		$examen = $_POST['examen'];
 		$timeMax = $_POST['timeMax'];
 
-	    $terminarExamen = new FormulariosAjax();
-	    $terminarExamen -> examen = $examen;
-	    $terminarExamen -> timeMax = $timeMax;
-	    $terminarExamen -> terminarExamenAjax();
+		$terminarExamen = new FormulariosAjax();
+		$terminarExamen -> examen = $examen;
+		$terminarExamen -> timeMax = $timeMax;
+		$terminarExamen -> terminarExamenAjax();
 	}
 }
 
@@ -1337,51 +1362,154 @@ if (isset($_POST['examenFinalizado'])) {
 		$examen = $_POST['examen'];
 		$timeMax = $_POST['timeMax'];
 
-	    $terminarExamen = new FormulariosAjax();
-	    $terminarExamen -> examen = $examen;
-	    $terminarExamen -> timeMax = $timeMax;
-	    $terminarExamen -> terminarExamenAjax();
+		$terminarExamen = new FormulariosAjax();
+		$terminarExamen -> examen = $examen;
+		$terminarExamen -> timeMax = $timeMax;
+		$terminarExamen -> terminarExamenAjax();
 	}
 }
 
 if (isset($_POST['genExcelExamen'])) {
 	$idExamen = $_POST['genExcelExamen'];
 
-    $responderPreguntaExamen = new FormulariosAjax();
-    $responderPreguntaExamen -> idExamen = $idExamen;
-    $responderPreguntaExamen -> crearExcelCalificacionesAjax();
+	$responderPreguntaExamen = new FormulariosAjax();
+	$responderPreguntaExamen -> idExamen = $idExamen;
+	$responderPreguntaExamen -> crearExcelCalificacionesAjax();
 }
 
 if (isset($_POST['nameDivisa'])) {
 	$nameDivisa = $_POST['nameDivisa'];
 	$divisa = mb_strtoupper($_POST['divisa']);
 
-    $addDivisa = new FormulariosAjax();
-    $addDivisa -> nameDivisa = $nameDivisa;
-    $addDivisa -> divisa = $divisa;
-    $addDivisa -> addDivisaAjax();
+	$addDivisa = new FormulariosAjax();
+	$addDivisa -> nameDivisa = $nameDivisa;
+	$addDivisa -> divisa = $divisa;
+	$addDivisa -> addDivisaAjax();
 }
 
 if (isset($_POST['eliminarDivisa'])) {
 	$eliminarDivisa = $_POST['eliminarDivisa'];
 
-    $delDivisa = new FormulariosAjax();
-    $delDivisa -> eliminarDivisa = $eliminarDivisa;
-    $delDivisa -> delDivisaAjax();
+	$delDivisa = new FormulariosAjax();
+	$delDivisa -> eliminarDivisa = $eliminarDivisa;
+	$delDivisa -> delDivisaAjax();
 }
 
 if (isset($_POST['nameCategoria'])) {
 	$nameCategoria = $_POST['nameCategoria'];
 
-    $addCategoria = new FormulariosAjax();
-    $addCategoria -> nameCategoria = $nameCategoria;
-    $addCategoria -> addCategoriaAjax();
+	$addCategoria = new FormulariosAjax();
+	$addCategoria -> nameCategoria = $nameCategoria;
+	$addCategoria -> addCategoriaAjax();
 }
 
 if (isset($_POST['eliminarCategoria'])) {
 	$eliminarCategoria = $_POST['eliminarCategoria'];
 
-    $delCategoria = new FormulariosAjax();
-    $delCategoria -> eliminarCategoria = $eliminarCategoria;
-    $delCategoria -> delCategoriaAjax();
+	$delCategoria = new FormulariosAjax();
+	$delCategoria -> eliminarCategoria = $eliminarCategoria;
+	$delCategoria -> delCategoriaAjax();
+}
+
+if (isset($_POST['nameVendedor'])) {
+	if ($_POST['categoria'] == null) {
+		echo "error-categoria";
+	}elseif ($_POST['nameVendedor'] == null) {
+		echo "error-nameVendedor";
+	}elseif ($_POST['divisa'] == null) {
+		echo "error-divisa";
+	}elseif ($_POST['importeTotal'] == null) {
+		echo "error-importeTotal";
+	}elseif ($_POST['importeIVA'] == null) {
+		echo "error-importeIVA";
+	}elseif ($_POST['fechaDocumento'] == null) {
+		echo "error-fechaDocumento";
+	}elseif ($_POST['descripcionGasto'] == null) {
+		echo "error-descripcionGasto";
+	}else{
+		// Recuperar los datos del formulario
+		$categoria = $_POST['categoria'];
+		$nameVendedor = $_POST['nameVendedor'];
+		$divisa = $_POST['divisa'];
+		$importeTotal = $_POST['importeTotal'];
+		$importeIVA = $_POST['importeIVA'];
+		$fechaDocumento = $_POST['fechaDocumento'];
+		$descripcionGasto = $_POST['descripcionGasto'];
+		$referenciaInterna = $_POST['referenciaInterna'];
+
+		$addGasto = new FormulariosAjax();
+		$addGasto -> categoria = $categoria;
+		$addGasto -> nameVendedor = $nameVendedor;
+		$addGasto -> divisa = $divisa;
+		$addGasto -> importeTotal = $importeTotal;
+		$addGasto -> importeIVA = $importeIVA;
+		$addGasto -> fechaDocumento = $fechaDocumento;
+		$addGasto -> descripcionGasto = $descripcionGasto;
+		$addGasto -> referenciaInterna = $referenciaInterna;
+		$addGasto -> addGastoAjax();
+	}
+}
+
+if (isset($_POST['idGasto'])) {
+	$idGasto = $_POST['idGasto'];
+
+	// Iterar sobre el arreglo de archivos
+	foreach ($_FILES['file']['name'] as $index => $fileName) {
+		$targetDir = "../view/Gastos/".$idGasto. "/";
+
+		$baseName = basename($fileName);
+
+		if (!file_exists($targetDir)) {
+			// Crear la carpeta
+			mkdir($targetDir, 0777, true); // Los permisos 0777 aseguran que la carpeta tenga todos los permisos
+		}
+
+		$targetFilePath = $targetDir .'/'. $baseName;
+		$fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
+		if ($fileType == 'pdf') {
+			$tipo = 'pdf';
+		} else {
+			$tipo = 'excel';
+		}
+
+		$uploadOk = 1;
+		$i = 1;
+
+		// Verificar si el archivo ya existe y renombrarlo si es necesario
+		while (file_exists($targetFilePath)) {
+			$baseName = pathinfo($fileName, PATHINFO_FILENAME) . "($i)." . $fileType;
+			$targetFilePath = $targetDir . $baseName;
+			$i++;
+		}
+
+		// Verificar el tamaño máximo del archivo (10MB)
+		if ($_FILES["file"]["size"][$index] > 10 * 1024 * 1024) {
+			echo "error_tamano";
+			$uploadOk = 0;
+		}
+
+		// Verificar los tipos de archivo permitidos (.xlsx, .xls, .pdf)
+		$allowedExtensions = array("xlsx", "xls", "pdf");
+		if (!in_array($fileType, $allowedExtensions)) {
+			echo "error_tipo";
+			$uploadOk = 0;
+		}
+
+		if ($uploadOk == 0) {
+			echo "error";
+		} else {
+			// Mover el archivo cargado al directorio de destino
+			if (move_uploaded_file($_FILES["file"]["tmp_name"][$index], $targetFilePath)) {
+				$data = array(
+					"Gastos_idGastos" => $idGasto,
+					"tipo" => $tipo,
+					"nameDocumento" => $baseName
+				);
+				$registrarDocumentosGastos = ControladorFormularios::ctrRegistrarDocumentosGastos($data);
+				echo $registrarDocumentosGastos;
+			} else {
+				echo "error";
+			}
+		}
+	}
 }

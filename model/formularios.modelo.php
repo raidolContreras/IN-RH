@@ -2513,12 +2513,10 @@ static public function mdlImagenNoticia($id, $name)
 			return $stmt->fetchAll();
 
 		}else{
-			$sql = "SELECT * FROM divisas WHERE $item = :$item";
+			$sql = "SELECT * FROM divisas WHERE $item = :item";
 
 			$stmt = $pdo->prepare($sql);
-			$stmt->bindParam(':'.$item, $value);
-
-			$stmt = $pdo->prepare($sql);
+			$stmt->bindParam(':item', $value, PDO::PARAM_INT); // Ajusta el enlace del parámetro aquí
 
 			$stmt->execute();
 			return $stmt->fetch();
@@ -2577,8 +2575,6 @@ static public function mdlImagenNoticia($id, $name)
 			$stmt = $pdo->prepare($sql);
 			$stmt->bindParam(':'.$item, $value);
 
-			$stmt = $pdo->prepare($sql);
-
 			$stmt->execute();
 			return $stmt->fetch();
 		}
@@ -2598,6 +2594,74 @@ static public function mdlImagenNoticia($id, $name)
 			return 'ok';
 		}else{
 			return "error";
+		}
+
+		$stmt->close();
+		$stmt = null;
+	}
+
+	static public function mdlAddGasto($datos){
+		$pdo =Conexion::conectar();
+		$sql = "INSERT INTO gastos(categoria, nameVendedor, divisa, importeTotal, importeIVA, fechaDocumento, descripcionGasto, referenciaInterna) VALUES (:categoria,:nameVendedor,:divisa,:importeTotal,:importeIVA,:fechaDocumento,:descripcionGasto,:referenciaInterna)";
+
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':categoria', $datos['categoria'], PDO::PARAM_INT);
+		$stmt->bindParam(':nameVendedor', $datos['nameVendedor'], PDO::PARAM_STR);
+		$stmt->bindParam(':divisa', $datos['divisa'], PDO::PARAM_INT);
+		$stmt->bindParam(':importeTotal', $datos['importeTotal'], PDO::PARAM_STR);
+		$stmt->bindParam(':importeIVA', $datos['importeIVA'], PDO::PARAM_STR);
+		$stmt->bindParam(':fechaDocumento', $datos['fechaDocumento'], PDO::PARAM_STR);
+		$stmt->bindParam(':descripcionGasto', $datos['descripcionGasto'], PDO::PARAM_STR);
+		$stmt->bindParam(':referenciaInterna', $datos['referenciaInterna'], PDO::PARAM_STR);
+
+		if ($stmt->execute()) {
+			return $pdo->lastInsertId();
+
+		}else{
+			return 'error';
+		}
+
+		$stmt->close();
+		$stmt = null;
+	}
+
+	static public function mdlRegistrarDocumentosGastos($datos){
+		$pdo =Conexion::conectar();
+		$sql = "INSERT INTO documentos_gastos(Gastos_idGastos, tipo, nameDocumento) VALUES (:Gastos_idGastos,:tipo,:nameDocumento)";
+
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':Gastos_idGastos', $datos['Gastos_idGastos'], PDO::PARAM_INT);
+		$stmt->bindParam(':tipo', $datos['tipo'], PDO::PARAM_STR);
+		$stmt->bindParam(':nameDocumento', $datos['nameDocumento'], PDO::PARAM_STR);
+
+		if ($stmt->execute()) {
+			return "ok"; //obtener el ID del empleado recién insertado
+		}else{
+			return 'error';
+		}
+
+		$stmt->close();
+		$stmt = null;
+	}
+
+	static public function mdlVerGastos($item, $valor){
+		$pdo =Conexion::conectar();
+		if ($item == null && $valor == null) {
+			$sql = "SELECT * FROM gastos ORDER BY idGastos ASC";
+
+			$stmt = $pdo->prepare($sql);
+
+			$stmt->execute();
+			return $stmt->fetchAll();
+
+		}else{
+			$sql = "SELECT * FROM gastos WHERE $item = :$item";
+			$stmt = $pdo->prepare($sql);
+			
+			$stmt->bindParam(':'.$item, $valor);
+
+			$stmt->execute();
+			return $stmt->fetch();
 		}
 
 		$stmt->close();

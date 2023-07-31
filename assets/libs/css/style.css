@@ -4116,6 +4116,11 @@ Pills vertical
 	background-color: #da0419;
 }
 
+.badge-danger-dot {
+	background-color: #EF8690;
+	color: #4E4E4E;
+}
+
 .badge-danger[href]:focus,
 .badge-danger[href]:hover {
 	color: #fff;
@@ -4128,6 +4133,11 @@ Pills vertical
 	color: #2e2f39;
 }
 
+.badge-warning-dot {
+	background-color: #F6DC8D;
+	color: #2e2f39;
+}
+
 .badge-warning[href]:focus,
 .badge-warning[href]:hover {
 	color: #2e2f39;
@@ -4137,6 +4147,11 @@ Pills vertical
 
 .badge-info {
 	background-color: #0998b0;
+}
+
+.badge-info-dot {
+	background-color: #89DCEA;
+	color: #4E4E4E;
 }
 
 .badge-info[href]:focus,

@@ -1,3 +1,4 @@
+<?php $gastos = ControladorFormularios::ctrVerGastos(null, null); ?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.css" />
 <style>
 	.dropzone {
@@ -33,12 +34,38 @@
 							</tr>
 						</thead>
 						<tbody>
+							<?php foreach ($gastos as $gasto):
+								$divisa = ControladorFormularios::ctrVerDivisa('idDivisa', $gasto['divisa']);
+								$categoria = ControladorFormularios::ctrVerCategoria('idCategoria', $gasto['categoria']);
+							?>
 							<tr>
-								<td>Juanito</td>
-								<td>17/07/2023</td>
-								<td>$ 2,250.00</td>
-								<td>Combustible</td>
-								<td><span class="badge badge-success-dot"><span class="badge-dot badge-success"></span>Aprobado</span></td>
+								<td><?php echo $gasto['nameVendedor'] ?></td>
+								<td><?php echo date('d/m/Y', strtotime($gasto['fechaDocumento'])) ?></td>
+								<td><?php echo ControladorFormularios::formatearNumero($gasto['importeTotal'], $divisa['divisa']) ?></td>
+								<td><?php echo $categoria['nameCategoria'] ?></td>
+								<?php 
+									switch ($gasto['status']) {
+										case 0:
+											echo '<td><span class="badge badge-warning-dot"><span class="badge-dot badge-warning"></span>Pendiente</span></td>';
+											break;
+										
+										case 1:
+											echo '<td><span class="badge badge-success-dot"><span class="badge-dot badge-success"></span>Aprobado</span></td>';
+											break;
+										
+										case 2:
+											echo '<td><span class="badge badge-danger-dot"><span class="badge-dot badge-danger"></span>Rechazado</span></td>';
+											break;
+										
+										case 3:
+											echo '<td><span class="badge badge-info-dot"><span class="badge-dot badge-info"></span>Pagado</span></td>';
+											break;
+										
+										default:
+											echo '<td><span class="badge badge-danger">Error</span></td>';
+											break;
+									}
+								?>
 								<td>
 									<div class="dropdown">
 										<button class="btn btn-link" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -53,6 +80,7 @@
 									</div>
 								</td>
 							</tr>
+							<?php endforeach ?>
 						</tbody>
 					</table>
 				</div>
@@ -179,7 +207,63 @@ $(document).ready(function() {
 			data: formData,
 			success: function(response) {
 				$("#form-result").val("");
-				if (response !== 'error') {
+				if (response === 'error-categoria') {
+					$("#form-result").html(`
+						<div class='alert alert-danger' role="alert" id="alerta">
+						<i class="fas fa-exclamation-triangle"></i>
+						<b>Error</b>, el campo de categoria esta vacio, intenta nuevamente.
+						</div>
+						`);
+					deleteAlert();
+				} else if (response === 'error-nameVendedor') {
+					$("#form-result").html(`
+						<div class='alert alert-danger' role="alert" id="alerta">
+						<i class="fas fa-exclamation-triangle"></i>
+						<b>Error</b>, el campo del nombre del vendedor esta vacio, intenta nuevamente.
+						</div>
+						`);
+					deleteAlert();
+				} else if (response === 'error-divisa') {
+					$("#form-result").html(`
+						<div class='alert alert-danger' role="alert" id="alerta">
+						<i class="fas fa-exclamation-triangle"></i>
+						<b>Error</b>, el campo de la divisa esta vacio, intenta nuevamente.
+						</div>
+						`);
+					deleteAlert();
+				} else if (response === 'error-importeTotal') {
+					$("#form-result").html(`
+						<div class='alert alert-danger' role="alert" id="alerta">
+						<i class="fas fa-exclamation-triangle"></i>
+						<b>Error</b>, el campo de importe total esta vacio, intenta nuevamente.
+						</div>
+						`);
+					deleteAlert();
+				} else if (response === 'error-importeIVA') {
+					$("#form-result").html(`
+						<div class='alert alert-danger' role="alert" id="alerta">
+						<i class="fas fa-exclamation-triangle"></i>
+						<b>Error</b>, el campo del importe del IVA esta vacio, intenta nuevamente.
+						</div>
+						`);
+					deleteAlert();
+				} else if (response === 'error-fechaDocumento') {
+					$("#form-result").html(`
+						<div class='alert alert-danger' role="alert" id="alerta">
+						<i class="fas fa-exclamation-triangle"></i>
+						<b>Error</b>, el campo de fecha de documento esta vacio, intenta nuevamente.
+						</div>
+						`);
+					deleteAlert();
+				} else if (response === 'error-descripcionGasto') {
+					$("#form-result").html(`
+						<div class='alert alert-danger' role="alert" id="alerta">
+						<i class="fas fa-exclamation-triangle"></i>
+						<b>Error</b>, el campo de descripción esta vacio, intenta nuevamente.
+						</div>
+						`);
+					deleteAlert();
+				}else {
 					$("#form-result").html(`
 						<div class='alert alert-success' role="alert" id="alerta">
 						<i class="fas fa-check-circle"></i>
@@ -191,18 +275,22 @@ $(document).ready(function() {
 					idGasto = response;
 
 					myDropzone.processQueue();
+					// Vaciar los campos del formulario
+          $("#categoria").val("");
+          $("#nameVendedor").val("");
+          $("#divisa").val("");
+          $("#importeTotal").val("");
+          $("#importeIVA").val("");
+          $("#fechaDocumento").val("");
+          $("#descripcionGasto").val("");
+          $("#referenciaInterna").val("");
+
+          // Limpiar el Dropzone
+          myDropzone.removeAllFiles();
 					deleteAlert();
 					setTimeout(function() {
 						location.href = 'Gastos';
 					}, 900);
-				} else {
-					$("#form-result").html(`
-						<div class='alert alert-danger' role="alert" id="alerta">
-						<i class="fas fa-exclamation-triangle"></i>
-						<b>Error</b>, no se pudo subir el gasto, intenta nuevamente.
-						</div>
-						`);
-					deleteAlert();
 				}
 			}
 		});

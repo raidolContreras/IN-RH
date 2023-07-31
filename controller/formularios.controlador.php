@@ -1462,5 +1462,25 @@ class ControladorFormularios{
 		return $delCategoria;
 	}
 
+	static public function ctrAddGasto($datos){
+		$addGasto = ModeloFormularios::mdlAddGasto($datos);
+		return $addGasto;
+	}
+
+	static public function ctrRegistrarDocumentosGastos($datos){
+		$addDocGasto = ModeloFormularios::mdlRegistrarDocumentosGastos($datos);
+		return $addDocGasto;
+	}
+
+	static public function ctrVerGastos($item, $valor){
+		$VerGastos = ModeloFormularios::mdlVerGastos($item, $valor);
+		return $VerGastos;
+	}
+
+	static public function formatearNumero($numero, $divisa) {
+		return '$ '. number_format($numero, 2, '.', ',') . ' ' . $divisa;
+	}
+
+
 	/*---------- Fin de ControladorFormularios ---------- */
 }
