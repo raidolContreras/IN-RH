@@ -187,7 +187,7 @@ $(document).ready(function() {
 			data: delData,
 			success: function(response) {
 				$("#form-result").val("");
-				if (response === 'ok') {
+				if (response === 'ok' || response === 'No se pudo eliminar la carpeta o la carpeta no existe.') {
 					$("#form-result").html(`
 						<div class='alert alert-success' role="alert" id="alerta">
 							<i class="fas fa-check-circle"></i>

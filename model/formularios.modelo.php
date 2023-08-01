@@ -2709,5 +2709,30 @@ static public function mdlImagenNoticia($id, $name)
 		$stmt = null;
 	}
 
+	static public function mdlUpdateGasto($datos){
+		$pdo = Conexion::conectar();
+		$sql = "UPDATE gastos SET categoria = :categoria, nameVendedor = :nameVendedor, divisa = :divisa, importeTotal = :importeTotal, importeIVA = :importeIVA, fechaDocumento = :fechaDocumento, descripcionGasto = :descripcionGasto, referenciaInterna = :referenciaInterna WHERE idGastos = :idGastos";
+
+		$stmt = $pdo -> prepare($sql);
+		$stmt->bindParam(':categoria', $datos['categoria'], PDO::PARAM_INT);
+		$stmt->bindParam(':nameVendedor', $datos['nameVendedor'], PDO::PARAM_STR);
+		$stmt->bindParam(':divisa', $datos['divisa'], PDO::PARAM_INT);
+		$stmt->bindParam(':importeTotal', $datos['importeTotal'], PDO::PARAM_STR);
+		$stmt->bindParam(':importeIVA', $datos['importeIVA'], PDO::PARAM_STR);
+		$stmt->bindParam(':fechaDocumento', $datos['fechaDocumento'], PDO::PARAM_STR);
+		$stmt->bindParam(':descripcionGasto', $datos['descripcionGasto'], PDO::PARAM_STR);
+		$stmt->bindParam(':referenciaInterna', $datos['referenciaInterna'], PDO::PARAM_STR);
+		$stmt->bindParam(':idGastos', $datos['idGastos'], PDO::PARAM_INT);
+
+		if ($stmt->execute()) {
+			return 'ok';
+		}else{
+			return "error";
+		}
+
+		$stmt->close();
+		$stmt = null;
+	}
+
 	/*---------- Fin de ModeloFormularios ---------- */
 }

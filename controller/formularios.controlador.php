@@ -1499,25 +1499,30 @@ class ControladorFormularios{
 	}
 
 	static public function eliminarCarpeta($carpeta) {
-    if (!is_dir($carpeta)) {
-        return false; // La ruta no es una carpeta válida
-    }
+	    if (!is_dir($carpeta)) {
+	        return false; // La ruta no es una carpeta válida
+	    }
 
-    // Obtener una lista de los archivos y subdirectorios dentro de la carpeta
-    $archivos = glob($carpeta . '/*');
+	    // Obtener una lista de los archivos y subdirectorios dentro de la carpeta
+	    $archivos = glob($carpeta . '/*');
 
-    // Eliminar todos los archivos dentro de la carpeta
-    foreach ($archivos as $archivo) {
-        if (is_file($archivo)) {
-            unlink($archivo); // Eliminar el archivo
-        } elseif (is_dir($archivo)) {
-            eliminarCarpeta($archivo); // Eliminar subcarpeta (llamada recursiva)
-        }
-    }
+	    // Eliminar todos los archivos dentro de la carpeta
+	    foreach ($archivos as $archivo) {
+	        if (is_file($archivo)) {
+	            unlink($archivo); // Eliminar el archivo
+	        } elseif (is_dir($archivo)) {
+	            eliminarCarpeta($archivo); // Eliminar subcarpeta (llamada recursiva)
+	        }
+	    }
 
-    // Eliminar la carpeta vacía
-    return rmdir($carpeta);
-}
+	    // Eliminar la carpeta vacía
+	    return rmdir($carpeta);
+	}
+
+	static public function ctrUpdateGasto($datos){
+		$updateGasto = ModeloFormularios::mdlUpdateGasto($datos);
+		return $updateGasto;
+	}
 
 
 	/*---------- Fin de ControladorFormularios ---------- */

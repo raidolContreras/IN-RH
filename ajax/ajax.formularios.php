@@ -795,6 +795,33 @@ class FormulariosAjax{
 		echo $delGasto;
 	}
 
+	public function updateGastoAjax(){
+		$idGastos = $this->idGastos;
+		$categoria = $this->categoria;
+		$nameVendedor = $this->nameVendedor;
+		$divisa = $this->divisa;
+		$importeTotal = $this->importeTotal;
+		$importeIVA = $this->importeIVA;
+		$fechaDocumento = $this->fechaDocumento;
+		$descripcionGasto = $this->descripcionGasto;
+		$referenciaInterna = $this->referenciaInterna;
+
+		$datos = array(
+			"idGastos" => $idGastos,
+			"categoria" => $categoria,
+			"nameVendedor" => $nameVendedor,
+			"divisa" => $divisa,
+			"importeTotal" => $importeTotal,
+			"importeIVA" => $importeIVA,
+			"fechaDocumento" => $fechaDocumento,
+			"descripcionGasto" => $descripcionGasto,
+			"referenciaInterna" => $referenciaInterna
+		);
+
+		$updateGasto = ControladorFormularios::ctrUpdateGasto($datos);
+		echo $updateGasto;
+	}
+
 }
 
 if(isset($_POST["validate"])){
@@ -1526,4 +1553,45 @@ if (isset($_POST['eliminarGasto'])) {
 	$eliminarGasto = new FormulariosAjax();
 	$eliminarGasto -> idGastos = $idGastos;
 	$eliminarGasto -> delGastoAjax();
+}
+
+if (isset($_POST['actualizarGastoUpdate'])) {
+	if ($_POST['categoriaUpdate'] == null) {
+		echo "error-categoria";
+	}elseif ($_POST['nameVendedorUpdate'] == null) {
+		echo "error-nameVendedor";
+	}elseif ($_POST['divisaUpdate'] == null) {
+		echo "error-divisa";
+	}elseif ($_POST['importeTotalUpdate'] == null) {
+		echo "error-importeTotal";
+	}elseif ($_POST['importeIVAUpdate'] == null) {
+		echo "error-importeIVA";
+	}elseif ($_POST['fechaDocumentoUpdate'] == null) {
+		echo "error-fechaDocumento";
+	}elseif ($_POST['descripcionGastoUpdate'] == null) {
+		echo "error-descripcionGasto";
+	}else{
+		// Recuperar los datos del formulario
+		$idGastos = $_POST['actualizarGastoUpdate'];
+		$categoria = $_POST['categoriaUpdate'];
+		$nameVendedor = $_POST['nameVendedorUpdate'];
+		$divisa = $_POST['divisaUpdate'];
+		$importeTotal = $_POST['importeTotalUpdate'];
+		$importeIVA = $_POST['importeIVAUpdate'];
+		$fechaDocumento = $_POST['fechaDocumentoUpdate'];
+		$descripcionGasto = $_POST['descripcionGastoUpdate'];
+		$referenciaInterna = $_POST['referenciaInternaUpdate'];
+
+		$updateGasto = new FormulariosAjax();
+		$updateGasto -> idGastos = $idGastos;
+		$updateGasto -> categoria = $categoria;
+		$updateGasto -> nameVendedor = $nameVendedor;
+		$updateGasto -> divisa = $divisa;
+		$updateGasto -> importeTotal = $importeTotal;
+		$updateGasto -> importeIVA = $importeIVA;
+		$updateGasto -> fechaDocumento = $fechaDocumento;
+		$updateGasto -> descripcionGasto = $descripcionGasto;
+		$updateGasto -> referenciaInterna = $referenciaInterna;
+		$updateGasto -> updateGastoAjax();
+	}
 }

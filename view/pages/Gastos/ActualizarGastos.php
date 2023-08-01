@@ -26,11 +26,15 @@
 				<div class="modal-body">
 					<div class="row">
 						<div class="col-6">
-							<form id="actualizarGasto-form" enctype="multipart/form-data">
+							<form id="actualizarGasto-form<?php echo $gasto['idGastos'] ?>" enctype="multipart/form-data">
 								<div class="row" style="align-items: center;" >
 									<div class="form-group col-xl-12">
 										<label for="recipient-name" class="col-form-label">Categoría:</label>
-										<select class="form-control" id="categoria" name="categoria" <?php echo $gasto['status'] != 0 ? 'disabled' : ''; ?>>
+										<select
+											class="form-control"
+											id="categoria"
+											name="categoriaUpdate" 
+											<?php echo $gasto['status'] != 0 ? 'disabled' : ''; ?>>
 											<option value="">Selecciona una categoría</option>
 											<?php foreach ($categorias as $categoria): ?>
 												<?php if ($categoria['idCategoria'] == $gasto['categoria']): ?>
@@ -44,11 +48,21 @@
 									</div>
 									<div class="form-group col-xl-12">
 										<label for="message-text" class="col-form-label">Nombre del vendedor:</label>
-										<input type="text" class="form-control" name="nameVendedor" id="nameVendedor" value="<?php echo $gasto['nameVendedor'] ?>" <?php echo $gasto['status'] != 0 ? 'disabled' : ''; ?>>
+										<input
+											type="text"
+											class="form-control"
+											name="nameVendedorUpdate"
+											id="nameVendedor"
+											value="<?php echo $gasto['nameVendedor'] ?>" 
+											<?php echo $gasto['status'] != 0 ? 'disabled' : ''; ?>>
 									</div>
 									<div class="form-group col-xl-6">
 										<label for="recipient-name" class="col-form-label">Divisas:</label>
-										<select class="form-control" id="divisa" name="divisa" <?php echo $gasto['status'] != 0 ? 'disabled' : ''; ?>>
+										<select
+											class="form-control"
+											id="divisa"
+											name="divisaUpdate" 
+											<?php echo $gasto['status'] != 0 ? 'disabled' : ''; ?>>
 											<option value="">Selecciona una divisa</option>
 											<?php foreach ($divisas as $divisa): ?>
 												<?php if ($divisa['idDivisa'] == $gasto['divisa']): ?>
@@ -62,28 +76,61 @@
 									</div>
 									<div class="form-group col-xl-6">
 										<label for="message-text" class="col-form-label">Importe total:</label>
-										<input type="number" class="form-control" name="importeTotal" id="importeTotal" value="<?php echo $gasto['importeTotal'] ?>"<?php echo $gasto['status'] != 0 ? 'disabled' : ''; ?>>
+										<input
+											type="number"
+											class="form-control"
+											name="importeTotalUpdate"
+											id="importeTotal"
+											value="<?php echo $gasto['importeTotal'] ?>"
+											<?php echo $gasto['status'] != 0 ? 'disabled' : ''; ?>>
 									</div>
 									<div class="form-group col-xl-6">
 										<label for="message-text" class="col-form-label">Importe del IVA:</label>
-										<input type="number" class="form-control" name="importeIVA" id="importeIVA" value="<?php echo $gasto['importeIVA'] ?>"<?php echo $gasto['status'] != 0 ? 'disabled' : ''; ?>>
+										<input
+											type="number"
+											class="form-control"
+											name="importeIVAUpdate"
+											id="importeIVA"
+											value="<?php echo $gasto['importeIVA'] ?>"
+											<?php echo $gasto['status'] != 0 ? 'disabled' : ''; ?>>
 									</div>
 									<div class="form-group col-xl-6">
 										<label for="message-text" class="col-form-label">Fecha del documento:</label>
-										<input type="date" class="form-control" name="fechaDocumento" id="fechaDocumento" value="<?php echo $gasto['fechaDocumento'] ?>"<?php echo $gasto['status'] != 0 ? 'disabled' : ''; ?>>
+										<input
+											type="date"
+											class="form-control"
+											name="fechaDocumentoUpdate"
+											id="fechaDocumento"
+											value="<?php echo $gasto['fechaDocumento'] ?>"
+											<?php echo $gasto['status'] != 0 ? 'disabled' : ''; ?>>
 									</div>
 									<div class="form-group col-xl-12">
 										<label for="message-text" class="col-form-label">Descripción:</label>
-										<textarea class="form-control" id="descripcionGasto" name="descripcionGasto" <?php echo $gasto['status'] != 0 ? 'disabled' : ''; ?>><?php echo $gasto['descripcionGasto'] ?></textarea>
+										<textarea
+											class="form-control"
+											id="descripcionGasto"
+											name="descripcionGastoUpdate" 
+											<?php echo $gasto['status'] != 0 ? 'disabled' : ''; ?>><?php echo $gasto['descripcionGasto'] ?></textarea>
 									</div>
 									<div class="form-group col-xl-12">
 										<label for="message-text" class="col-form-label">Referencia interna:</label>
-										<input type="text" class="form-control" name="referenciaInterna" id="referenciaInterna" placeholder="Agregar una referencia interna (opcional)" value="<?php echo $gasto['referenciaInterna'] ?>" <?php echo $gasto['status'] != 0 ? 'disabled' : ''; ?>>
+										<input
+											type="text"
+											class="form-control"
+											name="referenciaInternaUpdate"
+											id="referenciaInterna"
+											placeholder="Agregar una referencia interna (opcional)"
+											value="<?php echo $gasto['referenciaInterna'] ?>" 
+											<?php echo $gasto['status'] != 0 ? 'disabled' : ''; ?>>
 									</div>
-									<input type="hidden" name="actualizarGasto" id="actualizarGasto" value="<?php echo $gasto['idGastos'] ?>">
+									<input
+										type="hidden"
+										name="actualizarGastoUpdate"
+										id="actualizarGasto"
+										value="<?php echo $gasto['idGastos'] ?>">
 									<?php if ($gasto['status'] == 0): ?>
 									<div class="form-group col-xl-12">
-										<button class="btn btn-primary rounded btn-block">Actualizar Gasto</button>
+										<button type="button" id="actualizarGasto-btn<?php echo $gasto['idGastos'] ?>" class="btn btn-primary rounded btn-block">Actualizar Gasto</button>
 									</div>
 									<?php endif ?>
 								</div>
@@ -147,4 +194,40 @@
 			</div>
 		</div>
 	</div>
+<script>
+	
+	$('#actualizarGasto-btn<?php echo $gasto['idGastos'] ?>').click(function() {
+		var updateData = $("#actualizarGasto-form<?php echo $gasto['idGastos'] ?>").serialize();
+		$.ajax({
+			url: "ajax/ajax.formularios.php",
+			type: "POST",
+			data: updateData,
+			success: function(response) {
+				$("#form-result").val("");
+				if (response === 'ok') {
+					$("#form-result").html(`
+						<div class='alert alert-success' role="alert" id="alerta">
+							<i class="fas fa-check-circle"></i>
+							Gasto actualizado exitosamente.
+						</div>
+					`);
+					deleteAlert();
+					setTimeout(function() {
+						location.href = 'Gastos';
+					}, 900);
+				}
+				else {
+					$("#form-result").html(`
+						<div class='alert alert-danger' role="alert" id="alerta">
+							<i class="fas fa-exclamation-triangle"></i>
+							<b>Error</b>, no se pudo actualizar el gasto, intentalo nuevamente.
+						</div>
+					`);
+					deleteAlert();
+				}
+			}
+		});
+	});
+
+</script>
 <?php endforeach ?>
