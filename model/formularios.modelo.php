@@ -2692,5 +2692,22 @@ static public function mdlImagenNoticia($id, $name)
 		$stmt = null;
 	}
 
+	static public function mdlDelGastos($idGastos){
+		$pdo =Conexion::conectar();
+		$sql = "DELETE FROM gastos WHERE idGastos = :idGastos";
+
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(":idGastos", $idGastos, PDO::PARAM_INT);
+		
+		if ($stmt->execute()) {
+			return 'ok';
+		}else{
+			return "error";
+		}
+
+		$stmt->close();
+		$stmt = null;
+	}
+
 	/*---------- Fin de ModeloFormularios ---------- */
 }

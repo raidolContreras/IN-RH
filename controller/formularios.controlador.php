@@ -1486,6 +1486,39 @@ class ControladorFormularios{
 		return '$ '. number_format($numero, 2, '.', ',') . ' ' . $divisa;
 	}
 
+	static public function ctrDelGasto($idGastos) {
+		$delGasto = ModeloFormularios::mdlDelGastos($idGastos);
+		if ($delGasto == 'ok') {
+			$carpetaAEliminar = '../view/Gastos/'.$idGastos;
+			if (ControladorFormularios::eliminarCarpeta($carpetaAEliminar)) {
+			    return 'ok';
+			} else {
+			    return 'No se pudo eliminar la carpeta o la carpeta no existe.';
+			}
+		}
+	}
+
+	static public function eliminarCarpeta($carpeta) {
+    if (!is_dir($carpeta)) {
+        return false; // La ruta no es una carpeta válida
+    }
+
+    // Obtener una lista de los archivos y subdirectorios dentro de la carpeta
+    $archivos = glob($carpeta . '/*');
+
+    // Eliminar todos los archivos dentro de la carpeta
+    foreach ($archivos as $archivo) {
+        if (is_file($archivo)) {
+            unlink($archivo); // Eliminar el archivo
+        } elseif (is_dir($archivo)) {
+            eliminarCarpeta($archivo); // Eliminar subcarpeta (llamada recursiva)
+        }
+    }
+
+    // Eliminar la carpeta vacía
+    return rmdir($carpeta);
+}
+
 
 	/*---------- Fin de ControladorFormularios ---------- */
 }

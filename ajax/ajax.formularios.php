@@ -789,6 +789,12 @@ class FormulariosAjax{
 		echo $addGasto;
 	}
 
+	public function delGastoAjax(){
+		$idGastos = $this->idGastos;
+		$delGasto = ControladorFormularios::ctrDelGasto($idGastos);
+		echo $delGasto;
+	}
+
 }
 
 if(isset($_POST["validate"])){
@@ -1512,4 +1518,12 @@ if (isset($_POST['idGasto'])) {
 			}
 		}
 	}
+}
+
+if (isset($_POST['eliminarGasto'])) {
+	$idGastos = $_POST['eliminarGasto'];
+
+	$eliminarGasto = new FormulariosAjax();
+	$eliminarGasto -> idGastos = $idGastos;
+	$eliminarGasto -> delGastoAjax();
 }
