@@ -241,6 +241,7 @@ $(document).ready(function() {
 
 	$('#eliminarDocumento-btn').click(function() {
 		var delDoc = $("#eliminarDocumento-form").serialize();
+		var idDoc = document.getElementById("eliminarNameDocumento").value;
 		$.ajax({
 			url: "ajax/ajax.formularios.php",
 			type: "POST",
@@ -255,9 +256,8 @@ $(document).ready(function() {
 						</div>
 					`);
 					deleteAlert();
-					setTimeout(function() {
-						location.href = 'Gastos';
-					}, 900);
+					eliminarDiv(idDoc);
+					$('#modalEliminarDocumento').modal('hide');
 				}
 				else {
 					$("#form-result").html(`
@@ -267,6 +267,7 @@ $(document).ready(function() {
 						</div>
 					`);
 					deleteAlert();
+					$('#modalEliminarDocumento').modal('hide');
 				}
 			}
 		});
@@ -297,9 +298,6 @@ $(document).ready(function() {
 				// Aquí puedes agregar el código para procesar la eliminación del documento si es necesario
 		});
 
-		console.log(documentoId);
-		console.log(gastosid);
-		console.log(eliminarNameDocumento);
 		// Mostrar el modal de confirmación
 		$('#modalEliminarDocumento').modal('show');
 
@@ -332,6 +330,16 @@ function showErrorAlert(response) {
 		`);
 		deleteAlert();
 	}
+}
+
+function eliminarDiv(divId) {
+  var divAEliminar = document.getElementById(divId);
+  if (divAEliminar) {
+    divAEliminar.remove();
+    console.log('El div con ID ' + divId + ' ha sido eliminado.');
+  } else {
+    console.log('El div con ID ' + divId + ' no existe.');
+  }
 }
 
 </script>

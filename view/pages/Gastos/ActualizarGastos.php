@@ -149,7 +149,7 @@
 							}
 
 							foreach ($documentos as $documento): ?>
-							<div class="col-lg-6 col-sm-12">
+							<div class="col-lg-6 col-sm-12" id="<?php echo $documento['nameDocumento']; ?>">
 								<div class="card card-figure">
 									<?php if ($gasto['status'] == 0): ?>
 										<div class="row mb-2" style="justify-content: flex-end;">
