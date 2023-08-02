@@ -25,7 +25,7 @@
 				</div>
 				<div class="modal-body">
 					<div class="row">
-						<div class="col-6">
+						<div class="col-xl-6 col-12">
 							<form id="actualizarGasto-form<?php echo $gasto['idGastos'] ?>" enctype="multipart/form-data">
 								<div class="row" style="align-items: center;" >
 									<div class="form-group col-xl-12">
@@ -139,16 +139,27 @@
 
 							<?php if (empty($documentos)) {
 								echo '
-									<div class="col-6 row figure-attachment p-3 rounded" style="justify-content: center;">
+									<div class="col-xl-6 col-12 row figure-attachment p-3 rounded" style="justify-content: center; align-content: flex-start; justify-content: flex-start;">
 									<div class="col-lg-6 col-sm-12">
 										<center>Sin Documentos adjuntados</center>
 									</div>
 									';
 							}else{
-								echo '<div class="col-6 row figure-attachment p-3 rounded">';
+								echo '<div class="col-xl-6 col-12 row figure-attachment p-3 rounded" style="align-content: flex-start; justify-content: flex-start;">';
 							}
+							?>
 
-							foreach ($documentos as $documento): ?>
+							<?php if ($gasto['status'] == 0): ?>
+							<div class="form-group col-xl-12 row" style="justify-content: center;">
+								<form id="addDocNew-form" class="col-9">
+									<input type="hidden" name="addDocNew" id="addDocNew" value="<?php echo $gasto['idGastos'] ?>">
+									<input type="file" name="fileDocNew" id="addDocNew" class="form-control" accept="application/pdf, .xls, .xlsx" >
+								</form>
+								<button type="button" id="addDocNew-btn" class="btn btn-outline-success rounded-circle"><i class="fas fa-plus"></i></button>
+							</div>
+							<?php endif ?>
+
+							<?php foreach ($documentos as $documento): ?>
 							<div class="col-lg-6 col-sm-12" id="<?php echo $documento['nameDocumento']; ?>">
 								<div class="card card-figure">
 									<?php if ($gasto['status'] == 0): ?>
