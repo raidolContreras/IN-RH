@@ -1615,3 +1615,74 @@ if (isset($_POST['eliminarDocumento'])) {
 	$eliminarDocGasto -> nameDocumento = $nameDocumento;
 	$eliminarDocGasto -> delDocGastoAjax();
 }
+
+if (isset($_POST['addDocNew'])) {
+	$idGasto = $_POST['addDocNew'];
+
+	// Verificar si se cargó un archivo
+	if (isset($_FILES['file']) && $_FILES['file']['name'] !== '') {
+		// Obtener información del archivo
+		$fileName = $_FILES['file']['name'];
+		$fileSize = $_FILES['file']['size'];
+		$fileTmpName = $_FILES['file']['tmp_name'];
+
+		$targetDir = "../view/Gastos/" . $idGasto . "/";
+
+		$baseName = basename($fileName);
+
+		if (!file_exists($targetDir)) {
+			// Crear la carpeta
+			mkdir($targetDir, 0777, true); // Los permisos 0777 aseguran que la carpeta tenga todos los permisos
+		}
+
+		$targetFilePath = $targetDir . $baseName;
+		$fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
+		if ($fileType == 'pdf') {
+			$tipo = 'pdf';
+		} else {
+			$tipo = 'excel';
+		}
+
+		$uploadOk = 1;
+		$i = 1;
+
+		// Verificar si el archivo ya existe y renombrarlo si es necesario
+		while (file_exists($targetFilePath)) {
+			$baseName = pathinfo($fileName, PATHINFO_FILENAME) . "($i)." . $fileType;
+			$targetFilePath = $targetDir . $baseName;
+			$i++;
+		}
+
+		// Verificar el tamaño máximo del archivo (10MB)
+		if ($fileSize > 10 * 1024 * 1024) {
+			echo "error_tamano";
+			$uploadOk = 0;
+		}
+
+		// Verificar los tipos de archivo permitidos (.xlsx, .xls, .pdf)
+		$allowedExtensions = array("xlsx", "xls", "pdf");
+		if (!in_array($fileType, $allowedExtensions)) {
+			echo "error_tipo";
+			$uploadOk = 0;
+		}
+
+		if ($uploadOk == 0) {
+			echo "error";
+		} else {
+			// Mover el archivo cargado al directorio de destino
+			if (move_uploaded_file($fileTmpName, $targetFilePath)) {
+				$data = array(
+					"Gastos_idGastos" => $idGasto,
+					"tipo" => $tipo,
+					"nameDocumento" => $baseName
+				);
+				$registrarDocumentosGastos = ControladorFormularios::ctrRegistrarDocumentosGastos($data);
+				echo json_encode($data);
+			} else {
+				echo "error";
+			}
+		}
+	} else {
+		echo "error";
+	}
+}

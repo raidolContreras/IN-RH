@@ -139,23 +139,27 @@
 
 							<?php if (empty($documentos)) {
 								echo '
-									<div class="col-xl-6 col-12 row figure-attachment p-3 rounded" style="justify-content: center; align-content: flex-start; justify-content: flex-start;">
+									<div class="col-xl-6 col-12 row figure-attachment p-3 rounded"
+									style="justify-content: center; align-content: flex-start; justify-content: flex-start;"
+									id="div'.$gasto['idGastos'].'">
 									<div class="col-lg-6 col-sm-12">
 										<center>Sin Documentos adjuntados</center>
 									</div>
 									';
 							}else{
-								echo '<div class="col-xl-6 col-12 row figure-attachment p-3 rounded" style="align-content: flex-start; justify-content: flex-start;">';
+								echo '<div class="col-xl-6 col-12 row figure-attachment p-3 rounded" style="align-content: flex-start; justify-content: flex-start;" id="div'.$gasto['idGastos'].'">';
 							}
 							?>
 
 							<?php if ($gasto['status'] == 0): ?>
 							<div class="form-group col-xl-12 row" style="justify-content: center;">
-								<form id="addDocNew-form" class="col-9">
-									<input type="hidden" name="addDocNew" id="addDocNew" value="<?php echo $gasto['idGastos'] ?>">
-									<input type="file" name="fileDocNew" id="addDocNew" class="form-control" accept="application/pdf, .xls, .xlsx" >
+								<form id="addDocNew-form<?php echo $gasto['idGastos'] ?>" class="col-9" enctype="multipart/form-data">
+									<input type="hidden" name="addDocNew" id="addDocNew<?php echo $gasto['idGastos'] ?>" value="<?php echo $gasto['idGastos'] ?>">
+									<input type="file" name="file" id="file<?php echo $gasto['idGastos'] ?>" class="form-control-file" accept=".pdf, .xls, .xlsx">
 								</form>
-								<button type="button" id="addDocNew-btn" class="btn btn-outline-success rounded-circle"><i class="fas fa-plus"></i></button>
+								<button id="addDocNew-btn<?php echo $gasto['idGastos'] ?>" class="btn btn-outline-success rounded-circle">
+									<i class="fas fa-plus"></i>
+								</button>
 							</div>
 							<?php endif ?>
 
@@ -248,6 +252,47 @@
 			}
 		});
 	});
+
+
+$('#addDocNew-btn<?php echo $gasto['idGastos'] ?>').click(function() {
+    var addDocNew = document.getElementById('addDocNew<?php echo $gasto['idGastos'] ?>').value;
+    var fileInput = document.getElementById('file<?php echo $gasto['idGastos'] ?>');
+    var file = fileInput.files[0]; // Obtener el archivo del campo de entrada de archivos
+
+    // Crear objeto FormData para enviar el archivo
+    var formData = new FormData();
+    formData.append('file', file);
+    formData.append('addDocNew', addDocNew);
+
+    $.ajax({
+        url: "ajax/ajax.formularios.php",
+        type: "POST",
+        data: formData,
+        contentType: false, // Importante: desactivar la configuración contentType para que jQuery configure automáticamente el encabezado
+        processData: false, // Importante: desactivar el procesamiento de datos para que jQuery no convierta el objeto FormData en una cadena
+        success: function(response) {
+            $("#form-result").val("");
+            if (response !== 'error') {
+                $("#form-result").html(`
+                    <div class='alert alert-success' role="alert" id="alerta">
+                        <i class="fas fa-check-circle"></i>
+                        Documento agregado exitosamente.
+                    </div>
+                `);
+                deleteAlert();
+                addDiv(response);
+            } else {
+                $("#form-result").html(`
+                    <div class='alert alert-danger' role="alert" id="alerta">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <b>Error</b>, no se pudo agregar el documento, intentalo nuevamente.
+                    </div>
+                `);
+                deleteAlert();
+            }
+        }
+    });
+});
 
 </script>
 <?php endforeach ?>

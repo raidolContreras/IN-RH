@@ -128,7 +128,6 @@
 	</div>
 </div>
 
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.js"></script>
 
 <script>
@@ -340,6 +339,64 @@ function eliminarDiv(divId) {
   } else {
     console.log('El div con ID ' + divId + ' no existe.');
   }
+}
+
+function addDiv(datos) {
+	// Parsear el objeto JSON recibido en la función a un objeto de JavaScript
+	const documento = JSON.parse(datos);
+
+	// Crear el div con las clases y el ID correspondientes
+	const div = document.createElement('div');
+	div.className = 'col-lg-6 col-sm-12';
+	div.id = documento.nameDocumento;
+
+	// Crear el contenido del div con el código HTML correspondiente
+	div.innerHTML = `
+		<div class="card card-figure">
+			${
+				documento.tipo === 'excel'
+					? '<div class="row mb-2" style="justify-content: flex-end;">' +`</div>`
+					: ''
+			}
+			<figure class="figure">
+				<div class="figure-attachment">
+					<span class="fa-stack fa-lg">
+						<i class="fa fa-square fa-stack-2x text-primary"></i>
+						${
+							documento.tipo === 'excel'
+								? '<i class="fas fa-file-excel fa-stack-1x fa-inverse"></i>'
+								: '<i class="fa fa-file-pdf fa-stack-1x fa-inverse"></i>'
+						}
+					</span>
+				</div>
+				<figcaption class="figure-caption">
+					<ul class="list-inline d-flex text-muted mb-0">
+						<li class="list-inline-item text-truncate mr-auto">
+							<span>
+								${
+									documento.tipo === 'excel'
+										? '<i class="fas fa-file-excel"></i>'
+										: '<i class="fa fa-file-pdf"></i>'
+								}
+							</span>
+							${documento.nameDocumento}
+						</li>
+						<li class="list-inline-item">
+							<a download="" href="view/Gastos/${documento.Gastos_idGastos}/${documento.nameDocumento}">
+								<i class="fas fa-download"></i>
+							</a>
+						</li>
+					</ul>
+				</figcaption>
+			</figure>
+		</div>
+	`;
+
+	// Obtener el div existente con el ID específico
+	const divContainer = document.getElementById('div' + documento.Gastos_idGastos);
+
+	// Agregar el div creado al contenedor deseado (divContainer)
+	divContainer.appendChild(div);
 }
 
 </script>
