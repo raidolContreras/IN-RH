@@ -157,7 +157,7 @@
 									<input type="hidden" name="addDocNew" id="addDocNew<?php echo $gasto['idGastos'] ?>" value="<?php echo $gasto['idGastos'] ?>">
 									<input type="file" name="file" id="file<?php echo $gasto['idGastos'] ?>" class="form-control-file" accept=".pdf, .xls, .xlsx">
 								</form>
-								<button id="addDocNew-btn<?php echo $gasto['idGastos'] ?>" class="btn btn-outline-success rounded-circle">
+								<button id="addDocNew-btn<?php echo $gasto['idGastos'] ?>" class="btn btn-outline-success rounded-circle px-2 py-0">
 									<i class="fas fa-plus"></i>
 								</button>
 							</div>
