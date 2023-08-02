@@ -102,6 +102,33 @@
 <?php require_once "view/pages/Gastos/AddGastos.php"; ?>
 <?php require_once "view/pages/Gastos/DelGastos.php"; ?>
 
+<!-- Modal de confirmación de eliminación -->
+<div class="modal fade" id="modalEliminarDocumento" tabindex="-1" role="dialog" aria-labelledby="modalEliminarDocumentoLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="modalEliminarDocumentoLabel">Eliminar documento</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<p>¿Estás seguro de que deseas eliminar este documento?</p>
+			</div>
+			<form id="eliminarDocumento-form">
+				<input type="hidden" id="eliminarDocumento" name="eliminarDocumento">
+				<input type="hidden" id="eliminarDocumentoGasto" name="eliminarDocumentoGasto">
+				<input type="hidden" id="eliminarNameDocumento" name="eliminarNameDocumento">
+			</form>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+				<button type="button" class="btn btn-danger" id="eliminarDocumento-btn">Eliminar</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.js"></script>
 
 <script>
@@ -212,6 +239,39 @@ $(document).ready(function() {
 		});
 	});
 
+	$('#eliminarDocumento-btn').click(function() {
+		var delDoc = $("#eliminarDocumento-form").serialize();
+		$.ajax({
+			url: "ajax/ajax.formularios.php",
+			type: "POST",
+			data: delDoc,
+			success: function(response) {
+				$("#form-result").val("");
+				if (response === 'ok') {
+					$("#form-result").html(`
+						<div class='alert alert-success' role="alert" id="alerta">
+							<i class="fas fa-check-circle"></i>
+							Documento eliminado exitosamente.
+						</div>
+					`);
+					deleteAlert();
+					setTimeout(function() {
+						location.href = 'Gastos';
+					}, 900);
+				}
+				else {
+					$("#form-result").html(`
+						<div class='alert alert-danger' role="alert" id="alerta">
+							<i class="fas fa-exclamation-triangle"></i>
+							<b>Error</b>, no se pudo eliminar el documento, intentalo nuevamente.
+						</div>
+					`);
+					deleteAlert();
+				}
+			}
+		});
+	});
+
 	// Configuración del evento 'sending' del Dropzone
 	myDropzone.on("sending", function(file, xhr, formData) {
 		// Solo agregar el campo idGasto si se cumple la condición response !== "error"
@@ -219,6 +279,36 @@ $(document).ready(function() {
 			formData.append("idGasto", idGasto);
 		}
 	});
+
+	// Al hacer clic en el enlace de eliminar documento
+	$('.btn-eliminar-documento').click(function(e) {
+		e.preventDefault();
+		// Obtener los IDs del gasto y el documento que se eliminará
+		var documentoId = $(this).data('documento-id');
+		var gastosid = $(this).data('gastos-id');
+		var eliminarNameDocumento = $(this).data('name');
+		
+		var eliminarDocumento = $('#eliminarDocumento');
+		var eliminarDocumentoGasto = $('#eliminarDocumentoGasto');
+		var nameDocumento = $('#eliminarNameDocumento');
+		
+		// Al hacer clic en el botón "Eliminar" dentro del modal de confirmación
+		$('#eliminarDocumento-btn').click(function() {
+				// Aquí puedes agregar el código para procesar la eliminación del documento si es necesario
+		});
+
+		console.log(documentoId);
+		console.log(gastosid);
+		console.log(eliminarNameDocumento);
+		// Mostrar el modal de confirmación
+		$('#modalEliminarDocumento').modal('show');
+
+		eliminarDocumento.val(documentoId);
+		eliminarDocumentoGasto.val(gastosid);
+		nameDocumento.val(eliminarNameDocumento);
+
+	});
+
 });
 
 function deleteAlert() {

@@ -152,7 +152,15 @@
 							<div class="col-lg-6 col-sm-12">
 								<div class="card card-figure">
 									<?php if ($gasto['status'] == 0): ?>
-									<div class="row mb-2" style="justify-content: flex-end;"><button class="btn btn-danger px-1 py-0">&times;</button></div>
+										<div class="row mb-2" style="justify-content: flex-end;">
+											<a href="#"
+											class="btn btn-danger px-1 py-0 btn-eliminar-documento"
+											data-documento-id="<?php echo $documento['idDocumento_Gasto'] ?>"
+											data-gastos-id="<?php echo $gasto['idGastos'] ?>"
+											data-name="<?php echo $documento['nameDocumento'] ?>">
+											&times;
+											</a>
+										</div>
 									<?php endif ?>
 									<figure class="figure">
 										<div class="figure-attachment">
@@ -167,22 +175,22 @@
 										</div>
 										<figcaption class="figure-caption">
 											<ul class="list-inline d-flex text-muted mb-0">
-                        <li class="list-inline-item text-truncate mr-auto">
-                          <span>
+												<li class="list-inline-item text-truncate mr-auto">
+													<span>
 														<?php if ($documento['tipo'] == 'excel'): ?>
 															<i class="fas fa-file-excel"></i>
 														<?php else: ?>
 															<i class="fa fa-file-pdf"></i>
 														<?php endif ?>
-                          </span>
-                           <?php echo $documento['nameDocumento'] ?> 
-                        </li>
-                        <li class="list-inline-item">
-                          <a download="" href="view/Gastos/<?php echo $gasto['idGastos'] ?>/<?php echo $documento['nameDocumento'] ?>">
-                            <i class="fas fa-download "></i>
-                          </a>
-                        </li>
-                      </ul>
+													</span>
+													 <?php echo $documento['nameDocumento'] ?> 
+												</li>
+												<li class="list-inline-item">
+													<a download="" href="view/Gastos/<?php echo $gasto['idGastos'] ?>/<?php echo $documento['nameDocumento'] ?>">
+														<i class="fas fa-download "></i>
+													</a>
+												</li>
+											</ul>
 										</figcaption>
 									</figure>
 								</div>
@@ -194,6 +202,7 @@
 			</div>
 		</div>
 	</div>
+
 <script>
 	
 	$('#actualizarGasto-btn<?php echo $gasto['idGastos'] ?>').click(function() {

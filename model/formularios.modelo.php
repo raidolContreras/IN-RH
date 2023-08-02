@@ -2734,5 +2734,22 @@ static public function mdlImagenNoticia($id, $name)
 		$stmt = null;
 	}
 
+	static public function mdlDelDocGasto($idDocumento_Gasto){
+		$pdo =Conexion::conectar();
+		$sql = "DELETE FROM documentos_gastos WHERE idDocumento_Gasto = :idDocumento_Gasto";
+
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(":idDocumento_Gasto", $idDocumento_Gasto, PDO::PARAM_INT);
+		
+		if ($stmt->execute()) {
+			return 'ok';
+		}else{
+			return "error";
+		}
+
+		$stmt->close();
+		$stmt = null;
+	}
+
 	/*---------- Fin de ModeloFormularios ---------- */
 }

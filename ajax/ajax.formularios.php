@@ -822,6 +822,14 @@ class FormulariosAjax{
 		echo $updateGasto;
 	}
 
+	public function delDocGastoAjax(){
+		$idDocumento_Gasto = $this->idDocumento_Gasto;
+		$idGastos = $this->idGastos;
+		$nameDocumento = $this->nameDocumento;
+		$delDocGasto = ControladorFormularios::ctrDelDocGasto($idGastos, $idDocumento_Gasto, $nameDocumento);
+		echo $delDocGasto;
+	}
+
 }
 
 if(isset($_POST["validate"])){
@@ -1594,4 +1602,16 @@ if (isset($_POST['actualizarGastoUpdate'])) {
 		$updateGasto -> referenciaInterna = $referenciaInterna;
 		$updateGasto -> updateGastoAjax();
 	}
+}
+
+if (isset($_POST['eliminarDocumento'])) {
+	$idDocumento_Gasto = $_POST['eliminarDocumento'];
+	$idGastos = $_POST['eliminarDocumentoGasto'];
+	$nameDocumento = $_POST['eliminarNameDocumento'];
+
+	$eliminarDocGasto = new FormulariosAjax();
+	$eliminarDocGasto -> idGastos = $idGastos;
+	$eliminarDocGasto -> idDocumento_Gasto = $idDocumento_Gasto;
+	$eliminarDocGasto -> nameDocumento = $nameDocumento;
+	$eliminarDocGasto -> delDocGastoAjax();
 }

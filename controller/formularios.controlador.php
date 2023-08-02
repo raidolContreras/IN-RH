@@ -1491,37 +1491,61 @@ class ControladorFormularios{
 		if ($delGasto == 'ok') {
 			$carpetaAEliminar = '../view/Gastos/'.$idGastos;
 			if (ControladorFormularios::eliminarCarpeta($carpetaAEliminar)) {
-			    return 'ok';
+				return 'ok';
 			} else {
-			    return 'No se pudo eliminar la carpeta o la carpeta no existe.';
+				return 'No se pudo eliminar la carpeta o la carpeta no existe.';
 			}
 		}
 	}
 
 	static public function eliminarCarpeta($carpeta) {
-	    if (!is_dir($carpeta)) {
-	        return false; // La ruta no es una carpeta válida
-	    }
+		if (!is_dir($carpeta)) {
+			return false; // La ruta no es una carpeta válida
+		}
 
-	    // Obtener una lista de los archivos y subdirectorios dentro de la carpeta
-	    $archivos = glob($carpeta . '/*');
+		// Obtener una lista de los archivos y subdirectorios dentro de la carpeta
+		$archivos = glob($carpeta . '/*');
 
-	    // Eliminar todos los archivos dentro de la carpeta
-	    foreach ($archivos as $archivo) {
-	        if (is_file($archivo)) {
-	            unlink($archivo); // Eliminar el archivo
-	        } elseif (is_dir($archivo)) {
-	            eliminarCarpeta($archivo); // Eliminar subcarpeta (llamada recursiva)
-	        }
-	    }
+		// Eliminar todos los archivos dentro de la carpeta
+		foreach ($archivos as $archivo) {
+			if (is_file($archivo)) {
+				unlink($archivo); // Eliminar el archivo
+			} elseif (is_dir($archivo)) {
+				eliminarCarpeta($archivo); // Eliminar subcarpeta (llamada recursiva)
+			}
+		}
 
-	    // Eliminar la carpeta vacía
-	    return rmdir($carpeta);
+		// Eliminar la carpeta vacía
+		return rmdir($carpeta);
 	}
 
 	static public function ctrUpdateGasto($datos){
 		$updateGasto = ModeloFormularios::mdlUpdateGasto($datos);
 		return $updateGasto;
+	}
+
+	static public function ctrDelDocGasto($idGastos, $idDocumento_Gasto, $nameDocumento){
+		$delDocGasto = ModeloFormularios::mdlDelDocGasto($idDocumento_Gasto);
+		if ($delDocGasto == 'ok') {
+			$carpeta = '../view/Gastos/'.$idGastos;
+
+			if (!is_dir($carpeta)) {
+				return 'error al encontrar carpeta'; // La ruta no es una carpeta válida
+			}
+
+			// Obtener una lista de los archivos y subdirectorios dentro de la carpeta
+			$archivos = glob($carpeta . '/*');
+			
+			// Eliminar todos los archivos dentro de la carpeta
+			foreach ($archivos as $archivo) {
+				if (is_file($archivo) && $archivo == $carpeta.'/'.$nameDocumento) {
+					unlink($archivo); // Eliminar el archivo
+					return 'ok';
+					break;
+				}
+			}
+
+		}
 	}
 
 
