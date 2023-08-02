@@ -1,10 +1,8 @@
 <?php
 require_once "conexion.php";
 class ModeloFormularios{
-
 	/*---------- Función hecha para registrar a los empleados---------- */
 	static public function mdlRegistrarEmpleados($tabla1, $table2, $datos){
-
 		$pdo=Conexion::conectar();
 		$stmt = $pdo->prepare("INSERT INTO $tabla1(name, lastname, genero, fNac, phone, email, password, identificacion, CURP, NSS, RFC, street, numE, numI, colonia, CP, municipio, estado, fecha_contratado) VALUES (:nombre, :apellidos, :genero, :fecha_nacimiento, :telefono, :email, :passwordEncriptado, :num_identificacion, :curp, :num_seguro_social, :rfc, :calle, :num_exterior, :num_interior, :colonia, :cp, :municipio, :estado, :fecha_contratado)");
 
@@ -29,20 +27,16 @@ class ModeloFormularios{
 		$stmt->bindParam(':fecha_contratado', $datos['fecha_contratado'], PDO::PARAM_STR);
 		$id_empleado = 0;
 		if($stmt->execute()){
-
 			$id_empleado = $pdo->lastInsertId(); //obtener el ID del empleado recién insertado
 		}
 
 		if ($id_empleado == 0) {
-
 			echo $consulta->errorInfo()[2];
 		}
 		else{
-
 			$horarioEmpleado = ModeloFormularios::mdlregistrarEmpleadosHorario('empleados_has_horarios',$id_empleado, $datos['horario']);
 			
 			if ($datos['postulante'] != 0) {
-
 				$RegistroPostulante = ControladorFormularios::ctrVerPostulantes('idPostulantes', $datos['postulante']);
 				$CerrarVacante = ModeloFormularios::mdlEliminarVacante('vacantes', $RegistroPostulante['Vacantes_idVacantes']);
 				$vacante = ControladorFormularios::ctrVerVacantes('idVacantes', $RegistroPostulante['Vacantes_idVacantes']);
@@ -57,11 +51,9 @@ class ModeloFormularios{
 				$registrarPuesto = ModeloFormularios::mdlRegistrarPuestos('puesto', $puesto);
 
 				if ($registrarPuesto == 'ok') {
-
 					echo 'Usuario registrado en el puesto';
 					$carpetaEmpleado = "view/pdfs/" . $id_empleado;
 					if (!file_exists($carpetaEmpleado)) {
-
 						mkdir($carpetaEmpleado);
 					}
 
@@ -69,12 +61,10 @@ class ModeloFormularios{
 					$newLocation = $carpetaEmpleado."/curriculum.pdf";
 					$moved = rename($currentLocation, $newLocation);
 					if($moved){
-
 						echo "File moved successfully";
 						$regDoc = array("fileName" => 'curriculum', "idEmpleado" => $id_empleado);
 						$registroDocumento = ModeloFormularios::mdlRegistroPDFEmpleado('documento', $regDoc);
 						if ($registroDocumento == 'ok') {
-
 							echo 'Curriculum Registrado';
 						}
 
@@ -120,18 +110,15 @@ class ModeloFormularios{
 
 	/*---------- Función hecha para registrar a los numeros de emergencia---------- */
 	static public function mdlEmergencia($table2, $id_empleado, $datos){
-
 		$stmt = Conexion::conectar()->prepare("INSERT INTO $table2(nameEmer, parentesco, phoneEmer, Empleados_idEmpleados) VALUES (:emergencia, :parentesco, :telefonoE, $id_empleado)");
 		$stmt->bindParam(':emergencia', $datos['emergencia'], PDO::PARAM_STR);
 		$stmt->bindParam(':telefonoE', $datos['telefonoE'], PDO::PARAM_INT);
 		$stmt->bindParam(':parentesco', $datos['parentesco'], PDO::PARAM_STR);
 
 		if($stmt->execute()){
-
 			return "ok";
 		}
 		else{
-
 			print_r(Conexion::conectar()->errorInfo());
 		}
 
@@ -140,22 +127,17 @@ class ModeloFormularios{
 	}
 
 	static public function mdlRegistrarHistorial($tabla, $datos, $idEmpleado){
-
 		if ($datos['noResponder'] == 0) {
-
 			$salario = $datos['salario'];
 		}
 		else{
-
 			$salario = null;
 		}
 
 		if ($datos['trabajo_actual'] == 0) {
-
 			$fecha_fin = $datos['fecha_fin'];
 		}
 		else{
-
 			$fecha_fin = null;
 		}
 
@@ -173,19 +155,15 @@ class ModeloFormularios{
 		$stmt->bindParam(':logros', $datos['logros'], PDO::PARAM_STR);
 		$stmt->bindParam(':Empleados_idEmpleados', $idEmpleado, PDO::PARAM_STR);
 		if($stmt->execute()){
-
 			if ($datos['accion'] == 'otro') {
-
 				return 'otro';
 			}
 			else{
-
 				return 'terminar';
 			}
 
 		}
 		else{
-
 			print_r(Conexion::conectar()->errorInfo());
 		}
 
@@ -195,9 +173,7 @@ class ModeloFormularios{
 
 	/*---------- Función hecha para ver a los empleados---------- */
 	static public function mdlVerEmpleados($tabla, $item, $valor){
-
 		if($item == null && $valor == null){
-
 			$sql = "SELECT *
 			FROM empleados e 
 			INNER JOIN emergencia m ON e.idEmpleados = m.Empleados_idEmpleados ORDER BY lastname ASC;";
@@ -206,7 +182,6 @@ class ModeloFormularios{
 			return $stmt -> fetchAll();
 		}
 		else{
-
 			$stmt = Conexion::conectar()->prepare("SELECT *, d.Empleados_idEmpleados AS idEmpleadoDepa, e.status AS eStatus
 			FROM empleados e
 			INNER JOIN emergencia m ON e.idEmpleados = m.Empleados_idEmpleados
@@ -225,7 +200,6 @@ class ModeloFormularios{
 
 	/*---------- Esta función crea el formato del numero teléfonico ---------- */
 	static public function mdlNumeroTelefonico($number){
-
 		$number = preg_replace('/[^0-9]/', '', $number); // Elimina cualquier caracter que no sea un numero
 		$length = strlen($number);
 		if($length == 10){
@@ -255,7 +229,6 @@ class ModeloFormularios{
 	}
 
 	static public function mdlSeleccionarHisrory($tabla, $idEmpleado){
-
 		$sql = "SELECT * FROM $tabla WHERE Empleados_idEmpleados = :id";
 		$stmt = Conexion::conectar()->prepare($sql);
 		$stmt->bindParam(":id", $idEmpleado, PDO::PARAM_INT);
@@ -267,16 +240,13 @@ class ModeloFormularios{
 
 	/*---------- Función hecha para Registrar las fotos de Empleados---------- */
 	static public function mdlRegistroFotoEmpleado($tabla, $datos){
-
 		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla (namePhoto, Empleados_idEmpleados) VALUES (:imageName, :idEmpleado)");
 		$stmt->bindParam(":imageName", $datos["imageName"], PDO::PARAM_STR);
 		$stmt->bindParam(":idEmpleado", $datos["idEmpleado"], PDO::PARAM_STR);
 		if ($stmt->execute()) {
-
 			return "ok";
 		}
 		 else {
-
 			print_r(Conexion::conectar()->errorInfo());
 		}
 
@@ -286,16 +256,13 @@ class ModeloFormularios{
 
 	/*---------- Función hecha para ver las fotos---------- */
 	static public function mdlVerFotos($tabla, $item, $valor){
-
 		if($item == null && $valor == null){
-
 			$sql = "SELECT * FROM $tabla";
 			$stmt = Conexion::conectar()->prepare($sql);
 			$stmt->execute();
 			return $stmt -> fetchAll();
 		}
 		else{
-
 			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
 			$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
 			$stmt->execute();
@@ -307,17 +274,14 @@ class ModeloFormularios{
 	}
 
 	static public function mdlRegistroPDFEmpleado($tabla, $datos){
-
 		$sql = "INSERT INTO $tabla (nameDoc, Empleados_idEmpleados) VALUES (:fileName, :idEmpleado);";
 		$stmt = Conexion::conectar()->prepare($sql);
 		$stmt->bindParam(":idEmpleado", $datos["idEmpleado"], PDO::PARAM_STR);
 		$stmt->bindParam(":fileName", $datos["fileName"], PDO::PARAM_STR);
 		if ($stmt->execute()) {
-
 			return "ok";
 		}
 		 else {
-
 			return "error";
 		}
 
@@ -327,7 +291,6 @@ class ModeloFormularios{
 
 	/*---------- Función hecha para ver las fotos---------- */
 	static public function mdlVerDocumentos($tabla, $item, $valor){
-
 		$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
 		$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
 		$stmt->execute();
@@ -338,7 +301,6 @@ class ModeloFormularios{
 
 	/*---------- Función hecha para ver las fotos---------- */
 	static public function mdlVerDocumento($tabla, $item, $valor){
-
 		$stmt = Conexion::conectar()->prepare("SELECT nameDoc FROM $tabla WHERE nameDoc = '$item' AND Empleados_idEmpleados = $valor");
 		$stmt->execute();
 		return $stmt -> fetch();
@@ -347,7 +309,6 @@ class ModeloFormularios{
 	}
 
 	static public function mdlImprimirDivs($validar,$nameDoc,$id,$nombreDocumento){
-
 		// Si el archivo existe, mostrar un mensaje de éxito
 		$div = '<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">';
 		$div .= '<div class="row centrado">';
@@ -374,18 +335,14 @@ class ModeloFormularios{
 		$div2 .= '</div>';
 		$div2 .= '</form>';
 		if ($validar == 1) {
-
 			return $div;
 		}
 		else{
-
 			return $div2;
 		}
-
 	}
 
 	static public function mdlRegistrarDeptos($tabla, $datos){
-
 		if ($datos['idEmpleado'] == "Sin empleado") {
 			$sql = "INSERT INTO $tabla (nameDepto, Empresas_idEmpresas, Pertenencia) VALUES (:nameDepto, :Empresas_idEmpresas, :Pertenencia);";
 			
@@ -401,11 +358,9 @@ class ModeloFormularios{
 		$stmt->bindParam(":Empresas_idEmpresas", $datos['idEmpresa'], PDO::PARAM_INT);
 		$stmt->bindParam(":Pertenencia", $datos['Pertenencia'], PDO::PARAM_INT);
 		if ($stmt->execute()) {
-
 			return "ok";
 		}
 		else{
-
 			print_r(Conexion::conectar()->errorInfo());
 		}
 
@@ -415,7 +370,6 @@ class ModeloFormularios{
 
 	/*---------- Función hecha para ver a los empleados---------- */
 	static public function mdlVerEmpleadosDisponibles($tabla,$item){
-
 		$sql = "SELECT * FROM $tabla 
 				WHERE status = 1 
 				AND idEmpleados NOT IN (SELECT Empleados_idEmpleados FROM $item)";
@@ -428,16 +382,13 @@ class ModeloFormularios{
 
 	/*---------- Función hecha para ver a los empleados---------- */
 	static public function mdlVerDepartamentos($tabla, $item, $valor){
-
 		if ($item == null && $valor == null) {
-
 			$sql = "SELECT * FROM departamentos WHERE status = 1 ORDER BY idDepartamentos;";
 			$stmt = Conexion::conectar()->prepare($sql);
 			$stmt->execute();
 			return $stmt -> fetchAll();
 		}
 		else{
-
 			$sql = "SELECT * FROM $tabla WHERE $item = :$item AND status = 1 ORDER BY idDepartamentos";
 			$stmt = Conexion::conectar()->prepare($sql);
 			$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
@@ -451,7 +402,6 @@ class ModeloFormularios{
 
 	/*---------- Función hecha para ver a los empleados---------- */
 	static public function mdlVerPertenenciasDepartamentos($tabla, $item, $valor){
-
 		$sql = "SELECT * FROM $tabla WHERE $item = :$item AND status = 1";
 		$stmt = Conexion::conectar()->prepare($sql);
 		$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
@@ -464,7 +414,6 @@ class ModeloFormularios{
 
 	/*---------- Función hecha para ver a los empleados---------- */
 	static public function mdlDeptosEspecial($tabla, $item, $valor){
-
 		$sql = "SELECT * FROM $tabla WHERE $item = :$item AND status = 1 ORDER BY idDepartamentos";
 		$stmt = Conexion::conectar()->prepare($sql);
 		$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
@@ -475,7 +424,6 @@ class ModeloFormularios{
 		$stmt = null;
 	}
 	static public function mdlDeptosEspecial2($tabla, $item, $valor){
-
 		$sql = "SELECT d.nameDepto as name, d.idDepartamentos as id, de.nameDepto as Pertenencia
 				FROM $tabla d
 				LEFT JOIN $tabla de on de.idDepartamentos = d.Pertenencia
@@ -491,7 +439,6 @@ class ModeloFormularios{
 	}
 
 	static public function mdlActualizarDepto($tabla, $datos){
-
 		$sql = "UPDATE $tabla SET nameDepto=:nameDepto, Empleados_idEmpleados=:Empleados_idEmpleados, Empresas_idEmpresas=:Empresas_idEmpresas WHERE idDepartamentos = :idDepartamentos";
 		$stmt = Conexion::conectar()->prepare($sql);
 		$stmt->bindParam(":nameDepto", $datos['name'], PDO::PARAM_STR);
@@ -499,11 +446,9 @@ class ModeloFormularios{
 		$stmt->bindParam(":Empresas_idEmpresas", $datos['idEmpresa'], PDO::PARAM_INT);
 		$stmt->bindParam(":idDepartamentos", $datos['idDepto'], PDO::PARAM_INT);
 		if ($stmt->execute()) {
-
 			return "ok";
 		}
 		else{
-
 			print_r(Conexion::conectar()->errorInfo());
 		}
 
@@ -513,16 +458,13 @@ class ModeloFormularios{
 
 	
 	static public function mdlEliminarDepto($tabla, $idDepto){
-
 		$sql = "UPDATE $tabla SET status=0, Empleados_idEmpleados=0 WHERE idDepartamentos = :idDepartamentos";
 		$stmt = Conexion::conectar()->prepare($sql);
 		$stmt->bindParam(":idDepartamentos", $idDepto, PDO::PARAM_INT);
 		if ($stmt->execute()) {
-
 			return "ok";
 		}
 		else{
-
 			print_r(Conexion::conectar()->errorInfo());
 		}
 
@@ -532,16 +474,13 @@ class ModeloFormularios{
 
 	
 	static public function mdlEliminarNoticia($tabla, $idNoticia){
-
 		$sql = "DELETE FROM $tabla WHERE idNoticias = :idNoticias";
 		$stmt = Conexion::conectar()->prepare($sql);
 		$stmt->bindParam(":idNoticias", $idNoticia, PDO::PARAM_INT);
 		if ($stmt->execute()) {
-
 			return "ok";
 		}
 		else{
-
 			print_r(Conexion::conectar()->errorInfo());
 		}
 
@@ -550,7 +489,6 @@ class ModeloFormularios{
 	}
 
 	static public function mdlRegistrarPuestos($tabla, $datos){
-
 		$sql = "INSERT INTO $tabla(namePuesto, salario, salario_integrado, Empleados_idEmpleados, Departamentos_idDepartamentos) VALUES (:namePuesto, :salario, :salario_integrado, :Empleados_idEmpleados, :Departamentos_idDepartamentos)";
 		$stmt = Conexion::conectar()->prepare($sql);
 		$stmt->bindParam(":namePuesto", $datos['namePuesto'], PDO::PARAM_STR);
@@ -559,11 +497,9 @@ class ModeloFormularios{
 		$stmt->bindParam(":Empleados_idEmpleados", $datos['Empleados_idEmpleados'], PDO::PARAM_STR);
 		$stmt->bindParam(":Departamentos_idDepartamentos", $datos['Departamentos_idDepartamentos'], PDO::PARAM_STR);
 		if ($stmt->execute()) {
-
 			return 'ok';
 		}
 		else{
-
 			print_r(Conexion::conectar()->errorInfo());
 		}
 
@@ -572,7 +508,6 @@ class ModeloFormularios{
 	}
 
 	static public function mdlRegistrarVacantes($tabla, $datos){
-
 		$color = '#' . str_pad(dechex(mt_rand(0, 0xFFFFFF)), 6, '0', STR_PAD_LEFT);
 
 		$sql = "INSERT INTO $tabla(nameVacante, salarioVacante, requisitos, Empresas_idEmpresas, Departamentos_idDepartamentos, Empleados_idEmpleados, color) VALUES (:nameVacante, :salarioVacante, :requisitosVacante, :empresaVacante, :departamentoVacante, :idEmpleados, :color)";
@@ -597,7 +532,6 @@ class ModeloFormularios{
 	}
 
 	static public function mdlActualizarVacantes($tabla, $datos){
-
 		$sql = "UPDATE vacantes SET nameVacante=:nameVacante,salarioVacante=:salarioVacante,requisitos=:requisitos,Departamentos_idDepartamentos=:Departamentos_idDepartamentos WHERE idVacantes = :idVacante";
 		$stmt = Conexion::conectar()->prepare($sql);
 
@@ -611,7 +545,6 @@ class ModeloFormularios{
 			return 'ok';
 		}
 		else{
-
 			print_r(Conexion::conectar()->errorInfo());
 		}
 
@@ -620,7 +553,6 @@ class ModeloFormularios{
 	}
 
 	static public function mdlActivarVacante($tabla, $datos){
-
 		$sql = "UPDATE $tabla SET aprobado = :aprobado, Jefe_idEmpleados = :Jefe_idEmpleados WHERE idVacantes = :idVacante";
 		$stmt = Conexion::conectar()->prepare($sql);
 
@@ -632,7 +564,6 @@ class ModeloFormularios{
 			return 'ok';
 		}
 		else{
-
 			print_r(Conexion::conectar()->errorInfo());
 		}
 
@@ -642,18 +573,14 @@ class ModeloFormularios{
 
 	/*---------- Función hecha para ver a los empleados---------- */
 	static public function mdlVerTabla($tabla, $item, $valor){
-
 		if ($item == null && $valor == null) {
-
 			if ($tabla == "puesto") {
-
 				$sql = "SELECT * FROM $tabla 
 				JOIN empleados ON empleados.idEmpleados = $tabla.Empleados_idEmpleados 
 				JOIN departamentos ON $tabla.Departamentos_idDepartamentos = departamentos.idDepartamentos 
 				WHERE $tabla.status = 1;";
 			}
 			elseif ($tabla == "vacantes") {
-
 				$sql = "SELECT * FROM vacantes v
 				JOIN departamentos d ON v.Departamentos_idDepartamentos = d.idDepartamentos 
 				JOIN empresas e ON e.idEmpresas = v.Empresas_idEmpresas 
@@ -665,7 +592,6 @@ class ModeloFormularios{
 			return $stmt -> fetchAll();
 		}
 		else{
-
 			$sql = "SELECT * FROM $tabla WHERE $item = :$item";
 			$stmt = Conexion::conectar()->prepare($sql);
 			$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
@@ -678,15 +604,12 @@ class ModeloFormularios{
 	}
 
 	static public function mdlEliminarVacante($tabla, $idVacantes){
-
 		$sql = "UPDATE $tabla SET status = 0 WHERE idVacantes=$idVacantes";
 		$stmt = Conexion::conectar()->prepare($sql);
 		if ($stmt->execute()) {
-
 			return 'ok';
 		}
 		else{
-
 			print_r(Conexion::conectar()->errorInfo());
 		}
 
@@ -695,9 +618,7 @@ class ModeloFormularios{
 	}
 
 	static public function mdlVerPostulantes($tabla, $item, $valor){
-
 		if ($item == null && $valor == null) {
-
 			$sql = "SELECT * FROM $tabla 
 			JOIN Vacantes ON $tabla.Vacantes_idVacantes = Vacantes.idVacantes 
 			WHERE $tabla.statusPostulante = 1;";
@@ -706,7 +627,6 @@ class ModeloFormularios{
 			return $stmt -> fetchAll();
 		}
 		elseif ($tabla == "suma") {
-
 			$sql = "SELECT SUM(1) FROM postulantes WHERE statusPostulante = 1 AND $item = :$item;";
 			$stmt = Conexion::conectar()->prepare($sql);
 			$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
@@ -715,7 +635,6 @@ class ModeloFormularios{
 			
 		}
 		elseif ($item == "Vacantes_idVacantes") {
-
 			$sql = "SELECT * FROM $tabla WHERE statusPostulante = 1 AND $item = :$item;";
 			$stmt = Conexion::conectar()->prepare($sql);
 			
@@ -725,7 +644,6 @@ class ModeloFormularios{
 			
 		}
 		else{
-
 			$sql = "SELECT * FROM $tabla WHERE $item = :$item";
 			$stmt = Conexion::conectar()->prepare($sql);
 			$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
@@ -738,7 +656,6 @@ class ModeloFormularios{
 	}
 
 	static public function mdlRegistroPostulante($tabla, $datos){
-
 		$pdo=Conexion::conectar();
 		$sql = "INSERT INTO $tabla(namePostulante, lastnamePostulante, phonePostulante, emailPostulante, Vacantes_idVacantes) VALUES (:namePostulante, :lastnamePostulante, :phonePostulante, :emailPostulante, :Vacantes_idVacantes)";
 		$stmt = $pdo->prepare($sql);
@@ -748,22 +665,18 @@ class ModeloFormularios{
 		$stmt->bindParam(":emailPostulante", $datos['emailPostulante'], PDO::PARAM_STR);
 		$stmt->bindParam(":Vacantes_idVacantes", $datos['Vacantes_idVacantes'], PDO::PARAM_STR);
 		if ($stmt->execute()) {
-
 			$idPostulante = $pdo->lastInsertId(); //obtener el ID del empleado recién insertado
 			if ($idPostulante == 0) {
-
 				echo $consulta->errorInfo()[2];
 				return "error";
 			}
 			else{
-
 				$Registro = $idPostulante;
 				return $Registro;
 			}
 
 		}
 		else{
-
 			print_r(Conexion::conectar()->errorInfo());
 		}
 
@@ -772,18 +685,15 @@ class ModeloFormularios{
 	}
 
 	static public function mdlRegistroPDFPostulante($tabla, $datos){
-
 		$pdo=Conexion::conectar();
 		$sql = "INSERT INTO documento_postulante(nameDocPost, Postulantes_idPostulantes) VALUES (:nameDocPost, :Postulantes_idPostulantes)";
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(":nameDocPost", $datos['nameDocPost'], PDO::PARAM_STR);
 		$stmt->bindParam(":Postulantes_idPostulantes", $datos['Postulantes_idPostulantes'], PDO::PARAM_STR);
 		if ($stmt->execute()) {
-
 			return "ok";
 		}
 		else{
-
 			print_r(Conexion::conectar()->errorInfo());
 		}
 
@@ -792,18 +702,15 @@ class ModeloFormularios{
 	}
 
 	static public function mdlAgendarCitas($tabla, $datos){
-
 		$pdo=Conexion::conectar();
 		$sql = "INSERT INTO $tabla(fechaReunion, Postulantes_idPostulantes) VALUES (:fechaReunion, :Postulantes_idPostulantes)";
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(":fechaReunion", $datos['fechaReunion'], PDO::PARAM_STR);
 		$stmt->bindParam(":Postulantes_idPostulantes", $datos['Postulantes_idPostulantes'], PDO::PARAM_STR);
 		if ($stmt->execute()) {
-
 			return "ok";
 		}
 		else{
-
 			print_r(Conexion::conectar()->errorInfo());
 		}
 
@@ -813,9 +720,7 @@ class ModeloFormularios{
 	}
 
 	static public function mdlVerReuniones($tabla, $item, $valor){
-
 		if ($item == "idReuniones") {
-
 			$sql = "SELECT *
 					FROM $tabla 
 					WHERE $item = :$item";
@@ -827,7 +732,6 @@ class ModeloFormularios{
 			$stmt = null;
 		}
 		else{
-
 			$sql = "SELECT * 
 					FROM $tabla 
 					WHERE $item = :$item";
@@ -838,11 +742,9 @@ class ModeloFormularios{
 			$stmt->close();
 			$stmt = null;
 		}
-
 	}
 
 	static public function mdlContarReuniones($tabla, $item, $valor){
-
 		$sql = "SELECT COUNT(*) FROM $tabla WHERE $item = :$item AND status = 0";
 		$stmt = Conexion::conectar()->prepare($sql);
 		$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
@@ -862,7 +764,6 @@ class ModeloFormularios{
 	*/
 	
 	static public function mdlCalificarReunion($tabla, $datos){
-
 		$sql = "UPDATE $tabla SET pregunta1=:pregunta1, pregunta2=:pregunta2, pregunta3=:pregunta3, pregunta4=:pregunta4, comentariosReunion=:comentariosReunion, status = 1 WHERE idReuniones = :idReuniones AND status = 0;";
 		$sql .= "UPDATE postulantes SET colorPostulante=:pregunta4 WHERE idPostulantes = :idPostulantes;";
 		$stmt = Conexion::conectar()->prepare($sql);
@@ -874,11 +775,9 @@ class ModeloFormularios{
 		$stmt -> bindParam(":idReuniones", $datos['idReuniones'], PDO::PARAM_INT);
 		$stmt -> bindParam(":idPostulantes", $datos['idPostulantes'], PDO::PARAM_INT);
 		if ($stmt->execute()) {
-
 			return "ok";
 		}
 		else{
-
 			print_r(Conexion::conectar()->errorInfo());
 		}
 
@@ -887,16 +786,13 @@ class ModeloFormularios{
 	}
 
 	static public function mdlEliminarPostulante($tabla, $item, $valor){
-
 		$sql = "UPDATE $tabla SET statusPostulante=0 WHERE $item = :valor";
 		$stmt = Conexion::conectar()->prepare($sql);
 		$stmt->bindParam(":valor", $valor, PDO::PARAM_INT);
 		if ($stmt->execute()) {
-
 			return "ok";
 		}
 		else{
-
 			print_r(Conexion::conectar()->errorInfo());
 		}
 
@@ -906,10 +802,8 @@ class ModeloFormularios{
 
 
 	static public function correoVerificacion($datos){
-
 		$mensaje = '<div><img style="display: block; margin-left: auto; margin-right: auto;" src="https://asociacionmexicanadeperiodontologia.com/logoinconsulting.png" alt="" width="112" height="112"></div>';
 		if ($datos['genero'] == 0) {
-
 			$mensaje .= '<div>
 			<div><strong>Estimada '.ucwords($datos["nombre"]." ".$datos["apellidos"]).'</strong></div>
 			<div> </div> 
@@ -917,7 +811,6 @@ class ModeloFormularios{
 			<div> </div>';
 		}
 		else{
-
 			$mensaje .= '<div>
 			<div><strong>Estimado '.ucwords($datos["nombre"]." ".$datos["apellidos"]).'</strong></div>
 			<div> </div> 
@@ -942,14 +835,11 @@ class ModeloFormularios{
 		$cabeceras .= "Content-Type: text/html; charset=UTF-8\r\n";
 // Envío del correo electrónico
 		if (mail($destinatario, $asunto, $mensaje, $cabeceras)) {
-
 			return 'enviado';
 		}
 		 else {
-
 			return 'no enviado';
 		}
-
 	}
 
 	static public function mdlEmpleadoMes($tabla,$datos){
@@ -972,7 +862,6 @@ class ModeloFormularios{
 	}
 
 	static public function mdlSeleccionarEmpleadoMes($tabla){
-
 		$stmt = Conexion::conectar()->prepare("
 			SELECT * FROM $tabla
 			JOIN empleados ON empleados.idEmpleados = $tabla.Empleados_idEmpleados
@@ -1019,7 +908,6 @@ static public function mdlActualizarNoticia($tabla, $datos)
 }
 
 	static public function mdlVerNoticias($tabla, $item, $valor){
-
 		if ($item == null && $valor == null) {
 			$sql = "SELECT * FROM $tabla WHERE fecha_fin+1 > CURDATE()";
 			$stmt = Conexion::conectar()->prepare($sql);
@@ -1035,7 +923,6 @@ static public function mdlActualizarNoticia($tabla, $datos)
 
 		$stmt->close();
 		$stmt = null;
-
 	}
 
 static public function mdlImagenNoticia($id, $name)
@@ -1162,7 +1049,6 @@ static public function mdlImagenNoticia($id, $name)
 
 		$stmt->close();
 		$stmt = null;
-
 	}
 
 	static public function obtenerDatosEmpresa($empresaId)
@@ -1215,10 +1101,8 @@ static public function mdlImagenNoticia($id, $name)
 	}
 
 	static public function mdlForgotPasswordEmail($datos){
-
 		$mensaje = '<div><img style="display: block; margin-left: auto; margin-right: auto;" src="https://asociacionmexicanadeperiodontologia.com/logoinconsulting.png" alt="" width="112" height="112"></div>';
 		if ($datos['genero'] == 0) {
-
 			$mensaje .= '<div>
 			<div><strong>Estimada '.ucwords($datos["name"]).'</strong></div>
 			<div> </div> 
@@ -1226,7 +1110,6 @@ static public function mdlImagenNoticia($id, $name)
 			<div> </div>';
 		}
 		else{
-
 			$mensaje .= '<div>
 			<div><strong>Estimado '.ucwords($datos["name"]).'</strong></div>
 			<div> </div> 
@@ -1261,14 +1144,11 @@ static public function mdlImagenNoticia($id, $name)
 			$stmt = null;
 		}
 		 else {
-
 			return 'no enviado';
 		}
-
 	}
 
 	static public function mdlGuardarHorario($tabla,$nameHorario,$horarios){
-
 		$pdo = Conexion::conectar();
 		$sql = "INSERT INTO $tabla (nameHorario) VALUES (:nameHorario)";
 		$stmt = $pdo->prepare($sql);
@@ -1286,7 +1166,6 @@ static public function mdlImagenNoticia($id, $name)
 			$i=0;
 			$tabla = "dia_horario";
 			foreach ($horarios as $key => $value) {
-
 				$timestamp_entrada = strtotime($value['entrada']);
 				$timestamp_salida = strtotime($value['salida']);
 
@@ -1314,7 +1193,6 @@ static public function mdlImagenNoticia($id, $name)
 		$stmt->close();
 		$stmt = null;
 		
-
 	}
 
 	static public function mdlRegistrarDiasHorario($tabla,$datos){
@@ -1387,7 +1265,6 @@ static public function mdlImagenNoticia($id, $name)
 	}
 
 	static public function mdlBorrarEmpleadosHorarios($tabla,$idHorario){
-
 		$sql = "DELETE FROM $tabla WHERE Horarios_idHorarios = :idHorario";
 
 		$stmt = Conexion::conectar()->prepare($sql);
@@ -1399,11 +1276,9 @@ static public function mdlImagenNoticia($id, $name)
 		}
 		$stmt->close();
 		$stmt = null;
-
 	}
 
 	static public function mdlBorrarEmpleadosExamenes($idExamen){
-
 		$sql = "DELETE FROM empleados_has_examenes WHERE idExamen = :idExamen";
 
 		$stmt = Conexion::conectar()->prepare($sql);
@@ -1415,11 +1290,9 @@ static public function mdlImagenNoticia($id, $name)
 		}
 		$stmt->close();
 		$stmt = null;
-
 	}
 
 	static public function mdlregistrarEmpleadosHorario($tabla,$empleado,$idHorario){
-
 		$sql = "DELETE FROM $tabla WHERE Empleados_idEmpleados = :empleado;";
 		$sql .= "INSERT INTO $tabla (Empleados_idEmpleados, Horarios_idHorarios) VALUES (:empleado,:idHorario);";
 
@@ -1436,7 +1309,6 @@ static public function mdlImagenNoticia($id, $name)
 	}
 
 	static public function mdlregistrarEmpleadosExamenes($empleado,$idExamen){
-
 		$sql = "DELETE FROM empleados_has_examenes WHERE idExamen = :idExamen AND idEmpleado = :empleado;";
 
 		$sql .= "INSERT INTO empleados_has_examenes (idExamen, idEmpleado, fecha_inicio, fecha_fin, tiempo_utilizado) VALUES (:idExamen, :empleado, NULL, NULL, 0);";
@@ -1454,7 +1326,6 @@ static public function mdlImagenNoticia($id, $name)
 	}
 
 	static public function mdlActualizarEmpleadoHorario($tabla, $empleado, $idHorario){
-
 		$sql = "UPDATE $tabla SET Horarios_idHorarios=:idHorario WHERE Empleados_idEmpleados = :empleado";
 
 		$stmt = Conexion::conectar()->prepare($sql);
@@ -1467,7 +1338,6 @@ static public function mdlImagenNoticia($id, $name)
 		}
 		$stmt->close();
 		$stmt = null;
-
 	}
 
 	static public function mdlActualizarNombreHorario($tabla, $datos){
@@ -1483,7 +1353,6 @@ static public function mdlImagenNoticia($id, $name)
 		}
 		$stmt->close();
 		$stmt = null;
-
 	}
 
 	static public function mdlActualizarDiasLaborables($tabla, $datos){
@@ -1496,7 +1365,6 @@ static public function mdlImagenNoticia($id, $name)
 			$idHorarios = $datos['idHorarios'];
 			$tabla = "dia_horario";
 			foreach ($datos['horarios'] as $key => $value) {
-
 				$timestamp_entrada = strtotime($value['entrada']);
 				$timestamp_salida = strtotime($value['salida']);
 
@@ -1523,7 +1391,6 @@ static public function mdlImagenNoticia($id, $name)
 		}
 		$stmt->close();
 		$stmt = null;
-
 	}
 
 	static public function mdlRegistrarDiaFestivo($tabla, $datos){
@@ -1606,7 +1473,6 @@ static public function mdlImagenNoticia($id, $name)
 
 		$stmt->close();
 		$stmt = null;
-
 	}
 
 	static public function mdlVerPeticionesDepartamentales($tabla, $item, $valor){
@@ -1620,7 +1486,6 @@ static public function mdlImagenNoticia($id, $name)
 
 		$stmt->close();
 		$stmt = null;
-
 	}
 
 	static public function mdlVerAsistencia($tabla,$item,$valor){
@@ -1632,7 +1497,6 @@ static public function mdlImagenNoticia($id, $name)
 		
 		$stmt->close();
 		$stmt = null;
-
 	}
 
 	static public function mdlJustificarAsistencia($tabla,$datos){
@@ -1648,7 +1512,6 @@ static public function mdlImagenNoticia($id, $name)
 		}
 		$stmt->close();
 		$stmt = null;
-
 	}
 
 	static public function mdlResponderVacaciones($tabla,$datos){
@@ -1666,7 +1529,6 @@ static public function mdlImagenNoticia($id, $name)
 		}
 		$stmt->close();
 		$stmt = null;
-
 	}
 
 	static public function mdlResponderPermisos($tabla,$datos){
@@ -1682,7 +1544,6 @@ static public function mdlImagenNoticia($id, $name)
 		}
 		$stmt->close();
 		$stmt = null;
-
 	}
 
 	static public function mdlEliminarHorarios($idHorarios){
@@ -1699,7 +1560,6 @@ static public function mdlImagenNoticia($id, $name)
 		}
 		$stmt->close();
 		$stmt = null;
-
 	}
 
 	static public function mdlVerPermisosEmpleados($idEmpleados){
@@ -1725,7 +1585,6 @@ static public function mdlImagenNoticia($id, $name)
 		
 		$stmt->close();
 		$stmt = null;
-
 	}
 
 	static public function mdlVerSolicutudesPermisosEmpleados($idEmpleados){
@@ -1751,7 +1610,6 @@ static public function mdlImagenNoticia($id, $name)
 		
 		$stmt->close();
 		$stmt = null;
-
 	}
 
 	static public function mdlGenerarPermiso($tabla,$datos){
@@ -1841,7 +1699,6 @@ static public function mdlImagenNoticia($id, $name)
 		
 		$stmt->close();
 		$stmt = null;
-
 	}
 
 	static public function mdlVerSolicitudesPermisos($idEmpleados){
@@ -1916,11 +1773,9 @@ static public function mdlImagenNoticia($id, $name)
 	}
 
 	static public function mdlVerTareas($item, $valor){
-
 		$fechaLimite = date('Y-m-d', strtotime('-60 days'));
 
 		if ($item == null && $valor == null) {
-
 			$sql = "SELECT * FROM tareas ORDER BY idTareas WHERE fecha_creacion >= :fechaLimite;";
 			$stmt = Conexion::conectar()->prepare($sql);
 			$stmt->bindParam(":fechaLimite", $fechaLimite);
@@ -1928,7 +1783,6 @@ static public function mdlImagenNoticia($id, $name)
 			return $stmt -> fetchAll();
 		}
 		else{
-
 			$sql = "SELECT * FROM tareas WHERE $item = :$item AND fecha_creacion >= :fechaLimite ORDER BY idTareas";
 			$stmt = Conexion::conectar()->prepare($sql);
 			$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
@@ -1942,7 +1796,6 @@ static public function mdlImagenNoticia($id, $name)
 	}
 
 	static public function mdlVerDocumentosTareas($idTareas){
-
 		$sql = "SELECT * FROM documento_tarea WHERE Tareas_idTareas = :idTareas ORDER BY idDocumentoTarea";
 		$stmt = Conexion::conectar()->prepare($sql);
 		$stmt->bindParam(":idTareas", $idTareas, PDO::PARAM_INT);
@@ -1950,11 +1803,9 @@ static public function mdlImagenNoticia($id, $name)
 		return $stmt -> fetchAll();
 		$stmt->close();
 		$stmt = null;
-
 	}
 
 	static public function mdlVerDocumentosEntregas($idTareas){
-
 		$sql = "SELECT * FROM documentos_tarea_entregas WHERE Tareas_idTareas = :idTareas ORDER BY idDocumentoTareaEntregas";
 		$stmt = Conexion::conectar()->prepare($sql);
 		$stmt->bindParam(":idTareas", $idTareas, PDO::PARAM_INT);
@@ -1962,7 +1813,6 @@ static public function mdlImagenNoticia($id, $name)
 		return $stmt -> fetchAll();
 		$stmt->close();
 		$stmt = null;
-
 	}
 
 	static public function mdlRegistrarDocumentosTareas($data){
@@ -2648,22 +2498,16 @@ static public function mdlImagenNoticia($id, $name)
 		$pdo =Conexion::conectar();
 		if ($item == null && $valor == null) {
 			$sql = "SELECT * FROM gastos ORDER BY idGastos ASC";
-
 			$stmt = $pdo->prepare($sql);
-
 			$stmt->execute();
 			return $stmt->fetchAll();
-
 		}else{
 			$sql = "SELECT * FROM gastos WHERE $item = :$item";
 			$stmt = $pdo->prepare($sql);
-			
 			$stmt->bindParam(':'.$item, $valor);
-
 			$stmt->execute();
 			return $stmt->fetch();
 		}
-
 		$stmt->close();
 		$stmt = null;
 	}
@@ -2672,22 +2516,16 @@ static public function mdlImagenNoticia($id, $name)
 		$pdo =Conexion::conectar();
 		if ($item == null && $valor == null) {
 			$sql = "SELECT * FROM documentos_gastos ORDER BY idDocumento_Gasto ASC";
-
 			$stmt = $pdo->prepare($sql);
-
 			$stmt->execute();
 			return $stmt->fetchAll();
-
 		}else{
 			$sql = "SELECT * FROM documentos_gastos WHERE $item = :$item";
 			$stmt = $pdo->prepare($sql);
-			
 			$stmt->bindParam(':'.$item, $valor);
-
 			$stmt->execute();
 			return $stmt->fetchAll();
 		}
-
 		$stmt->close();
 		$stmt = null;
 	}
@@ -2695,16 +2533,13 @@ static public function mdlImagenNoticia($id, $name)
 	static public function mdlDelGastos($idGastos){
 		$pdo =Conexion::conectar();
 		$sql = "DELETE FROM gastos WHERE idGastos = :idGastos";
-
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(":idGastos", $idGastos, PDO::PARAM_INT);
-		
 		if ($stmt->execute()) {
 			return 'ok';
 		}else{
 			return "error";
 		}
-
 		$stmt->close();
 		$stmt = null;
 	}
@@ -2712,7 +2547,6 @@ static public function mdlImagenNoticia($id, $name)
 	static public function mdlUpdateGasto($datos){
 		$pdo = Conexion::conectar();
 		$sql = "UPDATE gastos SET categoria = :categoria, nameVendedor = :nameVendedor, divisa = :divisa, importeTotal = :importeTotal, importeIVA = :importeIVA, fechaDocumento = :fechaDocumento, descripcionGasto = :descripcionGasto, referenciaInterna = :referenciaInterna WHERE idGastos = :idGastos";
-
 		$stmt = $pdo -> prepare($sql);
 		$stmt->bindParam(':categoria', $datos['categoria'], PDO::PARAM_INT);
 		$stmt->bindParam(':nameVendedor', $datos['nameVendedor'], PDO::PARAM_STR);
@@ -2723,13 +2557,11 @@ static public function mdlImagenNoticia($id, $name)
 		$stmt->bindParam(':descripcionGasto', $datos['descripcionGasto'], PDO::PARAM_STR);
 		$stmt->bindParam(':referenciaInterna', $datos['referenciaInterna'], PDO::PARAM_STR);
 		$stmt->bindParam(':idGastos', $datos['idGastos'], PDO::PARAM_INT);
-
 		if ($stmt->execute()) {
 			return 'ok';
 		}else{
 			return "error";
 		}
-
 		$stmt->close();
 		$stmt = null;
 	}
@@ -2737,16 +2569,13 @@ static public function mdlImagenNoticia($id, $name)
 	static public function mdlDelDocGasto($idDocumento_Gasto){
 		$pdo =Conexion::conectar();
 		$sql = "DELETE FROM documentos_gastos WHERE idDocumento_Gasto = :idDocumento_Gasto";
-
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(":idDocumento_Gasto", $idDocumento_Gasto, PDO::PARAM_INT);
-		
 		if ($stmt->execute()) {
 			return 'ok';
 		}else{
 			return "error";
 		}
-
 		$stmt->close();
 		$stmt = null;
 	}

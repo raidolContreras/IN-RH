@@ -44,7 +44,7 @@ session_start();
 	<?php
 
 	if(isset($_GET["pagina"])){
-		if (!isset($_SESSION['validarIngreso']) && $_GET["pagina"] != 'Login'){
+		if (!isset($_SESSION['validarIngreso']) &&$_GET["pagina"] != 'Login'){
 			echo "<script>
 					setTimeout(function() {
 						location.href='Login';
@@ -91,7 +91,7 @@ session_start();
 
 			}elseif(strpos($_GET["pagina"], "Vacantes-") !== false){
 
-				$pagina = str_replace("Vacantes-", "", $_GET["pagina"]);
+				$pagina = str_replace("Vacantes-", "",$_GET["pagina"]);
 				if ($pagina == 'Postulantes'||
 					$pagina == "CrearVacante" ||
 					$pagina == "EliminarVacante") {
@@ -115,8 +115,8 @@ session_start();
 				include "pages/Empleado/".$_GET["pagina"].".php";
 
 			}elseif ($_GET["pagina"] == "Login" ||
-					 $_GET["pagina"] == "Salir" ||
-					 $_GET["pagina"] == "Forgot-Password") {
+					$_GET["pagina"] == "Salir" ||
+					$_GET["pagina"] == "Forgot-Password") {
 
 				include "pages/Login/".$_GET["pagina"].".php";
 
@@ -127,8 +127,8 @@ session_start();
 				include "pages/".$_GET["pagina"].".php";
 
 			}elseif ($_GET["pagina"] == "Noticias" ||
-					 $_GET["pagina"] == "TableroNoticias" ||
-					 $_GET["pagina"] == "EliminarNoticia"	) {
+					$_GET["pagina"] == "TableroNoticias" ||
+					$_GET["pagina"] == "EliminarNoticia"	) {
 
 				include "pages/navs/navbar.php";
 				include "pages/navs/sidenav.php"; 
@@ -139,12 +139,12 @@ session_start();
 				include "pages/".$_GET["pagina"].".php";
 
 			}elseif ($_GET["pagina"] == "Asistencia" ||
-					 $_GET["pagina"] == "Asistencia-resumen" ||
-					 $_GET["pagina"] == "Asistencia-ajustes" ||
-					 $_GET["pagina"] == "Asistencia-importar" ||
-					 $_GET["pagina"] == "Asistencia-permisos" ||
-					 $_GET["pagina"] == "Asistencia-permisos-vacaciones" ||
-					 $_GET["pagina"] == "CrearHorario" ) {
+					$_GET["pagina"] == "Asistencia-resumen" ||
+					$_GET["pagina"] == "Asistencia-ajustes" ||
+					$_GET["pagina"] == "Asistencia-importar" ||
+					$_GET["pagina"] == "Asistencia-permisos" ||
+					$_GET["pagina"] == "Asistencia-permisos-vacaciones" ||
+					$_GET["pagina"] == "CrearHorario" ) {
 
 				include "pages/navs/navbar.php";
 				include "pages/navs/sidenav.php";
@@ -155,22 +155,22 @@ session_start();
 				}
 
 			}elseif ($_GET["pagina"] == "crearEvaluacion" ||
-					 $_GET["pagina"] == "eliminarExamen" ||
-					 $_GET["pagina"] == "AddPregunta" ||
-					 $_GET["pagina"] == "CrearRespuesta" ||
-					 $_GET["pagina"] == "EliminarPregunta" ||
-					 $_GET["pagina"] == "AddEmpleados" ||
-					 $_GET["pagina"] == "Evaluaciones_Asignadas" ||
-					 $_GET["pagina"] == "Examen" ||
-					 $_GET["pagina"] == "Calificaciones" ||
-					 $_GET["pagina"] == "Preguntas") {
+					$_GET["pagina"] == "eliminarExamen" ||
+					$_GET["pagina"] == "AddPregunta" ||
+					$_GET["pagina"] == "CrearRespuesta" ||
+					$_GET["pagina"] == "EliminarPregunta" ||
+					$_GET["pagina"] == "AddEmpleados" ||
+					$_GET["pagina"] == "Evaluaciones_Asignadas" ||
+					$_GET["pagina"] == "Examen" ||
+					$_GET["pagina"] == "Calificaciones" ||
+					$_GET["pagina"] == "Preguntas") {
 
 				include "pages/navs/navbar.php";
 				include "pages/navs/sidenav.php";
 				include "pages/Examenes/".$_GET["pagina"].".php";
 
 			}elseif ($_GET["pagina"] == "Configuraciones-Divisas" ||
-					 $_GET["pagina"] == "Configuraciones-Categorias") {
+					$_GET["pagina"] == "Configuraciones-Categorias") {
 
 				include "pages/navs/navbar.php";
 				include "pages/navs/sidenav.php";

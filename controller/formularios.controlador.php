@@ -8,7 +8,6 @@ function generarPassword() {
 		$indice = rand(0, strlen($caracteres) - 1);
 		$password .= $caracteres[$indice];
 	}
-
 	return $password;
 }
 
@@ -81,13 +80,9 @@ class ControladorFormularios{
 
 	/*---------- Función hecha para Buscar las Fotos---------- */
 	static public function ctrVerFotos($item, $valor){
-
 		$tabla = "foto_empleado";
-
 		$respuesta = ModeloFormularios::mdlVerFotos($tabla, $item, $valor);
-
 		return $respuesta;
-
 	}
 
 	/*---------- Función hecha para subir pdf---------- */
@@ -96,7 +91,6 @@ class ControladorFormularios{
 			if ($_FILES['file']['error'] > 0) {
 				echo 'Error al cargar el archivo: ' . $_FILES['file']['error'] . '<br>';
 			}else{
-
 				// Crear la carpeta con el id del empleado
 				$empleadoId = $_POST['empleado'];
 				$carpetaEmpleado = "view/pdfs/" . $empleadoId;
@@ -138,23 +132,15 @@ class ControladorFormularios{
 	}
 
 	static public function ctrVerDocumentos($item, $valor){
-
 		$tabla = "documento";
-
 		$respuesta = ModeloFormularios::mdlVerDocumentos($tabla, $item, $valor);
-
 		return $respuesta;
-
 	}
 
 	static public function ctrVerDocumento($item, $valor){
-
 		$tabla = "documento";
-
 		$respuesta = ModeloFormularios::mdlVerDocumento($tabla, $item, $valor);
-
 		return $respuesta;
-
 	}
 
 	static public function ctrImprimirDivs($validar,$nameDoc,$id,$nombreDocumento){
@@ -165,7 +151,6 @@ class ControladorFormularios{
 	static public function ctrRegistrarDeptos(){
 		if (isset($_POST['name'])) {
 			if (preg_match('/^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["name"])) {
-
 				$datos = array("name" => $_POST["name"],
 						"idEmpleado" => $_POST["jefe"],
 						"idEmpresa" => $_POST["empresa"],
@@ -180,52 +165,36 @@ class ControladorFormularios{
 					return "error";
 				}
 			}
-
 		}
-
 	}
+
 	static public function ctrVerDepartamentos($item, $valor){
-
 		$tabla = "departamentos";
-
 		$respuesta = ModeloFormularios::mdlVerDepartamentos($tabla, $item, $valor);
-
 		return $respuesta;
-
 	}
+
 	static public function ctrVerPertenenciasDepartamentos($item, $valor){
-
 		$tabla = "departamentos";
-
 		$respuesta = ModeloFormularios::mdlVerPertenenciasDepartamentos($tabla, $item, $valor);
-
 		return $respuesta;
-
 	}
+
 	static public function ctrDeptosEspecial($item, $valor){
-
 		$tabla = "departamentos";
-
 		$respuesta = ModeloFormularios::mdlDeptosEspecial($tabla, $item, $valor);
-
 		return $respuesta;
-
 	}
+
 	static public function ctrDeptosEspecial2($item, $valor){
-
 		$tabla = "departamentos";
-
 		$respuesta = ModeloFormularios::mdlDeptosEspecial2($tabla, $item, $valor);
-
 		return $respuesta;
-
 	}
 
 	static public function ctrActualizarDepto(){
-
 		if (isset($_POST['name'])) {
 			if (preg_match('/^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["name"])) {
-
 				$datos = array("name" => $_POST["name"],
 						"idEmpleado" => $_POST["jefe"],
 						"idEmpresa" => $_POST["empresa"],
@@ -240,9 +209,7 @@ class ControladorFormularios{
 					return "error";
 				}
 			}
-
 		}
-
 	}
 
 	static public function ctrEliminarDepto(){
@@ -268,7 +235,6 @@ class ControladorFormularios{
 	}
 
 	static public function ctrRegistrarPuestos(){
-
 		if (isset($_POST['name'])) {
 			if (preg_match('/^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["name"])){
 				$tabla = "puesto";
@@ -327,54 +293,36 @@ class ControladorFormularios{
 
 	/*---------- Función hecha para ver a los empleados---------- */
 	static public function ctrVerPuestos($item, $valor){
-
 		$tabla = "puesto";
-
 		$respuesta = ModeloFormularios::mdlVerTabla($tabla, $item, $valor);
-
 		return $respuesta;
-
 	}
 
 	static public function ctrVerVacantes($item, $valor){
-
 		$tabla = "vacantes";
-
 		$respuesta = ModeloFormularios::mdlVerTabla($tabla, $item, $valor);
-
 		return $respuesta;
-
 	}
 
 	static public function ctrEliminarVacante(){
-
 		if (isset($_POST['vacante'])) {
 			$tabla = "vacantes";
 			$idVacantes = $_POST['vacante'];
 			$respuesta = ModeloFormularios::mdlEliminarVacante($tabla, $idVacantes);
-
 			return $respuesta;
 		}
 	}
 
 	static public function ctrVerPostulantes($item, $valor){
-
 		$tabla = "postulantes";
-
 		$respuesta = ModeloFormularios::mdlVerPostulantes($tabla, $item, $valor);
-
 		return $respuesta;
-
 	}
 
 	static public function ctrSumaPostulantes($item, $valor){
-
 		$tabla = "suma";
-
 		$respuesta = ModeloFormularios::mdlVerPostulantes($tabla, $item, $valor);
-
 		return $respuesta;
-
 	}
 
 	static public function ctrRegistrarPostulante(){
@@ -385,13 +333,15 @@ class ControladorFormularios{
 				if (filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
 					if (preg_match($patron, $_POST['telefono'])) {
 						$tabla = "postulantes";
-						$datos = array("namePostulante" => $_POST["nombre"],
-									 "lastnamePostulante" => $_POST["apellidos"],
-									 "phonePostulante" => $_POST["telefono"],
-									 "emailPostulante" => $_POST["email"],
-									 "Vacantes_idVacantes" => $_POST["Oferta"],
-									 "nameDocPost" => $_POST["archivo"],
-									 "File" => $_FILES['file']);
+						$datos = array(
+							"namePostulante" => $_POST["nombre"],
+							"lastnamePostulante" => $_POST["apellidos"],
+							"phonePostulante" => $_POST["telefono"],
+							"emailPostulante" => $_POST["email"],
+							"Vacantes_idVacantes" => $_POST["Oferta"],
+							"nameDocPost" => $_POST["archivo"],
+							"File" => $_FILES['file']
+						);
 						$registro = ModeloFormularios::mdlRegistroPostulante($tabla, $datos);
 						if ($registro != "error") {
 								$ctrSubirPDF = ControladorFormularios::ctrSubirPDFPostulante($registro,$datos);
@@ -589,13 +539,10 @@ class ControladorFormularios{
 				return 'Error: datos';
 			}
 		}
-
 	}
 
 	static public function ctrEmpleadoMes($empleadoMes, $mensaje, $publicado){
-
 		$tabla = 'empleado_mes';
-
 		$datos = array("Empleados_idEmpleados" => $empleadoMes,
 						"mensaje" => $mensaje,
 						"Publicado_idEmpleados" => $publicado);
@@ -766,24 +713,18 @@ class ControladorFormularios{
 		return $buscar;
 	}
 
-	static public function generarArchivoCSV($empresaId,$nameEmpresa)
-	{
+	static public function generarArchivoCSV($empresaId,$nameEmpresa){
 		$datosEmpresa = ModeloFormularios::obtenerDatosEmpresa($empresaId);
-
 		if (!empty($datosEmpresa)) {
 			$directorio = "assets/organigrama/".$nameEmpresa;
 			if (!is_dir($directorio)) {
 				mkdir($directorio, 0777, true);
 			}
-
 			$archivo = fopen($directorio . "/org.csv", "w");
-
 			$encabezado = array("id", "name", "area", "profileUrl", "imageUrl", "positionName", "parentId");
 			fputcsv($archivo, $encabezado);
-
 			foreach ($datosEmpresa as $fila) {
 				$parentId = ($fila["parentId"] == 0 ? '' : $fila["parentId"]);
-
 				$datos = array(
 					$fila["id"],
 					$fila["name"],
@@ -793,18 +734,13 @@ class ControladorFormularios{
 					$fila["positionName"],
 					$parentId
 				);
-
 				// Eliminar las comillas de cada valor
 				$datosSinComillas = array_map(function ($valor) {
 					return str_replace('"', '', $valor);
 				}, $datos);
-
 				fputcsv($archivo, $datosSinComillas);
 			}
-
-
 			fclose($archivo);
-
 			return "ok";
 		} else {
 			return "Error";
@@ -818,7 +754,6 @@ class ControladorFormularios{
 	}
 
 	static public function ctrForgotPasswordEmail($datos){
-
 		$busqueda = ControladorEmpleados::ctrCambioPasswordOlvidado("Empleados_idEmpleados", $datos['idEmpleados']);
 		if (isset($busqueda[0]) && $busqueda[0] == $datos['idEmpleados']) {
 			return 'existente';
@@ -856,39 +791,26 @@ class ControladorFormularios{
 	}
 
 	static public function ctrEmpleadosHasHorarios($empleados,$idHorario){
-
 		$tabla = "empleados_has_horarios";
-
 		$validar = "cambio";
-
 		foreach ($empleados as $empleado) {
-
 			if ($validar == "cambio") {
-
 				$registrarEmpleadosHorario = ModeloFormularios::mdlregistrarEmpleadosHorario($tabla,$empleado,$idHorario);
 				$validar = $registrarEmpleadosHorario;
-
 			}
 		}
 		return $validar;
-
 	}
 
 	static public function ctrEmpleadosHasExamenes($empleados,$idExamen){
-
 		$validar = "ok";
-
 		foreach ($empleados as $empleado) {
-
 			if ($validar == "ok") {
-
 				$registrarEmpleadosHorario = ModeloFormularios::mdlregistrarEmpleadosExamenes($empleado,$idExamen);
 				$validar = $registrarEmpleadosHorario;
-
 			}
 		}
 		return $validar;
-
 	}
 
 	static public function ctrActualizarHorario($datos){
@@ -1143,6 +1065,7 @@ class ControladorFormularios{
 				}
 			}
 		}
+
 		$dias_disponibles = $calculo_vacaciones - $dias_consumidos - $dias_pendientes;
 
 		$fechaInicio = $datos['fechaPermiso'];
@@ -1360,6 +1283,7 @@ class ControladorFormularios{
 			'11' => 'noviembre',
 			'12' => 'diciembre'
 		);
+
 		$dias = array(
 			1 => 'Lunes',
 			2 => 'Martes',
@@ -1382,7 +1306,6 @@ class ControladorFormularios{
 		if ($minutos != null) {
 			$horas = floor($minutos / 60);
 			$minutosRestantes = $minutos % 60;
-
 			$formato = "";
 
 			if ($horas > 0) {
@@ -1544,10 +1467,8 @@ class ControladorFormularios{
 					break;
 				}
 			}
-
 		}
 	}
-
 
 	/*---------- Fin de ControladorFormularios ---------- */
 }

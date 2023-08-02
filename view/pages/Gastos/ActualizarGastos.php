@@ -255,43 +255,43 @@
 
 
 $('#addDocNew-btn<?php echo $gasto['idGastos'] ?>').click(function() {
-    var addDocNew = document.getElementById('addDocNew<?php echo $gasto['idGastos'] ?>').value;
-    var fileInput = document.getElementById('file<?php echo $gasto['idGastos'] ?>');
-    var file = fileInput.files[0]; // Obtener el archivo del campo de entrada de archivos
+	var addDocNew = document.getElementById('addDocNew<?php echo $gasto['idGastos'] ?>').value;
+	var fileInput = document.getElementById('file<?php echo $gasto['idGastos'] ?>');
+	var file = fileInput.files[0]; // Obtener el archivo del campo de entrada de archivos
 
-    // Crear objeto FormData para enviar el archivo
-    var formData = new FormData();
-    formData.append('file', file);
-    formData.append('addDocNew', addDocNew);
+	// Crear objeto FormData para enviar el archivo
+	var formData = new FormData();
+	formData.append('file', file);
+	formData.append('addDocNew', addDocNew);
 
-    $.ajax({
-        url: "ajax/ajax.formularios.php",
-        type: "POST",
-        data: formData,
-        contentType: false, // Importante: desactivar la configuración contentType para que jQuery configure automáticamente el encabezado
-        processData: false, // Importante: desactivar el procesamiento de datos para que jQuery no convierta el objeto FormData en una cadena
-        success: function(response) {
-            $("#form-result").val("");
-            if (response !== 'error') {
-                $("#form-result").html(`
-                    <div class='alert alert-success' role="alert" id="alerta">
-                        <i class="fas fa-check-circle"></i>
-                        Documento agregado exitosamente.
-                    </div>
-                `);
-                deleteAlert();
-                addDiv(response);
-            } else {
-                $("#form-result").html(`
-                    <div class='alert alert-danger' role="alert" id="alerta">
-                        <i class="fas fa-exclamation-triangle"></i>
-                        <b>Error</b>, no se pudo agregar el documento, intentalo nuevamente.
-                    </div>
-                `);
-                deleteAlert();
-            }
-        }
-    });
+	$.ajax({
+		url: "ajax/ajax.formularios.php",
+		type: "POST",
+		data: formData,
+		contentType: false, // Importante: desactivar la configuración contentType para que jQuery configure automáticamente el encabezado
+		processData: false, // Importante: desactivar el procesamiento de datos para que jQuery no convierta el objeto FormData en una cadena
+		success: function(response) {
+			$("#form-result").val("");
+			if (response !== 'error') {
+				$("#form-result").html(`
+					<div class='alert alert-success' role="alert" id="alerta">
+						<i class="fas fa-check-circle"></i>
+						Documento agregado exitosamente.
+					</div>
+				`);
+				deleteAlert();
+				addDiv(response);
+			} else {
+				$("#form-result").html(`
+					<div class='alert alert-danger' role="alert" id="alerta">
+						<i class="fas fa-exclamation-triangle"></i>
+						<b>Error</b>, no se pudo agregar el documento, intentalo nuevamente.
+					</div>
+				`);
+				deleteAlert();
+			}
+		}
+	});
 });
 
 </script>
