@@ -2452,7 +2452,7 @@ static public function mdlImagenNoticia($id, $name)
 
 	static public function mdlAddGasto($datos){
 		$pdo =Conexion::conectar();
-		$sql = "INSERT INTO gastos(categoria, nameVendedor, divisa, importeTotal, importeIVA, fechaDocumento, descripcionGasto, referenciaInterna) VALUES (:categoria,:nameVendedor,:divisa,:importeTotal,:importeIVA,:fechaDocumento,:descripcionGasto,:referenciaInterna)";
+		$sql = "INSERT INTO gastos(categoria, nameVendedor, divisa, importeTotal, importeIVA, fechaDocumento, descripcionGasto, referenciaInterna, Empleados_idEmpleados) VALUES (:categoria,:nameVendedor,:divisa,:importeTotal,:importeIVA,:fechaDocumento,:descripcionGasto,:referenciaInterna, :Empleados_idEmpleados)";
 
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':categoria', $datos['categoria'], PDO::PARAM_INT);
@@ -2463,6 +2463,7 @@ static public function mdlImagenNoticia($id, $name)
 		$stmt->bindParam(':fechaDocumento', $datos['fechaDocumento'], PDO::PARAM_STR);
 		$stmt->bindParam(':descripcionGasto', $datos['descripcionGasto'], PDO::PARAM_STR);
 		$stmt->bindParam(':referenciaInterna', $datos['referenciaInterna'], PDO::PARAM_STR);
+		$stmt->bindParam(':Empleados_idEmpleados', $datos['Empleados_idEmpleados'], PDO::PARAM_INT);
 
 		if ($stmt->execute()) {
 			return $pdo->lastInsertId();

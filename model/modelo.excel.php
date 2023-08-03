@@ -1187,5 +1187,124 @@ static public function mdlGenerarExcelAsistenciasEmpresas($tabla, $idEmpresas){
 		return $letraResultado;
 	}
 
+	static public function ctrGenerarExcelGastoIndividual($datos){
+		$spreadsheet = new Spreadsheet();
+		$spreadsheet
+		->getProperties()
+		->setCreator("IN Consulting México")
+		->setLastModifiedBy('IN Consulting México')
+		->setTitle("Reporte de Gasto Individual IN Consulting")
+		->setDescription("Reporte de Gasto Individual de ".$datos['nombre']);
+
+		$spreadsheet->setActiveSheetIndex(0);
+		$borderStyle = [
+			'borders' => [
+				'outline' => [
+					'borderStyle' => Border::BORDER_THIN,
+					'color' => ['rgb' => '949494'],
+				],
+			],
+		];
+
+		$filleee = [
+			'fill' => [
+				'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+				'startColor' => ['argb' => 'ffeeeeee'],
+			],
+		];
+
+		$fill_solid = \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID;
+
+		$activeWorksheet = $spreadsheet->getActiveSheet();
+		/*-- Generación de columnas y  campos --*/
+
+		$activeWorksheet->setCellValue('C1', 'Información del gasto:');
+		$activeWorksheet->setCellValue('F2', 'Fecha de creación: '.$datos['fecha_creacion']);
+		$activeWorksheet->setCellValue('A2', 'Empleado que registro: '.$datos['nombre']);
+		$activeWorksheet->setCellValue('F3', 'Estatus: '.$datos['status']);
+
+		$activeWorksheet->setCellValue('B6', 'Categoria:');
+		$activeWorksheet->setCellValue('B7', $datos['categoria']);
+
+		$activeWorksheet->setCellValue('E6', 'Fecha del documento:');
+		$activeWorksheet->setCellValue('E7', $datos['fechaDocumento']);
+
+		$activeWorksheet->setCellValue('B9', 'Nombre del vendedor:');
+		$activeWorksheet->setCellValue('B10', $datos['nameVendedor']);
+
+		$activeWorksheet->setCellValue('B12', 'Importe total:');
+		$activeWorksheet->setCellValue('B13', $datos['importeTotal']);
+
+		$activeWorksheet->setCellValue('E12', 'Importe del IVA:');
+		$activeWorksheet->setCellValue('B13', $datos['importeIVA']);
+
+		$activeWorksheet->setCellValue('B15', 'Descripción:');
+		$activeWorksheet->setCellValue('B16', $datos['descripcionGasto']);
+
+		$activeWorksheet->setCellValue('B19', 'Referencia interna:');
+		$activeWorksheet->setCellValue('B20', $datos['referenciaInterna']);
+
+		$activeWorksheet->mergeCells('C1:E1');
+		$activeWorksheet->mergeCells('A2:D2');
+		$activeWorksheet->mergeCells('F2:G2');
+		$activeWorksheet->mergeCells('F3:G3');
+		$activeWorksheet->mergeCells('B6:C6');
+		$activeWorksheet->mergeCells('B7:C7');
+		$activeWorksheet->mergeCells('E6:F6');
+		$activeWorksheet->mergeCells('E7:F7');
+		$activeWorksheet->mergeCells('B9:F9');
+		$activeWorksheet->mergeCells('B10:F10');
+		$activeWorksheet->mergeCells('B12:C12');
+		$activeWorksheet->mergeCells('E12:F12');
+		$activeWorksheet->mergeCells('B13:C13');
+		$activeWorksheet->mergeCells('E13:F13');
+		$activeWorksheet->mergeCells('B15:F15');
+		$activeWorksheet->mergeCells('B16:F17');
+		$activeWorksheet->mergeCells('B19:F19');
+		$activeWorksheet->mergeCells('B20:F20');
+
+		$activeWorksheet->getColumnDimension('A')->setWidth(20);
+		// Establecer la altura de la fila 1 (por ejemplo, 25 puntos)
+		$activeWorksheet->getRowDimension(1)->setRowHeight(25);
+
+		$activeWorksheet->getColumnDimension('B')->setWidth(20);
+		$activeWorksheet->getColumnDimension('C')->setWidth(20);
+		$activeWorksheet->getColumnDimension('D')->setWidth(0);
+		$activeWorksheet->getColumnDimension('E')->setWidth(20);
+		$activeWorksheet->getColumnDimension('F')->setWidth(20);
+		$activeWorksheet->getColumnDimension('G')->setWidth(20);
+
+		$activeWorksheet->getStyle('B6:C7')->applyFromArray($borderStyle);
+		$activeWorksheet->getStyle('E6:F7')->applyFromArray($borderStyle);
+		$activeWorksheet->getStyle('B9:F10')->applyFromArray($borderStyle);
+		$activeWorksheet->getStyle('B12:C13')->applyFromArray($borderStyle);
+		$activeWorksheet->getStyle('E12:F13')->applyFromArray($borderStyle);
+		$activeWorksheet->getStyle('B15:F17')->applyFromArray($borderStyle);
+		$activeWorksheet->getStyle('B19:F20')->applyFromArray($borderStyle);
+
+		$activeWorksheet->getStyle('B6:F20')->getBorders()->getOutline()->setBorderStyle(Border::BORDER_MEDIUM)->setColor(new Color('ff949494'));
+		$activeWorksheet->getStyle('A2:G3')->getBorders()->getOutline()->setBorderStyle(Border::BORDER_MEDIUM)->setColor(new Color('ff949494'));
+
+		$activeWorksheet->getStyle('A2:G3')->applyFromArray($filleee);
+		$activeWorksheet->getStyle('B6:F20')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('ffffffff');
+		$activeWorksheet->getStyle('B6:C6')->applyFromArray($filleee);
+		$activeWorksheet->getStyle('E6:F6')->applyFromArray($filleee);
+		$activeWorksheet->getStyle('B9:C9')->applyFromArray($filleee);
+		$activeWorksheet->getStyle('E9:F9')->applyFromArray($filleee);
+		$activeWorksheet->getStyle('B12:C12')->applyFromArray($filleee);
+		$activeWorksheet->getStyle('E12:F12')->applyFromArray($filleee);
+		$activeWorksheet->getStyle('B15:F15')->applyFromArray($filleee);
+		$activeWorksheet->getStyle('B19:F19')->applyFromArray($filleee);
+
+		$activeWorksheet->getStyle('C1')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+		$activeWorksheet->getStyle('C1')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+
+		/*-- Finalización de columnas y  campos --*/
+		$writer = new Xlsx($spreadsheet);
+		$writer->save('../view/Gastos/excel/'.$datos['idGasto'].".".$datos['nombre'].'.xlsx');
+
+		return $datos['idGasto'].".".$datos['nombre'].'.xlsx';
+	}
+
 
 }

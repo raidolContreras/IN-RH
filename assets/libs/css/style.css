@@ -2955,6 +2955,51 @@ Pageheader
 }
 
 
+/*--- btn outline excel --*/
+
+.btn-outline-excel {
+	color: #1D6F42;
+	background-color: transparent;
+	border-color: #1D6F42;
+}
+
+.btn-outline-excel:hover {
+	color: #fff;
+	background-color: #1D6F42;
+	border-color: #1D6F42;
+}
+
+.btn-outline-excel.focus,
+.btn-outline-excel:focus {
+	color: #fff;
+	background-color: #1D6F42;
+	border-color: #1D6F42;
+	box-shadow: 0 0 0 1px rgb(255, 195, 89);
+}
+
+/*--- btn outline pdf --*/
+
+.btn-outline-pdf {
+	color: #FF0000;
+	background-color: transparent;
+	border-color: #FF0000;
+}
+
+.btn-outline-pdf:hover {
+	color: #fff;
+	background-color: #FF0000;
+	border-color: #FF0000;
+}
+
+.btn-outline-pdf.focus,
+.btn-outline-pdf:focus {
+	color: #fff;
+	background-color: #FF0000;
+	border-color: #FF0000;
+	box-shadow: 0 0 0 1px rgb(255, 195, 89);
+}
+
+
 /*--- btn outline primary --*/
 
 .btn-outline-primary {

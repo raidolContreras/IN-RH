@@ -765,6 +765,7 @@ class FormulariosAjax{
 	}
 
 	public function addGastoAjax(){
+		session_start();
 		$categoria = $this->categoria;
 		$nameVendedor = $this->nameVendedor;
 		$divisa = $this->divisa;
@@ -782,7 +783,8 @@ class FormulariosAjax{
 			"importeIVA" => $importeIVA,
 			"fechaDocumento" => $fechaDocumento,
 			"descripcionGasto" => $descripcionGasto,
-			"referenciaInterna" => $referenciaInterna
+			"referenciaInterna" => $referenciaInterna,
+			"Empleados_idEmpleados" => $_SESSION['idEmpleado']
 		);
 
 		$addGasto = ControladorFormularios::ctrAddGasto($datos);
@@ -828,6 +830,12 @@ class FormulariosAjax{
 		$nameDocumento = $this->nameDocumento;
 		$delDocGasto = ControladorFormularios::ctrDelDocGasto($idGastos, $idDocumento_Gasto, $nameDocumento);
 		echo $delDocGasto;
+	}
+
+	public function excelGastoAjax(){
+		$idGastos = $this->idGastos;
+		$excelDocGasto = ControladorFormularios::excelDocGasto($idGastos);
+		echo json_encode($excelDocGasto);
 	}
 
 }
@@ -1685,4 +1693,12 @@ if (isset($_POST['addDocNew'])) {
 	} else {
 		echo "error";
 	}
+}
+
+if (isset($_POST['excelGastos'])) {
+	$idGastos = $_POST['excelGastos'];
+
+	$ExcelDocGasto = new FormulariosAjax();
+	$ExcelDocGasto -> idGastos = $idGastos;
+	$ExcelDocGasto -> excelGastoAjax();
 }

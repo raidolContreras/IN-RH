@@ -198,7 +198,7 @@
 															<i class="fa fa-file-pdf"></i>
 														<?php endif ?>
 													</span>
-													 <?php echo $documento['nameDocumento'] ?> 
+													 <a target="_blank" href="view/Gastos/<?php echo $gasto['idGastos'] ?>/<?php echo $documento['nameDocumento'] ?>"><?php echo $documento['nameDocumento'] ?> </a>
 												</li>
 												<li class="list-inline-item">
 													<a download="" href="view/Gastos/<?php echo $gasto['idGastos'] ?>/<?php echo $documento['nameDocumento'] ?>">
@@ -212,6 +212,14 @@
 							</div>
 							<?php endforeach ?>
 						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-outline-excel rounded" id="excel" onclick="excel(<?php echo $gasto['idGastos'] ?>)">
+							<i class="fas fa-file-excel"></i> Exportar excel
+						</button>
+						<button type="button" class="btn btn-outline-pdf rounded" id="PDF" data-idPDF="<?php echo $gasto['idGastos'] ?>">
+							<i class="fas fa-file-pdf"></i> Exportar PDF
+						</button>
 					</div>
 				</div>
 			</div>
@@ -280,7 +288,6 @@ $('#addDocNew-btn<?php echo $gasto['idGastos'] ?>').click(function() {
 					</div>
 				`);
 				deleteAlert();
-				addDiv(response);
 			} else {
 				$("#form-result").html(`
 					<div class='alert alert-danger' role="alert" id="alerta">
@@ -296,3 +303,33 @@ $('#addDocNew-btn<?php echo $gasto['idGastos'] ?>').click(function() {
 
 </script>
 <?php endforeach ?>
+<script>
+	function excel(gastosid){
+		console.log(gastosid);
+		$.ajax({
+			url: "ajax/ajax.formularios.php",
+			type: "POST",
+			data: {excelGastos: gastosid},
+			success: function(response) {
+				$("#form-result").val("");
+				if (response !== 'error') {
+					$("#form-result").html(`
+						<div class='alert alert-success' role="alert" id="alerta">
+							<i class="fas fa-check-circle"></i>
+							Generando excel.
+						</div>
+					`);
+					deleteAlert();
+				} else {
+					$("#form-result").html(`
+						<div class='alert alert-danger' role="alert" id="alerta">
+							<i class="fas fa-exclamation-triangle"></i>
+							<b>Error</b>, no se pudo generar el documento, intentalo nuevamente.
+						</div>
+					`);
+					deleteAlert();
+				}
+			}
+		});
+	}
+</script>
