@@ -217,7 +217,7 @@
 						<button type="button" class="btn btn-outline-excel rounded" id="excel" onclick="excel(<?php echo $gasto['idGastos'] ?>)">
 							<i class="fas fa-file-excel"></i> Exportar excel
 						</button>
-						<button type="button" class="btn btn-outline-pdf rounded" id="PDF" data-idPDF="<?php echo $gasto['idGastos'] ?>">
+						<button type="button" class="btn btn-outline-pdf rounded" id="PDF" onclick="pdf(<?php echo $gasto['idGastos'] ?>)">
 							<i class="fas fa-file-pdf"></i> Exportar PDF
 						</button>
 					</div>
@@ -305,11 +305,39 @@ $('#addDocNew-btn<?php echo $gasto['idGastos'] ?>').click(function() {
 <?php endforeach ?>
 <script>
 	function excel(gastosid){
-		console.log(gastosid);
 		$.ajax({
 			url: "ajax/ajax.formularios.php",
 			type: "POST",
 			data: {excelGastos: gastosid},
+			success: function(response) {
+				$("#form-result").val("");
+				if (response !== 'error') {
+					$("#form-result").html(`
+						<div class='alert alert-success' role="alert" id="alerta">
+							<i class="fas fa-check-circle"></i>
+							Generando excel.
+						</div>
+					`);
+					window.location.href = "view/Gastos/excel/"+response;
+					deleteAlert();
+				} else {
+					$("#form-result").html(`
+						<div class='alert alert-danger' role="alert" id="alerta">
+							<i class="fas fa-exclamation-triangle"></i>
+							<b>Error</b>, no se pudo generar el documento, intentalo nuevamente.
+						</div>
+					`);
+					deleteAlert();
+				}
+			}
+		});
+	}
+	function pdf(gastosid){
+		console.log(gastosid);
+		$.ajax({
+			url: "ajax/ajax.formularios.php",
+			type: "POST",
+			data: {pdfGastos: gastosid},
 			success: function(response) {
 				$("#form-result").val("");
 				if (response !== 'error') {

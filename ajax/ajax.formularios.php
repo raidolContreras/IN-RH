@@ -835,7 +835,13 @@ class FormulariosAjax{
 	public function excelGastoAjax(){
 		$idGastos = $this->idGastos;
 		$excelDocGasto = ControladorFormularios::excelDocGasto($idGastos);
-		echo json_encode($excelDocGasto);
+		echo $excelDocGasto;
+	}
+
+	public function pdfGastoAjax(){
+		$idGastos = $this->idGastos;
+		$excelDocGasto = ControladorFormularios::pdfDocGasto($idGastos);
+		echo $excelDocGasto;
 	}
 
 }
@@ -1701,4 +1707,12 @@ if (isset($_POST['excelGastos'])) {
 	$ExcelDocGasto = new FormulariosAjax();
 	$ExcelDocGasto -> idGastos = $idGastos;
 	$ExcelDocGasto -> excelGastoAjax();
+}
+
+if (isset($_POST['pdfGastos'])) {
+	$idGastos = $_POST['pdfGastos'];
+
+	$ExcelDocGasto = new FormulariosAjax();
+	$ExcelDocGasto -> idGastos = $idGastos;
+	$ExcelDocGasto -> pdfGastoAjax();
 }

@@ -1528,5 +1528,63 @@ class ControladorFormularios{
 		return $generarExcel;
 	}
 
+	static public function pdfDocGasto($idGastos){
+		$gasto = ModeloFormularios::mdlVerGastos("idGastos", $idGastos);
+		$divisa = ModeloFormularios::mdlVerDivisa("idDivisa", $gasto['divisa']);
+		$categoria = ModeloFormularios::mdlVerCategoria("idCategoria", $gasto['categoria']);
+		$empleado = ModeloFormularios::mdlVerEmpleados(null,'idEmpleados', $gasto['Empleados_idEmpleados']);
+		$documentos = ModeloFormularios::mdlVerDocGastos('Gastos_idGastos', $idGastos);
+		$datos_documentos = array();
+		$nombre = $empleado['lastname']." ".$empleado['name'];
+		switch ($gasto['status']) {
+			case 0:
+				$status = 'Pendiente';
+				break;
+			case 1:
+				$status = 'Aprobado';
+				break;
+			case 2:
+				$status = 'Rechazado';
+				break;
+			case 3:
+				$status = 'Pagado';
+				break;
+			
+			default:
+				$status = 'Error en el estado';
+				break;
+		}
+		if (empty($documentos)) {
+			$datos_documentos = array(
+				"valor" => "Sin documentos adjuntados",
+				"tipo" => ""
+			);
+		}else{
+			foreach ($documentos as $documento) {
+				$datos_documentos[] = array(
+					"valor" => $documento['nameDocumento'],
+					"tipo" => $documento['tipo']
+				);
+			}
+		}
+		$datos = array(
+			"idGasto" => $gasto['idGastos'],
+			"nombre" => $nombre,
+			"nameVendedor" => $gasto['nameVendedor'],
+			"categoria" => $categoria['nameCategoria'],
+			"nameDivisa" => $divisa['nameDivisa'],
+			"importeTotal" => ControladorFormularios::formatearNumero($gasto['importeTotal'],$divisa['divisa']),
+			"importeIVA" => ControladorFormularios::formatearNumero($gasto['importeIVA'],$divisa['divisa']),
+			"fechaDocumento" => date('d/m/Y', strtotime($gasto['fechaDocumento'])),
+			"fecha_creacion" => date('d/m/Y h:i', strtotime($gasto['fecha_creacion'])),
+			"referenciaInterna" => $gasto['referenciaInterna'],
+			"descripcionGasto" => $gasto['descripcionGasto'],
+			"status" => $status,
+			"datos_documentos" => $datos_documentos
+		);
+		$generarPDF = ModeloExcel::ctrGenerarPDFGastoIndividual($datos);
+		return $generarPDF;
+	}
+
 	/*---------- Fin de ControladorFormularios ---------- */
 }
