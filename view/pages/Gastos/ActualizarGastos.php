@@ -332,32 +332,5 @@ $('#addDocNew-btn<?php echo $gasto['idGastos'] ?>').click(function() {
 			}
 		});
 	}
-	function pdf(gastosid){
-		console.log(gastosid);
-		$.ajax({
-			url: "ajax/ajax.formularios.php",
-			type: "POST",
-			data: {pdfGastos: gastosid},
-			success: function(response) {
-				$("#form-result").val("");
-				if (response !== 'error') {
-					$("#form-result").html(`
-						<div class='alert alert-success' role="alert" id="alerta">
-							<i class="fas fa-check-circle"></i>
-							Generando excel.
-						</div>
-					`);
-					deleteAlert();
-				} else {
-					$("#form-result").html(`
-						<div class='alert alert-danger' role="alert" id="alerta">
-							<i class="fas fa-exclamation-triangle"></i>
-							<b>Error</b>, no se pudo generar el documento, intentalo nuevamente.
-						</div>
-					`);
-					deleteAlert();
-				}
-			}
-		});
-	}
+
 </script>

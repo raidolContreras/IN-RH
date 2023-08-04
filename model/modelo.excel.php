@@ -1309,26 +1309,4 @@ static public function mdlGenerarExcelAsistenciasEmpresas($tabla, $idEmpresas){
 		return $datos['idGasto'].".".$datos['nombre'].'.xlsx';
 	}
 
-
-static public function ctrGenerarPDFGastoIndividual($datos){
-    // Crear una instancia de PhpSpreadsheet y configurar el contenido como lo hiciste antes
-    $spreadsheet = new Spreadsheet();
-    // ... (resto del código de configuración, igual que antes) ...
-
-    // Crear una instancia de la clase Tcpdf que actuará como escritor para PDF
-    $pdfWriter = new Tcpdf($spreadsheet);
-
-    // Establecer el título del documento PDF
-    $pdfWriter->getProperties()->setTitle('Reporte de Gasto Individual IN Consulting');
-
-    // Establecer el nombre del archivo PDF generado
-    $fileName = $datos['idGasto'] . '.' . $datos['nombre'] . '.pdf';
-
-    // Guardar el archivo PDF en una ruta específica
-    $pdfWriter->save('../view/Gastos/pdf/' . $fileName);
-
-    // Devolver el nombre del archivo generado (opcional, puedes omitir esto si no lo necesitas)
-    return $fileName;
-}
-
 }

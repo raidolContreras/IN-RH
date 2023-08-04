@@ -1518,7 +1518,7 @@ class ControladorFormularios{
 			"importeTotal" => ControladorFormularios::formatearNumero($gasto['importeTotal'],$divisa['divisa']),
 			"importeIVA" => ControladorFormularios::formatearNumero($gasto['importeIVA'],$divisa['divisa']),
 			"fechaDocumento" => date('d/m/Y', strtotime($gasto['fechaDocumento'])),
-			"fecha_creacion" => date('d/m/Y h:i', strtotime($gasto['fecha_creacion'])),
+			"fecha_creacion" => date('d/m/Y h:i A', strtotime($gasto['fecha_creacion'])),
 			"referenciaInterna" => $gasto['referenciaInterna'],
 			"descripcionGasto" => $gasto['descripcionGasto'],
 			"status" => $status,
@@ -1576,14 +1576,16 @@ class ControladorFormularios{
 			"importeTotal" => ControladorFormularios::formatearNumero($gasto['importeTotal'],$divisa['divisa']),
 			"importeIVA" => ControladorFormularios::formatearNumero($gasto['importeIVA'],$divisa['divisa']),
 			"fechaDocumento" => date('d/m/Y', strtotime($gasto['fechaDocumento'])),
-			"fecha_creacion" => date('d/m/Y h:i', strtotime($gasto['fecha_creacion'])),
+			"fecha_creacion" => date('d/m/Y h:i A', strtotime($gasto['fecha_creacion'])),
 			"referenciaInterna" => $gasto['referenciaInterna'],
 			"descripcionGasto" => $gasto['descripcionGasto'],
 			"status" => $status,
-			"datos_documentos" => $datos_documentos
+			"datos_documentos" => $datos_documentos,
+			"nameDocPDF" => $gasto['idGastos'].".".$nombre.'.pdf'
 		);
-		$generarPDF = ModeloExcel::ctrGenerarPDFGastoIndividual($datos);
-		return $generarPDF;
+		
+		//$generarPDF = ModeloExcel::ctrGenerarPDFGastoIndividual($datos);
+		return $datos;
 	}
 
 	/*---------- Fin de ControladorFormularios ---------- */

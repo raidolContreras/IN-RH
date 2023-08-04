@@ -841,7 +841,7 @@ class FormulariosAjax{
 	public function pdfGastoAjax(){
 		$idGastos = $this->idGastos;
 		$excelDocGasto = ControladorFormularios::pdfDocGasto($idGastos);
-		echo $excelDocGasto;
+		echo json_encode($excelDocGasto);
 	}
 
 }

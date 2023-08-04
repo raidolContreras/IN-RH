@@ -4,6 +4,8 @@
 ?>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.css" />
+<script src="assets/vendor/jsPDF/node_modules/jspdf/dist/jspdf.umd.min.js"></script>
+
 <style>
 	.dropzone {
 		border: 2px dashed #ccc;
@@ -28,8 +30,8 @@
 					<table class="table gastos">
 						<thead>
 							<tr>
-								<th>Proveedor</th>
 								<th width="150">Fecha del documento</th>
+								<th>Proveedor</th>
 								<th>Importe</th>
 								<th>Categoría</th>
 								<th width="50">Estado</th>
@@ -42,8 +44,8 @@
 								$categoria = ControladorFormularios::ctrVerCategoria('idCategoria', $gasto['categoria']);
 							?>
 							<tr>
-								<td><button class="btn btn-in-consulting" data-toggle="modal" data-target="#gasto<?php echo $gasto['idGastos'] ?>"><span><?php echo $gasto['nameVendedor'] ?></span></button></td>
-								<td><?php echo date('d/m/Y', strtotime($gasto['fechaDocumento'])) ?></td>
+								<td><button class="btn btn-in-consulting" data-toggle="modal" data-target="#gasto<?php echo $gasto['idGastos'] ?>"><span><?php echo date('d/m/Y', strtotime($gasto['fechaDocumento'])) ?></span></button></td>
+								<td><?php echo $gasto['nameVendedor'] ?></td>
 								<td><?php echo ControladorFormularios::formatearNumero($gasto['importeTotal'], $divisa['divisa']) ?></td>
 								<td><?php echo $categoria['nameCategoria'] ?></td>
 								<?php 
@@ -400,3 +402,4 @@ function addDiv(datos) {
 }
 
 </script>
+<script src="assets/libs/js/expPDF.js"></script>
