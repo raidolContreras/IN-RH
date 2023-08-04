@@ -1567,6 +1567,9 @@ class ControladorFormularios{
 				);
 			}
 		}
+		if ($gasto['referenciaInterna'] == "") {
+			$gasto['referenciaInterna'] = "-";
+		}
 		$datos = array(
 			"idGasto" => $gasto['idGastos'],
 			"nombre" => $nombre,
