@@ -21,7 +21,7 @@
 				<form class="row" style="align-items: center;" id="subirGasto-form" enctype="multipart/form-data">
 					<div class="col-xl-6">
 						<div class="row">
-							<div class="form-group col-xl-12">
+							<div class="form-group col-xl-6">
 								<label for="recipient-name" class="col-form-label">Categoría:</label>
 								<select class="form-control" id="categoria" name="categoria">
 									<option value="">Selecciona una categoría</option>
@@ -29,6 +29,19 @@
 										<option value="<?php echo $categoria['idCategoria'] ?>"><?php echo $categoria['nameCategoria'] ?></option>
 									<?php endforeach ?>
 								</select>
+							</div>
+							<div class="form-group col-xl-6">
+								<label for="recipient-name" class="col-form-label">Folio:</label>
+								<!-- HTML -->
+								<select id="opciones" class="form-control" name="folio">
+								  <option value="1">0001</option>
+								  <option value="2">0002</option>
+								  <option value="3">0003</option>
+								  <option value="otra">Nuevo folio</option>
+								</select>
+
+								<input class="form-control" type="text" id="nfolio" name="nfolio" style="display: none;" />
+
 							</div>
 							<div class="form-group col-xl-12">
 								<label for="message-text" class="col-form-label">Nombre del vendedor:</label>

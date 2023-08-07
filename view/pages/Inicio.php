@@ -68,6 +68,15 @@
 							</div>
 						</div>
 					</div>
+					<div class="col-xl-12 order-xl-6 order-lg-5">
+						<div class="card">
+							<div class="float-right" style="z-index: 2 !important;" id="justify-result">
+							</div>
+							<div class="card-body contenedor" style="z-index: 0 !important;">
+								<?php include "view/pages/modulos/Gastos.php" ?>
+							</div>
+						</div>
+					</div>
 				<?php else: ?>
 					<div class="col-lg-12 order-xl-2">
 						<div class="card">

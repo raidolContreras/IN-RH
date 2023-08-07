@@ -17,6 +17,13 @@
 		font-size: 1.5em;
 		color: #999;
 	}
+
+	/* CSS */
+/* Estilo para el campo de texto de la nueva opción */
+#otraOpcion {
+  display: block;
+}
+
 </style>
 <div class="container-fluid dashboard-content">
 	<div class="container">
@@ -400,6 +407,18 @@ function addDiv(datos) {
 	// Agregar el div creado al contenedor deseado (divContainer)
 	divContainer.appendChild(div);
 }
+
+// Mostrar el campo de texto cuando se selecciona "Agregar otra opción"
+document.getElementById("opciones").addEventListener("change", function () {
+  const select = document.getElementById("opciones");
+  const otraOpcion = document.getElementById("nfolio");
+
+  if (select.value === "otra") {
+    otraOpcion.style.display = "block";
+  } else {
+    otraOpcion.style.display = "none";
+  }
+});
 
 </script>
 <script src="assets/libs/js/expPDF.js"></script>
