@@ -3,6 +3,7 @@
 	$categoria = ControladorFormularios::ctrVerCategoria('idCategoria', $gasto['categoria']);
 	$importe = ControladorFormularios::formatearNumero($gasto['importeTotal'], $divisa['divisa']);
 	$documentos = ControladorFormularios::ctrVerDocGastos('Gastos_idGastos', $gasto['idGastos']);
+	$folio = ControladorFormularios::ctrVerFolioGastos('idFolio_Gasto', $gasto['folio']);
 ?>
 
 	<div
@@ -17,7 +18,7 @@
 				<div class="modal-header">
 					<div class="row" style="flex-direction: column;">
 						<p class="titulo-tablero mb-0" id="exampleModalLabel">Información del gasto: </p>
-						<p class="subtitulo-sup" id="exampleModalLabel"><?php echo $gasto['nameVendedor']." (".$importe.")"; ?></p>
+						<p class="subtitulo-sup" id="exampleModalLabel"><?php echo $folio['nameFolio'].' - '.$gasto['nameVendedor']." (".$importe.")"; ?></p>
 					</div>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>

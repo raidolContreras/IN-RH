@@ -195,9 +195,6 @@ jQuery(document).ready(function($) {
                 search: 'Buscar',
             }
             });
-
-            table.buttons().container()
-                .appendTo('#example_wrapper .col-md-6:eq(0)');
         });
     }
 
@@ -218,9 +215,6 @@ jQuery(document).ready(function($) {
                 search: 'Buscar',
             }
             });
-
-            table.buttons().container()
-                .appendTo('#example_wrapper .col-md-6:eq(0)');
         });
     }
 
@@ -241,9 +235,6 @@ jQuery(document).ready(function($) {
                 search: 'Buscar',
             }
             });
-
-            table.buttons().container()
-                .appendTo('#example_wrapper .col-md-6:eq(0)');
         });
     }
 
@@ -264,9 +255,6 @@ jQuery(document).ready(function($) {
                 search: 'Buscar',
             }
             });
-
-            table.buttons().container()
-                .appendTo('#example_wrapper .col-md-6:eq(0)');
         });
     }
 
@@ -292,31 +280,79 @@ jQuery(document).ready(function($) {
         });
     }
 
-    if ($("table.gastos").length) {
+  if ($("table.gastos").length) {
+    var table = $("table.gastos").DataTable({
+      lengthChange: false,
+      scrollCollapse: true,
+      paging: false,
+      buttons: [
+        {
+          extend: 'excelHtml5',
+          text: 'Exportar a Excel',
+          className: 'btn btn-outline-success rounded',
+          exportOptions: {
+            columns: [0, 1, 2, 4, 5, 6, 7] // Excluye la última columna de la exportación
+          },
+          customize: function( xlsx ) {
+            var sheet = xlsx.xl.worksheets['sheet1.xml'];
+            $('row:first c', sheet).attr( 's', '42' );
+          },
+          footer: true, // Habilita el pie de tabla personalizado
+          footerCallback: function (tfoot, data, start, end, display) {
+            var column_index_to_sum = 4; // Índice de la columna a sumar (columna 5 en base cero)
+            var api = this.api();
 
-        $(document).ready(function() {
-            var table = $('table.gastos').DataTable({
-                lengthChange: false,
-                scrollCollapse: true,
-                paging: false,
-                fixedHeader: false,
-                fixedColumns: true,
-                ordering: false,
-                language: {
-                    lengthMenu: 'Mostrar _MENU_ resultados por pagina',
-                    zeroRecords: 'Sin resultados - lo siento',
-                    info: 'Pagina _PAGE_ de _PAGES_',
-                    infoEmpty: 'No se encontraron registros',
-                    infoFiltered: '(Filtrado de _MAX_ registros totales)',
-                    search: 'Buscar',
-                },
-                columnDefs: [{
-                    targets: -1, // Última columna (puedes cambiar el índice si no es la última columna)
-                    orderable: false, // Desactivar el ordenado
-                }]
-            });
-        });
-    }
+            // Total de la columna
+            var total = api
+              .column(column_index_to_sum, { search: 'applied' })
+              .data()
+              .reduce(function (a, b) {
+                return parseFloat(a) + parseFloat(b);
+              }, 0);
+
+            $(api.column(column_index_to_sum).footer()).html('Total: ' + total);
+          }
+        },
+        {
+          extend: 'pdfHtml5',
+          text: 'Exportar a PDF',
+          className: 'btn btn-outline-danger rounded',
+          orientation: 'landscape',
+          pageSize: 'A4',
+          exportOptions: {
+            columns: [0, 1, 2, 4, 5, 6, 7] // Excluye la última columna de la exportación
+          },
+          customize: function(doc) {
+            doc.content[1].table.widths = Array(doc.content[1].table.body[0].length + 1).join('*').split('');
+          }
+        }
+      ],
+      fixedHeader: false,
+      fixedColumns: true,
+      ordering: false,
+      select: true,
+      language: {
+        lengthMenu: 'Mostrar _MENU_ resultados por página',
+        zeroRecords: 'Sin resultados - lo siento',
+        info: 'Página _PAGE_ de _PAGES_',
+        infoEmpty: 'No se encontraron registros',
+        infoFiltered: '(Filtrado de _MAX_ registros totales)',
+        search: 'Buscar',
+      },
+      columnDefs: [
+        {
+          targets: -1,
+          orderable: false,
+        },
+        {
+          targets: [5, 6], // Índices de las columnas "cantidad" y "moneda"
+          visible: false, // Oculta las columnas en la visualización del DataTable
+        }
+      ]
+    });
+
+    table.buttons().container().appendTo('#example_wrapper .col-md-6:eq(0)');
+  }
 
 
 });

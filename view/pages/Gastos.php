@@ -35,13 +35,16 @@
 			</div>
 			<div class="card-body">
 				<div class="table-responsive">
-					<table class="table gastos">
+					<table id="example" class="table gastos">
 						<thead>
 							<tr>
+								<th width="20">Folio</th>
 								<th width="150">Fecha del documento</th>
 								<th>Proveedor</th>
 								<th>Importe</th>
 								<th>Categoría</th>
+								<th>Cantidad</th>
+								<th>Moneda</th>
 								<th width="50">Estado</th>
 								<th></th>
 							</tr>
@@ -50,12 +53,16 @@
 							<?php foreach ($gastos as $gasto):
 								$divisa = ControladorFormularios::ctrVerDivisa('idDivisa', $gasto['divisa']);
 								$categoria = ControladorFormularios::ctrVerCategoria('idCategoria', $gasto['categoria']);
+								$folio = ControladorFormularios::ctrVerFolioGastos('idFolio_Gasto', $gasto['folio']);
 							?>
 							<tr>
-								<td><button class="btn btn-in-consulting" data-toggle="modal" data-target="#gasto<?php echo $gasto['idGastos'] ?>"><span><?php echo date('d/m/Y', strtotime($gasto['fechaDocumento'])) ?></span></button></td>
+								<td><button class="btn btn-in-consulting" data-toggle="modal" data-target="#gasto<?php echo $gasto['idGastos'] ?>"><span><?php echo $folio['nameFolio'] ?></span></button></td>
+								<td><?php echo date('d/m/Y', strtotime($gasto['fechaDocumento'])) ?></td>
 								<td><?php echo $gasto['nameVendedor'] ?></td>
 								<td><?php echo ControladorFormularios::formatearNumero($gasto['importeTotal'], $divisa['divisa']) ?></td>
 								<td><?php echo $categoria['nameCategoria'] ?></td>
+								<td><?php echo $gasto['importeTotal'] ?></td>
+								<td><?php echo $divisa['divisa'] ?></td>
 								<?php 
 									switch ($gasto['status']) {
 										case 0:

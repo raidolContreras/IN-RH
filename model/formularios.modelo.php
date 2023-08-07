@@ -2613,7 +2613,7 @@ static public function mdlImagenNoticia($id, $name)
 			$stmt = $pdo->prepare($sql);
 			$stmt->bindParam(':'.$item, $valor);
 			$stmt->execute();
-			return $stmt->fetchAll();
+			return $stmt->fetch();
 		}
 		$stmt->close();
 		$stmt = null;

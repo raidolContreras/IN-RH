@@ -1390,6 +1390,11 @@ class ControladorFormularios{
 		return $addFolio;
 	}
 
+	static public function ctrVerFolio($item, $value){
+		$verFolio = ModeloFormularios::mdlVerFolio($item, $value);
+		return $verFolio;
+	}
+
 	static public function ctrAddGasto($datos){
 		$addGasto = ModeloFormularios::mdlAddGasto($datos);
 		return $addGasto;
