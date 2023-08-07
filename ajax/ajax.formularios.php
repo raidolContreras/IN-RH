@@ -774,6 +774,7 @@ class FormulariosAjax{
 		$fechaDocumento = $this->fechaDocumento;
 		$descripcionGasto = $this->descripcionGasto;
 		$referenciaInterna = $this->referenciaInterna;
+		$folio = $this->folio;
 
 		$datos = array(
 			"categoria" => $categoria,
@@ -784,6 +785,7 @@ class FormulariosAjax{
 			"fechaDocumento" => $fechaDocumento,
 			"descripcionGasto" => $descripcionGasto,
 			"referenciaInterna" => $referenciaInterna,
+			"folio" => $folio,
 			"Empleados_idEmpleados" => $_SESSION['idEmpleado']
 		);
 
@@ -1481,6 +1483,8 @@ if (isset($_POST['nameVendedor'])) {
 		echo "error-fechaDocumento";
 	}elseif ($_POST['descripcionGasto'] == null) {
 		echo "error-descripcionGasto";
+	}elseif ($_POST['folio'] == null) {
+		echo "error-folio";
 	}else{
 		// Recuperar los datos del formulario
 		$categoria = $_POST['categoria'];
@@ -1491,6 +1495,13 @@ if (isset($_POST['nameVendedor'])) {
 		$fechaDocumento = $_POST['fechaDocumento'];
 		$descripcionGasto = $_POST['descripcionGasto'];
 		$referenciaInterna = $_POST['referenciaInterna'];
+		if ($_POST['folio'] == 'otra') {
+			session_start();
+			$folio = ControladorFormularios::ctrRegistrarFolioGastos($_POST['nfolio'], $_SESSION['idEmpleado']);
+		}else{
+			$folio = $_POST['folio'];
+		}
+		
 
 		$addGasto = new FormulariosAjax();
 		$addGasto -> categoria = $categoria;
@@ -1501,6 +1512,7 @@ if (isset($_POST['nameVendedor'])) {
 		$addGasto -> fechaDocumento = $fechaDocumento;
 		$addGasto -> descripcionGasto = $descripcionGasto;
 		$addGasto -> referenciaInterna = $referenciaInterna;
+		$addGasto -> folio = $folio;
 		$addGasto -> addGastoAjax();
 	}
 }

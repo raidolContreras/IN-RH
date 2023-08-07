@@ -1,6 +1,7 @@
 <?php $gastos = ControladorFormularios::ctrVerGastos(null, null); 
 	$divisas = ControladorFormularios::ctrVerDivisa(null, null);
 	$categorias = ControladorFormularios::ctrVerCategoria(null, null);
+	$folios = ControladorFormularios::ctrVerFolioGastos(null, null);
 ?>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.css" />

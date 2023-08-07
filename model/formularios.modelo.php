@@ -2452,7 +2452,7 @@ static public function mdlImagenNoticia($id, $name)
 
 	static public function mdlAddGasto($datos){
 		$pdo =Conexion::conectar();
-		$sql = "INSERT INTO gastos(categoria, nameVendedor, divisa, importeTotal, importeIVA, fechaDocumento, descripcionGasto, referenciaInterna, Empleados_idEmpleados) VALUES (:categoria,:nameVendedor,:divisa,:importeTotal,:importeIVA,:fechaDocumento,:descripcionGasto,:referenciaInterna, :Empleados_idEmpleados)";
+		$sql = "INSERT INTO gastos(categoria, nameVendedor, divisa, importeTotal, importeIVA, fechaDocumento, descripcionGasto, referenciaInterna, Empleados_idEmpleados, folio) VALUES (:categoria,:nameVendedor,:divisa,:importeTotal,:importeIVA,:fechaDocumento,:descripcionGasto,:referenciaInterna, :Empleados_idEmpleados, :folio)";
 
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':categoria', $datos['categoria'], PDO::PARAM_INT);
@@ -2464,6 +2464,26 @@ static public function mdlImagenNoticia($id, $name)
 		$stmt->bindParam(':descripcionGasto', $datos['descripcionGasto'], PDO::PARAM_STR);
 		$stmt->bindParam(':referenciaInterna', $datos['referenciaInterna'], PDO::PARAM_STR);
 		$stmt->bindParam(':Empleados_idEmpleados', $datos['Empleados_idEmpleados'], PDO::PARAM_INT);
+		$stmt->bindParam(':folio', $datos['folio'], PDO::PARAM_INT);
+
+		if ($stmt->execute()) {
+			return $pdo->lastInsertId();
+
+		}else{
+			return 'error';
+		}
+
+		$stmt->close();
+		$stmt = null;
+	}
+
+	static public function mdlRegistrarFolioGastos($folio, $idEmpleado){
+		$pdo =Conexion::conectar();
+		$sql = "INSERT INTO folios_gastos(nameFolio, Empleados_idEmpleados) VALUES (:nameFolio, :Empleados_idEmpleados)";
+
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':nameFolio', $folio, PDO::PARAM_STR);
+		$stmt->bindParam(':Empleados_idEmpleados', $idEmpleado, PDO::PARAM_INT);
 
 		if ($stmt->execute()) {
 			return $pdo->lastInsertId();
@@ -2576,6 +2596,24 @@ static public function mdlImagenNoticia($id, $name)
 			return 'ok';
 		}else{
 			return "error";
+		}
+		$stmt->close();
+		$stmt = null;
+	}
+
+	static public function mdlVerFolioGastos($item, $valor){
+		$pdo =Conexion::conectar();
+		if ($item == null && $valor == null) {
+			$sql = "SELECT * FROM folios_gastos ORDER BY fecha_creacion ASC";
+			$stmt = $pdo->prepare($sql);
+			$stmt->execute();
+			return $stmt->fetchAll();
+		}else{
+			$sql = "SELECT * FROM folios_gastos WHERE $item = :$item";
+			$stmt = $pdo->prepare($sql);
+			$stmt->bindParam(':'.$item, $valor);
+			$stmt->execute();
+			return $stmt->fetchAll();
 		}
 		$stmt->close();
 		$stmt = null;

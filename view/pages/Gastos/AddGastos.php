@@ -34,10 +34,13 @@
 								<label for="recipient-name" class="col-form-label">Folio:</label>
 								<!-- HTML -->
 								<select id="opciones" class="form-control" name="folio">
-								  <option value="1">0001</option>
-								  <option value="2">0002</option>
-								  <option value="3">0003</option>
-								  <option value="otra">Nuevo folio</option>
+									<option>Selecciona o crea un folio</option>
+									<?php foreach ($folios as $folio): ?>
+										<?php if ($folio['Empleados_idEmpleados'] == $_SESSION['idEmpleado']): ?>
+									<option value="<?php echo $folio['idFolio_Gasto'] ?>"><?php echo $folio['nameFolio'] ?></option>
+										<?php endif ?>
+									<?php endforeach ?>
+									<option value="otra">Nuevo folio</option>
 								</select>
 
 								<input class="form-control" type="text" id="nfolio" name="nfolio" style="display: none;" />

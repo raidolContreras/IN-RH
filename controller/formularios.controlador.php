@@ -1385,6 +1385,11 @@ class ControladorFormularios{
 		return $delCategoria;
 	}
 
+	static public function ctrRegistrarFolioGastos($folio, $idEmpleado){
+		$addFolio = ModeloFormularios::mdlRegistrarFolioGastos($folio, $idEmpleado);
+		return $addFolio;
+	}
+
 	static public function ctrAddGasto($datos){
 		$addGasto = ModeloFormularios::mdlAddGasto($datos);
 		return $addGasto;
@@ -1589,6 +1594,11 @@ class ControladorFormularios{
 		
 		//$generarPDF = ModeloExcel::ctrGenerarPDFGastoIndividual($datos);
 		return $datos;
+	}
+
+	static public function ctrVerFolioGastos($item, $valor){
+		$VerDocGastos = ModeloFormularios::mdlVerFolioGastos($item, $valor);
+		return $VerDocGastos;
 	}
 
 	/*---------- Fin de ControladorFormularios ---------- */
