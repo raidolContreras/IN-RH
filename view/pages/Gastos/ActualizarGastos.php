@@ -362,9 +362,7 @@ $('#addDocNew-btn<?php echo $gasto['idGastos'] ?>').click(function() {
 			}
 		});
 	}
-
-</script>
-<script>
+	
 	function pagado(gastosid){
 		$.ajax({
 			url: "ajax/ajax.formularios.php",
