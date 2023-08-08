@@ -10,6 +10,7 @@ $perfil = $primerLetra.$segundaLetra;
 <!-- ============================================================== -->
 <!-- navbar -->
 <!-- ============================================================== -->
+<?php $jefeDepartamento = ControladorFormularios::ctrVerDepartamentos("Empleados_idEmpleados", $_SESSION['idEmpleado']) ?>
 <div class="dashboard-header">
 	<nav class="navbar navbar-expand-lg bg-white fixed-top">
 		<a class="navbar-brand rambla" href="Inicio"><img src="assets/images/logo.png" width="40px" height="auto">consulting</a>
@@ -23,6 +24,30 @@ $perfil = $primerLetra.$segundaLetra;
 					<?php 
 
 					$paginaActual = $_GET['pagina'];
+
+//Menu de Evaluaciones
+					if (!empty($jefeDepartamento)) {
+						$gastos = array('Gastos', 'Solicitudes_Gastos');
+					}else{
+						$gastos = array('Gastos');
+					}
+
+					if (!empty($paginaActual) && in_array($paginaActual, $gastos)) {
+						foreach ($gastos as $pagina) {
+							$activeClass = ($paginaActual == $pagina) ? ' active' : '';
+							$marginLeftClass = ($pagina != $gastos[0]) ? ' ml-3' : '';
+
+							echo '<li class="nav-item' . $activeClass . $marginLeftClass . '">';
+							if ($pagina == 'Gastos') {
+								echo '<a href="' . $pagina . '"> Evaluaciones </a>';
+							}elseif($pagina == 'Solicitudes_Gastos'){
+								echo '<a href="' . $pagina . '"> Solicitudes de Gastos </a>';
+							}else{
+								echo '<a href="' . $pagina . '">' . ucfirst($pagina) . '</a>';
+							}
+							echo '</li>';
+						}
+					}
 
 //Menu de horarios
 					$Asistencias = array('Asistencia-importar', 'Asistencia-exportar', 'Asistencia-permisos');

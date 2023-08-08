@@ -1,4 +1,3 @@
-<?php $jefeDepartamento = ControladorFormularios::ctrVerDepartamentos("Empleados_idEmpleados", $_SESSION['idEmpleado']) ?>
 <div class="container-fluid dashboard-content ">
 
 	<div class="row">

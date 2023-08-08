@@ -138,6 +138,12 @@ session_start();
 
 				include "pages/".$_GET["pagina"].".php";
 
+			}elseif ($_GET["pagina"] == "Solicitudes_Gastos") {
+
+				include "pages/navs/navbar.php";
+				include "pages/navs/sidenav.php";
+				include "pages/Gastos/".$_GET["pagina"].".php";
+
 			}elseif ($_GET["pagina"] == "Asistencia" ||
 					$_GET["pagina"] == "Asistencia-resumen" ||
 					$_GET["pagina"] == "Asistencia-ajustes" ||

@@ -56,57 +56,59 @@
 									$categoria = ControladorFormularios::ctrVerCategoria('idCategoria', $gasto['categoria']);
 									$folio = ControladorFormularios::ctrVerFolioGastos('idFolio_Gasto', $gasto['folio']);
 								?>
-								<tr>
-									<td><button class="btn btn-in-consulting" data-toggle="modal" data-target="#gasto<?php echo $gasto['idGastos'] ?>"><span><?php echo $folio['nameFolio'] ?></span></button></td>
-									<td><?php echo date('d/m/Y', strtotime($gasto['fechaDocumento'])) ?></td>
-									<td><?php echo $gasto['nameVendedor'] ?></td>
-									<td><?php echo ControladorFormularios::formatearNumero($gasto['importeTotal'], $divisa['divisa']) ?></td>
-									<td><?php echo $categoria['nameCategoria'] ?></td>
-									<td><?php echo $gasto['importeTotal'] ?></td>
-									<td><?php echo $divisa['divisa'] ?></td>
-									<?php 
-										switch ($gasto['status']) {
-											case 0:
-												echo '<td><span class="badge badge-warning-dot"><span class="badge-dot badge-warning"></span>Pendiente</span></td>';
-												break;
-											
-											case 1:
-												echo '<td><span class="badge badge-success-dot"><span class="badge-dot badge-success"></span>Aprobado</span></td>';
-												break;
-											
-											case 2:
-												echo '<td><span class="badge badge-danger-dot"><span class="badge-dot badge-danger"></span>Rechazado</span></td>';
-												break;
-											
-											case 3:
-												echo '<td><span class="badge badge-info-dot"><span class="badge-dot badge-info"></span>Pagado</span></td>';
-												break;
-											
-											default:
-												echo '<td><span class="badge badge-danger">Error</span></td>';
-												break;
-										}
-									?>
-									<td>
-										<?php if ($gasto['status'] == 0 && $gasto['Empleados_idEmpleados'] == $_SESSION['idEmpleado']): ?>
-											<div class="btn-group dropright">
-												<button class="btn btn-link" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-													<i class="fas fa-ellipsis-v"></i>
-												</button>
-												<div class="dropdown-menu mr-0" aria-labelledby="dropdownMenuButton">
-													<button
-														class="dropdown-item btn btn-link float-left"
-														data-toggle="modal"
-														data-target="#delGasto"
-														data-del="<?php echo $gasto['idGastos'] ?>"
-														style="font-size: 13px;">
-														<i class="fas fa-trash"></i> Eliminar
+									<?php if ($gasto['Empleados_idEmpleados'] == $_SESSION['idEmpleado']): ?>
+									<tr>
+										<td><button class="btn btn-in-consulting" data-toggle="modal" data-target="#gasto<?php echo $gasto['idGastos'] ?>"><span><?php echo $folio['nameFolio'] ?></span></button></td>
+										<td><?php echo date('d/m/Y', strtotime($gasto['fechaDocumento'])) ?></td>
+										<td><?php echo $gasto['nameVendedor'] ?></td>
+										<td><?php echo ControladorFormularios::formatearNumero($gasto['importeTotal'], $divisa['divisa']) ?></td>
+										<td><?php echo $categoria['nameCategoria'] ?></td>
+										<td><?php echo $gasto['importeTotal'] ?></td>
+										<td><?php echo $divisa['divisa'] ?></td>
+										<?php 
+											switch ($gasto['status']) {
+												case 0:
+													echo '<td><span class="badge badge-warning-dot"><span class="badge-dot badge-warning"></span>Pendiente</span></td>';
+													break;
+												
+												case 1:
+													echo '<td><span class="badge badge-success-dot"><span class="badge-dot badge-success"></span>Aprobado</span></td>';
+													break;
+												
+												case 2:
+													echo '<td><span class="badge badge-danger-dot"><span class="badge-dot badge-danger"></span>Rechazado</span></td>';
+													break;
+												
+												case 3:
+													echo '<td><span class="badge badge-info-dot"><span class="badge-dot badge-info"></span>Pagado</span></td>';
+													break;
+												
+												default:
+													echo '<td><span class="badge badge-danger">Error</span></td>';
+													break;
+											}
+										?>
+										<td>
+											<?php if ($gasto['status'] == 0 && $gasto['Empleados_idEmpleados'] == $_SESSION['idEmpleado']): ?>
+												<div class="btn-group dropright">
+													<button class="btn btn-link" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+														<i class="fas fa-ellipsis-v"></i>
 													</button>
+													<div class="dropdown-menu mr-0" aria-labelledby="dropdownMenuButton">
+														<button
+															class="dropdown-item btn btn-link float-left"
+															data-toggle="modal"
+															data-target="#delGasto"
+															data-del="<?php echo $gasto['idGastos'] ?>"
+															style="font-size: 13px;">
+															<i class="fas fa-trash"></i> Eliminar
+														</button>
+													</div>
 												</div>
-											</div>
-										<?php endif ?>
-									</td>
-								</tr>
+											<?php endif ?>
+										</td>
+									</tr>
+									<?php endif ?>
 								<?php endforeach ?>
 							</tbody>
 						</table>
