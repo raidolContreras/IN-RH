@@ -2619,5 +2619,34 @@ static public function mdlImagenNoticia($id, $name)
 		$stmt = null;
 	}
 
+	static public function mdlAceptarGasto($idGastos, $status){
+		$pdo = Conexion::conectar();
+		$sql = "UPDATE gastos SET status = :status WHERE idGastos = :idGastos";
+		$stmt = $pdo -> prepare($sql);
+		$stmt->bindParam(':status', $status, PDO::PARAM_INT);
+		$stmt->bindParam(':idGastos', $idGastos, PDO::PARAM_INT);
+		if ($stmt->execute()) {
+			return 'ok';
+		}else{
+			return "error";
+		}
+		$stmt->close();
+		$stmt = null;
+	}
+
+	static public function mdlFinalizarFolio($idFolio_Gasto){
+		$pdo = Conexion::conectar();
+		$sql = "UPDATE folios_gastos SET status = 0 WHERE idFolio_Gasto = :idFolio_Gasto";
+		$stmt = $pdo -> prepare($sql);
+		$stmt->bindParam(':idFolio_Gasto', $idFolio_Gasto, PDO::PARAM_INT);
+		if ($stmt->execute()) {
+			return 'ok';
+		}else{
+			return "error";
+		}
+		$stmt->close();
+		$stmt = null;
+	}
+
 	/*---------- Fin de ModeloFormularios ---------- */
 }

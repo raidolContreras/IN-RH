@@ -846,6 +846,24 @@ class FormulariosAjax{
 		echo json_encode($excelDocGasto);
 	}
 
+	public function aceptarGastoAjax(){
+		$idGastos = $this->idGastos;
+		$aceptarGasto = ControladorFormularios::ctrAceptarGasto($idGastos, 1);
+		echo $aceptarGasto;
+	}
+
+	public function rechazarGastoAjax(){
+		$idGastos = $this->idGastos;
+		$rechazarGasto = ControladorFormularios::ctrAceptarGasto($idGastos, 2);
+		echo $rechazarGasto;
+	}
+
+	public function finalizarMotivoAjax(){
+		$idFolio_Gasto = $this->idFolio_Gasto;
+		$finalizarFolio = ControladorFormularios::ctrFinalizarFolio($idFolio_Gasto);
+		echo $finalizarFolio;
+	}
+
 }
 
 if(isset($_POST["validate"])){
@@ -1724,7 +1742,31 @@ if (isset($_POST['excelGastos'])) {
 if (isset($_POST['pdfGastos'])) {
 	$idGastos = $_POST['pdfGastos'];
 
-	$ExcelDocGasto = new FormulariosAjax();
-	$ExcelDocGasto -> idGastos = $idGastos;
-	$ExcelDocGasto -> pdfGastoAjax();
+	$PDFDocGasto = new FormulariosAjax();
+	$PDFDocGasto -> idGastos = $idGastos;
+	$PDFDocGasto -> pdfGastoAjax();
+}
+
+if (isset($_POST['aceptarGasto'])) {
+	$idGastos = $_POST['aceptarGasto'];
+
+	$aceptarGasto = new FormulariosAjax();
+	$aceptarGasto -> idGastos = $idGastos;
+	$aceptarGasto -> aceptarGastoAjax();
+}
+
+if (isset($_POST['rechazarGasto'])) {
+	$idGastos = $_POST['rechazarGasto'];
+
+	$rechazarGasto = new FormulariosAjax();
+	$rechazarGasto -> idGastos = $idGastos;
+	$rechazarGasto -> rechazarGastoAjax();
+}
+
+if (isset($_POST['motivoFinalizar'])) {
+	$idFolio_Gasto = $_POST['motivoFinalizar'];
+
+	$finMotivo = new FormulariosAjax();
+	$finMotivo -> idFolio_Gasto = $idFolio_Gasto;
+	$finMotivo -> finalizarMotivoAjax();
 }

@@ -1606,5 +1606,15 @@ class ControladorFormularios{
 		return $VerDocGastos;
 	}
 
+	static public function ctrAceptarGasto($idGastos, $status){
+		$aceptarGasto = ModeloFormularios::mdlAceptarGasto($idGastos, $status);
+		return $aceptarGasto;
+	}
+
+	static public function ctrFinalizarFolio($idFolio_Gasto){
+		$finalizarFolio = ModeloFormularios::mdlFinalizarFolio($idFolio_Gasto);
+		return $finalizarFolio;
+	}
+
 	/*---------- Fin de ControladorFormularios ---------- */
 }
