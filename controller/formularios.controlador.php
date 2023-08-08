@@ -1616,5 +1616,10 @@ class ControladorFormularios{
 		return $finalizarFolio;
 	}
 
+	static public function ctrMarcarPagado($idGastos){
+		$marcarPagado = ModeloFormularios::mdlMarcarPagado($idGastos);
+		return $marcarPagado;
+	}
+
 	/*---------- Fin de ControladorFormularios ---------- */
 }

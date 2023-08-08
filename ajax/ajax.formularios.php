@@ -863,6 +863,12 @@ class FormulariosAjax{
 		echo $finalizarFolio;
 	}
 
+	public function marcarPagadoAjax(){
+		$idGastos = $this->idGastos;
+		$marcarPagado = ControladorFormularios::ctrMarcarPagado($idGastos);
+		echo $marcarPagado;
+	}
+
 }
 
 if(isset($_POST["validate"])){
@@ -1768,4 +1774,12 @@ if (isset($_POST['motivoFinalizar'])) {
 	$finMotivo = new FormulariosAjax();
 	$finMotivo -> idFolio_Gasto = $idFolio_Gasto;
 	$finMotivo -> finalizarMotivoAjax();
+}
+
+if (isset($_POST['marcarPagado'])) {
+	$idGastos = $_POST['marcarPagado'];
+
+	$marcarPagado = new FormulariosAjax();
+	$marcarPagado -> idGastos = $idGastos;
+	$marcarPagado -> marcarPagadoAjax();
 }

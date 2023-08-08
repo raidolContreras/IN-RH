@@ -239,6 +239,11 @@
 						</div>
 					</div>
 					<div class="modal-footer">
+						<?php if ($gasto['status'] == 1 && $gasto['Empleados_idEmpleados'] == $_SESSION['idEmpleado']): ?>
+						<button type="button" class="btn btn-warning rounded" id="excel" onclick="pagado(<?php echo $gasto['idGastos'] ?>)">
+							Marcar como pagado
+						</button>
+						<?php endif ?>
 						<button type="button" class="btn btn-outline-excel rounded" id="excel" onclick="excel(<?php echo $gasto['idGastos'] ?>)">
 							<i class="fas fa-file-excel"></i> Exportar excel
 						</button>
@@ -350,6 +355,39 @@ $('#addDocNew-btn<?php echo $gasto['idGastos'] ?>').click(function() {
 						<div class='alert alert-danger' role="alert" id="alerta">
 							<i class="fas fa-exclamation-triangle"></i>
 							<b>Error</b>, no se pudo generar el documento, intentalo nuevamente.
+						</div>
+					`);
+					deleteAlert();
+				}
+			}
+		});
+	}
+
+</script>
+<script>
+	function pagado(gastosid){
+		$.ajax({
+			url: "ajax/ajax.formularios.php",
+			type: "POST",
+			data: {marcarPagado: gastosid},
+			success: function(response) {
+				$("#form-result").val("");
+				if (response !== 'error') {
+					$("#form-result").html(`
+						<div class='alert alert-success' role="alert" id="alerta">
+							<i class="fas fa-check-circle"></i>
+							Se marco como pagado correctamente.
+						</div>
+					`);
+					setTimeout(function() {
+						location.href = 'Gastos';
+					}, 900);
+					deleteAlert();
+				} else {
+					$("#form-result").html(`
+						<div class='alert alert-danger' role="alert" id="alerta">
+							<i class="fas fa-exclamation-triangle"></i>
+							<b>Error</b>, no se pudo marcar como pagado, intentalo nuevamente.
 						</div>
 					`);
 					deleteAlert();

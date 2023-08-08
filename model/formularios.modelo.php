@@ -2648,5 +2648,19 @@ static public function mdlImagenNoticia($id, $name)
 		$stmt = null;
 	}
 
+	static public function mdlMarcarPagado($idGastos){
+		$pdo = Conexion::conectar();
+		$sql = "UPDATE gastos SET status = 3 WHERE idGastos = :idGastos";
+		$stmt = $pdo -> prepare($sql);
+		$stmt->bindParam(':idGastos', $idGastos, PDO::PARAM_INT);
+		if ($stmt->execute()) {
+			return 'ok';
+		}else{
+			return "error";
+		}
+		$stmt->close();
+		$stmt = null;
+	}
+
 	/*---------- Fin de ModeloFormularios ---------- */
 }
