@@ -8,6 +8,7 @@ require_once "../controller/controlador.empleados.php";
 require_once "../controller/controlador.excel.php";
 require_once "../model/modelo.excel.php";
 
+session_start();
 class FormulariosAjax{
 
 	public function citasAjax(){
@@ -1494,7 +1495,7 @@ if (isset($_POST['eliminarCategoria'])) {
 if (isset($_POST['nameVendedor'])) {
 	if ($_POST['categoria'] == null) {
 		echo "error-categoria";
-	}elseif ($_POST['nfolio'] == null) {
+	}elseif ($_POST['nfolio'] == null && $_POST['folio'] == 'otra') {
 		echo "error-folio";
 	}elseif ($_POST['nameVendedor'] == null) {
 		echo "error-nameVendedor";
