@@ -31,7 +31,7 @@
 								</select>
 							</div>
 							<div class="form-group col-xl-6">
-								<label for="recipient-name" class="col-form-label">Folio:</label>
+								<label for="recipient-name" class="col-form-label">Motivo:</label>
 								<!-- HTML -->
 								<select id="opciones" class="form-control" name="folio">
 									<option>Selecciona o crea un motivo</option>
