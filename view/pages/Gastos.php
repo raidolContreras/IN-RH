@@ -88,7 +88,7 @@
 										}
 									?>
 									<td>
-										<?php if ($gasto['status'] == 0): ?>
+										<?php if ($gasto['status'] == 0 && $gasto['Empleados_idEmpleados'] == $_SESSION['idEmpleado']): ?>
 											<div class="btn-group dropright">
 												<button class="btn btn-link" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 													<i class="fas fa-ellipsis-v"></i>

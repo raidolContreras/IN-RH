@@ -35,7 +35,10 @@
 											class="form-control"
 											id="categoria"
 											name="categoriaUpdate" 
-											<?php echo $gasto['status'] != 0 ? 'disabled' : ''; ?>>
+											<?php if ($gasto['status'] != 0 || $gasto['Empleados_idEmpleados'] != $_SESSION['idEmpleado']): ?>
+												disabled
+											<?php endif ?>
+											>
 											<option value="">Selecciona una categoría</option>
 											<?php foreach ($categorias as $categoria): ?>
 												<?php if ($categoria['idCategoria'] == $gasto['categoria']): ?>
@@ -55,7 +58,10 @@
 											name="nameVendedorUpdate"
 											id="nameVendedor"
 											value="<?php echo $gasto['nameVendedor'] ?>" 
-											<?php echo $gasto['status'] != 0 ? 'disabled' : ''; ?>>
+											<?php if ($gasto['status'] != 0 || $gasto['Empleados_idEmpleados'] != $_SESSION['idEmpleado']): ?>
+												disabled
+											<?php endif ?>
+											>
 									</div>
 									<div class="form-group col-xl-6">
 										<label for="recipient-name" class="col-form-label">Divisas:</label>
@@ -63,7 +69,10 @@
 											class="form-control"
 											id="divisa"
 											name="divisaUpdate" 
-											<?php echo $gasto['status'] != 0 ? 'disabled' : ''; ?>>
+											<?php if ($gasto['status'] != 0 || $gasto['Empleados_idEmpleados'] != $_SESSION['idEmpleado']): ?>
+												disabled
+											<?php endif ?>
+											>
 											<option value="">Selecciona una divisa</option>
 											<?php foreach ($divisas as $divisa): ?>
 												<?php if ($divisa['idDivisa'] == $gasto['divisa']): ?>
@@ -83,7 +92,10 @@
 											name="importeTotalUpdate"
 											id="importeTotal"
 											value="<?php echo $gasto['importeTotal'] ?>"
-											<?php echo $gasto['status'] != 0 ? 'disabled' : ''; ?>>
+											<?php if ($gasto['status'] != 0 || $gasto['Empleados_idEmpleados'] != $_SESSION['idEmpleado']): ?>
+												disabled
+											<?php endif ?>
+											>
 									</div>
 									<div class="form-group col-xl-6">
 										<label for="message-text" class="col-form-label">Importe del IVA:</label>
@@ -93,7 +105,10 @@
 											name="importeIVAUpdate"
 											id="importeIVA"
 											value="<?php echo $gasto['importeIVA'] ?>"
-											<?php echo $gasto['status'] != 0 ? 'disabled' : ''; ?>>
+											<?php if ($gasto['status'] != 0 || $gasto['Empleados_idEmpleados'] != $_SESSION['idEmpleado']): ?>
+												disabled
+											<?php endif ?>
+											>
 									</div>
 									<div class="form-group col-xl-6">
 										<label for="message-text" class="col-form-label">Fecha del documento:</label>
@@ -103,7 +118,10 @@
 											name="fechaDocumentoUpdate"
 											id="fechaDocumento"
 											value="<?php echo $gasto['fechaDocumento'] ?>"
-											<?php echo $gasto['status'] != 0 ? 'disabled' : ''; ?>>
+											<?php if ($gasto['status'] != 0 || $gasto['Empleados_idEmpleados'] != $_SESSION['idEmpleado']): ?>
+												disabled
+											<?php endif ?>
+											>
 									</div>
 									<div class="form-group col-xl-12">
 										<label for="message-text" class="col-form-label">Descripción:</label>
@@ -111,7 +129,10 @@
 											class="form-control"
 											id="descripcionGasto"
 											name="descripcionGastoUpdate" 
-											<?php echo $gasto['status'] != 0 ? 'disabled' : ''; ?>><?php echo $gasto['descripcionGasto'] ?></textarea>
+											<?php if ($gasto['status'] != 0 || $gasto['Empleados_idEmpleados'] != $_SESSION['idEmpleado']): ?>
+												disabled
+											<?php endif ?>
+											><?php echo $gasto['descripcionGasto'] ?></textarea>
 									</div>
 									<div class="form-group col-xl-12">
 										<label for="message-text" class="col-form-label">Referencia interna:</label>
@@ -122,14 +143,17 @@
 											id="referenciaInterna"
 											placeholder="Agregar una referencia interna (opcional)"
 											value="<?php echo $gasto['referenciaInterna'] ?>" 
-											<?php echo $gasto['status'] != 0 ? 'disabled' : ''; ?>>
+											<?php if ($gasto['status'] != 0 || $gasto['Empleados_idEmpleados'] != $_SESSION['idEmpleado']): ?>
+												disabled
+											<?php endif ?>
+											>
 									</div>
 									<input
 										type="hidden"
 										name="actualizarGastoUpdate"
 										id="actualizarGasto"
 										value="<?php echo $gasto['idGastos'] ?>">
-									<?php if ($gasto['status'] == 0): ?>
+									<?php if ($gasto['status'] == 0 && $gasto['Empleados_idEmpleados'] == $_SESSION['idEmpleado']): ?>
 									<div class="form-group col-xl-12">
 										<button type="button" id="actualizarGasto-btn<?php echo $gasto['idGastos'] ?>" class="btn btn-primary rounded btn-block">Actualizar Gasto</button>
 									</div>

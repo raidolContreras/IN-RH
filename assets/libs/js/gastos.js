@@ -5,7 +5,8 @@ const errorMessages = {
 	'error-importeTotal': 'El campo de importe total está vacío. Por favor, ingresa el importe total.',
 	'error-importeIVA': 'El campo del importe del IVA está vacío. Por favor, ingresa el importe del IVA.',
 	'error-fechaDocumento': 'El campo de fecha de documento está vacío. Por favor, selecciona la fecha del documento.',
-	'error-descripcionGasto': 'El campo de descripción está vacío. Por favor, ingresa una descripción del gasto.'
+	'error-descripcionGasto': 'El campo de descripción está vacío. Por favor, ingresa una descripción del gasto.',
+	'error-folio': 'El campo de motivo está vacío. Por favor, ingresa un motivo del gasto.'
 };
 
 Dropzone.autoDiscover = false;
@@ -35,7 +36,7 @@ $(document).ready(function() {
 			data: formData,
 			success: function(response) {
 				$("#form-result").val("");
-				if (response === 'error-categoria' || response === 'error-nameVendedor' || response === 'error-divisa' ||response === 'error-importeTotal' || response === 'error-importeIVA' || response === 'error-fechaDocumento'|| response === 'error-descripcionGasto') {
+				if (response === 'error-categoria' || response === 'error-nameVendedor' || response === 'error-divisa' ||response === 'error-importeTotal' || response === 'error-importeIVA' || response === 'error-fechaDocumento' || response === 'error-descripcionGasto' || response === 'error-folio') {
 					showErrorAlert(response);
 					deleteAlert();
 				}else {

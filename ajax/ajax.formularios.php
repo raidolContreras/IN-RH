@@ -765,7 +765,6 @@ class FormulariosAjax{
 	}
 
 	public function addGastoAjax(){
-		session_start();
 		$categoria = $this->categoria;
 		$nameVendedor = $this->nameVendedor;
 		$divisa = $this->divisa;
@@ -1489,6 +1488,8 @@ if (isset($_POST['eliminarCategoria'])) {
 if (isset($_POST['nameVendedor'])) {
 	if ($_POST['categoria'] == null) {
 		echo "error-categoria";
+	}elseif ($_POST['nfolio'] == null) {
+		echo "error-folio";
 	}elseif ($_POST['nameVendedor'] == null) {
 		echo "error-nameVendedor";
 	}elseif ($_POST['divisa'] == null) {
@@ -1501,8 +1502,6 @@ if (isset($_POST['nameVendedor'])) {
 		echo "error-fechaDocumento";
 	}elseif ($_POST['descripcionGasto'] == null) {
 		echo "error-descripcionGasto";
-	}elseif ($_POST['folio'] == null) {
-		echo "error-folio";
 	}else{
 		// Recuperar los datos del formulario
 		$categoria = $_POST['categoria'];
