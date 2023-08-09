@@ -39,7 +39,7 @@ $perfil = $primerLetra.$segundaLetra;
 
 							echo '<li class="nav-item' . $activeClass . $marginLeftClass . '">';
 							if ($pagina == 'Gastos') {
-								echo '<a href="' . $pagina . '"> Evaluaciones </a>';
+								echo '<a href="' . $pagina . '"> Gastos </a>';
 							}elseif($pagina == 'Solicitudes_Gastos'){
 								echo '<a href="' . $pagina . '"> Solicitudes de Gastos </a>';
 							}else{
