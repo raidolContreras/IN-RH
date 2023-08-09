@@ -1,3 +1,4 @@
+<?php $empleado = ControladorEmpleados::ctrVerEmpleados("idEmpleados", $_SESSION['idEmpleado']); ?>
 <div class="container-fluid dashboard-content ">
 	<div class="row">
 		<div class="container">
@@ -47,7 +48,7 @@
 									<input type="password" class="form-control" id="confirmPassword" name="confirmPassword">
 								</div>
 								<div class="">
-									<button class="btn btn-primary rounded">Actualizar Contraseña</button>
+									<button type="button" class="btn btn-primary rounded">Actualizar Contraseña</button>
 								</div>
 							</form>
 						</div>
@@ -57,61 +58,89 @@
 							<h5 class="card-title mb-1 mt-3">Detalles personales</h5>
 							<p class="card-subtitle mb-4">Para cambiar sus datos personales, edite y guarde desde aquí</p>
 							<form>
-                            <div class="row">
-                              <div class="col-lg-6">
-                                <div class="mb-4">
-                                  <label for="exampleInputPassword1" class="form-label fw-semibold">Your Name</label>
-                                  <input type="text" class="form-control" id="exampleInputtext" placeholder="Mathew Anderson">
-                                </div>
-                                <div class="mb-4">
-                                  <label for="exampleInputPassword1" class="form-label fw-semibold">Location</label>
-                                  <select class="form-control" aria-label="Default select example">
-                                    <option selected="">United Kingdom</option>
-                                    <option value="1">United States</option>
-                                    <option value="2">United Kingdom</option>
-                                    <option value="3">India</option>
-                                    <option value="3">Russia</option>
-                                  </select>
-                                </div>
-                                <div class="mb-4">
-                                  <label for="exampleInputPassword1" class="form-label fw-semibold">Email</label>
-                                  <input type="email" class="form-control" id="exampleInputtext" placeholder="info@modernize.com">
-                                </div>
-                              </div>
-                              <div class="col-lg-6">
-                                <div class="mb-4">
-                                  <label for="exampleInputPassword1" class="form-label fw-semibold">Store Name</label>
-                                  <input type="text" class="form-control" id="exampleInputtext" placeholder="Maxima Studio">
-                                </div>
-                                <div class="mb-4">
-                                  <label for="exampleInputPassword1" class="form-label fw-semibold">Currency</label>
-                                  <select class="form-control" aria-label="Default select example">
-                                    <option selected="">India (INR)</option>
-                                    <option value="1">US Dollar ($)</option>
-                                    <option value="2">United Kingdom (Pound)</option>
-                                    <option value="3">India (INR)</option>
-                                    <option value="3">Russia (Ruble)</option>
-                                  </select>
-                                </div>
-                                <div class="mb-4">
-                                  <label for="exampleInputPassword1" class="form-label fw-semibold">Phone</label>
-                                  <input type="text" class="form-control" id="exampleInputtext" placeholder="+91 12345 65478">
-                                </div>
-                              </div>
-                              <div class="col-12">
-                                <div class="">
-                                  <label for="exampleInputPassword1" class="form-label fw-semibold">Address</label>
-                                  <input type="text" class="form-control" id="exampleInputtext" placeholder="814 Howard Street, 120065, India">
-                                </div>
-                              </div>
-                              <div class="col-12">
-                                <div class="d-flex align-items-center justify-content-end mt-4 gap-3">
-                                  <button class="btn btn-primary rounded">Save</button>
-                                  <button class="btn btn-light-danger text-danger rounded">Cancel</button>
-                                </div>
-                              </div>
-                            </div>
-                          </form>
+							<div class="row">
+								<div class="col-lg-6">
+								<div class="mb-4">
+									<label for="nombre">Nombre(s)</label>
+									<input type="text" class="form-control" id="nombre" name="nombre" value="<?php echo $empleado['name'] ?>" required>
+								</div>
+								<div class="mb-4">
+									<label for="genero">Género</label>
+									<select class="form-control" id="genero" name="genero" required>
+										<?php if ($empleado['genero'] == 1): ?>
+											<option value="1" selected>Masculino</option>
+											<option value="0">Femenino</option>
+										<?php else: ?>
+											<option value="1">Masculino</option>
+											<option value="0" selected>Femenino</option>
+										<?php endif ?>
+									</select>
+								</div>
+								</div>
+								<div class="col-lg-6">
+								<div class="mb-4">
+									<label for="apellidos">Apellidos</label>
+									<input type="text" class="form-control" id="apellidos" name="apellidos" value="<?php echo $empleado['lastname'] ?>" required>
+								</div>
+								<div class="mb-4">
+									<label for="fecha_nacimiento">Fecha de nacimiento</label>
+									<input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" value="<?php echo $empleado['fNac'] ?>" required>
+								</div>
+								</div>
+								
+								<div class="form-group card p-3 col-12">
+									<label for="direccion">Dirección</label>
+									<div class="row">
+										<div class="col-md-9">
+											<input type="text" class="form-control" id="calle" name="calle" placeholder="Calle" value="<?php echo $empleado['street'] ?>" required>
+										</div>
+										<div class="col-md-3">
+											<input type="text" class="form-control" id="num_exterior" name="num_exterior" placeholder="Núm. Ext." value="<?php echo $empleado['numE'] ?>" required>
+										</div>
+									</div>
+									<div class="row mt-2">
+										<div class="col-md-3">
+											<?php if ($empleado['numI'] != ''): ?>
+												<input type="text" class="form-control" id="num_interior" name="num_interior" placeholder="Núm. Int." value="<?php echo $empleado['numI'] ?>">
+											<?php else: ?>
+												<input type="text" class="form-control" id="num_interior" name="num_interior" placeholder="Núm. Int.">
+											<?php endif ?>
+										</div>
+										<div class="col-md-6">
+											<input type="text" class="form-control" id="colonia" name="colonia" placeholder="Colonia" value="<?php echo $empleado['colonia'] ?>" required>
+										</div>
+										<div class="col-md-3">
+											<input type="text" class="form-control" id="cp" name="cp" placeholder="C.P." value="<?php echo $empleado['CP'] ?>" required>
+										</div>
+									</div>
+									<div class="row mt-2">
+										<div class="col-md-6">
+											<select class="form-control" id="estado" name="estado" required>
+												<option>Selecciona un estado</option>
+												<?php foreach ($estadosArray as $key => $estado): ?>
+													<?php if ($empleado['estado'] == $estado['clave']): ?>
+														<option value="<?php echo $estado['clave'] ?>" selected><?php echo $estado['nombre'] ?></option>
+													<?php else: ?>
+														<option value="<?php echo $estado['clave'] ?>"><?php echo $estado['nombre'] ?></option>
+													<?php endif ?>
+												<?php endforeach ?>
+											</select>
+										</div>
+										<div class="col-md-6">
+											<select class="form-control" id="municipio" name="municipio" required>
+												<option value="<?php echo $empleado['municipio'] ?>"><?php echo $empleado['municipio'] ?></option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="col-12">
+								<div class="d-flex align-items-center justify-content-end mt-4 gap-3">
+									<button class="btn btn-primary rounded">Actualizar</button>
+									<button class="btn btn-light-danger text-danger rounded">Cancelar</button>
+								</div>
+								</div>
+							</div>
+							</form>
 						</div>
 					</div>
 				</div>

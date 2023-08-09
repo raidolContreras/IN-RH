@@ -7886,3 +7886,6 @@ text-overflow: ellipsis;
 .rounded{
 	border-radius: 7px !important;
 }
+.gap-3 {
+    gap: 1rem!important;
+}
