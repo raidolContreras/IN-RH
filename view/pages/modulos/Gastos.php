@@ -41,6 +41,7 @@
 					<?php if ($_SESSION['idEmpleado'] != $gasto['Empleados_idEmpleados']): ?>
 						<?php foreach ($jefes as $jefe): ?>
 							<?php if ($jefe == $_SESSION['idEmpleado']): ?>
+								<?php if ($gasto['status'] != 2): ?>
 								<tr>
 									<td><?php echo $folio['nameFolio'] ?></td>
 									<td><?php echo $nombre ?></td>
@@ -67,6 +68,7 @@
 										<?php endif ?>
 									</td>
 								</tr>
+								<?php endif ?>
 							<?php endif ?>
 						<?php endforeach ?>
 					<?php endif ?>
