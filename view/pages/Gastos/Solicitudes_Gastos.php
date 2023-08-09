@@ -1,3 +1,4 @@
+<?php if (!empty($jefeDepartamento)): ?>
 <div class="container-fluid dashboard-content">
 	<div class="row">
 		<div class="container col-xl-9 col-md-12 order-xl-1 order-md-2">
@@ -195,3 +196,8 @@ function deleteAlert() {
 	}, 1500);
 }
 </script>
+<?php else: ?>
+	<script>
+		location.href = 'Gastos';
+	</script>
+<?php endif ?>
