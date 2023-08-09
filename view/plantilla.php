@@ -124,6 +124,7 @@ session_start();
 						$_GET["pagina"] == "Perfil") {
 
 				include "pages/navs/navbar.php";
+				include "pages/navs/sidenav.php"; 
 				include "pages/".$_GET["pagina"].".php";
 
 			}elseif ($_GET["pagina"] == "Noticias" ||

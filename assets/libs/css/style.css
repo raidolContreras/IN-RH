@@ -156,12 +156,12 @@
 	 ========================================================================== */
 
 	 body {
-		font-family: 'Circular Std Book';
+		font-family: 'Plus Jakarta Sans',sans-serif;
 		font-style: normal;
 		font-weight: normal;
 		font-size: 14px;
 		color: #71748d;
-		background-color: #efeff6;
+		background-color: #FBFBFB;
 		-webkit-font-smoothing: antialiased;
 	 }
 	 .hprofile{
@@ -175,7 +175,7 @@
 	 h4,
 	 h5,
 	 h6 {
-		color: #654aa2;
+		color: #5F5F5F;
 		margin: 0px 0px 15px 0px;
 		font-family: 'Circular Std Medium';
 	 }
@@ -3294,13 +3294,13 @@ btn-link
 
 .card-into-card {
 	margin-bottom: 0px;
-	border: 1px solid #dedede;
 	padding: 10px 10px 10px 10px;
-	background-color: #F8F8F8;
+	background-color: #fff;
 	-webkit-box-shadow: 0px 1px 2px 1px rgba(154, 154, 204, 0.22);
 	-moz-box-shadow: 0px 1px 2px 1px rgba(154, 154, 204, 0.22);
 	box-shadow: 0px 1px 2px 1px rgba(154, 154, 204, 0.22);
 	text-align: justify;
+	min-height: 400px;
 }
 
 .second-card{
@@ -3322,7 +3322,9 @@ btn-link
 	border-bottom: 1px solid #e6e6f2;
 }
 
-.card-title {}
+.card-title {
+	font-size: 18px;
+}
 
 .card-subtitle {
 	font-size: 14px;
@@ -4642,7 +4644,7 @@ Pills vertical
 
 .table thead th,
 .table th {
-	color: #654aa2;
+	color: #797c94;
 	font-family: 'Circular Std Medium';
 }
 
@@ -7870,4 +7872,17 @@ text-overflow: ellipsis;
 	color: #fff;
 	background-color: #3775B4;
 	border-color: #3775B4;
+}
+.rounded-card{
+	border-radius: .50rem!important
+}
+.card-info{
+	background-color: #EBF3FE !important;
+	box-shadow: none !important;
+}
+.text-center{
+	text-align: center!important;
+}
+.rounded{
+	border-radius: 7px !important;
 }
