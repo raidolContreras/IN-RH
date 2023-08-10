@@ -965,6 +965,38 @@ class FormulariosAjax{
 		}
 	}
 
+	public function actualizarDatosAjax(){
+		$nombre = $this -> nombre;
+		$genero = $this -> genero;
+		$apellidos = $this -> apellidos;
+		$fecha_nacimiento = $this -> fecha_nacimiento;
+		$calle = $this -> calle;
+		$num_exterior = $this -> num_exterior;
+		$num_interior = $this -> num_interior;
+		$colonia = $this -> colonia;
+		$cp = $this -> cp;
+		$estado = $this -> estado;
+		$municipio = $this -> municipio;
+
+		$datos = array(
+			"nombre" => $nombre,
+			"apellidos" => $apellidos,
+			"genero" => $genero,
+			"fecha_nacimiento" => $fecha_nacimiento,
+			"calle" => $calle,
+			"num_exterior" => $num_exterior,
+			"num_interior" => $num_interior,
+			"colonia" => $colonia,
+			"cp" => $cp,
+			"estado" => $estado,
+			"municipio" => $municipio,
+			"idEmpleados" => $_SESSION['idEmpleado']
+		);
+
+		$actualizarDatos = ModeloEmpleados::mdlActualizarEmpleadoPerfil($datos);
+		echo $actualizarDatos;
+	}
+
 }
 
 if(isset($_POST["validate"])){
@@ -1909,4 +1941,32 @@ if (isset($_FILES['file'])) {
 	$actualizarFoto = new FormulariosAjax();
 	$actualizarFoto -> file = $file;
 	$actualizarFoto -> actualizarFotoAjax();
+}
+
+if (isset($_POST['nombrePerfil'])) {
+	$nombre = $_POST['nombrePerfil'];
+	$genero = $_POST['generoPerfil'];
+	$apellidos = $_POST['apellidosPerfil'];
+	$fecha_nacimiento = $_POST['fecha_nacimientoPerfil'];
+	$calle = $_POST['callePerfil'];
+	$num_exterior = $_POST['num_exteriorPerfil'];
+	$num_interior = $_POST['num_interiorPerfil'];
+	$colonia = $_POST['coloniaPerfil'];
+	$cp = $_POST['cpPerfil'];
+	$estado = $_POST['estadoPerfil'];
+	$municipio = $_POST['municipioPerfil'];
+
+	$actualizarDatos = new FormulariosAjax();
+	$actualizarDatos -> nombre = $nombre;
+	$actualizarDatos -> genero = $genero;
+	$actualizarDatos -> apellidos = $apellidos;
+	$actualizarDatos -> fecha_nacimiento = $fecha_nacimiento;
+	$actualizarDatos -> calle = $calle;
+	$actualizarDatos -> num_exterior = $num_exterior;
+	$actualizarDatos -> num_interior = $num_interior;
+	$actualizarDatos -> colonia = $colonia;
+	$actualizarDatos -> cp = $cp;
+	$actualizarDatos -> estado = $estado;
+	$actualizarDatos -> municipio = $municipio;
+	$actualizarDatos -> actualizarDatosAjax();
 }

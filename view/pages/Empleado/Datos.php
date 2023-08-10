@@ -165,7 +165,7 @@ if($registro == "ok"){
 						<?php endif ?>
 					</div>
 					<div class="col-md-6">
-						<input type="text" class="form-control" id="colonia" name="colonia" placeholder="Colonia" value="<?php echo $empleado['colonia'] ?>" required>
+						<input type="text" class="form-control" id="colonia" name="colonia" placeholder="Colonia" value="<?php echo $empleado['col'] ?>" required>
 					</div>
 					<div class="col-md-3">
 						<input type="text" class="form-control" id="cp" name="cp" placeholder="C.P." value="<?php echo $empleado['CP'] ?>" required>

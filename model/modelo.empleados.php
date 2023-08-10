@@ -37,6 +37,32 @@ class ModeloEmpleados{
 		$stmt = null;
 	}
 
+	static public function mdlActualizarEmpleadoPerfil($datos){
+		$sql = "UPDATE empleados SET name=:name, lastname=:lastname, genero=:genero, fNac=:fNac, street=:street, numE=:numE, numI=:numI, colonia=:colonia, CP=:CP, municipio=:municipio, estado=:estado WHERE idEmpleados =:idEmpleados";
+		$stmt = Conexion::conectar()->prepare($sql);
+
+		$stmt->bindParam(":name", $datos['nombre'],PDO::PARAM_STR);
+		$stmt->bindParam(":lastname", $datos['apellidos'],PDO::PARAM_STR);
+		$stmt->bindParam(":genero", $datos['genero'],PDO::PARAM_STR);
+		$stmt->bindParam(":fNac", $datos['fecha_nacimiento'],PDO::PARAM_STR);
+		$stmt->bindParam(":street", $datos['calle'],PDO::PARAM_STR);
+		$stmt->bindParam(":numE", $datos['num_exterior'],PDO::PARAM_STR);
+		$stmt->bindParam(":numI", $datos['num_interior'],PDO::PARAM_STR);
+		$stmt->bindParam(":colonia", $datos['colonia'],PDO::PARAM_STR);
+		$stmt->bindParam(":CP", $datos['cp'],PDO::PARAM_STR);
+		$stmt->bindParam(":municipio", $datos['municipio'],PDO::PARAM_STR);
+		$stmt->bindParam(":estado", $datos['estado'],PDO::PARAM_STR);
+		$stmt->bindParam(":idEmpleados", $datos['idEmpleados'],PDO::PARAM_INT);
+
+		if ($stmt->execute()) {
+			return 'ok';		
+		}else{
+			print_r(Conexion::conectar()->errorInfo());
+		}
+		$stmt->close();
+		$stmt = null;
+	}
+
 	static public function mdlActualizarEmergencia($tabla, $datos){
 		$sql = "UPDATE emergencia SET nameEmer=:nameEmer ,parentesco=:parentesco ,phoneEmer=:phoneEmer WHERE Empleados_idEmpleados=:Empleados_idEmpleados ";
 		$stmt = Conexion::conectar()->prepare($sql);

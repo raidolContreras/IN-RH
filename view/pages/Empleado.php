@@ -54,10 +54,10 @@ $causaBaja = array(
 						<li class="header-li"><i class="mdi mdi-home-outline"></i> Dirección</li>
 
 						<?php if ($colaborador['numI'] == null || $colaborador['numI'] == ""): ?>
-							<li><?php echo $colaborador["street"].", #".$colaborador["numE"].", ".$colaborador["colonia"].", ".$colaborador["municipio"].", ".$colaborador["estado"]?></li>
+							<li><?php echo $colaborador["street"].", #".$colaborador["numE"].", ".$colaborador["col"].", ".$colaborador["municipio"].", ".$colaborador["estado"]?></li>
 
 						<?php else: ?>
-							<li><?php echo $colaborador["street"].", #".$colaborador["numE"].", #".$colaborador["numI"].", ".$colaborador["colonia"].", ".$colaborador["municipio"].", ".$colaborador["estado"]?></li>
+							<li><?php echo $colaborador["street"].", #".$colaborador["numE"].", #".$colaborador["numI"].", ".$colaborador["col"].", ".$colaborador["municipio"].", ".$colaborador["estado"]?></li>
 
 						<?php endif ?>
 						<li class="header-li"><i class="mdi mdi-cake"></i> Fecha de nacimiento</li>
