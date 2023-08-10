@@ -254,6 +254,22 @@ class ModeloFormularios{
 		$stmt = null;
 	}
 
+	/*---------- Función hecha para Registrar las fotos de Empleados---------- */
+	static public function mdlActualizarFotoEmpleado($tabla, $datos){
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET namePhoto=:imageName WHERE Empleados_idEmpleados = :idEmpleado");
+		$stmt->bindParam(":imageName", $datos["imageName"], PDO::PARAM_STR);
+		$stmt->bindParam(":idEmpleado", $datos["idEmpleado"], PDO::PARAM_STR);
+		if ($stmt->execute()) {
+			return "ok";
+		}
+		 else {
+			print_r(Conexion::conectar()->errorInfo());
+		}
+
+		$stmt->close();
+		$stmt = null;
+	}
+
 	/*---------- Función hecha para ver las fotos---------- */
 	static public function mdlVerFotos($tabla, $item, $valor){
 		if($item == null && $valor == null){

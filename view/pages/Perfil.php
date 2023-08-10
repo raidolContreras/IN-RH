@@ -1,4 +1,16 @@
-<?php $empleado = ControladorEmpleados::ctrVerEmpleados("idEmpleados", $_SESSION['idEmpleado']); ?>
+<?php $empleado = ControladorEmpleados::ctrVerEmpleados("idEmpleados", $_SESSION['idEmpleado']); 
+
+
+// Leer el archivo JSON de estados
+$estadosJson = file_get_contents('view/pages/json/estados.json');
+
+// Leer el archivo JSON de ciudades
+$ciudadesJson = file_get_contents('view/pages/json/ciudades.json');
+
+// Convertir el JSON a un array asociativo
+$estadosArray = json_decode($estadosJson, true);
+$ciudadesArray = json_decode($ciudadesJson, true);
+?>
 <div class="container-fluid dashboard-content ">
 	<div class="row">
 		<div class="container">
@@ -7,52 +19,8 @@
 			</div>
 			<div class="card">
 				<div class="row rounded-card">
-					<div class="col-xl-6 col-md-12 my-4">
-						<div class="card-into-card rounded-card px-4">
-							<h5 class="card-title mb-1 mt-3">Cambiar foto de perfil</h5>
-							<p class="card-subtitle mb-4">Cambia tu foto de perfil desde aquí</p>
-							<div class="text-center">
-							<?php if (!empty($foto)): ?>
-								<img src="view/fotos/thumbnails/<?php echo $foto['namePhoto'] ?>" alt="" class="user-avatar-xxl2 rounded-circle">
-							<?php else: ?>
-								<?php if ($_SESSION['genero'] == 1): ?>
-									<span style="background-color: #29CEE8; border-radius: 50%; width: 40px; height: 40px; display: inline-flex; justify-content: center; align-items: center;">
-									<?php else: ?>
-										<span style="background-color: #F56CC1; border-radius: 50%; width: 40px; height: 40px; display: inline-flex; justify-content: center; align-items: center;">
-										<?php endif ?>
-										<p class="mt-1" style="color: white;"><?php echo $perfil; ?></p>
-									</span>
-								<?php endif ?>
-								<div class="align-items-center justify-content-center my-4 gap-3">
-									<button class="btn btn-primary rounded">Actualizar</button>
-								</div>
-								<p class="mb-0">Permitido JPG, GIF o PNG. Tamaño máximo de 800K</p>
-							</div>
-						</div>
-					</div>
-					<div class="col-xl-6 col-md-12 my-4">
-						<div class="card-into-card rounded-card px-4">
-							<h5 class="card-title mb-1 mt-3">Cambiar contraseña</h5>
-							<p class="card-subtitle mb-4">Para cambiar su contraseña por favor confirme aquí</p>
-							<form>
-								<div class="mb-4">
-									<label for="currentPassword" class="form-label fw-semibold">Contraseña actual</label>
-									<input type="password" class="form-control" id="currentPassword" name="currentPassword">
-								</div>
-								<div class="mb-4">
-									<label for="passwordNew" class="form-label fw-semibold">Nueva contraseña</label>
-									<input type="password" class="form-control" id="passwordNew" name="passwordNew">
-								</div>
-								<div class="mb-4">
-									<label for="confirmPassword" class="form-label fw-semibold">Confirmar Contraseña</label>
-									<input type="password" class="form-control" id="confirmPassword" name="confirmPassword">
-								</div>
-								<div class="">
-									<button type="button" class="btn btn-primary rounded">Actualizar Contraseña</button>
-								</div>
-							</form>
-						</div>
-					</div>
+					<?php require_once "view/pages/Perfil/Cambio_foto.php" ?>
+					<?php require_once "view/pages/Perfil/cambio_pass.php" ?>
 					<div class="col-xl-12 col-md-12 my-4">
 						<div class="card-into-card rounded-card px-4">
 							<h5 class="card-title mb-1 mt-3">Detalles personales</h5>
@@ -148,3 +116,37 @@
 		</div>
 	</div>
 </div>
+<script>
+	
+// Obtener referencia a los elementos select
+var estadoSelect = document.getElementById('estado');
+var poblacionMunicipioSelect = document.getElementById('municipio');
+
+// Manejar el evento de cambio en el select de estado
+estadoSelect.addEventListener('change', function() {
+	// Obtener el valor seleccionado del estado
+	var estadoSeleccionado = estadoSelect.value;
+
+	// Obtener las ciudades correspondientes al estado seleccionado
+	var ciudades = <?php echo json_encode($ciudadesArray); ?>;
+	var ciudadesEstado = ciudades[estadoSeleccionado];
+
+	// Limpiar las opciones actuales del select de ciudades
+	poblacionMunicipioSelect.innerHTML = '';
+
+	// Agregar una opción predeterminada
+	var opcionPredeterminada = document.createElement('option');
+	opcionPredeterminada.text = 'Selecciona una ciudad';
+	poblacionMunicipioSelect.add(opcionPredeterminada);
+
+	// Agregar las opciones de ciudades correspondientes al estado seleccionado
+	if (ciudadesEstado) {
+		ciudadesEstado.forEach(function(ciudad) {
+			var opcionCiudad = document.createElement('option');
+			opcionCiudad.text = ciudad;
+			opcionCiudad.value = ciudad;
+			poblacionMunicipioSelect.add(opcionCiudad);
+		});
+	}
+});
+</script>

@@ -870,6 +870,101 @@ class FormulariosAjax{
 		echo $marcarPagado;
 	}
 
+	public function cambioPasswordAjax2(){
+		$idEmpleados = $_SESSION['idEmpleado'];
+		$antiguoPassword = $this->antiguoPassword;
+		$passwordNew = $this->passwordNew;
+
+		$pass1 = crypt($antiguoPassword, '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$');
+		$pass2 = crypt($passwordNew, '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$');
+		// Verificar si las contraseñas cumplen los requisitos
+		$regex = '/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/';
+
+		$tabla = "empleados";
+		$empleado = ControladorEmpleados::ctrVerEmpleados('idEmpleados',$idEmpleados);
+		if ($empleado['password'] == $pass1) {
+			if ($pass1 == $pass2) {
+				echo 'error: iguales';
+			}else{
+				if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+					if (!preg_match($regex, $passwordNew)) {
+						echo 'error: data';
+					} else {
+						$data = array(
+							"idEmpleados" => $idEmpleados,
+							"password" => $pass2
+						);
+
+						$cambio = ControladorEmpleados::ctrCambioPassword($tabla,$data);
+						echo $cambio;
+					}
+				}
+			}
+		}else{
+			echo 'error: coincide';
+		}
+	}
+
+	public function actualizarFotoAjax(){
+		$file = $this->file;
+
+		if ($file["error"] == 0) {
+			// Obtener los datos del archivo
+			$imagen = $file;
+			$tabla = "foto_empleado";
+			$imageName = $_SESSION["name"] . " " . $_SESSION["lastname"];
+
+			// Obtener la extensión del archivo
+			$extension = pathinfo($imagen["name"], PATHINFO_EXTENSION);
+
+			// Renombrar la imagen con el nombre y apellidos proporcionados, más la extensión
+			$imageFileName = $imageName . "." . $extension;
+
+			// Guardar la imagen original en el servidor
+			$uploadPath = "../view/fotos/" . $imageFileName;
+			move_uploaded_file($imagen["tmp_name"], $uploadPath);
+
+			// Obtener la ruta para la imagen en miniatura
+			$thumbnailPath = "../view/fotos/thumbnails/" . $imageFileName;
+
+			// Cargar la imagen original
+			$originalImage = imagecreatefromstring(file_get_contents($uploadPath));
+
+			// Obtener las dimensiones originales de la imagen
+			$originalWidth = imagesx($originalImage);
+			$originalHeight = imagesy($originalImage);
+
+			// Calcular las nuevas dimensiones para la imagen en miniatura
+			$maxSize = 150;
+			$scale = min($maxSize / $originalWidth, $maxSize / $originalHeight);
+			$newWidth = round($scale * $originalWidth);
+			$newHeight = round($scale * $originalHeight);
+
+			// Crear la imagen en miniatura
+			$thumbnailImage = imagecreatetruecolor($newWidth, $newHeight);
+			imagecopyresampled($thumbnailImage, $originalImage, 0, 0, 0, 0, $newWidth, $newHeight, $originalWidth, $originalHeight);
+
+			// Guardar la imagen en miniatura en el servidor
+			imagepng($thumbnailImage, $thumbnailPath);
+
+			// Guardar los datos en la base de datos
+			$datos = array("imageName" => $imageFileName,
+				"idEmpleado" => $_SESSION['idEmpleado']
+			);
+			$busqueda = ModeloFormularios::mdlVerFotos($tabla, 'Empleados_idEmpleados', $_SESSION['idEmpleado']);
+			if (empty($busqueda)) {
+				$respuesta = ModeloFormularios::mdlRegistroFotoEmpleado($tabla, $datos);
+			}else{
+				$respuesta = ModeloFormularios::mdlActualizarFotoEmpleado($tabla, $datos);
+			}
+
+			echo $respuesta;
+		}else{
+			echo json_encode($file);
+		}
+	}
+
 }
 
 if(isset($_POST["validate"])){
@@ -1783,4 +1878,35 @@ if (isset($_POST['marcarPagado'])) {
 	$marcarPagado = new FormulariosAjax();
 	$marcarPagado -> idGastos = $idGastos;
 	$marcarPagado -> marcarPagadoAjax();
+}
+
+if (isset($_POST['currentPassword'])) {
+	if ($_POST['currentPassword']== '') {
+		echo "error: 1";
+	}elseif ($_POST['passwordNew'] == '') {
+		echo "error: 2";
+	}elseif ($_POST['confirmPassword'] == '') {
+		echo "error: 3";
+	}else{
+		$antiguoPassword = $_POST['currentPassword'];
+		$passwordNew = $_POST['passwordNew'];
+		$confirmPassword = $_POST['confirmPassword'];
+
+		if ($passwordNew == $confirmPassword) {
+			$cambioPassword = new FormulariosAjax();
+			$cambioPassword -> antiguoPassword = $antiguoPassword;
+			$cambioPassword -> passwordNew = $passwordNew;
+			$cambioPassword -> cambioPasswordAjax2();
+		}else{
+			echo "error: contraseña";
+		}
+	}
+}
+
+if (isset($_FILES['file'])) {
+	$file = $_FILES['file'];
+
+	$actualizarFoto = new FormulariosAjax();
+	$actualizarFoto -> file = $file;
+	$actualizarFoto -> actualizarFotoAjax();
 }
