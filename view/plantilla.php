@@ -80,6 +80,7 @@ session_start();
 				$_GET["pagina"] == "FinalizarTarea" ||
 				$_GET["pagina"] == "Evaluaciones" ||
 				$_GET["pagina"] == "Gastos" ||
+				$_GET["pagina"] == "Analisis" ||
 				$_GET["pagina"] == "somos" 
 
 			){

@@ -65,7 +65,12 @@
 					</li>
 
 					<li class="nav-item">
-						<a class="nav-link" href="#"><i class="fas fa-chart-bar"></i>ANALISÍS E INFORMES</a>
+						<?php if (isset($_GET['pagina']) && in_array($_GET['pagina'], array('Analisis'))): ?>
+							<a class="nav-link active" href="Analisis">
+						<?php else: ?>
+							<a class="nav-link" href="Analisis">
+						<?php endif ?>
+						<i class="fas fa-chart-bar"></i>ANALISÍS E INFORMES</a>
 					</li>
 
 					<li class="nav-item">
