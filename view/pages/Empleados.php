@@ -10,20 +10,20 @@ $empresas = ControladorFormularios::ctrVerEmpresas(null, null);
 				<div class="card-header tab-regular">
 					<ul class="nav nav-tabs card-header-tabs nav-empresas" id="myTab" role="tablist">
 					<?php if (!isset($_GET['depa'])): ?>
-						<li class="nav-item nav-item-empresas">
+						<li class="nav-item nav-item-empresas" style="max-width: 150px;">
 							<a class="nav-link active" href="Empleados">GENERAL</a>
 						</li>
 						<?php foreach ($empresas as $empresa): ?>
-							<li class="nav-item nav-item-empresas">
+							<li class="nav-item nav-item-empresas" style="max-width: 150px;">
 								<a class="nav-link" href="Empleados&depa=<?php echo $empresa['idEmpresas'] ?>"><?php echo $empresa['nombre_razon_social'] ?></a>
 							</li>
 						<?php endforeach ?>
 					<?php else: ?>
-						<li class="nav-item">
+						<li class="nav-item" style="max-width: 150px;">
 							<a class="nav-link" href="Empleados">GENERAL</a>
 						</li>
 						<?php foreach ($empresas as $empresa): ?>
-							<li class="nav-item nav-item-empresas">
+							<li class="nav-item nav-item-empresas" style="max-width: 150px;">
 								<?php if ($_GET['depa'] == $empresa['idEmpresas']): ?>
 								<a class="nav-link active" href="Empleados&depa=<?php echo $empresa['idEmpresas'] ?>"><?php echo $empresa['nombre_razon_social'] ?></a>
 								<?php else: ?>

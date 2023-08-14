@@ -3675,6 +3675,9 @@ btn-link
 	background-color: #dddde8;
 	margin-right: 5px;
 	border-color: #dddde8;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 .tab-regular .nav-tabs .nav-link:focus,
