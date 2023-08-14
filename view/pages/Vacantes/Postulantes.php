@@ -79,7 +79,7 @@ $calendary = ControladorFormularios::generarCalendario(); ?>
 															class="btn btn-outline-danger rounded" 
 															data-toggle="modal" 
 															data-target="#Eliminar<?php echo $postulante['idPostulantes'] ?>">
-															<i class="mdi mdi-account-remove"></i>
+															<i class="fas fa-user-times"></i>
 														</button>
 													</td>
 												</tr>
