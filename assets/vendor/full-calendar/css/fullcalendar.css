@@ -374,6 +374,7 @@ temporary rendered events).
   opacity: .25; }
 
 .fc-event .fc-content {
+  color: #fff !important;
   position: relative;
   z-index: 2; }
 
