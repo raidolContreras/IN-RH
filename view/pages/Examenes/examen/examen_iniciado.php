@@ -199,8 +199,10 @@ $i = 1;
 			});
 		}
 
+<?php if ($tiempo != 'Sin limite de tiempo'): ?>
 		// Iniciar el contador
 		mostrarContador();
+<?php endif ?>
 
 	$(document).ready(function() {
 		$("#terminar-examen-btn").click(function() {

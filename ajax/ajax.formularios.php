@@ -375,7 +375,6 @@ class FormulariosAjax{
 	}
 
 	public function CrearJustificanteHorario(){
-		session_start();
 		$Asistencias_idAsistencias = $this->Asistencias_idAsistencias;
 		$comentario = $this->comentario;
 
@@ -437,7 +436,6 @@ class FormulariosAjax{
 	}
 
 	public function GenerarPeticionesAjax(){
-		session_start();
 		$idPeticiones = $this->idPeticiones;
 		$fechaPermiso = $this->fechaPermiso;
 		$fechaFin = $this->fechaFin;
@@ -477,7 +475,6 @@ class FormulariosAjax{
 	}
 
 	public function asignarTareaAjax(){
-		session_start();
 		$nameTarea = $this->nameTarea;
 		$descripcion = $this->descripcion;
 		$empleado = $this->empleado;
@@ -494,7 +491,6 @@ class FormulariosAjax{
 	}
 
 	public function entregarTareaAjax(){
-		session_start();
 		$idTarea = $this->idTarea;
 		$descripcionEntrega = $this->descripcionEntrega;
 		$datos = array(
@@ -507,7 +503,6 @@ class FormulariosAjax{
 	}
 
 	public function finalizarTareaAjax(){
-		session_start();
 		$opinion = $this->opinion;
 		$idTarea = $this->idTarea;
 		$datos = array(
@@ -520,7 +515,6 @@ class FormulariosAjax{
 	}
 
 	public function crearVacanteAjax(){
-		session_start();
 		$nameVacante = $this->nameVacante;
 		$salarioVacante = $this->salarioVacante;
 		$empresaVacante = $this->empresaVacante;
@@ -539,7 +533,6 @@ class FormulariosAjax{
 	}
 
 	public function activarVacante(){
-		session_start();
 		$idVacantes = $this->idVacantes;
 		$valor = $this->valor;
 		$datos = array(
@@ -665,7 +658,6 @@ class FormulariosAjax{
 	}
 
 	public function crearIniciarExamenAjax(){
-		session_start();
 		$idExamen = $this->idExamen;
 		$idEmpleado = $_SESSION['idEmpleado'];
 		$datos = array(
@@ -699,7 +691,6 @@ class FormulariosAjax{
 	}
 
 	public function responderPreguntaExamenAjax(){
-		session_start();
 		$preguntaId = $this->preguntaId;
 		$respuestaExamen = $this->respuestaExamen;
 		$idExamen = $this->examen;
@@ -720,7 +711,6 @@ class FormulariosAjax{
 	}
 
 	public function terminarExamenAjax(){
-		session_start();
 		$examen = $this->examen;
 		$timeMax = $this->timeMax;
 		$idEmpleado = $_SESSION['idEmpleado'];
@@ -1647,7 +1637,6 @@ if (isset($_POST['nameVendedor'])) {
 		$descripcionGasto = $_POST['descripcionGasto'];
 		$referenciaInterna = $_POST['referenciaInterna'];
 		if ($_POST['folio'] == 'otra') {
-			session_start();
 			$folio = ControladorFormularios::ctrRegistrarFolioGastos($_POST['nfolio'], $_SESSION['idEmpleado']);
 		}else{
 			$folio = $_POST['folio'];
