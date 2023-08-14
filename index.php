@@ -18,5 +18,8 @@ require_once "model/modelo.empleados.php";
 require_once "controller/controlador.excel.php";
 require_once "model/modelo.excel.php";
 
+require_once "controller/controlador.analisis.php";
+require_once "model/modelo_analisis.php";
+
 $plantilla = new ControladorPlantilla();
 $plantilla -> ctrTraerPlantilla();

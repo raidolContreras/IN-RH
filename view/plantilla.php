@@ -103,6 +103,17 @@ session_start();
 					include "pages/Vacantes/".$pagina.".php";
 				}
 
+			}elseif(strpos($_GET["pagina"], "Analisis-") !== false){
+
+				$pagina = str_replace("Analisis-", "",$_GET["pagina"]);
+				if ($pagina == 'Vacaciones') {
+
+					include "pages/navs/navbar.php";
+					include "pages/navs/sidenav.php";
+
+					include "pages/Analisis/".$pagina.".php";
+				}
+
 			}elseif ($_GET["pagina"] == "Postulacion") {
 
 				include "pages/navs/navbar.php";
