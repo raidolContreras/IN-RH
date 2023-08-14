@@ -1,4 +1,4 @@
-
+<?php $empleados = ControladorEmpleados::ctrVerEmpleados(null, null) ?>
 <section class="dashboard-content">
     <div class="container">
         <div class="card rounded-card">
@@ -33,17 +33,20 @@
                             <th>Empleado</th>
                             <th>Departamento</th>
                             <th>Salario</th>
-                            <th>Calificación</th>
                         </tr>
                     </thead>
                     <tbody>
+                    	<?php foreach ($empleados as $empleado): 
+                    		$nombre = $empleado['lastname']." ".$empleado['name'];
+                    		$puesto = ControladorFormularios::ctrVerPuestos("Empleados_idEmpleados", $empleado['idEmpleados']);
+                    		$depa = ControladorFormularios::ctrVerDepartamentos("idDepartamentos", $puesto['Departamentos_idDepartamentos']);
+                    		?>
                         <tr>
-                            <td>Juan Pérez</td>
-                            <td>Recursos Humanos</td>
-                            <td>$50,000</td>
-                            <td>4.5</td>
+                            <td><?php echo mb_strtoupper($nombre, 'UTF-8') ?></td>
+                            <td><?php echo mb_strtoupper($depa['nameDepto'], 'UTF-8') ?></td>
+                            <td><?php echo ControladorFormularios::formatearNumero($puesto['salario'], 'MXN') ?></td>
                         </tr>
-                        <!-- Agregar más filas de datos aquí -->
+                    	<?php endforeach ?>
                     </tbody>
                 </table>
             </div>
