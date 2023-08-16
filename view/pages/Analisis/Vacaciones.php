@@ -6,7 +6,9 @@
 			<center>
 				<div class="card">
 					<div class="card-body" style="max-height:400px">
-						<canvas id="myChart"></canvas>
+						<canvas id="myChart">
+							<p>Vacaciones</p>
+						</canvas>
 					</div>
 				</div>
 			</center>
@@ -42,31 +44,48 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-  const ctx = document.getElementById('myChart');
+    const ctx = document.getElementById('myChart');
 
-  new Chart(ctx, {
-    type: 'doughnut',
-    data: {
-      labels: ['Aceptados', 'Rechazado', 'Pendientes'],
-      datasets: [{
-        label: '# of Votes',
-        data: [12, 19, 3]
-      }]
-    },
-    options: {
-        plugins: {
-            title: {
-                display: true,
-                text: 'Vacaciones',
-                padding: {
-                    top: 10,
-                    bottom: 30
-                }
+    function actualizarGrafico(data) {
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Aceptados', 'Rechazados', 'Pendientes'],
+                datasets: [{
+                    label: '# of Votes',
+                    data: data,
+                    backgroundColor: ['#28a745', '#dc3545', '#ffc107'],
+                }]
             },
-            tooltip: {
+            options: {
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Vacaciones',
+                        padding: {
+                            top: 10,
+                            bottom: 30
+                        }
+                    },
+                    tooltip: {}
+                }
+            }
+        });
+    }
 
+    // Llamada AJAX para obtener datos y actualizar el gráfico
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', 'ajax/vacaciones.contador.php', true);
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                const responseData = JSON.parse(xhr.responseText);
+                const data = [responseData.Aprobados, responseData.Rechazados, responseData.Pendientes];
+                actualizarGrafico(data);
+            } else {
+                console.error('Error en la solicitud AJAX');
             }
         }
-    }
-  });
+    };
+    xhr.send();
 </script>
