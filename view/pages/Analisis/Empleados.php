@@ -21,7 +21,7 @@
 						<th>Nombre</th>
 						<th>Género</th>
 						<th>Fecha de Nac.</th>
-						<th>Teléfono</th>
+						<th width="100">Teléfono</th>
 						<th>Salario</th>
 						<th>Puesto</th>
 						<th>Departamento</th>
