@@ -88,8 +88,11 @@
             data: {
                 labels: ['Aceptados', 'Rechazados', 'Pendientes'],
                 datasets: [{
+                    label: 'Total de Peticiones',
                     data: data,
                     backgroundColor: ['#3498db', '#e74c3c', '#f39c12'],
+                    hoverBackgroundColor: ['#217AB6', '#C53E30', '#C9851A'],
+                    borderRadius: 5,
                     borderWidth: 1
                 }]
             },
