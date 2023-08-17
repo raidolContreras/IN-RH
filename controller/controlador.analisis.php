@@ -12,4 +12,9 @@ Class ControladorAnalisis{
 		return $respuesta;
 	}
 
+	static public function empleados(){
+		$respuesta = ModeloAnalisis::empleados();
+		return $respuesta;
+	}
+
 }

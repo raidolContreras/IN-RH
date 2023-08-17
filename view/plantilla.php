@@ -113,6 +113,7 @@ session_start();
 					$pagina == 'EmpleadoGastos'||
 					$pagina == 'Genero'||
 					$pagina == 'Edades'||
+					$pagina == 'Empleados'||
 					$pagina == 'Permisos') {
 
 					include "pages/navs/navbar.php";

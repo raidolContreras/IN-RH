@@ -12,7 +12,7 @@
 					<div class="analysis-item">
 						<h3>Informe de Empleados</h3>
 						<p>Resumen detallado de la información clave de los empleados.</p>
-						<a href="#" class="btn btn-primary">Ver Informe</a>
+						<a href="Analisis-Empleados" class="btn btn-primary">Ver Informe</a>
 					</div>
 				</article>
 				<article class="col-md-6">

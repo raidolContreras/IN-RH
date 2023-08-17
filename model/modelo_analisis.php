@@ -52,5 +52,37 @@ class ModeloAnalisis{
 		$stmt = null;
 
 	}
+
+	static public function empleados(){
+
+		$sql = "SELECT
+				    CONCAT(e.lastname, ' ', e.name) AS nombre,
+				    CASE e.genero
+				        WHEN '1' THEN 'Masculino'
+				        WHEN '0' THEN 'Femenino'
+				        ELSE 'No binario'
+				    END AS Género,
+				    DATE_FORMAT(e.fNac, '%d/%m/%Y') AS Fecha_de_Nacimiento,
+				    e.phone AS Teléfono,
+				    p.salario AS Salario,
+				    p.namePuesto AS Puesto,
+				    d.nameDepto AS Departamento,
+				    em.nombre_razon_social AS Empresa,
+				    TIMESTAMPDIFF(YEAR, e.fecha_contratado, CURDATE()) AS Años_Trabajados,
+				    DATE_FORMAT(e.fecha_contratado, '%d/%m/%Y') AS Fecha_de_Ingreso
+				FROM empleados e
+				LEFT JOIN puesto p ON p.Empleados_idEmpleados = e.idEmpleados
+				LEFT JOIN departamentos d ON p.Departamentos_idDepartamentos = d.idDepartamentos
+				LEFT JOIN empresas em ON d.Empresas_idEmpresas = em.idEmpresas
+				WHERE e.status = 1;
+				";
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->execute();
+		return $stmt->fetchAll();
+
+		$stmt->close();
+		$stmt = null;
+
+	}
 	
 }
