@@ -198,35 +198,22 @@ class ModeloFormularios{
 		$stmt = null;
 	}
 
-	/*---------- Esta función crea el formato del numero teléfonico ---------- */
+	/*---------- Esta función crea el formato del numero telefónico ---------- */
 	static public function mdlNumeroTelefonico($number){
-		$number = preg_replace('/[^0-9]/', '', $number); // Elimina cualquier caracter que no sea un numero
-		$length = strlen($number);
-		if($length == 10){
-		 // Formato de 10 digitos
-			$number = preg_replace('/([0-9]{
-				3}
-				)([0-9]{
-				3}
-				)([0-9]{
-				4}
-			)/', '($1) $2-$3', $number);
-		}
-		elseif($length == 11){
-		 // Formato de 11 digitos (con codigo de pais)
-			$number = preg_replace('/([0-9]{
-				1}
-				)([0-9]{
-				3}
-				)([0-9]{
-				3}
-				)([0-9]{
-				4}
-			)/', '+$1 ($2) $3-$4', $number);
-		}
+	    $number = preg_replace('/[^0-9]/', '', $number); // Elimina cualquier caracter que no sea un numero
+	    $length = strlen($number);
+	    if($length == 10){
+	        // Formato de 10 digitos
+	        $number = preg_replace('/([0-9]{3})([0-9]{3})([0-9]{4})/', '($1) $2-$3', $number);
+	    }
+	    elseif($length == 11){
+	        // Formato de 11 digitos (con codigo de pais)
+	        $number = preg_replace('/([0-9]{1})([0-9]{3})([0-9]{3})([0-9]{4})/', '+$1 ($2) $3-$4', $number);
+	    }
 
-		return $number;
+	    return $number;
 	}
+
 
 	static public function mdlSeleccionarHisrory($tabla, $idEmpleado){
 		$sql = "SELECT * FROM $tabla WHERE Empleados_idEmpleados = :id";

@@ -36,7 +36,7 @@
 							<td><?php echo ucwords(mb_strtolower($empleado['nombre'])) ?></td>
 							<td><?php echo $empleado['Género'] ?></td>
 							<td><?php echo $empleado['Fecha_de_Nacimiento'] ?></td>
-							<td><?php echo $empleado['Teléfono'] ?></td>
+							<td><?php echo ControladorFormularios::ctrNumeroTelefonico($empleado['Teléfono']) ?></td>
 							<td><?php echo ControladorFormularios::formatearNumero($empleado['Salario'], "MXN") ?></td>
 							<td><?php echo $empleado['Puesto'] ?></td>
 							<td><?php echo $empleado['Departamento'] ?></td>
