@@ -37,7 +37,7 @@
 							<td><?php echo $empleado['Género'] ?></td>
 							<td><?php echo $empleado['Fecha_de_Nacimiento'] ?></td>
 							<td><?php echo $empleado['Teléfono'] ?></td>
-							<td><?php echo $empleado['Salario'] ?></td>
+							<td><?php echo ControladorFormularios::formatearNumero($empleado['Salario'], "MXN") ?></td>
 							<td><?php echo $empleado['Puesto'] ?></td>
 							<td><?php echo $empleado['Departamento'] ?></td>
 							<td><?php echo $empleado['Empresa'] ?></td>
@@ -58,7 +58,7 @@
 <style>
     #myChart {
         width: 100%;
-        height: 100vh;
+        max-height: 800px;
     }
 </style>
 
@@ -73,30 +73,15 @@
                 datasets: [{
                     label: 'Total de Empleados',
                     data: data.map(item => item.Total_de_Empleados),
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.8)',
-                        'rgba(54, 162, 235, 0.8)',
-                        'rgba(255, 205, 86, 0.8)',
-                        'rgba(75, 192, 192, 0.8)',
-                        'rgba(153, 102, 255, 0.8)',
-                        'rgba(255, 159, 64, 0.8)'
-                    ],
-                    borderWidth: 2,
-                    borderColor: 'rgba(0, 0, 0, 0.6)',
-                    borderRadius: 10,
+                    backgroundColor: 'rgba(63, 103, 126, 0.7)',
+                    hoverBackgroundColor: 'rgba(63, 103, 126, 1)',
+                    borderWidth: 0,
+                    borderRadius: 5,
                 }]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                layout: {
-                    padding: {
-                        left: 0,
-                        right: 0,
-                        top: 20,
-                        bottom: 20
-                    }
-                },
                 plugins: {
                     legend: {
                         display: false
@@ -110,15 +95,22 @@
                         },
                         font: {
                             size: 24,
-                            weight: 'bold'
+                            weight: 'bold',
+                            family: 'Arial, sans-serif'
                         },
                         color: 'rgba(0, 0, 0, 0.8)'
                     },
                     tooltip: {
                         backgroundColor: 'rgba(0, 0, 0, 0.8)',
                         bodyFont: {
+                            size: 14,
+                            weight: 'bold',
+                            family: 'Arial, sans-serif'
+                        },
+                        titleFont: {
                             size: 16,
-                            weight: 'bold'
+                            weight: 'bold',
+                            family: 'Arial, sans-serif'
                         }
                     }
                 },
@@ -129,8 +121,8 @@
                         },
                         ticks: {
                             font: {
-                                size: 14,
-                                weight: 'bold'
+                                size: 12,
+                                family: 'Arial, sans-serif'
                             },
                             color: 'rgba(0, 0, 0, 0.6)'
                         }
@@ -143,8 +135,8 @@
                         },
                         ticks: {
                             font: {
-                                size: 14,
-                                weight: 'bold'
+                                size: 12,
+                                family: 'Arial, sans-serif'
                             },
                             color: 'rgba(0, 0, 0, 0.6)'
                         }
