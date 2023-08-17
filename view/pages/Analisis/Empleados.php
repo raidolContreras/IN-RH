@@ -15,7 +15,7 @@
 			</center>
 		</div>
 		<div class="table-responsive">
-			<table class="table table-bordered table-striped vacaciones-table">
+			<table id="example" class="table table-bordered table-striped vacaciones-table analisis">
 				<thead>
 					<tr>
 						<th>Nombre</th>

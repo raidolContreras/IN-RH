@@ -5,7 +5,7 @@
 	<div class="card col-12 p-4 row">
 		<h3>Tabla de Datos de Asistencias del Mes</h3>
 		<div class="table-responsive">
-			<table class="table table-bordered">
+			<table id="example" class="table table-bordered table-striped vacaciones-table analisis">
 				<thead>
 					<tr>
 						<th>Nombre</th>

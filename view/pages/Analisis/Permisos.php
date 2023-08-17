@@ -53,7 +53,7 @@
             </center>
         </div>
         <div class="table-responsive">
-            <table class="table table-bordered table-striped permisos-table">
+            <table id="example" class="table table-bordered table-striped vacaciones-table analisis">
                 <thead>
                     <tr>
                         <th>Empleado</th>
@@ -93,8 +93,11 @@
                 labels: ['Aceptados', 'Rechazados', 'Pendientes'],
                 datasets: [{
                     label: 'Total de Peticiones',
-                    data: data,
-                    backgroundColor: ['#3498db', '#e74c3c', '#f39c12'],
+                    data: data,backgroundColor: [
+                        'rgba(52, 152, 219, 0.8)', // Azul con 80% de opacidad
+                        'rgba(231, 76, 60, 0.8)',  // Rojo con 80% de opacidad
+                        'rgba(243, 156, 18, 0.8)'  // Amarillo con 80% de opacidad
+                    ],
                     hoverBackgroundColor: ['#217AB6', '#C53E30', '#C9851A'],
                     borderRadius: 5,
                     borderWidth: 1
