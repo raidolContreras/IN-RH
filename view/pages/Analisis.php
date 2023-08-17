@@ -60,7 +60,14 @@
 					<div class="analysis-item">
 						<h3>Análisis de Distribución de Edades</h3>
 						<p>Distribución de edades de los empleados.</p>
-						<a href="Analisis-Edades" class="btn btn-primary">Ver Informe</a>
+						<a href="Analisis-Edades" class="btn btn-primary">Ver Análisis</a>
+					</div>
+				</article>
+				<article class="col-md-6">
+					<div class="analysis-item">
+						<h3>Análisis de Altas y Bajas</h3>
+						<p>Informe de las Altas y bajas de los empleados ocurridas mensualmete.</p>
+						<a href="Analisis-AltasBajas" class="btn btn-primary">Ver Análisis</a>
 					</div>
 				</article>
 			</section>
