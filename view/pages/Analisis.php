@@ -42,23 +42,7 @@
 			<section class="row mt-3">
 				<article class="col-md-6">
 					<div class="analysis-item">
-						<h3>Análisis de Evaluaciones de Desempeño</h3>
-						<p>Promedio de calificaciones en evaluaciones por empleado.</p>
-						<a href="Analisis-Evaluaciones" class="btn btn-primary">Ver Análisis</a>
-					</div>
-				</article>
-				<article class="col-md-6">
-					<div class="analysis-item">
-						<h3>Informe de Postulantes y Contrataciones</h3>
-						<p>Tiempo promedio de contratación desde la solicitud hasta la oferta.</p>
-						<a href="Analisis-Postulantes" class="btn btn-primary">Ver Informe</a>
-					</div>
-				</article>
-			</section>
-			<section class="row mt-3">
-				<article class="col-md-6">
-					<div class="analysis-item">
-						<h3>Informe de Empleados por Categoría de Gastos</h3>
+						<h3>Informe de Gastos por Empleados</h3>
 						<p>Relación entre la categoría de gasto y los empleados.</p>
 						<a href="Analisis-EmpleadoGastos" class="btn btn-primary">Ver Informe</a>
 					</div>
