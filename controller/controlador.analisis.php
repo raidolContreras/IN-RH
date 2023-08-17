@@ -7,4 +7,9 @@ Class ControladorAnalisis{
 		return $respuesta;
 	}
 
+	static public function permisos(){
+		$respuesta = ModeloAnalisis::permisos();
+		return $respuesta;
+	}
+
 }

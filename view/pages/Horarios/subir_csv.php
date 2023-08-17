@@ -4,7 +4,7 @@
     </div>
     <div class="card-body">
         <p class="ajustes-text">Para descargar el archivo csv de ejemplo, haz clic en el siguiente enlace. Este archivo te servirá de guía para el formato que debes usar. Recuerda que el archivo debe estar separado por comas.
-        <a class="btn btn-in-consulting" href="/Documentación/Ejemplo.csv" download="Ejemplo.csv">
+        <a class="btn btn-in-consulting" href="Documentation/Ejemplo.csv" download="Ejemplo.csv">
             <i class="fas fa-download"></i> <span>Descargar ejemplo</span>
         </a></p>
 

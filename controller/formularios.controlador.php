@@ -994,10 +994,16 @@ class ControladorFormularios{
 				}
 			}
 		}
+		if ($horasRegistradas < $horasEsperadas) {
+			$horasExtras = 0;
+		}else{
+			$horasExtras = $horasRegistradas-$horasEsperadas;
+		}
 		$datos = array(
 			"nombre" => $nombre,
 			"horasRegistradas" => ModeloExcel::mdlformatearHora($horasRegistradas),
-			"horasEsperadas" => ModeloExcel::mdlformatearHora($horasEsperadas)
+			"horasEsperadas" => ModeloExcel::mdlformatearHora($horasEsperadas),
+			"horasExtras" => ModeloExcel::mdlformatearHora($horasExtras)
 		);
 		return $datos;
 	}

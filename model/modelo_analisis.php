@@ -19,5 +19,38 @@ class ModeloAnalisis{
 		$stmt = null;
 
 	}
+
+	static public function permisos(){
+
+		$sql = "SELECT
+				    CONCAT(e.lastname, ' ', e.name) AS nombre,
+				    DATE_FORMAT(ep.fechaPermiso, '%Y/%m/%d') AS FechaPermiso,
+				    DATE_FORMAT(ep.fechaFin, '%Y/%m/%d') AS FechaFin,
+				    p.namePermisos AS TipoPermiso,
+				    ep.descripcion AS Descripcion,
+				    CASE
+				        WHEN ep.statusPermiso IS NULL THEN 'Pendiente'
+				        WHEN ep.statusPermiso = 1 THEN 'Aprobado'
+				        WHEN ep.statusPermiso = 2 THEN 'Rechazado'
+				    END AS EstadoPermiso,
+				    DATE_FORMAT(ep.fechaSolicitud, '%d/%m/%Y %H:%i:%s') AS FechaHoraSolicitud,
+				    IFNULL((SELECT name FROM empleados WHERE idEmpleados = ehp.Empleados_idEmpleados), '') AS EmpleadoAprobador
+				FROM
+				    empleados_has_permisos ep
+				INNER JOIN
+				    empleados e ON ep.Empleados_idEmpleados = e.idEmpleados
+				INNER JOIN
+				    permisos p ON ep.Permisos_idPermisos = p.idPermisos
+				LEFT JOIN
+				    empleados_has_permisos ehp ON ep.idEm_has_Per = ehp.idEm_has_Per  
+				";
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->execute();
+		return $stmt->fetchAll();
+
+		$stmt->close();
+		$stmt = null;
+
+	}
 	
 }

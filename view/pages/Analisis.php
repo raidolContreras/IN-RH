@@ -23,6 +23,63 @@
 					</div>
 				</article>
 			</section>
+			<section class="row mt-3">
+				<article class="col-md-6">
+					<div class="analysis-item">
+						<h3>Informe de Permisos</h3>
+						<p>Seguimiento de las solicitudes y aprobaciones de permisos.</p>
+						<a href="Analisis-Permisos" class="btn btn-primary">Ver Informe</a>
+					</div>
+				</article>
+				<article class="col-md-6">
+					<div class="analysis-item">
+						<h3>Informe de Asistencias</h3>
+						<p>Informe de las asistencias de los empleados.</p>
+						<a href="Analisis-Asistencias" class="btn btn-primary">Ver Informe</a>
+					</div>
+				</article>
+			</section>
+			<section class="row mt-3">
+				<article class="col-md-6">
+					<div class="analysis-item">
+						<h3>Análisis de Evaluaciones de Desempeño</h3>
+						<p>Promedio de calificaciones en evaluaciones por empleado.</p>
+						<a href="Analisis-Evaluaciones" class="btn btn-primary">Ver Análisis</a>
+					</div>
+				</article>
+				<article class="col-md-6">
+					<div class="analysis-item">
+						<h3>Informe de Postulantes y Contrataciones</h3>
+						<p>Tiempo promedio de contratación desde la solicitud hasta la oferta.</p>
+						<a href="Analisis-Postulantes" class="btn btn-primary">Ver Informe</a>
+					</div>
+				</article>
+			</section>
+			<section class="row mt-3">
+				<article class="col-md-6">
+					<div class="analysis-item">
+						<h3>Informe de Empleados por Categoría de Gastos</h3>
+						<p>Relación entre la categoría de gasto y los empleados.</p>
+						<a href="Analisis-EmpleadoGastos" class="btn btn-primary">Ver Informe</a>
+					</div>
+				</article>
+				<article class="col-md-6">
+					<div class="analysis-item">
+						<h3>Informe de Diversidad e Inclusión</h3>
+						<p>Distribución de empleados por género y departamento.</p>
+						<a href="Analisis-Genero" class="btn btn-primary">Ver Informe</a>
+					</div>
+				</article>
+			</section>
+			<section class="row mt-3">
+				<article class="col-md-6">
+					<div class="analysis-item">
+						<h3>Análisis de Distribución de Edades</h3>
+						<p>Distribución de edades de los empleados.</p>
+						<a href="Analisis-Edades" class="btn btn-primary">Ver Informe</a>
+					</div>
+				</article>
+			</section>
 		</div>
 	</div>
 </section>
