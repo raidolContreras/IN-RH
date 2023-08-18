@@ -27,4 +27,9 @@ Class ControladorAnalisis{
 		return $respuesta;
 	}
 
+	static public function gasto(){
+		$respuesta = ModeloAnalisis::gasto();
+		return $respuesta;
+	}
+
 }
