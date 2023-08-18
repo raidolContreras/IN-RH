@@ -22,4 +22,9 @@ Class ControladorAnalisis{
 		return $respuesta;
 	}
 
+	static public function edad(){
+		$respuesta = ModeloAnalisis::edad();
+		return $respuesta;
+	}
+
 }

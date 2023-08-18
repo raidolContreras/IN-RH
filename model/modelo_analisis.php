@@ -110,5 +110,30 @@ class ModeloAnalisis{
 		$stmt = null;
 
 	}
+
+	static public function edad(){
+
+		$sql = "SELECT
+				    em.nombre_razon_social AS Empresa,
+				    SUM(CASE WHEN TIMESTAMPDIFF(YEAR, e.fNac, CURDATE()) < 18 THEN 1 ELSE 0 END) AS Menores_de_18,
+				    SUM(CASE WHEN TIMESTAMPDIFF(YEAR, e.fNac, CURDATE()) BETWEEN 18 AND 25 THEN 1 ELSE 0 END) AS Edad_18_25,
+				    SUM(CASE WHEN TIMESTAMPDIFF(YEAR, e.fNac, CURDATE()) BETWEEN 26 AND 35 THEN 1 ELSE 0 END) AS Edad_26_35,
+				    SUM(CASE WHEN TIMESTAMPDIFF(YEAR, e.fNac, CURDATE()) BETWEEN 36 AND 45 THEN 1 ELSE 0 END) AS Edad_36_45,
+				    SUM(CASE WHEN TIMESTAMPDIFF(YEAR, e.fNac, CURDATE()) BETWEEN 46 AND 55 THEN 1 ELSE 0 END) AS Edad_46_55,
+				    SUM(CASE WHEN TIMESTAMPDIFF(YEAR, e.fNac, CURDATE()) > 55 THEN 1 ELSE 0 END) AS Edad_55_Plus
+				FROM empresas em
+				LEFT JOIN departamentos d ON em.idEmpresas = d.Empresas_idEmpresas
+				LEFT JOIN puesto p ON d.idDepartamentos = p.Departamentos_idDepartamentos
+				LEFT JOIN empleados e ON p.Empleados_idEmpleados = e.idEmpleados AND e.status = 1
+				GROUP BY em.idEmpresas, em.nombre_razon_social;
+				";
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->execute();
+		return $stmt->fetchAll();
+
+		$stmt->close();
+		$stmt = null;
+
+	}
 	
 }
