@@ -17,4 +17,9 @@ Class ControladorAnalisis{
 		return $respuesta;
 	}
 
+	static public function genero(){
+		$respuesta = ModeloAnalisis::genero();
+		return $respuesta;
+	}
+
 }

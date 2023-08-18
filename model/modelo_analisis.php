@@ -84,5 +84,31 @@ class ModeloAnalisis{
 		$stmt = null;
 
 	}
+
+	static public function genero(){
+
+		$sql = "SELECT
+				    em.nombre_razon_social AS Empresa,
+				    CASE e.genero
+				        WHEN '1' THEN 'Masculino'
+				        WHEN '0' THEN 'Femenino'
+				        ELSE 'No binario'
+				    END AS Género,
+				    COUNT(e.idEmpleados) AS Total_de_Empleados
+				FROM empresas em
+				LEFT JOIN departamentos d ON em.idEmpresas = d.Empresas_idEmpresas
+				LEFT JOIN puesto p ON d.idDepartamentos = p.Departamentos_idDepartamentos
+				LEFT JOIN empleados e ON p.Empleados_idEmpleados = e.idEmpleados AND e.status = 1
+				WHERE e.genero IN ('1', '0')
+				GROUP BY em.idEmpresas, em.nombre_razon_social, Género;
+				";
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->execute();
+		return $stmt->fetchAll();
+
+		$stmt->close();
+		$stmt = null;
+
+	}
 	
 }
