@@ -37,4 +37,9 @@ Class ControladorAnalisis{
 		return $respuesta;
 	}
 
+	static public function altasBajas(){
+		$respuesta = ModeloAnalisis::altasBajas();
+		return $respuesta;
+	}
+
 }
