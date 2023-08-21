@@ -49,9 +49,9 @@
 				</article>
 				<article class="col-md-6">
 					<div class="analysis-item">
-						<h3>Informe de Diversidad e Inclusión</h3>
-						<p>Distribución de empleados por género y departamento.</p>
-						<a href="Analisis-Genero" class="btn btn-primary">Ver Informe</a>
+						<h3>Informe de Gastos por Empleado</h3>
+						<p>Analisis entre la categoría de gasto y un empleado en especifico.</p>
+						<a href="Analisis-EmpleadoGastosIndividual" class="btn btn-primary">Ver Informe</a>
 					</div>
 				</article>
 			</section>
@@ -68,6 +68,15 @@
 						<h3>Análisis de Altas y Bajas</h3>
 						<p>Informe de las Altas y bajas de los empleados ocurridas mensualmete.</p>
 						<a href="Analisis-AltasBajas" class="btn btn-primary">Ver Análisis</a>
+					</div>
+				</article>
+			</section>
+			<section class="row mt-3">
+				<article class="col-md-6">
+					<div class="analysis-item">
+						<h3>Informe de Diversidad e Inclusión</h3>
+						<p>Distribución de empleados por género y departamento.</p>
+						<a href="Analisis-Genero" class="btn btn-primary">Ver Informe</a>
 					</div>
 				</article>
 			</section>

@@ -1,4 +1,4 @@
-<?php $gastos = ControladorAnalisis::gasto(null); ?>
+
 <style>
     #gastosChart {
         width: 100%;
@@ -37,6 +37,10 @@
 </style>
 <div class="container-fluid dashboard-content">
     <div class="card col-12 p-4 row">
+
+<?php if (isset($_GET['informe'])): 
+	$informe = $_GET['informe'];
+	$gastos = ControladorAnalisis::gasto($informe); ?>
         <h3>Tabla de Datos de Gastos</h3>
         <div class="col-12">
             <center>
@@ -75,9 +79,6 @@
                 </tbody>
             </table>
         </div>
-    </div>
-</div>
-
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
@@ -154,7 +155,7 @@
 
     // Llamada AJAX para obtener datos y actualizar el gráfico
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', 'ajax/gastos.contador.php', true);
+    xhr.open('GET', `ajax/gastos.contador.php?informe=${encodeURIComponent(<?php echo $informe; ?>)}`, true); // Aquí pasamos el valor de $informe a la URL
     xhr.onreadystatechange = function () {
         if (xhr.readyState === XMLHttpRequest.DONE) {
             if (xhr.status === 200) {
@@ -168,3 +169,32 @@
     };
     xhr.send();
 </script>
+<?php else: 
+	$empleados = ControladorAnalisis::empleadosGasto();
+	?>
+
+        <h3>Selecciona un empleado a analizar</h3>
+
+        <div class="table-responsive">
+            <table id="example" class="table table-bordered table-striped vacaciones-table analisis">
+                <thead>
+                    <tr>
+                        <th>Empleado</th>
+                        <th>N° de gastos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($empleados as $empleado) : ?>
+                        <tr>
+                            <td><a class="btn btn-in-consulting" href="Analisis-EmpleadoGastosIndividual&informe=<?php echo $empleado['idEmpleados'] ?>"><span><?php echo $empleado['nombre'] ?></span></a></td>
+                            <td><?php echo $empleado['Numero_de_Gastos'] ?></td>
+                        </tr>
+                    <?php endforeach ?>
+                </tbody>
+            </table>
+        </div>
+
+<?php endif ?>
+
+    </div>
+</div>

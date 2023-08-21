@@ -136,31 +136,81 @@ class ModeloAnalisis{
 
 	}
 
-	static public function gasto(){
+	static public function empleadosGasto(){
 
 		$sql = "SELECT
-					CONCAT(e.lastname, ' ', e.name) AS nombre,
-					g.descripcionGasto AS Descripción,
-					g.nameVendedor AS Vendedor,
-					d.divisa AS Divisa,
-					tg.nameCategoria AS Tipo_de_Gasto,
-					CASE g.status
-						WHEN 0 THEN 'Pendiente'
-						WHEN 1 THEN 'Aprobado'
-						WHEN 2 THEN 'Rechazado'
-						WHEN 3 THEN 'Pagado'
-						ELSE 'Desconocido'
-					END AS Status,
-					SUM(g.importeTotal) AS Total_de_Gastos
+					e.idEmpleados,
+				    CONCAT(e.lastname, ' ', e.name) AS nombre,
+				    COUNT(g.idGastos) AS Numero_de_Gastos
 				FROM empleados e
-				LEFT JOIN gastos g ON e.idEmpleados = g.Empleados_idEmpleados
-				LEFT JOIN divisas d ON g.divisa = d.idDivisa
-				LEFT JOIN categorias_gastos tg ON g.categoria = tg.idCategoria
+				INNER JOIN gastos g ON e.idEmpleados = g.Empleados_idEmpleados
 				WHERE e.status = 1
-					AND YEAR(g.fechaDocumento) = YEAR(CURDATE())
-					AND MONTH(g.fechaDocumento) = MONTH(CURDATE())
-				GROUP BY e.idEmpleados, e.name, e.lastname, g.descripcionGasto, g.nameVendedor, d.nameDivisa, tg.nameCategoria, g.status;
+				GROUP BY e.idEmpleados, e.name, e.lastname;
 				";
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->execute();
+		return $stmt->fetchAll();
+
+		$stmt->close();
+		$stmt = null;
+
+	}
+
+	static public function gasto($idEmpleados){
+
+		if ($idEmpleados == null) {
+
+			$sql = "SELECT
+						CONCAT(e.lastname, ' ', e.name) AS nombre,
+						g.descripcionGasto AS Descripción,
+						g.nameVendedor AS Vendedor,
+						d.divisa AS Divisa,
+						tg.nameCategoria AS Tipo_de_Gasto,
+						CASE g.status
+							WHEN 0 THEN 'Pendiente'
+							WHEN 1 THEN 'Aprobado'
+							WHEN 2 THEN 'Rechazado'
+							WHEN 3 THEN 'Pagado'
+							ELSE 'Desconocido'
+						END AS Status,
+						SUM(g.importeTotal) AS Total_de_Gastos
+					FROM empleados e
+					LEFT JOIN gastos g ON e.idEmpleados = g.Empleados_idEmpleados
+					LEFT JOIN divisas d ON g.divisa = d.idDivisa
+					LEFT JOIN categorias_gastos tg ON g.categoria = tg.idCategoria
+					WHERE e.status = 1
+						AND YEAR(g.fechaDocumento) = YEAR(CURDATE())
+						AND MONTH(g.fechaDocumento) = MONTH(CURDATE())
+					GROUP BY e.idEmpleados, e.name, e.lastname, g.descripcionGasto, g.nameVendedor, d.nameDivisa, tg.nameCategoria, g.status;
+					";
+
+		}else{
+
+			$sql = "SELECT
+						CONCAT(e.lastname, ' ', e.name) AS nombre,
+					    g.descripcionGasto AS Descripción,
+					    g.nameVendedor AS Vendedor,
+					    d.divisa AS Divisa,
+					    tg.nameCategoria AS Tipo_de_Gasto,
+					    CASE g.status
+					        WHEN 0 THEN 'Pendiente'
+					        WHEN 1 THEN 'Aprobado'
+					        WHEN 2 THEN 'Rechazado'
+					        WHEN 3 THEN 'Pagado'
+					        ELSE 'Desconocido'
+					    END AS Status,
+					    SUM(g.importeTotal) AS Total_de_Gastos
+					FROM empleados e
+					LEFT JOIN gastos g ON e.idEmpleados = g.Empleados_idEmpleados
+					LEFT JOIN divisas d ON g.divisa = d.idDivisa
+					LEFT JOIN categorias_gastos tg ON g.categoria = tg.idCategoria
+					WHERE e.status = 1
+					    AND e.idEmpleados = $idEmpleados -- Reemplaza <ID_DEL_EMPLEADO> con el ID del empleado deseado
+					    AND YEAR(g.fechaDocumento) = YEAR(CURDATE())
+					GROUP BY e.idEmpleados, e.name, e.lastname, g.descripcionGasto, g.nameVendedor, d.nameDivisa, tg.nameCategoria, g.status;
+					";
+
+		}
 				
 		$stmt = Conexion::conectar()->prepare($sql);
 		$stmt->execute();

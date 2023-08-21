@@ -101,6 +101,8 @@ session_start();
 					include "pages/navs/sidenav.php";
 
 					include "pages/Vacantes/".$pagina.".php";
+				}else{
+					include "pages/404-page.html";
 				}
 
 			}elseif(strpos($_GET["pagina"], "Analisis-") !== false){
@@ -114,12 +116,15 @@ session_start();
 					$pagina == 'Genero'||
 					$pagina == 'Edades'||
 					$pagina == 'Empleados'||
+					$pagina == 'EmpleadoGastosIndividual'||
 					$pagina == 'Permisos') {
 
 					include "pages/navs/navbar.php";
 					include "pages/navs/sidenav.php";
 
 					include "pages/Analisis/".$pagina.".php";
+				}else{
+					include "pages/404-page.html";
 				}
 
 			}elseif ($_GET["pagina"] == "Postulacion") {

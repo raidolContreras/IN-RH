@@ -27,8 +27,13 @@ Class ControladorAnalisis{
 		return $respuesta;
 	}
 
-	static public function gasto(){
-		$respuesta = ModeloAnalisis::gasto();
+	static public function gasto($idEmpleados){
+		$respuesta = ModeloAnalisis::gasto($idEmpleados);
+		return $respuesta;
+	}
+
+	static public function empleadosGasto(){
+		$respuesta = ModeloAnalisis::empleadosGasto();
 		return $respuesta;
 	}
 
