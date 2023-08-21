@@ -232,10 +232,34 @@ class ModeloAnalisis{
 				LEFT JOIN puesto p ON e.idEmpleados = p.Empleados_idEmpleados
 				LEFT JOIN departamentos d ON p.Departamentos_idDepartamentos = d.idDepartamentos
 				LEFT JOIN empresas em ON d.Empresas_idEmpresas = em.idEmpresas
-				WHERE e.fecha_contratado BETWEEN '2023-01-01' AND '2023-06-30'  -- Cambiar las fechas según el período deseado
+				WHERE e.fecha_contratado BETWEEN '2023-01-01' AND '2023-12-31'  -- Cambiar las fechas según el período deseado
 				AND em.nombre_razon_social IS NOT NULL  -- Usar IS NOT NULL en lugar de NOT NULL
 				GROUP BY Periodo, em.idEmpresas
 				ORDER BY Periodo, em.nombre_razon_social;
+				";
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->execute();
+		return $stmt->fetchAll();
+
+		$stmt->close();
+		$stmt = null;
+
+	}
+
+	static public function empresasDepartamentos(){
+
+		$sql = "SELECT
+					em.nombre_razon_social AS nRazonSocial,
+				    d.nameDepto AS Departamento,
+				    SUM(CASE WHEN e.genero = '1' THEN 1 ELSE 0 END) AS Masculino,
+				    SUM(CASE WHEN e.genero = '0' THEN 1 ELSE 0 END) AS Femenino,
+				    AVG(TIMESTAMPDIFF(YEAR, e.fNac, CURDATE())) AS Edad_Promedio
+				FROM empleados e
+				LEFT JOIN puesto p ON e.idEmpleados = p.Empleados_idEmpleados
+				LEFT JOIN departamentos d ON p.Departamentos_idDepartamentos = d.idDepartamentos
+				LEFT JOIN empresas em ON d.Empresas_idEmpresas = em.idEmpresas
+				WHERE d.nameDepto IS NOT NULL
+				GROUP BY d.nameDepto;
 				";
 		$stmt = Conexion::conectar()->prepare($sql);
 		$stmt->execute();
