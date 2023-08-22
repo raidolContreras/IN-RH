@@ -91,7 +91,7 @@
                     <div class="analysis-item">
                         <h3>Reporte de Cumpleaños</h3>
                         <p>Lista de fechas de cumpleaños de los empleados de la organización.</p>
-                        <a href="Analisis-Cumpleaños" class="btn btn-primary">Ver Informe</a>
+                        <a href="Analisis-Birthday" class="btn btn-primary">Ver Informe</a>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -123,7 +123,7 @@
                     <div class="analysis-item">
                         <h3>Reporte de Documentos Faltantes</h3>
                         <p>Registro de los documentos requeridos que faltan para cada empleado en la organización.</p>
-                        <a href="Analisis-DocumentosFaltantes" class="btn btn-primary">Ver Informe</a>
+                        <a href="Analisis-Documentos" class="btn btn-primary">Ver Informe</a>
                     </div>
                 </div>
             </div>

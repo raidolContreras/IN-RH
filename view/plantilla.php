@@ -118,6 +118,8 @@ session_start();
 					$pagina == 'Empleados'||
 					$pagina == 'EmpleadoGastosIndividual'||
 					$pagina == 'AltasBajas'||
+					$pagina == 'Birthday'||
+					$pagina == 'Documentos'||
 					$pagina == 'Permisos') {
 
 					include "pages/navs/navbar.php";

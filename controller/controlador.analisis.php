@@ -42,4 +42,19 @@ Class ControladorAnalisis{
 		return $respuesta;
 	}
 
+	static public function birthday(){
+		$respuesta = ModeloAnalisis::birthday();
+		return $respuesta;
+	}
+
+	static public function birthdayContador(){
+		$respuesta = ModeloAnalisis::birthdayContador();
+		return $respuesta;
+	}
+
+	static public function documentos(){
+		$respuesta = ModeloAnalisis::documentos();
+		return $respuesta;
+	}
+
 }
