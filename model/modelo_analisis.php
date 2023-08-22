@@ -313,89 +313,89 @@ class ModeloAnalisis{
 				    -- Subconsulta para el documento 'Curriculum'
 				    IF(
 				        EXISTS (SELECT 1 FROM documento d WHERE d.Empleados_idEmpleados = e.idEmpleados AND d.nameDoc = 'curriculum'),
-				        'Sí',
-				        'No'
+				        'Entregado',
+				        '-'
 				    ) AS Curriculum,
 				    -- Subconsulta para el documento 'Acta de Nacimiento'
 				    IF(
 				        EXISTS (SELECT 1 FROM documento d WHERE d.Empleados_idEmpleados = e.idEmpleados AND d.nameDoc = 'acta_nacimiento'),
-				        'Sí',
-				        'No'
+				        'Entregado',
+				        '-'
 				    ) AS Acta_de_Nacimiento,
 				    -- Subconsulta para el documento 'Comprobante de Domicilio'
 				    IF(
 				        EXISTS (SELECT 1 FROM documento d WHERE d.Empleados_idEmpleados = e.idEmpleados AND d.nameDoc = 'comprobante_domicilio'),
-				        'Sí',
-				        'No'
+				        'Entregado',
+				        '-'
 				    ) AS Comprobante_de_Domicilio,
 				    -- Subconsulta para el documento 'Identificación Anverso'
 				    IF(
 				        EXISTS (SELECT 1 FROM documento d WHERE d.Empleados_idEmpleados = e.idEmpleados AND d.nameDoc = 'identificacion_anverso'),
-				        'Sí',
-				        'No'
+				        'Entregado',
+				        '-'
 				    ) AS Identificacion_Anverso,
 				    -- Subconsulta para el documento 'Identificación Reverso'
 				    IF(
 				        EXISTS (SELECT 1 FROM documento d WHERE d.Empleados_idEmpleados = e.idEmpleados AND d.nameDoc = 'identificacion_reverso'),
-				        'Sí',
-				        'No'
+				        'Entregado',
+				        '-'
 				    ) AS Identificacion_Reverso,
 				    -- Subconsulta para el documento 'RFC'
 				    IF(
 				        EXISTS (SELECT 1 FROM documento d WHERE d.Empleados_idEmpleados = e.idEmpleados AND d.nameDoc = 'rfc'),
-				        'Sí',
-				        'No'
+				        'Entregado',
+				        '-'
 				    ) AS RFC,
 				    -- Subconsulta para el documento 'CURP'
 				    IF(
 				        EXISTS (SELECT 1 FROM documento d WHERE d.Empleados_idEmpleados = e.idEmpleados AND d.nameDoc = 'curp'),
-				        'Sí',
-				        'No'
+				        'Entregado',
+				        '-'
 				    ) AS CURP,
 				    -- Subconsulta para el documento 'NSS'
 				    IF(
 				        EXISTS (SELECT 1 FROM documento d WHERE d.Empleados_idEmpleados = e.idEmpleados AND d.nameDoc = 'nss'),
-				        'Sí',
-				        'No'
+				        'Entregado',
+				        '-'
 				    ) AS NSS,
 				    -- Subconsulta para el documento 'Comprobante último grado de estudios'
 				    IF(
 				        EXISTS (SELECT 1 FROM documento d WHERE d.Empleados_idEmpleados = e.idEmpleados AND d.nameDoc = 'comprobante_estudios'),
-				        'Sí',
-				        'No'
+				        'Entregado',
+				        '-'
 				    ) AS Comprobante_Ultimo_Grado,
 				    -- Subconsulta para el documento 'Carta de recomendación (Laboral)'
 				    IF(
 				        EXISTS (SELECT 1 FROM documento d WHERE d.Empleados_idEmpleados = e.idEmpleados AND d.nameDoc = 'recomendacion_laboral'),
-				        'Sí',
-				        'No'
+				        'Entregado',
+				        '-'
 				    ) AS Recomendacion_Laboral,
 				    -- Subconsulta para el documento 'Carta de recomendación (personal)'
 				    IF(
 				        EXISTS (SELECT 1 FROM documento d WHERE d.Empleados_idEmpleados = e.idEmpleados AND d.nameDoc = 'recomendacion_personal'),
-				        'Sí',
-				        'No'
+				        'Entregado',
+				        '-'
 				    ) AS Recomendacion_Personal,
 				    -- Subconsulta para el documento 'Estado de cuenta'
 				    IF(
 				        EXISTS (SELECT 1 FROM documento d WHERE d.Empleados_idEmpleados = e.idEmpleados AND d.nameDoc = 'estado_cuenta'),
-				        'Sí',
-				        'No'
+				        'Entregado',
+				        '-'
 				    ) AS Estado_de_Cuenta,
 				    -- Subconsulta para el documento 'Carta de no adeudos (infonavit)'
 				    IF(
 				        EXISTS (SELECT 1 FROM documento d WHERE d.Empleados_idEmpleados = e.idEmpleados AND d.nameDoc = 'infonavit'),
-				        'Sí',
-				        'No'
+				        'Entregado',
+				        '-'
 				    ) AS Carta_de_No_Adeudos_Infonavit,
 				    -- Subconsulta para el documento 'Carta de no adeudos (fonacot)'
 				    IF(
 				        EXISTS (SELECT 1 FROM documento d WHERE d.Empleados_idEmpleados = e.idEmpleados AND d.nameDoc = 'fonacot'),
-				        'Sí',
-				        'No'
+				        'Entregado',
+				        '-'
 				    ) AS Carta_de_No_Adeudos_Fonacot
 				FROM empleados e;";
-				
+
 		$stmt = Conexion::conectar()->prepare($sql);
 		$stmt->execute();
 		return $stmt->fetchAll();
