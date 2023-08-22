@@ -394,8 +394,8 @@ class ModeloAnalisis{
 				        'Sí',
 				        'No'
 				    ) AS Carta_de_No_Adeudos_Fonacot
-				FROM empleados e;
-				";
+				FROM empleados e;";
+				
 		$stmt = Conexion::conectar()->prepare($sql);
 		$stmt->execute();
 		return $stmt->fetchAll();
