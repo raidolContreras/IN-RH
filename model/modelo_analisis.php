@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 require_once "conexion.php";
 
@@ -140,8 +140,8 @@ class ModeloAnalisis{
 
 		$sql = "SELECT
 					e.idEmpleados,
-				    CONCAT(e.lastname, ' ', e.name) AS nombre,
-				    COUNT(g.idGastos) AS Numero_de_Gastos
+					CONCAT(e.lastname, ' ', e.name) AS nombre,
+					COUNT(g.idGastos) AS Numero_de_Gastos
 				FROM empleados e
 				INNER JOIN gastos g ON e.idEmpleados = g.Empleados_idEmpleados
 				WHERE e.status = 1
@@ -188,30 +188,30 @@ class ModeloAnalisis{
 
 			$sql = "SELECT
 						CONCAT(e.lastname, ' ', e.name) AS nombre,
-					    g.descripcionGasto AS Descripción,
-					    g.nameVendedor AS Vendedor,
-					    d.divisa AS Divisa,
-					    tg.nameCategoria AS Tipo_de_Gasto,
-					    CASE g.status
-					        WHEN 0 THEN 'Pendiente'
-					        WHEN 1 THEN 'Aprobado'
-					        WHEN 2 THEN 'Rechazado'
-					        WHEN 3 THEN 'Pagado'
-					        ELSE 'Desconocido'
-					    END AS Status,
-					    SUM(g.importeTotal) AS Total_de_Gastos
+						g.descripcionGasto AS Descripción,
+						g.nameVendedor AS Vendedor,
+						d.divisa AS Divisa,
+						tg.nameCategoria AS Tipo_de_Gasto,
+						CASE g.status
+							WHEN 0 THEN 'Pendiente'
+							WHEN 1 THEN 'Aprobado'
+							WHEN 2 THEN 'Rechazado'
+							WHEN 3 THEN 'Pagado'
+							ELSE 'Desconocido'
+						END AS Status,
+						SUM(g.importeTotal) AS Total_de_Gastos
 					FROM empleados e
 					LEFT JOIN gastos g ON e.idEmpleados = g.Empleados_idEmpleados
 					LEFT JOIN divisas d ON g.divisa = d.idDivisa
 					LEFT JOIN categorias_gastos tg ON g.categoria = tg.idCategoria
 					WHERE e.status = 1
-					    AND e.idEmpleados = $idEmpleados -- Reemplaza <ID_DEL_EMPLEADO> con el ID del empleado deseado
-					    AND YEAR(g.fechaDocumento) = YEAR(CURDATE())
+						AND e.idEmpleados = $idEmpleados -- Reemplaza <ID_DEL_EMPLEADO> con el ID del empleado deseado
+						AND YEAR(g.fechaDocumento) = YEAR(CURDATE())
 					GROUP BY e.idEmpleados, e.name, e.lastname, g.descripcionGasto, g.nameVendedor, d.nameDivisa, tg.nameCategoria, g.status;
 					";
 
 		}
-				
+
 		$stmt = Conexion::conectar()->prepare($sql);
 		$stmt->execute();
 		return $stmt->fetchAll();
@@ -224,10 +224,10 @@ class ModeloAnalisis{
 	static public function altasBajas(){
 
 		$sql = "SELECT
-				    DATE_FORMAT(e.fecha_contratado, '%Y-%m') AS Periodo,
-				    em.nombre_razon_social AS Empresa,
-				    SUM(CASE WHEN e.fecha_baja IS NULL THEN 1 ELSE 0 END) AS Altas,
-				    SUM(CASE WHEN e.fecha_baja IS NOT NULL THEN 1 ELSE 0 END) AS Bajas
+					DATE_FORMAT(e.fecha_contratado, '%Y-%m') AS Periodo,
+					em.nombre_razon_social AS Empresa,
+					SUM(CASE WHEN e.fecha_baja IS NULL THEN 1 ELSE 0 END) AS Altas,
+					SUM(CASE WHEN e.fecha_baja IS NOT NULL THEN 1 ELSE 0 END) AS Bajas
 				FROM empleados e
 				LEFT JOIN puesto p ON e.idEmpleados = p.Empleados_idEmpleados
 				LEFT JOIN departamentos d ON p.Departamentos_idDepartamentos = d.idDepartamentos
@@ -250,10 +250,10 @@ class ModeloAnalisis{
 
 		$sql = "SELECT
 					em.nombre_razon_social AS nRazonSocial,
-				    d.nameDepto AS Departamento,
-				    SUM(CASE WHEN e.genero = '1' THEN 1 ELSE 0 END) AS Masculino,
-				    SUM(CASE WHEN e.genero = '0' THEN 1 ELSE 0 END) AS Femenino,
-				    AVG(TIMESTAMPDIFF(YEAR, e.fNac, CURDATE())) AS Edad_Promedio
+					d.nameDepto AS Departamento,
+					SUM(CASE WHEN e.genero = '1' THEN 1 ELSE 0 END) AS Masculino,
+					SUM(CASE WHEN e.genero = '0' THEN 1 ELSE 0 END) AS Femenino,
+					AVG(TIMESTAMPDIFF(YEAR, e.fNac, CURDATE())) AS Edad_Promedio
 				FROM empleados e
 				LEFT JOIN puesto p ON e.idEmpleados = p.Empleados_idEmpleados
 				LEFT JOIN departamentos d ON p.Departamentos_idDepartamentos = d.idDepartamentos
@@ -274,8 +274,8 @@ class ModeloAnalisis{
 
 		$sql = "SELECT
 					CONCAT(e.lastname, ' ', e.name) AS nombre,
-				    DATE_FORMAT(e.fNac, '%d/%m/%Y') AS Fecha_de_Cumpleaños,
-				    e.fNac
+					DATE_FORMAT(e.fNac, '%d/%m/%Y') AS Fecha_de_Cumpleaños,
+					e.fNac
 				FROM empleados e
 				WHERE e.status = 1  -- Para incluir solo empleados activos
 				ORDER BY DATE_FORMAT(e.fNac, '%m-%d');";
@@ -309,92 +309,92 @@ class ModeloAnalisis{
 	static public function documentos($idEmpresas){
 
 		$sql = "SELECT
-				    e.idEmpleados AS ID_Empleado,
+					e.idEmpleados AS ID_Empleado,
 					CONCAT(e.lastname, ' ', e.name) AS nombre,
-				    -- Subconsulta para el documento 'Curriculum'
-				    IF(
-				        EXISTS (SELECT 1 FROM documento d WHERE d.Empleados_idEmpleados = e.idEmpleados AND d.nameDoc = 'curriculum'),
-				        'Entregado',
-				        '-'
-				    ) AS Curriculum,
-				    -- Subconsulta para el documento 'Acta de Nacimiento'
-				    IF(
-				        EXISTS (SELECT 1 FROM documento d WHERE d.Empleados_idEmpleados = e.idEmpleados AND d.nameDoc = 'acta_nacimiento'),
-				        'Entregado',
-				        '-'
-				    ) AS Acta_de_Nacimiento,
-				    -- Subconsulta para el documento 'Comprobante de Domicilio'
-				    IF(
-				        EXISTS (SELECT 1 FROM documento d WHERE d.Empleados_idEmpleados = e.idEmpleados AND d.nameDoc = 'comprobante_domicilio'),
-				        'Entregado',
-				        '-'
-				    ) AS Comprobante_de_Domicilio,
-				    -- Subconsulta para el documento 'Identificación Anverso'
-				    IF(
-				        EXISTS (SELECT 1 FROM documento d WHERE d.Empleados_idEmpleados = e.idEmpleados AND d.nameDoc = 'identificacion_anverso'),
-				        'Entregado',
-				        '-'
-				    ) AS Identificacion_Anverso,
-				    -- Subconsulta para el documento 'Identificación Reverso'
-				    IF(
-				        EXISTS (SELECT 1 FROM documento d WHERE d.Empleados_idEmpleados = e.idEmpleados AND d.nameDoc = 'identificacion_reverso'),
-				        'Entregado',
-				        '-'
-				    ) AS Identificacion_Reverso,
-				    -- Subconsulta para el documento 'RFC'
-				    IF(
-				        EXISTS (SELECT 1 FROM documento d WHERE d.Empleados_idEmpleados = e.idEmpleados AND d.nameDoc = 'rfc'),
-				        'Entregado',
-				        '-'
-				    ) AS RFC,
-				    -- Subconsulta para el documento 'CURP'
-				    IF(
-				        EXISTS (SELECT 1 FROM documento d WHERE d.Empleados_idEmpleados = e.idEmpleados AND d.nameDoc = 'curp'),
-				        'Entregado',
-				        '-'
-				    ) AS CURP,
-				    -- Subconsulta para el documento 'NSS'
-				    IF(
-				        EXISTS (SELECT 1 FROM documento d WHERE d.Empleados_idEmpleados = e.idEmpleados AND d.nameDoc = 'nss'),
-				        'Entregado',
-				        '-'
-				    ) AS NSS,
-				    -- Subconsulta para el documento 'Comprobante último grado de estudios'
-				    IF(
-				        EXISTS (SELECT 1 FROM documento d WHERE d.Empleados_idEmpleados = e.idEmpleados AND d.nameDoc = 'comprobante_estudios'),
-				        'Entregado',
-				        '-'
-				    ) AS Comprobante_Ultimo_Grado,
-				    -- Subconsulta para el documento 'Carta de recomendación (Laboral)'
-				    IF(
-				        EXISTS (SELECT 1 FROM documento d WHERE d.Empleados_idEmpleados = e.idEmpleados AND d.nameDoc = 'recomendacion_laboral'),
-				        'Entregado',
-				        '-'
-				    ) AS Recomendacion_Laboral,
-				    -- Subconsulta para el documento 'Carta de recomendación (personal)'
-				    IF(
-				        EXISTS (SELECT 1 FROM documento d WHERE d.Empleados_idEmpleados = e.idEmpleados AND d.nameDoc = 'recomendacion_personal'),
-				        'Entregado',
-				        '-'
-				    ) AS Recomendacion_Personal,
-				    -- Subconsulta para el documento 'Estado de cuenta'
-				    IF(
-				        EXISTS (SELECT 1 FROM documento d WHERE d.Empleados_idEmpleados = e.idEmpleados AND d.nameDoc = 'estado_cuenta'),
-				        'Entregado',
-				        '-'
-				    ) AS Estado_de_Cuenta,
-				    -- Subconsulta para el documento 'Carta de no adeudos (infonavit)'
-				    IF(
-				        EXISTS (SELECT 1 FROM documento d WHERE d.Empleados_idEmpleados = e.idEmpleados AND d.nameDoc = 'infonavit'),
-				        'Entregado',
-				        '-'
-				    ) AS Carta_de_No_Adeudos_Infonavit,
-				    -- Subconsulta para el documento 'Carta de no adeudos (fonacot)'
-				    IF(
-				        EXISTS (SELECT 1 FROM documento d WHERE d.Empleados_idEmpleados = e.idEmpleados AND d.nameDoc = 'fonacot'),
-				        'Entregado',
-				        '-'
-				    ) AS Carta_de_No_Adeudos_Fonacot
+					-- Subconsulta para el documento 'Curriculum'
+					IF(
+						EXISTS (SELECT 1 FROM documento d WHERE d.Empleados_idEmpleados = e.idEmpleados AND d.nameDoc = 'curriculum'),
+						'Entregado',
+						'-'
+					) AS Curriculum,
+					-- Subconsulta para el documento 'Acta de Nacimiento'
+					IF(
+						EXISTS (SELECT 1 FROM documento d WHERE d.Empleados_idEmpleados = e.idEmpleados AND d.nameDoc = 'acta_nacimiento'),
+						'Entregado',
+						'-'
+					) AS Acta_de_Nacimiento,
+					-- Subconsulta para el documento 'Comprobante de Domicilio'
+					IF(
+						EXISTS (SELECT 1 FROM documento d WHERE d.Empleados_idEmpleados = e.idEmpleados AND d.nameDoc = 'comprobante_domicilio'),
+						'Entregado',
+						'-'
+					) AS Comprobante_de_Domicilio,
+					-- Subconsulta para el documento 'Identificación Anverso'
+					IF(
+						EXISTS (SELECT 1 FROM documento d WHERE d.Empleados_idEmpleados = e.idEmpleados AND d.nameDoc = 'identificacion_anverso'),
+						'Entregado',
+						'-'
+					) AS Identificacion_Anverso,
+					-- Subconsulta para el documento 'Identificación Reverso'
+					IF(
+						EXISTS (SELECT 1 FROM documento d WHERE d.Empleados_idEmpleados = e.idEmpleados AND d.nameDoc = 'identificacion_reverso'),
+						'Entregado',
+						'-'
+					) AS Identificacion_Reverso,
+					-- Subconsulta para el documento 'RFC'
+					IF(
+						EXISTS (SELECT 1 FROM documento d WHERE d.Empleados_idEmpleados = e.idEmpleados AND d.nameDoc = 'rfc'),
+						'Entregado',
+						'-'
+					) AS RFC,
+					-- Subconsulta para el documento 'CURP'
+					IF(
+						EXISTS (SELECT 1 FROM documento d WHERE d.Empleados_idEmpleados = e.idEmpleados AND d.nameDoc = 'curp'),
+						'Entregado',
+						'-'
+					) AS CURP,
+					-- Subconsulta para el documento 'NSS'
+					IF(
+						EXISTS (SELECT 1 FROM documento d WHERE d.Empleados_idEmpleados = e.idEmpleados AND d.nameDoc = 'nss'),
+						'Entregado',
+						'-'
+					) AS NSS,
+					-- Subconsulta para el documento 'Comprobante último grado de estudios'
+					IF(
+						EXISTS (SELECT 1 FROM documento d WHERE d.Empleados_idEmpleados = e.idEmpleados AND d.nameDoc = 'comprobante_estudios'),
+						'Entregado',
+						'-'
+					) AS Comprobante_Ultimo_Grado,
+					-- Subconsulta para el documento 'Carta de recomendación (Laboral)'
+					IF(
+						EXISTS (SELECT 1 FROM documento d WHERE d.Empleados_idEmpleados = e.idEmpleados AND d.nameDoc = 'recomendacion_laboral'),
+						'Entregado',
+						'-'
+					) AS Recomendacion_Laboral,
+					-- Subconsulta para el documento 'Carta de recomendación (personal)'
+					IF(
+						EXISTS (SELECT 1 FROM documento d WHERE d.Empleados_idEmpleados = e.idEmpleados AND d.nameDoc = 'recomendacion_personal'),
+						'Entregado',
+						'-'
+					) AS Recomendacion_Personal,
+					-- Subconsulta para el documento 'Estado de cuenta'
+					IF(
+						EXISTS (SELECT 1 FROM documento d WHERE d.Empleados_idEmpleados = e.idEmpleados AND d.nameDoc = 'estado_cuenta'),
+						'Entregado',
+						'-'
+					) AS Estado_de_Cuenta,
+					-- Subconsulta para el documento 'Carta de no adeudos (infonavit)'
+					IF(
+						EXISTS (SELECT 1 FROM documento d WHERE d.Empleados_idEmpleados = e.idEmpleados AND d.nameDoc = 'infonavit'),
+						'Entregado',
+						'-'
+					) AS Carta_de_No_Adeudos_Infonavit,
+					-- Subconsulta para el documento 'Carta de no adeudos (fonacot)'
+					IF(
+						EXISTS (SELECT 1 FROM documento d WHERE d.Empleados_idEmpleados = e.idEmpleados AND d.nameDoc = 'fonacot'),
+						'Entregado',
+						'-'
+					) AS Carta_de_No_Adeudos_Fonacot
 				FROM empleados e
 				JOIN puesto p ON p.Empleados_idEmpleados = e.idEmpleados
 				JOIN departamentos d ON p.Departamentos_idDepartamentos = d.idDepartamentos

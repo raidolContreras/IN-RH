@@ -90,32 +90,44 @@ $causaBaja = array(
 						</ul>
 					</div>
 				</div>
-				<?php if (!empty($contrato)): ?>
 				<div class="card-body border-top">
 					<h3 class="font-16 hprofile">Datos del contrato</h3>
 					<div>
+				<?php if (!empty($contrato)): ?>
 						<ul class="mb-0 list-unstyled">
 							<li class="header-li">Tipo de contrato</li>
 							<li><?php echo $contrato[2] ?></li>
 							<li class="header-li">Fecha de inicio del contrato</li>
 							<li><?php echo $contrato[3] ?></li>
 						</ul>
+				<?php else: ?>
+						<div class="container pb-2">
+							<button class="btn btn-outline-primary rounded btn-block " data-toggle="modal" data-target="#contratoModal">
+								<i class="fas fa-plus"></i> Agregar contrato
+							</button>
+						</div>
+				<?php endif ?>
 					</div>
 				</div>
-				<?php endif ?>
-				<?php if (!empty($credito)): ?>
 				<div class="card-body border-top">
 					<h3 class="font-16 hprofile">Datos del crédito</h3>
 					<div>
+				<?php if (!empty($credito)): ?>
 						<ul class="mb-0 list-unstyled">
 							<li class="header-li">Tipo de crédito</li>
 							<li><?php echo $credito[2] ?></li>
 							<li class="header-li">Numero de crédito</li>
 							<li><?php echo $credito[3] ?></li>
 						</ul>
+				<?php else: ?>
+						<div class="container pb-2">
+							<button class="btn btn-outline-primary rounded btn-block " data-toggle="modal" data-target="#creditoModal">
+								<i class="fas fa-plus"></i> Agregar crédito
+							</button>
+						</div>
+				<?php endif ?>
 					</div>
 				</div>
-				<?php endif ?>
 				<div class="card-body border-top">
 					<?php if ($colaborador['eStatus'] == 1): ?>
 					<h3 class="font-16 hprofile">Acciones</h3>
@@ -286,20 +298,167 @@ $causaBaja = array(
 		</div>
 	</div>
 </div>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Modal contrato -->
+<div class="modal fade" id="contratoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Agregar datos del contrato</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="contrato-form">
+        	<div class="row">
+						<div class="form-group col-md-6">
+							<label for="tipo_contrato" class="col-form-label text-center font-weight-bold">Tipo de contrato:</label>
+							<select class="form-control" id="tipo_contrato" name="tipo_contrato">
+								<option value="">Selecciona una opción</option>
+								<option value="Contrato por Obra o Tiempo Determinado">Contrato por Obra o Tiempo Determinado</option>
+								<option value="Contrato por Tiempo Indeterminado">Contrato por Tiempo Indeterminado</option>
+								<option value="Contrato en Practicas">Contrato en Practicas</option>
+								<option value="Contrato para la Formación y el aprendizaje">Contrato para la Formación y el aprendizaje</option>
+							</select>
+						</div>
+						<div class="form-group col-md-6">
+							<label for="fecha_contrato" class="col-form-label text-center font-weight-bold">fecha de inicio del contrato</label>
+							<input type="date" class="form-control" id="fecha_contrato" name="fecha_contrato">
+						</div>
+					</div>
+							<input type="hidden" name="empleadoContrato" value="<?php echo $_GET['perfil'] ?>">
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" id="contrato-btn">Guardar cambios</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal crédito -->
+<div class="modal fade" id="creditoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Agregar datos del contrato</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="credito-form">
+        	<div class="row">
+						<div class="form-group col-md-6">
+							<label for="tipo_credito" class="col-form-label text-center font-weight-bold">Tipo de crédito</label>
+							<select class="form-control" id="tipo_credito" name="tipo_credito">
+								<option value="">Selecciona una opción</option>
+								<option value="Porcentaje">Porcentaje</option>
+								<option value="Cuota fija">Cuota fija</option>
+								<option value="Factor de descuento">Factor de descuento</option>
+							</select>
+						</div>
+						<div class="form-group col-md-6">
+							<label for="numero_credito" class="col-form-label text-center font-weight-bold">Numero de crédito</label>
+							<input type="text" class="form-control" id="numero_credito" name="numero_credito">
+						</div>
+					</div>
+							<input type="hidden" name="empleadoCredito" value="<?php echo $_GET['perfil'] ?>">
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" id="credito-btn">Guardar cambios</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
+$(document).ready(function() {
+	$("#contrato-btn").click(function() {
+		var value = $("#contrato-form").serialize(); // Obtener los datos del formulario
+		$.ajax({
+			url: "ajax/ajax.formularios.php", // Ruta al archivo PHP que procesará los datos del formulario
+			type: "POST",
+			data: value,
+			success: function(response) {
+				$(".alerta-flotante").val("");
+				if (response === 'ok') {
+					$(".alerta-flotante").html(`
+					<div class='alert alert-success' role="alert" id="alerta">
+					  <i class="fas fa-check-circle"></i>
+						Contrato creado correctamente
+					</div>
+					`);
+					deleteAlert();
+
+					setTimeout(function() {
+						location.reload();
+					}, 900);
+				} else {
+					$(".alerta-flotante").html(`
+					<div class='alert alert-danger' role="alert" id="alerta">
+					  <i class="fas fa-exclamation-triangle"></i>
+					  <b>Error</b>, no se pudo crear el contrato, intenta nuevamente
+					</div>
+					`);
+					deleteAlert();
+				}
+			}
+		});
+	});
+	$("#credito-btn").click(function() {
+		var value = $("#credito-form").serialize(); // Obtener los datos del formulario
+		$.ajax({
+			url: "ajax/ajax.formularios.php", // Ruta al archivo PHP que procesará los datos del formulario
+			type: "POST",
+			data: value,
+			success: function(response) {
+				$(".alerta-flotante").val("");
+				if (response === 'ok') {
+					$(".alerta-flotante").html(`
+					<div class='alert alert-success' role="alert" id="alerta">
+					  <i class="fas fa-check-circle"></i>
+						Crédito creado correctamente
+					</div>
+					`);
+					deleteAlert();
+
+					setTimeout(function() {
+						location.reload();
+					}, 900);
+				} else {
+					$(".alerta-flotante").html(`
+					<div class='alert alert-danger' role="alert" id="alerta">
+					  <i class="fas fa-exclamation-triangle"></i>
+					  <b>Error</b>, no se pudo crear el crédito, intenta nuevamente
+					</div>
+					`);
+					deleteAlert();
+				}
+			}
+		});
+	});
+});
+
 function cargarContenido(pagina) {
-  var xmlhttp = new XMLHttpRequest();
-  xmlhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      document.getElementById("show").innerHTML = this.responseText;
-    }
-  };
-  xmlhttp.open("POST", "view/pages/"+pagina+"?idEmpleados=" + "<?php echo $colaborador['idEmpleados']; ?>", true);
-  xmlhttp.send();
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			document.getElementById("show").innerHTML = this.responseText;
+		}
+	};
+	xmlhttp.open("POST", "view/pages/"+pagina+"?idEmpleados=" + "<?php echo $colaborador['idEmpleados']; ?>", true);
+	xmlhttp.send();
+}
+
+function deleteAlert() {
+	setTimeout(function() {
+		var alert = $('#alerta');
+		alert.fadeOut('slow', function() {
+			alert.remove();
+		});
+	}, 1500);
 }
 </script>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

@@ -987,6 +987,40 @@ class FormulariosAjax{
 		echo $actualizarDatos;
 	}
 
+	public function crearContratoAjax(){
+		$idEmpleados = $this -> idEmpleados;
+		$tipo_contrato = $this -> tipo_contrato;
+		$fecha_contrato = $this -> fecha_contrato;
+		$datosContrato = array(
+			"Empleados_idEmpleados" => $idEmpleados,
+			"tipo_contrato" => $tipo_contrato,
+			"fecha_contrato" => $fecha_contrato
+		);
+		if ($tipo_contrato != "" && $fecha_contrato != "") {
+			$crearContrato = ModeloFormularios::mdlCrearContrato($datosContrato);
+			echo "ok";
+		}else{
+			echo "error";
+		}
+	}
+
+	public function crearCreditoAjax(){
+		$idEmpleados = $this -> idEmpleados;
+		$tipo_credito = $this -> tipo_credito;
+		$numero_credito = $this -> numero_credito;
+		$datosCredito = array(
+			"Empleados_idEmpleados" => $idEmpleados,
+			"tipo_credito" => $tipo_credito,
+			"numero_credito" => $numero_credito
+		);
+		if ($tipo_credito != "" && $numero_credito != "") {
+			$crearCredito = ModeloFormularios::mdlCrearCredito($datosCredito);
+			echo "ok";
+		}else{
+			echo "error";
+		}
+	}
+
 }
 
 if(isset($_POST["validate"])){
@@ -1958,4 +1992,28 @@ if (isset($_POST['nombrePerfil'])) {
 	$actualizarDatos -> estado = $estado;
 	$actualizarDatos -> municipio = $municipio;
 	$actualizarDatos -> actualizarDatosAjax();
+}
+
+if (isset($_POST['tipo_contrato'])) {
+	$idEmpleados = $_POST['empleadoContrato'];
+	$tipo_contrato = $_POST['tipo_contrato'];
+	$fecha_contrato = $_POST['fecha_contrato'];
+
+	$crearContrato = new FormulariosAjax();
+	$crearContrato -> idEmpleados = $idEmpleados;
+	$crearContrato -> tipo_contrato = $tipo_contrato;
+	$crearContrato -> fecha_contrato = $fecha_contrato;
+	$crearContrato -> crearContratoAjax();
+}
+
+if (isset($_POST['tipo_credito'])) {
+	$idEmpleados = $_POST['empleadoCredito'];
+	$tipo_credito = $_POST['tipo_credito'];
+	$numero_credito = $_POST['numero_credito'];
+
+	$crearCreditorato = new FormulariosAjax();
+	$crearCreditorato -> idEmpleados = $idEmpleados;
+	$crearCreditorato -> tipo_credito = $tipo_credito;
+	$crearCreditorato -> numero_credito = $numero_credito;
+	$crearCreditorato -> crearCreditoAjax();
 }
