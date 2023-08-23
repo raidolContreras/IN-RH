@@ -239,7 +239,6 @@ class ModeloEmpleados{
 	}
 
 	static public function mdlEliminarPuesto($tabla, $idEmpleados, $crear_vacante){
-		session_start();
 		$puesto = ControladorFormularios::ctrVerPuestos("Empleados_idEmpleados", $idEmpleados);
 		$departamento = ControladorFormularios::ctrVerDepartamentos("idDepartamentos", $puesto['Departamentos_idDepartamentos']);
 		$tablaVacantes = "vacantes";

@@ -306,7 +306,7 @@ class ModeloAnalisis{
 
 	}
 
-	static public function documentos(){
+	static public function documentos($idEmpresas){
 
 		$sql = "SELECT
 				    e.idEmpleados AS ID_Empleado,
@@ -395,7 +395,12 @@ class ModeloAnalisis{
 				        'Entregado',
 				        '-'
 				    ) AS Carta_de_No_Adeudos_Fonacot
-				FROM empleados e;";
+				FROM empleados e
+				JOIN puesto p ON p.Empleados_idEmpleados = e.idEmpleados
+				JOIN departamentos d ON p.Departamentos_idDepartamentos = d.idDepartamentos
+				JOIN empresas em ON d.Empresas_idEmpresas = em.idEmpresas
+				WHERE e.status = 1 AND em.idEmpresas = $idEmpresas";
+
 
 		$stmt = Conexion::conectar()->prepare($sql);
 		$stmt->execute();

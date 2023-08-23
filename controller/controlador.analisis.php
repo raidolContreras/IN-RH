@@ -52,8 +52,8 @@ Class ControladorAnalisis{
 		return $respuesta;
 	}
 
-	static public function documentos(){
-		$respuesta = ModeloAnalisis::documentos();
+	static public function documentos($empresa){
+		$respuesta = ModeloAnalisis::documentos($empresa);
 		return $respuesta;
 	}
 
