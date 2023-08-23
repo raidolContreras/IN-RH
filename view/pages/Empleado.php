@@ -5,6 +5,8 @@ $Numbero = ControladorFormularios::ctrNumeroTelefonico($colaborador['phone']);
 $emergencia = ControladorFormularios::ctrNumeroTelefonico($colaborador['phoneEmer']);
 $foto = ControladorFormularios::ctrVerFotos("Empleados_idEmpleados", $colaborador['idEmpleados']);
 $puesto = ControladorFormularios::ctrVerPuestos("Empleados_idEmpleados", $_GET['perfil']);
+$credito = ControladorEmpleados::ctrVerCredito($_GET['perfil']);
+$contrato = ControladorEmpleados::ctrVerContrato($_GET['perfil']);
 $causaBaja = array(
 	1 => 'TERMINO DE CONTRATO',
 	2 => 'SEPARACION VOLUNTARIA',
@@ -88,6 +90,32 @@ $causaBaja = array(
 						</ul>
 					</div>
 				</div>
+				<?php if (!empty($contrato)): ?>
+				<div class="card-body border-top">
+					<h3 class="font-16 hprofile">Datos del contrato</h3>
+					<div>
+						<ul class="mb-0 list-unstyled">
+							<li class="header-li">Tipo de contrato</li>
+							<li><?php echo $contrato[2] ?></li>
+							<li class="header-li">Fecha de inicio del contrato</li>
+							<li><?php echo $contrato[3] ?></li>
+						</ul>
+					</div>
+				</div>
+				<?php endif ?>
+				<?php if (!empty($credito)): ?>
+				<div class="card-body border-top">
+					<h3 class="font-16 hprofile">Datos del crédito</h3>
+					<div>
+						<ul class="mb-0 list-unstyled">
+							<li class="header-li">Tipo de crédito</li>
+							<li><?php echo $credito[2] ?></li>
+							<li class="header-li">Numero de crédito</li>
+							<li><?php echo $credito[3] ?></li>
+						</ul>
+					</div>
+				</div>
+				<?php endif ?>
 				<div class="card-body border-top">
 					<?php if ($colaborador['eStatus'] == 1): ?>
 					<h3 class="font-16 hprofile">Acciones</h3>

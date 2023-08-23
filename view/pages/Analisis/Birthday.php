@@ -83,6 +83,7 @@ foreach ($birthdayContador as $birthday) {
 					<tr>
 						<th>Empleado</th>
 						<th>Fecha de Cumpleaños</th>
+						<th>Edad</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -90,6 +91,7 @@ foreach ($birthdayContador as $birthday) {
 						<tr>
 							<td><?php echo $birthday['nombre'] ?></td>
 							<td><?php echo $birthday['Fecha_de_Cumpleaños'] ?></td>
+							<td><?php echo ControladorFormularios::calcularEdad($birthday['fNac']) ?> años</td>
 						</tr>
 					<?php endforeach ?>
 				</tbody>

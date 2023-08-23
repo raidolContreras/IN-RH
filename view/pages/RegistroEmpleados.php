@@ -232,15 +232,15 @@ $ciudadesArray = json_decode($ciudadesJson, true);
 											<label for="tipo_contrato" class="col-form-label text-center font-weight-bold">Tipo de contrato:</label>
 											<select class="form-control" id="tipo_contrato" name="tipo_contrato" disabled>
 												<option value="">Selecciona una opción</option>
-												<option value="1">Contrato por Obra o Tiempo Determinado</option>
-												<option value="2">Contrato por Tiempo Indeterminado</option>
-												<option value="3">Contrato en Practicas</option>
-												<option value="4">Contrato para la Formación y el aprendizaje</option>
+												<option value="Contrato por Obra o Tiempo Determinado">Contrato por Obra o Tiempo Determinado</option>
+												<option value="Contrato por Tiempo Indeterminado">Contrato por Tiempo Indeterminado</option>
+												<option value="Contrato en Practicas">Contrato en Practicas</option>
+												<option value="Contrato para la Formación y el aprendizaje">Contrato para la Formación y el aprendizaje</option>
 											</select>
 										</div>
 										<div class="form-group col-md-4">
-											<label for="tiempo_contrato" class="col-form-label text-center font-weight-bold">Tiempo del contrato</label>
-											<input type="number" class="form-control" id="tiempo_contrato" name="tiempo_contrato" disabled>
+											<label for="fecha_contrato" class="col-form-label text-center font-weight-bold">fecha de inicio del contrato</label>
+											<input type="date" class="form-control" id="fecha_contrato" name="fecha_contrato" disabled>
 										</div>
 									</div>
 									<hr>
@@ -254,12 +254,17 @@ $ciudadesArray = json_decode($ciudadesJson, true);
 											</div>
 										</div>
 										<div class="form-group col-md-4">
-											<label for="total_credito" class="col-form-label text-center font-weight-bold">Cantidad total del crédito</label>
-											<input type="number" class="form-control" id="total_credito" name="total_credito" disabled>
+											<label for="tipo_credito" class="col-form-label text-center font-weight-bold">Tipo de crédito</label>
+											<select class="form-control" id="tipo_credito" name="tipo_credito" disabled>
+												<option value="">Selecciona una opción</option>
+												<option value="Porcentaje">Porcentaje</option>
+												<option value="Cuota fija">Cuota fija</option>
+												<option value="Factor de descuento">Factor de descuento</option>
+											</select>
 										</div>
 										<div class="form-group col-md-4">
-											<label for="tiempo_infonavit" class="col-form-label text-center font-weight-bold">Tiempo del crédito</label>
-											<input type="text" class="form-control" id="tiempo_infonavit" name="tiempo_infonavit" disabled>
+											<label for="numero_credito" class="col-form-label text-center font-weight-bold">Numero de crédito</label>
+											<input type="text" class="form-control" id="numero_credito" name="numero_credito" disabled>
 										</div>
 									</div>
 									<hr>
@@ -551,11 +556,11 @@ function toggleInputFields(checkboxId, inputId) {
 // Asigna la función a los eventos 'click' de los checkboxes
 document.getElementById('contrato').addEventListener('click', function () {
     toggleInputFields('contrato', 'tipo_contrato');
-    toggleInputFields('contrato', 'tiempo_contrato');
+    toggleInputFields('contrato', 'fecha_contrato');
 });
 
 document.getElementById('cuenta_infonavit').addEventListener('click', function () {
-    toggleInputFields('cuenta_infonavit', 'total_credito');
-    toggleInputFields('cuenta_infonavit', 'tiempo_infonavit');
+    toggleInputFields('cuenta_infonavit', 'tipo_credito');
+    toggleInputFields('cuenta_infonavit', 'numero_credito');
 });
 </script>

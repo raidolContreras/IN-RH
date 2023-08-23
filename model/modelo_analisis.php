@@ -274,7 +274,8 @@ class ModeloAnalisis{
 
 		$sql = "SELECT
 					CONCAT(e.lastname, ' ', e.name) AS nombre,
-				    DATE_FORMAT(e.fNac, '%d/%m/%Y') AS Fecha_de_Cumpleaños
+				    DATE_FORMAT(e.fNac, '%d/%m/%Y') AS Fecha_de_Cumpleaños,
+				    e.fNac
 				FROM empleados e
 				WHERE e.status = 1  -- Para incluir solo empleados activos
 				ORDER BY DATE_FORMAT(e.fNac, '%m-%d');";

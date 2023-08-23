@@ -6,6 +6,18 @@ class ControladorEmpleados{
 	static public function ctrRegistrarEmpleados(){
 		if (isset($_POST['nombre'])) {
 
+			if (isset($_POST['contrato'])) {
+				$contrato = true;
+			}else{
+				$contrato = false;
+			}
+
+			if (isset($_POST['cuenta_infonavit'])) {
+				$cuenta_infonavit = true;
+			}else{
+				$cuenta_infonavit = false;
+			}
+
 			$jefe = 0;
 			$departamento = 0;
 			$namePuesto = $_POST['namePuesto'];
@@ -52,7 +64,13 @@ class ControladorEmpleados{
 				'postulante' => $_POST['postulante'],
 				'jefe_Departamento' => $jefe,
 				'horario' => $_POST['horarios'],
-				'fecha_contratado' => $_POST['fecha_contratado']);
+				'fecha_contratado' => $_POST['fecha_contratado'],
+				'contrato' => $_POST['contrato'],
+				'tipo_contrato' => $_POST['tipo_contrato'],
+				'fecha_contrato' => $_POST['fecha_contrato'],
+				'cuenta_infonavit' => $cuenta_infonavit,
+				'tipo_credito' => $_POST['tipo_credito'],
+				'numero_credito' => $_POST['numero_credito']);
 			$Registro = ModeloFormularios::mdlRegistrarEmpleados('empleados','emergencia', $datos);
 			if ($Registro == 'ok') {
 				return 'ok';
@@ -68,6 +86,22 @@ class ControladorEmpleados{
 		$tabla = "empleados";
 
 		$respuesta = ModeloFormularios::mdlVerEmpleados($tabla, $item, $valor);
+
+		return $respuesta;
+
+	}
+	/*---------- Función hecha para ver a los creditos---------- */
+	static public function ctrVerCredito($idEmpleados){
+
+		$respuesta = ModeloFormularios::mdlVerCredito($idEmpleados);
+
+		return $respuesta;
+
+	}
+	/*---------- Función hecha para ver a los contraros---------- */
+	static public function ctrVerContrato($idEmpleados){
+
+		$respuesta = ModeloFormularios::mdlVerContrato($idEmpleados);
 
 		return $respuesta;
 

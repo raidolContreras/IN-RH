@@ -26,6 +26,14 @@ class ControladorFormularios{
 		return $newDate;
 	}
 
+	static public function calcularEdad($fechaNacimiento) {
+	    $fechaNacimiento = new DateTime($fechaNacimiento);
+	    $fechaActual = new DateTime();
+	    $diferencia = $fechaActual->diff($fechaNacimiento);
+	    
+	    return $diferencia->y; // Retorna la edad en años
+	}
+
 	/*---------- Esta función Sube una foto, y guarda un tumbnails para optimización de la pagina ---------- */
 	static public function ctrSubirFoto(){
 

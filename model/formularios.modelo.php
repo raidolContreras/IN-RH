@@ -34,6 +34,26 @@ class ModeloFormularios{
 			echo $consulta->errorInfo()[2];
 		}
 		else{
+			if ($datos['contrato'] == true) {
+				$datosContrato = array(
+					"Empleados_idEmpleados" => $id_empleado,
+					"tipo_contrato" => $datos['tipo_contrato'],
+					"fecha_contrato" => $datos['fecha_contrato']
+				);
+				if ($datos['tipo_contrato'] != "") {
+					$crearContrato = ModeloFormularios::mdlCrearContrato($datosContrato);
+				}
+			}
+			if ($datos['cuenta_infonavit'] == true) {
+				$datosCredito = array(
+					"Empleados_idEmpleados" => $id_empleado,
+					"tipo_credito" => $datos['tipo_credito'],
+					"numero_credito" => $datos['numero_credito']
+				);
+				if ($datos['tipo_credito'] != "") {
+					$crearContrato = ModeloFormularios::mdlCrearCredito($datosCredito);
+				}
+			}
 			$horarioEmpleado = ModeloFormularios::mdlregistrarEmpleadosHorario('empleados_has_horarios',$id_empleado, $datos['horario']);
 			
 			if ($datos['postulante'] != 0) {
@@ -106,6 +126,68 @@ class ModeloFormularios{
 
 		$stmt->closeCursor();
 		$stmt = null;
+	}
+
+	static public function mdlCrearContrato($datos){
+		$sql = "INSERT INTO contratos(Empleados_idEmpleados, tipo_contrato, fecha_contrato) VALUES (:Empleados_idEmpleados, :tipo_contrato, :fecha_contrato)";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->bindParam(':Empleados_idEmpleados', $datos['Empleados_idEmpleados'], PDO::PARAM_INT);
+		$stmt->bindParam(':tipo_contrato', $datos['tipo_contrato'], PDO::PARAM_STR);
+		$stmt->bindParam(':fecha_contrato', $datos['fecha_contrato'], PDO::PARAM_STR);
+		if($stmt->execute()){
+			return "ok";
+		}
+		else{
+			print_r(Conexion::conectar()->errorInfo());
+		}
+
+		$stmt->close();
+		$stmt = null;
+
+	}
+
+	static public function mdlCrearCredito($datos){
+		$sql = "INSERT INTO creditos(Empleados_idEmpleados, tipo_credito, numero_credito) VALUES (:Empleados_idEmpleados, :tipo_credito, :numero_credito)";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->bindParam(':Empleados_idEmpleados', $datos['Empleados_idEmpleados'], PDO::PARAM_INT);
+		$stmt->bindParam(':tipo_credito', $datos['tipo_credito'], PDO::PARAM_STR);
+		$stmt->bindParam(':numero_credito', $datos['numero_credito'], PDO::PARAM_STR);
+		if($stmt->execute()){
+			return "ok";
+		}
+		else{
+			print_r(Conexion::conectar()->errorInfo());
+		}
+
+		$stmt->close();
+		$stmt = null;
+
+	}
+
+	static public function mdlVerCredito($idEmpleados){
+		$sql = "SELECT * FROM creditos WHERE Empleados_idEmpleados = :Empleados_idEmpleados";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->bindParam(':Empleados_idEmpleados', $idEmpleados, PDO::PARAM_INT);
+		$stmt->execute();
+		return $stmt -> fetch();
+		$stmt->close();
+		$stmt = null;
+
+	}
+
+	static public function mdlVerContrato($idEmpleados){
+		$sql = "SELECT * FROM contratos WHERE Empleados_idEmpleados = :Empleados_idEmpleados";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->bindParam(':Empleados_idEmpleados', $idEmpleados, PDO::PARAM_INT);
+		$stmt->execute();
+		return $stmt -> fetch();
+		$stmt->close();
+		$stmt = null;
+
 	}
 
 	/*---------- Función hecha para registrar a los numeros de emergencia---------- */
