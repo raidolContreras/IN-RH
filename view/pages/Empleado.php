@@ -318,7 +318,7 @@ $causaBaja = array(
 								<option value="Contrato por Obra o Tiempo Determinado">Contrato por Obra o Tiempo Determinado</option>
 								<option value="Contrato por Tiempo Indeterminado">Contrato por Tiempo Indeterminado</option>
 								<option value="Contrato en Practicas">Contrato en Practicas</option>
-								<option value="Contrato para la Formación y el aprendizaje">Contrato para la Capacitación</option>
+								<option value="Contrato para la Capacitación">Contrato para la Capacitación</option>
 							</select>
 						</div>
 						<div class="form-group col-md-6">
