@@ -48,9 +48,11 @@ class ModeloFormularios{
 				$datosCredito = array(
 					"Empleados_idEmpleados" => $id_empleado,
 					"tipo_credito" => $datos['tipo_credito'],
-					"numero_credito" => $datos['numero_credito']
+					"numero_credito" => $datos['numero_credito'],
+					"valor_descuento" => $datos['valor_descuento'],
+					"inicio_credito" => $datos['inicio_credito']
 				);
-				if ($datos['tipo_credito'] != "") {
+				if ($datos['tipo_credito'] != "" && $datos['fecha_contrato'] != "" && $datos['valor_descuento'] != "" && $datos['inicio_credito'] != "") {
 					$crearContrato = ModeloFormularios::mdlCrearCredito($datosCredito);
 				}
 			}
@@ -148,12 +150,14 @@ class ModeloFormularios{
 	}
 
 	static public function mdlCrearCredito($datos){
-		$sql = "INSERT INTO creditos(Empleados_idEmpleados, tipo_credito, numero_credito) VALUES (:Empleados_idEmpleados, :tipo_credito, :numero_credito)";
+		$sql = "INSERT INTO creditos(Empleados_idEmpleados, tipo_credito, numero_credito, valor_descuento, inicio_credito) VALUES (:Empleados_idEmpleados, :tipo_credito, :numero_credito, :valor_descuento, :inicio_credito)";
 
 		$stmt = Conexion::conectar()->prepare($sql);
 		$stmt->bindParam(':Empleados_idEmpleados', $datos['Empleados_idEmpleados'], PDO::PARAM_INT);
 		$stmt->bindParam(':tipo_credito', $datos['tipo_credito'], PDO::PARAM_STR);
 		$stmt->bindParam(':numero_credito', $datos['numero_credito'], PDO::PARAM_STR);
+		$stmt->bindParam(':valor_descuento', $datos['valor_descuento'], PDO::PARAM_STR);
+		$stmt->bindParam(':inicio_credito', $datos['inicio_credito'], PDO::PARAM_STR);
 		if($stmt->execute()){
 			return "ok";
 		}

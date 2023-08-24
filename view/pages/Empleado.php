@@ -118,6 +118,10 @@ $causaBaja = array(
 							<li><?php echo $credito[2] ?></li>
 							<li class="header-li">Numero de crédito</li>
 							<li><?php echo $credito[3] ?></li>
+							<li class="header-li">Valor de descuento</li>
+							<li><?php echo $credito[4] ?></li>
+							<li class="header-li">Fecha de inicio de credito</li>
+							<li><?php echo $credito[5] ?></li>
 						</ul>
 				<?php else: ?>
 						<div class="container pb-2">
@@ -361,6 +365,14 @@ $causaBaja = array(
 						<div class="form-group col-md-6">
 							<label for="numero_credito" class="col-form-label text-center font-weight-bold">Numero de crédito</label>
 							<input type="text" class="form-control" id="numero_credito" name="numero_credito">
+						</div>
+						<div class="form-group col-md-6">
+							<label for="valor_descuento" class="col-form-label text-center font-weight-bold">Valor de descuento</label>
+							<input type="number" class="form-control" id="valor_descuento" name="valor_descuento" step="0.01" min="0">
+						</div>
+						<div class="form-group col-md-6">
+							<label for="inicio_credito" class="col-form-label text-center font-weight-bold">Fecha de inicio del crédito</label>
+							<input type="date" class="form-control" id="inicio_credito" name="inicio_credito">
 						</div>
 					</div>
 							<input type="hidden" name="empleadoCredito" value="<?php echo $_GET['perfil'] ?>">

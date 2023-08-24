@@ -70,7 +70,9 @@ class ControladorEmpleados{
 				'fecha_contrato' => $_POST['fecha_contrato'],
 				'cuenta_infonavit' => $cuenta_infonavit,
 				'tipo_credito' => $_POST['tipo_credito'],
-				'numero_credito' => $_POST['numero_credito']);
+				'numero_credito' => $_POST['numero_credito'],
+				'valor_descuento' => $_POST['valor_descuento'],
+				'inicio_credito' => $_POST['inicio_credito']);
 			$Registro = ModeloFormularios::mdlRegistrarEmpleados('empleados','emergencia', $datos);
 			if ($Registro == 'ok') {
 				return 'ok';

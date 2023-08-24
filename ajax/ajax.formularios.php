@@ -1008,12 +1008,16 @@ class FormulariosAjax{
 		$idEmpleados = $this -> idEmpleados;
 		$tipo_credito = $this -> tipo_credito;
 		$numero_credito = $this -> numero_credito;
+		$valor_descuento = $this -> valor_descuento;
+		$inicio_credito = $this -> inicio_credito;
 		$datosCredito = array(
 			"Empleados_idEmpleados" => $idEmpleados,
 			"tipo_credito" => $tipo_credito,
-			"numero_credito" => $numero_credito
+			"numero_credito" => $numero_credito,
+			"valor_descuento" => $valor_descuento,
+			"inicio_credito" => $inicio_credito
 		);
-		if ($tipo_credito != "" && $numero_credito != "") {
+		if ($tipo_credito != "" && $numero_credito != "" && $valor_descuento != "" && $inicio_credito != "") {
 			$crearCredito = ModeloFormularios::mdlCrearCredito($datosCredito);
 			echo "ok";
 		}else{
@@ -2010,10 +2014,14 @@ if (isset($_POST['tipo_credito'])) {
 	$idEmpleados = $_POST['empleadoCredito'];
 	$tipo_credito = $_POST['tipo_credito'];
 	$numero_credito = $_POST['numero_credito'];
+	$valor_descuento = $_POST['valor_descuento'];
+	$inicio_credito = $_POST['inicio_credito'];
 
 	$crearCreditorato = new FormulariosAjax();
 	$crearCreditorato -> idEmpleados = $idEmpleados;
 	$crearCreditorato -> tipo_credito = $tipo_credito;
 	$crearCreditorato -> numero_credito = $numero_credito;
+	$crearCreditorato -> valor_descuento = $valor_descuento;
+	$crearCreditorato -> inicio_credito = $inicio_credito;
 	$crearCreditorato -> crearCreditoAjax();
 }

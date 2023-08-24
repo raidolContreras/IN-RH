@@ -263,6 +263,14 @@ $ciudadesArray = json_decode($ciudadesJson, true);
 											</select>
 										</div>
 										<div class="form-group col-md-4">
+											<label for="valor_descuento" class="col-form-label text-center font-weight-bold">Valor de descuento</label>
+											<input type="number" class="form-control" id="valor_descuento" name="valor_descuento" step="0.01" min="0" disabled>
+										</div>
+										<div class="form-group col-md-4">
+											<label for="inicio_credito" class="col-form-label text-center font-weight-bold">Fecha de inicio del crédito</label>
+											<input type="date" class="form-control" id="inicio_credito" name="inicio_credito" disabled>
+										</div>
+										<div class="form-group col-md-4">
 											<label for="numero_credito" class="col-form-label text-center font-weight-bold">Numero de crédito</label>
 											<input type="text" class="form-control" id="numero_credito" name="numero_credito" disabled>
 										</div>
@@ -562,5 +570,7 @@ document.getElementById('contrato').addEventListener('click', function () {
 document.getElementById('cuenta_infonavit').addEventListener('click', function () {
     toggleInputFields('cuenta_infonavit', 'tipo_credito');
     toggleInputFields('cuenta_infonavit', 'numero_credito');
+    toggleInputFields('cuenta_infonavit', 'valor_descuento');
+    toggleInputFields('cuenta_infonavit', 'inicio_credito');
 });
 </script>
