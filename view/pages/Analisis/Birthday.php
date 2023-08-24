@@ -120,7 +120,12 @@ function actualizarGrafico(cumple) {
             }]
         },
         options: {
-            plugins: {
+			responsive: true,
+			maintainAspectRatio: false,
+			plugins: {
+				legend: {
+					display: false
+				},
                 title: {
                     display: true,
                     text: 'Registro de Cumpleaños',
