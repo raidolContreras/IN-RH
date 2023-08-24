@@ -68,6 +68,7 @@ class ControladorEmpleados{
 				'contrato' => $_POST['contrato'],
 				'tipo_contrato' => $_POST['tipo_contrato'],
 				'fecha_contrato' => $_POST['fecha_contrato'],
+				'fin_contrato' => $_POST['fin_contrato'],
 				'cuenta_infonavit' => $cuenta_infonavit,
 				'tipo_credito' => $_POST['tipo_credito'],
 				'numero_credito' => $_POST['numero_credito'],

@@ -239,8 +239,12 @@ $ciudadesArray = json_decode($ciudadesJson, true);
 											</select>
 										</div>
 										<div class="form-group col-md-4">
-											<label for="fecha_contrato" class="col-form-label text-center font-weight-bold">fecha de inicio del contrato</label>
+											<label for="fecha_contrato" class="col-form-label text-center font-weight-bold">Fecha de inicio del contrato</label>
 											<input type="date" class="form-control" id="fecha_contrato" name="fecha_contrato" disabled>
+										</div>
+										<div class="form-group col-md-4">
+											<label for="fin_contrato" class="col-form-label text-center font-weight-bold">Fin del contrato</label>
+											<input type="date" class="form-control" id="fin_contrato" name="fin_contrato" disabled>
 										</div>
 									</div>
 									<hr>
@@ -550,27 +554,50 @@ $ciudadesArray = json_decode($ciudadesJson, true);
 	});
 
 function toggleInputFields(checkboxId, inputId) {
-    var checkbox = document.getElementById(checkboxId);
-    var input = document.getElementById(inputId);
+	var checkbox = document.getElementById(checkboxId);
+	var input = document.getElementById(inputId);
 
-    if (checkbox.checked) {
-        input.disabled = false;
-    } else {
-        input.disabled = true;
-        input.value = ''; // Limpia el valor del campo cuando se deshabilita
-    }
+	if (checkbox.checked) {
+		input.disabled = false;
+	} else {
+		input.disabled = true;
+		input.value = ''; // Limpia el valor del campo cuando se deshabilita
+
+		if (inputId === 'tipo_contrato') {
+			$('#fin_contrato').prop('disabled', true);
+			$('#fin_contrato').val('');
+		}
+	}
 }
 
 // Asigna la función a los eventos 'click' de los checkboxes
 document.getElementById('contrato').addEventListener('click', function () {
-    toggleInputFields('contrato', 'tipo_contrato');
-    toggleInputFields('contrato', 'fecha_contrato');
+	toggleInputFields('contrato', 'tipo_contrato');
+	toggleInputFields('contrato', 'fecha_contrato');
+});
+
+$(document).ready(function() {
+	$('#tipo_contrato').change(function() {
+		var selectedOption = $(this).val();
+		if (selectedOption !== "Contrato por Tiempo Indeterminado") {
+			$('#fin_contrato').prop('disabled', false);
+		} else {
+			$('#fin_contrato').prop('disabled', true);
+			$('#fin_contrato').val(''); // Establecer el valor en una cadena vacía
+		}
+	});
+
+	// Verificar el valor inicial al cargar la página
+	if ($('#tipo_contrato').val() === '') {
+		$('#fin_contrato').prop('disabled', true);
+	}
 });
 
 document.getElementById('cuenta_infonavit').addEventListener('click', function () {
-    toggleInputFields('cuenta_infonavit', 'tipo_credito');
-    toggleInputFields('cuenta_infonavit', 'numero_credito');
-    toggleInputFields('cuenta_infonavit', 'valor_descuento');
-    toggleInputFields('cuenta_infonavit', 'inicio_credito');
+	toggleInputFields('cuenta_infonavit', 'tipo_credito');
+	toggleInputFields('cuenta_infonavit', 'numero_credito');
+	toggleInputFields('cuenta_infonavit', 'valor_descuento');
+	toggleInputFields('cuenta_infonavit', 'inicio_credito');
 });
 </script>
+

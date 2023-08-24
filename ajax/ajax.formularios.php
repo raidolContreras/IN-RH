@@ -991,10 +991,12 @@ class FormulariosAjax{
 		$idEmpleados = $this -> idEmpleados;
 		$tipo_contrato = $this -> tipo_contrato;
 		$fecha_contrato = $this -> fecha_contrato;
+		$fin_contrato = $this -> fin_contrato;
 		$datosContrato = array(
 			"Empleados_idEmpleados" => $idEmpleados,
 			"tipo_contrato" => $tipo_contrato,
-			"fecha_contrato" => $fecha_contrato
+			"fecha_contrato" => $fecha_contrato,
+			"fin_contrato" => $fin_contrato
 		);
 		if ($tipo_contrato != "" && $fecha_contrato != "") {
 			$crearContrato = ModeloFormularios::mdlCrearContrato($datosContrato);
@@ -2002,11 +2004,17 @@ if (isset($_POST['tipo_contrato'])) {
 	$idEmpleados = $_POST['empleadoContrato'];
 	$tipo_contrato = $_POST['tipo_contrato'];
 	$fecha_contrato = $_POST['fecha_contrato'];
+	if (!isset($_POST['fin_contrato'])) {
+		$fin_contrato = null;
+	}else{
+		$fin_contrato = $_POST['fin_contrato'];
+	}
 
 	$crearContrato = new FormulariosAjax();
 	$crearContrato -> idEmpleados = $idEmpleados;
 	$crearContrato -> tipo_contrato = $tipo_contrato;
 	$crearContrato -> fecha_contrato = $fecha_contrato;
+	$crearContrato -> fin_contrato = $fin_contrato;
 	$crearContrato -> crearContratoAjax();
 }
 

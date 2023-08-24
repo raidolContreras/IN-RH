@@ -99,6 +99,10 @@ $causaBaja = array(
 							<li><?php echo $contrato[2] ?></li>
 							<li class="header-li">Fecha de inicio del contrato</li>
 							<li><?php echo $contrato[3] ?></li>
+							<?php if ($contrato[2] != 'Contrato por Tiempo Indeterminado'): ?>
+							<li class="header-li">Fecha de fin del contrato</li>
+							<li><?php echo $contrato['fin_contrato'] ?></li>
+							<?php endif ?>
 						</ul>
 				<?php else: ?>
 						<div class="container pb-2">
@@ -329,6 +333,10 @@ $causaBaja = array(
 							<label for="fecha_contrato" class="col-form-label text-center font-weight-bold">fecha de inicio del contrato</label>
 							<input type="date" class="form-control" id="fecha_contrato" name="fecha_contrato">
 						</div>
+						<div class="form-group col-md-6">
+							<label for="fin_contrato" class="col-form-label text-center font-weight-bold">Fin del contrato</label>
+							<input type="date" class="form-control" id="fin_contrato" name="fin_contrato" disabled>
+						</div>
 					</div>
 							<input type="hidden" name="empleadoContrato" value="<?php echo $_GET['perfil'] ?>">
         </form>
@@ -473,4 +481,22 @@ function deleteAlert() {
 		});
 	}, 1500);
 }
+
+$(document).ready(function() {
+    $('#tipo_contrato').change(function() {
+        var selectedOption = $(this).val();
+        if (selectedOption !== "Contrato por Tiempo Indeterminado") {
+            $('#fin_contrato').prop('disabled', false);
+        } else {
+            $('#fin_contrato').prop('disabled', true);
+            $('#fin_contrato').val(''); // Establecer el valor en una cadena vacía
+        }
+    });
+
+    // Verificar el valor inicial al cargar la página
+    if ($('#tipo_contrato').val() === '') {
+        $('#fin_contrato').prop('disabled', true);
+    }
+});
+
 </script>

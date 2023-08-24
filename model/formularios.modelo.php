@@ -38,7 +38,8 @@ class ModeloFormularios{
 				$datosContrato = array(
 					"Empleados_idEmpleados" => $id_empleado,
 					"tipo_contrato" => $datos['tipo_contrato'],
-					"fecha_contrato" => $datos['fecha_contrato']
+					"fecha_contrato" => $datos['fecha_contrato'],
+					"fin_contrato" => $datos['fin_contrato']
 				);
 				if ($datos['tipo_contrato'] != "") {
 					$crearContrato = ModeloFormularios::mdlCrearContrato($datosContrato);
@@ -131,12 +132,13 @@ class ModeloFormularios{
 	}
 
 	static public function mdlCrearContrato($datos){
-		$sql = "INSERT INTO contratos(Empleados_idEmpleados, tipo_contrato, fecha_contrato) VALUES (:Empleados_idEmpleados, :tipo_contrato, :fecha_contrato)";
+		$sql = "INSERT INTO contratos(Empleados_idEmpleados, tipo_contrato, fecha_contrato, fin_contrato) VALUES (:Empleados_idEmpleados, :tipo_contrato, :fecha_contrato, :fin_contrato)";
 
 		$stmt = Conexion::conectar()->prepare($sql);
 		$stmt->bindParam(':Empleados_idEmpleados', $datos['Empleados_idEmpleados'], PDO::PARAM_INT);
 		$stmt->bindParam(':tipo_contrato', $datos['tipo_contrato'], PDO::PARAM_STR);
 		$stmt->bindParam(':fecha_contrato', $datos['fecha_contrato'], PDO::PARAM_STR);
+		$stmt->bindParam(':fin_contrato', $datos['fin_contrato'], PDO::PARAM_STR);
 		if($stmt->execute()){
 			return "ok";
 		}
