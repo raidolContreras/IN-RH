@@ -270,15 +270,19 @@ class ModeloAnalisis{
 
 	}
 
-	static public function birthday(){
+	static public function birthday($idEmpresas){
 
 		$sql = "SELECT
 					CONCAT(e.lastname, ' ', e.name) AS nombre,
 					DATE_FORMAT(e.fNac, '%d/%m/%Y') AS Fecha_de_Cumpleaños,
 					e.fNac
 				FROM empleados e
-				WHERE e.status = 1  -- Para incluir solo empleados activos
+				JOIN puesto p ON p.Empleados_idEmpleados = e.idEmpleados
+				JOIN departamentos d ON p.Departamentos_idDepartamentos = d.idDepartamentos
+				JOIN empresas em ON d.Empresas_idEmpresas = em.idEmpresas
+				WHERE e.status = 1 AND em.idEmpresas = $idEmpresas
 				ORDER BY DATE_FORMAT(e.fNac, '%m-%d');";
+
 		$stmt = Conexion::conectar()->prepare($sql);
 		$stmt->execute();
 		return $stmt->fetchAll();
@@ -288,13 +292,16 @@ class ModeloAnalisis{
 
 	}
 
-	static public function birthdayContador(){
+	static public function birthdayContador($idEmpresas){
 
 		$sql = "SELECT
 					DATE_FORMAT(e.fNac, '%m') AS Mes,
 					COUNT(*) AS Cantidad_de_Empleados
 				FROM empleados e
-				WHERE e.status = 1  -- Para incluir solo empleados activos
+				JOIN puesto p ON p.Empleados_idEmpleados = e.idEmpleados
+				JOIN departamentos d ON p.Departamentos_idDepartamentos = d.idDepartamentos
+				JOIN empresas em ON d.Empresas_idEmpresas = em.idEmpresas
+				WHERE e.status = 1 AND em.idEmpresas = $idEmpresas
 				GROUP BY DATE_FORMAT(e.fNac, '%m')
 				ORDER BY MONTH(e.fNac);";
 		$stmt = Conexion::conectar()->prepare($sql);
@@ -402,6 +409,46 @@ class ModeloAnalisis{
 				WHERE e.status = 1 AND em.idEmpresas = $idEmpresas";
 
 
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->execute();
+		return $stmt->fetchAll();
+
+		$stmt->close();
+		$stmt = null;
+
+	}
+
+	static public function contrato(){
+
+		$sql = "SELECT
+					CONCAT(e.lastname, ' ', e.name) AS nombre,
+				    C.idContrato,
+				    C.tipo_contrato,
+				    C.fecha_contrato,
+				    C.fin_contrato
+				FROM
+				    empleados e
+				INNER JOIN
+				    contratos C ON e.idEmpleados = C.Empleados_idEmpleados;
+				";
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->execute();
+		return $stmt->fetchAll();
+
+		$stmt->close();
+		$stmt = null;
+
+	}
+
+	static public function contratoContador(){
+
+		$sql = "SELECT 'Tiempo_Determinado' AS 'Tipo_Contrato', COUNT(*) AS 'Total' FROM contratos WHERE tipo_contrato = 'Contrato por Obra o Tiempo Determinado'
+				UNION
+				SELECT 'Tiempo_Indeterminado', COUNT(*) FROM contratos WHERE tipo_contrato = 'Contrato por Tiempo Indeterminado'
+				UNION
+				SELECT 'Practicas', COUNT(*) FROM contratos WHERE tipo_contrato = 'Contrato en Practicas'
+				UNION
+				SELECT 'Capacitacion', COUNT(*) FROM contratos WHERE tipo_contrato = 'Contrato para la Capacitación';";
 		$stmt = Conexion::conectar()->prepare($sql);
 		$stmt->execute();
 		return $stmt->fetchAll();

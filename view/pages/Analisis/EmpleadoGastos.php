@@ -129,22 +129,22 @@
                             weight: 'bold',
                             family: 'Arial, sans-serif'
                         }
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: {
+                            display: false
+                        }
                     },
-                    scales: {
-                        x: {
-                            grid: {
-                                display: false
-                            }
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: '#e0e0e0'
                         },
-                        y: {
-                            beginAtZero: true,
-                            grid: {
-                                color: '#e0e0e0'
-                            },
-                            ticks: {
-                                stepSize: 1,
-                                precision: 0
-                            }
+                        ticks: {
+                            stepSize: 1,
+                            precision: 0
                         }
                     }
                 }

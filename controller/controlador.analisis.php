@@ -42,18 +42,28 @@ Class ControladorAnalisis{
 		return $respuesta;
 	}
 
-	static public function birthday(){
-		$respuesta = ModeloAnalisis::birthday();
+	static public function birthday($idEmpresas){
+		$respuesta = ModeloAnalisis::birthday($idEmpresas);
 		return $respuesta;
 	}
 
-	static public function birthdayContador(){
-		$respuesta = ModeloAnalisis::birthdayContador();
+	static public function birthdayContador($idEmpresas){
+		$respuesta = ModeloAnalisis::birthdayContador($idEmpresas);
 		return $respuesta;
 	}
 
 	static public function documentos($empresa){
 		$respuesta = ModeloAnalisis::documentos($empresa);
+		return $respuesta;
+	}
+
+	static public function contrato(){
+		$respuesta = ModeloAnalisis::contrato();
+		return $respuesta;
+	}
+
+	static public function contratoContador(){
+		$respuesta = ModeloAnalisis::contratoContador();
 		return $respuesta;
 	}
 

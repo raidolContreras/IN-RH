@@ -151,24 +151,24 @@ foreach ($generos as $genero) {
                             weight: 'bold',
                             family: 'Arial, sans-serif'
                         }
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: {
+                            display: false
+                        }
                     },
-	                scales: {
-				        x: {
-				            grid: {
-				                display: false
-				            }
-				        },
-				        y: {
-				            beginAtZero: true,
-				            grid: {
-				                color: '#e0e0e0'
-				            },
-				            ticks: {
-				                stepSize: 1, // Aquí ajustamos el paso a 1 para mostrar solo números enteros
-				                precision: 0 // Aquí establecemos la precisión en 0 para evitar decimales
-				            }
-				        }
-				    }
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: '#e0e0e0'
+                        },
+                        ticks: {
+                            stepSize: 1, // Aquí ajustamos el paso a 1 para mostrar solo números enteros
+                            precision: 0 // Aquí establecemos la precisión en 0 para evitar decimales
+                        }
+                    }
                 }
             }
         });

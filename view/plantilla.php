@@ -120,7 +120,9 @@ session_start();
 					$pagina == 'AltasBajas'||
 					$pagina == 'Birthday'||
 					$pagina == 'Documentos'||
-					$pagina == 'Permisos') {
+					$pagina == 'Permisos'||
+					$pagina == 'Contratos'||
+					$pagina == 'CreditosInfonavit') {
 
 					include "pages/navs/navbar.php";
 					include "pages/navs/sidenav.php";

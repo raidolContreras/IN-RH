@@ -1,9 +1,6 @@
-<div class="container-fluid dashboard-content">
-	<div class="card col-12 p-4 row">
-<?php if (isset($_GET['empresa'])): 
-
-$birthdays = ControladorAnalisis::birthday($_GET['empresa']);
-$birthdayContador = ControladorAnalisis::birthdayContador($_GET['empresa']);
+<?php
+$birthdays = ControladorAnalisis::birthday();
+$birthdayContador = ControladorAnalisis::birthdayContador();
 $meses = array(
 	"01" => "Enero",
 	"02" => "Febrero",
@@ -68,6 +65,8 @@ foreach ($birthdayContador as $birthday) {
 	}
 </style>
 
+<div class="container-fluid dashboard-content">
+	<div class="card col-12 p-4 row">
 		<h3 class="mb-4">Tabla de Datos de Cumpleaños</h3>
 		<div class="col-12">
 			<center>
@@ -98,6 +97,8 @@ foreach ($birthdayContador as $birthday) {
 				</tbody>
 			</table>
 		</div>
+	</div>
+</div>
 
 <script>
 	const ctx = document.getElementById('birthdayChart');
@@ -174,30 +175,3 @@ function actualizarGrafico(cumple) {
 actualizarGrafico(<?php echo json_encode($cumple); ?>);
 
 </script>
-
-<?php else: 
-	$empresas = ControladorFormularios::ctrVerEmpresas(null,null);
-?>
-		<h3>Selecciona una empresa</h3>
-		<div class="table-responsive">
-			<table id="example" class="table table-bordered table-striped vacaciones-table analisis">
-				<thead>
-					<tr>
-						<th>Empresa</th>
-					</tr>
-				</thead>
-				<tbody>
-					<?php foreach ($empresas as $empresa):?>
-						<tr>
-							<td><a class="btn btn-in-consulting" href="Analisis-Birthday&empresa=<?php echo $empresa['idEmpresas'] ?>">
-								<span><?php echo $empresa['nombre_razon_social'] ?></span>
-							</a>
-							</td>
-						</tr>
-					<?php endforeach ?>
-				</tbody>
-			</table>
-		</div>
-<?php endif ?>
-	</div>
-</div>
