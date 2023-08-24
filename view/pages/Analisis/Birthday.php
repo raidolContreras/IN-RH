@@ -124,7 +124,7 @@ function actualizarGrafico(cumple) {
 			maintainAspectRatio: false,
 			plugins: {
 				legend: {
-					display: false
+					display: false,
 				},
                 title: {
                     display: true,
