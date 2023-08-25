@@ -47,7 +47,7 @@
 ?>
 		<h3>Selecciona una empresa</h3>
 		<div class="table-responsive">
-			<table id="example" class="table table-bordered table-striped vacaciones-table analisis">
+			<table class="table table-bordered table-striped vacaciones-table analisis">
 				<thead>
 					<tr>
 						<th>Empresa</th>

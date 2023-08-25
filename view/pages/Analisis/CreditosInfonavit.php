@@ -1,40 +1,34 @@
+<div class="container-fluid dashboard-content">
+	<div class="card col-12 p-4 row">
 <?php
-$birthdays = ControladorAnalisis::birthday();
-$birthdayContador = ControladorAnalisis::birthdayContador();
-$meses = array(
-	"01" => "Enero",
-	"02" => "Febrero",
-	"03" => "Marzo",
-	"04" => "Abril",
-	"05" => "Mayo",
-	"06" => "Junio",
-	"07" => "Julio",
-	"08" => "Agosto",
-	"09" => "Septiembre",
-	"10" => "Octubre",
-	"11" => "Noviembre",
-	"12" => "Diciembre"
-);
-$cumple = array();
-foreach ($birthdayContador as $birthday) {
-	$mes = $meses[$birthday['Mes']];
-	$cantidad = $birthday['Cantidad_de_Empleados'];
+if (isset($_GET['empresa'])): 
+	$creditos = ControladorAnalisis::credito($_GET['empresa']);
+	$contratoCredito = ControladorAnalisis::contratoCredito($_GET['empresa']);
+	$nameCredito = array(
+		"Porcentaje" => "Porcentaje",
+		"Cuota fija" => "Cuota fija",
+		"Factor de descuento" => "Factor de descuento"
+	);
+	$creditosT = array();
+	foreach ($contratoCredito as $credito) {
+		$tipo = $nameCredito[$credito['Tipo_Credito']];
+		$cantidad = $credito['Total'];
 
-	if (!isset($cumple[$mes])) {
-		$cumple[$mes] = $cantidad;
+		if (!isset($creditosT[$tipo])) {
+			$creditosT[$tipo] = $cantidad;
+		}
 	}
-}
 ?>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
-	#birthdayChart {
+	#contratoChart {
 		width: 100%;
 		max-height: 300px;
 	}
 
-	.birthday-card {
+	.contrato-card {
 		background-color: #ffffff;
 		border: 1px solid #e0e0e0;
 		border-radius: 10px;
@@ -43,36 +37,34 @@ foreach ($birthdayContador as $birthday) {
 		box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 	}
 
-	.birthday-table {
+	.contrato-table {
 		margin-top: 20px;
 		width: 100%;
 		border-collapse: collapse;
 	}
 
-	.birthday-table th,
-	.birthday-table td {
+	.contrato-table th,
+	.contrato-table td {
 		padding: 12px;
 		text-align: center;
 	}
 
-	.birthday-table th {
+	.contrato-table th {
 		background-color: #f2f2f2;
 		font-weight: bold;
 	}
 
-	.birthday-table tr:nth-child(even) {
+	.contrato-table tr:nth-child(even) {
 		background-color: #f9f9f9;
 	}
 </style>
 
-<div class="container-fluid dashboard-content">
-	<div class="card col-12 p-4 row">
-		<h3 class="mb-4">Tabla de Datos de Cumpleaños</h3>
+		<h3 class="mb-4">Tabla de Datos de Créditos</h3>
 		<div class="col-12">
 			<center>
-				<div class="card birthday-card">
+				<div class="card contrato-card">
 					<div class="card-body">
-						<canvas id="birthdayChart"></canvas>
+						<canvas id="contratoChart"></canvas>
 					</div>
 				</div>
 			</center>
@@ -82,16 +74,20 @@ foreach ($birthdayContador as $birthday) {
 				<thead>
 					<tr>
 						<th>Empleado</th>
-						<th>Fecha de Cumpleaños</th>
-						<th>Edad</th>
+						<th>Tipo de crédito</th>
+						<th>Numero de crédito</th>
+						<th>Valor del descuento</th>
+						<th>Fecha de inicio del crédito</th>
 					</tr>
 				</thead>
 				<tbody>
-					<?php foreach ($birthdays as $birthday): ?>
+					<?php foreach ($creditos as $credito): ?>
 						<tr>
-							<td><?php echo $birthday['nombre'] ?></td>
-							<td><?php echo $birthday['Fecha_de_Cumpleaños'] ?></td>
-							<td><?php echo ControladorFormularios::calcularEdad($birthday['fNac']) ?> años</td>
+							<td><?php echo $credito['nombre'] ?></td>
+							<td><?php echo $credito['tipo_credito'] ?></td>
+							<td><?php echo $credito['numero_credito'] ?></td>
+							<td><?php echo $credito['valor_descuento'] ?></td>
+							<td><?php echo $credito['inicio_credito'] ?></td>
 						</tr>
 					<?php endforeach ?>
 				</tbody>
@@ -101,77 +97,108 @@ foreach ($birthdayContador as $birthday) {
 </div>
 
 <script>
-	const ctx = document.getElementById('birthdayChart');
+	const ctx = document.getElementById('contratoChart');
 
-function actualizarGrafico(cumple) {
-    const meses = Object.keys(cumple); // Obtener los nombres de los meses
-    const cantidades = Object.values(cumple); // Obtener las cantidades
+function actualizarGrafico(creditos) {
+	const credito = Object.keys(creditos); // Obtener los nombres de los contrato
+	const cantidades = Object.values(creditos); // Obtener las cantidades
 
-    new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: meses, // Usar los nombres de los meses como etiquetas en el datalabel
-            datasets: [{
-                label: 'Cumpleaños',
-                data: cantidades, // Usar las cantidades
-                backgroundColor: 'rgba(63, 103, 126, 0.7)',
-                hoverBackgroundColor: 'rgba(63, 103, 126, 1)',
-                borderRadius: 5,
-                borderWidth: 1
-            }]
-        },
-        options: {
-            plugins: {
-                title: {
-                    display: true,
-                    text: 'Registro de Cumpleaños',
-                    padding: {
-                        top: 20,
-                        bottom: 20
-                    },
-                    font: {
-                        size: 24,
-                        weight: 'bold',
-                        family: 'Arial, sans-serif'
-                    },
-                    color: 'rgba(0, 0, 0, 0.8)'
-                },
-                tooltips: {
-                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                    bodyFont: {
-                        size: 14,
-                        weight: 'bold',
-                        family: 'Arial, sans-serif'
-                    },
-                    titleFont: {
-                        size: 16,
-                        weight: 'bold',
-                        family: 'Arial, sans-serif'
-                    }
-                }
-            },
-            scales: {
-                x: {
-                    grid: {
-                        display: false
-                    }
-                },
-                y: {
-                    beginAtZero: true,
-                    grid: {
-                        color: '#e0e0e0'
-                    },
-                    ticks: {
-                        stepSize: 1,
-                        precision: 0,
-                    }
-                }
-            }
-        }
-    });
+	new Chart(ctx, {
+		type: 'bar',
+		data: {
+			labels: credito, // Usar los nombres de los meses como etiquetas en el datalabel
+			datasets: [{
+				label: 'Total de Créditos',
+				data: cantidades, // Usar las cantidades
+				backgroundColor: 'rgba(63, 103, 126, 0.7)',
+				hoverBackgroundColor: 'rgba(63, 103, 126, 1)',
+				borderRadius: 5,
+				borderWidth: 1
+			}]
+		},
+		options: {
+			responsive: true,
+			maintainAspectRatio: false,
+			plugins: {
+				legend: {
+					display: false
+				},
+				title: {
+					display: true,
+					text: 'Registro de Créditos',
+					padding: {
+						top: 20,
+						bottom: 20
+					},
+					font: {
+						size: 24,
+						weight: 'bold',
+						family: 'Arial, sans-serif'
+					},
+					color: 'rgba(0, 0, 0, 0.8)'
+				},
+				tooltips: {
+					backgroundColor: 'rgba(0, 0, 0, 0.8)',
+					bodyFont: {
+						size: 14,
+						weight: 'bold',
+						family: 'Arial, sans-serif'
+					},
+					titleFont: {
+						size: 16,
+						weight: 'bold',
+						family: 'Arial, sans-serif'
+					}
+				}
+			},
+			scales: {
+				x: {
+					grid: {
+						display: false
+					}
+				},
+				y: {
+					beginAtZero: true,
+					grid: {
+						color: '#e0e0e0'
+					},
+					ticks: {
+						stepSize: 1, // Aquí ajustamos el paso a 1 para mostrar solo números enteros
+						precision: 0 // Aquí establecemos la precisión en 0 para evitar decimales
+					}
+				}
+			}
+		}
+	});
 }
 
 // Llamada AJAX para obtener datos y actualizar el gráfico
-actualizarGrafico(<?php echo json_encode($cumple); ?>);
+actualizarGrafico(<?php echo json_encode($creditosT); ?>);
 
 </script>
+<?php else: 
+	$empresas = ControladorFormularios::ctrVerEmpresas(null,null);
+?>
+		<h3>Selecciona una empresa</h3>
+		<div class="table-responsive">
+			<table class="table table-bordered table-striped vacaciones-table analisis">
+				<thead>
+					<tr>
+						<th>Empresa</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php foreach ($empresas as $empresa):?>
+						<tr>
+							<td><a class="btn btn-in-consulting" href="Analisis-CreditosInfonavit&empresa=<?php echo $empresa['idEmpresas'] ?>">
+								<span><?php echo $empresa['nombre_razon_social'] ?></span>
+							</a>
+							</td>
+						</tr>
+					<?php endforeach ?>
+				</tbody>
+			</table>
+		</div>
+<?php endif ?>
+	</div>
+</div>

@@ -1,21 +1,24 @@
+<div class="container-fluid dashboard-content">
+	<div class="card col-12 p-4 row">
 <?php
-$contratos = ControladorAnalisis::contrato();
-$contratoContador = ControladorAnalisis::contratoContador();
-$nameContrato = array(
-	"Tiempo_Determinado" => "Tiempo Determinado",
-	"Tiempo_Indeterminado" => "Tiempo Indeterminado",
-	"Practicas" => "Practicas",
-	"Capacitacion" => "Capacitación"
-);
-$contratosT = array();
-foreach ($contratoContador as $contador) {
-	$mes = $nameContrato[$contador['Tipo_Contrato']];
-	$cantidad = $contador['Total'];
+if (isset($_GET['empresa'])): 
+	$contratos = ControladorAnalisis::contrato($_GET['empresa']);
+	$contratoContador = ControladorAnalisis::contratoContador($_GET['empresa']);
+	$nameContrato = array(
+		"Tiempo_Determinado" => "Tiempo Determinado",
+		"Tiempo_Indeterminado" => "Tiempo Indeterminado",
+		"Practicas" => "Practicas",
+		"Capacitacion" => "Capacitación"
+	);
+	$contratosT = array();
+	foreach ($contratoContador as $contador) {
+		$mes = $nameContrato[$contador['Tipo_Contrato']];
+		$cantidad = $contador['Total'];
 
-	if (!isset($contratosT[$mes])) {
-		$contratosT[$mes] = $cantidad;
+		if (!isset($contratosT[$mes])) {
+			$contratosT[$mes] = $cantidad;
+		}
 	}
-}
 ?>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -57,8 +60,6 @@ foreach ($contratoContador as $contador) {
 	}
 </style>
 
-<div class="container-fluid dashboard-content">
-	<div class="card col-12 p-4 row">
 		<h3 class="mb-4">Tabla de Datos de Contratos</h3>
 		<div class="col-12">
 			<center>
@@ -174,3 +175,29 @@ function actualizarGrafico(contratos) {
 actualizarGrafico(<?php echo json_encode($contratosT); ?>);
 
 </script>
+<?php else: 
+	$empresas = ControladorFormularios::ctrVerEmpresas(null,null);
+?>
+		<h3>Selecciona una empresa</h3>
+		<div class="table-responsive">
+			<table class="table table-bordered table-striped vacaciones-table analisis">
+				<thead>
+					<tr>
+						<th>Empresa</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php foreach ($empresas as $empresa):?>
+						<tr>
+							<td><a class="btn btn-in-consulting" href="Analisis-Contratos&empresa=<?php echo $empresa['idEmpresas'] ?>">
+								<span><?php echo $empresa['nombre_razon_social'] ?></span>
+							</a>
+							</td>
+						</tr>
+					<?php endforeach ?>
+				</tbody>
+			</table>
+		</div>
+<?php endif ?>
+	</div>
+</div>

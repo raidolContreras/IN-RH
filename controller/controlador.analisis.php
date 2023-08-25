@@ -57,13 +57,23 @@ Class ControladorAnalisis{
 		return $respuesta;
 	}
 
-	static public function contrato(){
-		$respuesta = ModeloAnalisis::contrato();
+	static public function contrato($idEmpresas){
+		$respuesta = ModeloAnalisis::contrato($idEmpresas);
 		return $respuesta;
 	}
 
-	static public function contratoContador(){
-		$respuesta = ModeloAnalisis::contratoContador();
+	static public function contratoContador($idEmpresas){
+		$respuesta = ModeloAnalisis::contratoContador($idEmpresas);
+		return $respuesta;
+	}
+
+	static public function credito($idEmpresas){
+		$respuesta = ModeloAnalisis::credito($idEmpresas);
+		return $respuesta;
+	}
+
+	static public function contratoCredito($idEmpresas){
+		$respuesta = ModeloAnalisis::contratoCredito($idEmpresas);
 		return $respuesta;
 	}
 

@@ -418,7 +418,7 @@ class ModeloAnalisis{
 
 	}
 
-	static public function contrato(){
+	static public function contrato($idEmpresas){
 
 		$sql = "SELECT
 					CONCAT(e.lastname, ' ', e.name) AS nombre,
@@ -429,8 +429,12 @@ class ModeloAnalisis{
 				FROM
 				    empleados e
 				INNER JOIN
-				    contratos C ON e.idEmpleados = C.Empleados_idEmpleados;
-				";
+				    contratos C ON e.idEmpleados = C.Empleados_idEmpleados
+				JOIN puesto p ON p.Empleados_idEmpleados = e.idEmpleados
+				JOIN departamentos d ON p.Departamentos_idDepartamentos = d.idDepartamentos
+				JOIN empresas em ON d.Empresas_idEmpresas = em.idEmpresas
+				WHERE e.status = 1 AND em.idEmpresas = $idEmpresas;";
+
 		$stmt = Conexion::conectar()->prepare($sql);
 		$stmt->execute();
 		return $stmt->fetchAll();
@@ -440,15 +444,91 @@ class ModeloAnalisis{
 
 	}
 
-	static public function contratoContador(){
+	static public function contratoContador($idEmpresas){
 
-		$sql = "SELECT 'Tiempo_Determinado' AS 'Tipo_Contrato', COUNT(*) AS 'Total' FROM contratos WHERE tipo_contrato = 'Contrato por Obra o Tiempo Determinado'
+		$sql = "SELECT 'Tiempo_Determinado' AS 'Tipo_Contrato', COUNT(*) AS 'Total' FROM contratos c
+					JOIN empleados e ON e.idEmpleados = c.Empleados_idEmpleados
+					JOIN puesto p ON p.Empleados_idEmpleados = e.idEmpleados
+					JOIN departamentos d ON p.Departamentos_idDepartamentos = d.idDepartamentos
+					JOIN empresas em ON d.Empresas_idEmpresas = em.idEmpresas
+				WHERE e.status = 1 AND em.idEmpresas = $idEmpresas AND tipo_contrato = 'Contrato por Obra o Tiempo Determinado'
 				UNION
-				SELECT 'Tiempo_Indeterminado', COUNT(*) FROM contratos WHERE tipo_contrato = 'Contrato por Tiempo Indeterminado'
+				SELECT 'Tiempo_Indeterminado', COUNT(*) FROM contratos c
+					JOIN empleados e ON e.idEmpleados = c.Empleados_idEmpleados
+					JOIN puesto p ON p.Empleados_idEmpleados = e.idEmpleados
+					JOIN departamentos d ON p.Departamentos_idDepartamentos = d.idDepartamentos
+					JOIN empresas em ON d.Empresas_idEmpresas = em.idEmpresas
+				WHERE e.status = 1 AND em.idEmpresas = $idEmpresas AND tipo_contrato = 'Contrato por Tiempo Indeterminado'
 				UNION
-				SELECT 'Practicas', COUNT(*) FROM contratos WHERE tipo_contrato = 'Contrato en Practicas'
+				SELECT 'Practicas', COUNT(*) FROM contratos c
+					JOIN empleados e ON e.idEmpleados = c.Empleados_idEmpleados
+					JOIN puesto p ON p.Empleados_idEmpleados = e.idEmpleados
+					JOIN departamentos d ON p.Departamentos_idDepartamentos = d.idDepartamentos
+					JOIN empresas em ON d.Empresas_idEmpresas = em.idEmpresas
+				WHERE e.status = 1 AND em.idEmpresas = $idEmpresas AND tipo_contrato = 'Contrato en Practicas'
 				UNION
-				SELECT 'Capacitacion', COUNT(*) FROM contratos WHERE tipo_contrato = 'Contrato para la Capacitación';";
+				SELECT 'Capacitacion', COUNT(*) FROM contratos c
+					JOIN empleados e ON e.idEmpleados = c.Empleados_idEmpleados
+					JOIN puesto p ON p.Empleados_idEmpleados = e.idEmpleados
+					JOIN departamentos d ON p.Departamentos_idDepartamentos = d.idDepartamentos
+					JOIN empresas em ON d.Empresas_idEmpresas = em.idEmpresas
+				WHERE e.status = 1 AND em.idEmpresas = $idEmpresas AND tipo_contrato = 'Contrato para la Capacitación'";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->execute();
+		return $stmt->fetchAll();
+
+		$stmt->close();
+		$stmt = null;
+
+	}
+
+	static public function credito($idEmpresas){
+
+		$sql = "SELECT
+					CONCAT(e.lastname, ' ', e.name) AS nombre,
+					C.*
+				FROM
+				    empleados e
+				INNER JOIN
+				    creditos C ON e.idEmpleados = C.Empleados_idEmpleados
+				JOIN puesto p ON p.Empleados_idEmpleados = e.idEmpleados
+				JOIN departamentos d ON p.Departamentos_idDepartamentos = d.idDepartamentos
+				JOIN empresas em ON d.Empresas_idEmpresas = em.idEmpresas
+				WHERE e.status = 1 AND em.idEmpresas = $idEmpresas;";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->execute();
+		return $stmt->fetchAll();
+
+		$stmt->close();
+		$stmt = null;
+
+	}
+
+	static public function contratoCredito($idEmpresas){
+
+		$sql = "SELECT 'Porcentaje' AS 'Tipo_Credito', COUNT(*) AS 'Total' FROM creditos c
+					JOIN empleados e ON e.idEmpleados = c.Empleados_idEmpleados
+					JOIN puesto p ON p.Empleados_idEmpleados = e.idEmpleados
+					JOIN departamentos d ON p.Departamentos_idDepartamentos = d.idDepartamentos
+					JOIN empresas em ON d.Empresas_idEmpresas = em.idEmpresas
+				WHERE e.status = 1 AND em.idEmpresas = $idEmpresas AND tipo_credito = 'Porcentaje'
+				UNION
+				SELECT 'Cuota fija', COUNT(*) FROM creditos c
+					JOIN empleados e ON e.idEmpleados = c.Empleados_idEmpleados
+					JOIN puesto p ON p.Empleados_idEmpleados = e.idEmpleados
+					JOIN departamentos d ON p.Departamentos_idDepartamentos = d.idDepartamentos
+					JOIN empresas em ON d.Empresas_idEmpresas = em.idEmpresas
+				WHERE e.status = 1 AND em.idEmpresas = $idEmpresas AND tipo_credito = 'Cuota fija'
+				UNION
+				SELECT 'Factor de descuento', COUNT(*) FROM creditos c
+					JOIN empleados e ON e.idEmpleados = c.Empleados_idEmpleados
+					JOIN puesto p ON p.Empleados_idEmpleados = e.idEmpleados
+					JOIN departamentos d ON p.Departamentos_idDepartamentos = d.idDepartamentos
+					JOIN empresas em ON d.Empresas_idEmpresas = em.idEmpresas
+				WHERE e.status = 1 AND em.idEmpresas = $idEmpresas AND tipo_credito = 'Factor de descuento'";
+
 		$stmt = Conexion::conectar()->prepare($sql);
 		$stmt->execute();
 		return $stmt->fetchAll();
