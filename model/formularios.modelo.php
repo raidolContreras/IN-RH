@@ -1016,26 +1016,25 @@ static public function mdlActualizarNoticia($tabla, $datos)
 		$stmt = null;
 	}
 
-static public function mdlImagenNoticia($id, $name)
-{
-	$pdo = Conexion::conectar();
-	$sql = "UPDATE noticias SET name_foto=:name_foto WHERE idNoticias=:idNoticias";
-	$stmt = $pdo->prepare($sql);
-	$stmt->bindParam(":name_foto", $name, PDO::PARAM_STR);
-	$stmt->bindParam(":idNoticias", $id, PDO::PARAM_INT);
-	if ($stmt->execute()) {
-		return "ok";
-	} else {
-		print_r($stmt->errorInfo());
+	static public function mdlImagenNoticia($id, $name){
+		$pdo = Conexion::conectar();
+		$sql = "UPDATE noticias SET name_foto=:name_foto WHERE idNoticias=:idNoticias";
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(":name_foto", $name, PDO::PARAM_STR);
+		$stmt->bindParam(":idNoticias", $id, PDO::PARAM_INT);
+		if ($stmt->execute()) {
+			return "ok";
+		} else {
+			print_r($stmt->errorInfo());
+		}
+		$stmt->close();
+		$stmt = null;
 	}
-	$stmt->close();
-	$stmt = null;
-}
 
 	static public function mdlRegistrarEmpresas($tabla, $datos){
 		$sql = "INSERT INTO $tabla
-		(registro_patronal, rfc, nombre_razon_social, regimen, actividad_economica, calle, numero, numero_interior, colonia, cp, entidad, poblacion_municipio, telefono, convenio_reembolso, delegacion_imss, subdelegacion, clave_subdelegacion, dia_inicio_afiliacion, mes_inicio_afiliacion, anio_inicio_afiliacion) 
-		VALUES (:registro_patronal,:rfc,:nombre_razon_social,:regimen,:actividad_economica,:calle,:numero,:numero_interior,:colonia,:cp,:entidad,:poblacion_municipio,:telefono,:convenio_reembolso,:delegacion_imss,:subdelegacion,:clave_subdelegacion,:dia_inicio_afiliacion, :mes_inicio_afiliacion,:anio_inicio_afiliacion)";
+				(registro_patronal, rfc, nombre_razon_social, regimen, actividad_economica, calle, numero, numero_interior, colonia, cp, entidad, poblacion_municipio, telefono, convenio_reembolso, delegacion_imss, subdelegacion, clave_subdelegacion, dia_inicio_afiliacion, mes_inicio_afiliacion, anio_inicio_afiliacion) 
+				VALUES (:registro_patronal,:rfc,:nombre_razon_social,:regimen,:actividad_economica,:calle,:numero,:numero_interior,:colonia,:cp,:entidad,:poblacion_municipio,:telefono,:convenio_reembolso,:delegacion_imss,:subdelegacion,:clave_subdelegacion,:dia_inicio_afiliacion, :mes_inicio_afiliacion,:anio_inicio_afiliacion)";
 		$stmt = Conexion::conectar()->prepare($sql);
 
 		$stmt->bindParam(":registro_patronal", $datos['registro_patronal'], PDO::PARAM_STR);
@@ -2744,6 +2743,20 @@ static public function mdlImagenNoticia($id, $name)
 		$sql = "UPDATE gastos SET status = 3 WHERE idGastos = :idGastos";
 		$stmt = $pdo -> prepare($sql);
 		$stmt->bindParam(':idGastos', $idGastos, PDO::PARAM_INT);
+		if ($stmt->execute()) {
+			return 'ok';
+		}else{
+			return "error";
+		}
+		$stmt->close();
+		$stmt = null;
+	}
+
+	static public function mdlDelPermiso($idPermiso){
+		$pdo = Conexion::conectar();
+		$sql = "DELETE FROM permisos WHERE idPermisos = :idPermiso ";
+		$stmt = $pdo -> prepare($sql);
+		$stmt->bindParam(':idPermiso', $idPermiso, PDO::PARAM_INT);
 		if ($stmt->execute()) {
 			return 'ok';
 		}else{

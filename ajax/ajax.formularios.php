@@ -1027,6 +1027,12 @@ class FormulariosAjax{
 		}
 	}
 
+	public function delPermisoAjax(){
+		$idPermisos = $this -> idPermisos;
+		$delPermiso = ModeloFormularios::mdlDelPermiso($idPermisos);
+		echo $delPermiso;
+	}
+
 }
 
 if(isset($_POST["validate"])){
@@ -2032,4 +2038,12 @@ if (isset($_POST['tipo_credito'])) {
 	$crearCreditorato -> valor_descuento = $valor_descuento;
 	$crearCreditorato -> inicio_credito = $inicio_credito;
 	$crearCreditorato -> crearCreditoAjax();
+}
+
+if (isset($_POST['delPermiso'])) {
+	$idPermisos = $_POST['delPermiso'];
+
+	$delPermiso = new FormulariosAjax();
+	$delPermiso -> idPermisos = $idPermisos;
+	$delPermiso -> delPermisoAjax();
 }
