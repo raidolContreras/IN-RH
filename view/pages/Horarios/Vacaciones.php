@@ -263,260 +263,11 @@ $dias_disponibles = $calculo_vacaciones - $dias_consumidos - $dias_pendientes;
 	</div>
 </div>
 
-<!-- The Modal -->
-<div class="modal fade rounded" id="permiso">
-	<div class="modal-dialog modal-dialog-centered modal-lg ">
-		<div class="modal-content">
-
-		<!-- Modal Header -->
-			<div class="modal-header" style="flex-direction: column; align-items: center;">
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				
-				<p class="titulo-tablero titulo" id="titulo">
-					<span class="badge-dot"></span>
-				</p>
-				<p class="subtitulo-tablero ">Solicitar ausencia</p>
-			</div>
-
-			<!-- Modal body -->
-			<div class="modal-body">
-				<form class="form-container" id="solicitud-permiso-form">
-
-					<div class="row">
-						<div class="col">
-							<div class="form-group">
-								<label for="fechaPermiso">Desde:</label>
-								<input class="form-control" type="date" id="fechaPermiso" name="fechaPermiso" min="<?php echo date('Y-m-d') ?>">
-							</div>
-						</div>
-						<div class="col">
-							<div class="form-group">
-								<label for="fechaFin">Hasta:</label>
-								<input class="form-control" type="date" id="fechaFin" name="fechaFin" min="<?php echo date('Y-m-d') ?>" disabled>
-							</div>
-						</div>
-						<div class="col-12" id="description">
-							<div class="form-group">
-								<label for="descripcion">Descripción:</label>
-								<textarea class="form-control" name="descripcion" id="descripcion" rows="5"></textarea>
-							</div>
-						</div>
-					</div>
-					<input type="hidden" id="id" name="generarPeticion">
-				</form>
-			</div>
-
-			<!-- Modal footer -->
-			<div class="modal-footer">
-				<button id="solicitud-permiso-btn" type="button" class="btn btn-primary rounded" data-dismiss="modal">Solicitar</button>
-				<button type="button" class="btn btn-danger rounded" data-dismiss="modal">Cancelar</button>
-			</div>
-
-		</div>
-	</div>
-</div>
-<!-- The Modal -->
-<div class="modal fade rounded" id="Incapacidad">
-	<div class="modal-dialog modal-dialog-centered modal-lg ">
-		<div class="modal-content">
-
-		<!-- Modal Header -->
-			<div class="modal-header" style="flex-direction: column; align-items: center;">
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				
-				<p class="titulo-tablero titulo" id="titulo">
-					<span class="badge-dot"></span>Registrar Incapacidad
-				</p>
-			</div>
-
-			<!-- Modal body -->
-			<div class="modal-body">
-				<form class="form-container" id="incapacidad-permiso-form">
-
-					<div class="row">
-						<div class="col-6">
-							<div class="form-group">
-								<label for="ramo_seguro">Ramo de Seguro:</label>
-								<select name="ramo_seguro" id="ramo_seguro" class="form-control">
-									<option value="">Selecciona un ramo de seguro</option>
-									<option value="1">Riesgos de trabajo</option>
-									<option value="2">Enfermedad General</option>
-									<option value="3">Maternidad</option>
-									<option value="4">Licencia 140 Bis</option>
-								</select>
-							</div>
-						</div>
-						<div class="col-6">
-							<div class="form-group">
-								<label for="tipo_riesgo">Tipo de Riesgo:</label>
-								<select name="tipo_riesgo" id="tipo_riesgo" class="form-control" disabled>
-									<option>Selecciona un tipo de riesgo</option>
-									<option value="1">Accidente de Trabajo</option>
-									<option value="2">Accidente de Trayecto</option>
-									<option value="3">Enfermedad Profesional</option>
-								</select>
-							</div>
-						</div>
-						<div class="col-6">
-							<div class="form-group">
-								<label for="secuela_consecuencia">Secuela o Consecuencia:</label>
-								<select name="secuela_consecuencia" id="secuela_consecuencia" class="form-control" disabled>
-									<option>Selecciona una opción</option>
-									<option value="Ninguna">Ninguna</option>
-									<option value="Incapacidad Temporal">Incapacidad Temporal</option>
-									<option value="Valuación Inicial Provisional">Valuación Inicial Provisional</option>
-									<option value="Valuación Inicial Definitiva">Valuación Inicial Definitiva</option>
-									<option value="Defunción">Defunción</option>
-									<option value="Recaida">Recaida</option>
-									<option value="Valuación Post. Al a Fecha de Alta">Valuación Post. Al a Fecha de Alta</option>
-									<option value="Revocación Provisional">Revocación Provisional</option>
-									<option value="Recaida sin alta medica">Recaida sin alta medica</option>
-									<option value="Revaluación definitiva">Revaluación definitiva</option>
-								</select>
-							</div>
-						</div>
-						<div class="col-6">
-							<div class="form-group">
-								<label for="control_incapacidad">Control de la Incapacidad:</label>
-								<select name="control_incapacidad" id="control_incapacidad" class="form-control">
-									<option value="">Selecciona una opción</option>
-									<option value="1">Unica</option>
-									<option value="2">Inicial</option>
-									<option value="3">Subsecuente</option>
-									<option value="4">Alta Medica o ST-2</option>
-								</select>
-							</div>
-						</div>
-						<div class="col-6">
-							<div class="form-group">
-								<label for="fecha_inicio">Fecha de Inicio:</label>
-								<input type="date" name="fecha_inicio" id="fecha_inicio" class="form-control">
-							</div>
-						</div>
-						<div class="col-6">
-							<div class="form-group">
-								<label for="fecha_termino">Fecha de Termino:</label>
-								<input type="date" name="fecha_termino" id="fecha_termino" class="form-control">
-							</div>
-						</div>
-						<div class="col-4">
-							<div class="form-group">
-								<label for="folio">Folio:</label>
-								<input type="text" name="folio" id="folio" class="form-control">
-							</div>
-						</div>
-						<div class="col-4">
-							<div class="form-group">
-								<label for="dias">Días:</label>
-								<input type="number" name="dias" id="dias" class="form-control">
-							</div>
-						</div>
-						<div class="col-4">
-							<div class="form-group">
-								<label for="porcentaje">Porcentaje:</label>
-								<input class="form-control" type="number" id="porcentaje" name="porcentaje" step="0.01" min="0" max="100">
-							</div>
-						</div>
-					</div>
-				</form>
-			</div>
-
-			<!-- Modal footer -->
-			<div class="modal-footer">
-				<button id="incapacidad-permiso-btn" type="button" class="btn btn-primary rounded">Solicitar</button>
-				<button type="button" class="btn btn-danger rounded" data-dismiss="modal">Cancelar</button>
-			</div>
-
-		</div>
-	</div>
-</div>
-
-<!-- The Modal Eliminar -->
-<div class="modal fade rounded" id="eliminar">
-	<div class="modal-dialog modal-dialog-centered">
-		<div class="modal-content">
-
-		<!-- Modal Header -->
-			<div class="modal-header" style="flex-direction: column; align-items: center;">
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<p class="titulo-tablero titulo" id="titulo">
-					<span class="badge-dot"></span>
-				</p>
-				<p class="subtitulo-tablero ">Eliminar solicitud</p>
-			</div>
-			<div class="modal-body">
-				¿Estás seguro de eliminar la solicitud?
-				<form id="solicitud-eliminar-form">
-					<input type="hidden" name="eliminarSolicitud" id="eliminarSolicitud">
-				</form>
-			</div>
-			<!-- Modal footer -->
-			<div class="modal-footer">
-				<button id="solicitud-eliminar-btn" type="button" class="btn btn-danger rounded" data-dismiss="modal">Eliminar</button>
-				<button type="button" class="btn btn-primary rounded" data-dismiss="modal">Cancelar</button>
-			</div>
-
-		</div>
-	</div>
-</div>
-
-<!-- The Modal Eliminar Vacaciones -->
-<div class="modal fade rounded" id="eliminarV">
-	<div class="modal-dialog modal-dialog-centered">
-		<div class="modal-content">
-
-		<!-- Modal Header -->
-			<div class="modal-header" style="flex-direction: column; align-items: center;">
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<p class="titulo-tablero titulo" id="tituloV">
-					<span class="badge-dot"></span>
-				</p>
-				<p class="subtitulo-tablero ">Eliminar solicitud</p>
-			</div>
-			<div class="modal-body">
-				¿Estás seguro de eliminar la solicitud?
-				<form id="solicitud-eliminarV-form">
-					<input type="hidden" name="eliminarVSolicitud" id="eliminarVSolicitud">
-				</form>
-			</div>
-			<!-- Modal footer -->
-			<div class="modal-footer">
-				<button id="solicitud-eliminarV-btn" type="button" class="btn btn-danger rounded" data-dismiss="modal">Eliminar</button>
-				<button type="button" class="btn btn-primary rounded" data-dismiss="modal">Cancelar</button>
-			</div>
-
-		</div>
-	</div>
-</div>
-
-<!-- The Modal Eliminar Vacaciones -->
-<div class="modal fade rounded" id="eliminarI">
-	<div class="modal-dialog modal-dialog-centered">
-		<div class="modal-content">
-
-		<!-- Modal Header -->
-			<div class="modal-header" style="flex-direction: column; align-items: center;">
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<p class="titulo-tablero titulo" id="tituloI">
-					<span class="badge-dot"></span>
-				</p>
-				<p class="subtitulo-tablero ">Ocultar incapacidad</p>
-			</div>
-			<div class="modal-body">
-				¿Deseas ocultar la incapacidad?
-				<form id="solicitud-eliminarI-form">
-					<input type="hidden" name="eliminarISolicitud" id="eliminarISolicitud">
-				</form>
-			</div>
-			<!-- Modal footer -->
-			<div class="modal-footer">
-				<button id="solicitud-eliminarI-btn" type="button" class="btn btn-danger rounded" data-dismiss="modal">Eliminar</button>
-				<button type="button" class="btn btn-primary rounded" data-dismiss="modal">Cancelar</button>
-			</div>
-
-		</div>
-	</div>
-</div>
+<?php include 'view/pages/Horarios/Modals/SolicitudAusencia.php' ?>
+<?php include 'view/pages/Horarios/Modals/Incapacidad.php' ?>
+<?php include 'view/pages/Horarios/Modals/DelSolicitud.php' ?>
+<?php include 'view/pages/Horarios/Modals/DelSolicitudVacaciones.php' ?>
+<?php include 'view/pages/Horarios/Modals/DelSolicitudIncapacidades.php' ?>
 
 <script src="assets/libs/js/generar_permisos_vacaciones.js"></script>
 <script>
@@ -543,4 +294,34 @@ $(document).ready(function() {
 		$('#secuela_consecuencia').val('Selecciona una opción'); // Establecer el valor en una cadena vacía
 	}
 });
+
+    // Función para calcular la fecha de término
+    function calcularFechaTermino() {
+        // Obtén los valores de fecha de inicio y días
+        const fechaInicio = new Date(document.getElementById("fecha_inicio").value);
+        const dias = parseInt(document.getElementById("dias").value);
+
+        if (!isNaN(dias) && fechaInicio instanceof Date && !isNaN(fechaInicio.getTime())) {
+            // Calcula la fecha de término sumando los días a la fecha de inicio
+            fechaInicio.setDate(fechaInicio.getDate() + dias);
+
+            // Formatea la fecha de término como "yyyy-MM-dd"
+            const año = fechaInicio.getFullYear();
+            const mes = (fechaInicio.getMonth() + 1).toString().padStart(2, "0");
+            const dia = fechaInicio.getDate().toString().padStart(2, "0");
+
+            // Actualiza el campo de fecha de término
+            document.getElementById("fecha_termino").value = `${año}-${mes}-${dia}`;
+            document.getElementById("fecha_termino_envio").value = `${año}-${mes}-${dia}`;
+        } else {
+            // Si los valores no son válidos, borra el campo de fecha de término
+            document.getElementById("fecha_termino").value = "";
+            document.getElementById("fecha_termino_envio").value = "";
+        }
+    }
+
+    // Asocia la función de cálculo con los eventos de cambio en fecha de inicio y días
+    document.getElementById("fecha_inicio").addEventListener("change", calcularFechaTermino);
+    document.getElementById("dias").addEventListener("input", calcularFechaTermino);
 </script>
+
