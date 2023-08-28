@@ -2766,5 +2766,66 @@ static public function mdlActualizarNoticia($tabla, $datos)
 		$stmt = null;
 	}
 
+	static public function mdlCrearIncapacidad($datos){
+		$pdo =Conexion::conectar();
+		$sql = "INSERT INTO incapacidades(ramo_seguro, tipo_riesgo, secuela_consecuencia, control_incapacidad, fecha_inicio, fecha_termino, folio, dias, porcentaje, Empleados_idEmpleados) VALUES (:ramo_seguro, :tipo_riesgo, :secuela_consecuencia, :control_incapacidad, :fecha_inicio, :fecha_termino, :folio, :dias, :porcentaje, :idEmpleados)";
+
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':ramo_seguro', $datos['ramo_seguro'], PDO::PARAM_INT);
+		$stmt->bindParam(':tipo_riesgo', $datos['tipo_riesgo'], PDO::PARAM_INT);
+		$stmt->bindParam(':secuela_consecuencia', $datos['secuela_consecuencia'], PDO::PARAM_STR);
+		$stmt->bindParam(':control_incapacidad', $datos['control_incapacidad'], PDO::PARAM_INT);
+		$stmt->bindParam(':fecha_inicio', $datos['fecha_inicio'], PDO::PARAM_STR);
+		$stmt->bindParam(':fecha_termino', $datos['fecha_termino'], PDO::PARAM_STR);
+		$stmt->bindParam(':folio', $datos['folio'], PDO::PARAM_STR);
+		$stmt->bindParam(':dias', $datos['dias'], PDO::PARAM_INT);
+		$stmt->bindParam(':porcentaje', $datos['porcentaje'], PDO::PARAM_STR);
+		$stmt->bindParam(':idEmpleados', $datos['idEmpleados'], PDO::PARAM_INT);
+
+		if ($stmt->execute()) {
+			return "ok"; //obtener el ID del empleado recién insertado
+		}else{
+			return 'error';
+		}
+
+		$stmt->close();
+		$stmt = null;
+	}
+
+	static public function mdlVerIncapacidad($item, $valor){
+		$pdo =Conexion::conectar();
+		if ($item == null && $valor == null) {
+			$sql = "SELECT *,
+					CONCAT(DATE_FORMAT(fecha_inicio, '%d/%m/%Y'), ' - ', DATE_FORMAT(fecha_termino, '%d/%m/%Y'), ' (', TIMESTAMPDIFF(DAY, fecha_inicio, fecha_termino)+1, ' días)') AS rango
+					FROM incapacidades";
+
+			$stmt = $pdo->prepare($sql);
+			$stmt->execute();
+			return $stmt->fetchAll();
+		}else{
+			$sql = "SELECT * FROM incapacidades WHERE $item = :$item";
+			$stmt = $pdo->prepare($sql);
+			$stmt->bindParam(':'.$item, $valor);
+			$stmt->execute();
+			return $stmt->fetch();
+		}
+		$stmt->close();
+		$stmt = null;
+	}
+
+	static public function mdlDelIncapacidad($idIncapacidades){
+		$pdo = Conexion::conectar();
+		$sql = "UPDATE incapacidades SET status = 0 WHERE idIncapacidades = :idIncapacidades";
+		$stmt = $pdo -> prepare($sql);
+		$stmt->bindParam(':idIncapacidades', $idIncapacidades, PDO::PARAM_INT);
+		if ($stmt->execute()) {
+			return 'ok';
+		}else{
+			return "error";
+		}
+		$stmt->close();
+		$stmt = null;
+	}
+
 	/*---------- Fin de ModeloFormularios ---------- */
 }

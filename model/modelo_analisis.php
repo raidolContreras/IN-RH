@@ -422,14 +422,14 @@ class ModeloAnalisis{
 
 		$sql = "SELECT
 					CONCAT(e.lastname, ' ', e.name) AS nombre,
-				    C.idContrato,
-				    C.tipo_contrato,
-				    C.fecha_contrato,
-				    C.fin_contrato
+					C.idContrato,
+					C.tipo_contrato,
+					C.fecha_contrato,
+					C.fin_contrato
 				FROM
-				    empleados e
+					empleados e
 				INNER JOIN
-				    contratos C ON e.idEmpleados = C.Empleados_idEmpleados
+					contratos C ON e.idEmpleados = C.Empleados_idEmpleados
 				JOIN puesto p ON p.Empleados_idEmpleados = e.idEmpleados
 				JOIN departamentos d ON p.Departamentos_idDepartamentos = d.idDepartamentos
 				JOIN empresas em ON d.Empresas_idEmpresas = em.idEmpresas
@@ -489,9 +489,9 @@ class ModeloAnalisis{
 					CONCAT(e.lastname, ' ', e.name) AS nombre,
 					C.*
 				FROM
-				    empleados e
+					empleados e
 				INNER JOIN
-				    creditos C ON e.idEmpleados = C.Empleados_idEmpleados
+					creditos C ON e.idEmpleados = C.Empleados_idEmpleados
 				JOIN puesto p ON p.Empleados_idEmpleados = e.idEmpleados
 				JOIN departamentos d ON p.Departamentos_idDepartamentos = d.idDepartamentos
 				JOIN empresas em ON d.Empresas_idEmpresas = em.idEmpresas
@@ -528,6 +528,68 @@ class ModeloAnalisis{
 					JOIN departamentos d ON p.Departamentos_idDepartamentos = d.idDepartamentos
 					JOIN empresas em ON d.Empresas_idEmpresas = em.idEmpresas
 				WHERE e.status = 1 AND em.idEmpresas = $idEmpresas AND tipo_credito = 'Factor de descuento'";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->execute();
+		return $stmt->fetchAll();
+
+		$stmt->close();
+		$stmt = null;
+
+	}
+
+	static public function incapacidad($idEmpresas){
+
+		$sql = "SELECT
+					CONCAT(e.lastname, ' ', e.name) AS nombre,
+					i.*
+				FROM
+					incapacidades AS i
+				JOIN
+					empleados AS e ON i.Empleados_idEmpleados = e.idEmpleados
+					JOIN puesto p ON p.Empleados_idEmpleados = e.idEmpleados
+					JOIN departamentos d ON p.Departamentos_idDepartamentos = d.idDepartamentos
+					JOIN empresas em ON d.Empresas_idEmpresas = em.idEmpresas
+				WHERE e.status = 1 AND em.idEmpresas = $idEmpresas";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->execute();
+		return $stmt->fetchAll();
+
+		$stmt->close();
+		$stmt = null;
+
+	}
+
+	static public function incapacidadContador($idEmpresas){
+
+		$sql = "SELECT
+					CASE
+						WHEN I.ramo_seguro = 1 THEN 'Riesgos de trabajo'
+						WHEN I.ramo_seguro = 2 THEN 'Enfermedad General'
+						WHEN I.ramo_seguro = 3 THEN 'Maternidad'
+						WHEN I.ramo_seguro = 4 THEN 'Licencia 140 Bis'
+						ELSE 'Otro'
+					END AS 'Tipo_Incapacidad',
+					COUNT(*) AS 'Total'
+				FROM
+					incapacidades AS I
+				JOIN
+					empleados AS E ON I.Empleados_idEmpleados = E.idEmpleados
+				JOIN
+					puesto AS P ON P.Empleados_idEmpleados = E.idEmpleados
+				JOIN
+					departamentos AS D ON P.Departamentos_idDepartamentos = D.idDepartamentos
+				JOIN
+					empresas AS EM ON D.Empresas_idEmpresas = EM.idEmpresas
+				WHERE
+					E.status = 1
+					AND EM.idEmpresas = $idEmpresas
+					AND I.ramo_seguro BETWEEN 1 AND 4
+				GROUP BY
+					I.ramo_seguro
+				ORDER BY
+					I.ramo_seguro;";
 
 		$stmt = Conexion::conectar()->prepare($sql);
 		$stmt->execute();

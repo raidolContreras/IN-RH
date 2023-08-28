@@ -122,7 +122,8 @@ session_start();
 					$pagina == 'Documentos'||
 					$pagina == 'Permisos'||
 					$pagina == 'Contratos'||
-					$pagina == 'CreditosInfonavit') {
+					$pagina == 'CreditosInfonavit'||
+					$pagina == 'Incapacidades') {
 
 					include "pages/navs/navbar.php";
 					include "pages/navs/sidenav.php";

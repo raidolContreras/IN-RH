@@ -1635,5 +1635,15 @@ class ControladorFormularios{
 		return $marcarPagado;
 	}
 
+	static public function ctrCrearIncapacidad($datos){
+		$crearIncapacidad = ModeloFormularios::mdlCrearIncapacidad($datos);
+		return $crearIncapacidad;
+	}
+
+	static public function ctrVerIncapacidad($item, $valor){
+		$verIncapacidad = ModeloFormularios::mdlVerIncapacidad($item, $valor);
+		return $verIncapacidad;
+	}
+
 	/*---------- Fin de ControladorFormularios ---------- */
 }

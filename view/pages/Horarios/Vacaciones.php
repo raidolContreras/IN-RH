@@ -3,6 +3,7 @@ $permisos = ControladorFormularios::ctrVerPermisos(null,null);
 $empleados_has_permisos = ControladorFormularios::ctrVerPermisosEmpleados($_SESSION['idEmpleado']);
 $tiempoContratado = $empleados_has_permisos[0]['tiempoContrato'];
 $calculo_vacaciones = ControladorFormularios::ctrCalculoVacacional($tiempoContratado);
+$incapacidades = ControladorFormularios::ctrVerIncapacidad(null,null);
 $vacaciones = ControladorFormularios::ctrVerSolicitudesVacaciones($_SESSION['idEmpleado']);
 $dias_consumidos = 0;
 $dias_pendientes = 0;
@@ -224,10 +225,28 @@ $dias_disponibles = $calculo_vacaciones - $dias_consumidos - $dias_pendientes;
 											</td>
 											<td class="float-right">
 												<button class="btn btn-danger rounded-circle btn-sm"
-											data-toggle="modal"
-											data-target="#eliminarV"
-											data-name="<?php echo $vacacion['rango']; ?>"
-											data-whatever="<?php echo $vacacion['idVacaciones']; ?>">
+													data-toggle="modal"
+													data-target="#eliminarV"
+													data-name="<?php echo $vacacion['rango']; ?>"
+													data-whatever="<?php echo $vacacion['idVacaciones']; ?>">
+													&times;
+											  </button>
+											</td>
+										</tr>
+										<?php endif ?>
+									<?php endforeach ?>
+									<?php foreach ($incapacidades as $incapacidad): ?>
+										<?php if ($incapacidad['Empleados_idEmpleados'] == $_SESSION['idEmpleado'] && $incapacidad['status'] == 1): ?>
+										<tr>
+											<td><?php echo $incapacidad['rango'] ?></td>
+											<td>Informe de Incapacidad</td>
+											<td><span class="badge-success p-1 rounded">Aprobado</span></td>
+											<td class="float-right">
+												<button class="btn btn-danger rounded-circle btn-sm"
+													data-toggle="modal"
+													data-target="#eliminarI"
+													data-name="<?php echo $incapacidad['rango']; ?>"
+													data-whatever="<?php echo $incapacidad['idIncapacidades']; ?>">
 													&times;
 											  </button>
 											</td>
@@ -312,14 +331,14 @@ $dias_disponibles = $calculo_vacaciones - $dias_consumidos - $dias_pendientes;
 
 			<!-- Modal body -->
 			<div class="modal-body">
-				<form class="form-container" id="solicitud-permiso-form">
+				<form class="form-container" id="incapacidad-permiso-form">
 
 					<div class="row">
 						<div class="col-6">
 							<div class="form-group">
 								<label for="ramo_seguro">Ramo de Seguro:</label>
 								<select name="ramo_seguro" id="ramo_seguro" class="form-control">
-									<option>Selecciona un ramo de seguro</option>
+									<option value="">Selecciona un ramo de seguro</option>
 									<option value="1">Riesgos de trabajo</option>
 									<option value="2">Enfermedad General</option>
 									<option value="3">Maternidad</option>
@@ -343,8 +362,16 @@ $dias_disponibles = $calculo_vacaciones - $dias_consumidos - $dias_pendientes;
 								<label for="secuela_consecuencia">Secuela o Consecuencia:</label>
 								<select name="secuela_consecuencia" id="secuela_consecuencia" class="form-control" disabled>
 									<option>Selecciona una opción</option>
-									<option value="1">Sí</option>
-									<option value="2">No</option>
+									<option value="Ninguna">Ninguna</option>
+									<option value="Incapacidad Temporal">Incapacidad Temporal</option>
+									<option value="Valuación Inicial Provisional">Valuación Inicial Provisional</option>
+									<option value="Valuación Inicial Definitiva">Valuación Inicial Definitiva</option>
+									<option value="Defunción">Defunción</option>
+									<option value="Recaida">Recaida</option>
+									<option value="Valuación Post. Al a Fecha de Alta">Valuación Post. Al a Fecha de Alta</option>
+									<option value="Revocación Provisional">Revocación Provisional</option>
+									<option value="Recaida sin alta medica">Recaida sin alta medica</option>
+									<option value="Revaluación definitiva">Revaluación definitiva</option>
 								</select>
 							</div>
 						</div>
@@ -352,7 +379,7 @@ $dias_disponibles = $calculo_vacaciones - $dias_consumidos - $dias_pendientes;
 							<div class="form-group">
 								<label for="control_incapacidad">Control de la Incapacidad:</label>
 								<select name="control_incapacidad" id="control_incapacidad" class="form-control">
-									<option>Selecciona una opción</option>
+									<option value="">Selecciona una opción</option>
 									<option value="1">Unica</option>
 									<option value="2">Inicial</option>
 									<option value="3">Subsecuente</option>
@@ -396,7 +423,7 @@ $dias_disponibles = $calculo_vacaciones - $dias_consumidos - $dias_pendientes;
 
 			<!-- Modal footer -->
 			<div class="modal-footer">
-				<button id="solicitud-permiso-btn" type="button" class="btn btn-primary rounded" data-dismiss="modal">Solicitar</button>
+				<button id="incapacidad-permiso-btn" type="button" class="btn btn-primary rounded">Solicitar</button>
 				<button type="button" class="btn btn-danger rounded" data-dismiss="modal">Cancelar</button>
 			</div>
 
@@ -455,6 +482,35 @@ $dias_disponibles = $calculo_vacaciones - $dias_consumidos - $dias_pendientes;
 			<!-- Modal footer -->
 			<div class="modal-footer">
 				<button id="solicitud-eliminarV-btn" type="button" class="btn btn-danger rounded" data-dismiss="modal">Eliminar</button>
+				<button type="button" class="btn btn-primary rounded" data-dismiss="modal">Cancelar</button>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+<!-- The Modal Eliminar Vacaciones -->
+<div class="modal fade rounded" id="eliminarI">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+
+		<!-- Modal Header -->
+			<div class="modal-header" style="flex-direction: column; align-items: center;">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<p class="titulo-tablero titulo" id="tituloI">
+					<span class="badge-dot"></span>
+				</p>
+				<p class="subtitulo-tablero ">Ocultar incapacidad</p>
+			</div>
+			<div class="modal-body">
+				¿Deseas ocultar la incapacidad?
+				<form id="solicitud-eliminarI-form">
+					<input type="hidden" name="eliminarISolicitud" id="eliminarISolicitud">
+				</form>
+			</div>
+			<!-- Modal footer -->
+			<div class="modal-footer">
+				<button id="solicitud-eliminarI-btn" type="button" class="btn btn-danger rounded" data-dismiss="modal">Eliminar</button>
 				<button type="button" class="btn btn-primary rounded" data-dismiss="modal">Cancelar</button>
 			</div>
 

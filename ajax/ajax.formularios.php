@@ -1033,6 +1033,43 @@ class FormulariosAjax{
 		echo $delPermiso;
 	}
 
+	public function crearIncapacidadAjax(){
+
+		$ramo_seguro = $this -> ramo_seguro;
+		$tipo_riesgo = $this -> tipo_riesgo;
+		$secuela_consecuencia = $this -> secuela_consecuencia;
+		$control_incapacidad = $this -> control_incapacidad;
+		$fecha_inicio = $this -> fecha_inicio;
+		$fecha_termino = $this -> fecha_termino;
+		$folio = $this -> folio;
+		$dias = $this -> dias;
+		$porcentaje = $this -> porcentaje;
+		$idEmpleados = $_SESSION['idEmpleado'];
+
+		$datos = array(
+			"ramo_seguro" => $ramo_seguro,
+			"tipo_riesgo" => $tipo_riesgo,
+			"secuela_consecuencia" => $secuela_consecuencia,
+			"control_incapacidad" => $control_incapacidad,
+			"fecha_inicio" => $fecha_inicio,
+			"fecha_termino" => $fecha_termino,
+			"folio" => $folio,
+			"dias" => $dias,
+			"porcentaje" => $porcentaje,
+			"idEmpleados" => $idEmpleados
+		);
+
+		$crearIncapacidad = ControladorFormularios::ctrCrearIncapacidad($datos);
+		echo $crearIncapacidad;
+	
+	}
+
+	public function ocultarIncapacidadesAjax(){
+		$idIncapacidades = $this -> idIncapacidades;
+		$delIncapacidad = ModeloFormularios::mdlDelIncapacidad($idIncapacidades);
+		echo $delIncapacidad;
+	}
+
 }
 
 if(isset($_POST["validate"])){
@@ -1368,6 +1405,14 @@ if (isset($_POST['eliminarVSolicitud'])) {
 	$GenerarPeticiones = new FormulariosAjax();
 	$GenerarPeticiones -> idVacaciones = $idVacaciones;
 	$GenerarPeticiones -> eliminarSolicitudVacacionAjax();
+}
+
+if (isset($_POST['eliminarISolicitud'])) {
+	$idIncapacidades = $_POST['eliminarISolicitud'];
+
+	$ocultarIncapacidades = new FormulariosAjax();
+	$ocultarIncapacidades -> idIncapacidades = $idIncapacidades;
+	$ocultarIncapacidades -> ocultarIncapacidadesAjax();
 }
 
 if (isset($_POST['nameTarea'])) {
@@ -2046,4 +2091,37 @@ if (isset($_POST['delPermiso'])) {
 	$delPermiso = new FormulariosAjax();
 	$delPermiso -> idPermisos = $idPermisos;
 	$delPermiso -> delPermisoAjax();
+}
+
+if (isset($_POST['ramo_seguro']) && $_POST['ramo_seguro'] != "") {
+	if (isset($_POST['tipo_riesgo'])) {
+		$tipo_riesgo = $_POST['tipo_riesgo'];
+	}else{
+		$tipo_riesgo = null;
+	}
+	if (isset($_POST['secuela_consecuencia'])) {
+		$secuela_consecuencia = $_POST['secuela_consecuencia'];
+	}else{
+		$secuela_consecuencia = null;
+	}
+
+	$ramo_seguro = $_POST['ramo_seguro'];
+	$control_incapacidad = $_POST['control_incapacidad'];
+	$fecha_inicio = $_POST['fecha_inicio'];
+	$fecha_termino = $_POST['fecha_termino'];
+	$folio = $_POST['folio'];
+	$dias = $_POST['dias'];
+	$porcentaje = $_POST['porcentaje'];
+
+	$crearIncapacidad = new FormulariosAjax();
+	$crearIncapacidad -> ramo_seguro = $ramo_seguro;
+	$crearIncapacidad -> tipo_riesgo = $tipo_riesgo;
+	$crearIncapacidad -> secuela_consecuencia = $secuela_consecuencia;
+	$crearIncapacidad -> control_incapacidad = $control_incapacidad;
+	$crearIncapacidad -> fecha_inicio = $fecha_inicio;
+	$crearIncapacidad -> fecha_termino = $fecha_termino;
+	$crearIncapacidad -> folio = $folio;
+	$crearIncapacidad -> dias = $dias;
+	$crearIncapacidad -> porcentaje = $porcentaje;
+	$crearIncapacidad -> crearIncapacidadAjax();
 }

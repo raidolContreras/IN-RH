@@ -77,4 +77,14 @@ Class ControladorAnalisis{
 		return $respuesta;
 	}
 
+	static public function incapacidad($idEmpresas){
+		$respuesta = ModeloAnalisis::incapacidad($idEmpresas);
+		return $respuesta;
+	}
+
+	static public function incapacidadContador($idEmpresas){
+		$respuesta = ModeloAnalisis::incapacidadContador($idEmpresas);
+		return $respuesta;
+	}
+
 }

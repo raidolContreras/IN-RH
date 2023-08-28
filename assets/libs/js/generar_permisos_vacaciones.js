@@ -158,6 +158,84 @@ $(document).ready(function() {
   });
 });
 
+$(document).ready(function() {
+  $("#solicitud-eliminarI-btn").click(function() {
+		var formData = $("#solicitud-eliminarI-form").serialize(); // Obtener los datos del formulario
+
+		$.ajax({
+		  url: "ajax/ajax.formularios.php",
+		  type: "POST",
+		  data: formData,
+		  success: function(response) {
+				if (response === 'ok') {
+				  $("#form-result").html(`
+						<div class='alert alert-success' role="alert" id="alerta">
+						  <i class="fas fa-check-circle"></i>
+						  <strong class="mx-2">¡Éxito!</strong>
+						</div>
+				  `);
+				  deleteAlert();
+				  if ( window.history.replaceState ) {
+
+						window.history.replaceState( null, null, window.location.href );
+
+				  }
+				  setTimeout(function() {
+						window.location.reload();
+				  }, 1600);
+				} else {
+				  $("#form-result").html(`
+						<div class='alert alert-danger' role="alert" id="alerta">
+						  <i class="fas fa-exclamation-triangle"></i>
+						  <strong class="mx-2">Error!</strong> No se pudo ocultar la incapacidad, intenta nuevamente
+						</div>
+				  `);
+				  deleteAlert();
+				}
+		  }
+		});
+  });
+});
+
+$(document).ready(function() {
+  $("#incapacidad-permiso-btn").click(function() {
+		var formData = $("#incapacidad-permiso-form").serialize(); // Obtener los datos del formulario
+
+		$.ajax({
+		  url: "ajax/ajax.formularios.php",
+		  type: "POST",
+		  data: formData,
+		  success: function(response) {
+				if (response === 'ok') {
+				  $("#form-result").html(`
+						<div class='alert alert-success' role="alert" id="alerta">
+						  <i class="fas fa-check-circle"></i>
+						  <strong class="mx-2">¡Incapacidad creada con éxito!</strong>
+						</div>
+				  `);
+				  deleteAlert();
+				  if ( window.history.replaceState ) {
+
+						window.history.replaceState( null, null, window.location.href );
+
+				  }
+				  setTimeout(function() {
+						window.location.reload();
+				  }, 1600);
+				} else {
+				  $("#form-result").html(`
+						<div class='alert alert-danger' role="alert" id="alerta">
+						  <i class="fas fa-exclamation-triangle"></i>
+						  <strong class="mx-2">Error!</strong> No se pudo crear la incapacidad, intenta nuevamente
+						</div>
+				  `);
+				  deleteAlert();
+				}
+		  }
+		});
+  });
+});
+
 function deleteAlert() {
   setTimeout(function() {
 		var alert = $('#alerta');
@@ -242,6 +320,19 @@ $('#eliminarV').on('show.bs.modal', function (event) {
   modal.find('#eliminarVSolicitud').val(recipient);
 
   var tituloElement = modal.find('#tituloV');
+  tituloElement.empty(); // Vaciar el contenido anterior
+  tituloElement.append(name);
+});
+
+$('#eliminarI').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget);
+  var recipient = button.data('whatever');
+  var name = button.data('name');
+
+  var modal = $(this);
+  modal.find('#eliminarISolicitud').val(recipient);
+
+  var tituloElement = modal.find('#tituloI');
   tituloElement.empty(); // Vaciar el contenido anterior
   tituloElement.append(name);
 });
