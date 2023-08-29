@@ -20,8 +20,8 @@ while ($fila = $resultado->fetch(PDO::FETCH_ASSOC)) {
 	}
 
 	$title = 'Incapacidad (Aprobadas)';
-	$color = '#5336BF';
-	$textColor = '#000';
+	$color = '#81A4EA';
+	$textColor = '#fff';
 
 	$fechas[] = array(
 		"title" => $title,

@@ -80,8 +80,8 @@ foreach ($stmt_asistencias->fetchAll() as $asistencias) {
 				if ($asistencias['entrada'] <= $fecha['hora_Entrada'] && $asistencias['entrada'] != "00:00:00") {
 
 					if ($asistencias['salida'] >= $fecha['hora_Salida'] && $asistencias['salida'] != "00:00:00") {
-						$color = "#0EE276";
-						$colorFondo = "#0EE276";
+						$color = "#A4EBD9";
+						$colorFondo = "#A4EBD9";
 						$idAsistencia = "";
 						$className = "";
 						$title = $asistencias['entrada']." - ". $asistencias['salida'];

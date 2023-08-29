@@ -60,14 +60,6 @@ $(document).ready(function() {
 														        }
 														    }
 														    console.log(dataVacaciones);
-																/*for (var i = 0; i < data.dataVacaciones.length; i++) {
-																	var eventStart = moment(data.dataVacaciones[i].start).format("YYYY-MM-DD");
-																	var eventEnd = data.dataVacaciones[i].end ? moment(data.dataVacaciones[i].end).format("YYYY-MM-DD") : eventStart;
-																	if (date.isBetween(eventStart, eventEnd, 'day', '[]')) {
-																		cell.css("background-color", data.dataVacaciones.[i].colorFondo);
-																		break; // Si encontramos una coincidencia, salimos del bucle
-																	}
-																}*/
 														},
 												        eventClick: function (calEvent, jsEvent, view) {
 												        	if (calEvent.colorFondo === '#EC5869' || calEvent.colorFondo === '#EF890C' ) {

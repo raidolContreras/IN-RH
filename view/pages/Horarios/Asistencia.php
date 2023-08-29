@@ -51,20 +51,20 @@ $justificantes = ControladorEmpleados::ctrAsistenciasJustificantes($_SESSION['id
 }
 	
 .badge-Presente {
-	color: #343;
-	background-color: #0EE276;
+	color: #314049;
+	background-color: #a4ebd9;
 }
 .badge-Retardo {
-	color: #343;
+	color: #314049;
 	background-color: #EF890C;
 }
 .badge-Ausente {
-	color: #343;
+	color: #314049;
 	background-color: #EC5869;
 }
 .badge-Incapacidad {
-	color: #fff;
-	background-color: #5336BF;
+	color: #314049;
+	background-color: #81A4EA;
 }
 
 <?php foreach ($permisos as $permiso): ?>
