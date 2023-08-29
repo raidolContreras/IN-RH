@@ -62,6 +62,10 @@ $justificantes = ControladorEmpleados::ctrAsistenciasJustificantes($_SESSION['id
 	color: #343;
 	background-color: #EC5869;
 }
+.badge-Incapacidad {
+	color: #fff;
+	background-color: #5336BF;
+}
 
 <?php foreach ($permisos as $permiso): ?>
 	
@@ -100,6 +104,7 @@ $justificantes = ControladorEmpleados::ctrAsistenciasJustificantes($_SESSION['id
 							<span class="mr-2 badge badge-Presente">Presente</span>
 							<span class="mr-2 badge badge-Retardo">Retardo</span>
 							<span class="mr-2 badge badge-Ausente">Ausente</span>
+							<span class="mr-2 badge badge-Incapacidad">Incapacidad</span>
 							<?php foreach ($permisos as $permiso): ?>
 								<span class="mr-2 mt-2 badge badge-<?php echo strtr($permiso['namePermisos'], " ", "-"); ?>">
 									<?php echo $permiso['namePermisos'] ?>

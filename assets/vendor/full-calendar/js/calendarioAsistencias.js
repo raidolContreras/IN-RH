@@ -28,65 +28,75 @@ $(document).ready(function() {
 										url: 'ajax/fechas.permisos.php',
 										dataType: 'json',
 										success: function(dataPermisos) {
-											// Combinar los datos de fechas empleados y festivos en una sola variable
-											var allEvents = dataEmpleados.concat(dataFestivos.concat(dataVacaciones.concat(dataPermisos.concat(data.datos))));
+											// Obtener los días de las vacaciones del empleado mediante AJAX
+											$.ajax({
+												url: 'ajax/fechas.incapacidades.php',
+												dataType: 'json',
+												success: function(dataIncapacidades) {
+													// Combinar los datos de fechas empleados y festivos en una sola variable
+													var allEvents = dataEmpleados.concat(dataFestivos.concat(dataVacaciones.concat(dataPermisos.concat(dataIncapacidades.concat(data.datos)))));
 
-											//console.log(allEvents);
-											// Configuración del calendario
-											$('#horarios').fullCalendar({
-												header: {
-													left: 'title'
-												},
-												defaultView: 'month',
-												navLinks: false,
-												editable: false,
-												eventLimit: true,
-												showNonCurrentDates: false,
-												businessHours: {
-													dow: dataEmpleados // días de semana, 0=Domingo
-												},
-												dayRender: function(date, cell) {
-												    var today = moment().startOf('day');
-												    for (var i = 0; i < data.datos.length; i++) {
-												        var eventStart = moment(data.datos[i].start, 'YYYY-MM-DD');
-												        if (date.isSame(eventStart, 'day')) {
-												            cell.css("background-color", data.datos[i].colorFondo);
-												            break;
-												        }
-												    }
-												    console.log(dataVacaciones);
-														/*for (var i = 0; i < data.dataVacaciones.length; i++) {
-															var eventStart = moment(data.dataVacaciones[i].start).format("YYYY-MM-DD");
-															var eventEnd = data.dataVacaciones[i].end ? moment(data.dataVacaciones[i].end).format("YYYY-MM-DD") : eventStart;
-															if (date.isBetween(eventStart, eventEnd, 'day', '[]')) {
-																cell.css("background-color", data.dataVacaciones.[i].colorFondo);
-																break; // Si encontramos una coincidencia, salimos del bucle
-															}
-														}*/
-												},
-										        eventClick: function (calEvent, jsEvent, view) {
-										        	if (calEvent.colorFondo === '#EC5869' || calEvent.colorFondo === '#EF890C' ) {
-										        		
-										        		var startDate = new Date(calEvent.start);
-														var formattedStartDate = startDate.toISOString().slice(0, 10);
+													//console.log(allEvents);
+													// Configuración del calendario
+													$('#horarios').fullCalendar({
+														header: {
+															left: 'title'
+														},
+														defaultView: 'month',
+														navLinks: false,
+														editable: false,
+														eventLimit: true,
+														showNonCurrentDates: false,
+														businessHours: {
+															dow: dataEmpleados // días de semana, 0=Domingo
+														},
+														dayRender: function(date, cell) {
+														    var today = moment().startOf('day');
+														    for (var i = 0; i < data.datos.length; i++) {
+														        var eventStart = moment(data.datos[i].start, 'YYYY-MM-DD');
+														        if (date.isSame(eventStart, 'day')) {
+														            cell.css("background-color", data.datos[i].colorFondo);
+														            break;
+														        }
+														    }
+														    console.log(dataVacaciones);
+																/*for (var i = 0; i < data.dataVacaciones.length; i++) {
+																	var eventStart = moment(data.dataVacaciones[i].start).format("YYYY-MM-DD");
+																	var eventEnd = data.dataVacaciones[i].end ? moment(data.dataVacaciones[i].end).format("YYYY-MM-DD") : eventStart;
+																	if (date.isBetween(eventStart, eventEnd, 'day', '[]')) {
+																		cell.css("background-color", data.dataVacaciones.[i].colorFondo);
+																		break; // Si encontramos una coincidencia, salimos del bucle
+																	}
+																}*/
+														},
+												        eventClick: function (calEvent, jsEvent, view) {
+												        	if (calEvent.colorFondo === '#EC5869' || calEvent.colorFondo === '#EF890C' ) {
+												        		
+												        		var startDate = new Date(calEvent.start);
+																var formattedStartDate = startDate.toISOString().slice(0, 10);
 
-										        		if (calEvent.colorFondo === '#EC5869') {
-											            	$('#event-title').text('Justificación del Retardo: '+formattedStartDate);
-											            	$('#hEntrada').html("Entrada registrada: -");
-											            	$('#hSalida').html("Salida registrada: -");
-										        		}
-										        		if (calEvent.colorFondo === '#EF890C') {
-											            	$('#event-title').text('Justificación de la Ausencia: '+formattedStartDate);
-											            	$('#hEntrada').html("Entrada registrada: "+calEvent.hEntrada);
-											            	$('#hSalida').html("Salida registrada: "+calEvent.hSalida);
-										        		}
-											            $('#entrada').html("Entrada Esperada: "+calEvent.entrada);
-											            $('#salida').html("Salida Esperada: "+calEvent.salida);
-											            $('#asistencia').val(calEvent.description);
-											            $('#modal-event').modal();
-											        }
-										        },
-												events: allEvents, // Pasar todos los eventos al calendario
+												        		if (calEvent.colorFondo === '#EC5869') {
+													            	$('#event-title').text('Justificación del Retardo: '+formattedStartDate);
+													            	$('#hEntrada').html("Entrada registrada: -");
+													            	$('#hSalida').html("Salida registrada: -");
+												        		}
+												        		if (calEvent.colorFondo === '#EF890C') {
+													            	$('#event-title').text('Justificación de la Ausencia: '+formattedStartDate);
+													            	$('#hEntrada').html("Entrada registrada: "+calEvent.hEntrada);
+													            	$('#hSalida').html("Salida registrada: "+calEvent.hSalida);
+												        		}
+													            $('#entrada').html("Entrada Esperada: "+calEvent.entrada);
+													            $('#salida').html("Salida Esperada: "+calEvent.salida);
+													            $('#asistencia').val(calEvent.description);
+													            $('#modal-event').modal();
+													        }
+												        },
+														events: allEvents, // Pasar todos los eventos al calendario
+													});
+												},
+												error: function(xhr, status, error) {
+													console.error('Error en la solicitud AJAX de fechas de asistencias:', status, error);
+												}
 											});
 										},
 										error: function(xhr, status, error) {
