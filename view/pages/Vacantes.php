@@ -30,14 +30,15 @@ $i = 0; ?>
 									$suma = ControladorFormularios::ctrSumaPostulantes('Vacantes_idVacantes', $vacante['idVacantes']);
 									$Activador = ModeloFormularios::mdlActivadoresVacantes($vacante['Departamentos_idDepartamentos']);
 									$activadores = array();
-
-									while ($Activador['Pertenencia'] != 0){
-										$activadores[] = array(
-											"idEmpleados" => $Activador['idEmpleados']
-										);
-										$Activador = ModeloFormularios::mdlActivadoresVacantes($Activador['Pertenencia']);
-										$i++;
-									};
+									if ($vacante['Departamentos_idDepartamentos'] == $_SESSION['idDepartamentos']) {
+										while ($Activador['Pertenencia'] != 0){
+											$activadores[] = array(
+												"idEmpleados" => $Activador['idEmpleados']
+											);
+											$Activador = ModeloFormularios::mdlActivadoresVacantes($Activador['Pertenencia']);
+											$i++;
+										};
+									}
 									
 									foreach ($activadores as $activador) {
 										if ($_SESSION['idEmpleado'] == $activador['idEmpleados']) {
