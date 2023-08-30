@@ -141,7 +141,6 @@ jQuery(document).ready(function($) {
             var table = $('table.Postulantes').DataTable({
                 lengthChange: false,
                 dom: 'Bfrtip',
-                scrollY: 350,
                 buttons: [
                     {
                         extend: 'excelHtml5',

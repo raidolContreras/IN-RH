@@ -38,7 +38,7 @@ $i = 0; ?>
 										$Activador = ModeloFormularios::mdlActivadoresVacantes($Activador['Pertenencia']);
 										$i++;
 									};
-
+									
 									foreach ($activadores as $activador) {
 										if ($_SESSION['idEmpleado'] == $activador['idEmpleados']) {
 											$activacion = 1;

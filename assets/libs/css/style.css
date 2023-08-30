@@ -2953,6 +2953,29 @@ Pageheader
 }
 
 
+/*--- btn outline brand --*/
+
+.btn-outline-purple {
+	color: #6f42c1;
+	background-color: transparent;
+	border-color: #6f42c1;
+}
+
+.btn-outline-purple:hover {
+	color: #fff;
+	background-color: #6f42c1;
+	border-color: #6f42c1;
+}
+
+.btn-outline-purple.focus,
+.btn-outline-purple:focus {
+	color: #6f42c1;
+	background-color: transparent;
+	border-color: #6f42c1;
+	box-shadow: 0 0 0 1px rgb(255, 195, 89);
+}
+
+
 /*--- btn outline excel --*/
 
 .btn-outline-excel {

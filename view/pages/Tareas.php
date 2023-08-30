@@ -3,7 +3,6 @@
 	$empleados = ControladorEmpleados::ctrVerEmpleados(null,null);
 	$tareas = ControladorFormularios::ctrVerTareas("Jefe_idEmpleados", $_SESSION['idEmpleado']);
 ?>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <div class="container-fluid dashboard-content">
 	<div class="ecommerce-widget">
 		<div class="row">

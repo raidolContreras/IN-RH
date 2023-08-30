@@ -1,202 +1,150 @@
-<?php 
-
-	$reuniones = ControladorFormularios::ctrVerReuniones("idReuniones", $_GET['reunion']);
-	$postulante = ControladorFormularios::ctrVerPostulantes("idPostulantes", $reuniones['Postulantes_idPostulantes']);
-
+<?php
+$reunionId = isset($_GET['reunion']) ? $_GET['reunion'] : null;
+$isEvaluado = isset($_GET['Evaluado']) && $_GET['Evaluado'] == true;
+$reuniones = ControladorFormularios::ctrVerReuniones("idReuniones", $reunionId);
+$postulante = ControladorFormularios::ctrVerPostulantes("idPostulantes", $reuniones['Postulantes_idPostulantes']);
 ?>
 
-<div class="container-fluid dashboard-content ">
-	<div class="ecommerce-widget">
-		<!-- ============================================================== -->
-		<!-- data table	-->
-		<!-- ============================================================== -->
-		<div class="col-12">
-			<div class="card">
-				<div class="card-body">
-					<div id="form-result"></div>
-					<div class="container">
-						<h1>Encuesta del entrevistador</h1>
+<style>
+    /* Estilos CSS personalizados */
+    .custom-form-label {
+        font-weight: bold;
+    }
 
-						<form method="POST" id="reunion-form">
+    .custom-form-group {
+        margin-bottom: 20px;
+    }
 
-						  <div class="row">
-							<div class="col">
-							  <div class="form-group">
-								<label for="pregunta1">¿Cómo calificaría la preparación del entrevistado para la entrevista?</label>
+    .custom-textarea {
+        resize: none;
+    }
 
-								<?php if (isset($_GET['Evaluado']) && $_GET['Evaluado'] == true): ?>
-								<select class="form-control" id="pregunta1" name="pregunta1" required disabled>
-								  <option value="" disabled>Seleccione una opción</option>
-								  <?php if ($reuniones['pregunta1'] == 1): ?>
-								  <option value="1" selected >Excelente</option>
-								  <?php elseif ($reuniones['pregunta1'] == 2): ?>
-								  <option value="2" selected >Bueno</option>
-								  <?php elseif ($reuniones['pregunta1'] == 3): ?>
-								  <option value="3" selected >Regular</option>
-								  <?php elseif ($reuniones['pregunta1'] == 4): ?>
-								  <option value="4" selected >Malo</option>
-								  <?php elseif ($reuniones['pregunta1'] == 5): ?>
-								  <option value="5" selected >Muy malo</option>
-								  <?php endif ?>
-								</select>
-								<?php else: ?>
-								<select class="form-control" id="pregunta1" name="pregunta1" required>
-								  <option value="" disabled selected>Seleccione una opción</option>
-								  <option value="1">Excelente</option>
-								  <option value="2">Bueno</option>
-								  <option value="3">Regular</option>
-								  <option value="4">Malo</option>
-								  <option value="5">Muy malo</option>
-								</select>
-								<?php endif ?>
-							  </div>
-							</div>
-							<div class="col">
-							  <div class="form-group">
-								<label for="pregunta2">¿Cómo calificaría la actitud del entrevistado durante la entrevista?</label>
+    .custom-card {
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        margin-top: 50px;
+    }
 
-								<?php if (isset($_GET['Evaluado']) && $_GET['Evaluado'] == true): ?>
-								<select class="form-control" id="pregunta2" name="pregunta2" required disabled>
-								  <option value="" disabled>Seleccione una opción</option>
-								  <?php if ($reuniones['pregunta2'] == 1): ?>
-								  <option value="1" selected >Excelente</option>
-								  <?php elseif ($reuniones['pregunta2'] == 2): ?>
-								  <option value="2" selected >Bueno</option>
-								  <?php elseif ($reuniones['pregunta2'] == 3): ?>
-								  <option value="3" selected >Regular</option>
-								  <?php elseif ($reuniones['pregunta2'] == 4): ?>
-								  <option value="4" selected >Malo</option>
-								  <?php elseif ($reuniones['pregunta2'] == 5): ?>
-								  <option value="5" selected >Muy malo</option>
-								  <?php endif ?>
-								</select>
-								<?php else: ?>
-								<select class="form-control" id="pregunta2" name="pregunta2" required>
-								  <option value="" disabled selected>Seleccione una opción</option>
-								  <option value="1">Excelente</option>
-								  <option value="2">Bueno</option>
-								  <option value="3">Regular</option>
-								  <option value="4">Malo</option>
-								  <option value="5">Muy malo</option>
-								</select>
-								<?php endif ?>
-							  </div>
-							</div>
-						  </div>
-						  <div class="row">
-							<div class="col">
-							  <div class="form-group">
-								<label for="pregunta3">¿Cómo calificaría la calidad de las respuestas del entrevistado?</label>
-								<?php if (isset($_GET['Evaluado']) && $_GET['Evaluado'] == true): ?>
-								<select class="form-control" id="pregunta3" name="pregunta3" required disabled>
-								  <option value="" disabled>Seleccione una opción</option>
-								  <?php if ($reuniones['pregunta3'] == 1): ?>
-								  <option value="1" selected >Excelente</option>
-								  <?php elseif ($reuniones['pregunta3'] == 2): ?>
-								  <option value="2" selected >Bueno</option>
-								  <?php elseif ($reuniones['pregunta3'] == 3): ?>
-								  <option value="3" selected >Regular</option>
-								  <?php elseif ($reuniones['pregunta3'] == 4): ?>
-								  <option value="4" selected >Malo</option>
-								  <?php elseif ($reuniones['pregunta3'] == 5): ?>
-								  <option value="5" selected >Muy malo</option>
-								  <?php endif ?>
-								</select>
-								<?php else: ?>
-								<select class="form-control" id="pregunta3" name="pregunta3" required>
-								  <option value="" disabled selected>Seleccione una opción</option>
-								  <option value="1">Excelente</option>
-								  <option value="2">Bueno</option>
-								  <option value="3">Regular</option>
-								  <option value="4">Malo</option>
-								  <option value="5">Muy malo</option>
-								</select>
-								<?php endif ?>
-							  </div>
-							</div>
-							<div class="col">
-							  <div class="form-group">
-								<label for="pregunta4">¿Recomendaría contratar al entrevistado?</label>
-								<?php if (isset($_GET['Evaluado']) && $_GET['Evaluado'] == true): ?>
-							    <select class="form-control" id="pregunta4" name="pregunta4" required disabled>
-							      <option value="" disabled>Seleccione una opción</option>
-							      <?php if ($reuniones['pregunta4'] == 1): ?>
-							        <option value="1" selected>Sí, definitivamente</option>
-							      <?php elseif ($reuniones['pregunta4'] == 2): ?>
-							        <option value="2" selected>No estoy seguro</option>
-							      <?php elseif ($reuniones['pregunta4'] == 3): ?>
-							        <option value="3" selected>No, definitivamente no</option>
-							      <?php endif ?>
-							    </select>
-								<?php else: ?>
-								<select class="form-control" id="pregunta4" name="pregunta4" required>
-								  <option value="" disabled selected>Seleccione una opción</option>
-								  <option value="1">Sí, definitivamente</option>
-								  <option value="2">No estoy seguro</option>
-								  <option value="3">No, definitivamente no</option>
-								</select>
-								<?php endif ?>
-							  </div>
-							</div>
-						  </div>
-						  <div class="row">
-							<div class="col">
-							  <div class="form-group">
-								<label for="comentariosReunion">¿Tiene algún comentario adicional sobre el entrevistado?</label>
-								<?php if (isset($_GET['Evaluado']) && $_GET['Evaluado'] == true): ?>
-								<textarea class="form-control" id="comentariosReunion" name="comentariosReunion" rows="3" disabled><?php echo $reuniones['comentariosReunion'] ?></textarea>
-								<?php else: ?>
-								<textarea class="form-control" id="comentariosReunion" name="comentariosReunion" rows="3"></textarea>
-								<?php endif ?>
-							  </div>
-							</div>
-						  </div>
-						<?php if (isset($_GET['Evaluado']) && $_GET['Evaluado'] == true): ?>
-						<?php else: ?>
-						  <input type="hidden" name="reunion" value="<?php echo $_GET['reunion'] ?>">
-						  <input type="hidden" name="postulante" value="<?php echo $reuniones['Postulantes_idPostulantes'] ?>">
-						  <button id="submit-btn" type="submit" class="btn btn-primary">Enviar</button>
-						</form>
-						<?php endif ?>
-					  </div>
+    .custom-header {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
 
-				</div>
-			</div>
-		</div>
-	</div>
+    .custom-submit-button {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .custom-submit-button:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card custom-card">
+                <div class="card-body">
+                    <div id="form-result"></div>
+                    <h1 class="custom-header">Encuesta del entrevistador</h1>
+
+                    <form method="POST" id="reunion-form">
+                        <div class="custom-form-group">
+                            <label for="pregunta1" class="custom-form-label">Calificación para la preparación del entrevistado</label>
+                            <select class="form-control" id="pregunta1" name="pregunta1" required<?= $isEvaluado ? ' disabled' : '' ?>>
+                                <option value="" disabled <?= $isEvaluado ? '' : 'selected' ?>>Seleccione una opción</option>
+                                <?php for ($i = 1; $i <= 5; $i++): ?>
+                                    <option value="<?= $i ?>" <?= $reuniones['pregunta1'] == $i ? 'selected' : '' ?>>
+                                        <?= ($i == 1) ? 'Excelente' : (($i == 2) ? 'Bueno' : (($i == 3) ? 'Regular' : (($i == 4) ? 'Malo' : 'Muy malo'))) ?>
+                                    </option>
+                                <?php endfor; ?>
+                            </select>
+                        </div>
+                        <div class="custom-form-group">
+                            <label for="pregunta2" class="custom-form-label">Calificación para la actitud del entrevistado</label>
+                            <select class="form-control" id="pregunta2" name="pregunta2" required<?= $isEvaluado ? ' disabled' : '' ?>>
+                                <option value="" disabled <?= $isEvaluado ? '' : 'selected' ?>>Seleccione una opción</option>
+                                <?php for ($i = 1; $i <= 5; $i++): ?>
+                                    <option value="<?= $i ?>" <?= $reuniones['pregunta2'] == $i ? 'selected' : '' ?>>
+                                        <?= ($i == 1) ? 'Excelente' : (($i == 2) ? 'Bueno' : (($i == 3) ? 'Regular' : (($i == 4) ? 'Malo' : 'Muy malo'))) ?>
+                                    </option>
+                                <?php endfor; ?>
+                            </select>
+                        </div>
+                        <div class="custom-form-group">
+                            <label for="pregunta3" class="custom-form-label">Calificación para la calidad de las respuestas</label>
+                            <select class="form-control" id="pregunta3" name="pregunta3" required<?= $isEvaluado ? ' disabled' : '' ?>>
+                                <option value="" disabled <?= $isEvaluado ? '' : 'selected' ?>>Seleccione una opción</option>
+                                <?php for ($i = 1; $i <= 5; $i++): ?>
+                                    <option value="<?= $i ?>" <?= $reuniones['pregunta3'] == $i ? 'selected' : '' ?>>
+                                        <?= ($i == 1) ? 'Excelente' : (($i == 2) ? 'Bueno' : (($i == 3) ? 'Regular' : (($i == 4) ? 'Malo' : 'Muy malo'))) ?>
+                                    </option>
+                                <?php endfor; ?>
+                            </select>
+                        </div>
+                        <div class="custom-form-group">
+                            <label for="pregunta4" class="custom-form-label">¿Recomendaría contratar al entrevistado?</label>
+                            <select class="form-control" id="pregunta4" name="pregunta4" required<?= $isEvaluado ? ' disabled' : '' ?>>
+                                <option value="" disabled <?= $isEvaluado ? '' : 'selected' ?>>Seleccione una opción</option>
+                                <?php for ($i = 1; $i <= 3; $i++): ?>
+                                    <option value="<?= $i ?>" <?= $reuniones['pregunta4'] == $i ? 'selected' : '' ?>>
+                                        <?= ($i == 1) ? 'Sí, definitivamente' : (($i == 2) ? 'No estoy seguro' : 'No, definitivamente no') ?>
+                                    </option>
+                                <?php endfor; ?>
+                            </select>
+                        </div>
+                        <div class="custom-form-group">
+                            <label for="comentariosReunion" class="custom-form-label">Comentarios adicionales sobre el entrevistado</label>
+                            <textarea class="form-control custom-textarea" id="comentariosReunion" name="comentariosReunion" rows="3"<?= $isEvaluado ? ' disabled' : '' ?>><?= $isEvaluado ? $reuniones['comentariosReunion'] : '' ?></textarea>
+                        </div>
+                        <?php if (!$isEvaluado): ?>
+                            <input type="hidden" name="reunion" value="<?= $reunionId ?>">
+                            <input type="hidden" name="postulante" value="<?= $reuniones['Postulantes_idPostulantes'] ?>">
+                            <button id="submit-btn" type="submit" class="btn btn-primary custom-submit-button">Enviar</button>
+                        <?php endif ?>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<?php if (isset($_GET['Evaluado']) && $_GET['Evaluado'] == true): ?>
-<?php else: ?>
+
+<?php if (!$isEvaluado): ?>
 <script>
-	$(document).ready(function() {
-		$("#submit-btn").click(function(event) {
-			event.preventDefault(); // Evitar el envío del formulario por defecto
+    $(document).ready(function() {
+        $("#reunion-form").submit(function(event) {
+            event.preventDefault(); // Evitar el envío del formulario por defecto
 
-			var formData = $("#reunion-form").serialize(); // Obtener los datos del formulario
+            var formData = $(this).serialize(); // Obtener los datos del formulario
 
-			$.ajax({
-				url: "ajax/ajax.formularios.php", // Ruta al archivo PHP que procesará los datos del formulario
-				type: "POST",
-				data: formData,
-				success: function(response) {
-			    if (response.indexOf('ok') !== -1) {
-		        // El servidor ha devuelto "ok" o alguna cadena que contenga "ok"
-		        $("#reunion-form")[0].reset(); // Reiniciar el formulario
-		        $("#form-result").parent().append(`
-		            <div class='alert alert-success'>Se calificó la reunión con éxito</div>
-		        `);
-		        	setTimeout(function() {
-					  window.location.href = "Reuniones&Evaluado=true&reunion=<?php echo $_GET['reunion']; ?>";
-					}, 500);
-		    	}else {
-		        // El servidor ha devuelto algo diferente a "ok"
-		        $("#form-result").parent().append(`
-		            <div class='alert alert-danger'><b>Error</b>, al calificar la reunión, intenta nuevamente</div>
-		        `);
-			    }
-				}
-			});
-		});
-	});
+            $.ajax({
+                url: "ajax/ajax.formularios.php", // Ruta al archivo PHP que procesará los datos del formulario
+                type: "POST",
+                data: formData,
+                success: function(response) {
+                    if (response.indexOf('ok') !== -1) {
+                        // El servidor ha devuelto "ok" o alguna cadena que contenga "ok"
+                        $("#reunion-form")[0].reset(); // Reiniciar el formulario
+                        $("#form-result").parent().append(`
+                            <div class='alert alert-success'>Se calificó la reunión con éxito</div>
+                        `);
+                        setTimeout(function() {
+                            window.location.href = "Reuniones&Evaluado=true&reunion=<?= $reunionId ?>";
+                        }, 500);
+                    } else {
+                        // El servidor ha devuelto algo diferente a "ok"
+                        $("#form-result").parent().append(`
+                            <div class='alert alert-danger'><b>Error</b>, al calificar la reunión, intenta nuevamente</div>
+                        `);
+                    }
+                }
+            });
+        });
+    });
 </script>
 <?php endif ?>
