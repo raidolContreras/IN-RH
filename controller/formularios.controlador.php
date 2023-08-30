@@ -327,6 +327,11 @@ class ControladorFormularios{
 		return $respuesta;
 	}
 
+	static public function ctrDelPostulantes($idPostulante){
+		$respuesta = ModeloFormularios::mdlDelPostulantes($idPostulante);
+		return $respuesta;
+	}
+
 	static public function ctrSumaPostulantes($item, $valor){
 		$tabla = "suma";
 		$respuesta = ModeloFormularios::mdlVerPostulantes($tabla, $item, $valor);

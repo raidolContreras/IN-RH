@@ -95,6 +95,8 @@ class ModeloFormularios{
 
 				}
 
+				$DelPostulante = ControladorFormularios::ctrDelPostulantes($datos['postulante']);
+
 			} else{
 				$puesto = array("namePuesto" => $datos['namePuesto'],
 								"salario" => $datos['salarioPuesto'],
@@ -745,6 +747,37 @@ class ModeloFormularios{
 		$stmt->close();
 		$stmt = null;
 	}
+	static public function mdlDelPostulantes($idPostulante){
+	    $pdo = Conexion::conectar();
+
+	    try {
+	        $pdo->beginTransaction(); // Comenzar una transacción
+
+	        // Primera consulta DELETE
+	        $sql1 = "DELETE FROM postulantes WHERE idPostulantes = :idPostulante1";
+	        $stmt1 = $pdo->prepare($sql1);
+	        $stmt1->bindParam(':idPostulante1', $idPostulante, PDO::PARAM_INT);
+	        $stmt1->execute();
+
+	        // Segunda consulta DELETE
+	        $sql2 = "DELETE FROM documento_postulante WHERE Postulantes_idPostulantes = :idPostulante2";
+	        $stmt2 = $pdo->prepare($sql2);
+	        $stmt2->bindParam(':idPostulante2', $idPostulante, PDO::PARAM_INT);
+	        $stmt2->execute();
+
+	        // Confirmar la transacción
+	        $pdo->commit();
+
+	        return 'ok';
+	    } catch (PDOException $e) {
+	        // En caso de error, deshacer la transacción y manejar el error
+	        $pdo->rollBack();
+	        return 'error: ' . $e->getMessage();
+	    }
+	    
+	    // No es necesario cerrar los statements en este caso
+	}
+
 
 	static public function mdlRegistroPostulante($tabla, $datos){
 		$pdo=Conexion::conectar();
