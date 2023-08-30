@@ -45,10 +45,8 @@ $i = 0; ?>
 											$activacion = 1;
 										}
 									}
-								?>
-									<?php if ($activacion == 1): ?>
-										
-										<?php if ($vacante['aprobado'] != 2): ?>
+									if ($activacion == 1): 
+										if ($vacante['aprobado'] != 2): ?>
 											<tr>
 												<td><?php echo $vacante['nameVacante'] ?></td>
 												<td><?php echo $vacante['nombre_razon_social'] ?></td>
