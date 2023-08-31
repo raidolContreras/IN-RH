@@ -264,9 +264,9 @@ class ModeloFormularios{
 	/*---------- Función hecha para ver a los empleados---------- */
 	static public function mdlVerEmpleados($tabla, $item, $valor){
 		if($item == null && $valor == null){
-			$sql = "SELECT *
-			FROM empleados e 
-			INNER JOIN emergencia m ON e.idEmpleados = m.Empleados_idEmpleados ORDER BY lastname ASC;";
+			$sql = "SELECT *, CONCAT(e.lastname, ' ', e.name) AS nombre
+					FROM empleados e
+					INNER JOIN emergencia m ON e.idEmpleados = m.Empleados_idEmpleados ORDER BY lastname ASC;";
 			$stmt = Conexion::conectar()->prepare($sql);
 			$stmt->execute();
 			return $stmt -> fetchAll();
@@ -2856,6 +2856,70 @@ static public function mdlActualizarNoticia($tabla, $datos)
 		}else{
 			return "error";
 		}
+		$stmt->close();
+		$stmt = null;
+	}
+
+	static public function mdlVerRoles($item, $valor){
+		$pdo =Conexion::conectar();
+		if ($item == null && $valor == null) {
+			$sql = "SELECT * FROM roles";
+			$stmt = $pdo->prepare($sql);
+			$stmt->execute();
+			return $stmt->fetchAll();
+		}else{
+			$sql = "SELECT * FROM roles WHERE $item = :$item";
+			$stmt = $pdo->prepare($sql);
+			$stmt->bindParam(':'.$item, $valor);
+			$stmt->execute();
+			return $stmt->fetch();
+		}
+		$stmt->close();
+		$stmt = null;
+	}
+
+	static public function mdlCrearRol($datos){
+		$pdo =Conexion::conectar();
+		$sql = "INSERT INTO roles(Empleados_idEmpleados, Ver_Empleados, Editar_Empleados, Del_Empleados, Ver_Tareas, Editar_Tareas, Del_Tareas) VALUES (:Empleados_idEmpleados ,:Ver_Empleados ,:Editar_Empleados ,:Del_Empleados ,:Ver_Tareas ,:Editar_Tareas ,:Del_Tareas )";
+
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':Empleados_idEmpleados', $datos['idEmpleados'], PDO::PARAM_INT);
+		$stmt->bindParam(':Ver_Empleados', $datos['Ver_Empleados'], PDO::PARAM_INT);
+		$stmt->bindParam(':Editar_Empleados', $datos['Editar_Empleados'], PDO::PARAM_INT);
+		$stmt->bindParam(':Del_Empleados', $datos['Del_Empleados'], PDO::PARAM_INT);
+		$stmt->bindParam(':Ver_Tareas', $datos['Ver_Tareas'], PDO::PARAM_INT);
+		$stmt->bindParam(':Editar_Tareas', $datos['Editar_Tareas'], PDO::PARAM_INT);
+		$stmt->bindParam(':Del_Tareas', $datos['Del_Tareas'], PDO::PARAM_INT);
+
+		if ($stmt->execute()) {
+			return "ok"; //obtener el ID del empleado recién insertado
+		}else{
+			return 'error';
+		}
+
+		$stmt->close();
+		$stmt = null;
+	}
+
+	static public function mdlActualizarRol($datos){
+		$pdo =Conexion::conectar();
+		$sql = "UPDATE roles SET Ver_Empleados = :Ver_Empleados, Editar_Empleados = :Editar_Empleados, Del_Empleados = :Del_Empleados, Ver_Tareas = :Ver_Tareas, Editar_Tareas = :Editar_Tareas, Del_Tareas = :Del_Tareas  WHERE Empleados_idEmpleados = :Empleados_idEmpleados";
+
+		$stmt = $pdo->prepare($sql);
+		$stmt->bindParam(':Ver_Empleados', $datos['Ver_Empleados'], PDO::PARAM_INT);
+		$stmt->bindParam(':Editar_Empleados', $datos['Editar_Empleados'], PDO::PARAM_INT);
+		$stmt->bindParam(':Del_Empleados', $datos['Del_Empleados'], PDO::PARAM_INT);
+		$stmt->bindParam(':Ver_Tareas', $datos['Ver_Tareas'], PDO::PARAM_INT);
+		$stmt->bindParam(':Editar_Tareas', $datos['Editar_Tareas'], PDO::PARAM_INT);
+		$stmt->bindParam(':Del_Tareas', $datos['Del_Tareas'], PDO::PARAM_INT);
+		$stmt->bindParam(':Empleados_idEmpleados', $datos['idEmpleados'], PDO::PARAM_INT);
+
+		if ($stmt->execute()) {
+			return "ok"; //obtener el ID del empleado recién insertado
+		}else{
+			return 'error';
+		}
+
 		$stmt->close();
 		$stmt = null;
 	}

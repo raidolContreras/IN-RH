@@ -1070,6 +1070,35 @@ class FormulariosAjax{
 		echo $delIncapacidad;
 	}
 
+	public function crearRolesAjax(){
+		$idEmpleados = $this -> idEmpleados;
+		$Ver_Empleados = $this -> Ver_Empleados;
+		$Editar_Empleados = $this -> Editar_Empleados;
+		$Del_Empleados = $this -> Del_Empleados;
+		$Ver_Tareas = $this -> Ver_Tareas;
+		$Editar_Tareas = $this -> Editar_Tareas;
+		$Del_Tareas = $this -> Del_Tareas;
+
+		$datos = array(
+			"idEmpleados" => $idEmpleados,
+			"Ver_Empleados" => $Ver_Empleados,
+			"Editar_Empleados" => $Editar_Empleados,
+			"Del_Empleados" => $Del_Empleados,
+			"Ver_Tareas" => $Ver_Tareas,
+			"Editar_Tareas" => $Editar_Tareas,
+			"Del_Tareas" => $Del_Tareas
+		);
+		$buscarEmpleadoRol = ModeloFormularios::mdlVerRoles("Empleados_idEmpleados", $idEmpleados);
+
+		if (empty($buscarEmpleadoRol)) {
+			$crearRoles = ModeloFormularios::mdlCrearRol($datos);
+			echo $crearRoles;
+		}else{
+			$crearRoles = ModeloFormularios::mdlActualizarRol($datos);
+			echo $crearRoles;
+		}
+	}
+
 }
 
 if(isset($_POST["validate"])){
@@ -2124,4 +2153,24 @@ if (isset($_POST['ramo_seguro']) && $_POST['ramo_seguro'] != "") {
 	$crearIncapacidad -> dias = $dias;
 	$crearIncapacidad -> porcentaje = $porcentaje;
 	$crearIncapacidad -> crearIncapacidadAjax();
+}
+
+if (isset($_POST['empleado-rol'])) {
+	$idEmpleados = $_POST['empleado-rol'];
+	$Ver_Empleados = (isset($_POST['Ver-Empleados'])) ? 1 : 0;
+	$Editar_Empleados = (isset($_POST['Editar-Empleados'])) ? 1 : 0;
+	$Del_Empleados = (isset($_POST['Del-Empleados'])) ? 1 : 0;
+	$Ver_Tareas = (isset($_POST['Ver-Tareas'])) ? 1 : 0;
+	$Editar_Tareas = (isset($_POST['Editar-Tareas'])) ? 1 : 0;
+	$Del_Tareas = (isset($_POST['Del-Tareas'])) ? 1 : 0;
+
+	$crearRoles = new FormulariosAjax();
+	$crearRoles -> idEmpleados = $idEmpleados;
+	$crearRoles -> Ver_Empleados = $Ver_Empleados;
+	$crearRoles -> Editar_Empleados = $Editar_Empleados;
+	$crearRoles -> Del_Empleados = $Del_Empleados;
+	$crearRoles -> Ver_Tareas = $Ver_Tareas;
+	$crearRoles -> Editar_Tareas = $Editar_Tareas;
+	$crearRoles -> Del_Tareas = $Del_Tareas;
+	$crearRoles -> crearRolesAjax();
 }

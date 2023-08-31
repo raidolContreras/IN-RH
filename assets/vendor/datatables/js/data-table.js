@@ -468,6 +468,19 @@ jQuery(document).ready(function($) {
     table.buttons().container().appendTo('#example_wrapper .col-md-6:eq(0)');
   }
 
+  if ($("table.roles").length) {
+    var table = $("table.roles").DataTable({
+      language: {
+        lengthMenu: 'Mostrar _MENU_ resultados por página',
+        zeroRecords: 'Sin resultados - lo siento',
+        info: 'Página _PAGE_ de _PAGES_',
+        infoEmpty: 'No se encontraron registros',
+        infoFiltered: '(Filtrado de _MAX_ registros totales)',
+        search: 'Buscar',
+      }
+    });
+  }
+
 
 });
 function createCellPos( n ){

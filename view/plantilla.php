@@ -89,7 +89,7 @@ session_start();
 				include "pages/navs/sidenav.php"; 
 
 				include "pages/".$_GET["pagina"].".php";
-				echo '<a href="Empresas" class="configuration-button"><i class="fas fa-cog rotate-center"></i></a>';
+				echo '<a href="Configuraciones" class="configuration-button"><i class="fas fa-cog rotate-center"></i></a>';
 
 			}elseif(strpos($_GET["pagina"], "Vacantes-") !== false){
 
@@ -209,7 +209,8 @@ session_start();
 				include "pages/Examenes/".$_GET["pagina"].".php";
 
 			}elseif ($_GET["pagina"] == "Configuraciones-Divisas" ||
-					$_GET["pagina"] == "Configuraciones-Categorias") {
+					$_GET["pagina"] == "Configuraciones-Categorias" ||
+					$_GET["pagina"] == "Configuraciones-Roles") {
 
 				include "pages/navs/navbar.php";
 				include "pages/navs/sidenav.php";
@@ -224,7 +225,7 @@ session_start();
 		include "pages/navs/navbar.php";
 		include "pages/navs/sidenav.php"; 
 		include "pages/Inicio.php";
-		echo '<a href="Empresas" class="configuration-button"><i class="fas fa-cog rotate-center"></i></a>';
+		echo '<a href="Configuraciones" class="configuration-button"><i class="fas fa-cog rotate-center"></i></a>';
 	}
 //	include "pages/navs/footer.php";
 

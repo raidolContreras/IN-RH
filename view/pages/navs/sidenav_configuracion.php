@@ -1,20 +1,22 @@
 <div class="card-side-nav col-xl-2 col-lg-3 col-md-4 col-3 lista-ajustes">
-	<div>
-	<?php if (isset($_GET['pagina']) && in_array($_GET['pagina'], array('Configuraciones-Divisas'))): ?>
-		<a href="Configuraciones-Divisas" class="btn btn-block btn-in-consulting-link active">
-	<?php else: ?>
-		<a href="Configuraciones-Divisas" class="btn btn-block btn-in-consulting-link">
-	<?php endif ?>
-			Divisas
-		</a>
-	</div>
-	<div>
-	<?php if (isset($_GET['pagina']) && in_array($_GET['pagina'], array('Configuraciones-Categorias'))): ?>
-		<a href="Configuraciones-Categorias" class="btn btn-block btn-in-consulting-link active">
-	<?php else: ?>
-		<a href="Configuraciones-Categorias" class="btn btn-block btn-in-consulting-link">
-	<?php endif ?>
-			Categorías
-		</a>
-	</div>
+    <?php
+    // Define un arreglo de páginas y nombres
+    $paginas = array(
+        'Configuraciones-Divisas' => 'Divisas',
+        'Configuraciones-Categorias' => 'Categorías',
+        'Configuraciones-Roles' => 'Roles'
+    );
+
+    // Itera sobre el arreglo de páginas y nombres
+    foreach ($paginas as $pagina => $nombre) {
+        $isActive = (isset($_GET['pagina']) && $_GET['pagina'] === $pagina) ? 'active' : '';
+    ?>
+        <div>
+            <a href="<?php echo $pagina; ?>" class="btn btn-block btn-in-consulting-link <?php echo $isActive; ?>">
+                <?php echo $nombre; ?>
+            </a>
+        </div>
+    <?php
+    }
+    ?>
 </div>
