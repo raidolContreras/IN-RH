@@ -1,3 +1,4 @@
+<?php if (!empty($rol) && $rol['Del_Evaluaciones'] == 1): ?>
 <?php 
 if (isset($_GET['evaluacion'])) {
 	$Evaluaciones = ControladorFormularios::ctrVerEvaluaciones('idExamen', $_GET['evaluacion']);
@@ -77,3 +78,9 @@ function deleteAlert() {
 
 
 </script>
+
+<?php else: ?>
+    <script>
+        window.location.href = 'Evaluaciones';
+    </script>
+<?php endif ?>

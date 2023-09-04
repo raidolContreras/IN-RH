@@ -1,3 +1,5 @@
+<?php if (!empty($rol) && $rol['Ver_Evaluaciones'] == 1): ?>
+
 <?php 
 $preguntas = ControladorFormularios::ctrVerPreguntas(null, null);
 $datos = array();
@@ -46,7 +48,9 @@ foreach ($preguntas as $pregunta) {
 		<div class="card mx-5 menu-ajustes">
 			<div class="card-header row" style="justify-content: space-between; align-items: center;">
 			<h5>Preguntas</h5>
+			<?php if (!empty($rol) && $rol['Editar_Evaluaciones'] == 1): ?>
 			<a class="btn btn-outline-primary rounded" href="AddPregunta&evaluacion=<?php echo $_GET['evaluacion']; ?>">Agregar preguntas</a>
+			<?php endif ?>
 			</div>
 			<div class="card-body">
 			<div class="list-group">
@@ -88,10 +92,12 @@ foreach ($preguntas as $pregunta) {
 			<div class="modal-content">
 				<div class="modal-header">
 					<h3><?php echo $dato['pregunta']; ?></h3>
+					<?php if (!empty($rol) && $rol['Del_Evaluaciones'] == 1 && $rol['Editar_Evaluaciones'] == 1): ?>
 					<a href="EliminarPregunta&pregunta=<?php echo $dato['idPregunta']; ?>&examen=<?php echo $dato['idExamen']; ?>"
 						 class="btn btn-outline-danger rounded">
 						<i class="fas fa-trash"></i>
 					</a>
+					<?php endif ?>
 				</div>
 					<div class="modal-body">
 						<div class="row" style="justify-content: space-between; align-items: center;">
@@ -345,3 +351,9 @@ foreach ($preguntas as $pregunta) {
 			}, 400);
 		}
 </script>
+
+<?php else: ?>
+	<script>
+		window.location.href = 'Evaluaciones_Asignadas';
+	</script>
+<?php endif ?>

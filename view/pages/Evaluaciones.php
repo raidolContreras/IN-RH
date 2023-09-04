@@ -1,3 +1,4 @@
+<?php if (!empty($rol) && $rol['Ver_Evaluaciones'] == 1): ?>
 <?php
 $Evaluaciones = ControladorFormularios::ctrVerEvaluaciones(null, null);
 ?>
@@ -8,11 +9,13 @@ $Evaluaciones = ControladorFormularios::ctrVerEvaluaciones(null, null);
 				<div class="encabezado">
 					Evaluaciones
 				</div>
+				<?php if (!empty($rol) && $rol['Editar_Evaluaciones'] == 1): ?>
 				<div class="float-right">
 					<a href="crearEvaluacion" class="btb btn-success p-2 rounded float-right">
 						Crear evaluación
 					</a>
 				</div>
+				<?php endif ?>
 			</div>
 			<div class="card-body">
 				<div class="table-responsive">
@@ -68,22 +71,26 @@ $Evaluaciones = ControladorFormularios::ctrVerEvaluaciones(null, null);
 												<i class="fas fa-ellipsis-v"></i>
 											</button>
 											<div class="dropdown-menu mr-0" aria-labelledby="dropdownMenuButton">
+												<?php if (!empty($rol) && $rol['Editar_Evaluaciones'] == 1): ?>
 												<a class="IN-dropdown-item" href="crearEvaluacion&evaluacion=<?php echo $Evaluacion['idExamen']; ?>">
 													<i class="fas fa-edit"></i> Editar
 												</a>
 												<a class="IN-dropdown-item" href="AddEmpleados&evaluacion=<?php echo $Evaluacion['idExamen']; ?>">
 													<i class="fas fa-user-plus"></i> Agregar empleados
 												</a>
+												<?php endif ?>
 												<a class="IN-dropdown-item" href="Preguntas&evaluacion=<?php echo $Evaluacion['idExamen']; ?>">
 													<i class="fas fa-clipboard-list"></i> Ver preguntas
 												</a>
 												<a class="IN-dropdown-item" href="Calificaciones&evaluacion=<?php echo $Evaluacion['idExamen']; ?>">
 													<i class="fas fa-tasks"></i> Calificaciones
 												</a>
+												<?php if (!empty($rol) && $rol['Del_Evaluaciones'] == 1): ?>
 												<a class="IN-dropdown-item"
 												href="eliminarExamen&evaluacion=<?php echo $Evaluacion['idExamen']; ?>">
 													<i class="fas fa-trash"></i> Eliminar
 												</a>
+												<?php endif ?>
 											</div>
 										</div>
 									</td>
@@ -96,3 +103,8 @@ $Evaluaciones = ControladorFormularios::ctrVerEvaluaciones(null, null);
 		</div>
 	</div>
 </div>
+<?php else: ?>
+	<script>
+		window.location.href = 'Evaluaciones_Asignadas';
+	</script>
+<?php endif ?>

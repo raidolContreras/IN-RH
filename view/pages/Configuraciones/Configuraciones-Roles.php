@@ -2,6 +2,9 @@
 $Ver_Empleados = 0;
 $Editar_Empleados = 0;
 $Del_Empleados = 0;
+$Ver_Evaluaciones = 0;
+$Editar_Evaluaciones = 0;
+$Del_Evaluaciones = 0;
 $Resumenes_Asistencias = 0;
 $Ajustes_Asistencias = 0;
  ?>
@@ -40,6 +43,9 @@ $Ajustes_Asistencias = 0;
 											$Ver_Empleados = $rol['Ver_Empleados'];
 											$Editar_Empleados = $rol['Editar_Empleados'];
 											$Del_Empleados = $rol['Del_Empleados'];
+											$Ver_Evaluaciones = $rol['Ver_Evaluaciones'];
+											$Editar_Evaluaciones = $rol['Editar_Evaluaciones'];
+											$Del_Evaluaciones = $rol['Del_Evaluaciones'];
 											$Resumenes_Asistencias = $rol['Resumenes_Asistencias'];
 											$Ajustes_Asistencias = $rol['Ajustes_Asistencias'];
 										}
@@ -59,6 +65,9 @@ $Ajustes_Asistencias = 0;
 												data-Ver_Empleados="<?php echo $Ver_Empleados; ?>"
 												data-Editar_Empleados="<?php echo $Editar_Empleados; ?>"
 												data-Del_Empleados="<?php echo $Del_Empleados; ?>"
+												data-Ver_Evaluacion="<?php echo $Ver_Evaluaciones; ?>"
+												data-Editar_Evaluacion="<?php echo $Editar_Evaluaciones; ?>"
+												data-Del_Evaluacion="<?php echo $Del_Evaluaciones; ?>"
 												data-Resumenes_Asistencias="<?php echo $Resumenes_Asistencias; ?>"
 												data-Ajustes_Asistencias="<?php echo $Ajustes_Asistencias; ?>">
 												<i class="fas fa-clipboard-list"></i>
@@ -121,6 +130,25 @@ $Ajustes_Asistencias = 0;
 							<span class="custom-control-label">Ajustes de Asistencias</span>
 						</label>
 					</div>
+					<div class="col-sm-6 mt-3">
+						<p class="subtitulo">Evaluaciones
+						<label class="custom-control custom-checkbox custom-control">
+							<input type="checkbox" id="Marcar-Todos-Evaluaciones" class="custom-control-input">
+							<span class="custom-control-label">Marcar Todos</span>
+						</label></p>
+						<label class="custom-control custom-checkbox custom-control-inline">
+							<input type="checkbox" Name="Ver-Evaluaciones" id="Ver-Evaluaciones" class=" evaluacion-checkbox custom-control-input">
+							<span class="custom-control-label">Ver de Evaluaciones</span>
+						</label>
+						<label class="custom-control custom-checkbox custom-control-inline">
+							<input type="checkbox" Name="Editar-Evaluaciones" id="Editar-Evaluaciones" class=" evaluacion-checkbox custom-control-input" disabled>
+							<span class="custom-control-label">Editar de Evaluaciones</span>
+						</label>
+						<label class="custom-control custom-checkbox custom-control-inline">
+							<input type="checkbox" Name="Del-Evaluaciones" id="Del-Evaluaciones" class=" evaluacion-checkbox custom-control-input" disabled>
+							<span class="custom-control-label">Eliminar de Evaluaciones</span>
+						</label>
+					</div>
 					<input type="hidden" name="empleado-rol" id="empleado-rol">
 				</form>
 			</div>
@@ -139,6 +167,9 @@ $('#rolesModal').on('show.bs.modal', function (event) {
 	var ver_empleados = button.data('ver_empleados');
 	var editar_empleados = button.data('editar_empleados');
 	var del_empleados = button.data('del_empleados');
+	var ver_evaluacion = button.data('ver_evaluacion');
+	var editar_evaluacion = button.data('editar_evaluacion');
+	var del_evaluacion = button.data('del_evaluacion');
 	var resumenes_asistencias = button.data('resumenes_asistencias');
 	var ajustes_asistencias = button.data('ajustes_asistencias');
 	var id = button.data('id');
@@ -167,6 +198,30 @@ $('#rolesModal').on('show.bs.modal', function (event) {
 		modal.find('#Del-Empleados').prop('checked', false);
 		modal.find('#Editar-Empleados').prop('checked', false);
 	}
+
+	
+	if (ver_evaluacion === 1) {
+		modal.find('#Ver-Evaluaciones').prop('checked', true);
+		$('#Editar-Evaluaciones').prop('disabled', false);
+		$('#Del-Evaluaciones').prop('disabled', false);
+		if (editar_evaluacion === 1) {
+			modal.find('#Editar-Evaluaciones').prop('checked', true);
+		}else{
+			modal.find('#Editar-Evaluaciones').prop('checked', false);
+		}
+		if (del_evaluacion === 1) {
+			modal.find('#Del-Evaluaciones').prop('checked', true);
+		}else{
+			modal.find('#Del-Evaluaciones').prop('checked', false);
+		}
+	} else {
+		modal.find('#Ver-Evaluaciones').prop('checked', false);
+		$('#Editar-Evaluaciones').prop('disabled', true);
+		$('#Del-Evaluaciones').prop('disabled', true);
+		modal.find('#Del-Evaluaciones').prop('checked', false);
+		modal.find('#Editar-Evaluaciones').prop('checked', false);
+	}
+
 
 	if (resumenes_asistencias === 1) {
 		modal.find('#Resumenes-Asistencias').prop('checked', true);
@@ -217,14 +272,58 @@ $(document).ready(function() {
 	// Manejar el cambio en los checkboxes individuales de empleados
 	$('.empleado-checkbox').change(function() {
 		var totalEmpleados = $('.empleado-checkbox').length;
-		var totalSeleccionados = $('.empleado-checkbox:checked').length;
+		var totalSeleccionadosEmpleados = $('.empleado-checkbox:checked').length;
 		
 		// Si todos los checkboxes de empleados están seleccionados, marcar el checkbox "Marcar Todos"
-		$('#Marcar-Todos-Empleados').prop('checked', totalSeleccionados === totalEmpleados);
+		$('#Marcar-Todos-Empleados').prop('checked', totalSeleccionadosEmpleados === totalEmpleados);
 		
 		// Habilitar o deshabilitar los checkboxes de acciones basado en la selección de empleados
-		$('#Editar-Empleados').prop('disabled', totalSeleccionados === 0);
-		$('#Del-Empleados').prop('disabled', totalSeleccionados === 0);
+		$('#Editar-Empleados').prop('disabled', totalSeleccionadosEmpleados === 0);
+		$('#Del-Empleados').prop('disabled', totalSeleccionadosEmpleados === 0);
+	});
+
+	$('#Ver-Evaluaciones').change(function() {
+		var isChecked = $(this).prop('checked');
+		if (isChecked) {
+			$('#Editar-Evaluaciones').prop('disabled', false);
+			$('#Del-Evaluaciones').prop('disabled', false);
+		} else {
+			$('#Editar-Evaluaciones').prop('disabled', true);
+			$('#Del-Evaluaciones').prop('disabled', true);
+		}
+	});
+
+	// Verificar el valor inicial al cargar la página
+	var isCheckedInitially = $('#Ver-Evaluaciones').prop('checked');
+	if (isCheckedInitially) {
+		$('#Editar-Evaluaciones').prop('disabled', false);
+		$('#Del-Evaluaciones').prop('disabled', false);
+	} else {
+		$('#Editar-Evaluaciones').prop('disabled', true);
+		$('#Del-Evaluaciones').prop('disabled', true);
+	}
+
+	// Marcar o desmarcar todos los checkboxes de Evaluaciones al hacer clic en "Marcar Todos"
+	$('#Marcar-Todos-Evaluaciones').change(function() {
+		var isChecked = $(this).prop('checked');
+		$('.evaluacion-checkbox').prop('checked', isChecked);
+
+		// Si el checkbox "Marcar Todos" está marcado, habilitar los checkboxes de acciones
+		$('#Editar-Evaluaciones').prop('disabled', !isChecked);
+		$('#Del-Evaluaciones').prop('disabled', !isChecked);
+	});
+
+	// Manejar el cambio en los checkboxes individuales de Evaluaciones
+	$('.evaluacion-checkbox').change(function() {
+		var totalEvaluaciones = $('.evaluacion-checkbox').length;
+		var totalSeleccionadosEvaluaciones = $('.evaluacion-checkbox:checked').length;
+		
+		// Si todos los checkboxes de Evaluaciones están seleccionados, marcar el checkbox "Marcar Todos"
+		$('#Marcar-Todos-Evaluaciones').prop('checked', totalSeleccionadosEvaluaciones === totalEvaluaciones);
+		
+		// Habilitar o deshabilitar los checkboxes de acciones basado en la selección de Evaluaciones
+		$('#Editar-Evaluaciones').prop('disabled', totalSeleccionadosEvaluaciones === 0);
+		$('#Del-Evaluaciones').prop('disabled', totalSeleccionadosEvaluaciones === 0);
 	});
 
 	// Marcar o desmarcar todos los checkboxes de empleados al hacer clic en "Marcar Todos"
@@ -236,10 +335,10 @@ $(document).ready(function() {
 	// Manejar el cambio en los checkboxes individuales de Asistencias
 	$('.Asistencia-checkbox').change(function() {
 		var totalAsistencias = $('.Asistencia-checkbox').length;
-		var totalSeleccionados = $('.Asistencia-checkbox:checked').length;
+		var totalSeleccionadosAsistencias = $('.Asistencia-checkbox:checked').length;
 		
 		// Si todos los checkboxes de Asistencias están seleccionados, marcar el checkbox "Marcar Todos"
-		$('#Marcar-Todos-Asistencias').prop('checked', totalSeleccionados === totalAsistencias);
+		$('#Marcar-Todos-Asistencias').prop('checked', totalSeleccionadosAsistencias === totalAsistencias);
 		
 	});
 });

@@ -97,7 +97,11 @@ $perfil = $primerLetra.$segundaLetra;
 					}
 
 //Menu de Evaluaciones
-					$evaluaciones = array('Evaluaciones', 'Evaluaciones_Asignadas');
+					if (!empty($rol) && $rol['Ver_Evaluaciones'] == 1) {
+						$evaluaciones = array('Evaluaciones', 'Evaluaciones_Asignadas');
+					}else{
+						$evaluaciones = array('Evaluaciones_Asignadas');
+					}
 
 					if (!empty($paginaActual) && in_array($paginaActual, $evaluaciones)) {
 						foreach ($evaluaciones as $pagina) {
