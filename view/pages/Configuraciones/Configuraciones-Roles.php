@@ -15,7 +15,6 @@ $Del_Tareas = 0;
 				<div class="col-xl-10 col-lg-9 col-md-8 col-9" id="horarios">
 					<div class="row mr-4 ml-2 mt-3">
 						<div class="card-header encabezado m-0 p-0">
-							Gestionar permisos del sistema
 						</div>
 					</div>
 					<?php $empleados = ControladorEmpleados::ctrVerEmpleados(null,null); ?>
