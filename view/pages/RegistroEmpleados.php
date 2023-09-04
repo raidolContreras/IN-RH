@@ -1,3 +1,5 @@
+<?php if (!empty($rol) && $rol['Ver_Empleados'] == 1 && $rol['Editar_Empleados'] == 1 ) : ?>
+
 <?php if (isset($_GET['postulante'])){
 	$postulante = ControladorFormularios::ctrVerPostulantes("idPostulantes", $_GET['postulante']);
 	$nombre = $postulante['namePostulante'];
@@ -601,3 +603,8 @@ document.getElementById('cuenta_infonavit').addEventListener('click', function (
 });
 </script>
 
+<?php else: ?>
+	<script>
+		window.location.href = 'Inicio';
+	</script>
+<?php endif ?>

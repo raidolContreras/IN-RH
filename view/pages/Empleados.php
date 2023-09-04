@@ -40,9 +40,13 @@ $empresas = ControladorFormularios::ctrVerEmpresas(null, null);
 					<div class="tab-content" id="myTabContent">
 						<?php if (!empty($empleados)): ?>
 							<div class="tab-pane fade show active" id="card-1" role="tabpanel" aria-labelledby="general">
+								<?php if (!empty($rol) && $rol['Editar_Empleados'] == 1) : ?>
+
 								<a href="RegistroEmpleados" class="btb btn-success p-2 rounded mb-3 float-right">
 									Registrar empleados<i class="fas fa-user-plus ml-2"></i>
 								</a>
+
+								<?php endif ?>
 								<div class="table-responsive">
 									<table id="example" class="table table-striped table-bordered second" style="width:100%; height:100%">
 										<thead>
