@@ -10,6 +10,7 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarNav">
 				<ul class="navbar-nav flex-column">
+					<?php if (!empty($rol) && $rol['Ver_Empleados'] == 1) : ?>
 					<li class="nav-item">
 						<?php if (isset($_GET['pagina']) && in_array($_GET['pagina'], array('Empleados', 'Departamento', 'Nominas', 'Organigrama','RegistroEmpleados'))): ?>
 							<a class="nav-link active" href="Empleados">
@@ -18,6 +19,7 @@
 						<?php endif ?>
 						<i class="fa fa-users"></i>EMPLEADOS</a>
 					</li>
+					<?php endif ?>
 
 					<li class="nav-item">
 						<?php if (isset($_GET['pagina']) && in_array($_GET['pagina'], array('Vacantes', 'Talento'))): ?>

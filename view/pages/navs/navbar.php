@@ -1,6 +1,7 @@
 <!-- ============================================================== -->
 <!-- main wrapper -->
 <!-- ============================================================== -->
+<?php $rol = ModeloFormularios::mdlVerRoles("Empleados_idEmpleados", $_SESSION['idEmpleado']); ?>
 <div class="dashboard-main-wrapper">
 	<?php 
 $primerLetra = strtoupper(substr($_SESSION["name"], 0, 1)); // Extrae la primer letra del texto
@@ -108,22 +109,24 @@ $perfil = $primerLetra.$segundaLetra;
 					}
 
 //Menu de empleados
-					$empleados = array('Empleados', 'Departamento', 'Nominas', 'Organigrama');
+					if (!empty($rol) && $rol['Ver_Empleados'] == 1) {
+						$empleados = array('Empleados', 'Departamento', 'Nominas', 'Organigrama');
 
-					if (!empty($paginaActual) && in_array($paginaActual, $empleados)) {
-						foreach ($empleados as $pagina) {
-							$activeClass = ($paginaActual == $pagina) ? ' active' : '';
-							$marginLeftClass = ($pagina != $empleados[0]) ? ' ml-3' : '';
+						if (!empty($paginaActual) && in_array($paginaActual, $empleados)) {
+							foreach ($empleados as $pagina) {
+								$activeClass = ($paginaActual == $pagina) ? ' active' : '';
+								$marginLeftClass = ($pagina != $empleados[0]) ? ' ml-3' : '';
 
-							echo '<li class="nav-item' . $activeClass . $marginLeftClass . '">';
-							if ($pagina == 'Nominas') {
-								echo '<a href="' . $pagina . '"> Nóminas </a>';
-							}elseif($pagina == 'Departamento'){
-								echo '<a href="' . $pagina . '"> Directivos y jefaturas </a>';
-							}else{
-								echo '<a href="' . $pagina . '">' . ucfirst($pagina) . '</a>';
+								echo '<li class="nav-item' . $activeClass . $marginLeftClass . '">';
+								if ($pagina == 'Nominas') {
+									echo '<a href="' . $pagina . '"> Nóminas </a>';
+								}elseif($pagina == 'Departamento'){
+									echo '<a href="' . $pagina . '"> Directivos y jefaturas </a>';
+								}else{
+									echo '<a href="' . $pagina . '">' . ucfirst($pagina) . '</a>';
+								}
+								echo '</li>';
 							}
-							echo '</li>';
 						}
 					}
 //Menu de empleado individual

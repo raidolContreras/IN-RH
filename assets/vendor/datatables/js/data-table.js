@@ -470,6 +470,7 @@ jQuery(document).ready(function($) {
 
   if ($("table.roles").length) {
     var table = $("table.roles").DataTable({
+      stateSave: true,
       language: {
         lengthMenu: 'Mostrar _MENU_ resultados por página',
         zeroRecords: 'Sin resultados - lo siento',

@@ -1,3 +1,5 @@
+<?php if (!empty($rol) && $rol['Ver_Empleados'] == 1) : ?>
+
 <?php 
 $empleados = ControladorEmpleados::ctrVerEmpleados(null, null); 
 $empresas = ControladorFormularios::ctrVerEmpresas(null, null);
@@ -134,3 +136,8 @@ $empresas = ControladorFormularios::ctrVerEmpresas(null, null);
 		</div>
 	</div>
 </div>
+<?php else: ?>
+	<script>
+		window.location.href = 'Inicio';
+	</script>
+<?php endif ?>
