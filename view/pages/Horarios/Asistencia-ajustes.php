@@ -1,3 +1,4 @@
+<?php if (!empty($rol) && $rol['Ajustes_Asistencias'] == 1): ?>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link rel="stylesheet" href="assets/vendor/multi-select/css/multi-select.css">
 <div class="container-fluid dashboard-content">
@@ -293,3 +294,9 @@ function deleteAlert() {
 }
 
 </script>
+
+<?php else: ?>
+	<script>
+		window.location.href = 'Asistencia';
+	</script>
+<?php endif ?>

@@ -1,3 +1,5 @@
+<?php if (!empty($rol) && $rol['Resumenes_Asistencias'] == 1): ?>
+
 <?php 
 	$idEmpresas = 0;
 $empresas = ControladorFormularios::ctrVerEmpresas(null, null);
@@ -88,3 +90,8 @@ $Total_Horas = ControladorFormularios::ctrTotalHoras($empleado);
 </div>
 <script src="assets/libs/js/exportar_asistencias.js"></script>
 <div id="form-result" class="alerta-flotante"></div>
+<?php else: ?>
+	<script>
+		window.location.href = 'Asistencia';
+	</script>
+<?php endif ?>

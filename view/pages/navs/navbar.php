@@ -62,9 +62,11 @@ $perfil = $primerLetra.$segundaLetra;
 							echo '<li class="nav-item ml-3">';
 							echo '<a href="Asistencia-permisos-vacaciones"> Permisos </a>';
 							echo '</li>';
+							if (!empty($rol) && $rol['Resumenes_Asistencias'] == 1) {
 							echo '<li class="nav-item ml-3">';
 							echo '<a href="Asistencia-resumen"> Resumen de asistencias </a>';
 							echo '</li>';
+							}
 							echo '<li class="nav-item active ml-3">';
 							echo '<a href="' . $paginaActual . '"> Ajustes </a>';
 							echo '</li>';
@@ -73,17 +75,23 @@ $perfil = $primerLetra.$segundaLetra;
 								$activeClass = ($paginaActual == $pagina) ? ' active' : '';
 								$marginLeftClass = ($pagina != $horarios[0]) ? ' ml-3' : '';
 
-								echo '<li class="nav-item' . $activeClass . $marginLeftClass . '">';
 								if ($pagina == 'Asistencia') {
+									echo '<li class="nav-item' . $activeClass . $marginLeftClass . '">';
 									echo '<a href="' . $pagina . '"> Calendario </a>';
-								} elseif ($pagina == 'Asistencia-resumen') {
+									echo '</li>';
+								} elseif ($pagina == 'Asistencia-resumen' && !empty($rol) && $rol['Resumenes_Asistencias'] == 1) {
+									echo '<li class="nav-item' . $activeClass . $marginLeftClass . '">';
 									echo '<a href="' . $pagina . '"> Resumen de asistencias </a>';
-								} elseif ($pagina == 'Asistencia-ajustes') {
+									echo '</li>';
+								} elseif ($pagina == 'Asistencia-ajustes' && !empty($rol) && $rol['Ajustes_Asistencias'] == 1) {
+									echo '<li class="nav-item' . $activeClass . $marginLeftClass . '">';
 									echo '<a href="' . $pagina . '"> Ajustes </a>';
+									echo '</li>';
 								} elseif ($pagina == 'Asistencia-permisos-vacaciones') {
+									echo '<li class="nav-item' . $activeClass . $marginLeftClass . '">';
 									echo '<a href="' . $pagina . '"> Permisos </a>';
+									echo '</li>';
 								}
-								echo '</li>';
 							}
 						}
 					}
