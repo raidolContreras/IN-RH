@@ -4,7 +4,7 @@
     $paginas = array(
         'Configuraciones-Divisas' => 'Divisas',
         'Configuraciones-Categorias' => 'Categorías',
-        'Configuraciones-Roles' => 'Roles'
+        'Configuraciones-Roles' => 'Permisos'
     );
 
     // Itera sobre el arreglo de páginas y nombres

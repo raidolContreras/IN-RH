@@ -130,7 +130,11 @@ $perfil = $primerLetra.$segundaLetra;
 						}
 					}
 //Menu de empleado individual
-					$empleado = array('Empleado', 'Datos');
+					if (!empty($rol) && $rol['Editar_Empleados'] == 1) {
+						$empleado = array('Empleado', 'Datos');
+					}else{
+						$empleado = array('Empleado');
+					}
 
 					if (!empty($paginaActual) && in_array($paginaActual, $empleado)) {
 						foreach ($empleado as $pagina) {

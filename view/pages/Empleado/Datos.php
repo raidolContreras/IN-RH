@@ -1,3 +1,4 @@
+<?php if (!empty($rol) && $rol['Editar_Empleados'] == 1): ?>
 <?php if (isset($_GET['perfil'])){
 	$empleado = ControladorEmpleados::ctrVerEmpleados("idEmpleados", $_GET['perfil']);
 	$puesto = ControladorFormularios::ctrVerPuestos("Empleados_idEmpleados", $_GET['perfil']);
@@ -476,8 +477,7 @@ $(document).ready(function() {
 	$(document).ready(function(){
 		$('[data-toggle="identificacion"]').popover();	 
 	});
-</script>
-<script>
+
 	function showAlert() {
 		var alertContainer = document.getElementById('alertContainer');
 		var alert = document.getElementById('alert');
@@ -533,3 +533,8 @@ estadoSelect.addEventListener('change', function() {
 	}
 });
 </script>
+<?php else: ?>
+	<script>
+		window.location.href = 'Inicio';
+	</script>
+<?php endif ?>

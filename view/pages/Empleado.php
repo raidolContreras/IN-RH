@@ -29,11 +29,13 @@ $causaBaja = array(
 						<?php if (!empty($foto)): ?>
 							<img src="view/fotos/thumbnails/<?php echo $foto['namePhoto'] ?>" alt="User Avatar" class="rounded-circle user-avatar-xxl2">
 						<?php else: ?>
+							<?php if (!empty($rol) && $rol['Editar_Empleados'] == 1): ?>
 							<form method="POST" action="Foto">
 								<button type="submit" class="btn btn-info rounded" name="empleado" value="<?php echo $colaborador['idEmpleados']; ?>">
 									Subir foto
 								</button>
 							</form>
+							<?php endif ?>
 						<?php endif ?>
 					</div>
 					<div class="text-center">
@@ -105,11 +107,13 @@ $causaBaja = array(
 							<?php endif ?>
 						</ul>
 				<?php else: ?>
+					<?php if (!empty($rol) && $rol['Editar_Empleados'] == 1): ?>
 						<div class="container pb-2">
 							<button class="btn btn-outline-primary rounded btn-block " data-toggle="modal" data-target="#contratoModal">
 								<i class="fas fa-plus"></i> Agregar contrato
 							</button>
 						</div>
+					<?php endif ?>
 				<?php endif ?>
 					</div>
 				</div>
@@ -128,25 +132,32 @@ $causaBaja = array(
 							<li><?php echo $credito[5] ?></li>
 						</ul>
 				<?php else: ?>
+					<?php if (!empty($rol) && $rol['Editar_Empleados'] == 1): ?>
 						<div class="container pb-2">
 							<button class="btn btn-outline-primary rounded btn-block " data-toggle="modal" data-target="#creditoModal">
 								<i class="fas fa-plus"></i> Agregar crédito
 							</button>
 						</div>
+					<?php endif ?>
 				<?php endif ?>
 					</div>
 				</div>
 				<div class="card-body border-top">
 					<?php if ($colaborador['eStatus'] == 1): ?>
+
 					<h3 class="font-16 hprofile">Acciones</h3>
 
 						<form method="POST" action="Documento" class="container pb-2">
+						<?php if (!empty($rol) && $rol['Editar_Empleados'] == 1): ?>
 							<button class="btn btn-primary rounded btn-block " name="empleado" value="<?php echo $colaborador['idEmpleados'];?>">
 								<i class="ti-upload"></i> Subir Documentos
 							</button>
+						<?php endif ?>
+						<?php if (!empty($rol) && $rol['Del_Empleados'] == 1): ?>
 							<button type="button" class="btn btn-danger rounded btn-block" data-toggle="modal" data-target="#eliminar">
 								Dar de baja
 							</button>
+						<?php endif ?>
 						</form>
 					<?php else: ?>
 						<h3 class="font-16 hprofile">Motivo de baja</h3>
@@ -161,113 +172,6 @@ $causaBaja = array(
 							</ul>
 						</div>
 					<?php endif ?>
-
-					<div>
-						<div class="container">
-
-							<div class="modal fade" id="eliminar">
-								<div class="modal-dialog modal-lg">
-									<div class="modal-content">
-
-										<div class="modal-header">
-											<h4 class="modal-title">Baja (<?php echo strtoupper($colaborador['name']." ".$colaborador['lastname']); ?>)</h4>
-											<button type="button" class="close" data-dismiss="modal">&times;</button>
-										</div>
-
-											<form method="POST" id="baja-form">
-										<div class="modal-body">
-											<p>Seguro que deseas dar de baja a <?php echo strtoupper($colaborador['name']." ".$colaborador['lastname']); ?>, esta acción <strong>si </strong>puede deshacerse</p>
-												<div class="pb-3">
-													<label for="fecha_baja">Día de la baja</label>
-													<input type="date" class="form-control" min="<?php echo date("Y-m-d", strtotime($colaborador['fecha_contratado'])); ?>" id="fecha_baja" name="fecha_baja" required>
-												</div>
-												<div class="pb-3">
-													<label for="causaBaja">Motivo baja</label>
-													<select class="form-control" tabindex="17" id="causaBaja" name="causaBaja" size="1" style="display: inline;" required>
-														<option>SELECCIONA UN MOTIVO</option>
-														<?php foreach ($causaBaja as $key => $value): ?>
-															<option value="<?php echo $key ?>"><?php echo $value ?></option>
-														<?php endforeach ?>
-													</select>
-												</div>
-												<div class="pb-3">
-													<label for="detalles_baja">Detalla la causa</label>
-													<textarea class="form-control" name="detalles_baja" id="detalles_baja"></textarea>
-												</div>
-													<p class="titulo-tablero" style="display: flex; justify-content: center;">¿Deseas abrir una vacante?</p>
-												<div style="display: flex; justify-content: center;">
-													<label class="custom-control custom-radio custom-control-inline">
-														<input type="radio" name="crear_vacante" class="custom-control-input" value="1" checked><span class="custom-control-label">Sí</span>
-													</label>
-													<label class="custom-control custom-radio custom-control-inline">
-														<input type="radio" name="crear_vacante" class="custom-control-input" value="2"><span class="custom-control-label">No</span>
-													</label>
-												</div>
-										</div>
-
-										<div class="modal-footer">
-											<div class="col-12" id="form-result"></div>
-												<input type="hidden" name="empleado" value="<?php echo $colaborador['idEmpleados'];?>">
-												<input type="hidden" name="EliminarEmpleado" value="1">
-												<button class="btn btn-danger rounded float-right" id="baja-btn" type="button">
-													<i class="fas fa-eraser"></i> Dar de baja
-												</button>
-											</form>
-
-											<button class="btn btn-success rounded float-right" data-dismiss="modal">
-												Cancelar
-											</button>
-
-											<script>
-												
-												$(document).ready(function() {
-													$("#baja-btn").click(function() {
-													var formData = $("#baja-form").serialize(); // Obtener los datos del formulario
-
-														$.ajax({
-															url: "ajax/ajax.formularios.php", // Ruta al archivo PHP que procesará los datos del formulario
-															type: "POST",
-															data: formData,
-															success: function(response) {
-
-																if (response === '"ok"') {
-																	$("#form-result").val("");
-																	$("#form-result").parent().after(`
-																		<div class='alert alert-success'>Empleado eliminado</div>
-																		`);
-																	setTimeout(function() {
-																		location.href="Empleados";
-																	}, 500);
-																}else if (response === '"Error: usuario"') {
-																	$("#form-result").val("");
-																	$("#form-result").parent().after(`
-																		<div class='alert alert-warning'>Empleado no encontrado</div>
-																		`);
-																	setTimeout(function() {
-																		location.href="Empleados";
-																	}, 500);
-																}else{
-																	$("#form-result").val("");
-																	$("#form-result").parent().after(`
-																		<div class='alert alert-danger'><b>Error</b>, no se elimino al empleado, intenta nuevamente</div>
-																		`);
-																}
-
-															}
-														});
-													});
-												});
-
-											</script>
-
-										</div>
-
-									</div>
-								</div>
-							</div>
-
-						</div>
-					</div>
 				</div>
 			</div>
 		</div>
@@ -306,6 +210,64 @@ $causaBaja = array(
 		</div>
 	</div>
 </div>
+
+<?php if (!empty($rol) && $rol['Del_Empleados'] == 1): ?>
+	<div class="modal fade" id="eliminar">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+
+				<div class="modal-header">
+					<h4 class="modal-title">Baja (<?php echo strtoupper($colaborador['name']." ".$colaborador['lastname']); ?>)</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<form method="POST" id="baja-form">
+					<div class="modal-body">
+						<p>Seguro que deseas dar de baja a <?php echo strtoupper($colaborador['name']." ".$colaborador['lastname']); ?>, esta acción <strong>si </strong>puede deshacerse</p>
+						<div class="pb-3">
+							<label for="fecha_baja">Día de la baja</label>
+							<input type="date" class="form-control" min="<?php echo date("Y-m-d", strtotime($colaborador['fecha_contratado'])); ?>" id="fecha_baja" name="fecha_baja" required>
+						</div>
+						<div class="pb-3">
+							<label for="causaBaja">Motivo baja</label>
+							<select class="form-control" tabindex="17" id="causaBaja" name="causaBaja" size="1" style="display: inline;" required>
+								<option>SELECCIONA UN MOTIVO</option>
+								<?php foreach ($causaBaja as $key => $value): ?>
+									<option value="<?php echo $key ?>"><?php echo $value ?></option>
+								<?php endforeach ?>
+							</select>
+						</div>
+						<div class="pb-3">
+							<label for="detalles_baja">Detalla la causa</label>
+							<textarea class="form-control" name="detalles_baja" id="detalles_baja"></textarea>
+						</div>
+						<p class="titulo-tablero" style="display: flex; justify-content: center;">¿Deseas abrir una vacante?</p>
+						<div style="display: flex; justify-content: center;">
+							<label class="custom-control custom-radio custom-control-inline">
+								<input type="radio" name="crear_vacante" class="custom-control-input" value="1" checked><span class="custom-control-label">Sí</span>
+							</label>
+							<label class="custom-control custom-radio custom-control-inline">
+								<input type="radio" name="crear_vacante" class="custom-control-input" value="2"><span class="custom-control-label">No</span>
+							</label>
+						</div>
+					</div>
+
+					<div class="modal-footer">
+						<input type="hidden" name="empleado" value="<?php echo $colaborador['idEmpleados'];?>">
+						<input type="hidden" name="EliminarEmpleado" value="1">
+						<button class="btn btn-danger rounded float-right" id="baja-btn" type="button">
+							<i class="fas fa-eraser"></i> Dar de baja
+						</button>
+						<button class="btn btn-success rounded float-right" data-dismiss="modal">
+							Cancelar
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+<?php endif ?>
+<?php if (!empty($rol) && $rol['Editar_Empleados'] == 1): ?>
 <!-- Modal contrato -->
 <div class="modal fade" id="contratoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-xl" role="document">
@@ -393,7 +355,53 @@ $causaBaja = array(
     </div>
   </div>
 </div>
+<?php endif ?>
 
+<?php if (!empty($rol) && $rol['Del_Empleados'] == 1): ?>
+<script>
+	
+	$(document).ready(function() {
+		$("#baja-btn").click(function() {
+		var formData = $("#baja-form").serialize(); // Obtener los datos del formulario
+
+			$.ajax({
+				url: "ajax/ajax.formularios.php", // Ruta al archivo PHP que procesará los datos del formulario
+				type: "POST",
+				data: formData,
+				success: function(response) {
+
+					if (response === '"ok"') {
+						$("#form-result").val("");
+						$("#form-result").parent().after(`
+							<div class='alert alert-success'>Empleado eliminado</div>
+							`);
+						setTimeout(function() {
+							location.href="Empleados";
+						}, 500);
+					}else if (response === '"Error: usuario"') {
+						$("#form-result").val("");
+						$("#form-result").parent().after(`
+							<div class='alert alert-warning'>Empleado no encontrado</div>
+							`);
+						setTimeout(function() {
+							location.href="Empleados";
+						}, 500);
+					}else{
+						$("#form-result").val("");
+						$("#form-result").parent().after(`
+							<div class='alert alert-danger'><b>Error</b>, no se elimino al empleado, intenta nuevamente</div>
+							`);
+					}
+
+				}
+			});
+		});
+	});
+
+</script>
+<?php endif ?>
+
+<?php if (!empty($rol) && $rol['Editar_Empleados'] == 1): ?>
 <script>
 $(document).ready(function() {
 	$("#contrato-btn").click(function() {
@@ -428,6 +436,7 @@ $(document).ready(function() {
 			}
 		});
 	});
+
 	$("#credito-btn").click(function() {
 		var value = $("#credito-form").serialize(); // Obtener los datos del formulario
 		$.ajax({
@@ -460,8 +469,26 @@ $(document).ready(function() {
 			}
 		});
 	});
-});
+	
+    $('#tipo_contrato').change(function() {
+        var selectedOption = $(this).val();
+        if (selectedOption !== "Contrato por Tiempo Indeterminado") {
+            $('#fin_contrato').prop('disabled', false);
+        } else {
+            $('#fin_contrato').prop('disabled', true);
+            $('#fin_contrato').val(''); // Establecer el valor en una cadena vacía
+        }
+    });
 
+    // Verificar el valor inicial al cargar la página
+    if ($('#tipo_contrato').val() === '') {
+        $('#fin_contrato').prop('disabled', true);
+    }
+});
+</script>
+<?php endif ?>
+
+<script>
 function cargarContenido(pagina) {
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
@@ -481,22 +508,5 @@ function deleteAlert() {
 		});
 	}, 1500);
 }
-
-$(document).ready(function() {
-    $('#tipo_contrato').change(function() {
-        var selectedOption = $(this).val();
-        if (selectedOption !== "Contrato por Tiempo Indeterminado") {
-            $('#fin_contrato').prop('disabled', false);
-        } else {
-            $('#fin_contrato').prop('disabled', true);
-            $('#fin_contrato').val(''); // Establecer el valor en una cadena vacía
-        }
-    });
-
-    // Verificar el valor inicial al cargar la página
-    if ($('#tipo_contrato').val() === '') {
-        $('#fin_contrato').prop('disabled', true);
-    }
-});
 
 </script>

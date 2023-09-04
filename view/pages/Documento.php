@@ -1,3 +1,4 @@
+<?php if (!empty($rol) && $rol['Editar_Empleados'] == 1): ?>
 <?php
 					
 $colaborador = ControladorEmpleados::ctrVerEmpleados( 'idEmpleados',$_POST["empleado"]); 
@@ -105,3 +106,8 @@ if($subir == "ok"){
 	</div> 
 </div>
 </div>
+<?php else: ?>
+	<script>
+		window.location.href = 'Empleados';
+	</script>
+<?php endif ?>

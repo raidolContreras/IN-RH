@@ -15,12 +15,7 @@ $Del_Tareas = 0;
 				<div class="col-xl-10 col-lg-9 col-md-8 col-9" id="horarios">
 					<div class="row mr-4 ml-2 mt-3">
 						<div class="card-header encabezado m-0 p-0">
-							Gestionar categorías
-						</div>
-						<div class="card-header encabezado m-0 p-0">
-							<button type="button" class="btn btn-in-consulting float-right" data-toggle="modal" data-target="#exampleModal">
-								<i class="fas fa-plus-circle"></i> <span>Dar de alta categoría</span>
-							</button>
+							Gestionar permisos del sistema
 						</div>
 					</div>
 					<?php $empleados = ControladorEmpleados::ctrVerEmpleados(null,null); ?>
