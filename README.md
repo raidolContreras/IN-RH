@@ -1,5 +1,7 @@
 # IN-RH: Plataforma de Gestión Integral de Recursos Humanos
 
+![Logotipo de IN-RH](assets/images/logo.png)
+
 IN-RH es una potente plataforma diseñada para simplificar y optimizar la gestión de recursos humanos en tu empresa. Con IN-RH, puedes llevar un control completo de las operaciones relacionadas con tu personal, desde la contratación hasta la generación de informes estratégicos.
 
 ## Características Principales:
