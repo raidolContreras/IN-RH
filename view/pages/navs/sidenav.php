@@ -21,6 +21,7 @@
 					</li>
 					<?php endif ?>
 
+					<?php if (!empty($rol) && $rol['Ver_Reclutamiento'] == 1) : ?>
 					<li class="nav-item">
 						<?php if (isset($_GET['pagina']) && in_array($_GET['pagina'], array('Vacantes', 'Talento'))): ?>
 							<a class="nav-link active" href="Vacantes">
@@ -29,6 +30,7 @@
 						<?php endif ?>
 						<i class="fa fa-bullhorn"></i>RECLUTAMIENTO</a>
 					</li>
+					<?php endif ?>
 
 					<li class="nav-item">
 						<?php if (isset($_GET['pagina']) && in_array($_GET['pagina'], array('Asistencia', 'Asistencia-resumen', 'Asistencia-ajustes'))): ?>

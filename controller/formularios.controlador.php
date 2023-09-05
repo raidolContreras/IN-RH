@@ -270,6 +270,12 @@ class ControladorFormularios{
 		return $registro;
 	}
 	
+	static public function ctrUpdateVacantes($datos){
+		$tabla = "vacantes";
+		$registro = ModeloFormularios::mdlActualizarVacantes($tabla,$datos);	
+		return $registro;
+	}
+	
 	static public function ctrActivarVacante($datos){
 		$tabla = "vacantes";
 		$registro = ModeloFormularios::mdlActivarVacante($tabla,$datos);	
@@ -282,10 +288,10 @@ class ControladorFormularios{
 			if (preg_match('/^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["name"])){
 				$tabla = "vacantes";
 				$datos = array("nameVacante" => $_POST['name'],
-								 "salarioVacante" => $_POST['salario'],
-								 "Departamentos_idDepartamentos" => $_POST['departamento'],
-								 "requisitos" => $_POST['requisitos'],
-								 "idVacante" => $idVacante);
+								"salarioVacante" => $_POST['salario'],
+								"Departamentos_idDepartamentos" => $_POST['departamento'],
+								"requisitos" => $_POST['requisitos'],
+								"idVacante" => $idVacante);
 				$registro = ModeloFormularios::mdlActualizarVacantes($tabla,$datos);
 				if ($registro == 'ok') {
 					return 'ok';

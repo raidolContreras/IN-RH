@@ -1,3 +1,4 @@
+<?php if (!empty($rol) && $rol['Ver_Reclutamiento'] == 1) : ?>
 <?php $vacantes = ControladorFormularios::ctrVerVacantes(null, null); 
 $i = 0; ?>
 <div class="container-fluid dashboard-content ">
@@ -8,9 +9,11 @@ $i = 0; ?>
 		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 			<div class="card">
 				<div class="card-body">
+					<?php if (!empty($rol) && $rol['Editar_Reclutamiento'] == 1): ?>
 					<a href="Vacantes-CrearVacante" class="btb btn-success p-2 rounded mb-3 float-right">
 						Crear Oferta de Empleo <i class="icon-briefcase"></i>
 					</a>
+					<?php endif ?>
 					<div class="table-responsive">
 						<table id="example" class="table table-striped table-bordered Extras" style="width:100%">
 							<thead>
@@ -74,17 +77,25 @@ $i = 0; ?>
 													<?php endif ?>
 												</td>
 												<td>
+													<?php if (!empty($rol) && ($rol['Editar_Reclutamiento'] == 1 || $rol['Del_Reclutamiento'] == 1)): ?>
 													<div class="dropdown">
 														<button class="btn btn-link" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 															<i class="fas fa-ellipsis-v"></i>
 														</button>
 														<div class="dropdown-menu mr-0" aria-labelledby="dropdownMenuButton">
+															<?php if (!empty($rol) && $rol['Editar_Reclutamiento'] == 1): ?>
 															<a class="dropdown-item" href="Vacantes-CrearVacante&Editar=<?php echo $vacante['idVacantes'] ?>"><i class="fas fa-edit"></i> Editar</a>
+															<?php endif ?>
+															<?php if (!empty($rol) && $rol['Del_Reclutamiento'] == 1): ?>
 															<a class="dropdown-item" href="Vacantes-EliminarVacante&Eliminar=<?php echo $vacante['idVacantes'] ?>"><i class="fas fa-trash"></i> Eliminar</a>
+															<?php endif ?>
+															<?php if (!empty($rol) && $rol['Editar_Reclutamiento'] == 1): ?>
 															<a class="dropdown-item" href="Postulacion&vacante=<?php echo $vacante['idVacantes'] ?>">
 															<i class="fas fa-user-plus"></i> Agregar</a>
+															<?php endif ?>
 														</div>
 													</div>
+													<?php endif ?>
 												</td>
 											<?php elseif($vacante['aprobado'] == 0 && $activacion == 1): ?>
 												<td colspan="2">
@@ -179,3 +190,8 @@ $i = 0; ?>
 		}
 	});
 </script>
+<?php else: ?>
+	<script>
+		window.location.href = 'Inicio';
+	</script>
+<?php endif ?>

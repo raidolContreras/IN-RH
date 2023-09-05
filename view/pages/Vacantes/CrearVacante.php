@@ -1,5 +1,28 @@
+<?php if (!empty($rol) && $rol['Ver_Reclutamiento'] == 1): ?>
 <?php
 $empresas = ControladorFormularios::ctrVerEmpresas(null,null);
+
+$nameVacante = '';
+$salarioVacante = 0;
+$requisitos = '';
+$Empresas_idEmpresas = 0;
+$Departamentos_idDepartamentos = 0;
+$nameDepto = '';
+$idVacantes = 0;
+
+if (isset($_GET['Editar'])) {
+	$vacante = ControladorFormularios::ctrVerVacantes('idVacantes', $_GET['Editar']);
+	$nameVacante = $vacante['nameVacante'];
+	$salarioVacante = $vacante['salarioVacante'];
+	$requisitos = $vacante['requisitos'];
+	$Empresas_idEmpresas = $vacante['Empresas_idEmpresas'];
+	$idVacantes = $_GET['Editar'];
+	$Departamentos_idDepartamentos = $vacante['Departamentos_idDepartamentos'];
+	$depto = ControladorFormularios::ctrVerDepartamentos('idDepartamentos',$Departamentos_idDepartamentos);
+	$nameDepto = $depto['nameDepto'];
+}
+
+
 ?>
 <div class="container-fluid dashboard-content ">
 	<div class="container">
@@ -10,13 +33,13 @@ $empresas = ControladorFormularios::ctrVerEmpresas(null,null);
 						<div class="col-md-6">
 							<div class="form-group">
 								<label for="nameVacante" class="col-form-label font-weight-bold">Nombre del puesto:</label>
-								<input type="text" class="form-control" id="nameVacante" value="" name="nameVacante" required>
+								<input type="text" class="form-control" id="nameVacante" value="<?php echo $nameVacante ?>" name="nameVacante" required>
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
 								<label for="salarioVacante" class="col-form-label font-weight-bold">Salario:</label>
-								<input type="text"  maxlength="10" class="form-control" id="salarioVacante" value="" name="salarioVacante" pattern="[0-9]+(\.[0-9]{1,2})?" title="Ingrese un número con hasta dos decimales" required onkeypress="return (event.charCode >= 46 && event.charCode <= 57 && event.charCode != 47)" min="1">
+								<input type="text"  maxlength="10" class="form-control" id="salarioVacante" value="<?php echo $salarioVacante ?>" name="salarioVacante" pattern="[0-9]+(\.[0-9]{1,2})?" title="Ingrese un número con hasta dos decimales" required onkeypress="return (event.charCode >= 46 && event.charCode <= 57 && event.charCode != 47)" min="1">
 							</div>
 						</div>
 						<div class="col-md-6">
@@ -27,7 +50,11 @@ $empresas = ControladorFormularios::ctrVerEmpresas(null,null);
 										Seleccionar empresa
 									</option>
 									<?php foreach ($empresas as $empresa): ?>
+										<?php if ($empresa['idEmpresas'] == $Empresas_idEmpresas): ?>
+											<option value="<?php echo $empresa['idEmpresas']; ?>" selected>
+										<?php else: ?>
 											<option value="<?php echo $empresa['idEmpresas']; ?>">
+										<?php endif ?>
 												<?php echo ucwords(strtolower($empresa['nombre_razon_social']." (".$empresa['rfc'].")")); ?>
 											</option>
 									<?php endforeach ?>
@@ -38,9 +65,14 @@ $empresas = ControladorFormularios::ctrVerEmpresas(null,null);
 							<div class="form-group">
 								<label for="departamentoVacante" class="col-form-label font-weight-bold">Departamento:</label>
 								<select class="form-control" id="departamentoVacante" value="" name="departamentoVacante" required>
+									<?php if ($nameDepto != ''): ?>
+										<option value="<?php echo $Departamentos_idDepartamentos ?>"><?php echo $nameDepto ?></option>
+									<?php else: ?>
 									<option>
 										Selecciona una empresa
 									</option>
+										
+									<?php endif ?>
 								</select>
 							</div>
 						</div>
@@ -49,11 +81,12 @@ $empresas = ControladorFormularios::ctrVerEmpresas(null,null);
 								<label for="requisitosVacante" class="col-form-label font-weight-bold">Requisitos:</label>
 								<!---->
 								<textarea class="form-control texteditor" name="requisitosVacante" id="requisitosVacante" rows="3" required>
-									
+									<?php echo $requisitos; ?>
 								</textarea>
 								<!---->
 							</div>
 						</div>
+						<input type="hidden" name="vacante_creada" value="<?php echo $idVacantes; ?>">
 
 					</div>
 					<div class="form-group float-right">
@@ -128,7 +161,13 @@ $empresas = ControladorFormularios::ctrVerEmpresas(null,null);
 					$("#form-result").html(`
 					<div class='alert alert-success' role="alert" id="alerta">
 					  <i class="fas fa-check-circle"></i>
-					  Nueva vacante registrada.
+					  <?php 
+					  	if (isset($_GET['Editar'])) {
+					  		echo "Vacante actualizada.";
+					  	}else{
+					  		echo "Nueva vacante registrada.";
+					  	}
+					  ?>
 					</div>
 						`);
 					deleteAlert();
@@ -170,3 +209,8 @@ $empresas = ControladorFormularios::ctrVerEmpresas(null,null);
 			}, 1500);
 		}
 </script>
+<?php else: ?>
+	<script>
+		window.location.href = 'Inicio';
+	</script>
+<?php endif ?>

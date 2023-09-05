@@ -11,6 +11,9 @@ $Del_Tareas = 0;
 $Resumenes_Asistencias = 0;
 $Ajustes_Asistencias = 0;
 $Ver_Analisis = 0;
+$Ver_Reclutamiento = 0;
+$Editar_Reclutamiento = 0;
+$Del_Reclutamiento = 0;
  ?>
 <div class="container-fluid dashboard-content">
 	<div class="ecommerce-widget">
@@ -56,6 +59,9 @@ $Ver_Analisis = 0;
 										$Editar_Tareas = $rol['Editar_Tareas'];
 										$Del_Tareas = $rol['Del_Tareas'];
 										$Ver_Analisis = $rol['Ver_Analisis'];
+										$Ver_Reclutamiento = $rol['Ver_Reclutamiento'];
+										$Editar_Reclutamiento = $rol['Editar_Reclutamiento'];
+										$Del_Reclutamiento = $rol['Del_Reclutamiento'];
 									}
 									?>
 									<tr>
@@ -81,7 +87,10 @@ $Ver_Analisis = 0;
 												data-Ver_Tareas="<?php echo $Ver_Tareas; ?>"
 												data-Editar_Tareas="<?php echo $Editar_Tareas; ?>"
 												data-Del_Tareas="<?php echo $Del_Tareas; ?>"
-												data-Ver_Analisis="<?php echo $Ver_Analisis; ?>">
+												data-Ver_Analisis="<?php echo $Ver_Analisis; ?>"
+												data-Ver_Reclutamiento="<?php echo $Ver_Reclutamiento; ?>"
+												data-Editar_Reclutamiento="<?php echo $Editar_Reclutamiento; ?>"
+												data-Del_Reclutamiento="<?php echo $Del_Reclutamiento; ?>">
 												<i class="fas fa-clipboard-list"></i>
 											</button>
 										</td>
@@ -187,6 +196,25 @@ $Ver_Analisis = 0;
 							<span class="custom-control-label">Ver</span>
 						</label></p>
 					</div>
+					<div class="col-sm-6 mt-3">
+						<p class="subtitulo">Reclutamiento
+						<label class="custom-control custom-checkbox custom-control">
+							<input type="checkbox" id="Marcar-Todos-Reclutamiento" class="custom-control-input">
+							<span class="custom-control-label">Marcar Todos</span>
+						</label></p>
+						<label class="custom-control custom-checkbox custom-control-inline">
+							<input type="checkbox" Name="Ver-Reclutamiento" id="Ver-Reclutamiento" class=" reclutamiento-checkbox custom-control-input-look">
+							<span class="custom-control-label">Ver</span>
+						</label>
+						<label class="custom-control custom-checkbox custom-control-inline">
+							<input type="checkbox" Name="Editar-Reclutamiento" id="Editar-Reclutamiento" class=" reclutamiento-checkbox custom-control-input-edit" disabled>
+							<span class="custom-control-label">Editar</span>
+						</label>
+						<label class="custom-control custom-checkbox custom-control-inline">
+							<input type="checkbox" Name="Del-Reclutamiento" id="Del-Reclutamiento" class=" reclutamiento-checkbox custom-control-input-trash" disabled>
+							<span class="custom-control-label">Eliminar</span>
+						</label>
+					</div>
 					<input type="hidden" name="empleado-rol" id="empleado-rol">
 				</form>
 			</div>
@@ -221,6 +249,10 @@ $('#rolesModal').on('show.bs.modal', function (event) {
 	var ajustes_asistencias = button.data('ajustes_asistencias');
 	// Permisos Analisís e informes
 	var ver_analisis =  button.data('ver_analisis');
+	// Permisos Reclutamiento
+	var ver_reclutamiento = button.data('ver_reclutamiento');
+	var editar_reclutamiento = button.data('editar_reclutamiento');
+	var del_reclutamiento = button.data('del_reclutamiento');
 
 	var modal = $(this);
 	modal.find('.modal-title').text('Asignar Roles: ' + recipient);
@@ -311,6 +343,28 @@ $('#rolesModal').on('show.bs.modal', function (event) {
 		modal.find('#Ver-Analisis').prop('checked', true);
 	}else{
 		modal.find('#Ver-Analisis').prop('checked', false);
+	}
+	
+	if (ver_reclutamiento === 1) {
+		modal.find('#Ver-Reclutamiento').prop('checked', true);
+		$('#Editar-Reclutamiento').prop('disabled', false);
+		$('#Del-Reclutamiento').prop('disabled', false);
+		if (editar_reclutamiento === 1) {
+			modal.find('#Editar-Reclutamiento').prop('checked', true);
+		}else{
+			modal.find('#Editar-Reclutamiento').prop('checked', false);
+		}
+		if (del_reclutamiento === 1) {
+			modal.find('#Del-Reclutamiento').prop('checked', true);
+		}else{
+			modal.find('#Del-Reclutamiento').prop('checked', false);
+		}
+	} else {
+		modal.find('#Ver-Reclutamiento').prop('checked', false);
+		$('#Editar-Reclutamiento').prop('disabled', true);
+		$('#Del-Reclutamiento').prop('disabled', true);
+		modal.find('#Del-Reclutamiento').prop('checked', false);
+		modal.find('#Editar-Reclutamiento').prop('checked', false);
 	}
 });
 
@@ -424,7 +478,6 @@ $(document).ready(function() {
 		$('#Editar-Tareas').prop('disabled', true);
 		$('#Del-Tareas').prop('disabled', true);
 	}
-
 	// Marcar o desmarcar todos los checkboxes de Tareas al hacer clic en "Marcar Todos"
 	$('#Marcar-Todos-Tareas').change(function() {
 		var isChecked = $(this).prop('checked');
@@ -446,6 +499,50 @@ $(document).ready(function() {
 		// Habilitar o deshabilitar los checkboxes de acciones basado en la selección de Tareas
 		$('#Editar-Tareas').prop('disabled', totalSeleccionadosTareas === 0);
 		$('#Del-Tareas').prop('disabled', totalSeleccionadosTareas === 0);
+	});
+
+	$('#Ver-Reclutamiento').change(function() {
+		var isChecked = $(this).prop('checked');
+		if (isChecked) {
+			$('#Editar-Reclutamiento').prop('disabled', false);
+			$('#Del-Reclutamiento').prop('disabled', false);
+		} else {
+			$('#Editar-Reclutamiento').prop('disabled', true);
+			$('#Del-Reclutamiento').prop('disabled', true);
+		}
+	});
+
+	// Verificar el valor inicial al cargar la página
+	var isCheckedInitially = $('#Ver-Reclutamiento').prop('checked');
+	if (isCheckedInitially) {
+		$('#Editar-Reclutamiento').prop('disabled', false);
+		$('#Del-Reclutamiento').prop('disabled', false);
+	} else {
+		$('#Editar-Reclutamiento').prop('disabled', true);
+		$('#Del-Reclutamiento').prop('disabled', true);
+	}
+
+	// Marcar o desmarcar todos los checkboxes de Reclutamiento al hacer clic en "Marcar Todos"
+	$('#Marcar-Todos-Reclutamiento').change(function() {
+		var isChecked = $(this).prop('checked');
+		$('.reclutamiento-checkbox').prop('checked', isChecked);
+
+		// Si el checkbox "Marcar Todos" está marcado, habilitar los checkboxes de acciones
+		$('#Editar-Reclutamiento').prop('disabled', !isChecked);
+		$('#Del-Reclutamiento').prop('disabled', !isChecked);
+	});
+
+	// Manejar el cambio en los checkboxes individuales de Reclutamiento
+	$('.reclutamiento-checkbox').change(function() {
+		var totalReclutamiento = $('.reclutamiento-checkbox').length;
+		var totalSeleccionadosReclutamiento = $('.reclutamiento-checkbox:checked').length;
+		
+		// Si todos los checkboxes de Reclutamiento están seleccionados, marcar el checkbox "Marcar Todos"
+		$('#Marcar-Todos-Reclutamiento').prop('checked', totalSeleccionadosReclutamiento === totalReclutamiento);
+		
+		// Habilitar o deshabilitar los checkboxes de acciones basado en la selección de Reclutamiento
+		$('#Editar-Reclutamiento').prop('disabled', totalSeleccionadosReclutamiento === 0);
+		$('#Del-Reclutamiento').prop('disabled', totalSeleccionadosReclutamiento === 0);
 	});
 
 	// Marcar o desmarcar todos los checkboxes de empleados al hacer clic en "Marcar Todos"

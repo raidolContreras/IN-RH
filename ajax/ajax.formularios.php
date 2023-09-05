@@ -532,6 +532,25 @@ class FormulariosAjax{
 		echo $registro;
 	}
 
+	public function updateVacanteAjax(){
+		$nameVacante = $this->nameVacante;
+		$salarioVacante = $this->salarioVacante;
+		$empresaVacante = $this->empresaVacante;
+		$departamentoVacante = $this->departamentoVacante;
+		$requisitosVacante = $this->requisitosVacante;
+		$idVacantes = $this->idVacantes;
+		$datos = array(
+			"nameVacante" => $nameVacante,
+			"salarioVacante" => $salarioVacante,
+			"empresaVacante" => $empresaVacante,
+			"Departamentos_idDepartamentos" => $departamentoVacante,
+			"requisitos" => $requisitosVacante,
+			"idVacante" => $idVacantes
+		);
+		$registro = ControladorFormularios::ctrUpdateVacantes($datos);
+		echo $registro;
+	}
+
 	public function activarVacante(){
 		$idVacantes = $this->idVacantes;
 		$valor = $this->valor;
@@ -1084,6 +1103,9 @@ class FormulariosAjax{
 		$Editar_Tareas = $this -> Editar_Tareas;
 		$Del_Tareas = $this -> Del_Tareas;
 		$Ver_Analisis = $this -> Ver_Analisis;
+		$Ver_Reclutamiento = $this -> Ver_Reclutamiento;
+		$Editar_Reclutamiento = $this -> Editar_Reclutamiento;
+		$Del_Reclutamiento = $this -> Del_Reclutamiento;
 
 		$datos = array(
 			"idEmpleados" => $idEmpleados,
@@ -1098,7 +1120,10 @@ class FormulariosAjax{
 			"Ver_Tareas" => $Ver_Tareas,
 			"Editar_Tareas" => $Editar_Tareas,
 			"Del_Tareas" => $Del_Tareas,
-			"Ver_Analisis" => $Ver_Analisis
+			"Ver_Analisis" => $Ver_Analisis,
+			"Ver_Reclutamiento" => $Ver_Reclutamiento,
+			"Editar_Reclutamiento" => $Editar_Reclutamiento,
+			"Del_Reclutamiento" => $Del_Reclutamiento
 		);
 		$buscarEmpleadoRol = ModeloFormularios::mdlVerRoles("Empleados_idEmpleados", $idEmpleados);
 
@@ -1490,7 +1515,7 @@ if (isset($_POST['resultadoTarea'])) {
 	$asignarTarea -> finalizarTareaAjax();
 }
 
-if (isset($_POST['nameVacante'])) {
+if (isset($_POST['vacante_creada'])) {
 	if (preg_match('/^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["nameVacante"])){
 
 		$nameVacante = $_POST['nameVacante'];
@@ -1498,6 +1523,7 @@ if (isset($_POST['nameVacante'])) {
 		$empresaVacante = $_POST['empresaVacante'];
 		$departamentoVacante = $_POST['departamentoVacante'];
 		$requisitosVacante = $_POST['requisitosVacante'];
+		$idVacantes = $_POST['vacante_creada'];
 
 		$crearVacante = new FormulariosAjax();
 		$crearVacante -> nameVacante = $nameVacante;
@@ -1505,7 +1531,12 @@ if (isset($_POST['nameVacante'])) {
 		$crearVacante -> empresaVacante = $empresaVacante;
 		$crearVacante -> departamentoVacante = $departamentoVacante;
 		$crearVacante -> requisitosVacante = $requisitosVacante;
-		$crearVacante -> crearVacanteAjax();
+		$crearVacante -> idVacantes = $idVacantes;
+		if ($idVacantes == 0) {
+			$crearVacante -> crearVacanteAjax();
+		}else{
+			$crearVacante -> updateVacanteAjax();
+		}
 
 	}else{
 		echo "2";
@@ -2181,6 +2212,9 @@ if (isset($_POST['empleado-rol'])) {
 	$Editar_Tareas = (isset($_POST['Editar-Tareas'])) ? 1 : 0;
 	$Del_Tareas = (isset($_POST['Del-Tareas'])) ? 1 : 0;
 	$Ver_Analisis = (isset($_POST['Ver-Analisis'])) ? 1 : 0;
+	$Ver_Reclutamiento = (isset($_POST['Ver-Reclutamiento'])) ? 1 : 0;
+	$Editar_Reclutamiento = (isset($_POST['Editar-Reclutamiento'])) ? 1 : 0;
+	$Del_Reclutamiento = (isset($_POST['Del-Reclutamiento'])) ? 1 : 0;
 
 	$crearRoles = new FormulariosAjax();
 	$crearRoles -> idEmpleados = $idEmpleados;
@@ -2196,5 +2230,8 @@ if (isset($_POST['empleado-rol'])) {
 	$crearRoles -> Editar_Tareas = $Editar_Tareas;
 	$crearRoles -> Del_Tareas = $Del_Tareas;
 	$crearRoles -> Ver_Analisis = $Ver_Analisis;
+	$crearRoles -> Ver_Reclutamiento = $Ver_Reclutamiento;
+	$crearRoles -> Editar_Reclutamiento = $Editar_Reclutamiento;
+	$crearRoles -> Del_Reclutamiento = $Del_Reclutamiento;
 	$crearRoles -> crearRolesAjax();
 }
