@@ -1,4 +1,4 @@
-
+<?php if (!empty($rol) && $rol['Ver_Analisis'] == 1): ?>
 <style>
     #gastosChart {
         width: 100%;
@@ -198,3 +198,8 @@
 
     </div>
 </div>
+<?php else: ?>
+    <script>
+        window.location.href = 'Inicio';
+    </script>
+<?php endif ?>

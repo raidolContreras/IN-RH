@@ -1,3 +1,4 @@
+<?php if (!empty($rol) && $rol['Ver_Analisis'] == 1): ?>
 <section class="dashboard-content">
 	<div class="container">
 		<div class="card rounded-card">
@@ -121,3 +122,8 @@
 		</div>
 	</div>
 </section>
+<?php else: ?>
+	<script>
+		window.location.href = 'Inicio';
+	</script>
+<?php endif ?>

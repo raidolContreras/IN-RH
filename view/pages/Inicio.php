@@ -58,6 +58,7 @@
 							</div>
 						</div>
 					</div>
+					<?php if (!empty($rol) && $rol['Ver_Tareas'] == 1) : ?>
 					<div class="col-xl-12 order-xl-4 order-lg-3">
 						<div class="card">
 							<div class="float-right" style="z-index: 2 !important;" id="justify-result">
@@ -67,6 +68,7 @@
 							</div>
 						</div>
 					</div>
+					<?php endif ?>
 					<div class="col-xl-12 order-xl-6 order-lg-5">
 						<div class="card">
 							<div class="float-right" style="z-index: 2 !important;" id="justify-result">
@@ -108,14 +110,19 @@ foreach ($tareas as $tarea):
 	$documentos = ControladorFormularios::ctrVerDocumentosTareas($tarea['idTareas']);
 	$nombre = mb_strtoupper($empleado['lastname']." ".$empleado['name']);
 	?>
+	<?php if (!empty($rol) && $rol['Ver_Tareas'] == 1) : ?>
 	<div class="modal fade" id="tarea<?php echo $tarea['idTareas'] ?>">
 		<div class="modal-dialog modal-xl">
 			<div class="modal-content">
 				<div class="modal-header" style="align-items: center;">
 					<h3 class="ml-2 mt-3">Detalles de la tarea</h3>
 					<div>
+						<?php if (!empty($rol) && $rol['Editar_Tareas'] == 1) : ?>
 						<a href="#" class=""><i class="fas fa-edit"></i></a>
+						<?php endif ?>
+						<?php if (!empty($rol) && $rol['Del_Tareas'] == 1) : ?>
 						<a href="#" class="px-2 "><i class="fas fa-trash"></i></a>
+						<?php endif ?>
 					</div>
 				</div>
 				<div class="modal-header">
@@ -237,6 +244,7 @@ foreach ($tareas as $tarea):
 			</div>
 		</div>
 	</div>
+	<?php endif ?>
 <?php endforeach ?>
 <?php 
 $encargos = ControladorFormularios::ctrVerTareas("Empleados_idEmpleados", $_SESSION['idEmpleado']);

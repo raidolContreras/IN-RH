@@ -1,3 +1,4 @@
+<?php if (!empty($rol) && $rol['Ver_Analisis'] == 1): ?>
 <?php $gastos = ControladorAnalisis::gasto(null); ?>
 <style>
     #gastosChart {
@@ -168,3 +169,8 @@
     };
     xhr.send();
 </script>
+<?php else: ?>
+    <script>
+        window.location.href = 'Inicio';
+    </script>
+<?php endif ?>

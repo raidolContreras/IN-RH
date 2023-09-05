@@ -1,3 +1,4 @@
+<?php if (!empty($rol) && $rol['Ver_Tareas'] == 1) : ?>
 <?php 
 	$empresas = ControladorFormularios::ctrVerEmpresas(null,null);
 	$empleados = ControladorEmpleados::ctrVerEmpleados(null,null);
@@ -69,58 +70,60 @@
 					</div>
 				</div>
 			</div>
+			<?php if (!empty($rol) && $rol['Editar_Tareas'] == 1) : ?>
 			<div class="col-xl-4">
 				<div class="card p-3">
-						<form id="tarea-form">
-							<div class="row">
-								<div class="col-xl-12">
-									<label for="nameTarea">Nombre de la tarea</label>
-									<input type="text" id="nameTarea" name="nameTarea" class="form-control" required>
-								</div>
-								<div class="col-xl-12 mt-2">
-									<label for="descripcion">Descripción de la tarea</label>
-									<textarea id="descripcion" name="descripcion" class="form-control" required></textarea>
-								</div>
-								
-								<div class="col-xl-12 mt-2">
-									<label for="empresa" class="col-form-label font-weight-bold">Empresa:</label>
-									<select class="form-control form-control-lg" id="empresa" name="empresasSeleccion" required>
-										<option>
-											Seleccionar empresa
-										</option>
-									<?php foreach ($empresas as $empresa): ?>
-										<?php if ($empresasSelect['idEmpresas'] == $empresa['idEmpresas']): ?>
-										<option value="<?php echo $empresa['idEmpresas']; ?>" selected>
-											<?php echo mb_strtoupper($empresa['nombre_razon_social']." (".$empresa['rfc'].")"); ?>
-										</option>
-										<?php else: ?>
-										<option value="<?php echo $empresa['idEmpresas']; ?>">
-											<?php echo mb_strtoupper($empresa['nombre_razon_social']." (".$empresa['rfc'].")"); ?>
-										</option>
-										<?php endif ?>
-									<?php endforeach ?>
-									</select>
-								</div>
-
-								<div class="col-xl-12 mt-2">
-									<label for="empleado">Asignado a</label>
-									<select type="text" id="empleado" name="empleado" class="form-control" required>
-										<option>
-											Selecciona una empresa
-										</option>
-									</select>
-								</div>
-								<div class="col-xl-12 mt-2">
-									<label for="vencimiento">Vencimiento</label>
-									<input type="date" id="vencimiento" name="vencimiento" class="form-control" min="<?php echo date('Y-m-d'); ?>" required>
-								</div>
+					<form id="tarea-form">
+						<div class="row">
+							<div class="col-xl-12">
+								<label for="nameTarea">Nombre de la tarea</label>
+								<input type="text" id="nameTarea" name="nameTarea" class="form-control" required>
 							</div>
-						</form>
-						<div class="col-xl-12 mt-2">
-							<button class="btn btn-outline-primary btn-block rounded" id="submit-btn" type="button">Asignar tarea</button>
+							<div class="col-xl-12 mt-2">
+								<label for="descripcion">Descripción de la tarea</label>
+								<textarea id="descripcion" name="descripcion" class="form-control" required></textarea>
+							</div>
+							
+							<div class="col-xl-12 mt-2">
+								<label for="empresa" class="col-form-label font-weight-bold">Empresa:</label>
+								<select class="form-control form-control-lg" id="empresa" name="empresasSeleccion" required>
+									<option>
+										Seleccionar empresa
+									</option>
+								<?php foreach ($empresas as $empresa): ?>
+									<?php if ($empresasSelect['idEmpresas'] == $empresa['idEmpresas']): ?>
+									<option value="<?php echo $empresa['idEmpresas']; ?>" selected>
+										<?php echo mb_strtoupper($empresa['nombre_razon_social']." (".$empresa['rfc'].")"); ?>
+									</option>
+									<?php else: ?>
+									<option value="<?php echo $empresa['idEmpresas']; ?>">
+										<?php echo mb_strtoupper($empresa['nombre_razon_social']." (".$empresa['rfc'].")"); ?>
+									</option>
+									<?php endif ?>
+								<?php endforeach ?>
+								</select>
+							</div>
+
+							<div class="col-xl-12 mt-2">
+								<label for="empleado">Asignado a</label>
+								<select type="text" id="empleado" name="empleado" class="form-control" required>
+									<option>
+										Selecciona una empresa
+									</option>
+								</select>
+							</div>
+							<div class="col-xl-12 mt-2">
+								<label for="vencimiento">Vencimiento</label>
+								<input type="date" id="vencimiento" name="vencimiento" class="form-control" min="<?php echo date('Y-m-d'); ?>" required>
+							</div>
 						</div>
+					</form>
+					<div class="col-xl-12 mt-2">
+						<button class="btn btn-outline-primary btn-block rounded" id="submit-btn" type="button">Asignar tarea</button>
+					</div>
 				</div>
 			</div>
+			<?php endif ?>
 		</div>
 	</div>
 </div>
@@ -137,8 +140,12 @@ foreach ($tareas as $tarea):
 				<div class="modal-header" style="align-items: center;">
 					<h3 class="ml-2 mt-3">Detalles de la tarea</h3>
 					<div>
+						<?php if (!empty($rol) && $rol['Editar_Tareas'] == 1) : ?>
 						<a href="#" class=""><i class="fas fa-edit"></i></a>
+						<?php endif ?>
+						<?php if (!empty($rol) && $rol['Del_Tareas'] == 1) : ?>
 						<a href="#" class="px-2 "><i class="fas fa-trash"></i></a>
+						<?php endif ?>
 					</div>
 				</div>
 				<div class="modal-header">
@@ -355,3 +362,9 @@ $(document).ready(function() {
 		}, 1500);
 	}
 </script>
+
+<?php else: ?>
+	<script>
+		window.location.href = 'Inicio';
+	</script>
+<?php endif ?>

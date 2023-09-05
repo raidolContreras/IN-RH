@@ -1,3 +1,4 @@
+<?php if (!empty($rol) && $rol['Ver_Analisis'] == 1): ?>
 <?php 
 $edades = ControladorAnalisis::edad();
 $labels = ['Menores de 18', '18 a 25', '26 a 35', '36 a 45', '46 a 55', '55+'];
@@ -173,3 +174,8 @@ foreach ($edades as $edad) {
 
     actualizarGrafico(data,empresa);
 </script>
+<?php else: ?>
+    <script>
+        window.location.href = 'Inicio';
+    </script>
+<?php endif ?>

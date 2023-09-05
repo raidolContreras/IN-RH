@@ -1080,6 +1080,10 @@ class FormulariosAjax{
 		$Del_Evaluaciones = $this -> Del_Evaluaciones;
 		$Resumenes_Asistencias = $this -> Resumenes_Asistencias;
 		$Ajustes_Asistencias = $this -> Ajustes_Asistencias;
+		$Ver_Tareas = $this -> Ver_Tareas;
+		$Editar_Tareas = $this -> Editar_Tareas;
+		$Del_Tareas = $this -> Del_Tareas;
+		$Ver_Analisis = $this -> Ver_Analisis;
 
 		$datos = array(
 			"idEmpleados" => $idEmpleados,
@@ -1090,7 +1094,11 @@ class FormulariosAjax{
 			"Editar_Evaluaciones" => $Editar_Evaluaciones,
 			"Del_Evaluaciones" => $Del_Evaluaciones,
 			"Resumenes_Asistencias" => $Resumenes_Asistencias,
-			"Ajustes_Asistencias" => $Ajustes_Asistencias
+			"Ajustes_Asistencias" => $Ajustes_Asistencias,
+			"Ver_Tareas" => $Ver_Tareas,
+			"Editar_Tareas" => $Editar_Tareas,
+			"Del_Tareas" => $Del_Tareas,
+			"Ver_Analisis" => $Ver_Analisis
 		);
 		$buscarEmpleadoRol = ModeloFormularios::mdlVerRoles("Empleados_idEmpleados", $idEmpleados);
 
@@ -2169,6 +2177,10 @@ if (isset($_POST['empleado-rol'])) {
 	$Del_Evaluaciones = (isset($_POST['Del-Evaluaciones'])) ? 1 : 0;
 	$Resumenes_Asistencias = (isset($_POST['Resumenes-Asistencias'])) ? 1 : 0;
 	$Ajustes_Asistencias = (isset($_POST['Ajustes-Asistencias'])) ? 1 : 0;
+	$Ver_Tareas = (isset($_POST['Ver-Tareas'])) ? 1 : 0;
+	$Editar_Tareas = (isset($_POST['Editar-Tareas'])) ? 1 : 0;
+	$Del_Tareas = (isset($_POST['Del-Tareas'])) ? 1 : 0;
+	$Ver_Analisis = (isset($_POST['Ver-Analisis'])) ? 1 : 0;
 
 	$crearRoles = new FormulariosAjax();
 	$crearRoles -> idEmpleados = $idEmpleados;
@@ -2180,5 +2192,9 @@ if (isset($_POST['empleado-rol'])) {
 	$crearRoles -> Del_Evaluaciones = $Del_Evaluaciones;
 	$crearRoles -> Resumenes_Asistencias = $Resumenes_Asistencias;
 	$crearRoles -> Ajustes_Asistencias = $Ajustes_Asistencias;
+	$crearRoles -> Ver_Tareas = $Ver_Tareas;
+	$crearRoles -> Editar_Tareas = $Editar_Tareas;
+	$crearRoles -> Del_Tareas = $Del_Tareas;
+	$crearRoles -> Ver_Analisis = $Ver_Analisis;
 	$crearRoles -> crearRolesAjax();
 }

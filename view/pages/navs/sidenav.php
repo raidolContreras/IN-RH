@@ -38,7 +38,8 @@
 						<?php endif ?>
 							<i class="fas fa-pencil-alt"></i>REGISTRO DE HORAS</a>
 					</li>
-
+					
+					<?php if (!empty($rol) && $rol['Ver_Tareas'] == 1) : ?>
 					<li class="nav-item">
 						<?php if (isset($_GET['pagina']) && in_array($_GET['pagina'], array('Tareas', 'Tareas-ajustes'))): ?>
 							<a class="nav-link active" href="Tareas">
@@ -47,6 +48,7 @@
 						<?php endif ?>
 						<i class="fa fa-tasks"></i>TAREAS</a>
 					</li>
+					<?php endif ?>
 
 					<li class="nav-item">
 						<?php if (isset($_GET['pagina']) && in_array($_GET['pagina'], array('Evaluaciones', 'Preguntas', 'Evaluaciones_Asignadas', 'Examen', 'AddEmpleados', 'crearEvaluacion', 'eliminarExamen'))): ?>
@@ -66,6 +68,7 @@
 						<i class="fas fa-money-bill-alt"></i>GASTOS</a>
 					</li>
 
+					<?php if (!empty($rol) && $rol['Ver_Analisis'] == 1) : ?>
 					<li class="nav-item">
 						<?php if (isset($_GET['pagina']) && in_array($_GET['pagina'], array('Analisis'))): ?>
 							<a class="nav-link active" href="Analisis">
@@ -74,6 +77,7 @@
 						<?php endif ?>
 						<i class="fas fa-chart-bar"></i>ANALISÍS E INFORMES</a>
 					</li>
+					<?php endif ?>
 
 					<li class="nav-item">
 						<a class="nav-link" href="#"><i class="fa fa-graduation-cap"></i>CURSOS Y CAPACITACIONES</a>

@@ -1,3 +1,4 @@
+<?php if (!empty($rol) && $rol['Ver_Analisis'] == 1): ?>
 <?php $empleados = ControladorAnalisis::empleados(); ?>
 
 <div class="container-fluid dashboard-content ">
@@ -161,5 +162,8 @@
     };
     xhr.send();
 </script>
-
-<!-- Resto de tu HTML existente ... -->
+<?php else: ?>
+    <script>
+        window.location.href = 'Inicio';
+    </script>
+<?php endif ?>

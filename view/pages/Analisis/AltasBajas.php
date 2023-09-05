@@ -1,3 +1,4 @@
+<?php if (!empty($rol) && $rol['Ver_Analisis'] == 1): ?>
 <?php $altasBajas = ControladorAnalisis::altasBajas(); 
 $altas = array();
 $bajas = array();
@@ -169,3 +170,8 @@ foreach ($altasBajas as $altaBaja) {
     // Llamada AJAX para obtener datos y actualizar el gráfico
     actualizarGrafico(<?php echo json_encode($altas); ?>, <?php echo json_encode($bajas); ?>);
 </script>
+<?php else: ?>
+    <script>
+        window.location.href = 'Inicio';
+    </script>
+<?php endif ?>

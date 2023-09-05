@@ -5,8 +5,12 @@ $Del_Empleados = 0;
 $Ver_Evaluaciones = 0;
 $Editar_Evaluaciones = 0;
 $Del_Evaluaciones = 0;
+$Ver_Tareas = 0;
+$Editar_Tareas = 0;
+$Del_Tareas = 0;
 $Resumenes_Asistencias = 0;
 $Ajustes_Asistencias = 0;
+$Ver_Analisis = 0;
  ?>
 <div class="container-fluid dashboard-content">
 	<div class="ecommerce-widget">
@@ -22,7 +26,7 @@ $Ajustes_Asistencias = 0;
 					</div>
 					<?php $empleados = ControladorEmpleados::ctrVerEmpleados(null,null); ?>
 					<div class="card-body">
-						<div class="table-responsive">
+						<div class="table-responsive p-2">
 							<table class="table roles">
 								<thead>
 									<tr>
@@ -34,29 +38,33 @@ $Ajustes_Asistencias = 0;
 									</tr>
 								</thead>
 								<tbody>
-									<?php foreach ($empleados as $empleado): 
-										$puestos = ControladorFormularios::ctrVerPuestos("Empleados_idEmpleados", $empleado['idEmpleados']);
-										$departamentos = ControladorFormularios::ctrVerDepartamentos("idDepartamentos", $puestos['Departamentos_idDepartamentos']);
-										$empresas = ControladorFormularios::ctrVerEmpresas("idEmpresas", $departamentos['Empresas_idEmpresas']);
-										$rol = ModeloFormularios::mdlVerRoles("Empleados_idEmpleados", $empleado['idEmpleados']);
-										if (!empty($rol)) {
-											$Ver_Empleados = $rol['Ver_Empleados'];
-											$Editar_Empleados = $rol['Editar_Empleados'];
-											$Del_Empleados = $rol['Del_Empleados'];
-											$Ver_Evaluaciones = $rol['Ver_Evaluaciones'];
-											$Editar_Evaluaciones = $rol['Editar_Evaluaciones'];
-											$Del_Evaluaciones = $rol['Del_Evaluaciones'];
-											$Resumenes_Asistencias = $rol['Resumenes_Asistencias'];
-											$Ajustes_Asistencias = $rol['Ajustes_Asistencias'];
-										}
-										?>
-										<tr>
-											<td><?php echo mb_strtoupper($empleado['nombre']); ?></td>
-											<td><?php echo mb_strtoupper($puestos['namePuesto']); ?></td>
-											<td><?php echo mb_strtoupper($departamentos['nameDepto']); ?></td>
-											<td><?php echo mb_strtoupper($empresas['nombre_razon_social']); ?></td>
-											<td>
-												<button
+								<?php foreach ($empleados as $empleado): 
+									$puestos = ControladorFormularios::ctrVerPuestos("Empleados_idEmpleados", $empleado['idEmpleados']);
+									$departamentos = ControladorFormularios::ctrVerDepartamentos("idDepartamentos", $puestos['Departamentos_idDepartamentos']);
+									$empresas = ControladorFormularios::ctrVerEmpresas("idEmpresas", $departamentos['Empresas_idEmpresas']);
+									$rol = ModeloFormularios::mdlVerRoles("Empleados_idEmpleados", $empleado['idEmpleados']);
+									if (!empty($rol)) {
+										$Ver_Empleados = $rol['Ver_Empleados'];
+										$Editar_Empleados = $rol['Editar_Empleados'];
+										$Del_Empleados = $rol['Del_Empleados'];
+										$Ver_Evaluaciones = $rol['Ver_Evaluaciones'];
+										$Editar_Evaluaciones = $rol['Editar_Evaluaciones'];
+										$Del_Evaluaciones = $rol['Del_Evaluaciones'];
+										$Resumenes_Asistencias = $rol['Resumenes_Asistencias'];
+										$Ajustes_Asistencias = $rol['Ajustes_Asistencias'];
+										$Ver_Tareas = $rol['Ver_Tareas'];
+										$Editar_Tareas = $rol['Editar_Tareas'];
+										$Del_Tareas = $rol['Del_Tareas'];
+										$Ver_Analisis = $rol['Ver_Analisis'];
+									}
+									?>
+									<tr>
+										<td><?php echo mb_strtoupper($empleado['nombre']); ?></td>
+										<td><?php echo mb_strtoupper($puestos['namePuesto']); ?></td>
+										<td><?php echo mb_strtoupper($departamentos['nameDepto']); ?></td>
+										<td><?php echo mb_strtoupper($empresas['nombre_razon_social']); ?></td>
+										<td>
+											<button
 												class="btn btn-outline-purple rounded btn-block"
 												data-toggle="modal"
 												data-target="#rolesModal"
@@ -69,20 +77,24 @@ $Ajustes_Asistencias = 0;
 												data-Editar_Evaluacion="<?php echo $Editar_Evaluaciones; ?>"
 												data-Del_Evaluacion="<?php echo $Del_Evaluaciones; ?>"
 												data-Resumenes_Asistencias="<?php echo $Resumenes_Asistencias; ?>"
-												data-Ajustes_Asistencias="<?php echo $Ajustes_Asistencias; ?>">
+												data-Ajustes_Asistencias="<?php echo $Ajustes_Asistencias; ?>"
+												data-Ver_Tareas="<?php echo $Ver_Tareas; ?>"
+												data-Editar_Tareas="<?php echo $Editar_Tareas; ?>"
+												data-Del_Tareas="<?php echo $Del_Tareas; ?>"
+												data-Ver_Analisis="<?php echo $Ver_Analisis; ?>">
 												<i class="fas fa-clipboard-list"></i>
 											</button>
 										</td>
 									</tr>
 								<?php endforeach ?>
-							</tbody>
-						</table>
+								</tbody>
+							</table>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
 </div>
 <!-- Modal de Asignar Roles -->
 <div class="modal fade" id="rolesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -103,16 +115,16 @@ $Ajustes_Asistencias = 0;
 							<span class="custom-control-label">Marcar Todos</span>
 						</label></p>
 						<label class="custom-control custom-checkbox custom-control-inline">
-							<input type="checkbox" Name="Ver-Empleados" id="Ver-Empleados" class="empleado-checkbox custom-control-input">
-							<span class="custom-control-label">Ver Empleados</span>
+							<input type="checkbox" Name="Ver-Empleados" id="Ver-Empleados" class="empleado-checkbox custom-control-input-look">
+							<span class="custom-control-label">Ver</span>
 						</label>
 						<label class="custom-control custom-checkbox custom-control-inline">
-							<input type="checkbox" Name="Editar-Empleados" id="Editar-Empleados" class="empleado-checkbox custom-control-input" disabled>
-							<span class="custom-control-label">Editar Empleados</span>
+							<input type="checkbox" Name="Editar-Empleados" id="Editar-Empleados" class="empleado-checkbox custom-control-input-edit" disabled>
+							<span class="custom-control-label">Editar</span>
 						</label>
 						<label class="custom-control custom-checkbox custom-control-inline">
-							<input type="checkbox" Name="Del-Empleados" id="Del-Empleados" class="empleado-checkbox custom-control-input" disabled>
-							<span class="custom-control-label">Eliminar Empleados</span>
+							<input type="checkbox" Name="Del-Empleados" id="Del-Empleados" class="empleado-checkbox custom-control-input-trash" disabled>
+							<span class="custom-control-label">Eliminar</span>
 						</label>
 					</div>
 					<div class="col-sm-6">
@@ -122,12 +134,12 @@ $Ajustes_Asistencias = 0;
 							<span class="custom-control-label">Marcar Todos</span>
 						</label></p>
 						<label class="custom-control custom-checkbox custom-control-inline">
-							<input type="checkbox" Name="Resumenes-Asistencias" id="Resumenes-Asistencias" class=" Asistencia-checkbox custom-control-input">
-							<span class="custom-control-label">Resumenes de Asistencias</span>
+							<input type="checkbox" Name="Resumenes-Asistencias" id="Resumenes-Asistencias" class=" Asistencia-checkbox custom-control-input-look">
+							<span class="custom-control-label">Resumenes</span>
 						</label>
 						<label class="custom-control custom-checkbox custom-control-inline">
-							<input type="checkbox" Name="Ajustes-Asistencias" id="Ajustes-Asistencias" class=" Asistencia-checkbox custom-control-input">
-							<span class="custom-control-label">Ajustes de Asistencias</span>
+							<input type="checkbox" Name="Ajustes-Asistencias" id="Ajustes-Asistencias" class=" Asistencia-checkbox custom-control-input-look">
+							<span class="custom-control-label">Ajustes</span>
 						</label>
 					</div>
 					<div class="col-sm-6 mt-3">
@@ -137,17 +149,43 @@ $Ajustes_Asistencias = 0;
 							<span class="custom-control-label">Marcar Todos</span>
 						</label></p>
 						<label class="custom-control custom-checkbox custom-control-inline">
-							<input type="checkbox" Name="Ver-Evaluaciones" id="Ver-Evaluaciones" class=" evaluacion-checkbox custom-control-input">
-							<span class="custom-control-label">Ver de Evaluaciones</span>
+							<input type="checkbox" Name="Ver-Evaluaciones" id="Ver-Evaluaciones" class=" evaluacion-checkbox custom-control-input-look">
+							<span class="custom-control-label">Ver</span>
 						</label>
 						<label class="custom-control custom-checkbox custom-control-inline">
-							<input type="checkbox" Name="Editar-Evaluaciones" id="Editar-Evaluaciones" class=" evaluacion-checkbox custom-control-input" disabled>
-							<span class="custom-control-label">Editar de Evaluaciones</span>
+							<input type="checkbox" Name="Editar-Evaluaciones" id="Editar-Evaluaciones" class=" evaluacion-checkbox custom-control-input-edit" disabled>
+							<span class="custom-control-label">Editar</span>
 						</label>
 						<label class="custom-control custom-checkbox custom-control-inline">
-							<input type="checkbox" Name="Del-Evaluaciones" id="Del-Evaluaciones" class=" evaluacion-checkbox custom-control-input" disabled>
-							<span class="custom-control-label">Eliminar de Evaluaciones</span>
+							<input type="checkbox" Name="Del-Evaluaciones" id="Del-Evaluaciones" class=" evaluacion-checkbox custom-control-input-trash" disabled>
+							<span class="custom-control-label">Eliminar</span>
 						</label>
+					</div>
+					<div class="col-sm-6 mt-3">
+						<p class="subtitulo">Tareas
+						<label class="custom-control custom-checkbox custom-control">
+							<input type="checkbox" id="Marcar-Todos-Tareas" class="custom-control-input">
+							<span class="custom-control-label">Marcar Todos</span>
+						</label></p>
+						<label class="custom-control custom-checkbox custom-control-inline">
+							<input type="checkbox" Name="Ver-Tareas" id="Ver-Tareas" class=" tareas-checkbox custom-control-input-look">
+							<span class="custom-control-label">Ver</span>
+						</label>
+						<label class="custom-control custom-checkbox custom-control-inline">
+							<input type="checkbox" Name="Editar-Tareas" id="Editar-Tareas" class=" tareas-checkbox custom-control-input-edit" disabled>
+							<span class="custom-control-label">Editar</span>
+						</label>
+						<label class="custom-control custom-checkbox custom-control-inline">
+							<input type="checkbox" Name="Del-Tareas" id="Del-Tareas" class=" tareas-checkbox custom-control-input-trash" disabled>
+							<span class="custom-control-label">Eliminar</span>
+						</label>
+					</div>
+					<div class="col-sm-6 mt-3">
+						<p class="subtitulo">Análisis
+						<label class="custom-control custom-checkbox custom-control">
+							<input type="checkbox" Name="Ver-Analisis" id="Ver-Analisis" class="custom-control-input-look">
+							<span class="custom-control-label">Ver</span>
+						</label></p>
 					</div>
 					<input type="hidden" name="empleado-rol" id="empleado-rol">
 				</form>
@@ -163,16 +201,27 @@ $Ajustes_Asistencias = 0;
 <script>
 $('#rolesModal').on('show.bs.modal', function (event) {
 	var button = $(event.relatedTarget);
+
+	var id = button.data('id');
 	var recipient = button.data('name');
+	// Permisos Empleados
 	var ver_empleados = button.data('ver_empleados');
 	var editar_empleados = button.data('editar_empleados');
 	var del_empleados = button.data('del_empleados');
+	// Permisos Evaluaciones
 	var ver_evaluacion = button.data('ver_evaluacion');
 	var editar_evaluacion = button.data('editar_evaluacion');
 	var del_evaluacion = button.data('del_evaluacion');
+	// Permisos Tareas
+	var ver_tareas =  button.data('ver_tareas');
+	var editar_tareas =  button.data('editar_tareas');
+	var del_tareas =  button.data('del_tareas');
+	// Permisos Asistencias
 	var resumenes_asistencias = button.data('resumenes_asistencias');
 	var ajustes_asistencias = button.data('ajustes_asistencias');
-	var id = button.data('id');
+	// Permisos Analisís e informes
+	var ver_analisis =  button.data('ver_analisis');
+
 	var modal = $(this);
 	modal.find('.modal-title').text('Asignar Roles: ' + recipient);
 	modal.find('#empleado-rol').val(id);
@@ -222,6 +271,29 @@ $('#rolesModal').on('show.bs.modal', function (event) {
 		modal.find('#Editar-Evaluaciones').prop('checked', false);
 	}
 
+	
+	if (ver_tareas === 1) {
+		modal.find('#Ver-Tareas').prop('checked', true);
+		$('#Editar-Tareas').prop('disabled', false);
+		$('#Del-Tareas').prop('disabled', false);
+		if (editar_tareas === 1) {
+			modal.find('#Editar-Tareas').prop('checked', true);
+		}else{
+			modal.find('#Editar-Tareas').prop('checked', false);
+		}
+		if (del_tareas === 1) {
+			modal.find('#Del-Tareas').prop('checked', true);
+		}else{
+			modal.find('#Del-Tareas').prop('checked', false);
+		}
+	} else {
+		modal.find('#Ver-Tareas').prop('checked', false);
+		$('#Editar-Tareas').prop('disabled', true);
+		$('#Del-Tareas').prop('disabled', true);
+		modal.find('#Del-Tareas').prop('checked', false);
+		modal.find('#Editar-Tareas').prop('checked', false);
+	}
+
 
 	if (resumenes_asistencias === 1) {
 		modal.find('#Resumenes-Asistencias').prop('checked', true);
@@ -233,6 +305,12 @@ $('#rolesModal').on('show.bs.modal', function (event) {
 		modal.find('#Ajustes-Asistencias').prop('checked', true);
 	}else{
 		modal.find('#Ajustes-Asistencias').prop('checked', false);
+	}
+	
+	if (ver_analisis === 1) {
+		modal.find('#Ver-Analisis').prop('checked', true);
+	}else{
+		modal.find('#Ver-Analisis').prop('checked', false);
 	}
 });
 
@@ -324,6 +402,50 @@ $(document).ready(function() {
 		// Habilitar o deshabilitar los checkboxes de acciones basado en la selección de Evaluaciones
 		$('#Editar-Evaluaciones').prop('disabled', totalSeleccionadosEvaluaciones === 0);
 		$('#Del-Evaluaciones').prop('disabled', totalSeleccionadosEvaluaciones === 0);
+	});
+
+	$('#Ver-Tareas').change(function() {
+		var isChecked = $(this).prop('checked');
+		if (isChecked) {
+			$('#Editar-Tareas').prop('disabled', false);
+			$('#Del-Tareas').prop('disabled', false);
+		} else {
+			$('#Editar-Tareas').prop('disabled', true);
+			$('#Del-Tareas').prop('disabled', true);
+		}
+	});
+
+	// Verificar el valor inicial al cargar la página
+	var isCheckedInitially = $('#Ver-Tareas').prop('checked');
+	if (isCheckedInitially) {
+		$('#Editar-Tareas').prop('disabled', false);
+		$('#Del-Tareas').prop('disabled', false);
+	} else {
+		$('#Editar-Tareas').prop('disabled', true);
+		$('#Del-Tareas').prop('disabled', true);
+	}
+
+	// Marcar o desmarcar todos los checkboxes de Tareas al hacer clic en "Marcar Todos"
+	$('#Marcar-Todos-Tareas').change(function() {
+		var isChecked = $(this).prop('checked');
+		$('.tareas-checkbox').prop('checked', isChecked);
+
+		// Si el checkbox "Marcar Todos" está marcado, habilitar los checkboxes de acciones
+		$('#Editar-Tareas').prop('disabled', !isChecked);
+		$('#Del-Tareas').prop('disabled', !isChecked);
+	});
+
+	// Manejar el cambio en los checkboxes individuales de Tareas
+	$('.tareas-checkbox').change(function() {
+		var totalTareas = $('.tareas-checkbox').length;
+		var totalSeleccionadosTareas = $('.tareas-checkbox:checked').length;
+		
+		// Si todos los checkboxes de Tareas están seleccionados, marcar el checkbox "Marcar Todos"
+		$('#Marcar-Todos-Tareas').prop('checked', totalSeleccionadosTareas === totalTareas);
+		
+		// Habilitar o deshabilitar los checkboxes de acciones basado en la selección de Tareas
+		$('#Editar-Tareas').prop('disabled', totalSeleccionadosTareas === 0);
+		$('#Del-Tareas').prop('disabled', totalSeleccionadosTareas === 0);
 	});
 
 	// Marcar o desmarcar todos los checkboxes de empleados al hacer clic en "Marcar Todos"

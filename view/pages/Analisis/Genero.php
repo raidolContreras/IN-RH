@@ -1,3 +1,4 @@
+<?php if (!empty($rol) && $rol['Ver_Analisis'] == 1): ?>
 <?php
 $generos = ControladorAnalisis::genero();
 
@@ -177,3 +178,8 @@ foreach ($generos as $genero) {
     // Llamada AJAX para obtener datos y actualizar el gráfico
     actualizarGrafico(<?php echo json_encode($masculinos); ?>, <?php echo json_encode($femeninos); ?>);
 </script>
+<?php else: ?>
+    <script>
+        window.location.href = 'Inicio';
+    </script>
+<?php endif ?>

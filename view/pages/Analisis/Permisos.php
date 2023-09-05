@@ -1,6 +1,5 @@
+<?php if (!empty($rol) && $rol['Ver_Analisis'] == 1): ?>
 <?php $permisos = ControladorAnalisis::permisos(); ?>
-<!-- Tu HTML existente ... -->
-
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
@@ -175,5 +174,8 @@
 	};
 	xhrPermisos.send();
 </script>
-
-<!-- Resto de tu HTML existente ... -->
+<?php else: ?>
+	<script>
+		window.location.href = 'Inicio';
+	</script>
+<?php endif ?>

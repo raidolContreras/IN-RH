@@ -1,3 +1,4 @@
+<?php if (!empty($rol) && $rol['Ver_Analisis'] == 1): ?>
 <div class="container-fluid dashboard-content">
 	<div class="card col-12 p-4 row">
 <?php
@@ -202,3 +203,8 @@ actualizarGrafico(<?php echo json_encode($creditosT); ?>);
 <?php endif ?>
 	</div>
 </div>
+<?php else: ?>
+	<script>
+		window.location.href = 'Inicio';
+	</script>
+<?php endif ?>
