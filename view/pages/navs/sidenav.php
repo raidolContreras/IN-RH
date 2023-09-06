@@ -80,6 +80,16 @@
 						<i class="fas fa-chart-bar"></i>ANALISÍS E INFORMES</a>
 					</li>
 					<?php endif ?>
+					<?php if (!empty($rol) && $rol['Ver_Empleados'] == 0) : ?>
+					<li class="nav-item">
+						<?php if (isset($_GET['pagina']) && in_array($_GET['pagina'], array('Organigrama'))): ?>
+							<a class="nav-link active" href="Organigrama">
+						<?php else: ?>
+							<a class="nav-link" href="Organigrama">
+						<?php endif ?>
+						<i class="fa fa-users"></i>ORGANIGRAMA</a>
+					</li>
+					<?php endif ?>
 
 					<li class="nav-item">
 						<a class="nav-link" href="#"><i class="fa fa-graduation-cap"></i>CURSOS Y CAPACITACIONES</a>

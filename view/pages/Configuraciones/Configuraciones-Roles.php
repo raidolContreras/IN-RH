@@ -17,6 +17,7 @@ $Ver_Analisis = 0;
 $Ver_Reclutamiento = 0;
 $Editar_Reclutamiento = 0;
 $Del_Reclutamiento = 0;
+$Ver_Organigramas = 0;
  ?>
 <div class="container-fluid dashboard-content">
 	<div class="ecommerce-widget">
@@ -68,6 +69,7 @@ $Del_Reclutamiento = 0;
 										$Ver_Reclutamiento = $rol['Ver_Reclutamiento'];
 										$Editar_Reclutamiento = $rol['Editar_Reclutamiento'];
 										$Del_Reclutamiento = $rol['Del_Reclutamiento'];
+										$Ver_Organigramas = $rol['Ver_Organigramas'];
 									}
 									?>
 									<tr>
@@ -99,7 +101,8 @@ $Del_Reclutamiento = 0;
 												data-Ver_Analisis="<?php echo $Ver_Analisis; ?>"
 												data-Ver_Reclutamiento="<?php echo $Ver_Reclutamiento; ?>"
 												data-Editar_Reclutamiento="<?php echo $Editar_Reclutamiento; ?>"
-												data-Del_Reclutamiento="<?php echo $Del_Reclutamiento; ?>">
+												data-Del_Reclutamiento="<?php echo $Del_Reclutamiento; ?>"
+												data-Ver_Organigramas="<?php echo $Ver_Organigramas; ?>">
 												<i class="fas fa-clipboard-list"></i>
 											</button>
 										</td>
@@ -218,13 +221,6 @@ $Del_Reclutamiento = 0;
 						</label>
 					</div>
 					<div class="col-sm-6 mt-3">
-						<p class="subtitulo">Análisis
-						<label class="custom-control custom-checkbox custom-control">
-							<input type="checkbox" Name="Ver-Analisis" id="Ver-Analisis" class="custom-control-input-look">
-							<span class="custom-control-label">Ver</span>
-						</label></p>
-					</div>
-					<div class="col-sm-6 mt-3">
 						<p class="subtitulo">Reclutamiento
 						<label class="custom-control custom-checkbox custom-control">
 							<input type="checkbox" id="Marcar-Todos-Reclutamiento" class="custom-control-input">
@@ -242,6 +238,20 @@ $Del_Reclutamiento = 0;
 							<input type="checkbox" Name="Del-Reclutamiento" id="Del-Reclutamiento" class=" reclutamiento-checkbox custom-control-input-trash" disabled>
 							<span class="custom-control-label">Eliminar</span>
 						</label>
+					</div>
+					<div class="col-sm-6 mt-3">
+						<p class="subtitulo">Análisis
+						<label class="custom-control custom-checkbox custom-control">
+							<input type="checkbox" Name="Ver-Analisis" id="Ver-Analisis" class="custom-control-input-look">
+							<span class="custom-control-label">Ver</span>
+						</label></p>
+					</div>
+					<div class="col-sm-6 mt-3">
+						<p class="subtitulo">Organigramas
+						<label class="custom-control custom-checkbox custom-control">
+							<input type="checkbox" Name="Ver-Organigramas" id="Ver-Organigramas" class="custom-control-input-look">
+							<span class="custom-control-label">Ver Todos</span>
+						</label></p>
 					</div>
 					<input type="hidden" name="empleado-rol" id="empleado-rol">
 				</form>
@@ -281,6 +291,8 @@ $('#rolesModal').on('show.bs.modal', function (event) {
 	var ajustes_asistencias = button.data('ajustes_asistencias');
 	// Permisos Analisís e informes
 	var ver_analisis =  button.data('ver_analisis');
+	// Permisos Analisís e informes
+	var ver_organigramas =  button.data('ver_organigramas');
 	// Permisos Reclutamiento
 	var ver_reclutamiento = button.data('ver_reclutamiento');
 	var editar_reclutamiento = button.data('editar_reclutamiento');
@@ -397,6 +409,12 @@ $('#rolesModal').on('show.bs.modal', function (event) {
 		modal.find('#Ver-Analisis').prop('checked', true);
 	}else{
 		modal.find('#Ver-Analisis').prop('checked', false);
+	}
+	
+	if (ver_organigramas === 1) {
+		modal.find('#Ver-Organigramas').prop('checked', true);
+	}else{
+		modal.find('#Ver-Organigramas').prop('checked', false);
 	}
 	
 	if (ver_reclutamiento === 1) {

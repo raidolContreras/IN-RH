@@ -86,10 +86,18 @@
 						<hr>
 						<?php $empresas = ControladorFormularios::ctrVerEmpresas(null,null); ?>
 						<?php foreach ($empresas as $empresa): ?>
-							<?php if ($empresa['totalEmpleados']==0): ?>
-								<a class="btn btn-outline-success rounded btn-block btn-lg disabled" href="Organigrama&empresa=<?php echo $empresa['idEmpresas']; ?>"><?php echo $empresa['nombre_razon_social']; ?> <span class="badge badge-light">EMPLEADOS (<?php echo $empresa['totalEmpleados']; ?>)</span></a>
-							<?php else: ?>
-								<a class="btn btn-outline-success rounded btn-block btn-lg" href="Organigrama&empresa=<?php echo $empresa['idEmpresas']; ?>"> <?php echo $empresa['nombre_razon_social']; ?> <span class="badge badge-light">EMPLEADOS (<?php echo $empresa['totalEmpleados']; ?>)</span></a>
+							<?php if (!empty($rol) && $rol['Ver_Organigramas'] == 1): ?>
+								<?php if ($empresa['totalEmpleados']==0): ?>
+									<a class="btn btn-outline-success rounded btn-block btn-lg disabled" href="Organigrama&empresa=<?php echo $empresa['idEmpresas']; ?>"><?php echo $empresa['nombre_razon_social']; ?> <span class="badge badge-light">EMPLEADOS (<?php echo $empresa['totalEmpleados']; ?>)</span></a>
+								<?php else: ?>
+									<a class="btn btn-outline-success rounded btn-block btn-lg" href="Organigrama&empresa=<?php echo $empresa['idEmpresas']; ?>"> <?php echo $empresa['nombre_razon_social']; ?> <span class="badge badge-light">EMPLEADOS (<?php echo $empresa['totalEmpleados']; ?>)</span></a>
+								<?php endif ?>
+							<?php elseif($_SESSION["idEmpresas"] == $empresa['idEmpresas']): ?>
+								<?php if ($empresa['totalEmpleados']==0): ?>
+									<a class="btn btn-outline-success rounded btn-block btn-lg disabled" href="Organigrama&empresa=<?php echo $empresa['idEmpresas']; ?>"><?php echo $empresa['nombre_razon_social']; ?> <span class="badge badge-light">EMPLEADOS (<?php echo $empresa['totalEmpleados']; ?>)</span></a>
+								<?php else: ?>
+									<a class="btn btn-outline-success rounded btn-block btn-lg" href="Organigrama&empresa=<?php echo $empresa['idEmpresas']; ?>"> <?php echo $empresa['nombre_razon_social']; ?> <span class="badge badge-light">EMPLEADOS (<?php echo $empresa['totalEmpleados']; ?>)</span></a>
+								<?php endif ?>
 							<?php endif ?>
 						<?php endforeach ?>
 					</div>
