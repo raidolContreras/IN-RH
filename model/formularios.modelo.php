@@ -2881,13 +2881,16 @@ static public function mdlActualizarNoticia($tabla, $datos)
 
 	static public function mdlCrearRol($datos){
 		$pdo =Conexion::conectar();
-		$sql = "INSERT INTO roles(Empleados_idEmpleados, Ver_Empleados, Editar_Empleados, Del_Empleados, Resumenes_Asistencias, Ajustes_Asistencias, Ver_Evaluaciones, Editar_Evaluaciones,Del_Evaluaciones, Ver_Tareas, Editar_Tareas, Del_Tareas, Ver_Analisis, Ver_Reclutamiento, Editar_Reclutamiento, Del_Reclutamiento) VALUES (:Empleados_idEmpleados ,:Ver_Empleados ,:Editar_Empleados ,:Del_Empleados, :Resumenes_Asistencias, :Ajustes_Asistencias, :Ver_Evaluaciones, :Editar_Evaluaciones, :Del_Evaluaciones, :Ver_Tareas, :Editar_Tareas, :Del_Tareas, :Ver_Analisis, :Ver_Reclutamiento, :Editar_Reclutamiento, :Del_Reclutamiento)";
+		$sql = "INSERT INTO roles(Empleados_idEmpleados, Ver_Empleados, Editar_Empleados, Del_Empleados, Ver_Departamentos, Editar_Departamentos, Del_Departamentos, Resumenes_Asistencias, Ajustes_Asistencias, Ver_Evaluaciones, Editar_Evaluaciones,Del_Evaluaciones, Ver_Tareas, Editar_Tareas, Del_Tareas, Ver_Analisis, Ver_Reclutamiento, Editar_Reclutamiento, Del_Reclutamiento) VALUES (:Empleados_idEmpleados ,:Ver_Empleados ,:Editar_Empleados ,:Del_Empleados,:Ver_Departamentos ,:Editar_Departamentos ,:Del_Departamentos, :Resumenes_Asistencias, :Ajustes_Asistencias, :Ver_Evaluaciones, :Editar_Evaluaciones, :Del_Evaluaciones, :Ver_Tareas, :Editar_Tareas, :Del_Tareas, :Ver_Analisis, :Ver_Reclutamiento, :Editar_Reclutamiento, :Del_Reclutamiento)";
 
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':Empleados_idEmpleados', $datos['idEmpleados'], PDO::PARAM_INT);
 		$stmt->bindParam(':Ver_Empleados', $datos['Ver_Empleados'], PDO::PARAM_INT);
 		$stmt->bindParam(':Editar_Empleados', $datos['Editar_Empleados'], PDO::PARAM_INT);
 		$stmt->bindParam(':Del_Empleados', $datos['Del_Empleados'], PDO::PARAM_INT);
+		$stmt->bindParam(':Ver_Departamentos', $datos['Ver_Departamentos'], PDO::PARAM_INT);
+		$stmt->bindParam(':Editar_Departamentos', $datos['Editar_Departamentos'], PDO::PARAM_INT);
+		$stmt->bindParam(':Del_Departamentos', $datos['Del_Departamentos'], PDO::PARAM_INT);
 		$stmt->bindParam(':Resumenes_Asistencias', $datos['Resumenes_Asistencias'], PDO::PARAM_INT);
 		$stmt->bindParam(':Ajustes_Asistencias', $datos['Ajustes_Asistencias'], PDO::PARAM_INT);
 		$stmt->bindParam(':Ver_Evaluaciones', $datos['Ver_Evaluaciones'], PDO::PARAM_INT);
@@ -2913,12 +2916,15 @@ static public function mdlActualizarNoticia($tabla, $datos)
 
 	static public function mdlActualizarRol($datos){
 		$pdo =Conexion::conectar();
-		$sql = "UPDATE roles SET Ver_Empleados = :Ver_Empleados, Editar_Empleados = :Editar_Empleados, Del_Empleados = :Del_Empleados, Resumenes_Asistencias = :Resumenes_Asistencias, Ajustes_Asistencias = :Ajustes_Asistencias, Ver_Evaluaciones = :Ver_Evaluaciones, Editar_Evaluaciones = :Editar_Evaluaciones, Del_Evaluaciones = :Del_Evaluaciones, Ver_Tareas = :Ver_Tareas, Editar_Tareas = :Editar_Tareas, Del_Tareas = :Del_Tareas, Ver_Analisis = :Ver_Analisis, Ver_Reclutamiento = :Ver_Reclutamiento, Editar_Reclutamiento = :Editar_Reclutamiento, Del_Reclutamiento = :Del_Reclutamiento WHERE Empleados_idEmpleados = :Empleados_idEmpleados";
+		$sql = "UPDATE roles SET Ver_Empleados = :Ver_Empleados, Editar_Empleados = :Editar_Empleados, Del_Empleados = :Del_Empleados, Ver_Departamentos = :Ver_Departamentos, Editar_Departamentos = :Editar_Departamentos, Del_Departamentos = :Del_Departamentos, Resumenes_Asistencias = :Resumenes_Asistencias, Ajustes_Asistencias = :Ajustes_Asistencias, Ver_Evaluaciones = :Ver_Evaluaciones, Editar_Evaluaciones = :Editar_Evaluaciones, Del_Evaluaciones = :Del_Evaluaciones, Ver_Tareas = :Ver_Tareas, Editar_Tareas = :Editar_Tareas, Del_Tareas = :Del_Tareas, Ver_Analisis = :Ver_Analisis, Ver_Reclutamiento = :Ver_Reclutamiento, Editar_Reclutamiento = :Editar_Reclutamiento, Del_Reclutamiento = :Del_Reclutamiento WHERE Empleados_idEmpleados = :Empleados_idEmpleados";
 
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':Ver_Empleados', $datos['Ver_Empleados'], PDO::PARAM_INT);
 		$stmt->bindParam(':Editar_Empleados', $datos['Editar_Empleados'], PDO::PARAM_INT);
 		$stmt->bindParam(':Del_Empleados', $datos['Del_Empleados'], PDO::PARAM_INT);
+		$stmt->bindParam(':Ver_Departamentos', $datos['Ver_Departamentos'], PDO::PARAM_INT);
+		$stmt->bindParam(':Editar_Departamentos', $datos['Editar_Departamentos'], PDO::PARAM_INT);
+		$stmt->bindParam(':Del_Departamentos', $datos['Del_Departamentos'], PDO::PARAM_INT);
 		$stmt->bindParam(':Resumenes_Asistencias', $datos['Resumenes_Asistencias'], PDO::PARAM_INT);
 		$stmt->bindParam(':Ajustes_Asistencias', $datos['Ajustes_Asistencias'], PDO::PARAM_INT);
 		$stmt->bindParam(':Ver_Evaluaciones', $datos['Ver_Evaluaciones'], PDO::PARAM_INT);

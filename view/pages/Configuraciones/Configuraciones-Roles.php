@@ -2,6 +2,9 @@
 $Ver_Empleados = 0;
 $Editar_Empleados = 0;
 $Del_Empleados = 0;
+$Ver_Departamentos = 0;
+$Editar_Departamentos = 0;
+$Del_Departamentos = 0;
 $Ver_Evaluaciones = 0;
 $Editar_Evaluaciones = 0;
 $Del_Evaluaciones = 0;
@@ -50,6 +53,9 @@ $Del_Reclutamiento = 0;
 										$Ver_Empleados = $rol['Ver_Empleados'];
 										$Editar_Empleados = $rol['Editar_Empleados'];
 										$Del_Empleados = $rol['Del_Empleados'];
+										$Ver_Departamentos = $rol['Ver_Departamentos'];
+										$Editar_Departamentos = $rol['Editar_Departamentos'];
+										$Del_Departamentos = $rol['Del_Departamentos'];
 										$Ver_Evaluaciones = $rol['Ver_Evaluaciones'];
 										$Editar_Evaluaciones = $rol['Editar_Evaluaciones'];
 										$Del_Evaluaciones = $rol['Del_Evaluaciones'];
@@ -79,6 +85,9 @@ $Del_Reclutamiento = 0;
 												data-Ver_Empleados="<?php echo $Ver_Empleados; ?>"
 												data-Editar_Empleados="<?php echo $Editar_Empleados; ?>"
 												data-Del_Empleados="<?php echo $Del_Empleados; ?>"
+												data-Ver_Departamentos="<?php echo $Ver_Departamentos; ?>"
+												data-Editar_Departamentos="<?php echo $Editar_Departamentos; ?>"
+												data-Del_Departamentos="<?php echo $Del_Departamentos; ?>"
 												data-Ver_Evaluacion="<?php echo $Ver_Evaluaciones; ?>"
 												data-Editar_Evaluacion="<?php echo $Editar_Evaluaciones; ?>"
 												data-Del_Evaluacion="<?php echo $Del_Evaluaciones; ?>"
@@ -133,6 +142,25 @@ $Del_Reclutamiento = 0;
 						</label>
 						<label class="custom-control custom-checkbox custom-control-inline">
 							<input type="checkbox" Name="Del-Empleados" id="Del-Empleados" class="empleado-checkbox custom-control-input-trash" disabled>
+							<span class="custom-control-label">Eliminar</span>
+						</label>
+					</div>
+					<div class="col-sm-6">
+						<p class="subtitulo">Departamentos
+						<label class="custom-control custom-checkbox custom-control">
+							<input type="checkbox" id="Marcar-Todos-Departamentos" class="custom-control-input">
+							<span class="custom-control-label">Marcar Todos</span>
+						</label></p>
+						<label class="custom-control custom-checkbox custom-control-inline">
+							<input type="checkbox" Name="Ver-Departamentos" id="Ver-Departamentos" class="departamentos-checkbox custom-control-input-look">
+							<span class="custom-control-label">Ver</span>
+						</label>
+						<label class="custom-control custom-checkbox custom-control-inline">
+							<input type="checkbox" Name="Editar-Departamentos" id="Editar-Departamentos" class="departamentos-checkbox custom-control-input-edit" disabled>
+							<span class="custom-control-label">Editar</span>
+						</label>
+						<label class="custom-control custom-checkbox custom-control-inline">
+							<input type="checkbox" Name="Del-Departamentos" id="Del-Departamentos" class="departamentos-checkbox custom-control-input-trash" disabled>
 							<span class="custom-control-label">Eliminar</span>
 						</label>
 					</div>
@@ -236,6 +264,10 @@ $('#rolesModal').on('show.bs.modal', function (event) {
 	var ver_empleados = button.data('ver_empleados');
 	var editar_empleados = button.data('editar_empleados');
 	var del_empleados = button.data('del_empleados');
+	// Permisos Departamentos
+	var ver_departamentos = button.data('ver_departamentos');
+	var editar_departamentos = button.data('editar_departamentos');
+	var del_departamentos = button.data('del_departamentos');
 	// Permisos Evaluaciones
 	var ver_evaluacion = button.data('ver_evaluacion');
 	var editar_evaluacion = button.data('editar_evaluacion');
@@ -278,6 +310,28 @@ $('#rolesModal').on('show.bs.modal', function (event) {
 		$('#Del-Empleados').prop('disabled', true);
 		modal.find('#Del-Empleados').prop('checked', false);
 		modal.find('#Editar-Empleados').prop('checked', false);
+	}
+	
+	if (ver_departamentos === 1) {
+		modal.find('#Ver-Departamentos').prop('checked', true);
+		$('#Editar-Departamentos').prop('disabled', false);
+		$('#Del-Departamentos').prop('disabled', false);
+		if (editar_departamentos === 1) {
+			modal.find('#Editar-Departamentos').prop('checked', true);
+		}else{
+			modal.find('#Editar-Departamentos').prop('checked', false);
+		}
+		if (del_departamentos === 1) {
+			modal.find('#Del-Departamentos').prop('checked', true);
+		}else{
+			modal.find('#Del-Departamentos').prop('checked', false);
+		}
+	} else {
+		modal.find('#Ver-Departamentos').prop('checked', false);
+		$('#Editar-Departamentos').prop('disabled', true);
+		$('#Del-Departamentos').prop('disabled', true);
+		modal.find('#Del-Departamentos').prop('checked', false);
+		modal.find('#Editar-Departamentos').prop('checked', false);
 	}
 
 	
@@ -412,6 +466,50 @@ $(document).ready(function() {
 		// Habilitar o deshabilitar los checkboxes de acciones basado en la selección de empleados
 		$('#Editar-Empleados').prop('disabled', totalSeleccionadosEmpleados === 0);
 		$('#Del-Empleados').prop('disabled', totalSeleccionadosEmpleados === 0);
+	});
+	
+	$('#Ver-Departamentos').change(function() {
+		var isChecked = $(this).prop('checked');
+		if (isChecked) {
+			$('#Editar-Departamentos').prop('disabled', false);
+			$('#Del-Departamentos').prop('disabled', false);
+		} else {
+			$('#Editar-Departamentos').prop('disabled', true);
+			$('#Del-Departamentos').prop('disabled', true);
+		}
+	});
+
+	// Verificar el valor inicial al cargar la página
+	var isCheckedInitially = $('#Ver-Departamentos').prop('checked');
+	if (isCheckedInitially) {
+		$('#Editar-Departamentos').prop('disabled', false);
+		$('#Del-Departamentos').prop('disabled', false);
+	} else {
+		$('#Editar-Departamentos').prop('disabled', true);
+		$('#Del-Departamentos').prop('disabled', true);
+	}
+
+	// Marcar o desmarcar todos los checkboxes de Departamentos al hacer clic en "Marcar Todos"
+	$('#Marcar-Todos-Departamentos').change(function() {
+		var isChecked = $(this).prop('checked');
+		$('.departamentos-checkbox').prop('checked', isChecked);
+
+		// Si el checkbox "Marcar Todos" está marcado, habilitar los checkboxes de acciones
+		$('#Editar-Departamentos').prop('disabled', !isChecked);
+		$('#Del-Departamentos').prop('disabled', !isChecked);
+	});
+
+	// Manejar el cambio en los checkboxes individuales de Departamentos
+	$('.departamentos-checkbox').change(function() {
+		var totalDepartamentos = $('.departamentos-checkbox').length;
+		var totalSeleccionadosDepartamentos = $('.departamentos-checkbox:checked').length;
+		
+		// Si todos los checkboxes de Departamentos están seleccionados, marcar el checkbox "Marcar Todos"
+		$('#Marcar-Todos-Departamentos').prop('checked', totalSeleccionadosDepartamentos === totalDepartamentos);
+		
+		// Habilitar o deshabilitar los checkboxes de acciones basado en la selección de Departamentos
+		$('#Editar-Departamentos').prop('disabled', totalSeleccionadosDepartamentos === 0);
+		$('#Del-Departamentos').prop('disabled', totalSeleccionadosDepartamentos === 0);
 	});
 
 	$('#Ver-Evaluaciones').change(function() {

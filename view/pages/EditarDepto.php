@@ -1,3 +1,4 @@
+<?php if (!empty($rol) && $rol['Editar_Departamentos'] == 1): ?>
 <?php 
 $datos = ControladorFormularios::ctrVerDepartamentos("idDepartamentos",$_GET['Edicion']);
 if ($datos['Empleados_idEmpleados']!=null) {
@@ -151,3 +152,8 @@ $(document).ready(function() {
 });
 
 </script>
+<?php else: ?>
+	<script>
+		window.location.href = 'Inicio';
+	</script>
+<?php endif ?>

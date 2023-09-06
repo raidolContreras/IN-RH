@@ -1,3 +1,4 @@
+<?php if (!empty($rol) && $rol['Ver_Departamentos'] == 1): ?>
 <?php 
 $empresas = ControladorFormularios::ctrVerEmpresas(null, null);
 $departamento = ControladorFormularios::ctrVerDepartamentos(null, null);
@@ -14,7 +15,7 @@ $departamento = ControladorFormularios::ctrVerDepartamentos(null, null);
 					<ul class="nav nav-tabs card-header-tabs nav-empresas" id="myTab" role="tablist">
 						<?php if (!isset($_GET['depa'])): ?>
 							<li class="nav-item nav-item-empresas" style="max-width: 150px;">
-								<a class="nav-link active" id="general" href="Departamento" role="tab" aria-controls="card-1" aria-selected="true">General</a>
+								<a class="nav-link active" id="general" href="Departamento" role="tab" aria-controls="card-1" aria-selected="true">GENERAL</a>
 							</li>
 							<?php foreach ($empresas as $empresa): ?>
 								<li class="nav-item nav-item-empresas" style="max-width: 150px;">
@@ -23,7 +24,7 @@ $departamento = ControladorFormularios::ctrVerDepartamentos(null, null);
 							<?php endforeach ?>
 						<?php else: ?>
 							<li class="nav-item nav-item-empresas" style="max-width: 150px;">
-								<a class="nav-link" id="general" href="Departamento">General</a>
+								<a class="nav-link" id="general" href="Departamento">GENERAL</a>
 							</li>
 							<?php foreach ($empresas as $empresa): ?>
 									<li class="nav-item" style="max-width: 150px;">
@@ -39,9 +40,11 @@ $departamento = ControladorFormularios::ctrVerDepartamentos(null, null);
 				</div>
 
 				<div class="card-body">
+					<?php if (!empty($rol) && $rol['Editar_Departamentos'] == 1): ?>
 					<a href="CrearDepartamentos" class="btb btn-success p-2 rounded mb-3 float-right">
 						Crear Departamentos<i class="fas fa-user-plus ml-2"></i>
 					</a>
+					<?php endif ?>
 					<div class="table-responsive">
 						<table id="example" class="table table-striped table-bordered depto" style="width:100%">
 							<thead>
@@ -49,7 +52,9 @@ $departamento = ControladorFormularios::ctrVerDepartamentos(null, null);
 									<th width="40%">Nombre Depto</th>
 									<th width="40%">Encargado</th>
 									<th width="20%">empresa</th>
+									<?php if (!empty($rol) && ($rol['Editar_Departamentos'] == 1 || $rol['Del_Departamentos'] == 1)): ?>
 									<th>Acciones</th>
+									<?php endif ?>
 								</tr>
 							</thead>
 							<tbody>
@@ -83,17 +88,23 @@ $departamento = ControladorFormularios::ctrVerDepartamentos(null, null);
 										</td>
 										<td><?php echo $nombreEmpleado; ?></td>
 										<td><?php echo $empresa['nombre_razon_social']." (".$empresa['rfc'].")"; ?></td>
+											<?php if (!empty($rol) && ($rol['Editar_Departamentos'] == 1 || $rol['Del_Departamentos'] == 1)): ?>
 										<td>
 											<div class="dropdown">
 											  <button class="btn btn-link" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 											    <i class="fas fa-ellipsis-v"></i>
 											  </button>
 											  <div class="dropdown-menu mr-0" aria-labelledby="dropdownMenuButton">
+												<?php if (!empty($rol) && $rol['Editar_Departamentos'] == 1): ?>
 											    <a class="dropdown-item" href="EditarDepto&Edicion=<?php echo $depa['idDepartamentos'] ?>"><i class="fas fa-edit"></i> Editar</a>
+											  	<?php endif ?>
+												<?php if (!empty($rol) && $rol['Del_Departamentos'] == 1): ?>
 											    <a class="dropdown-item" href="EliminarDepto&Eliminar=<?php echo $depa['idDepartamentos'] ?>"><i class="fas fa-trash"></i> Eliminar</a>
+											  	<?php endif ?>
 											  </div>
 											</div>
 										</td>
+											<?php endif ?>
 									</tr>
 								<?php endforeach ?>
 							<?php else: ?>
@@ -127,17 +138,23 @@ $departamento = ControladorFormularios::ctrVerDepartamentos(null, null);
 										</td>
 										<td><?php echo $nombreEmpleado; ?></td>
 										<td><?php echo $empresa['nombre_razon_social']." (".$empresa['rfc'].")"; ?></td>
+											<?php if (!empty($rol) && ($rol['Editar_Departamentos'] == 1 || $rol['Del_Departamentos'] == 1)): ?>
 										<td>
 											<div class="dropdown">
 											  <button class="btn btn-link" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 											    <i class="fas fa-ellipsis-v"></i>
 											  </button>
 											  <div class="dropdown-menu mr-0" aria-labelledby="dropdownMenuButton">
+												<?php if (!empty($rol) && $rol['Editar_Departamentos'] == 1): ?>
 											    <a class="dropdown-item" href="EditarDepto&Edicion=<?php echo $depa['idDepartamentos'] ?>"><i class="fas fa-edit"></i> Editar</a>
+											  	<?php endif ?>
+												<?php if (!empty($rol) && $rol['Del_Departamentos'] == 1): ?>
 											    <a class="dropdown-item" href="EliminarDepto&Eliminar=<?php echo $depa['idDepartamentos'] ?>"><i class="fas fa-trash"></i> Eliminar</a>
+											  	<?php endif ?>
 											  </div>
 											</div>
 										</td>
+											<?php endif ?>
 									</tr>
 								<?php endforeach ?>
 							<?php endif ?>
@@ -211,3 +228,9 @@ foreach ($departamentos as $depa) {
         </div>
     </div>
 <?php } ?>
+
+<?php else: ?>
+	<script>
+		window.location.href = 'Inicio';
+	</script>
+<?php endif ?>

@@ -1,3 +1,4 @@
+<?php if (!empty($rol) && $rol['Editar_Departamentos'] == 1): ?>
 <?php 
 $empleados = ControladorEmpleados::ctrVerEmpleados(null,null); 
 $registro = ControladorFormularios::ctrRegistrarDeptos();
@@ -133,3 +134,8 @@ $(document).ready(function() {
   });
 });
 </script>
+<?php else: ?>
+	<script>
+		window.location.href = 'Inicio';
+	</script>
+<?php endif ?>

@@ -122,7 +122,11 @@ $perfil = $primerLetra.$segundaLetra;
 
 //Menu de empleados
 					if (!empty($rol) && $rol['Ver_Empleados'] == 1) {
-						$empleados = array('Empleados', 'Departamento', 'Nominas', 'Organigrama');
+						if (!empty($rol) && $rol['Ver_Departamentos'] == 1) {
+							$empleados = array('Empleados', 'Departamento', 'Nominas', 'Organigrama');
+						}else{
+							$empleados = array('Empleados', 'Nominas', 'Organigrama');
+						}
 
 						if (!empty($paginaActual) && in_array($paginaActual, $empleados)) {
 							foreach ($empleados as $pagina) {

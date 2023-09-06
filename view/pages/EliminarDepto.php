@@ -1,3 +1,4 @@
+<?php if (!empty($rol) && $rol['Del_Departamentos'] == 1): ?>
 <?php 
 $eliminar = ControladorFormularios::ctrEliminarDepto(); 
 $datos = ControladorFormularios::ctrVerDepartamentos("idDepartamentos",$_GET['Eliminar']);
@@ -54,3 +55,8 @@ $datos = ControladorFormularios::ctrVerDepartamentos("idDepartamentos",$_GET['El
 
 	</div>
 </div>
+<?php else: ?>
+	<script>
+		window.location.href = 'Inicio';
+	</script>
+<?php endif ?>

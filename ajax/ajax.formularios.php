@@ -1094,6 +1094,9 @@ class FormulariosAjax{
 		$Ver_Empleados = $this -> Ver_Empleados;
 		$Editar_Empleados = $this -> Editar_Empleados;
 		$Del_Empleados = $this -> Del_Empleados;
+		$Ver_Departamentos = $this -> Ver_Departamentos;
+		$Editar_Departamentos = $this -> Editar_Departamentos;
+		$Del_Departamentos = $this -> Del_Departamentos;
 		$Ver_Evaluaciones = $this -> Ver_Evaluaciones;
 		$Editar_Evaluaciones = $this -> Editar_Evaluaciones;
 		$Del_Evaluaciones = $this -> Del_Evaluaciones;
@@ -1112,6 +1115,9 @@ class FormulariosAjax{
 			"Ver_Empleados" => $Ver_Empleados,
 			"Editar_Empleados" => $Editar_Empleados,
 			"Del_Empleados" => $Del_Empleados,
+			"Ver_Departamentos" => $Ver_Departamentos,
+			"Editar_Departamentos" => $Editar_Departamentos,
+			"Del_Departamentos" => $Del_Departamentos,
 			"Ver_Evaluaciones" => $Ver_Evaluaciones,
 			"Editar_Evaluaciones" => $Editar_Evaluaciones,
 			"Del_Evaluaciones" => $Del_Evaluaciones,
@@ -2203,6 +2209,9 @@ if (isset($_POST['empleado-rol'])) {
 	$Ver_Empleados = (isset($_POST['Ver-Empleados'])) ? 1 : 0;
 	$Editar_Empleados = (isset($_POST['Editar-Empleados'])) ? 1 : 0;
 	$Del_Empleados = (isset($_POST['Del-Empleados'])) ? 1 : 0;
+	$Ver_Departamentos = (isset($_POST['Ver-Departamentos'])) ? 1 : 0;
+	$Editar_Departamentos = (isset($_POST['Editar-Departamentos'])) ? 1 : 0;
+	$Del_Departamentos = (isset($_POST['Del-Departamentos'])) ? 1 : 0;
 	$Ver_Evaluaciones = (isset($_POST['Ver-Evaluaciones'])) ? 1 : 0;
 	$Editar_Evaluaciones = (isset($_POST['Editar-Evaluaciones'])) ? 1 : 0;
 	$Del_Evaluaciones = (isset($_POST['Del-Evaluaciones'])) ? 1 : 0;
@@ -2221,6 +2230,9 @@ if (isset($_POST['empleado-rol'])) {
 	$crearRoles -> Ver_Empleados = $Ver_Empleados;
 	$crearRoles -> Editar_Empleados = $Editar_Empleados;
 	$crearRoles -> Del_Empleados = $Del_Empleados;
+	$crearRoles -> Ver_Departamentos = $Ver_Departamentos;
+	$crearRoles -> Editar_Departamentos = $Editar_Departamentos;
+	$crearRoles -> Del_Departamentos = $Del_Departamentos;
 	$crearRoles -> Ver_Evaluaciones = $Ver_Evaluaciones;
 	$crearRoles -> Editar_Evaluaciones = $Editar_Evaluaciones;
 	$crearRoles -> Del_Evaluaciones = $Del_Evaluaciones;
