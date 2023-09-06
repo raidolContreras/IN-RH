@@ -1,3 +1,4 @@
+<?php if (!empty($rol) && $rol['Ver_Empleados'] == 1) : ?>
 <?php
 $colaborador = ControladorEmpleados::ctrVerEmpleados( 'idEmpleados',$_GET['perfil']); 
 
@@ -510,3 +511,8 @@ function deleteAlert() {
 }
 
 </script>
+<?php else: ?>
+	<script>
+		window.location.href = 'Inicio';
+	</script>
+<?php endif ?>
