@@ -183,7 +183,7 @@ $perfil = $primerLetra.$segundaLetra;
 						}
 					}
 //Menu de de Bolsa de trabajo
-					$configuraciones = array( 'Configuraciones','Empresas', 'Permisos');
+					$configuraciones = array( 'Configuraciones','Empresas');
 					if (!empty($paginaActual) && in_array($paginaActual, $configuraciones)) {
 						foreach ($configuraciones as $pagina) {
 							$activeClass = ($paginaActual == $pagina) ? ' active' : '';
