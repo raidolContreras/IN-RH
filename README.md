@@ -20,4 +20,6 @@ IN-RH es una potente plataforma diseñada para simplificar y optimizar la gesti�
 
 - **Generación de Análisis e Informes:** Obtén información valiosa con análisis y informes detallados para la toma de decisiones estratégicas.
 
+- **Sistema de roles:** Administra permisos y accesos a los empleados sobre areas especificas del sistema.
+
 IN-RH es la solución todo en uno que te permite centralizar y automatizar todas tus operaciones de recursos humanos, mejorando la eficiencia, la productividad y el control de tu organización. ¡Simplifica la gestión de recursos humanos con IN-RH hoy mismo!
