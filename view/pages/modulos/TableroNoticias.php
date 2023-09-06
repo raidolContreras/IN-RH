@@ -42,15 +42,21 @@
 							<div class="pr-3 pt-3">
 								<div class="float-right pr-2">
 									<p class="titulo-sup m-0">
+										<?php if (!empty($rol) && $rol['Agregar_Noticias'] == 1): ?>
 										<a href="Noticias" class="btn-outline-light boton ml-3" >
 											<i class="fas fa-plus"></i>
 										</a>
+										<?php endif ?>
+										<?php if (!empty($rol) && $rol['Del_Noticias'] == 1): ?>
 										<a href="EliminarNoticia&noticia=<?php echo $noticia['idNoticias'] ?>" class="btn-outline-light boton ml-3" >
 											<i class="fas fa-trash"></i>
 										</a>
+										<?php endif ?>
+										<?php if (!empty($rol) && $rol['Editar_Noticias'] == 1): ?>
 										<a href="Noticias&noticia=<?php echo $noticia['idNoticias'] ?>" class="btn-outline-light boton ml-3" >
 											<i class="fas fa-edit"></i>
 										</a>
+										<?php endif ?>
 									</p>
 								</div>
 							</div>
@@ -144,9 +150,11 @@
 					<div class="pr-3 pt-3">
 						<div class="float-right pr-2">
 							<p class="titulo-sup m-0">
+								<?php if (!empty($rol) && $rol['Agregar_Noticias'] == 1): ?>
 								<a href="Noticias" class="btn-outline-light boton" >
 									<i class="fas fa-plus"></i>
 								</a>
+								<?php endif ?>
 							</p>
 						</div>
 					</div>

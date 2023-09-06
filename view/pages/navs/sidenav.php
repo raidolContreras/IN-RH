@@ -80,7 +80,7 @@
 						<i class="fas fa-chart-bar"></i>ANALISÍS E INFORMES</a>
 					</li>
 					<?php endif ?>
-					<?php if (!empty($rol) && $rol['Ver_Empleados'] == 0) : ?>
+					<?php if (empty($rol) || $rol['Ver_Empleados'] == 0) : ?>
 					<li class="nav-item">
 						<?php if (isset($_GET['pagina']) && in_array($_GET['pagina'], array('Organigrama'))): ?>
 							<a class="nav-link active" href="Organigrama">

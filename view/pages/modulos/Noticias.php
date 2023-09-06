@@ -6,18 +6,21 @@ $name_foto = "";
 $idNoticia = 0;
 
 if (isset($_GET['noticia'])) {
-	$noticias = ControladorFormularios::ctrVerNoticias('idNoticias', $_GET['noticia']);
-	
-	if (!empty($noticias)) {
-		$mensaje = $noticias['mensaje'];
-		$fecha_fin = $noticias['fecha_fin'];
-		$foto_noticia = $noticias['foto_noticia']; // 1 si hay foto, 0 no existe foto
-		$name_foto = $noticias['name_foto'];
-		$idNoticia = $noticias['idNoticias'];
+	if (!empty($rol) && $rol['Editar_Noticias'] == 1) {
+		$noticias = ControladorFormularios::ctrVerNoticias('idNoticias', $_GET['noticia']);
+		
+		if (!empty($noticias)) {
+			$mensaje = $noticias['mensaje'];
+			$fecha_fin = $noticias['fecha_fin'];
+			$foto_noticia = $noticias['foto_noticia']; // 1 si hay foto, 0 no existe foto
+			$name_foto = $noticias['name_foto'];
+			$idNoticia = $noticias['idNoticias'];
+		}
 	}
 }
 
 ?>
+<?php if (!empty($rol) && ($rol['Editar_Noticias'] == 1 || $rol['Agregar_Noticias'] == 1)): ?>
 <div class="container-fluid dashboard-content">
 	<form method="POST" enctype="multipart/form-data">
 		<?php 
@@ -118,3 +121,8 @@ if (isset($_GET['noticia'])) {
 		});
 	});
 </script>
+<?php else: ?>
+	<script>
+		window.location.href = 'Inicio';
+	</script>
+<?php endif ?>

@@ -1,5 +1,5 @@
+<?php if (!empty($rol) && $rol['Del_Noticias'] == 1): ?>
 <?php 
-
 $eliminar = ControladorFormularios::ctrEliminarNoticia(); 
 $noticias = ControladorFormularios::ctrVerNoticias("idNoticias", $_GET['noticia']); ?>
 
@@ -55,3 +55,8 @@ $noticias = ControladorFormularios::ctrVerNoticias("idNoticias", $_GET['noticia'
 
 	</div>
 </div>
+<?php else: ?>
+	<script>
+		window.location.href = 'Inicio';
+	</script>
+<?php endif ?>

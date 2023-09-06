@@ -18,6 +18,9 @@ $Ver_Reclutamiento = 0;
 $Editar_Reclutamiento = 0;
 $Del_Reclutamiento = 0;
 $Ver_Organigramas = 0;
+$Agregar_Noticias = 0;
+$Editar_Noticias = 0;
+$Del_Noticias = 0;
  ?>
 <div class="container-fluid dashboard-content">
 	<div class="ecommerce-widget">
@@ -70,6 +73,9 @@ $Ver_Organigramas = 0;
 										$Editar_Reclutamiento = $rol['Editar_Reclutamiento'];
 										$Del_Reclutamiento = $rol['Del_Reclutamiento'];
 										$Ver_Organigramas = $rol['Ver_Organigramas'];
+										$Agregar_Noticias = $rol['Agregar_Noticias'];
+										$Editar_Noticias = $rol['Editar_Noticias'];
+										$Del_Noticias = $rol['Del_Noticias'];
 									}
 									?>
 									<tr>
@@ -102,7 +108,10 @@ $Ver_Organigramas = 0;
 												data-Ver_Reclutamiento="<?php echo $Ver_Reclutamiento; ?>"
 												data-Editar_Reclutamiento="<?php echo $Editar_Reclutamiento; ?>"
 												data-Del_Reclutamiento="<?php echo $Del_Reclutamiento; ?>"
-												data-Ver_Organigramas="<?php echo $Ver_Organigramas; ?>">
+												data-Ver_Organigramas="<?php echo $Ver_Organigramas; ?>"
+												data-Agregar_Noticias="<?php echo $Agregar_Noticias; ?>"
+												data-Editar_Noticias="<?php echo $Editar_Noticias; ?>"
+												data-Del_Noticias="<?php echo $Del_Noticias; ?>">
 												<i class="fas fa-clipboard-list"></i>
 											</button>
 										</td>
@@ -240,6 +249,25 @@ $Ver_Organigramas = 0;
 						</label>
 					</div>
 					<div class="col-sm-6 mt-3">
+						<p class="subtitulo">Noticias
+						<label class="custom-control custom-checkbox custom-control">
+							<input type="checkbox" id="Marcar-Todos-Noticias" class="custom-control-input">
+							<span class="custom-control-label">Marcar Todos</span>
+						</label></p>
+						<label class="custom-control custom-checkbox custom-control-inline">
+							<input type="checkbox" Name="Agregar-Noticias" id="Agregar-Noticias" class=" noticias-checkbox custom-control-input-look">
+							<span class="custom-control-label">Agregar</span>
+						</label>
+						<label class="custom-control custom-checkbox custom-control-inline">
+							<input type="checkbox" Name="Editar-Noticias" id="Editar-Noticias" class=" noticias-checkbox custom-control-input-edit">
+							<span class="custom-control-label">Editar</span>
+						</label>
+						<label class="custom-control custom-checkbox custom-control-inline">
+							<input type="checkbox" Name="Del-Noticias" id="Del-Noticias" class=" noticias-checkbox custom-control-input-trash">
+							<span class="custom-control-label">Eliminar</span>
+						</label>
+					</div>
+					<div class="col-sm-6 mt-3">
 						<p class="subtitulo">Análisis
 						<label class="custom-control custom-checkbox custom-control">
 							<input type="checkbox" Name="Ver-Analisis" id="Ver-Analisis" class="custom-control-input-look">
@@ -291,12 +319,16 @@ $('#rolesModal').on('show.bs.modal', function (event) {
 	var ajustes_asistencias = button.data('ajustes_asistencias');
 	// Permisos Analisís e informes
 	var ver_analisis =  button.data('ver_analisis');
-	// Permisos Analisís e informes
+	// Ver todos los organigramas
 	var ver_organigramas =  button.data('ver_organigramas');
 	// Permisos Reclutamiento
 	var ver_reclutamiento = button.data('ver_reclutamiento');
 	var editar_reclutamiento = button.data('editar_reclutamiento');
 	var del_reclutamiento = button.data('del_reclutamiento');
+	// Permisos Noticias
+	var agregar_noticias = button.data('agregar_noticias');
+	var editar_noticias = button.data('editar_noticias');
+	var del_noticias = button.data('del_noticias');
 
 	var modal = $(this);
 	modal.find('.modal-title').text('Asignar Roles: ' + recipient);
@@ -392,6 +424,23 @@ $('#rolesModal').on('show.bs.modal', function (event) {
 		modal.find('#Editar-Tareas').prop('checked', false);
 	}
 
+	if (agregar_noticias === 1) {
+		modal.find('#Agregar-Noticias').prop('checked', true);
+	}else{
+		modal.find('#Agregar-Noticias').prop('checked', false);
+	}
+
+	if (editar_noticias === 1) {
+		modal.find('#Editar-Noticias').prop('checked', true);
+	}else{
+		modal.find('#Editar-Noticias').prop('checked', false);
+	}
+
+	if (del_noticias === 1) {
+		modal.find('#Del-Noticias').prop('checked', true);
+	}else{
+		modal.find('#Del-Noticias').prop('checked', false);
+	}
 
 	if (resumenes_asistencias === 1) {
 		modal.find('#Resumenes-Asistencias').prop('checked', true);
@@ -484,6 +533,21 @@ $(document).ready(function() {
 		// Habilitar o deshabilitar los checkboxes de acciones basado en la selección de empleados
 		$('#Editar-Empleados').prop('disabled', totalSeleccionadosEmpleados === 0);
 		$('#Del-Empleados').prop('disabled', totalSeleccionadosEmpleados === 0);
+	});
+
+	// Marcar o desmarcar todos los checkboxes de Noticias al hacer clic en "Marcar Todos"
+	$('#Marcar-Todos-Noticias').change(function() {
+		var isChecked = $(this).prop('checked');
+		$('.noticias-checkbox').prop('checked', isChecked);
+	});
+
+	// Manejar el cambio en los checkboxes individuales de Noticias
+	$('.noticias-checkbox').change(function() {
+		var totalNoticias = $('.noticias-checkbox').length;
+		var totalSeleccionadosNoticias = $('.noticias-checkbox:checked').length;
+		
+		// Si todos los checkboxes de Noticias están seleccionados, marcar el checkbox "Marcar Todos"
+		$('#Marcar-Todos-Noticias').prop('checked', totalSeleccionadosNoticias === totalNoticias);
 	});
 	
 	$('#Ver-Departamentos').change(function() {
