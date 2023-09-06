@@ -1105,6 +1105,7 @@ class FormulariosAjax{
 		$Ver_Tareas = $this -> Ver_Tareas;
 		$Editar_Tareas = $this -> Editar_Tareas;
 		$Del_Tareas = $this -> Del_Tareas;
+		$Asignar_EmpleadoMes = $this -> Asignar_EmpleadoMes;
 		$Ver_Analisis = $this -> Ver_Analisis;
 		$Ver_Reclutamiento = $this -> Ver_Reclutamiento;
 		$Editar_Reclutamiento = $this -> Editar_Reclutamiento;
@@ -1130,6 +1131,7 @@ class FormulariosAjax{
 			"Ver_Tareas" => $Ver_Tareas,
 			"Editar_Tareas" => $Editar_Tareas,
 			"Del_Tareas" => $Del_Tareas,
+			"Asignar_EmpleadoMes" => $Asignar_EmpleadoMes,
 			"Ver_Analisis" => $Ver_Analisis,
 			"Ver_Reclutamiento" => $Ver_Reclutamiento,
 			"Editar_Reclutamiento" => $Editar_Reclutamiento,
@@ -2228,6 +2230,7 @@ if (isset($_POST['empleado-rol'])) {
 	$Ver_Tareas = (isset($_POST['Ver-Tareas'])) ? 1 : 0;
 	$Editar_Tareas = (isset($_POST['Editar-Tareas'])) ? 1 : 0;
 	$Del_Tareas = (isset($_POST['Del-Tareas'])) ? 1 : 0;
+	$Asignar_EmpleadoMes = (isset($_POST['Asignar-EmpleadoMes'])) ? 1 : 0;
 	$Ver_Analisis = (isset($_POST['Ver-Analisis'])) ? 1 : 0;
 	$Ver_Reclutamiento = (isset($_POST['Ver-Reclutamiento'])) ? 1 : 0;
 	$Editar_Reclutamiento = (isset($_POST['Editar-Reclutamiento'])) ? 1 : 0;
@@ -2253,6 +2256,7 @@ if (isset($_POST['empleado-rol'])) {
 	$crearRoles -> Ver_Tareas = $Ver_Tareas;
 	$crearRoles -> Editar_Tareas = $Editar_Tareas;
 	$crearRoles -> Del_Tareas = $Del_Tareas;
+	$crearRoles -> Asignar_EmpleadoMes = $Asignar_EmpleadoMes;
 	$crearRoles -> Ver_Analisis = $Ver_Analisis;
 	$crearRoles -> Ver_Reclutamiento = $Ver_Reclutamiento;
 	$crearRoles -> Editar_Reclutamiento = $Editar_Reclutamiento;

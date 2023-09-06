@@ -13,12 +13,14 @@ $fotoEmpleado = ControladorFormularios::ctrVerFotos("Empleados_idEmpleados", $em
 		</div>
 		<div class="float-right m-0">
 			<p class="titulo-sup m-0">
+				<?php if (!empty($rol) && $rol['Asignar_EmpleadoMes'] == 1): ?>
 				<button type="button" 
 					class="btn-outline-light boton" 
 					data-toggle="modal" 
 					data-target="#Empleado">
 					<i class="fas fa-edit"></i>
 				</button>
+				<?php endif ?>
 			</p>
 		</div>
 	</div>
@@ -60,11 +62,14 @@ $fotoEmpleado = ControladorFormularios::ctrVerFotos("Empleados_idEmpleados", $em
 	<div class="col-12 mb-0 pb-0">
 		<div class="center-all cursor-pointer">
 			<div class="widget-container widget-mb-10px p-5">
+
+				<?php if (!empty($rol) && $rol['Asignar_EmpleadoMes'] == 1): ?>
 				<button class="btn-outline-light boton"
 					data-toggle="modal" 
 					data-target="#Empleado">
 					Agregar empleado del mes.
 				</button>
+				<?php endif ?>
 			</div>
 		</div>
 	</div>

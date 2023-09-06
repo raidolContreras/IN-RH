@@ -13,6 +13,7 @@ $Editar_Tareas = 0;
 $Del_Tareas = 0;
 $Resumenes_Asistencias = 0;
 $Ajustes_Asistencias = 0;
+$Asignar_EmpleadoMes = 0;
 $Ver_Analisis = 0;
 $Ver_Reclutamiento = 0;
 $Editar_Reclutamiento = 0;
@@ -48,7 +49,9 @@ $Del_Noticias = 0;
 									</tr>
 								</thead>
 								<tbody>
+										
 								<?php foreach ($empleados as $empleado): 
+									if ($empleado['status'] == 1):
 									$puestos = ControladorFormularios::ctrVerPuestos("Empleados_idEmpleados", $empleado['idEmpleados']);
 									$departamentos = ControladorFormularios::ctrVerDepartamentos("idDepartamentos", $puestos['Departamentos_idDepartamentos']);
 									$empresas = ControladorFormularios::ctrVerEmpresas("idEmpresas", $departamentos['Empresas_idEmpresas']);
@@ -68,6 +71,7 @@ $Del_Noticias = 0;
 										$Ver_Tareas = $rol['Ver_Tareas'];
 										$Editar_Tareas = $rol['Editar_Tareas'];
 										$Del_Tareas = $rol['Del_Tareas'];
+										$Asignar_EmpleadoMes = $rol['Asignar_EmpleadoMes'];
 										$Ver_Analisis = $rol['Ver_Analisis'];
 										$Ver_Reclutamiento = $rol['Ver_Reclutamiento'];
 										$Editar_Reclutamiento = $rol['Editar_Reclutamiento'];
@@ -104,6 +108,7 @@ $Del_Noticias = 0;
 												data-Ver_Tareas="<?php echo $Ver_Tareas; ?>"
 												data-Editar_Tareas="<?php echo $Editar_Tareas; ?>"
 												data-Del_Tareas="<?php echo $Del_Tareas; ?>"
+												data-Asignar_EmpleadoMes="<?php echo $Asignar_EmpleadoMes; ?>"
 												data-Ver_Analisis="<?php echo $Ver_Analisis; ?>"
 												data-Ver_Reclutamiento="<?php echo $Ver_Reclutamiento; ?>"
 												data-Editar_Reclutamiento="<?php echo $Editar_Reclutamiento; ?>"
@@ -116,6 +121,7 @@ $Del_Noticias = 0;
 											</button>
 										</td>
 									</tr>
+									<?php endif ?>
 								<?php endforeach ?>
 								</tbody>
 							</table>
@@ -138,12 +144,13 @@ $Del_Noticias = 0;
 			</div>
 			<div class="modal-body">
 				<form class="row" id="asignarRoles-form">
-					<div class="col-sm-6">
-						<p class="subtitulo">Empleados
-						<label class="custom-control custom-checkbox custom-control">
+					<div class="col-sm-6 mt-3">
+						<hr>
+						<strong><p class="subtitulo mb-0">Empleados</p></strong>
+						<label class="custom-control custom-checkbox custom-control mb-0">
 							<input type="checkbox" id="Marcar-Todos-Empleados" class="custom-control-input">
 							<span class="custom-control-label">Marcar Todos</span>
-						</label></p>
+						</label>
 						<label class="custom-control custom-checkbox custom-control-inline">
 							<input type="checkbox" Name="Ver-Empleados" id="Ver-Empleados" class="empleado-checkbox custom-control-input-look">
 							<span class="custom-control-label">Ver</span>
@@ -157,12 +164,13 @@ $Del_Noticias = 0;
 							<span class="custom-control-label">Eliminar</span>
 						</label>
 					</div>
-					<div class="col-sm-6">
-						<p class="subtitulo">Departamentos
-						<label class="custom-control custom-checkbox custom-control">
+					<div class="col-sm-6 mt-3">
+						<hr>
+						<strong><p class="subtitulo mb-0">Departamentos</p></strong>
+						<label class="custom-control custom-checkbox custom-control mb-0">
 							<input type="checkbox" id="Marcar-Todos-Departamentos" class="custom-control-input">
 							<span class="custom-control-label">Marcar Todos</span>
-						</label></p>
+						</label>
 						<label class="custom-control custom-checkbox custom-control-inline">
 							<input type="checkbox" Name="Ver-Departamentos" id="Ver-Departamentos" class="departamentos-checkbox custom-control-input-look">
 							<span class="custom-control-label">Ver</span>
@@ -176,13 +184,13 @@ $Del_Noticias = 0;
 							<span class="custom-control-label">Eliminar</span>
 						</label>
 					</div>
-					<div class="col-sm-6">
-						<p class="subtitulo">Asistencias
-						<label class="custom-control custom-checkbox custom-control">
+					<div class="col-sm-6 mt-3">
+						<hr>
+						<strong><p class="subtitulo mb-0">Asistencias</p></strong>
+						<label class="custom-control custom-checkbox custom-control mb-0">
 							<input type="checkbox" id="Marcar-Todos-Asistencias" class="custom-control-input">
 							<span class="custom-control-label">Marcar Todos</span>
-						</label></p>
-						<label class="custom-control custom-checkbox custom-control-inline">
+						</label>						<label class="custom-control custom-checkbox custom-control-inline">
 							<input type="checkbox" Name="Resumenes-Asistencias" id="Resumenes-Asistencias" class=" Asistencia-checkbox custom-control-input-look">
 							<span class="custom-control-label">Resumenes</span>
 						</label>
@@ -192,11 +200,12 @@ $Del_Noticias = 0;
 						</label>
 					</div>
 					<div class="col-sm-6 mt-3">
-						<p class="subtitulo">Evaluaciones
-						<label class="custom-control custom-checkbox custom-control">
+						<hr>
+						<strong><p class="subtitulo mb-0">Evaluaciones</p></strong>
+						<label class="custom-control custom-checkbox custom-control mb-0">
 							<input type="checkbox" id="Marcar-Todos-Evaluaciones" class="custom-control-input">
 							<span class="custom-control-label">Marcar Todos</span>
-						</label></p>
+						</label>
 						<label class="custom-control custom-checkbox custom-control-inline">
 							<input type="checkbox" Name="Ver-Evaluaciones" id="Ver-Evaluaciones" class=" evaluacion-checkbox custom-control-input-look">
 							<span class="custom-control-label">Ver</span>
@@ -211,11 +220,12 @@ $Del_Noticias = 0;
 						</label>
 					</div>
 					<div class="col-sm-6 mt-3">
-						<p class="subtitulo">Tareas
-						<label class="custom-control custom-checkbox custom-control">
+						<hr>
+						<strong><p class="subtitulo mb-0">Tareas</p></strong>
+						<label class="custom-control custom-checkbox custom-control mb-0">
 							<input type="checkbox" id="Marcar-Todos-Tareas" class="custom-control-input">
 							<span class="custom-control-label">Marcar Todos</span>
-						</label></p>
+						</label>
 						<label class="custom-control custom-checkbox custom-control-inline">
 							<input type="checkbox" Name="Ver-Tareas" id="Ver-Tareas" class=" tareas-checkbox custom-control-input-look">
 							<span class="custom-control-label">Ver</span>
@@ -230,11 +240,12 @@ $Del_Noticias = 0;
 						</label>
 					</div>
 					<div class="col-sm-6 mt-3">
-						<p class="subtitulo">Reclutamiento
-						<label class="custom-control custom-checkbox custom-control">
+						<hr>
+						<strong><p class="subtitulo mb-0">Reclutamiento</p></strong>
+						<label class="custom-control custom-checkbox custom-control mb-0">
 							<input type="checkbox" id="Marcar-Todos-Reclutamiento" class="custom-control-input">
 							<span class="custom-control-label">Marcar Todos</span>
-						</label></p>
+						</label>
 						<label class="custom-control custom-checkbox custom-control-inline">
 							<input type="checkbox" Name="Ver-Reclutamiento" id="Ver-Reclutamiento" class=" reclutamiento-checkbox custom-control-input-look">
 							<span class="custom-control-label">Ver</span>
@@ -249,11 +260,12 @@ $Del_Noticias = 0;
 						</label>
 					</div>
 					<div class="col-sm-6 mt-3">
-						<p class="subtitulo">Noticias
-						<label class="custom-control custom-checkbox custom-control">
+						<hr>
+						<strong><p class="subtitulo mb-0">Noticias</p></strong>
+						<label class="custom-control custom-checkbox custom-control mb-0">
 							<input type="checkbox" id="Marcar-Todos-Noticias" class="custom-control-input">
 							<span class="custom-control-label">Marcar Todos</span>
-						</label></p>
+						</label>
 						<label class="custom-control custom-checkbox custom-control-inline">
 							<input type="checkbox" Name="Agregar-Noticias" id="Agregar-Noticias" class=" noticias-checkbox custom-control-input-look">
 							<span class="custom-control-label">Agregar</span>
@@ -268,18 +280,28 @@ $Del_Noticias = 0;
 						</label>
 					</div>
 					<div class="col-sm-6 mt-3">
-						<p class="subtitulo">Análisis
-						<label class="custom-control custom-checkbox custom-control">
-							<input type="checkbox" Name="Ver-Analisis" id="Ver-Analisis" class="custom-control-input-look">
-							<span class="custom-control-label">Ver</span>
-						</label></p>
+						<hr>
+						<strong><p class="subtitulo mb-0">Empleado del mes</p></strong>
+						<label class="custom-control custom-checkbox custom-control mb-0">
+							<input type="checkbox" Name="Asignar-EmpleadoMes" id="Asignar-EmpleadoMes" class="custom-control-input-look">
+							<span class="custom-control-label">Asignar</span>
+						</label>
 					</div>
 					<div class="col-sm-6 mt-3">
-						<p class="subtitulo">Organigramas
-						<label class="custom-control custom-checkbox custom-control">
+						<hr>
+						<strong><p class="subtitulo mb-0">Análisis</p></strong>
+						<label class="custom-control custom-checkbox custom-control mb-0">
+							<input type="checkbox" Name="Ver-Analisis" id="Ver-Analisis" class="custom-control-input-look">
+							<span class="custom-control-label">Ver</span>
+						</label>
+					</div>
+					<div class="col-sm-6 mt-3">
+						<hr>
+						<strong><p class="subtitulo mb-0">Organigramas</p></strong>
+						<label class="custom-control custom-checkbox custom-control mb-0">
 							<input type="checkbox" Name="Ver-Organigramas" id="Ver-Organigramas" class="custom-control-input-look">
 							<span class="custom-control-label">Ver Todos</span>
-						</label></p>
+						</label>
 					</div>
 					<input type="hidden" name="empleado-rol" id="empleado-rol">
 				</form>
@@ -319,6 +341,8 @@ $('#rolesModal').on('show.bs.modal', function (event) {
 	var ajustes_asistencias = button.data('ajustes_asistencias');
 	// Permisos Analisís e informes
 	var ver_analisis =  button.data('ver_analisis');
+	// Permisos Empleado del Mes
+	var asignar_empleadomes =  button.data('asignar_empleadomes');
 	// Ver todos los organigramas
 	var ver_organigramas =  button.data('ver_organigramas');
 	// Permisos Reclutamiento
@@ -452,6 +476,12 @@ $('#rolesModal').on('show.bs.modal', function (event) {
 		modal.find('#Ajustes-Asistencias').prop('checked', true);
 	}else{
 		modal.find('#Ajustes-Asistencias').prop('checked', false);
+	}
+	
+	if (asignar_empleadomes === 1) {
+		modal.find('#Asignar-EmpleadoMes').prop('checked', true);
+	}else{
+		modal.find('#Asignar-EmpleadoMes').prop('checked', false);
 	}
 	
 	if (ver_analisis === 1) {
