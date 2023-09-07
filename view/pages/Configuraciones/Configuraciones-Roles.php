@@ -1,34 +1,4 @@
 <?php if (!empty($rol) && $rol['Configuracion_Permisos'] == 1): ?>
-<?php 
-$Ver_Empleados = 0;
-$Editar_Empleados = 0;
-$Del_Empleados = 0;
-$Ver_Departamentos = 0;
-$Editar_Departamentos = 0;
-$Del_Departamentos = 0;
-$Ver_Evaluaciones = 0;
-$Editar_Evaluaciones = 0;
-$Del_Evaluaciones = 0;
-$Ver_Tareas = 0;
-$Editar_Tareas = 0;
-$Del_Tareas = 0;
-$Resumenes_Asistencias = 0;
-$Ajustes_Asistencias = 0;
-$Asignar_EmpleadoMes = 0;
-$Ver_Analisis = 0;
-$Ver_Reclutamiento = 0;
-$Editar_Reclutamiento = 0;
-$Del_Reclutamiento = 0;
-$Ver_Organigramas = 0;
-$Agregar_Noticias = 0;
-$Editar_Noticias = 0;
-$Del_Noticias = 0;
-$Ver_Empresas = 0;
-$Editar_Empresas = 0;
-$Configuracion_Divisas = 0;
-$Configuracion_Categorias = 0;
-$Configuracion_Permisos = 0;
- ?>
 <div class="container-fluid dashboard-content">
 	<div class="ecommerce-widget">
 		<div class="card mx-5 menu-ajustes">
@@ -91,6 +61,35 @@ $Configuracion_Permisos = 0;
 										$Configuracion_Divisas = $rol['Configuracion_Divisas'];
 										$Configuracion_Categorias = $rol['Configuracion_Categorias'];
 										$Configuracion_Permisos = $rol['Configuracion_Permisos'];
+									}else{
+										$Ver_Empleados = 0;
+										$Editar_Empleados = 0;
+										$Del_Empleados = 0;
+										$Ver_Departamentos = 0;
+										$Editar_Departamentos = 0;
+										$Del_Departamentos = 0;
+										$Ver_Evaluaciones = 0;
+										$Editar_Evaluaciones = 0;
+										$Del_Evaluaciones = 0;
+										$Ver_Tareas = 0;
+										$Editar_Tareas = 0;
+										$Del_Tareas = 0;
+										$Resumenes_Asistencias = 0;
+										$Ajustes_Asistencias = 0;
+										$Asignar_EmpleadoMes = 0;
+										$Ver_Analisis = 0;
+										$Ver_Reclutamiento = 0;
+										$Editar_Reclutamiento = 0;
+										$Del_Reclutamiento = 0;
+										$Ver_Organigramas = 0;
+										$Agregar_Noticias = 0;
+										$Editar_Noticias = 0;
+										$Del_Noticias = 0;
+										$Ver_Empresas = 0;
+										$Editar_Empresas = 0;
+										$Configuracion_Divisas = 0;
+										$Configuracion_Categorias = 0;
+										$Configuracion_Permisos = 0;
 									}
 									?>
 									<tr>
@@ -584,7 +583,7 @@ $('#rolesModal').on('show.bs.modal', function (event) {
 	if (configuracion_permisos === 1) {
 		modal.find('#Configuracion-Permisos').prop('checked', true);
 	}else{
-		modal.find('#Configuracion-Ppermisos').prop('checked', false);
+		modal.find('#Configuracion-Permisos').prop('checked', false);
 	}
 	
 	if (ver_reclutamiento === 1) {
