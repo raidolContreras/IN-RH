@@ -22,6 +22,8 @@ $Ver_Organigramas = 0;
 $Agregar_Noticias = 0;
 $Editar_Noticias = 0;
 $Del_Noticias = 0;
+$Ver_Empresas = 0;
+$Editar_Empresas = 0;
  ?>
 <div class="container-fluid dashboard-content">
 	<div class="ecommerce-widget">
@@ -80,6 +82,8 @@ $Del_Noticias = 0;
 										$Agregar_Noticias = $rol['Agregar_Noticias'];
 										$Editar_Noticias = $rol['Editar_Noticias'];
 										$Del_Noticias = $rol['Del_Noticias'];
+										$Ver_Empresas = $rol['Ver_Empresas'];
+										$Editar_Empresas = $rol['Editar_Empresas'];
 									}
 									?>
 									<tr>
@@ -116,7 +120,9 @@ $Del_Noticias = 0;
 												data-Ver_Organigramas="<?php echo $Ver_Organigramas; ?>"
 												data-Agregar_Noticias="<?php echo $Agregar_Noticias; ?>"
 												data-Editar_Noticias="<?php echo $Editar_Noticias; ?>"
-												data-Del_Noticias="<?php echo $Del_Noticias; ?>">
+												data-Del_Noticias="<?php echo $Del_Noticias; ?>"
+												data-Ver_Empresas="<?php echo $Ver_Empresas; ?>"
+												data-Editar_Empresas="<?php echo $Editar_Empresas; ?>">
 												<i class="fas fa-clipboard-list"></i>
 											</button>
 										</td>
@@ -281,6 +287,22 @@ $Del_Noticias = 0;
 					</div>
 					<div class="col-sm-6 mt-3">
 						<hr>
+						<strong><p class="subtitulo mb-0">Empresas</p></strong>
+						<label class="custom-control custom-checkbox custom-control mb-0">
+							<input type="checkbox" id="Marcar-Todos-Empresas" class="custom-control-input">
+							<span class="custom-control-label">Marcar Todos</span>
+						</label>
+						<label class="custom-control custom-checkbox custom-control-inline">
+							<input type="checkbox" Name="Ver-Empresas" id="Ver-Empresas" class=" empresas-checkbox custom-control-input-look">
+							<span class="custom-control-label">Ver</span>
+						</label>
+						<label class="custom-control custom-checkbox custom-control-inline">
+							<input type="checkbox" Name="Editar-Empresas" id="Editar-Empresas" class=" empresas-checkbox custom-control-input-edit" disabled>
+							<span class="custom-control-label">Editar</span>
+						</label>
+					</div>
+					<div class="col-sm-6 mt-3">
+						<hr>
 						<strong><p class="subtitulo mb-0">Empleado del mes</p></strong>
 						<label class="custom-control custom-checkbox custom-control mb-0">
 							<input type="checkbox" Name="Asignar-EmpleadoMes" id="Asignar-EmpleadoMes" class="custom-control-input-look">
@@ -353,6 +375,9 @@ $('#rolesModal').on('show.bs.modal', function (event) {
 	var agregar_noticias = button.data('agregar_noticias');
 	var editar_noticias = button.data('editar_noticias');
 	var del_noticias = button.data('del_noticias');
+	// Permisos Noticias
+	var ver_empresas = button.data('ver_empresas');
+	var editar_empresas = button.data('editar_empresas');
 
 	var modal = $(this);
 	modal.find('.modal-title').text('Asignar Roles: ' + recipient);
@@ -378,6 +403,20 @@ $('#rolesModal').on('show.bs.modal', function (event) {
 		$('#Del-Empleados').prop('disabled', true);
 		modal.find('#Del-Empleados').prop('checked', false);
 		modal.find('#Editar-Empleados').prop('checked', false);
+	}
+	
+	if (ver_empresas === 1) {
+		modal.find('#Ver-Empresas').prop('checked', true);
+		$('#Editar-Empresas').prop('disabled', false);
+		if (editar_empresas === 1) {
+			modal.find('#Editar-Empresas').prop('checked', true);
+		}else{
+			modal.find('#Editar-Empresas').prop('checked', false);
+		}
+	} else {
+		modal.find('#Ver-Empresas').prop('checked', false);
+		$('#Editar-Empresas').prop('disabled', true);
+		modal.find('#Editar-Empresas').prop('checked', false);
 	}
 	
 	if (ver_departamentos === 1) {
@@ -563,6 +602,44 @@ $(document).ready(function() {
 		// Habilitar o deshabilitar los checkboxes de acciones basado en la selección de empleados
 		$('#Editar-Empleados').prop('disabled', totalSeleccionadosEmpleados === 0);
 		$('#Del-Empleados').prop('disabled', totalSeleccionadosEmpleados === 0);
+	});
+
+	$('#Ver-Empresas').change(function() {
+		var isChecked = $(this).prop('checked');
+		if (isChecked) {
+			$('#Editar-Empresas').prop('disabled', false);
+		} else {
+			$('#Editar-Empresas').prop('disabled', true);
+		}
+	});
+
+	// Verificar el valor inicial al cargar la página
+	var isCheckedInitially = $('#Ver-Empresas').prop('checked');
+	if (isCheckedInitially) {
+		$('#Editar-Empresas').prop('disabled', false);
+	} else {
+		$('#Editar-Empresas').prop('disabled', true);
+	}
+
+	// Marcar o desmarcar todos los checkboxes de Empresas al hacer clic en "Marcar Todos"
+	$('#Marcar-Todos-Empresas').change(function() {
+		var isChecked = $(this).prop('checked');
+		$('.empresas-checkbox').prop('checked', isChecked);
+
+		// Si el checkbox "Marcar Todos" está marcado, habilitar los checkboxes de acciones
+		$('#Editar-Empresas').prop('disabled', !isChecked);
+	});
+
+	// Manejar el cambio en los checkboxes individuales de Empresas
+	$('.empresas-checkbox').change(function() {
+		var totalEmpresas = $('.empresas-checkbox').length;
+		var totalSeleccionadosEmpresas = $('.empresas-checkbox:checked').length;
+		
+		// Si todos los checkboxes de Empresas están seleccionados, marcar el checkbox "Marcar Todos"
+		$('#Marcar-Todos-Empresas').prop('checked', totalSeleccionadosEmpresas === totalEmpresas);
+		
+		// Habilitar o deshabilitar los checkboxes de acciones basado en la selección de Empresas
+		$('#Editar-Empresas').prop('disabled', totalSeleccionadosEmpresas === 0);
 	});
 
 	// Marcar o desmarcar todos los checkboxes de Noticias al hacer clic en "Marcar Todos"

@@ -183,7 +183,11 @@ $perfil = $primerLetra.$segundaLetra;
 						}
 					}
 //Menu de de Bolsa de trabajo
-					$configuraciones = array( 'Configuraciones','Empresas');
+					if (!empty($rol) && $rol['Ver_Empresas'] == 1) {
+						$configuraciones = array( 'Configuraciones','Empresas');
+					}else{
+						$configuraciones = array( 'Configuraciones');
+					}
 					if (!empty($paginaActual) && in_array($paginaActual, $configuraciones)) {
 						foreach ($configuraciones as $pagina) {
 							$activeClass = ($paginaActual == $pagina) ? ' active' : '';

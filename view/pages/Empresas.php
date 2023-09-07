@@ -1,3 +1,4 @@
+<?php if (!empty($rol) && $rol['Ver_Empresas'] == 1) : ?>
 <?php if (!isset($_GET['empresa'])): ?>
 <?php 
 $empresas = ControladorFormularios::ctrVerEmpresas(null,null);
@@ -20,9 +21,11 @@ $regimenArray = json_decode($regimenJson, true);
 		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 			<div class="card">
 				<div class="card-body">
+					<?php if (!empty($rol) && $rol['Editar_Empresas'] == 1) : ?>
 					<a href="RegistroEmpresa" class="btb btn-success p-2 rounded mb-3 float-right">
 						Nueva empresa<i class="fas fa-user-plus ml-2"></i>
 					</a>
+					<?php endif ?>
 					<div class="table-responsive">
 						<table id="example" class="table table-striped table-bordered second" style="width:100%">
 							<thead>
@@ -45,9 +48,13 @@ $regimenArray = json_decode($regimenJson, true);
 								<?php foreach ($empresas as $empresa): ?>
 									<tr>
 										<td>
+											<?php if (!empty($rol) && $rol['Editar_Empresas'] == 1) : ?>
 											<a class="btn btn-link" href="Empresas&empresa=<?php echo $empresa['idEmpresas'];?>">
 												<?php echo $empresa['nombre_razon_social']; ?>
 											</a>
+											<?php else: ?>
+												<?php echo $empresa['nombre_razon_social']; ?>
+											<?php endif ?>
 										</td>
 										<td><?php echo $empresa['registro_patronal']; ?></td>
 										<td><?php echo $empresa['rfc']; ?></td>
@@ -81,7 +88,7 @@ $regimenArray = json_decode($regimenJson, true);
 		</div>
 	</div>
 <?php else: ?>
-
+<?php if (!empty($rol) && $rol['Editar_Empresas'] == 1): ?>
 	<?php $consultaEmpresa = ControladorFormularios::ctrVerEmpresas("idEmpresas",$_GET['empresa']);
 	if (isset($consultaEmpresa[0])): ?>
 		<?php 
@@ -490,6 +497,11 @@ $regimenArray = json_decode($regimenJson, true);
 			}
 		});
 		</script>
+<?php else: ?>
+	<script>
+		window.location.href="Empresas";
+	</script>
+<?php endif ?>
 	<?php else: ?>
 		<script>
 			window.location.href="Empresas";
@@ -498,3 +510,8 @@ $regimenArray = json_decode($regimenJson, true);
 
 <?php endif ?>
 </div>
+<?php else: ?>
+	<script>
+		window.location.href = 'Inicio';
+	</script>
+<?php endif ?>

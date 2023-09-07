@@ -1114,6 +1114,8 @@ class FormulariosAjax{
 		$Agregar_Noticias = $this -> Agregar_Noticias;
 		$Editar_Noticias = $this -> Editar_Noticias;
 		$Del_Noticias = $this -> Del_Noticias;
+		$Ver_Empresas = $this -> Ver_Empresas;
+		$Editar_Empresas = $this -> Editar_Empresas;
 
 		$datos = array(
 			"idEmpleados" => $idEmpleados,
@@ -1139,7 +1141,9 @@ class FormulariosAjax{
 			"Ver_Organigramas" => $Ver_Organigramas,
 			"Agregar_Noticias" => $Agregar_Noticias,
 			"Editar_Noticias" => $Editar_Noticias,
-			"Del_Noticias" => $Del_Noticias
+			"Del_Noticias" => $Del_Noticias,
+			"Ver_Empresas" => $Ver_Empresas,
+			"Editar_Empresas" => $Editar_Empresas
 		);
 		$buscarEmpleadoRol = ModeloFormularios::mdlVerRoles("Empleados_idEmpleados", $idEmpleados);
 
@@ -2239,6 +2243,8 @@ if (isset($_POST['empleado-rol'])) {
 	$Agregar_Noticias = (isset($_POST['Agregar-Noticias'])) ? 1 : 0;
 	$Editar_Noticias = (isset($_POST['Editar-Noticias'])) ? 1 : 0;
 	$Del_Noticias = (isset($_POST['Del-Noticias'])) ? 1 : 0;
+	$Ver_Empresas = (isset($_POST['Ver-Empresas'])) ? 1 : 0;
+	$Editar_Empresas = (isset($_POST['Editar-Empresas'])) ? 1 : 0;
 
 	$crearRoles = new FormulariosAjax();
 	$crearRoles -> idEmpleados = $idEmpleados;
@@ -2265,5 +2271,7 @@ if (isset($_POST['empleado-rol'])) {
 	$crearRoles -> Agregar_Noticias = $Agregar_Noticias;
 	$crearRoles -> Editar_Noticias = $Editar_Noticias;
 	$crearRoles -> Del_Noticias = $Del_Noticias;
+	$crearRoles -> Ver_Empresas = $Ver_Empresas;
+	$crearRoles -> Editar_Empresas = $Editar_Empresas;
 	$crearRoles -> crearRolesAjax();
 }
