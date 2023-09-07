@@ -1,3 +1,4 @@
+<?php if (!empty($rol) && $rol['Configuracion_Divisas'] == 1): ?>
 <div class="container-fluid dashboard-content">
 	<div class="ecommerce-widget">
 		<div class="card mx-5 menu-ajustes">
@@ -192,3 +193,8 @@ $('#eliminar').on('show.bs.modal', function (event) {
 	}
 
 </script>
+<?php else: ?>
+	<script>
+		window.location.href="Inicio";
+	</script>
+<?php endif ?>

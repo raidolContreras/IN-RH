@@ -93,7 +93,9 @@ session_start();
 				include "pages/navs/sidenav.php"; 
 
 				include "pages/".$_GET["pagina"].".php";
-				echo '<a href="Configuraciones" class="configuration-button"><i class="fas fa-cog rotate-center"></i></a>';
+				if (!empty($rol) && ($rol['Configuracion_Divisas'] == 1 || $rol['Configuracion_Categorias'] == 1 || $rol['Configuracion_Permisos'] == 1)) {
+					echo '<a href="Configuraciones" class="configuration-button"><i class="fas fa-cog rotate-center"></i></a>';
+				}
 
 			}elseif(strpos($_GET["pagina"], "Vacantes-") !== false){
 
@@ -229,7 +231,9 @@ session_start();
 		include "pages/navs/navbar.php";
 		include "pages/navs/sidenav.php"; 
 		include "pages/Inicio.php";
-		echo '<a href="Configuraciones" class="configuration-button"><i class="fas fa-cog rotate-center"></i></a>';
+		if (!empty($rol) && ($rol['Configuracion_Divisas'] == 1 || $rol['Configuracion_Categorias'] == 1 || $rol['Configuracion_Permisos'] == 1)) {
+			echo '<a href="Configuraciones" class="configuration-button"><i class="fas fa-cog rotate-center"></i></a>';
+		}
 	}
 //	include "pages/navs/footer.php";
 

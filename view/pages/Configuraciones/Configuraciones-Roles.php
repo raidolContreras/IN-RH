@@ -1,3 +1,4 @@
+<?php if (!empty($rol) && $rol['Configuracion_Permisos'] == 1): ?>
 <?php 
 $Ver_Empleados = 0;
 $Editar_Empleados = 0;
@@ -24,6 +25,9 @@ $Editar_Noticias = 0;
 $Del_Noticias = 0;
 $Ver_Empresas = 0;
 $Editar_Empresas = 0;
+$Configuracion_Divisas = 0;
+$Configuracion_Categorias = 0;
+$Configuracion_Permisos = 0;
  ?>
 <div class="container-fluid dashboard-content">
 	<div class="ecommerce-widget">
@@ -84,6 +88,9 @@ $Editar_Empresas = 0;
 										$Del_Noticias = $rol['Del_Noticias'];
 										$Ver_Empresas = $rol['Ver_Empresas'];
 										$Editar_Empresas = $rol['Editar_Empresas'];
+										$Configuracion_Divisas = $rol['Configuracion_Divisas'];
+										$Configuracion_Categorias = $rol['Configuracion_Categorias'];
+										$Configuracion_Permisos = $rol['Configuracion_Permisos'];
 									}
 									?>
 									<tr>
@@ -122,7 +129,10 @@ $Editar_Empresas = 0;
 												data-Editar_Noticias="<?php echo $Editar_Noticias; ?>"
 												data-Del_Noticias="<?php echo $Del_Noticias; ?>"
 												data-Ver_Empresas="<?php echo $Ver_Empresas; ?>"
-												data-Editar_Empresas="<?php echo $Editar_Empresas; ?>">
+												data-Editar_Empresas="<?php echo $Editar_Empresas; ?>"
+												data-Configuracion_Divisas="<?php echo $Configuracion_Divisas; ?>"
+												data-Configuracion_Categorias="<?php echo $Configuracion_Categorias; ?>"
+												data-Configuracion_Permisos="<?php echo $Configuracion_Permisos; ?>">
 												<i class="fas fa-clipboard-list"></i>
 											</button>
 										</td>
@@ -303,6 +313,26 @@ $Editar_Empresas = 0;
 					</div>
 					<div class="col-sm-6 mt-3">
 						<hr>
+						<strong><p class="subtitulo mb-0">Configuracion</p></strong>
+						<label class="custom-control custom-checkbox custom-control mb-0">
+							<input type="checkbox" id="Marcar-Todos-Configuraciones" class="custom-control-input">
+							<span class="custom-control-label">Marcar Todos</span>
+						</label>
+						<label class="custom-control custom-checkbox custom-control-inline">
+							<input type="checkbox" Name="Configuracion-Divisas" id="Configuracion-Divisas" class=" configuraciones-checkbox custom-control-input-edit">
+							<span class="custom-control-label">Divisas</span>
+						</label>
+						<label class="custom-control custom-checkbox custom-control-inline">
+							<input type="checkbox" Name="Configuracion-Categorias" id="Configuracion-Categorias" class=" configuraciones-checkbox custom-control-input-edit">
+							<span class="custom-control-label">Categorias</span>
+						</label>
+						<label class="custom-control custom-checkbox custom-control-inline">
+							<input type="checkbox" Name="Configuracion-Permisos" id="Configuracion-Permisos" class=" configuraciones-checkbox custom-control-input-edit">
+							<span class="custom-control-label">Permisos</span>
+						</label>
+					</div>
+					<div class="col-sm-6 mt-3">
+						<hr>
 						<strong><p class="subtitulo mb-0">Empleado del mes</p></strong>
 						<label class="custom-control custom-checkbox custom-control mb-0">
 							<input type="checkbox" Name="Asignar-EmpleadoMes" id="Asignar-EmpleadoMes" class="custom-control-input-look">
@@ -378,6 +408,10 @@ $('#rolesModal').on('show.bs.modal', function (event) {
 	// Permisos Noticias
 	var ver_empresas = button.data('ver_empresas');
 	var editar_empresas = button.data('editar_empresas');
+	// Permisos Configuraciones
+	var configuracion_divisas = button.data('configuracion_divisas');
+	var configuracion_categorias = button.data('configuracion_categorias');
+	var configuracion_permisos = button.data('configuracion_permisos');
 
 	var modal = $(this);
 	modal.find('.modal-title').text('Asignar Roles: ' + recipient);
@@ -535,6 +569,24 @@ $('#rolesModal').on('show.bs.modal', function (event) {
 		modal.find('#Ver-Organigramas').prop('checked', false);
 	}
 	
+	if (configuracion_divisas === 1) {
+		modal.find('#Configuracion-Divisas').prop('checked', true);
+	}else{
+		modal.find('#Configuracion-Divisas').prop('checked', false);
+	}
+	
+	if (configuracion_categorias === 1) {
+		modal.find('#Configuracion-Categorias').prop('checked', true);
+	}else{
+		modal.find('#Configuracion-Categorias').prop('checked', false);
+	}
+	
+	if (configuracion_permisos === 1) {
+		modal.find('#Configuracion-Permisos').prop('checked', true);
+	}else{
+		modal.find('#Configuracion-Ppermisos').prop('checked', false);
+	}
+	
 	if (ver_reclutamiento === 1) {
 		modal.find('#Ver-Reclutamiento').prop('checked', true);
 		$('#Editar-Reclutamiento').prop('disabled', false);
@@ -655,6 +707,21 @@ $(document).ready(function() {
 		
 		// Si todos los checkboxes de Noticias están seleccionados, marcar el checkbox "Marcar Todos"
 		$('#Marcar-Todos-Noticias').prop('checked', totalSeleccionadosNoticias === totalNoticias);
+	});
+
+	// Marcar o desmarcar todos los checkboxes de Configuraciones al hacer clic en "Marcar Todos"
+	$('#Marcar-Todos-Configuraciones').change(function() {
+		var isChecked = $(this).prop('checked');
+		$('.configuraciones-checkbox').prop('checked', isChecked);
+	});
+
+	// Manejar el cambio en los checkboxes individuales de Noticias
+	$('.configuraciones-checkbox').change(function() {
+		var totalConfiguraciones = $('.configuraciones-checkbox').length;
+		var totalSeleccionadosConfiguraciones = $('.configuraciones-checkbox:checked').length;
+		
+		// Si todos los checkboxes de Configuraciones están seleccionados, marcar el checkbox "Marcar Todos"
+		$('#Marcar-Todos-Configuraciones').prop('checked', totalSeleccionadosConfiguraciones === totalConfiguraciones);
 	});
 	
 	$('#Ver-Departamentos').change(function() {
@@ -893,3 +960,8 @@ function deleteAlert() {
 	}, 1000);
 }
 </script>
+<?php else: ?>
+	<script>
+		window.location.href="Inicio";
+	</script>
+<?php endif ?>
