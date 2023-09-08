@@ -1729,24 +1729,35 @@ CREATE TABLE `reuniones` (
 CREATE TABLE `roles` (
   `idRoles` int(11) NOT NULL,
   `Empleados_idEmpleados` int(11) NOT NULL,
-  `Ver_Empleados` int(1) NOT NULL DEFAULT '0',
-  `Editar_Empleados` int(1) NOT NULL DEFAULT '0',
-  `Del_Empleados` int(1) NOT NULL DEFAULT '0',
-  `Resumenes_Asistencias` int(1) NOT NULL DEFAULT '0',
-  `Ajustes_Asistencias` int(1) NOT NULL DEFAULT '0',
-  `Ver_Evaluaciones` int(1) NOT NULL DEFAULT '0',
-  `Editar_Evaluaciones` int(1) NOT NULL DEFAULT '0',
-  `Del_Evaluaciones` int(1) NOT NULL DEFAULT '0'
+  `Ver_Empleados` int(1) NOT NULL DEFAULT 0,
+  `Editar_Empleados` int(1) NOT NULL DEFAULT 0,
+  `Del_Empleados` int(1) NOT NULL DEFAULT 0,
+  `Resumenes_Asistencias` int(1) NOT NULL DEFAULT 0,
+  `Ajustes_Asistencias` int(1) NOT NULL DEFAULT 0,
+  `Ver_Evaluaciones` int(1) NOT NULL DEFAULT 0,
+  `Editar_Evaluaciones` int(1) NOT NULL DEFAULT 0,
+  `Del_Evaluaciones` int(1) NOT NULL DEFAULT 0,
+  `Ver_Tareas` int(1) NOT NULL DEFAULT 0,
+  `Editar_Tareas` int(1) NOT NULL DEFAULT 0,
+  `Del_Tareas` int(1) NOT NULL DEFAULT 0,
+  `Ver_Analisis` int(1) NOT NULL DEFAULT 0,
+  `Ver_Reclutamiento` int(1) NOT NULL DEFAULT 0,
+  `Editar_Reclutamiento` int(1) NOT NULL DEFAULT 0,
+  `Del_Reclutamiento` int(1) NOT NULL DEFAULT 0,
+  `Ver_Departamentos` int(1) NOT NULL DEFAULT 0,
+  `Editar_Departamentos` int(1) NOT NULL DEFAULT 0,
+  `Del_Departamentos` int(1) NOT NULL DEFAULT 0,
+  `Ver_Organigramas` int(1) NOT NULL DEFAULT 0,
+  `Agregar_Noticias` int(1) NOT NULL DEFAULT 0,
+  `Editar_Noticias` int(1) NOT NULL DEFAULT 0,
+  `Del_Noticias` int(1) NOT NULL DEFAULT 0,
+  `Asignar_EmpleadoMes` int(1) NOT NULL DEFAULT 0,
+  `Ver_Empresas` int(1) NOT NULL DEFAULT 0,
+  `Editar_Empresas` int(1) NOT NULL DEFAULT 0,
+  `Configuracion_Divisas` int(1) NOT NULL DEFAULT 0,
+  `Configuracion_Categorias` int(1) NOT NULL DEFAULT 0,
+  `Configuracion_Permisos` int(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Volcado de datos para la tabla `roles`
---
-
-INSERT INTO `roles` (`idRoles`, `Empleados_idEmpleados`, `Ver_Empleados`, `Editar_Empleados`, `Del_Empleados`, `Resumenes_Asistencias`, `Ajustes_Asistencias`, `Ver_Evaluaciones`, `Editar_Evaluaciones`, `Del_Evaluaciones`) VALUES
-(1, 124, 1, 1, 1, 0, 0, 0, 0, 0),
-(2, 3, 1, 0, 0, 0, 0, 1, 1, 1),
-(3, 6, 1, 1, 1, 0, 0, 1, 1, 1);
 
 -- --------------------------------------------------------
 
