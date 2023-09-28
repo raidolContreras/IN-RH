@@ -1,68 +1,68 @@
 [
 	{
 		"LimiteInferior": 0.01,
-		"LimiteSuperior": 171.78,
-		"CuotaFija": 0,
+		"LimiteSuperior": 368.10,
+		"CuotaFija": 0.00,
 		"Porcentaje": 1.92
 	},
 	{
-		"LimiteInferior": 171.79,
-		"LimiteSuperior": 1458.03,
-		"CuotaFija": 3.29,
+		"LimiteInferior": 368.11,
+		"LimiteSuperior": 3124.35,
+		"CuotaFija": 7.05,
 		"Porcentaje": 6.40
 	},
 	{
-		"LimiteInferior": 1458.04,
-		"LimiteSuperior": 2562.35,
-		"CuotaFija": 85.61,
+		"LimiteInferior": 3124.36,
+		"LimiteSuperior": 5490.75,
+		"CuotaFija": 183.45,
 		"Porcentaje": 10.88
 	},
 	{
-		"LimiteInferior": 2562.36,
-		"LimiteSuperior": 2978.64,
-		"CuotaFija": 205.80,
+		"LimiteInferior": 5490.76,
+		"LimiteSuperior": 6382.80,
+		"CuotaFija": 441.00,
 		"Porcentaje": 16.00
 	},
 	{
-		"LimiteInferior": 2978.65,
-		"LimiteSuperior": 3566.22,
-		"CuotaFija": 272.37,
+		"LimiteInferior": 6382.81,
+		"LimiteSuperior": 7641.90,
+		"CuotaFija": 583.65,
 		"Porcentaje": 17.92
 	},
 	{
-		"LimiteInferior": 3566.23,
-		"LimiteSuperior": 7192.64,
-		"CuotaFija": 377.65,
+		"LimiteInferior": 7641.91,
+		"LimiteSuperior": 15412.80,
+		"CuotaFija": 809.25,
 		"Porcentaje": 21.36
 	},
 	{
-		"LimiteInferior": 7192.65,
-		"LimiteSuperior": 11336.57,
-		"CuotaFija": 1152.27,
+		"LimiteInferior": 15412.81,
+		"LimiteSuperior": 24292.65,
+		"CuotaFija": 2469.15,
 		"Porcentaje": 23.52
 	},
 	{
-		"LimiteInferior": 11336.58,
-		"LimiteSuperior": 21643.30,
-		"CuotaFija": 2126.95,
+		"LimiteInferior": 24292.66,
+		"LimiteSuperior": 46378.50,
+		"CuotaFija": 4557.75,
 		"Porcentaje": 30.00
 	},
 	{
-		"LimiteInferior": 21643.31,
-		"LimiteSuperior": 28857.78,
-		"CuotaFija": 5218.92,
+		"LimiteInferior": 46378.51,
+		"LimiteSuperior": 61838.10,
+		"CuotaFija": 11183.40,
 		"Porcentaje": 32.00
 	},
 	{
-		"LimiteInferior": 28857.79,
-		"LimiteSuperior": 86573.34,
-		"CuotaFija": 7527.59,
+		"LimiteInferior": 61838.11,
+		"LimiteSuperior": 185514.30,
+		"CuotaFija": 16130.55,
 		"Porcentaje": 34.00
 	},
 	{
-		"LimiteInferior": 86573.35,
+		"LimiteInferior": 185514.31,
 		"LimiteSuperior": 999999999.00,
-		"CuotaFija": 27150.83,
+		"CuotaFija": 58180.35,
 		"Porcentaje": 35.00
 	}
 ]

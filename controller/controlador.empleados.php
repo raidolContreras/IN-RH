@@ -275,5 +275,51 @@ class ControladorEmpleados{
 		$DiasFestivos = ModeloEmpleados::mdlDiasFestivos($tabla);
 		return $DiasFestivos;
 	}
+
+	static public function obtenerCuotaFijaYPorcentaje($quincena) {
+		// Obtener el contenido del archivo JSON
+		$archivoJSON = 'view/pages/json/ISR.json';
+		$jsonData = file_get_contents($archivoJSON);
+
+		// Decodificar el JSON en un array asociativo
+		$tablaISR = json_decode($jsonData, true);
+
+		// Valores por defecto
+		$LimiteInferior = 0;
+		$cuotaFija = 0;
+		$porcentaje = 0;
+
+		// Buscar en qué rango se encuentra $quincena
+		foreach ($tablaISR as $rango) {
+			if ($quincena >= $rango['LimiteInferior'] && $quincena <= $rango['LimiteSuperior']) {
+				$LimiteInferior = $rango['LimiteInferior'];
+				$cuotaFija = $rango['CuotaFija'];
+				$porcentaje = $rango['Porcentaje'];
+				break; // Salir del bucle una vez que se encuentra el rango adecuado
+			}
+		}
+
+		// Devolver los valores en un arreglo
+		return ['LimiteInferior' => $LimiteInferior,'cuotaFija' => $cuotaFija, 'porcentaje' => $porcentaje];
+	}
+
+	static public function calcularISR($quincena) {
+		// Obtener cuota fija, porcentaje y límite inferior
+		$valoresISR = ControladorEmpleados::obtenerCuotaFijaYPorcentaje($quincena);
+		$LimiteInferior = $valoresISR['LimiteInferior'];
+		$cuotaFija = $valoresISR['cuotaFija'];
+		$porcentaje = $valoresISR['porcentaje'];
+
+		// Calcular excedente sobre el límite inferior
+		$excedente = $quincena - $LimiteInferior;
+
+		// Calcular impuesto marginal
+		$impuestoMarginal = $excedente * ($porcentaje / 100);
+
+		// Calcular ISR Causado
+		$ISRcausado = $impuestoMarginal + $cuotaFija;
+
+		return $ISRcausado;
+	}
 	
 }

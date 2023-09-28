@@ -228,11 +228,16 @@ session_start();
 		}
 
 	}else{
-		include "pages/navs/navbar.php";
-		include "pages/navs/sidenav.php"; 
-		include "pages/Inicio.php";
-		if (!empty($rol) && ($rol['Configuracion_Divisas'] == 1 || $rol['Configuracion_Categorias'] == 1 || $rol['Configuracion_Permisos'] == 1)) {
-			echo '<a href="Configuraciones" class="configuration-button"><i class="fas fa-cog rotate-center"></i></a>';
+		if (!isset( $_SESSION['validarIngreso'])) {
+			header("Location: Login"); // Cambia "login.php" al nombre de tu página de inicio de sesión
+			exit();
+		}else{
+			include "pages/navs/navbar.php";
+			include "pages/navs/sidenav.php"; 
+			include "pages/Inicio.php";
+			if (!empty($rol) && ($rol['Configuracion_Divisas'] == 1 || $rol['Configuracion_Categorias'] == 1 || $rol['Configuracion_Permisos'] == 1)) {
+				echo '<a href="Configuraciones" class="configuration-button"><i class="fas fa-cog rotate-center"></i></a>';
+			}
 		}
 	}
 //	include "pages/navs/footer.php";
