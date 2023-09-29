@@ -93,7 +93,6 @@ jQuery(document).ready(function($) {
                 dom: 'Bfrtip',
                 lengthChange: false,
                 "ordering": false,
-                scrollY: 350,
                 buttons: [
                     {
                         extend: 'excelHtml5',
@@ -119,7 +118,52 @@ jQuery(document).ready(function($) {
                     }
                 ],
                 fixedHeader: true,
-                select: true,
+            language: {
+                lengthMenu: 'Mostrar _MENU_ resultados por pagina',
+                zeroRecords: 'Sin resultados - lo siento',
+                info: 'Pagina _PAGE_ de _PAGES_',
+                infoEmpty: 'No se encontraron registros',
+                infoFiltered: '(Filtrado de _MAX_ registros totales)',
+                search: 'Buscar',
+            }
+            });
+
+            table.buttons().container()
+                .appendTo('#example_wrapper .col-md-6:eq(0)');
+        });
+    }
+
+    if ($("table.nomina").length) {
+
+        $(document).ready(function() {
+            var table = $('table.nomina').DataTable({
+                dom: 'Bfrtip',
+                lengthChange: false,
+                buttons: [
+                    {
+                        extend: 'excelHtml5',
+                        text: 'Exportar a Excel',
+                        className: 'btn btn-outline-success rounded',
+                        customize: function( xlsx ) {
+                            var sheet = xlsx.xl.worksheets['Datos.xml'];
+                            $('row:first c', sheet).attr( 's', '42' );
+                        },
+                        exportOptions: {
+                            columns: [ 0, 1, 2 ]
+                        }
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        text: 'Exportar a PDF',
+                        className: 'btn btn-outline-danger rounded',
+                        orientation: 'landscape',
+                        pageSize: 'LEGAL',
+                        exportOptions: {
+                            columns: [ 0, 1, 2 ]
+                        }
+                    }
+                ],
+                fixedHeader: true,
             language: {
                 lengthMenu: 'Mostrar _MENU_ resultados por pagina',
                 zeroRecords: 'Sin resultados - lo siento',

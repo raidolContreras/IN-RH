@@ -27,11 +27,11 @@ class ControladorFormularios{
 	}
 
 	static public function calcularEdad($fechaNacimiento) {
-	    $fechaNacimiento = new DateTime($fechaNacimiento);
-	    $fechaActual = new DateTime();
-	    $diferencia = $fechaActual->diff($fechaNacimiento);
-	    
-	    return $diferencia->y; // Retorna la edad en años
+		$fechaNacimiento = new DateTime($fechaNacimiento);
+		$fechaActual = new DateTime();
+		$diferencia = $fechaActual->diff($fechaNacimiento);
+		
+		return $diferencia->y; // Retorna la edad en años
 	}
 
 	/*---------- Esta función Sube una foto, y guarda un tumbnails para optimización de la pagina ---------- */
@@ -1326,6 +1326,47 @@ class ControladorFormularios{
 
 		return $formato;
 	}
+
+	static public function ctrFormatearFechaNomina($fecha){
+		// Divide la fecha en sus componentes: día, mes y año
+		list($dia, $numeroMes, $year) = explode("-", $fecha);
+
+		// Define los nombres de los meses y días de la semana
+		$meses = array(
+			'01' => 'enero',
+			'02' => 'febrero',
+			'03' => 'marzo',
+			'04' => 'abril',
+			'05' => 'mayo',
+			'06' => 'junio',
+			'07' => 'julio',
+			'08' => 'agosto',
+			'09' => 'septiembre',
+			'10' => 'octubre',
+			'11' => 'noviembre',
+			'12' => 'diciembre'
+		);
+
+		$dias = array(
+			1 => 'Lunes',
+			2 => 'Martes',
+			3 => 'Miércoles',
+			4 => 'Jueves',
+			5 => 'Viernes',
+			6 => 'Sábado',
+			7 => 'Domingo'
+		);
+
+		// Obtiene el nombre del mes y el día de la semana
+		$mes = $meses[$numeroMes];
+		$diaSemana = $dias[date('N', strtotime($fecha))];
+
+		// Formatea la fecha en el nuevo formato
+		$formato = $diaSemana . ", " . $dia . " " . $mes . ", " . $year;
+
+		return $formato;
+	}
+
 
 	static public function ctrFormatearTiempo($minutos){
 		if ($minutos != null) {
