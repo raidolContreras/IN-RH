@@ -48,12 +48,12 @@
 														
 														case 'Cuota fija':
 															$seguro = $credito['valor_descuento'];
-															$datoSeguro = 'Cuota fija ($'.$credito['valor_descuento'].') '.formatearNumero($seguro);
+															$datoSeguro = 'Cuota fija: '.formatearNumero($seguro);
 															break;
 														
 														case 'Factor de descuento':
 															$seguro = $credito['valor_descuento'];
-															$datoSeguro = 'Factor de descuento ($'.$credito['valor_descuento'].') '.formatearNumero($seguro);
+															$datoSeguro = 'Factor de descuento: '.formatearNumero($seguro);
 															break;
 														
 														default:
