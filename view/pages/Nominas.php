@@ -1,4 +1,8 @@
 <?php
+
+	$diasCotizados = 15; // Ejemplo de número de días cotizados
+	$porcentajeRetencionIMSS = 2.38; // Ejemplo de porcentaje de retención IMSS
+
 	// Función para formatear un número con el símbolo de moneda
 	function formatearNumero($numero) {
 		$numero = ControladorFormularios::formatearNumero($numero, 'MXN');
@@ -22,6 +26,7 @@
 											<tr>
 												<th>Nombre Completo</th>
 												<th>Salario Quincenal (Bruto)</th>
+												<th>Subsidio</th>
 												<th>Crédito I.M.S.S.</th>
 												<th>I.S.R.</th>
 												<th>Salario Quincenal (Neto)</th>
@@ -30,43 +35,25 @@
 										</thead>
 										<tbody style="font-size: 12px !important">
 										<?php foreach ($empleados as $value):
-											if ($value['status'] == 1): 
+											if ($value['status'] == 1):
+
 												$credito = ControladorEmpleados::ctrVerCredito($value['idEmpleados']);
 												$puesto = ControladorFormularios::ctrVerPuestos('Empleados_idEmpleados', $value['idEmpleados']);
-												$quincena = $puesto['salario_integrado'] * 15;
+												$quincena = $puesto['salario_integrado'] * $diasCotizados;
+
+												$retencionIMSS = ControladorEmpleados::calcularRetencionIMSS($quincena, $diasCotizados, $porcentajeRetencionIMSS);
+
 												$ISR = ControladorEmpleados::calcularISR($quincena);
+												$subsidios = ControladorEmpleados::obtenerSubsidios($quincena);
+												$cuotaFija = formatearNumero($subsidios['cuotaFija']);
+												$salFinal = $quincena - $ISR + floatval($cuotaFija);
 
 												$neto = $quincena - $ISR;
 												$ISRFormateado = formatearNumero($ISR);
 
-												if (!empty($credito['valor_descuento'])){
-													switch ($credito['tipo_credito']) {
-														case 'Porcentaje':
-															$seguro = $quincena * $credito['valor_descuento'] / 100;
-															$datoSeguro = 'Porcentaje ('.$credito['valor_descuento'].'%) '.formatearNumero($seguro);
-															break;
-														
-														case 'Cuota fija':
-															$seguro = $credito['valor_descuento'];
-															$datoSeguro = 'Cuota fija: '.formatearNumero($seguro);
-															break;
-														
-														case 'Factor de descuento':
-															$seguro = $credito['valor_descuento'];
-															$datoSeguro = 'Factor de descuento: '.formatearNumero($seguro);
-															break;
-														
-														default:
-															$seguro = 0;
-															$datoSeguro = formatearNumero($seguro);
-															break;
-													}
-												}else{
-													$seguro = 0;
-													$datoSeguro = formatearNumero(0);
-												}
+												$datoSeguro = "Total Retención IMSS: $" . number_format($retencionIMSS, 2);
 
-												$neto = $neto - $seguro;
+												$neto = $neto - $retencionIMSS;
 
 
 												$quincenaFormateada = formatearNumero($quincena);
@@ -78,6 +65,7 @@
 													<?php echo mb_strtoupper($value['lastname'].' '.$value['name'], 'UTF-8'); ?>
 												</td>
 												<td><?php echo $quincenaFormateada ?></td>
+												<td><?php echo $cuotaFija ?></td>
 												<td><?php echo $datoSeguro ?></td>
 												<td><?php echo $ISRFormateado ?></td>
 												<td><?php echo $netoFormateado ?></td>
@@ -109,12 +97,14 @@ $empleado = ControladorEmpleados::ctrVerEmpleados('idEmpleados', $_GET['Empleado
 $credito = ControladorEmpleados::ctrVerCredito($_GET['Empleado']);
 
 // Calcular la quincena
-$quincena = $empleado['salario_integrado'] * 15;
+$quincena = $empleado['salario_integrado'] * $diasCotizados;
 
 $ISR = ControladorEmpleados::calcularISR($quincena);
-$seguro = 0;
 
-$salFinal = $quincena - $ISR;
+$subsidios = ControladorEmpleados::obtenerSubsidios($quincena);
+$cuotaFija = formatearNumero($subsidios['cuotaFija']);
+
+$salFinal = $quincena - $ISR + floatval($cuotaFija);
 
 if (date('d') <= 15) {
 	$month = date('m') - 1;
@@ -130,6 +120,10 @@ if (date('d') <= 15) {
 }
 
 $fechaNominaFormateada = ControladorFormularios::ctrFormatearFechaNomina($fechaNomina);
+
+$retencionIMSS = ControladorEmpleados::calcularRetencionIMSS($quincena, $diasCotizados, $porcentajeRetencionIMSS);
+
+$salFinal = $salFinal - $retencionIMSS;
 
 ?>
 
@@ -215,48 +209,14 @@ $fechaNominaFormateada = ControladorFormularios::ctrFormatearFechaNomina($fechaN
 								<tr>
 									<td>Sueldo</td>
 									<td style="text-align:right;"><?php echo formatearNumero($quincena) ?></td>
-
-									<?php if (!empty($credito)): ?>
-										<?php
-											switch ($credito['tipo_credito']) {
-												case 'Porcentaje':
-													$seguro = $quincena * $credito['valor_descuento'] / 100;
-													break;
-												
-												case 'Cuota fija':
-													$seguro = $credito['valor_descuento'];
-													break;
-												
-												case 'Factor de descuento':
-													$seguro = $credito['valor_descuento'];
-													break;
-												
-												default:
-													$seguro = 0;
-													break;
-											}
-
-											$salFinal = $salFinal - $seguro;
-
-										?>
 									<td style="border-left: 2px solid #e6e6f2;">I.M.S.S.</td>
-									<td style="text-align:right;"><?php echo formatearNumero($seguro) ?></td>
-									<?php else: ?>
-									<td style="border-left: 2px solid #e6e6f2;">I.S.R. mes</td>
-									<td style="text-align:right;"><?php echo formatearNumero($ISR) ?></td>
-									<?php endif ?>
+									<td style="text-align:right;"><?php echo formatearNumero($retencionIMSS) ?></td>
 								</tr>
 								<tr>
 									<td>Subsidio</td>
-									<td style="text-align:right;"><?php echo formatearNumero(0); ?></td>
-
-									<?php if (!empty($credito)): ?>
+									<td style="text-align:right;"><?php echo $cuotaFija; ?></td>
 									<td style="border-left: 2px solid #e6e6f2;">I.S.R. mes</td>
 									<td style="text-align:right;"><?php echo formatearNumero($ISR) ?></td>
-									<?php else: ?>
-									<td style="border-left: 2px solid #e6e6f2;"></td>
-									<td></td>
-									<?php endif ?>
 								</tr>
 							</tbody>
 						</table>
@@ -290,7 +250,7 @@ $fechaNominaFormateada = ControladorFormularios::ctrFormatearFechaNomina($fechaN
 										<strong class="text-dark">Descuentos</strong>
 									</td>
 									<td style="text-align:right;">
-										<strong class="text-dark"><?php echo formatearNumero($seguro) ?></strong>
+										<strong class="text-dark"><?php echo formatearNumero($retencionIMSS) ?></strong>
 									</td>
 								</tr>
 								<tr>

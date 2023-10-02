@@ -1333,15 +1333,15 @@ class ControladorFormularios{
 
 		// Define los nombres de los meses y días de la semana
 		$meses = array(
-			'01' => 'enero',
-			'02' => 'febrero',
-			'03' => 'marzo',
-			'04' => 'abril',
-			'05' => 'mayo',
-			'06' => 'junio',
-			'07' => 'julio',
-			'08' => 'agosto',
-			'09' => 'septiembre',
+			'1' => 'enero',
+			'2' => 'febrero',
+			'3' => 'marzo',
+			'4' => 'abril',
+			'5' => 'mayo',
+			'6' => 'junio',
+			'7' => 'julio',
+			'8' => 'agosto',
+			'9' => 'septiembre',
 			'10' => 'octubre',
 			'11' => 'noviembre',
 			'12' => 'diciembre'

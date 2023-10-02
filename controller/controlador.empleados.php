@@ -303,6 +303,31 @@ class ControladorEmpleados{
 		return ['LimiteInferior' => $LimiteInferior,'cuotaFija' => $cuotaFija, 'porcentaje' => $porcentaje];
 	}
 
+	static public function obtenerSubsidios($quincena) {
+		// Obtener el contenido del archivo JSON
+		$archivoJSON = 'view/pages/json/Subsidio.json';
+		$jsonData = file_get_contents($archivoJSON);
+
+		// Decodificar el JSON en un array asociativo
+		$tablaISR = json_decode($jsonData, true);
+
+		// Valores por defecto
+		$LimiteInferior = 0;
+		$cuotaFija = 0;
+
+		// Buscar en qué rango se encuentra $quincena
+		foreach ($tablaISR as $rango) {
+			if ($quincena >= $rango['LimiteInferior'] && $quincena <= $rango['LimiteSuperior']) {
+				$LimiteInferior = $rango['LimiteInferior'];
+				$cuotaFija = $rango['CuotaFija'] / 30.4 * 15;
+				break; // Salir del bucle una vez que se encuentra el rango adecuado
+			}
+		}
+
+		// Devolver los valores en un arreglo
+		return ['LimiteInferior' => $LimiteInferior,'cuotaFija' => $cuotaFija];
+	}
+
 	static public function calcularISR($quincena) {
 		// Obtener cuota fija, porcentaje y límite inferior
 		$valoresISR = ControladorEmpleados::obtenerCuotaFijaYPorcentaje($quincena);
@@ -320,6 +345,27 @@ class ControladorEmpleados{
 		$ISRcausado = $impuestoMarginal + $cuotaFija;
 
 		return $ISRcausado;
+	}
+
+	static public function calcularRetencionIMSS($salarioBaseCotizacion, $diasCotizados, $porcentajeRetencionIMSS) {
+	    // Calcula la retención inicial IMSS
+	    $retencionInicialIMSS = $salarioBaseCotizacion * ($porcentajeRetencionIMSS / 100);
+
+	    // Verifica si el salario base de cotización es mayor que 3 SMDF
+	    $salarioMinimoDF = 103.74; // Valor del salario mínimo del DF
+	    $topeTresSalariosMinimos = $salarioMinimoDF * 3;
+	    $excesoSalarial = max(0, $salarioBaseCotizacion - $topeTresSalariosMinimos);
+
+	    // Si el salario base de cotización es mayor que 3 SMDF, calcula la retención adicional
+	    if ($excesoSalarial > 0) {
+	        $porcentajeRetencionExceso = 0.40; // Porcentaje de retención sobre el exceso
+	        $retencionExceso = $excesoSalarial * ($porcentajeRetencionExceso / 100);
+	        $totalRetencionIMSS = $retencionInicialIMSS + $retencionExceso;
+	    } else {
+	        $totalRetencionIMSS = $retencionInicialIMSS;
+	    }
+
+	    return $totalRetencionIMSS;
 	}
 	
 }
