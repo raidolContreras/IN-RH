@@ -89,195 +89,206 @@
 	</div>
 </div>
 <?php else: 
+$dExtra = 0;
 
-// Obtener datos del empleado
+if (date('d') <= 15) {
+    $month = date('m') - 1;
+    if ($month == 0) {
+        $month = 12;
+        $year = date('Y') - 1;
+    } else {
+        $year = date('Y');
+    }
+    $fechaInicio = "$year-$month-16";
+    $fechaFin = "$year-$month-30";
+    $fechaNomina = "30-$month-$year";
+} else {
+    $fechaInicio = date('Y-m-01');
+    $fechaFin = date('Y-m-16');
+    $fechaNomina = date('Y-m-15');
+}
+
+$asistenciasTotales = ControladorEmpleados::ctrCalcularFaltasEmpleado($_GET['Empleado'], $fechaInicio, $fechaFin);
+
+if ($asistenciasTotales['diasNetos'] == $asistenciasTotales['diasAsistidos']) {
+    $diasCotizados = 15;
+} elseif ($asistenciasTotales['diasNetos'] < $asistenciasTotales['diasAsistidos']) {
+    $diastotales = $asistenciasTotales['diasAsistidos'] - $asistenciasTotales['diasNetos'];
+    $diasCotizados = 15 + ($diastotales * 2);
+    $dExtra = 1;
+} else {
+    $diastotales = 0;
+}
+
+// Obtener datos del empleado y crédito del empleado
 $empleado = ControladorEmpleados::ctrVerEmpleados('idEmpleados', $_GET['Empleado']);
-
-// Obtener datos del crédito del empleado
 $credito = ControladorEmpleados::ctrVerCredito($_GET['Empleado']);
 
 // Calcular la quincena
+$quincenaBruta = $empleado['salario_integrado'] * 15;
 $quincena = $empleado['salario_integrado'] * $diasCotizados;
 
-$ISR = ControladorEmpleados::calcularISR($quincena);
+$Extra = $dExtra ? ($quincena - $quincenaBruta) : 0;
 
+$ISR = ControladorEmpleados::calcularISR($quincena);
 $subsidios = ControladorEmpleados::obtenerSubsidios($quincena);
 $cuotaFija = formatearNumero($subsidios['cuotaFija']);
 
 $salFinal = $quincena - $ISR + floatval($cuotaFija);
 
-if (date('d') <= 15) {
-	$month = date('m') - 1;
-	if ($month == 0) {
-		$month = 12;
-		$year = date('Y') - 1;
-	} else {
-		$year = date('Y');
-	}
-	$fechaNomina = "30-" . $month . "-" . $year;
-} else {
-	$fechaNomina = "15-" . date('m') . "-" . date('Y');
-}
-
 $fechaNominaFormateada = ControladorFormularios::ctrFormatearFechaNomina($fechaNomina);
 
 $retencionIMSS = ControladorEmpleados::calcularRetencionIMSS($quincena, $diasCotizados, $porcentajeRetencionIMSS);
 
-$salFinal = $salFinal - $retencionIMSS;
-
+$salFinal -= $retencionIMSS;
 ?>
-
 <div class="container-fluid dashboard-content">
-	<div class="row">
-		<div class="offset-xl-2 col-xl-8 col-lg-12 col-md-12 col-sm-12 col-12">
-			<div class="card">
-				<div class="card-header p-4">
-					<div class="float-right">
-						<h3 class="mb-0">Nomina</h3>
-						<?php echo "Fecha: ".$fechaNominaFormateada; ?>
-					</div>
-				</div>
-				<div class="card-body">
-					<div class="row mb-4">
-						<div class="col-sm-6">
-							<table class="table">
-								<tr>
-									<td colspan="2">
-										<h3 class="text-dark mb-1">
-											<?php echo $empleado['idEmpleados'] . ' - ' . $empleado['lastname'] . ' ' . $empleado['name'] ?>
-										</h3>
-									</td>
-								</tr>
-								<tr>
-									<td class="">
-										RFC:
-									</td>
-									<td class="">
-										<?php echo mb_strtoupper($empleado['RFC']) ?>
-									</td>
-								</tr>
-								<tr>
-									<td class="">
-										CURP:
-									</td>
-									<td class="">
-										<?php echo mb_strtoupper($empleado['CURP']) ?>
-									</td>
-								</tr>
-								<tr>
-									<td class="">
-										Fecha ini Relación Lab:
-									</td>
-									<td class="">
-										<?php echo date('d/m/Y', strtotime($empleado['fecha_contratado'])) ?>
-									</td>
-								</tr>
-								<tr>
-									<td class="">
-										NSS:
-									</td>
-									<td class="">
-										<?php echo $empleado['NSS'] ?>
-									</td>
-								</tr>
-								<tr>
-									<td class="">
-										Domicilio Fiscal:
-									</td>
-									<td class="">
-										<?php echo $empleado['CP'] ?>
-									</td>
-								</tr>
-							</table>
-						</div>
-					</div>
-					<div class="table-responsive-sm">
-						<table class="table table-striped">
-							<thead>
-								<tr>
-									<th width="50%" colspan="2" style="text-align:center;">Percepciones</th>
-									<th width="50%" colspan="2" style="text-align:center;">Deducciones</th>
-								</tr>
-								<tr>
-									<th style="text-align:left;">Concepto</th>
-									<th style="text-align:right;">Total</th>
-									<th style="border-left: 2px solid #e6e6f2;text-align:left;">Concepto</th>
-									<th style="text-align:right;">Total</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td>Sueldo</td>
-									<td style="text-align:right;"><?php echo formatearNumero($quincena) ?></td>
-									<td style="border-left: 2px solid #e6e6f2;">I.M.S.S.</td>
-									<td style="text-align:right;"><?php echo formatearNumero($retencionIMSS) ?></td>
-								</tr>
-								<tr>
-									<td>Subsidio</td>
-									<td style="text-align:right;"><?php echo $cuotaFija; ?></td>
-									<td style="border-left: 2px solid #e6e6f2;">I.S.R. mes</td>
-									<td style="text-align:right;"><?php echo formatearNumero($ISR) ?></td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-					<div class="table-responsive-sm">
-						<table class="table table-clear">
-							<tr>
-								<th width="25%"></th>
-								<th width="25%"></th>
-								<th width="25%" style="border-left: 2px solid #e6e6f2;text-align:left;"></th>
-								<th width="25%"></th>
-							</tr>
-							<tbody>
-								<tr>
-									<td style="text-align:left;">
-										<strong class="text-dark">Total Percepc. más Otros Pagos</strong>
-									</td>
-									<td style="text-align:right;">
-										<strong class="text-dark"><?php echo formatearNumero($quincena) ?></strong>
-									</td>
-									<td  style="border-left: 2px solid #e6e6f2;text-align:left;">
-										<strong class="text-dark">Subtotal</strong>
-									</td>
-									<td style="text-align:right;">
-										<strong class="text-dark"><?php echo formatearNumero($quincena) ?></strong>
-									</td>
-								</tr>
-								<tr>
-									<td colspan="2"></td>
-									<td>
-										<strong class="text-dark">Descuentos</strong>
-									</td>
-									<td style="text-align:right;">
-										<strong class="text-dark"><?php echo formatearNumero($retencionIMSS) ?></strong>
-									</td>
-								</tr>
-								<tr>
-									<td colspan="2"></td>
-									<td>
-										<strong class="text-dark">Retenciones</strong>
-									</td>
-									<td style="text-align:right;">
-										<strong class="text-dark"><?php echo formatearNumero($ISR) ?></strong>
-									</td>
-								</tr>
-								<tr>
-									<td colspan="2"></td>
-									<td>
-										<strong class="text-dark">Total</strong>
-									</td>
-									<td style="text-align:right;">
-										<strong class="text-dark"><?php echo formatearNumero($salFinal) ?></strong>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="row">
+        <div class="offset-xl-2 col-xl-8 col-lg-12 col-md-12 col-sm-12 col-12">
+            <div class="card">
+                <div class="card-header p-4">
+                    <div class="float-right">
+                        <h3 class="mb-0">Nomina</h3>
+                        <?php echo "Fecha: " . $fechaNominaFormateada; ?>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-4">
+                        <div class="col-sm-6">
+                            <table class="table">
+                                <tr>
+                                    <td colspan="2">
+                                        <h3 class="text-dark mb-1">
+                                            <?php echo "{$empleado['idEmpleados']} - {$empleado['lastname']} {$empleado['name']}"; ?>
+                                        </h3>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>RFC:</td>
+                                    <td><?php echo mb_strtoupper($empleado['RFC']); ?></td>
+                                </tr>
+                                <tr>
+                                    <td>CURP:</td>
+                                    <td><?php echo mb_strtoupper($empleado['CURP']); ?></td>
+                                </tr>
+                                <tr>
+                                    <td>Fecha ini Relación Lab:</td>
+                                    <td><?php echo date('d/m/Y', strtotime($empleado['fecha_contratado'])); ?></td>
+                                </tr>
+                                <tr>
+                                    <td>NSS:</td>
+                                    <td><?php echo $empleado['NSS']; ?></td>
+                                </tr>
+                                <tr>
+                                    <td>Domicilio Fiscal:</td>
+                                    <td><?php echo $empleado['CP']; ?></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="table-responsive-sm">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th width="50%" colspan="2" style="text-align:center;">Percepciones</th>
+                                    <th width="50%" colspan="2" style="text-align:center;">Deducciones</th>
+                                </tr>
+                                <tr>
+                                    <th style="text-align:left;">Concepto</th>
+                                    <th style="text-align:right;">Total</th>
+                                    <th style="border-left: 2px solid #e6e6f2;text-align:left;">Concepto</th>
+                                    <th style="text-align:right;">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Sueldo</td>
+                                    <td style="text-align:right;"><?php echo formatearNumero($quincenaBruta); ?></td>
+                                    <td style="border-left: 2px solid #e6e6f2;">I.M.S.S.</td>
+                                    <td style="text-align:right;"><?php echo formatearNumero($retencionIMSS); ?></td>
+                                </tr>
+                                <?php if ($dExtra == 1): ?>
+                                    <tr>
+                                        <td>Extra</td>
+                                        <td style="text-align:right;"><?php echo formatearNumero($Extra); ?></td>
+                                        <td style="border-left: 2px solid #e6e6f2;">I.S.R. mes</td>
+                                        <td style="text-align:right;"><?php echo formatearNumero($ISR); ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Subsidio</td>
+                                        <td style="text-align:right;"><?php echo $cuotaFija; ?></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                <?php else: ?>
+                                    <tr>
+                                        <td>Subsidio</td>
+                                        <td style="text-align:right;"><?php echo $cuotaFija; ?></td>
+                                        <td style="border-left: 2px solid #e6e6f2;">I.S.R. mes</td>
+                                        <td style="text-align:right;"><?php echo formatearNumero($ISR); ?></td>
+                                    </tr>
+                                <?php endif ?>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-responsive-sm">
+                        <table class="table table-clear">
+                            <tr>
+                                <th width="25%"></th>
+                                <th width="25%"></th>
+                                <th width="25%" style="border-left: 2px solid #e6e6f2;text-align:left;"></th>
+                                <th width="25%"></th>
+                            </tr>
+                            <tbody>
+                                <tr>
+                                    <td style="text-align:left;">
+                                        <strong class="text-dark">Total Percepc. más Otros Pagos</strong>
+                                    </td>
+                                    <td style="text-align:right;">
+                                        <strong class="text-dark"><?php echo formatearNumero($quincena); ?></strong>
+                                    </td>
+                                    <td style="border-left: 2px solid #e6e6f2;text-align:left;">
+                                        <strong class="text-dark">Subtotal</strong>
+                                    </td>
+                                    <td style="text-align:right;">
+                                        <strong class="text-dark"><?php echo formatearNumero($quincena); ?></strong>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td>
+                                        <strong class="text-dark">Descuentos</strong>
+                                    </td>
+                                    <td style="text-align:right;">
+                                        <strong class="text-dark"><?php echo formatearNumero($retencionIMSS); ?></strong>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td>
+                                        <strong class="text-dark">Retenciones</strong>
+                                    </td>
+                                    <td style="text-align:right;">
+                                        <strong class="text-dark"><?php echo formatearNumero($ISR); ?></strong>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td>
+                                        <strong class="text-dark">Total</strong>
+                                    </td>
+                                    <td style="text-align:right;">
+                                        <strong class="text-dark"><?php echo formatearNumero($salFinal); ?></strong>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
 
 <?php endif ?>

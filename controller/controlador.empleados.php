@@ -348,24 +348,119 @@ class ControladorEmpleados{
 	}
 
 	static public function calcularRetencionIMSS($salarioBaseCotizacion, $diasCotizados, $porcentajeRetencionIMSS) {
-	    // Calcula la retención inicial IMSS
-	    $retencionInicialIMSS = $salarioBaseCotizacion * ($porcentajeRetencionIMSS / 100);
+		// Calcula la retención inicial IMSS
+		$retencionInicialIMSS = $salarioBaseCotizacion * ($porcentajeRetencionIMSS / 100);
 
-	    // Verifica si el salario base de cotización es mayor que 3 SMDF
-	    $salarioMinimoDF = 103.74; // Valor del salario mínimo del DF
-	    $topeTresSalariosMinimos = $salarioMinimoDF * 3;
-	    $excesoSalarial = max(0, $salarioBaseCotizacion - $topeTresSalariosMinimos);
+		// Verifica si el salario base de cotización es mayor que 3 SMDF
+		$salarioMinimoDF = 103.74; // Valor del salario mínimo del DF
+		$topeTresSalariosMinimos = $salarioMinimoDF * 3;
+		$excesoSalarial = max(0, $salarioBaseCotizacion - $topeTresSalariosMinimos);
 
-	    // Si el salario base de cotización es mayor que 3 SMDF, calcula la retención adicional
-	    if ($excesoSalarial > 0) {
-	        $porcentajeRetencionExceso = 0.40; // Porcentaje de retención sobre el exceso
-	        $retencionExceso = $excesoSalarial * ($porcentajeRetencionExceso / 100);
-	        $totalRetencionIMSS = $retencionInicialIMSS + $retencionExceso;
-	    } else {
-	        $totalRetencionIMSS = $retencionInicialIMSS;
-	    }
+		// Si el salario base de cotización es mayor que 3 SMDF, calcula la retención adicional
+		if ($excesoSalarial > 0) {
+			$porcentajeRetencionExceso = 0.40; // Porcentaje de retención sobre el exceso
+			$retencionExceso = $excesoSalarial * ($porcentajeRetencionExceso / 100);
+			$totalRetencionIMSS = $retencionInicialIMSS + $retencionExceso;
+		} else {
+			$totalRetencionIMSS = $retencionInicialIMSS;
+		}
 
-	    return $totalRetencionIMSS;
+		return $totalRetencionIMSS;
 	}
+
+	static public function ctrCalcularFaltasEmpleado($idEmpleados, $fechaInicio, $fechaFin){
+
+		$horario = ControladorFormularios::ctrVerEmpleadosHorarios("Empleados_idEmpleados", $idEmpleados);
+		if (empty($horario)) {
+			$horario = ControladorFormularios::ctrSeleccionarHorarios(null, null);
+			foreach ($horario as $key => $value) {
+				if ($value['default'] == 1) {
+					$diasAsignados = ControladorFormularios::ctrSeleccionarHorarios("Horarios_idHorarios", $value['idHorarios']);
+				}
+			}
+		}else{
+			$diasAsignados = ControladorFormularios::ctrSeleccionarHorarios("Horarios_idHorarios", $horario[0]['Horarios_idHorarios']);
+		}
+		$asistenciasQuincena = ModeloEmpleados::mdlVerAsistenciasQuincenas($idEmpleados, $fechaInicio, $fechaFin);
+
+		$diasBrutos = 0;
+		$diasNetos = 0;
+		$diasAsistidos = 0;
+		$diasObligatorios = 0;
+		$diasLaborableNombres = [
+			1 => "Lunes",
+			2 => "Martes",
+			3 => "Miércoles",
+			4 => "Jueves",
+			5 => "Viernes",
+			6 => "Sábado",
+			0 => "Domingo"
+		];
+
+		$diasLaborables = [];
+		$totalDias = 0;
+		$fechaActual = strtotime($fechaInicio);
+		$fechaFinal = strtotime($fechaFin);
+
+		while ($fechaActual <= $fechaFinal) {
+		    // Verificar si el día actual es laborable según tus nombres de días personalizados
+		    $diaSemana = date("N", $fechaActual);
+
+		    if ($diaSemana == 7) {
+		        $diaSemana = 0;
+		    }
+
+		    if (isset($diasLaborableNombres[$diaSemana])) {
+		        $nombreDia = $diasLaborableNombres[$diaSemana];
+		    } else {
+		        $nombreDia = null;
+		    }
+
+		    if (!empty($nombreDia)) {
+		        $totalDias++;
+		    }
+
+
+			foreach ($diasAsignados as $diaAsignado) {
+				if ($diaSemana == $diaAsignado['dia_Laborable']) {
+					$diasNetos++;
+				}
+			}
+
+		    // Avanzar al siguiente día
+		    $fechaActual = strtotime("+1 day", $fechaActual);
+
+		}
+
+		foreach ($asistenciasQuincena as $asistencia) {
+			foreach ($diasAsignados as $diaAsignado) {
+				if ($asistencia['numero_dia_semana'] == $diaAsignado['dia_Laborable'] && $asistencia['entrada'] != '00:00:00' && $asistencia['salida'] != '00:00:00') {
+					$diasObligatorios++;
+					$diaSemana = $asistencia['numero_dia_semana'];
+					$nombreDia = $diasLaborableNombres[$diaSemana];
+
+					if (!in_array($nombreDia, $diasLaborables)) {
+						$diasLaborables[] = $nombreDia;
+					}
+				}
+				if ($asistencia['numero_dia_semana'] == $diaAsignado['dia_Laborable']) {
+					$diasBrutos++;
+				}
+			}
+			$diasAsistidos++;
+		}
+
+		// $diasExtra = $diasAsistidos - $diasBrutos;
+
+		$diasTotales = $diasAsistidos - $diasNetos;
+
+		$data = array(
+			'diasNetos' => $diasNetos,
+			'diasAsistidos' => $diasAsistidos
+		);
+
+		return $data;
+	}
+
 	
 }

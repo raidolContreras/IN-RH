@@ -299,7 +299,7 @@ class ModeloEmpleados{
 					RIGHT JOIN dia_horario dh ON h.idHorarios = dh.Horarios_idHorarios
 					WHERE $item = :valor"; 
 		}else{
-			$sql = "SELECT dh.dia_Laborable, dh.numero_Horas, dh.hora_Entrada, dh.hora_Salida
+			$sql = "SELECT dh.dia_Laborable, dh.numero_Horas, dh.hora_Entrada, dh.hora_Salida, h.idHorarios
 					FROM horarios h
 					RIGHT JOIN dia_horario dh ON h.idHorarios = dh.Horarios_idHorarios
 					WHERE $item = :valor"; 
@@ -389,6 +389,25 @@ class ModeloEmpleados{
 		$stmt = Conexion::conectar()->prepare($sql);
 		$stmt->bindParam(":idEmpleados", $valor, PDO::PARAM_INT);
 		$stmt->bindParam(":mes", $mes, PDO::PARAM_INT);
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+
+		$stmt->close();
+		$stmt = null;
+	}
+
+	static public function mdlVerAsistenciasQuincenas($idEmpleados, $fechaInicio, $fechaFin){
+		
+		$sql = "SELECT a.*, DAYOFWEEK(a.fecha_asistencia) - 1 AS numero_dia_semana 
+		FROM asistencias a 
+		LEFT JOIN empleados e ON e.idEmpleados = a.Empleados_idEmpleados 
+		WHERE a.fecha_asistencia >= :fechaInicio AND a.fecha_asistencia <= :fechaFin AND a.Empleados_idEmpleados = :idEmpleados;";
+
+		$stmt = Conexion::conectar()->prepare($sql);
+		$stmt->bindParam(":idEmpleados", $idEmpleados, PDO::PARAM_INT);
+		$stmt->bindParam(":fechaInicio", $fechaInicio, PDO::PARAM_STR);
+		$stmt->bindParam(":fechaFin", $fechaFin, PDO::PARAM_STR);
 		$stmt->execute();
 
 		return $stmt->fetchAll();
