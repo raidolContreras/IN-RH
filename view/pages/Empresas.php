@@ -30,18 +30,18 @@ $regimenArray = json_decode($regimenJson, true);
 						<table id="example" class="table table-striped table-bordered second" style="width:100%">
 							<thead>
 								<tr>
-									<th>Nombre o Razón social</th>
-									<th>Registro patronal</th>
+									<th>NOMBRE O RAZÓN SOCIAL</th>
+									<th>REGISTRO PATRONAL</th>
 									<th>R.F.C.</th>
-									<th>Régimen</th>
-									<th>Actividad económica</th>
-									<th>Dirección</th>
-									<th>Entidad y Población o municipio/alcaldia</th>
-									<th>Teléfono</th>
-									<th>Delegación IMSS</th>
-									<th>Subdelegación IMSS</th>
-									<th>Clave subdelegación</th>
-									<th>Fecha de inicio de operaciones</th>
+									<th>RÉGIMEN</th>
+									<th>ACTIVIDAD ECONÓMICA</th>
+									<th>DIRECCIÓN</th>
+									<th>ENTIDAD Y POBLACIÓN O MUNICIPIO/ALCALDÍA</th>
+									<th>TELÉFONO</th>
+									<th>DELEGACIÓN IMSS</th>
+									<th>SUBDELEGACIÓN IMSS</th>
+									<th>CLAVE SUBDELEGACIÓN</th>
+									<th>FECHA DE INICIO DE OPERACIONES</th>
 								</tr>
 							</thead>
 							<tbody>

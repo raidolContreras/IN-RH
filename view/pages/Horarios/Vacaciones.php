@@ -172,9 +172,9 @@ $dias_disponibles = $calculo_vacaciones - $dias_consumidos - $dias_pendientes;
 							<table class="table table-striped table-bordered Puestos">
 								<thead>
 									<tr>
-										<th>Periodo</th>
-										<th>Tipo</th>
-										<th>Estado</th>
+										<th>PERIODO</th>
+										<th>TIPO</th>
+										<th>ESTADO</th>
 										<th width="10"></th>
 									</tr>
 								</thead>

@@ -11,12 +11,12 @@
 						<table>
 							<thead>
 								<tr>
-									<th>Nombre vacante</th>
-									<th>Empresa</th>
-									<th>Departamento</th>
-									<th>Aprobado</th>
-									<th width="10%">Salario</th>
-									<th width="5%">Postulantes</th>
+									<th>NOMBRE DE LA VACANTE</th>
+									<th>EMPRESA</th>
+									<th>DEPARTAMENTO</th>
+									<th>APROBADO</th>
+									<th width="10%">SALARIO</th>
+									<th width="5%">POSTULANTES</th>
 								</tr>
 							</thead>
 						</table>

@@ -18,18 +18,22 @@ $i = 0; ?>
 						<table id="example" class="table table-striped table-bordered Extras" style="width:100%">
 							<thead>
 								<tr>
-									<th>Nombre vacante</th>
-									<th>Empresa</th>
-									<th>Departamento</th>
-									<th>Aprobado</th>
-									<th width="10%">Salario</th>
-									<th width="5%">Postulantes</th>
-									<th width="5%">Acciones</th>
+									<th>NOMBRE DE LA VACANTE</th>
+									<th>EMPRESA</th>
+									<th>DEPARTAMENTO</th>
+									<th>APROBADO</th>
+									<th width="10%">SALARIO</th>
+									<th width="5%">POSTULANTES</th>
+									<th width="5%">ACCIONES</th>
 								</tr>
 							</thead>
 							<tbody>
 								<?php foreach ($vacantes as $key => $vacante):
-									$activacion = 0;
+									if (!empty($rol) && $rol['Editar_Reclutamiento'] == 1){
+										$activacion = 1;
+									}else {
+										$activacion = 0;
+									}
 									$suma = ControladorFormularios::ctrSumaPostulantes('Vacantes_idVacantes', $vacante['idVacantes']);
 									$Activador = ModeloFormularios::mdlActivadoresVacantes($vacante['Departamentos_idDepartamentos']);
 									$activadores = array();

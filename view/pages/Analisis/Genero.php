@@ -80,9 +80,9 @@ foreach ($generos as $genero) {
 			<table id="example" class="table table-bordered table-striped vacaciones-table analisis">
 				<thead>
 					<tr>
-						<th>Empresa</th>
-						<th>Género</th>
-						<th>Total de Empleados</th>
+                        <th>EMPRESA</th>
+                        <th>GÉNERO</th>
+                        <th>TOTAL DE EMPLEADOS</th>
 					</tr>
 				</thead>
 				<tbody>

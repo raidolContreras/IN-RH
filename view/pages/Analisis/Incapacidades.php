@@ -95,15 +95,15 @@ if (isset($_GET['empresa'])):
 			<table id="example" class="table table-bordered table-striped vacaciones-table analisis">
 				<thead>
 					<tr>
-						<th>Folio</th>
-						<th>Empleado</th>
-						<th>Ramo del seguro</th>
-						<th>Tipo de riesgo</th>
-						<th>Secuela por consecuencia</th>
-						<th>Control</th>
-						<th>Fecha de Inicio</th>
-						<th>Fecha de Termino</th>
-						<th>Porcentaje</th>
+						<th>FOLIO</th>
+						<th>EMPLEADO</th>
+						<th>RAMO DEL SEGURO</th>
+						<th>TIPO DE RIESGO</th>
+						<th>SECUELA POR CONSECUENCIA</th>
+						<th>CONTROL</th>
+						<th>FECHA DE INICIO</th>
+						<th>FECHA DE TÉRMINO</th>
+						<th>PORCENTAJE</th>
 					</tr>
 				</thead>
 				<tbody>

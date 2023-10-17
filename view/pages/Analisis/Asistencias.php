@@ -9,10 +9,10 @@
 			<table id="example" class="table table-bordered table-striped vacaciones-table analisis">
 				<thead>
 					<tr>
-						<th>Nombre</th>
-						<th>Registrado</th>
-						<th>Esperado</th>
-						<th>Horas Extras</th>
+						<th>NOMBRE</th>
+						<th>REGISTRADO</th>
+						<th>ESPERADO</th>
+						<th>HORAS EXTRAS</th>
 					</tr>
 				</thead>
 				<tbody>

@@ -51,13 +51,13 @@ $empresas = ControladorFormularios::ctrVerEmpresas(null, null);
 									<table id="example" class="table table-striped table-bordered second" style="width:100%; height:100%">
 										<thead>
 											<tr>
-												<th width="20%">Nombre Completo</th>
-												<th>Puesto de trabajo</th>
-												<th>Departamento</th>
-												<th>Empresa</th>
-												<th>Fecha de Contratación</th>
-												<th>Fecha de Baja</th>
-												<th>Estado</th>
+												<th width="20%">NOMBRE COMPLETO</th>
+												<th>PUESTO DE TRABAJO</th>
+												<th>DEPARTAMENTO</th>
+												<th>EMPRESA</th>
+												<th>FECHA DE CONTRATACIÓN</th>
+												<th>FECHA DE BAJA</th>
+												<th>ESTADO</th>
 											</tr>
 										</thead>
 										<tbody style="font-size: 12px !important">

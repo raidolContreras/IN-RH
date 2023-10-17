@@ -83,9 +83,9 @@ foreach ($birthdayContador as $birthday) {
 			<table id="example" class="table table-bordered table-striped vacaciones-table analisis">
 				<thead>
 					<tr>
-						<th>Empleado</th>
-						<th>Fecha de Cumpleaños</th>
-						<th>Edad</th>
+						<th>EMPLEADO</th>
+						<th>FECHA DE CUMPLEAÑOS</th>
+						<th>EDAD</th>
 					</tr>
 				</thead>
 				<tbody>

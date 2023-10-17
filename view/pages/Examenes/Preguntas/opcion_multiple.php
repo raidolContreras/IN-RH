@@ -47,9 +47,9 @@ $Evaluaciones = ControladorFormularios::ctrVerPreguntas('idPregunta', $_GET['pre
 					</div>
 					<div class="col-12 mt-3">
 						<button class="btn btn-primary rounded float-right btn-registrar-respuestas"
-										type="button"
-										id="respuesta-btn"
-										name="respuesta-btn">
+								type="button"
+								id="respuesta-btn"
+								name="respuesta-btn">
 							Registrar respuestas
 						</button>
 					</div>

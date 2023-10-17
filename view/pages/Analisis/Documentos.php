@@ -25,7 +25,7 @@
 			<table id="example" class="table table-bordered table-striped vacaciones-table analisis">
 				<thead>
 					<tr>
-						<th>Nombre</th>
+						<th>NOMBRE</th>
 						<?php foreach ($docRequeridos as $docRequerido): ?>
 						<th><?php echo $docRequerido ?></th>
 						<?php endforeach ?>

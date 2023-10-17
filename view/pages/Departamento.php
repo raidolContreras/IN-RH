@@ -49,11 +49,11 @@ $departamento = ControladorFormularios::ctrVerDepartamentos(null, null);
 						<table id="example" class="table table-striped table-bordered depto" style="width:100%">
 							<thead>
 								<tr>
-									<th width="40%">Nombre Depto</th>
-									<th width="40%">Encargado</th>
-									<th width="20%">empresa</th>
+									<th width="40%">NOMBRE DEPTO</th>
+									<th width="40%">ENCARGADO</th>
+									<th width="20%">EMPRESA</th>
 									<?php if (!empty($rol) && ($rol['Editar_Departamentos'] == 1 || $rol['Del_Departamentos'] == 1)): ?>
-									<th>Acciones</th>
+									<th>ACCIONES</th>
 									<?php endif ?>
 								</tr>
 							</thead>

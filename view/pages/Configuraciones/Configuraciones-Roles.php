@@ -17,11 +17,11 @@
 							<table class="table roles">
 								<thead>
 									<tr>
-										<th width="200">Empleados</th>
-										<th>Puesto</th>
-										<th>Departamento</th>
-										<th>Empresa</th>
-										<th>Asignar roles</th>
+										<th width="200">EMPLEADOS</th>
+										<th>PUESTO</th>
+										<th>DEPARTAMENTO</th>
+										<th>EMPRESA</th>
+										<th>ASIGNAR ROLES</th>
 									</tr>
 								</thead>
 								<tbody>

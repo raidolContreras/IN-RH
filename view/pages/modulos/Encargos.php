@@ -6,10 +6,10 @@
 	<table class="table Peticiones table-hover">
 		<thead>
 			<tr>
-				<th>Nombre de la tarea</th>
-				<th>Asignado por</th>
-				<th>Vencimiento</th>
-				<th>status</th>
+				<th>NOMBRE DE LA TAREA</th>
+				<th>ASIGNADO POR</th>
+				<th>VENCIMIENTO</th>
+				<th>ESTADO</th>
 			</tr>
 		</thead>
 		<tbody>

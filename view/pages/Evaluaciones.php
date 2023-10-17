@@ -23,9 +23,9 @@ $Evaluaciones = ControladorFormularios::ctrVerEvaluaciones(null, null);
 						<thead>
 							<tr>
 								<th>#</th>
-								<th>Nombre del examen</th>
-								<th>Rango de fechas</th>
-								<th>Tiempo límite</th>
+								<th>NOMBRE DEL EXAMEN</th>
+								<th>RANGO DE FECHAS</th>
+								<th>TIEMPO LÍMITE</th>
 								<th></th>
 							</tr>
 						</thead>

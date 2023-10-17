@@ -72,10 +72,10 @@ foreach ($altasBajas as $altaBaja) {
             <table id="example" class="table table-bordered table-striped vacaciones-table analisis">
                 <thead>
                     <tr>
-                        <th>Periodo</th>
-                        <th>Empresa</th>
-                        <th>Altas</th>
-                        <th>Bajas</th>
+                        <th>PERIODO</th>
+                        <th>EMPRESA</th>
+                        <th>ALTAS</th>
+                        <th>BAJAS</th>
                     </tr>
                 </thead>
                 <tbody>

@@ -57,12 +57,13 @@
             <table id="example" class="table table-bordered table-striped vacaciones-table analisis">
                 <thead>
                     <tr>
-                        <th>Empleado</th>
-                        <th>Descripción</th>
-                        <th>Vendedor</th>
-                        <th>Total de Gastos</th>
-                        <th>Tipo de Gasto</th>
-                        <th>Status</th>
+                        <th>EMPLEADO</th>
+                        <th>DESCRIPCIÓN</th>
+                        <th>VENDEDOR</th>
+                        <th>TOTAL DE GASTOS</th>
+                        <th>TIPO DE GASTO</th>
+                        <th>ESTADO</th>
+
                     </tr>
                 </thead>
                 <tbody>

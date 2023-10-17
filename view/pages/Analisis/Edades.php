@@ -72,7 +72,7 @@ foreach ($edades as $edad) {
             <table id="example" class="table table-bordered table-striped vacaciones-table analisis">
                 <thead>
                     <tr>
-                        <th>Empresa</th>
+                        <th>EMPRESA</th>
                         <?php foreach ($labels as $label): ?>
                             <th><?php echo $label; ?></th>
                         <?php endforeach; ?>

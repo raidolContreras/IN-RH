@@ -19,16 +19,16 @@
 			<table id="example" class="table table-bordered table-striped vacaciones-table analisis">
 				<thead>
 					<tr>
-						<th>Nombre</th>
-						<th>Género</th>
-						<th>Fecha de Nac.</th>
-						<th width="100">Teléfono</th>
-						<th>Salario</th>
-						<th>Puesto</th>
-						<th>Departamento</th>
-						<th>Empresa</th>
-						<th>Años Trabajados</th>
-						<th>Fecha de Ingreso</th>
+                        <th>NOMBRE</th>
+                        <th>GÉNERO</th>
+                        <th>FECHA DE NACIMIENTO</th>
+                        <th width="100">TELÉFONO</th>
+                        <th>SALARIO</th>
+                        <th>PUESTO</th>
+                        <th>DEPARTAMENTO</th>
+                        <th>EMPRESA</th>
+                        <th>AÑOS TRABAJADOS</th>
+                        <th>FECHA DE INGRESO</th>
 					</tr>
 				</thead>
 				<tbody>

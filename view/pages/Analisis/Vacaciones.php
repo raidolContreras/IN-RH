@@ -55,11 +55,11 @@
             <table id="example" class="table table-bordered table-striped vacaciones-table analisis">
                 <thead>
                     <tr>
-                        <th>Empleado</th>
-                        <th>Fecha de inicio</th>
-                        <th>Fecha de fin</th>
-                        <th>Fecha de solicitud</th>
-                        <th>Estado</th>
+                        <th>EMPLEADO</th>
+                        <th>FECHA DE INICIO</th>
+                        <th>FECHA DE FIN</th>
+                        <th>FECHA DE SOLICITUD</th>
+                        <th>ESTADO</th>
                     </tr>
                 </thead>
                 <tbody>

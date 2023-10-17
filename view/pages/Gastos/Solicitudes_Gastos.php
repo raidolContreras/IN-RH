@@ -12,14 +12,14 @@
 						<table id="example" class="table solicitud-gastos">
 							<thead>
 								<tr>
-									<th width="20">Motivo</th>
-									<th>Empleado</th>
-									<th width="150">Fecha del documento</th>
-									<th>Proveedor</th>
-									<th>Importe</th>
-									<th>Categoría</th>
-									<th>Cantidad</th>
-									<th>Moneda</th>
+									<th width="20%">MOTIVO</th>
+									<th>EMPLEADO</th>
+									<th width="150">FECHA DEL DOCUMENTO</th>
+									<th>PROVEEDOR</th>
+									<th>IMPORTE</th>
+									<th>CATEGORÍA</th>
+									<th>CANTIDAD</th>
+									<th>MONEDA</th>
 									<th></th>
 								</tr>
 							</thead>

@@ -24,13 +24,13 @@
 									<table id="example" class="table table-striped table-bordered nomina" style="width:100%; height:100%">
 										<thead>
 											<tr>
-												<th>Nombre Completo</th>
-												<th>Salario Quincenal (Bruto)</th>
-												<th>Subsidio</th>
-												<th>Crédito I.M.S.S.</th>
-												<th>I.S.R.</th>
-												<th>Salario Quincenal (Neto)</th>
-												<th>Ver nóminas</th>
+												<th>NOMBRE COMPLETO</th>
+                                                <th>SALARIO QUINCENAL (BRUTO)</th>
+                                                <th>SUBSIDIO</th>
+                                                <th>I.M.S.S.</th>
+                                                <th>I.S.R.</th>
+                                                <th>SALARIO QUINCENAL (NETO)</th>
+                                                <th>VER NÓMINAS</th>
 											</tr>
 										</thead>
 										<tbody style="font-size: 12px !important">
@@ -51,7 +51,7 @@
 												$neto = $quincena - $ISR;
 												$ISRFormateado = formatearNumero($ISR);
 
-												$datoSeguro = "Total Retención IMSS: $" . number_format($retencionIMSS, 2);
+												$datoSeguro = "$" . number_format($retencionIMSS, 2);
 
 												$neto = $neto - $retencionIMSS;
 
@@ -89,6 +89,10 @@
 	</div>
 </div>
 <?php else: 
+
+// Obtener datos del empleado y crédito del empleado
+$empleado = ControladorEmpleados::ctrVerEmpleados('idEmpleados', $_GET['Empleado']);
+
 $dExtra = 0;
 
 if (date('d') <= 15) {
@@ -116,13 +120,10 @@ if ($asistenciasTotales['diasNetos'] == $asistenciasTotales['diasAsistidos']) {
     $diastotales = $asistenciasTotales['diasAsistidos'] - $asistenciasTotales['diasNetos'];
     $diasCotizados = 15 + ($diastotales * 2);
     $dExtra = 1;
-} else {
+} elseif($asistenciasTotales['diasNetos'] > $asistenciasTotales['diasAsistidos']) {
+	$diasCotizados = $asistenciasTotales['diasAsistidos'];
     $diastotales = 0;
 }
-
-// Obtener datos del empleado y crédito del empleado
-$empleado = ControladorEmpleados::ctrVerEmpleados('idEmpleados', $_GET['Empleado']);
-$credito = ControladorEmpleados::ctrVerCredito($_GET['Empleado']);
 
 // Calcular la quincena
 $quincenaBruta = $empleado['salario_integrado'] * 15;
@@ -203,7 +204,7 @@ $salFinal -= $retencionIMSS;
                             <tbody>
                                 <tr>
                                     <td>Sueldo</td>
-                                    <td style="text-align:right;"><?php echo formatearNumero($quincenaBruta); ?></td>
+                                    <td style="text-align:right;"><?php echo formatearNumero($quincenaBruta)."(".formatearNumero($quincena).")"; ?></td>
                                     <td style="border-left: 2px solid #e6e6f2;">I.M.S.S.</td>
                                     <td style="text-align:right;"><?php echo formatearNumero($retencionIMSS); ?></td>
                                 </tr>

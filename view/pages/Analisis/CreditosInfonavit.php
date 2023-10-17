@@ -74,11 +74,11 @@ if (isset($_GET['empresa'])):
 			<table id="example" class="table table-bordered table-striped vacaciones-table analisis">
 				<thead>
 					<tr>
-						<th>Empleado</th>
-						<th>Tipo de crédito</th>
-						<th>Numero de crédito</th>
-						<th>Valor del descuento</th>
-						<th>Fecha de inicio del crédito</th>
+						<th>EMPLEADO</th>
+						<th>TIPO DE CRÉDITO</th>
+						<th>NÚMERO DE CRÉDITO</th>
+						<th>VALOR DEL DESCUENTO</th>
+						<th>FECHA DE INICIO DEL CRÉDITO</th>
 					</tr>
 				</thead>
 				<tbody>

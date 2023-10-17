@@ -17,16 +17,16 @@
 						<table id="Puestos" class="table table-striped table-bordered Puestos" style="width:100%">
 							<thead>
 								<tr>
-									<th width="30%">Nombre del puesto</th>
-									<th width="30%">Colaborador</th>
-									<th width="">Salario</th>
-									<th width="">Salario diario integrado</th>
-									<th width="">Horario</th>
+									<th width="30%">NOMBRE DEL PUESTO</th>
+									<th width="30%">COLABORADOR</th>
+									<th width="">SALARIO</th>
+									<th width="">SALARIO DIARIO INTEGRADO</th>
+									<th width="">HORARIO</th>
 									<th width="">CURP</th>
 									<th width="">RFC</th>
 									<th width="">NSS</th>
 									<th width="">CP</th>
-									<th>Acciones</th>
+									<th>ACCIONES</th>
 								</tr>
 							</thead>
 							<tbody>

@@ -28,9 +28,9 @@ $escala = json_decode($escalaFile, true);
 						<thead>
 							<tr>
 								<th rowspan="2">#</th>
-								<th rowspan="2">Empleado</th>
-								<th rowspan="2">Total</th>
-								<th colspan="<?php echo $i; ?>" style="text-align:center">Preguntas</th>
+								<th rowspan="2">EMPLEADO</th>
+								<th rowspan="2">TOTAL</th>
+								<th colspan="<?php echo $i; ?>" style="text-align: center">PREGUNTAS</th>
 							</tr>
 							<tr>
 								<?php foreach ($preguntas as $pregunta): ?>
