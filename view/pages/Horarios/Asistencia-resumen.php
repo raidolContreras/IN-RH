@@ -15,7 +15,7 @@ if (isset($_GET['empresa'])) {
 	<div class="ecommerce-widget">
 		<div class="card mx-5 menu-ajustes">
 			<div class="card-header encabezado">
-				Resumen de Asistencias 
+				RESUMEN DE ASISTENCIAS
 				<form class="exportarExcelEmpresas-form float-right">
 					<input type="hidden" name="genExcelEmpresas" value="<?php echo $idEmpresas ?>">
 					<button type="button" class="btn btn-outline-success btn-rounded btn-lg exportarExcelEmpresas-btn">

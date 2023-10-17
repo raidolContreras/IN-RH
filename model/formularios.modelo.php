@@ -675,7 +675,7 @@ class ModeloFormularios{
 				WHERE $tabla.status = 1;";
 			}
 			elseif ($tabla == "vacantes") {
-				$sql = "SELECT * FROM vacantes v
+				$sql = "SELECT *, v.Empresas_idEmpresas AS idEmpresaV FROM vacantes v
 				JOIN departamentos d ON v.Departamentos_idDepartamentos = d.idDepartamentos 
 				JOIN empresas e ON e.idEmpresas = v.Empresas_idEmpresas 
 				WHERE v.status = 1;";
@@ -2881,9 +2881,9 @@ static public function mdlActualizarNoticia($tabla, $datos)
 
 	static public function mdlCrearRol($datos){
 		$pdo =Conexion::conectar();
-		$sql = "INSERT INTO roles(Empleados_idEmpleados, Ver_Empleados, Editar_Empleados, Del_Empleados, Resumenes_Asistencias, Ajustes_Asistencias, Ver_Evaluaciones, Editar_Evaluaciones, Del_Evaluaciones, Ver_Tareas, Editar_Tareas, Del_Tareas, Ver_Analisis, Ver_Reclutamiento, Editar_Reclutamiento, Del_Reclutamiento, Ver_Departamentos, Editar_Departamentos, Del_Departamentos, Ver_Organigramas, Agregar_Noticias, Editar_Noticias, Del_Noticias, Asignar_EmpleadoMes, Ver_Empresas, Editar_Empresas, Configuracion_Divisas, Configuracion_Categorias, Configuracion_Permisos)
+		$sql = "INSERT INTO roles(Empleados_idEmpleados, Ver_Empleados, Editar_Empleados, Del_Empleados, Resumenes_Asistencias, Ajustes_Asistencias, Ver_Evaluaciones, Editar_Evaluaciones, Del_Evaluaciones, Ver_Tareas, Editar_Tareas, Del_Tareas, Ver_Analisis, Ver_Reclutamiento, Editar_Reclutamiento, Del_Reclutamiento, General_Reclutamiento, Ver_Departamentos, Editar_Departamentos, Del_Departamentos, Ver_Organigramas, Agregar_Noticias, Editar_Noticias, Del_Noticias, Asignar_EmpleadoMes, Ver_Empresas, Editar_Empresas, Configuracion_Divisas, Configuracion_Categorias, Configuracion_Permisos)
 		VALUES
-		(:Empleados_idEmpleados ,:Ver_Empleados ,:Editar_Empleados ,:Del_Empleados, :Resumenes_Asistencias, :Ajustes_Asistencias, :Ver_Evaluaciones, :Editar_Evaluaciones, :Del_Evaluaciones, :Ver_Tareas, :Editar_Tareas, :Del_Tareas, :Ver_Analisis, :Ver_Reclutamiento, :Editar_Reclutamiento, :Del_Reclutamiento,:Ver_Departamentos ,:Editar_Departamentos ,:Del_Departamentos, :Ver_Organigramas, :Agregar_Noticias, :Editar_Noticias, :Del_Noticias, :Asignar_EmpleadoMes, :Ver_Empresas, :Editar_Empresas, :Configuracion_Divisas, :Configuracion_Categorias, :Configuracion_Permisos)";
+		(:Empleados_idEmpleados ,:Ver_Empleados ,:Editar_Empleados ,:Del_Empleados, :Resumenes_Asistencias, :Ajustes_Asistencias, :Ver_Evaluaciones, :Editar_Evaluaciones, :Del_Evaluaciones, :Ver_Tareas, :Editar_Tareas, :Del_Tareas, :Ver_Analisis, :Ver_Reclutamiento, :Editar_Reclutamiento, :Del_Reclutamiento,:General_Reclutamiento,:Ver_Departamentos ,:Editar_Departamentos ,:Del_Departamentos, :Ver_Organigramas, :Agregar_Noticias, :Editar_Noticias, :Del_Noticias, :Asignar_EmpleadoMes, :Ver_Empresas, :Editar_Empresas, :Configuracion_Divisas, :Configuracion_Categorias, :Configuracion_Permisos)";
 
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':Empleados_idEmpleados', $datos['idEmpleados'], PDO::PARAM_INT);
@@ -2902,6 +2902,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 		$stmt->bindParam(':Ver_Reclutamiento', $datos['Ver_Reclutamiento'], PDO::PARAM_INT);
 		$stmt->bindParam(':Editar_Reclutamiento', $datos['Editar_Reclutamiento'], PDO::PARAM_INT);
 		$stmt->bindParam(':Del_Reclutamiento', $datos['Del_Reclutamiento'], PDO::PARAM_INT);
+		$stmt->bindParam(':General_Reclutamiento', $datos['General_Reclutamiento'], PDO::PARAM_INT);
 		$stmt->bindParam(':Ver_Departamentos', $datos['Ver_Departamentos'], PDO::PARAM_INT);
 		$stmt->bindParam(':Editar_Departamentos', $datos['Editar_Departamentos'], PDO::PARAM_INT);
 		$stmt->bindParam(':Del_Departamentos', $datos['Del_Departamentos'], PDO::PARAM_INT);
@@ -2928,7 +2929,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 
 	static public function mdlActualizarRol($datos){
 		$pdo =Conexion::conectar();
-		$sql = "UPDATE roles SET Ver_Empleados = :Ver_Empleados, Editar_Empleados = :Editar_Empleados, Del_Empleados = :Del_Empleados, Ver_Departamentos = :Ver_Departamentos, Editar_Departamentos = :Editar_Departamentos, Del_Departamentos = :Del_Departamentos, Resumenes_Asistencias = :Resumenes_Asistencias, Ajustes_Asistencias = :Ajustes_Asistencias, Ver_Evaluaciones = :Ver_Evaluaciones, Editar_Evaluaciones = :Editar_Evaluaciones, Del_Evaluaciones = :Del_Evaluaciones, Ver_Tareas = :Ver_Tareas, Editar_Tareas = :Editar_Tareas, Del_Tareas = :Del_Tareas, Ver_Analisis = :Ver_Analisis, Ver_Reclutamiento = :Ver_Reclutamiento, Editar_Reclutamiento = :Editar_Reclutamiento, Del_Reclutamiento = :Del_Reclutamiento, Ver_Organigramas = :Ver_Organigramas, Agregar_Noticias = :Agregar_Noticias, Editar_Noticias = :Editar_Noticias, Del_Noticias = :Del_Noticias, Asignar_EmpleadoMes = :Asignar_EmpleadoMes, Ver_Empresas = :Ver_Empresas, Editar_Empresas = :Editar_Empresas, Configuracion_Divisas = :Configuracion_Divisas, Configuracion_Categorias = :Configuracion_Categorias, Configuracion_Permisos = :Configuracion_Permisos WHERE Empleados_idEmpleados = :Empleados_idEmpleados";
+		$sql = "UPDATE roles SET Ver_Empleados = :Ver_Empleados, Editar_Empleados = :Editar_Empleados, Del_Empleados = :Del_Empleados, Ver_Departamentos = :Ver_Departamentos, Editar_Departamentos = :Editar_Departamentos, Del_Departamentos = :Del_Departamentos, Resumenes_Asistencias = :Resumenes_Asistencias, Ajustes_Asistencias = :Ajustes_Asistencias, Ver_Evaluaciones = :Ver_Evaluaciones, Editar_Evaluaciones = :Editar_Evaluaciones, Del_Evaluaciones = :Del_Evaluaciones, Ver_Tareas = :Ver_Tareas, Editar_Tareas = :Editar_Tareas, Del_Tareas = :Del_Tareas, Ver_Analisis = :Ver_Analisis, Ver_Reclutamiento = :Ver_Reclutamiento, Editar_Reclutamiento = :Editar_Reclutamiento, Del_Reclutamiento = :Del_Reclutamiento, General_Reclutamiento = :General_Reclutamiento, Ver_Organigramas = :Ver_Organigramas, Agregar_Noticias = :Agregar_Noticias, Editar_Noticias = :Editar_Noticias, Del_Noticias = :Del_Noticias, Asignar_EmpleadoMes = :Asignar_EmpleadoMes, Ver_Empresas = :Ver_Empresas, Editar_Empresas = :Editar_Empresas, Configuracion_Divisas = :Configuracion_Divisas, Configuracion_Categorias = :Configuracion_Categorias, Configuracion_Permisos = :Configuracion_Permisos WHERE Empleados_idEmpleados = :Empleados_idEmpleados";
 
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(':Ver_Empleados', $datos['Ver_Empleados'], PDO::PARAM_INT);
@@ -2949,6 +2950,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 		$stmt->bindParam(':Ver_Reclutamiento', $datos['Ver_Reclutamiento'], PDO::PARAM_INT);
 		$stmt->bindParam(':Editar_Reclutamiento', $datos['Editar_Reclutamiento'], PDO::PARAM_INT);
 		$stmt->bindParam(':Del_Reclutamiento', $datos['Del_Reclutamiento'], PDO::PARAM_INT);
+		$stmt->bindParam(':General_Reclutamiento', $datos['General_Reclutamiento'], PDO::PARAM_INT);
 		$stmt->bindParam(':Ver_Organigramas', $datos['Ver_Organigramas'], PDO::PARAM_INT);
 		$stmt->bindParam(':Agregar_Noticias', $datos['Agregar_Noticias'], PDO::PARAM_INT);
 		$stmt->bindParam(':Editar_Noticias', $datos['Editar_Noticias'], PDO::PARAM_INT);

@@ -4,7 +4,7 @@
 		<div class="container">
 			<div class="card">
 				<div class="card-header">
-					<p class="titulo-tablero">Bases de talento</p>
+					<p class="titulo-tablero">BASES DE TALENTO</p>
 				</div>
 				<div class="card-body">
 					<div class="table">

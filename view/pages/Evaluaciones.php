@@ -7,7 +7,7 @@ $Evaluaciones = ControladorFormularios::ctrVerEvaluaciones(null, null);
 		<div class="card mx-5 menu-ajustes">
 			<div class="row card-header" style="align-items: center;">
 				<div class="encabezado">
-					Evaluaciones
+					EVALUACIONES
 				</div>
 				<?php if (!empty($rol) && $rol['Editar_Evaluaciones'] == 1): ?>
 				<div class="float-right">

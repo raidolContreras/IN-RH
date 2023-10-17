@@ -4,19 +4,19 @@
 <div class="container-fluid dashboard-content">
 	<div class="ecommerce-widget">
 		<div class="card mx-5 menu-ajustes">
-			<div class="card-header encabezado">Configuración del registro de horas</div>
+			<div class="card-header encabezado">CONFIGURACIÓN DEL REGISTRO DE HORAS</div>
 			<div class="row">
 				<div class="card-side-nav col-xl-2 col-lg-3 col-md-4 col-3 lista-ajustes">
-					<div><a href="Asistencia-ajustes" class="btn btn-block btn-in-consulting-link active">Horarios de trabajo</a></div>
-					<div><a href="Asistencia-permisos" class="btn btn-block btn-in-consulting-link">Permisos</a></div>
-					<div><a href="Asistencia-importar" class="btn btn-block btn-in-consulting-link">Importar horarios</a></div>
+					<div><a href="Asistencia-ajustes" class="btn btn-block btn-in-consulting-link active">HORARIOS DE TRABAJO</a></div>
+					<div><a href="Asistencia-permisos" class="btn btn-block btn-in-consulting-link">PERMISOS</a></div>
+					<div><a href="Asistencia-importar" class="btn btn-block btn-in-consulting-link">IMPORTAR HORARIOS</a></div>
 				</div>
 				<div class=" col-xl-10 col-lg-9 col-md-8 col-9" id="horarios">
 					<?php
 					$horarios = ControladorFormularios::ctrSeleccionarHorarios(null, null); ?>
 					<div class="row mr-4 ml-2 mt-3">
 						<div class="card-header encabezado">
-							Horarios de trabajo
+							HORARIOS DE TRABAJO
 						</div>
 						<div class="card-body">
 							<h3 class="encabezado-h">Plantillas de horario de trabajo</h3>

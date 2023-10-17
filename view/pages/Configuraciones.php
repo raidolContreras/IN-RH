@@ -2,7 +2,7 @@
 <div class="container-fluid dashboard-content">
 	<div class="ecommerce-widget">
 		<div class="card mx-5 menu-ajustes">
-			<div class="card-header encabezado">Configuración del sistema</div>
+			<div class="card-header encabezado">CONFIGURACIÓN DEL SISTEMA</div>
 			<div class="row">
 				<?php require_once "view/pages/navs/sidenav_configuracion.php"; ?>
 				<div class=" col-xl-10 col-lg-9 col-md-8 col-9" id="horarios">

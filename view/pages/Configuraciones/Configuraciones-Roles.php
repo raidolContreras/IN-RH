@@ -2,7 +2,7 @@
 <div class="container-fluid dashboard-content">
 	<div class="ecommerce-widget">
 		<div class="card mx-5 menu-ajustes">
-			<div class="card-header encabezado">Configuración del sistema</div>
+			<div class="card-header encabezado">CONFIGURACIÓN DEL SISTEMA</div>
 			<div class="row">
 				<?php require_once "view/pages/navs/sidenav_configuracion.php"; ?>
 				<div class="col-xl-10 col-lg-9 col-md-8 col-9" id="horarios">
@@ -52,6 +52,7 @@
 										$Ver_Reclutamiento = $rol['Ver_Reclutamiento'];
 										$Editar_Reclutamiento = $rol['Editar_Reclutamiento'];
 										$Del_Reclutamiento = $rol['Del_Reclutamiento'];
+										$General_Reclutamiento = $rol['General_Reclutamiento'];
 										$Ver_Organigramas = $rol['Ver_Organigramas'];
 										$Agregar_Noticias = $rol['Agregar_Noticias'];
 										$Editar_Noticias = $rol['Editar_Noticias'];
@@ -81,6 +82,7 @@
 										$Ver_Reclutamiento = 0;
 										$Editar_Reclutamiento = 0;
 										$Del_Reclutamiento = 0;
+										$General_Reclutamiento = 0;
 										$Ver_Organigramas = 0;
 										$Agregar_Noticias = 0;
 										$Editar_Noticias = 0;
@@ -123,6 +125,7 @@
 												data-Ver_Reclutamiento="<?php echo $Ver_Reclutamiento; ?>"
 												data-Editar_Reclutamiento="<?php echo $Editar_Reclutamiento; ?>"
 												data-Del_Reclutamiento="<?php echo $Del_Reclutamiento; ?>"
+												data-General_Reclutamiento="<?php echo $General_Reclutamiento; ?>"
 												data-Ver_Organigramas="<?php echo $Ver_Organigramas; ?>"
 												data-Agregar_Noticias="<?php echo $Agregar_Noticias; ?>"
 												data-Editar_Noticias="<?php echo $Editar_Noticias; ?>"
@@ -273,6 +276,10 @@
 							<input type="checkbox" Name="Del-Reclutamiento" id="Del-Reclutamiento" class=" reclutamiento-checkbox custom-control-input-trash" disabled>
 							<span class="custom-control-label">Eliminar</span>
 						</label>
+						<label class="custom-control custom-checkbox custom-control-inline">
+							<input type="checkbox" Name="General-Reclutamiento" id="General-Reclutamiento" class=" reclutamiento-checkbox custom-control-input-general" disabled>
+							<span class="custom-control-label">Administración General</span>
+						</label>
 					</div>
 					<div class="col-sm-6 mt-3">
 						<hr>
@@ -400,6 +407,7 @@ $('#rolesModal').on('show.bs.modal', function (event) {
 	var ver_reclutamiento = button.data('ver_reclutamiento');
 	var editar_reclutamiento = button.data('editar_reclutamiento');
 	var del_reclutamiento = button.data('del_reclutamiento');
+	var general_reclutamiento = button.data('general_reclutamiento');
 	// Permisos Noticias
 	var agregar_noticias = button.data('agregar_noticias');
 	var editar_noticias = button.data('editar_noticias');
@@ -590,6 +598,7 @@ $('#rolesModal').on('show.bs.modal', function (event) {
 		modal.find('#Ver-Reclutamiento').prop('checked', true);
 		$('#Editar-Reclutamiento').prop('disabled', false);
 		$('#Del-Reclutamiento').prop('disabled', false);
+		$('#General-Reclutamiento').prop('disabled', false);
 		if (editar_reclutamiento === 1) {
 			modal.find('#Editar-Reclutamiento').prop('checked', true);
 		}else{
@@ -600,12 +609,19 @@ $('#rolesModal').on('show.bs.modal', function (event) {
 		}else{
 			modal.find('#Del-Reclutamiento').prop('checked', false);
 		}
+		if (general_reclutamiento === 1) {
+			modal.find('#General-Reclutamiento').prop('checked', true);
+		}else{
+			modal.find('#General-Reclutamiento').prop('checked', false);
+		}
 	} else {
 		modal.find('#Ver-Reclutamiento').prop('checked', false);
 		$('#Editar-Reclutamiento').prop('disabled', true);
 		$('#Del-Reclutamiento').prop('disabled', true);
+		$('#General-Reclutamiento').prop('disabled', true);
 		modal.find('#Del-Reclutamiento').prop('checked', false);
 		modal.find('#Editar-Reclutamiento').prop('checked', false);
+		modal.find('#General-Reclutamiento').prop('checked', false);
 	}
 });
 
@@ -859,9 +875,11 @@ $(document).ready(function() {
 		if (isChecked) {
 			$('#Editar-Reclutamiento').prop('disabled', false);
 			$('#Del-Reclutamiento').prop('disabled', false);
+			$('#General-Reclutamiento').prop('disabled', false);
 		} else {
 			$('#Editar-Reclutamiento').prop('disabled', true);
 			$('#Del-Reclutamiento').prop('disabled', true);
+			$('#General-Reclutamiento').prop('disabled', true);
 		}
 	});
 
@@ -870,9 +888,11 @@ $(document).ready(function() {
 	if (isCheckedInitially) {
 		$('#Editar-Reclutamiento').prop('disabled', false);
 		$('#Del-Reclutamiento').prop('disabled', false);
+		$('#General-Reclutamiento').prop('disabled', false);
 	} else {
 		$('#Editar-Reclutamiento').prop('disabled', true);
 		$('#Del-Reclutamiento').prop('disabled', true);
+		$('#General-Reclutamiento').prop('disabled', true);
 	}
 
 	// Marcar o desmarcar todos los checkboxes de Reclutamiento al hacer clic en "Marcar Todos"
@@ -883,6 +903,7 @@ $(document).ready(function() {
 		// Si el checkbox "Marcar Todos" está marcado, habilitar los checkboxes de acciones
 		$('#Editar-Reclutamiento').prop('disabled', !isChecked);
 		$('#Del-Reclutamiento').prop('disabled', !isChecked);
+		$('#General-Reclutamiento').prop('disabled', !isChecked);
 	});
 
 	// Manejar el cambio en los checkboxes individuales de Reclutamiento
@@ -896,6 +917,7 @@ $(document).ready(function() {
 		// Habilitar o deshabilitar los checkboxes de acciones basado en la selección de Reclutamiento
 		$('#Editar-Reclutamiento').prop('disabled', totalSeleccionadosReclutamiento === 0);
 		$('#Del-Reclutamiento').prop('disabled', totalSeleccionadosReclutamiento === 0);
+		$('#General-Reclutamiento').prop('disabled', totalSeleccionadosReclutamiento === 0);
 	});
 
 	// Marcar o desmarcar todos los checkboxes de empleados al hacer clic en "Marcar Todos"

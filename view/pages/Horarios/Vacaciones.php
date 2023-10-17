@@ -78,7 +78,7 @@ $dias_disponibles = $calculo_vacaciones - $dias_consumidos - $dias_pendientes;
 			<div class="col-xl-2 col-lg-12 col-md-12 col-12">
 				<div class="card caja">
 					<div class="card-header">
-						<p class="titulo-tablero titulo">Vacaciones</p>
+						<p class="titulo-tablero titulo">VACACIONES</p>
 					</div>
 					<div class="card-body">
 						<div class="row">
@@ -129,7 +129,7 @@ $dias_disponibles = $calculo_vacaciones - $dias_consumidos - $dias_pendientes;
 			<div class="col-xl-2 col-lg-12 col-md-12 col-12">
 				<div class="card caja contenedor">
 					<div class="card-header">
-						<p class="titulo-tablero titulo">Solicitar permisos</p>
+						<p class="titulo-tablero titulo">SOLICITAR PERMISOS</p>
 					</div>
 						<div class="card-header">
 							<p class="subtitulo-tablero mt-3 mb-0">
@@ -165,7 +165,7 @@ $dias_disponibles = $calculo_vacaciones - $dias_consumidos - $dias_pendientes;
 			<div class="col-xl-8 col-md-12 col-12">
 				<div class="card">
 					<div class="card-header">
-						Historial de ausencias
+						HISTORIAL DE AUSENCIAS
 					</div>
 					<div class="card-body">
 						<div class="table-responsive">

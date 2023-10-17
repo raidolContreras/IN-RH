@@ -10,7 +10,7 @@
 			<div class="col-xl-8">
 				<div class="card">
 					<div class="card-body">
-						<p class="titulo-tablero titulo">Lista de Tareas</p>
+						<p class="titulo-tablero titulo">LISTA DE TAREAS</p>
 						<div class="table-responsive">
 							<table class="table Extras">
 								<thead>

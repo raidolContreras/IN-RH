@@ -31,7 +31,7 @@
 		<div class="container col-xl-9 col-md-12 order-xl-1 order-md-2">
 			<div class="card">
 				<div class="card-header">
-					Resumen de gastos
+					RESUMEN DE GASTOS
 					<button type="button" class="btn btn-outline-primary rounded float-right" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-plus"></i> Agregar gastos</button>
 				</div>
 				<div class="card-body">
