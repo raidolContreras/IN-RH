@@ -48,6 +48,9 @@ session_start();
 		if (!isset($_SESSION['validarIngreso']) && $_GET["pagina"] != 'Login'){
 			if ($_GET["pagina"] == 'Forgot-Password') {
 				include "pages/Login/".$_GET["pagina"].".php";
+			}
+			if ($_GET["pagina"] == 'Password') {
+				include "pages/".$_GET["pagina"].".php";
 			}else{
 				echo "<script>
 						setTimeout(function() {
@@ -173,10 +176,6 @@ session_start();
 				include "pages/navs/sidenav.php"; 
 				include "pages/modulos/".$_GET["pagina"].".php";
 
-			}elseif ($_GET["pagina"] == "Password") {
-
-				include "pages/".$_GET["pagina"].".php";
-
 			}elseif ($_GET["pagina"] == "Solicitudes_Gastos") {
 
 				include "pages/navs/navbar.php";
@@ -222,16 +221,23 @@ session_start();
 				include "pages/navs/sidenav.php";
 				include "pages/Configuraciones/".$_GET["pagina"].".php";
 
-			}else{
+			}
+
+			elseif ($_GET["pagina"] == "Password") {
+
+				include "pages/".$_GET["pagina"].".php";
+
+			} else{
 				include "pages/404-page.html";
 			}
 		}
 
 	}else{
+
 		if (!isset( $_SESSION['validarIngreso'])) {
 			header("Location: Login"); // Cambia "login.php" al nombre de tu página de inicio de sesión
 			exit();
-		}else{
+		} else{
 			include "pages/navs/navbar.php";
 			include "pages/navs/sidenav.php"; 
 			include "pages/Inicio.php";
