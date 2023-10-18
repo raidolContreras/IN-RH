@@ -18,13 +18,13 @@
 							<table id="example" class="table table-striped table-bordered Extras" style="width:100%">
 								<thead>
 									<tr>
-										<th>NOMBRE DE LA VACANTE</th>
-										<th>EMPRESA</th>
-										<th>DEPARTAMENTO</th>
-										<th>APROBADO</th>
-										<th width="10%">SALARIO</th>
-										<th width="5%">POSTULANTES</th>
-										<th width="5%">ACCIONES</th>
+										<th>Nombre de la vacante</th>
+										<th>Empresa</th>
+										<th>Departamento</th>
+										<th>Aprobado</th>
+										<th width="10%">Salario</th>
+										<th width="5%">Postulantes</th>
+										<th width="5%">Acciones</th>
 									</tr>
 								</thead>
 								<tbody>

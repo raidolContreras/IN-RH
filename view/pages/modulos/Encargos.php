@@ -1,7 +1,7 @@
 <?php 
 	$tareas = ControladorFormularios::ctrVerTareas("Empleados_idEmpleados", $_SESSION['idEmpleado']);
 ?>
-<p class="titulo-tablero titulo">Lista de Encargos</p>
+<p class="titulo-tablero titulo">LISTA DE ENCARGOS</p>
 <div class="table-responsive">
 	<table class="table Peticiones table-hover">
 		<thead>

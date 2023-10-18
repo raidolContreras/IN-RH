@@ -31,9 +31,9 @@
 									<caption>Lista de Horarios</caption>
 									<thead>
 										<tr>
-											<th scope="col">NOMBRE DE LA PLANTILLA</th>
-											<th scope="col">HORAS SEMANALES</th>
-											<th scope="col">HORARIO POR DEFECTO</th>
+											<th scope="col">Nombre de la platilla</th>
+											<th scope="col">Horas semanales</th>
+											<th scope="col">Horario por defecto</th>
 										</tr>
 									</thead>
 									<tbody>

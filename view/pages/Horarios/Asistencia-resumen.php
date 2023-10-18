@@ -52,9 +52,9 @@ if (isset($_GET['empresa'])) {
 								<table id="example" class="table ResumenAsistencias">
 									<thead>
 										<tr>
-											<th>NOMBRE</th>
-											<th>REGISTRADO</th>
-											<th>ESPERADO</th>
+											<th>Nombre</th>
+											<th>Registrado</th>
+											<th>Esperado</th>
 											<th width="40"></th>
 										</tr>
 									</thead>

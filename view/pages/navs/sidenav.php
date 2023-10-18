@@ -33,7 +33,7 @@
 					<?php endif ?>
 
 					<li class="nav-item">
-						<?php if (isset($_GET['pagina']) && in_array($_GET['pagina'], array('Asistencia', 'Asistencia-resumen', 'Asistencia-ajustes'))): ?>
+						<?php if (isset($_GET['pagina']) && in_array($_GET['pagina'], array('Asistencia', 'Asistencia-resumen', 'Asistencia-ajustes', 'Asistencia-permisos-vacaciones', 'Asistencia-permisos', 'Asistencia-importar'))): ?>
 							<a class="nav-link active" href="Asistencia">
 						<?php else: ?>
 							<a class="nav-link" href="Asistencia">
@@ -62,7 +62,7 @@
 					</li>
 
 					<li class="nav-item">
-						<?php if (isset($_GET['pagina']) && in_array($_GET['pagina'], array('Gastos'))): ?>
+						<?php if (isset($_GET['pagina']) && in_array($_GET['pagina'], array('Gastos', 'Solicitudes_Gastos'))): ?>
 							<a class="nav-link active" href="Gastos">
 						<?php else: ?>
 							<a class="nav-link" href="Gastos">

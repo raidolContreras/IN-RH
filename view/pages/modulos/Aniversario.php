@@ -1,7 +1,7 @@
 <?php 
 $empleados = ControladorEmpleados::ctrFechaAniversario();  
 ?>
-<p class="titulo-tablero titulo">Aniversario laboral</p>
+<p class="titulo-tablero titulo">ANIVERSARIO LABORAL</p>
 <hr>
 <div class="row">
 	<div class="ml-4 pb-0">

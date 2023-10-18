@@ -2,7 +2,7 @@
 	$gastos = ControladorFormularios::ctrVerGastos(null, null);
 ?>
 <div class="card-body">
-	<p class="titulo-tablero titulo">Lista de Gastos</p>
+	<p class="titulo-tablero titulo">LISTA DE GASTOS</p>
 	<div class="table-responsive">
 		<table id="example" class="table Peticiones">
 			<thead>

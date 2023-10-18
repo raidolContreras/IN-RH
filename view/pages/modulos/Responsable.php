@@ -2,7 +2,7 @@
 $equipo_de_trabajo = ControladorEmpleados::ctrEquipoDeTrabajo(null);
 $pertenece = 0;
 ?>
-<p class="titulo-tablero titulo">Mi grupo de trabajo</p>
+<p class="titulo-tablero titulo">MI GRUPO DE TRABAJO</p>
 <hr class="titulo">
 <div class="row">
 	<div class="col-12 mt-2">

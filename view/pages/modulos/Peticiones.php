@@ -18,7 +18,7 @@ foreach ($puestos as $puesto) {
 }
 ?>
 
-<p class="titulo-tablero titulo">Solicitudes pendientes</p>
+<p class="titulo-tablero titulo">SOLICITUDES PENDIENTES</p>
 <div class="row">
 	<div class="mx-3 mt-2 pb-0 table-responsive">
 		<table id="example" class="table Peticiones table-hover">

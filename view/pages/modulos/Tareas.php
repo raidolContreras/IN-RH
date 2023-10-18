@@ -2,7 +2,7 @@
 	$tareas = ControladorFormularios::ctrVerTareas("Jefe_idEmpleados", $_SESSION['idEmpleado']);
 ?>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<p class="titulo-tablero titulo">Lista de Tareas</p>
+<p class="titulo-tablero titulo">LISTA DE TAREAS</p>
 <div class="table-responsive">
 	<table class="table Peticiones table-hover">
 		<thead>

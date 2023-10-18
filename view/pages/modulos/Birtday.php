@@ -1,7 +1,7 @@
 <?php 
 $empleados = ControladorEmpleados::ctrFechaNacimiento(null, null);  
 ?>
-<p class="titulo-tablero titulo">Próximos cumpleaños</p>
+<p class="titulo-tablero titulo">PRÓXIMOS CUMPLEAÑOS</p>
 <hr>
 <div class="row">
 	<div class="ml-4 pb-0">

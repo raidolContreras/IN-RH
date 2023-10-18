@@ -15,10 +15,10 @@
 							<table class="table Extras">
 								<thead>
 									<tr>
-										<th>NOMBRE DE LA TAREA</th>
-										<th>ASIGNADO A</th>
-										<th>VENCIMIENTO</th>
-										<th>ESTADO</th>
+										<th>Nombre de la tarea</th>
+										<th>Asignado a</th>
+										<th>Vencimiento</th>
+										<th>Estado</th>
 									</tr>
 								</thead>
 								<tbody>
