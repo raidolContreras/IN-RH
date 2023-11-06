@@ -52,11 +52,12 @@ session_start();
 			if ($_GET["pagina"] == 'Password') {
 				include "pages/".$_GET["pagina"].".php";
 			}else{
-				echo "<script>
-						setTimeout(function() {
-							location.href='Login';
-						}, 500);
-					</script>";
+				// echo "<script>
+//         setTimeout(function() {
+//             location.href='Login';
+//         }, 500);
+//     </script>";
+
 			}
 		}else{
 			if($_GET["pagina"] == "Empleados" ||
