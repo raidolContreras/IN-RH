@@ -47,7 +47,7 @@ session_start();
 	if(isset($_GET["pagina"])){
 		if (!isset($_SESSION['validarIngreso']) && $_GET["pagina"] != 'Login'){
 			if ($_GET["pagina"] == 'Forgot-Password') {
-				include "pages/Login/".$_GET["pagina"].".php";
+				include "pages/Login/Forgot-Password.php";
 			}
 			if ($_GET["pagina"] == 'Password') {
 				include "pages/".$_GET["pagina"].".php";
