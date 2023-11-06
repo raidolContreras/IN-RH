@@ -231,13 +231,13 @@ session_start();
 		}
 
 	}else{
-		if ($_GET["pagina"] == "Forgot-Password") {
+		if (!isset( $_SESSION['validarIngreso']) && $_GET["pagina"] == "Forgot-Password") {
 
 			include "pages/Login/".$_GET["pagina"].".php";
 
 		}
 
-		elseif (!isset( $_SESSION['validarIngreso'])) {
+		if (!isset( $_SESSION['validarIngreso'])) {
 			header("Location: Login"); // Cambia "login.php" al nombre de tu página de inicio de sesión
 			exit();
 		} else{
