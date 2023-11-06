@@ -155,9 +155,7 @@ session_start();
 				include "pages/navs/sidenav.php"; 
 				include "pages/Empleado/".$_GET["pagina"].".php";
 
-			}elseif ($_GET["pagina"] == "Login" ||
-					$_GET["pagina"] == "Salir" ||
-					$_GET["pagina"] == "Forgot-Password") {
+			}elseif ($_GET["pagina"] == "Salir") {
 
 				include "pages/Login/".$_GET["pagina"].".php";
 
