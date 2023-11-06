@@ -49,7 +49,7 @@ session_start();
 			if ($_GET["pagina"] == 'Forgot-Password') {
 				include "pages/Login/".$_GET["pagina"].".php";
 			}
-			if ($_GET["pagina"] == 'Password') {
+			elseif ($_GET["pagina"] == 'Password') {
 				include "pages/".$_GET["pagina"].".php";
 			}else{
 				echo "<script>
