@@ -47,9 +47,9 @@ session_start();
 	if(isset($_GET["pagina"])){
 		if (!isset($_SESSION['validarIngreso']) && $_GET["pagina"] != 'Login'){
 			if ($_GET["pagina"] == 'Forgot-Password') {
-				include "pages/Login/Forgot-Password.php";
+				include "pages/Login/".$_GET["pagina"].".php";
 			}
-			elseif ($_GET["pagina"] == 'Password') {
+			if ($_GET["pagina"] == 'Password') {
 				include "pages/".$_GET["pagina"].".php";
 			}else{
 				echo "<script>
@@ -155,7 +155,9 @@ session_start();
 				include "pages/navs/sidenav.php"; 
 				include "pages/Empleado/".$_GET["pagina"].".php";
 
-			}elseif ($_GET["pagina"] == "Salir" ) {
+			}elseif ($_GET["pagina"] == "Login" ||
+					$_GET["pagina"] == "Salir" ||
+					$_GET["pagina"] == "Forgot-Password") {
 
 				include "pages/Login/".$_GET["pagina"].".php";
 
@@ -231,7 +233,12 @@ session_start();
 		}
 
 	}else{
-		if (!isset( $_SESSION['validarIngreso'])) {
+
+		if (!isset( $_SESSION['validarIngreso']) && $_GET["pagina"] == "Forgot-Password") {
+
+			include "pages/Login/".$_GET["pagina"].".php";
+
+		} elseif (!isset( $_SESSION['validarIngreso'])) {
 			header("Location: Login"); // Cambia "login.php" al nombre de tu página de inicio de sesión
 			exit();
 		} else{
