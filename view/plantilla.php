@@ -45,19 +45,20 @@ session_start();
 	<?php
 
 	if(isset($_GET["pagina"])){
+
+		if (!isset($_SESSION['validarIngreso']) && $_GET["pagina"] == 'Forgot-Password') {
+			include "pages/Login/".$_GET["pagina"].".php";
+		}
+
 		if (!isset($_SESSION['validarIngreso']) && $_GET["pagina"] != 'Login'){
-			if ($_GET["pagina"] == 'Forgot-Password') {
-				include "pages/Login/".$_GET["pagina"].".php";
-			}
 			if ($_GET["pagina"] == 'Password') {
 				include "pages/".$_GET["pagina"].".php";
 			}else{
-				// echo "<script>
-//         setTimeout(function() {
-//             location.href='Login';
-//         }, 500);
-//     </script>";
-
+				echo "<script>
+						setTimeout(function() {
+							location.href='Login';
+						}, 500);
+					</script>";
 			}
 		}else{
 			if($_GET["pagina"] == "Empleados" ||
