@@ -231,8 +231,7 @@ session_start();
 		}
 
 	}else{
-		if ($_GET["pagina"] == "Login" ||
-			$_GET["pagina"] == "Forgot-Password") {
+		if ($_GET["pagina"] == "Forgot-Password") {
 
 			include "pages/Login/".$_GET["pagina"].".php";
 
