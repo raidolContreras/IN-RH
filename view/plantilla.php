@@ -235,9 +235,7 @@ session_start();
 
 			include "pages/Login/".$_GET["pagina"].".php";
 
-		}
-
-		if (!isset( $_SESSION['validarIngreso'])) {
+		} elseif (!isset( $_SESSION['validarIngreso'])) {
 			header("Location: Login"); // Cambia "login.php" al nombre de tu página de inicio de sesión
 			exit();
 		} else{
