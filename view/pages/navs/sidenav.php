@@ -92,7 +92,7 @@
 					<?php endif ?>
 
 					<li class="nav-item">
-						<a class="nav-link" href="https://contreras-flota.click/moodle/" target="_blank"><i class="fa fa-graduation-cap"></i>CURSOS Y CAPACITACIONES</a>
+						<a class="nav-link" href="https://cursos.hucco.com.mx" target="_blank"><i class="fa fa-graduation-cap"></i>CURSOS Y CAPACITACIONES</a>
 					</li>
 				</ul>
 			</div>

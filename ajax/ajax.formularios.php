@@ -268,7 +268,7 @@ class FormulariosAjax{
 			$idEncript = crypt($busqueda['idEmpleados'], 'asxx54ahjppf45sd87a5a4dDDGsystemdev');
 			$emailEncript = md5($forgotEmail);
 
-			$link = 'http://inconsulting.porscheclubmorelia.com/Password&cambio='.$idEncript.'&forgot='.$emailEncript;
+			$link = 'https://hucco.com.mx/Password&cambio='.$idEncript.'&forgot='.$emailEncript;
 			$name = $busqueda['name']." ".$busqueda['lastname'];
 			
 			$datos = array("name" => $name,
