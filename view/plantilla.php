@@ -35,9 +35,9 @@ session_start();
 
 	
 	<?php if (isset($_GET["pagina"])): ?>
-		<title><?php echo 'IN Consulting México - '.$_GET["pagina"]; ?></title>
+		<title><?php echo 'Hucco - '.$_GET["pagina"]; ?></title>
 	<?php else: ?>
-		<title><?php echo 'IN Consulting México'; ?></title>
+		<title><?php echo 'Hucco'; ?></title>
 	<?php endif ?>
 </head>
 
