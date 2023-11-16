@@ -339,7 +339,7 @@ class ControladorFormularios{
 	}
 
 	static public function ctrSumaPostulantes($item, $valor){
-		$tabla = "postulantes";
+		$tabla = "suma";
 		$respuesta = ModeloFormularios::mdlVerPostulantes($tabla, $item, $valor);
 		return $respuesta;
 	}
