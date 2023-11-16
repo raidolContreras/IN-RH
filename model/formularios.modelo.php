@@ -713,8 +713,8 @@ class ModeloFormularios{
 
 	static public function mdlVerPostulantes($tabla, $item, $valor){
 		if ($item == null && $valor == null) {
-			$sql = "SELECT * FROM postulantes 
-			JOIN vacantes ON $tabla.Vacantes_idVacantes = Vacantes.idVacantes 
+			$sql = "SELECT * FROM $tabla 
+			JOIN vacantes ON $tabla.Vacantes_idVacantes = vacantes.idVacantes 
 			WHERE $tabla.statusPostulante = 1;";
 			$stmt = Conexion::conectar()->prepare($sql);
 			$stmt->execute();
