@@ -14,7 +14,7 @@ $perfil = $primerLetra.$segundaLetra;
 <?php $jefeDepartamento = ControladorFormularios::ctrVerDepartamentos("Empleados_idEmpleados", $_SESSION['idEmpleado']) ?>
 <div class="dashboard-header">
 	<nav class="navbar navbar-expand-lg bg-white fixed-top">
-		<img src="assets/images/logoinconsulting.png" alt="">
+		<img src="assets/images/logo.png" alt="">
 		<a class="navbar-brand rambla" href="Inicio">HUCCO</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="fas fa-bars"></span>
