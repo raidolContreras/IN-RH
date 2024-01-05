@@ -11,15 +11,17 @@
 						<table>
 							<thead>
 								<tr>
-									<th>Nombre de la vacante</th>
-									<th>Empresa</th>
-									<th>Departamento</th>
-									<th>Aprobado</th>
-									<th width="10%">Salario</th>
-									<th width="5%">Postulantes</th>
+									<th>Nombre</th>
 									<th width="5%">Acciones</th>
 								</tr>
 							</thead>
+							<tbody>
+								<?php foreach ($postulantes as $postulante): ?>
+									<tr>
+										<td><?php echo $postulante[0] ?></td>
+									</tr>
+								<?php endforeach ?>
+							</tbody>
 						</table>
 					</div>
 				</div>
