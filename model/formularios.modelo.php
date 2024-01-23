@@ -956,7 +956,7 @@ class ModeloFormularios{
 		$destinatario = $datos['email'];
 		$asunto = 'Bienvenido a IN Consulting';
 // Configuración de cabeceras del correo
-		$cabeceras = "From: noreply@inconsulting.porscheclubmorelia.com\r\n";
+		$cabeceras = "From: noreply@hucco.com.mx\r\n";
 		$cabeceras .= "Content-Type: text/html; charset=UTF-8\r\n";
 // Envío del correo electrónico
 		if (mail($destinatario, $asunto, $mensaje, $cabeceras)) {
@@ -1254,7 +1254,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 		$destinatario = $datos['email'];
 		$asunto = 'Recuperación de contraseña';
 // Configuración de cabeceras del correo
-		$cabeceras = "From: noreply@inconsulting.porscheclubmorelia.com\r\n";
+		$cabeceras = "From: noreply@hucco.com.mx\r\n";
 		$cabeceras .= "Content-Type: text/html; charset=UTF-8\r\n";
 // Envío del correo electrónico
 		if (mail($destinatario, $asunto, $mensaje, $cabeceras)) {
