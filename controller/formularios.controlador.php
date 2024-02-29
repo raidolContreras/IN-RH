@@ -522,7 +522,7 @@ class ControladorFormularios{
 
 			if($respuesta["email"] == $loginEmail && $respuesta["password"] == $encriptarPassword){
 
-				if ($respuesta["status"] == 1) {
+				if ($respuesta["eStatus"] == 1) {
 					$nivel = 0;
 					$_SESSION["validarIngreso"] = "ok";
 					$_SESSION["idEmpleado"] = $respuesta["idEmpleados"];
