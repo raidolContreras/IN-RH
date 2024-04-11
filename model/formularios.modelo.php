@@ -31,7 +31,7 @@ class ModeloFormularios{
 		}
 
 		if ($id_empleado == 0) {
-			echo $consulta->errorInfo()[2];
+			echo $stmt->errorInfo()[2];
 		}
 		else{
 			if ($datos['contrato'] == true) {
@@ -42,7 +42,7 @@ class ModeloFormularios{
 					"fin_contrato" => $datos['fin_contrato']
 				);
 				if ($datos['tipo_contrato'] != "") {
-					$crearContrato = ModeloFormularios::mdlCrearContrato($datosContrato);
+					ModeloFormularios::mdlCrearContrato($datosContrato);
 				}
 			}
 			if ($datos['cuenta_infonavit'] == true) {
@@ -54,14 +54,14 @@ class ModeloFormularios{
 					"inicio_credito" => $datos['inicio_credito']
 				);
 				if ($datos['tipo_credito'] != "" && $datos['fecha_contrato'] != "" && $datos['valor_descuento'] != "" && $datos['inicio_credito'] != "") {
-					$crearContrato = ModeloFormularios::mdlCrearCredito($datosCredito);
+					ModeloFormularios::mdlCrearCredito($datosCredito);
 				}
 			}
-			$horarioEmpleado = ModeloFormularios::mdlregistrarEmpleadosHorario('empleados_has_horarios',$id_empleado, $datos['horario']);
+			ModeloFormularios::mdlregistrarEmpleadosHorario('empleados_has_horarios',$id_empleado, $datos['horario']);
 			
 			if ($datos['postulante'] != 0) {
 				$RegistroPostulante = ControladorFormularios::ctrVerPostulantes('idPostulantes', $datos['postulante']);
-				$CerrarVacante = ModeloFormularios::mdlEliminarVacante('vacantes', $RegistroPostulante['Vacantes_idVacantes']);
+				ModeloFormularios::mdlEliminarVacante('vacantes', $RegistroPostulante['Vacantes_idVacantes']);
 				$vacante = ControladorFormularios::ctrVerVacantes('idVacantes', $RegistroPostulante['Vacantes_idVacantes']);
 
 				$puesto = array("namePuesto" => $datos['namePuesto'],
@@ -109,7 +109,9 @@ class ModeloFormularios{
 			}
 
 			$Registro = ModeloFormularios::mdlEmergencia($table2, $id_empleado, $datos);
-			$correo = ModeloFormularios::correoVerificacion($datos);
+
+			// $correo = ModeloFormularios::correoVerificacion($datos); // activar si se necesita
+
 			if ($datos['jefe_Departamento'] == 1) {
 				
 				$datosDepto = array(
@@ -119,13 +121,14 @@ class ModeloFormularios{
 				
 				$updateDataDepto = ModeloEmpleados::mdlActualizarjefatura('departamentos', $datosDepto);
 			}
-			if ($correo == 'enviado') {
-				return "ok";
-			}
-			else{
-				echo 'No enviado';
-				print_r(Conexion::conectar()->errorInfo());
-			}
+
+			return "ok";
+			// if ($correo == 'enviado') {
+			// 	return "ok";
+			// } else{
+			// 	echo 'No enviado';
+			// 	print_r(Conexion::conectar()->errorInfo());
+			// }
 
 		}
 
@@ -945,16 +948,16 @@ class ModeloFormularios{
 
 		$mensaje .= '<div>Tu contraseña temporal es la siguiente: <strong>'.$datos['password'].'</strong>. </div>
 		<div> </div>
-		<div>Ingresa con tu correo y contraseña a la siguiente dirección: <a href="http://inconsulting.porscheclubmorelia.com/">inconsulting</a> y cambia la contraseña por una más segura y personal. </div>
+		<div>Ingresa con tu correo y contraseña a la siguiente dirección: <a href="https://hucco.com.mx/">Hucco</a> y cambia la contraseña por una más segura y personal. </div>
 		<div> </div>
 		<div>Esperamos que te sientas cómodo/a y motivado/a en tu nuevo puesto. Si tienes cualquier pregunta o sugerencia, no dudes en contactarnos.</div>
 		<div> </div>
 		<div style="text-align: center;"><strong>Atentamente:</strong></div>
 		<div style="text-align: center;"> </div>
-		<div style="text-align: center;"><em>El equipo de IN Consulting</em></div>
+		<div style="text-align: center;"><em>El equipo de Hucco</em></div>
 		</div>';
 		$destinatario = $datos['email'];
-		$asunto = 'Bienvenido a IN Consulting';
+		$asunto = 'Bienvenido a Hucco';
 // Configuración de cabeceras del correo
 		$cabeceras = "From: noreply@hucco.com.mx\r\n";
 		$cabeceras .= "Content-Type: text/html; charset=UTF-8\r\n";
