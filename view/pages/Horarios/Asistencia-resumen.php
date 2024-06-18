@@ -17,10 +17,13 @@ if (isset($_GET['empresa'])) {
 			<div class="card-header encabezado">
 				RESUMEN DE ASISTENCIAS
 				<form class="exportarExcelEmpresas-form float-right">
-					<input type="hidden" name="genExcelEmpresas" value="<?php echo $idEmpresas ?>">
-					<button type="button" class="btn btn-outline-success btn-rounded btn-lg exportarExcelEmpresas-btn">
-						<i class="mdi mdi-download"></i> Descargar Excel
-					</button>
+					<div class="row" style="flex-wrap: nowrap;">
+						<input type="hidden" name="genExcelEmpresas" value="<?php echo $idEmpresas ?>">
+						<input type="month" class="form-control" id="fecha" name="fecha" min="2023-01" />
+						<button type="button" class="btn btn-outline-success btn-rounded btn-lg exportarExcelEmpresas-btn">
+							<i class="mdi mdi-download"></i> Descargar Excel
+						</button>
+					</div>
 				</form>
 			</div>
 			<div class="row">

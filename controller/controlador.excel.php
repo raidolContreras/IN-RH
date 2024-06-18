@@ -2,9 +2,9 @@
 
 class ControladorExcel{
 
-	static public function ctrGeneralExcelAsistencias($idEmpleados){
+	static public function ctrGeneralExcelAsistencias($idEmpleados, $fecha){
 		$tabla = "empleados";
-		$GenerarExcelAsistencia = ModeloExcel::mdlGenerarExcelAsistencias($tabla, $idEmpleados);
+		$GenerarExcelAsistencia = ModeloExcel::mdlGenerarExcelAsistencias($tabla, $idEmpleados, $fecha);
 		return $GenerarExcelAsistencia;
 	}
 

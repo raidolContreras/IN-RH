@@ -348,36 +348,64 @@ class ModeloEmpleados{
 		$stmt = null;
 	}
 
-	static public function mdlAsustenciasJustificantes($tabla, $item, $valor){
+	static public function mdlAsustenciasJustificantes($tabla, $item, $valor, $fechaSelected){
+		// Construir la consulta SQL base
 		$sql = "SELECT *
 				FROM $tabla a
 				LEFT JOIN justificantes j ON j.Asistencias_idAsistencias = a.idAsistencias
-				WHERE $item = :idEmpleados
-				AND MONTH(a.fecha_asistencia) = MONTH(CURRENT_DATE());";
-
+				WHERE $item = :idEmpleados";
+	
+		// Verificar si $fechaSelected no es null
+		if (!is_null($fechaSelected)) {
+			$sql .= " AND DATE_FORMAT(a.fecha_asistencia, '%Y-%m') = :fechaSelected";
+		} else {
+			$sql .= " AND MONTH(a.fecha_asistencia) = MONTH(CURRENT_DATE())
+					  AND YEAR(a.fecha_asistencia) = YEAR(CURRENT_DATE())";
+		}
+		
 		$stmt = Conexion::conectar()->prepare($sql);
 		$stmt->bindParam(":idEmpleados", $valor, PDO::PARAM_INT);
-
+		
+		// Vincular el parámetro si $fechaSelected no es null
+		if (!is_null($fechaSelected)) {
+			$stmt->bindParam(":fechaSelected", $fechaSelected, PDO::PARAM_STR);
+		}
+		
 		$stmt->execute();
-
-		return $stmt->fetchAll();
-
-		$stmt->close();
+	
+		$result = $stmt->fetchAll();
+	
+		$stmt->closeCursor();
 		$stmt = null;
+	
+		return $result;
 	}
 
-	static public function mdlDiasFestivos($tabla){
-		$sql = "SELECT *, IF(TIMESTAMPDIFF(DAY, fechaFestivo, fechaFin)+1 is null, 1, TIMESTAMPDIFF(DAY, fechaFestivo, fechaFin)+1) as rango
-				FROM $tabla";
-
+	static public function mdlDiasFestivos($tabla, $fechaSelected){
+		// Construir la consulta SQL
+		$sql = "SELECT *, IF(TIMESTAMPDIFF(DAY, fechaFestivo, fechaFin)+1 is null, 1, TIMESTAMPDIFF(DAY, fechaFestivo, fechaFin)+1) as rango FROM $tabla";
+	
+		// Verificar si $fechaSelected no es null
+		if (!is_null($fechaSelected)) {
+			$sql .= " WHERE DATE_FORMAT(fechaFestivo, '%Y-%m') = :fechaSelected";
+		}
+	
 		$stmt = Conexion::conectar()->prepare($sql);
+	
+		// Vincular el parámetro si $fechaSelected no es null
+		if (!is_null($fechaSelected)) {
+			$stmt->bindParam(":fechaSelected", $fechaSelected, PDO::PARAM_STR);
+		}
+	
 		$stmt->execute();
-
-		return $stmt->fetchAll();
-
-		$stmt->close();
+	
+		$result = $stmt->fetchAll();
+	
+		$stmt->closeCursor();
 		$stmt = null;
-	}
+	
+		return $result;
+	}	
 
 	static public function mdlAsistenciasMes($idEmpleados, $mes){
 		$sql = "SELECT *

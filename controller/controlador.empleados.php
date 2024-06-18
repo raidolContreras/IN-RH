@@ -264,15 +264,15 @@ class ControladorEmpleados{
 		return $EquipoDeTrabajo;
 	}
 
-	static public function ctrAsistenciasJustificantes($idEmpleados){
+	static public function ctrAsistenciasJustificantes($idEmpleados, $fechaSelected){
 		$tabla = "asistencias";
-		$buscarAsistenciasJustificantes = ModeloEmpleados::mdlAsustenciasJustificantes($tabla, "a.Empleados_idEmpleados", $idEmpleados);
+		$buscarAsistenciasJustificantes = ModeloEmpleados::mdlAsustenciasJustificantes($tabla, "a.Empleados_idEmpleados", $idEmpleados, $fechaSelected);
 		return $buscarAsistenciasJustificantes;
 	}
 
-	static public function ctrDiasFestivos(){
+	static public function ctrDiasFestivos($fechaSelected){
 		$tabla = "festivos";
-		$DiasFestivos = ModeloEmpleados::mdlDiasFestivos($tabla);
+		$DiasFestivos = ModeloEmpleados::mdlDiasFestivos($tabla, $fechaSelected);
 		return $DiasFestivos;
 	}
 

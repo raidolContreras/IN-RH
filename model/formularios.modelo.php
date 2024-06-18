@@ -151,7 +151,7 @@ class ModeloFormularios{
 			print_r(Conexion::conectar()->errorInfo());
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 
 	}
@@ -172,7 +172,7 @@ class ModeloFormularios{
 			print_r(Conexion::conectar()->errorInfo());
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 
 	}
@@ -184,7 +184,7 @@ class ModeloFormularios{
 		$stmt->bindParam(':Empleados_idEmpleados', $idEmpleados, PDO::PARAM_INT);
 		$stmt->execute();
 		return $stmt -> fetch();
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 
 	}
@@ -196,7 +196,7 @@ class ModeloFormularios{
 		$stmt->bindParam(':Empleados_idEmpleados', $idEmpleados, PDO::PARAM_INT);
 		$stmt->execute();
 		return $stmt -> fetch();
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 
 	}
@@ -215,7 +215,7 @@ class ModeloFormularios{
 			print_r(Conexion::conectar()->errorInfo());
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -260,7 +260,7 @@ class ModeloFormularios{
 			print_r(Conexion::conectar()->errorInfo());
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -287,7 +287,7 @@ class ModeloFormularios{
 			return $stmt -> fetch();
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -314,7 +314,7 @@ class ModeloFormularios{
 		$stmt->bindParam(":id", $idEmpleado, PDO::PARAM_INT);
 		$stmt->execute();
 		return $stmt -> fetchAll();
-		$stmt -> close();
+		$stmt -> closeCursor();
 		$stmt = null;
 	}
 
@@ -330,7 +330,7 @@ class ModeloFormularios{
 			print_r(Conexion::conectar()->errorInfo());
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -346,7 +346,7 @@ class ModeloFormularios{
 			print_r(Conexion::conectar()->errorInfo());
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -365,7 +365,7 @@ class ModeloFormularios{
 			return $stmt -> fetch();
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -381,7 +381,7 @@ class ModeloFormularios{
 			return "error";
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -391,7 +391,7 @@ class ModeloFormularios{
 		$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
 		$stmt->execute();
 		return $stmt -> fetchAll();
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -400,7 +400,7 @@ class ModeloFormularios{
 		$stmt = Conexion::conectar()->prepare("SELECT nameDoc FROM $tabla WHERE nameDoc = '$item' AND Empleados_idEmpleados = $valor");
 		$stmt->execute();
 		return $stmt -> fetch();
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -460,7 +460,7 @@ class ModeloFormularios{
 			print_r(Conexion::conectar()->errorInfo());
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -472,7 +472,7 @@ class ModeloFormularios{
 		$stmt = Conexion::conectar()->prepare($sql);
 		$stmt->execute();
 		return $stmt -> fetchAll();
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -492,7 +492,7 @@ class ModeloFormularios{
 			return $stmt -> fetch();
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -504,7 +504,7 @@ class ModeloFormularios{
 		$stmt->execute();
 		return $stmt -> fetchAll();
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -516,7 +516,7 @@ class ModeloFormularios{
 		$stmt->execute();
 		return $stmt -> fetchAll();
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 	static public function mdlDeptosEspecial2($tabla, $item, $valor){
@@ -530,7 +530,7 @@ class ModeloFormularios{
 		$stmt->execute();
 		return $stmt -> fetchAll();
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -548,7 +548,7 @@ class ModeloFormularios{
 			print_r(Conexion::conectar()->errorInfo());
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -564,7 +564,7 @@ class ModeloFormularios{
 			print_r(Conexion::conectar()->errorInfo());
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -580,7 +580,7 @@ class ModeloFormularios{
 			print_r(Conexion::conectar()->errorInfo());
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -599,7 +599,7 @@ class ModeloFormularios{
 			print_r(Conexion::conectar()->errorInfo());
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -623,7 +623,7 @@ class ModeloFormularios{
 			print_r(Conexion::conectar()->errorInfo());
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -645,7 +645,7 @@ class ModeloFormularios{
 			print_r(Conexion::conectar()->errorInfo());
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -664,7 +664,7 @@ class ModeloFormularios{
 			print_r(Conexion::conectar()->errorInfo());
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -696,7 +696,7 @@ class ModeloFormularios{
 			return $stmt -> fetch();
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -710,7 +710,7 @@ class ModeloFormularios{
 			print_r(Conexion::conectar()->errorInfo());
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -748,7 +748,7 @@ class ModeloFormularios{
 			return $stmt -> fetch();
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 	static public function mdlDelPostulantes($idPostulante){
@@ -808,7 +808,7 @@ class ModeloFormularios{
 			print_r(Conexion::conectar()->errorInfo());
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -825,7 +825,7 @@ class ModeloFormularios{
 			print_r(Conexion::conectar()->errorInfo());
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -842,7 +842,7 @@ class ModeloFormularios{
 			print_r(Conexion::conectar()->errorInfo());
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 		
 	}
@@ -856,7 +856,7 @@ class ModeloFormularios{
 			$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
 			$stmt->execute();
 			return $stmt -> fetch();
-			$stmt->close();
+			$stmt->closeCursor();
 			$stmt = null;
 		}
 		else{
@@ -867,7 +867,7 @@ class ModeloFormularios{
 			$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
 			$stmt->execute();
 			return $stmt -> fetchAll();
-			$stmt->close();
+			$stmt->closeCursor();
 			$stmt = null;
 		}
 	}
@@ -878,7 +878,7 @@ class ModeloFormularios{
 		$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
 		$stmt->execute();
 		return $stmt -> fetch();
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -909,7 +909,7 @@ class ModeloFormularios{
 			print_r(Conexion::conectar()->errorInfo());
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -924,7 +924,7 @@ class ModeloFormularios{
 			print_r(Conexion::conectar()->errorInfo());
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -985,7 +985,7 @@ class ModeloFormularios{
 			print_r(Conexion::conectar()->errorInfo());
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -996,7 +996,7 @@ class ModeloFormularios{
 			ORDER BY fecha_publicacion DESC LIMIT 1");
 		$stmt->execute();
 		return $stmt -> fetch();
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -1013,7 +1013,7 @@ class ModeloFormularios{
 		}else{
 			print_r(Conexion::conectar()->errorInfo());
 		}
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -1031,7 +1031,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 	} else {
 		print_r($stmt->errorInfo());
 	}
-	$stmt->close();
+	$stmt->closeCursor();
 	$stmt = null;
 }
 
@@ -1049,7 +1049,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 			return $stmt -> fetch();
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -1064,7 +1064,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 		} else {
 			print_r($stmt->errorInfo());
 		}
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -1174,7 +1174,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 			return $stmt->fetch();
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -1223,7 +1223,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 		$stmt->execute();
 
 		return $stmt->fetchAll();
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -1267,7 +1267,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 			if ($stmt->execute()) {
 				return 'ok';
 			}
-			$stmt->close();
+			$stmt->closeCursor();
 			$stmt = null;
 		}
 		 else {
@@ -1317,7 +1317,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 		
 	}
@@ -1337,7 +1337,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 			return "ok";
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -1362,7 +1362,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -1377,7 +1377,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 		}else{
 			return "error";
 		}
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -1387,7 +1387,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 		$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
 		$stmt->execute();
 		return $stmt -> fetchAll();
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -1401,7 +1401,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 		}else{
 			return "error";
 		}
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -1415,7 +1415,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 		}else{
 			return "error";
 		}
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -1431,7 +1431,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 		}else{
 			return "error";
 		}
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -1448,7 +1448,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 		}else{
 			return "error";
 		}
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -1463,7 +1463,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 		}else{
 			return "error";
 		}
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -1478,7 +1478,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 		}else{
 			return "error";
 		}
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -1516,7 +1516,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 		}else{
 			return "error";
 		}
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -1532,7 +1532,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 		}else{
 			return "error";
 		}
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -1547,7 +1547,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 		}else{
 			return "error";
 		}
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -1569,7 +1569,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -1585,7 +1585,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 		}else{
 			return "error";
 		}
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -1598,7 +1598,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 		$stmt->execute();
 		return $stmt->fetchAll();
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -1611,7 +1611,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 		$stmt->execute();
 		return $stmt->fetchAll();
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -1622,7 +1622,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 		$stmt->execute();
 		return $stmt->fetch();
 		
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -1637,7 +1637,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 		}else{
 			return "error";
 		}
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -1654,7 +1654,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 		}else{
 			return "error";
 		}
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -1669,7 +1669,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 		}else{
 			return "error";
 		}
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -1685,7 +1685,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 		}else{
 			return "error";
 		}
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -1710,7 +1710,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 		$stmt->execute();
 		return $stmt->fetchAll();
 		
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -1735,7 +1735,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 		$stmt->execute();
 		return $stmt->fetchAll();
 		
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -1753,7 +1753,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 		}else{
 			return "error";
 		}
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -1772,7 +1772,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 			return "error";
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -1788,7 +1788,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 			return "error";
 		}
 		
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -1804,11 +1804,12 @@ static public function mdlActualizarNoticia($tabla, $datos)
 			return "error";
 		}
 		
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
-	static public function mdlVerSolicitudesVacaciones($idEmpleados){
+	static public function mdlVerSolicitudesVacaciones($idEmpleados, $fechaSelected){
+		// Construir la consulta SQL base
 		$sql = "SELECT 
 				e.idEmpleados, e.lastname, e.name, v.idVacaciones, v.respuesta, v.Jefe_idEmpleados as jefe, v.fecha_solicitud as solicitud, v.fecha_respuesta, v.fecha_aprobacion as aprobacion, e.fecha_contratado as contratado, v.status_vacaciones, v.fecha_inicio_vacaciones AS inicio, v.fecha_fin_vacaciones AS fin,
 				CONCAT(e.lastname, ' ', e.name) AS nombre,
@@ -1817,31 +1818,60 @@ static public function mdlActualizarNoticia($tabla, $datos)
 				FROM 
 				empleados e
 				LEFT JOIN vacaciones v ON v.Empleados_idEmpleados = e.idEmpleados
-				WHERE e.idEmpleados =:idEmpleados;";
-
+				WHERE e.idEmpleados = :idEmpleados";
+	
+		// Verificar si $fechaSelected no es null
+		if (!is_null($fechaSelected)) {
+			$sql .= " AND DATE_FORMAT(v.fecha_inicio_vacaciones, '%Y-%m') = :fechaSelected";
+		}
+	
 		$stmt = Conexion::conectar()->prepare($sql);
 		$stmt->bindParam(":idEmpleados", $idEmpleados, PDO::PARAM_INT);
+	
+		// Vincular el parámetro si $fechaSelected no es null
+		if (!is_null($fechaSelected)) {
+			$stmt->bindParam(":fechaSelected", $fechaSelected, PDO::PARAM_STR);
+		}
+	
 		$stmt->execute();
-		return $stmt->fetchAll();
-		
-		$stmt->close();
+	
+		$result = $stmt->fetchAll();
+	
+		$stmt->closeCursor();
 		$stmt = null;
-	}
+	
+		return $result;
+	}	
 
-	static public function mdlVerSolicitudesPermisos($idEmpleados){
+	static public function mdlVerSolicitudesPermisos($idEmpleados, $fechaSelected){
+		// Construir la consulta SQL base
 		$sql = "SELECT *, TIMESTAMPDIFF(DAY, ep.fechaPermiso, ep.fechaFin)+1 AS rango
 				FROM empleados_has_permisos ep
 				RIGHT JOIN permisos p ON p.idPermisos = ep.Permisos_idPermisos
-				WHERE Empleados_idEmpleados = :idEmpleados;";
-
+				WHERE Empleados_idEmpleados = :idEmpleados";
+	
+		// Verificar si $fechaSelected no es null
+		if (!is_null($fechaSelected)) {
+			$sql .= " AND DATE_FORMAT(ep.fechaPermiso, '%Y-%m') = :fechaSelected";
+		}
+	
 		$stmt = Conexion::conectar()->prepare($sql);
 		$stmt->bindParam(":idEmpleados", $idEmpleados, PDO::PARAM_INT);
+	
+		// Vincular el parámetro si $fechaSelected no es null
+		if (!is_null($fechaSelected)) {
+			$stmt->bindParam(":fechaSelected", $fechaSelected, PDO::PARAM_STR);
+		}
+	
 		$stmt->execute();
-		return $stmt->fetchAll();
-		
-		$stmt->close();
+	
+		$result = $stmt->fetchAll();
+	
+		$stmt->closeCursor();
 		$stmt = null;
-	}
+	
+		return $result;
+	}	
 
 	static public function mdlAsignarTarea($datos){
 		$pdo =Conexion::conectar();
@@ -1860,7 +1890,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 			return "error";
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -1893,9 +1923,9 @@ static public function mdlActualizarNoticia($tabla, $datos)
 			return "error";
 		}
 
-		$stmt_busqueda->close();
+		$stmt_busqueda->closeCursor();
 		$stmt_busqueda = null;
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -1918,7 +1948,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 			return $stmt -> fetchAll();
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -1928,7 +1958,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 		$stmt->bindParam(":idTareas", $idTareas, PDO::PARAM_INT);
 		$stmt->execute();
 		return $stmt -> fetchAll();
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -1938,7 +1968,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 		$stmt->bindParam(":idTareas", $idTareas, PDO::PARAM_INT);
 		$stmt->execute();
 		return $stmt -> fetchAll();
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -1957,7 +1987,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 			return "error";
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -1976,7 +2006,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 			return "error";
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -1995,7 +2025,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 			return "error";
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -2010,7 +2040,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 		
 		$stmt->execute();
 		return $stmt -> fetch();
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -2032,7 +2062,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 			return "error";
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -2049,7 +2079,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 			return "error";
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -2066,7 +2096,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 			return "error";
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -2083,7 +2113,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 			return "error";
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -2102,7 +2132,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 		    return "error";
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -2121,7 +2151,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 		    return "error";
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -2144,7 +2174,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 			return "error";
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -2167,7 +2197,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 			return $stmt -> fetch();
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -2190,7 +2220,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 			return $stmt -> fetch();
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -2205,7 +2235,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 		$stmt->execute();
 		return $stmt -> fetchAll();
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -2228,7 +2258,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 			return $stmt -> fetch();
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -2242,7 +2272,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 			$stmt->execute();
 			return $stmt -> fetchAll();
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -2261,7 +2291,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 
 		return $stmt -> fetchAll();
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -2275,7 +2305,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 		$stmt->execute();
 		return $stmt -> fetchAll();
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -2297,7 +2327,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 			return "error";
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -2317,7 +2347,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 			return "error";
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -2333,7 +2363,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 		$stmt->execute();
 		return $stmt -> fetch();
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -2353,7 +2383,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 			return "error";
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -2368,7 +2398,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 		$stmt->execute();
 		return $stmt -> fetch();
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -2410,7 +2440,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 			return "error";
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -2427,7 +2457,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 		$stmt->execute();
 		return $stmt->fetchAll();
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -2442,7 +2472,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 		$stmt->execute();
 		return $stmt->fetchAll();
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -2458,7 +2488,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 		$stmt->execute();
 		return $stmt->fetch();
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -2475,7 +2505,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 			return 'error';
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -2499,7 +2529,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 			return $stmt->fetch();
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -2516,7 +2546,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 			return "error";
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -2532,7 +2562,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 			return 'error';
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -2556,7 +2586,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 			return $stmt->fetch();
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -2573,7 +2603,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 			return "error";
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -2600,7 +2630,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 			return 'error';
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -2619,7 +2649,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 			return 'error';
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -2638,7 +2668,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 			return 'error';
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -2656,7 +2686,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 			$stmt->execute();
 			return $stmt->fetch();
 		}
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -2674,7 +2704,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 			$stmt->execute();
 			return $stmt->fetchAll();
 		}
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -2688,7 +2718,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 		}else{
 			return "error";
 		}
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -2710,7 +2740,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 		}else{
 			return "error";
 		}
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -2724,7 +2754,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 		}else{
 			return "error";
 		}
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -2742,7 +2772,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 			$stmt->execute();
 			return $stmt->fetch();
 		}
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -2757,7 +2787,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 		}else{
 			return "error";
 		}
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -2771,7 +2801,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 		}else{
 			return "error";
 		}
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -2785,7 +2815,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 		}else{
 			return "error";
 		}
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -2799,7 +2829,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 		}else{
 			return "error";
 		}
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -2825,7 +2855,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 			return 'error';
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -2846,7 +2876,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 			$stmt->execute();
 			return $stmt->fetch();
 		}
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -2860,7 +2890,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 		}else{
 			return "error";
 		}
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -2878,7 +2908,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 			$stmt->execute();
 			return $stmt->fetch();
 		}
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -2926,7 +2956,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 			return 'error';
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 
@@ -2972,7 +3002,7 @@ static public function mdlActualizarNoticia($tabla, $datos)
 			return 'error';
 		}
 
-		$stmt->close();
+		$stmt->closeCursor();
 		$stmt = null;
 	}
 

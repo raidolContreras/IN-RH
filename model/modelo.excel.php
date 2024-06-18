@@ -4,9 +4,9 @@ require_once "conexion.php";
 
 require_once "autoload.php";
 
-// Importar las clases necesarias para TCPDF y PhpSpreadsheet
+		// Importar las clases necesarias para TCPDF y PhpSpreadsheet
 use PhpOffice\PhpSpreadsheet\Writer\Pdf\Tcpdf;
-//Librerias
+		//Librerias
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\Worksheet;
@@ -19,13 +19,36 @@ use PhpOffice\PhpSpreadsheet\Style\Style;
 
 class ModeloExcel{
 
-	static public function mdlGenerarExcelAsistencias($tabla, $idEmpleados){
-		$fecha= date("d/M/Y");
+	static public function mdlGenerarExcelAsistencias($tabla, $idEmpleados, $fechaSelected){
+		
 		$dias = array("Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado");
 		$diasmin = array("Do","Lu","Ma","Mi","Ju","Vi","Sá");
 		$meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
 
-		$mesActual = $meses[date('n')-1];
+		if ($fechaSelected == null) {
+			// Obtener la fecha actual
+			$dia = date('d');
+			$mesNumero = date('n'); // Número del mes actual
+			$anio = date('Y');
+
+			$mesActual = $meses[date('n') - 1];
+		} else {
+			// Usar la fecha seleccionada
+			$fechaParts = explode('-', $fechaSelected);
+			$anio = $fechaParts[0];
+			$mesNumero = intval($fechaParts[1]);
+			$dia = '01'; // Si solo tienes año y mes, puedes usar el primer día del mes
+
+			$fechaParts = explode('-', $fechaSelected);
+			$mesNumero = intval($fechaParts[1]); // Convertir el mes a entero
+			$mesActual = $meses[$mesNumero - 1];
+		}
+
+		// Obtener el nombre del mes en español
+		$mesNombre = $meses[$mesNumero - 1];
+
+		// Formatear la fecha
+		$fecha = "$dia/$mesNombre/$anio";
 
 		/*-------- Datos generales --------*/
 		$empleado = ControladorEmpleados::ctrVerEmpleados("idEmpleados", $idEmpleados);
@@ -38,16 +61,16 @@ class ModeloExcel{
 
 
 		/*-------- Datos de los días (festivos, asistencias, horarios) --------*/
-		$festivos = ControladorEmpleados::ctrDiasFestivos();
-		$asistencias = ControladorEmpleados::ctrAsistenciasJustificantes($idEmpleados);
+		$festivos = ControladorEmpleados::ctrDiasFestivos($fechaSelected);
+		$asistencias = ControladorEmpleados::ctrAsistenciasJustificantes($idEmpleados, $fechaSelected);
 		$horarios = ControladorEmpleados::ctrVerEmpleadosHorariosDHorarios("idEmpleados", $idEmpleados);
 		$default = ControladorEmpleados::ctrVerEmpleadosHorariosDHorarios("h.default", 1);
-		$vacaciones = ControladorFormularios::ctrVerSolicitudesVacaciones($idEmpleados);
-		$permisos = ControladorFormularios::ctrVerSolicitudesPermisos($idEmpleados);
+		$vacaciones = ControladorFormularios::ctrVerSolicitudesVacaciones($idEmpleados,$fechaSelected);
+		$permisos = ControladorFormularios::ctrVerSolicitudesPermisos($idEmpleados,$fechaSelected);
 
 		$datos_asistencia = array();
 		$horas_totales = 0;
-
+		
 		foreach ($asistencias as $asistencia) {
 			$horaEntrada = $asistencia['entrada'];
 			$horaSalida = $asistencia['salida'];
@@ -116,15 +139,15 @@ class ModeloExcel{
 		->setCreator("IN Consulting México")
 		->setLastModifiedBy('IN Consulting México')
 		->setTitle("Reporte de Asistencias IN Consulting")
-		->setDescription("Reporte de Asistencias del mes de ".$meses[date('n')-1]);
+		->setDescription("Reporte de Asistencias del mes de ".$mesActual);
 
 		$drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\HeaderFooterDrawing();
 
-// Set the name of the logo
+		// Set the name of the logo
 		$drawing->setName('inconsulting.com');
 		$drawing->setPath('../assets/images/logo.png');
 
-//Informacion de la campaña
+		//Informacion de la campaña
 		$spreadsheet->setActiveSheetIndex(0);
 
 		$activeWorksheet = $spreadsheet->getActiveSheet();
@@ -132,7 +155,7 @@ class ModeloExcel{
 
 		$activeWorksheet->getHeaderFooter()->addImage($drawing, \PhpOffice\PhpSpreadsheet\Worksheet\HeaderFooter::IMAGE_HEADER_LEFT);
 
-// Set the print header
+		// Set the print header
 		$activeWorksheet->getHeaderFooter()->setOddHeader('&L&G');
 
 		$activeWorksheet->setTitle('Reporte de '.$mesActual );
@@ -211,23 +234,28 @@ class ModeloExcel{
 
 		$i=12;
 
-// Ordenar los datos de asistencia por fecha
+		// Ordenar los datos de asistencia por fecha
 		usort($datos_asistencia, function($a, $b) {
 			$fecha1 = DateTime::createFromFormat('Y-m-d', $a['fecha_asistencia']);
 			$fecha2 = DateTime::createFromFormat('Y-m-d', $b['fecha_asistencia']);
 			return $fecha1 <=> $fecha2;
 		});
 
-		$numeroDias = date('t');
-
-// Obtener el número del día actual
+		
+		// Obtener el número del día actual
 		$diaActual = date('j');
-
-// Obtener el mes actual
-		$mesActual = date('m');
-
-// Obtener el año actual
-		$añoActual = date('Y');
+		
+		// Obtener el mes actual
+		if ($fechaSelected != null) {
+			$fechaParts = explode('-', $fechaSelected);
+			$mesActual = intval($fechaParts[1]); 
+			$añoActual = intval($fechaParts[0]);
+			$numeroDias = cal_days_in_month(CAL_GREGORIAN, $mesActual, $añoActual);
+		} else {
+			$numeroDias = date('t');
+			$mesActual = date('m');
+			$añoActual = date('Y');
+		}
 
 		$primerQuincena = 0;
 		$segundaQuincena = 0;
@@ -247,14 +275,14 @@ class ModeloExcel{
 		$HorasEsperadasPermisos = '';
 
 
-// Generar celdas para cada día del mes
+		// Generar celdas para cada día del mes
 		for ($dia = 1; $dia <= $numeroDias; $dia++) {
 
 			$activeWorksheet->setCellValue('E'.$i, ' - ');
 			$activeWorksheet->setCellValue('G'.$i, ' - ');
 			$status = 0;
 
-// Formatear la fecha completa en el formato "dd/mm/yyyy"
+		// Formatear la fecha completa en el formato "dd/mm/yyyy"
 			$fechaCompleta = sprintf("%02d/%02d/%04d", $dia, $mesActual, $añoActual);
 			$fechasInformato = date('N', strtotime(sprintf("%04d-%02d-%02d", $añoActual, $mesActual, $dia)));
 
@@ -292,9 +320,9 @@ class ModeloExcel{
 					$status = 1;
 				}
 
-// Verificar si es el día 15 para agregar la línea divisoria
+		// Verificar si es el día 15 para agregar la línea divisoria
 				if ($dia === 15) {
-// Agregar una línea divisoria
+		// Agregar una línea divisoria
 					$activeWorksheet->setCellValue('D9', ModeloExcel::mdlformatearHora($primerQuincena));
 					$activeWorksheet->getStyle('B'.$i.':L'.$i)->getBorders()->getBottom()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_MEDIUM);
 					$activeWorksheet->getStyle('B'.$i.':L'.$i)->getBorders()->getBottom()->getColor()->setARGB('000000');
@@ -304,7 +332,7 @@ class ModeloExcel{
 
 			$activeWorksheet->setCellValue('G9', ModeloExcel::mdlformatearHora($segundaQuincena));
 			$activeWorksheet->setCellValue('B'.$i, $diasmin[$fechasInformato]);
-// Imprimir la fecha completa en la celda correspondiente
+		// Imprimir la fecha completa en la celda correspondiente
 			$activeWorksheet->setCellValue('C'.$i, $fechaCompleta);
 
 			if ($status == 0) {
@@ -408,7 +436,7 @@ class ModeloExcel{
 					$diasPermiso--;
 			}
 
-// Incrementar el número de fila
+		// Incrementar el número de fila
 			$i++;
 		}
 		if (date('d') <= 15) {
@@ -436,8 +464,8 @@ class ModeloExcel{
 	}
 
 	static public function mdlformatearHora($hora){
-		$horas = floor($hora); // Obtener la parte entera de las horas
-		$minutos = round(($hora - $horas) * 60); // Obtener los minutos y redondearlos
+		$horas = floor($hora); 		// Obtener la parte entera de las horas
+		$minutos = round(($hora - $horas) * 60); 		// Obtener los minutos y redondearlos
 
 		$hora_formateada = $horas.'h '. $minutos . 'min';
 		return $hora_formateada;
@@ -445,14 +473,14 @@ class ModeloExcel{
 
 	static public function mdlTotalDiasLaborables($mes,$anio,$ndia){
 
-	// Obtener el número de días en el mes
+			// Obtener el número de días en el mes
 		$num_dias_mes = cal_days_in_month(CAL_GREGORIAN, $mes, $anio);
 
 		$num_dias_trabajo = 0;
 
-	// Contar los días de trabajo en el mes
+			// Contar los días de trabajo en el mes
 		for ($dia = 1; $dia <= $num_dias_mes; $dia++) {
-			$num_dia_semana = date('w', strtotime("$anio-$mes-$dia")); // Obtener el número del día de la semana (0: domingo, 1: lunes, etc.)
+			$num_dia_semana = date('w', strtotime("$anio-$mes-$dia")); 		// Obtener el número del día de la semana (0: domingo, 1: lunes, etc.)
 
 			if (in_array($num_dia_semana, $ndia)) {
 				$num_dias_trabajo++;
@@ -524,7 +552,7 @@ static public function mdlGenerarExcelAsistenciasEmpresas($tabla, $idEmpresas){
 
 	$nombreMesActual = $meses[date('n')-1];
 
-	$festivos = ControladorEmpleados::ctrDiasFestivos();
+	$festivos = ControladorEmpleados::ctrDiasFestivos(null);
 
 	$spreadsheet = new Spreadsheet();
 	$spreadsheet
@@ -534,7 +562,7 @@ static public function mdlGenerarExcelAsistenciasEmpresas($tabla, $idEmpresas){
 	->setTitle("Reporte de Asistencias IN Consulting")
 	->setDescription("Reporte de Asistencias del mes de ".$meses[date('n')-1]);
 
-//Informacion de la campaña
+		//Informacion de la campaña
 	$spreadsheet->setActiveSheetIndex(0);
 
 	$activeWorksheet = $spreadsheet->getActiveSheet();
@@ -588,12 +616,12 @@ static public function mdlGenerarExcelAsistenciasEmpresas($tabla, $idEmpresas){
 		$empresa = ControladorFormularios::ctrVerEmpresas("idEmpresas", $departamento['Empresas_idEmpresas']);
 
 		/*-------- Datos de los días (festivos, asistencias, horarios) --------*/
-		$asistencias = ControladorEmpleados::ctrAsistenciasJustificantes($empleado['idEmpleados']);
+		$asistencias = ControladorEmpleados::ctrAsistenciasJustificantes($empleado['idEmpleados'], null);
 		$horarios = ControladorEmpleados::ctrVerEmpleadosHorariosDHorarios("Empleados_idEmpleados", $empleado['idEmpleados']);
 		$default = ControladorEmpleados::ctrVerEmpleadosHorariosDHorarios("h.default", 1);
 
-		$vacaciones = ControladorFormularios::ctrVerSolicitudesVacaciones($empleado['idEmpleados']);
-		$permisos = ControladorFormularios::ctrVerSolicitudesPermisos($empleado['idEmpleados']);
+		$vacaciones = ControladorFormularios::ctrVerSolicitudesVacaciones($empleado['idEmpleados'], null);
+		$permisos = ControladorFormularios::ctrVerSolicitudesPermisos($empleado['idEmpleados'], null);
 
 		$datos_asistencia = array();
 		$horas_totales = 0;
@@ -726,13 +754,13 @@ static public function mdlGenerarExcelAsistenciasEmpresas($tabla, $idEmpresas){
 
 		$numeroDias = date('t');
 
-// Obtener el número del día actual
+		// Obtener el número del día actual
 		$diaActual = date('j');
 
-// Obtener el mes actual
+		// Obtener el mes actual
 		$mesActual = date('m');
 
-// Obtener el año actual
+		// Obtener el año actual
 		$añoActual = date('Y');
 
 		$primerQuincena = 0;
@@ -751,14 +779,14 @@ static public function mdlGenerarExcelAsistenciasEmpresas($tabla, $idEmpresas){
 		$diasFestivos = 0;
 
 		$HorasEsperadasPermisos = '';
-// Generar celdas para cada día del mes
+		// Generar celdas para cada día del mes
 		for ($dia = 1; $dia <= $numeroDias; $dia++) {
 
 			$activeWorksheet->setCellValue('E'.$a, ' - ');
 			$activeWorksheet->setCellValue('G'.$a, ' - ');
 			$status = 0;
 
-// Formatear la fecha completa en el formato "dd/mm/yyyy"
+		// Formatear la fecha completa en el formato "dd/mm/yyyy"
 			$fechaCompleta = sprintf("%02d/%02d/%04d", $dia, $mesActual, $añoActual);
 			$fechasInformato = date('N', strtotime(sprintf("%04d-%02d-%02d", $añoActual, $mesActual, $dia)));
 
@@ -796,9 +824,9 @@ static public function mdlGenerarExcelAsistenciasEmpresas($tabla, $idEmpresas){
 					$status = 1;
 				}
 
-// Verificar si es el día 15 para agregar la línea divisoria
+		// Verificar si es el día 15 para agregar la línea divisoria
 				if ($dia === 15) {
-// Agregar una línea divisoria
+		// Agregar una línea divisoria
 					$activeWorksheet->setCellValue('D'.($a-17), ModeloExcel::mdlformatearHora($primerQuincena));
 					$activeWorksheet->getStyle('B'.$a.':L'.$a)->getBorders()->getBottom()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_MEDIUM);
 					$activeWorksheet->getStyle('B'.$a.':L'.$a)->getBorders()->getBottom()->getColor()->setARGB('000000');
@@ -807,7 +835,7 @@ static public function mdlGenerarExcelAsistenciasEmpresas($tabla, $idEmpresas){
 			}
 
 			$activeWorksheet->setCellValue('B'.$a, $diasmin[$fechasInformato]);
-// Imprimir la fecha completa en la celda correspondiente
+		// Imprimir la fecha completa en la celda correspondiente
 			$activeWorksheet->setCellValue('C'.$a, $fechaCompleta);
 
 			if ($status == 0) {
@@ -911,7 +939,7 @@ static public function mdlGenerarExcelAsistenciasEmpresas($tabla, $idEmpresas){
 					$diasPermiso--;
 			}
 
-// Incrementar el número de fila
+		// Incrementar el número de fila
 			$a++;
 		}
 
@@ -953,12 +981,12 @@ static public function mdlGenerarExcelAsistenciasEmpresas($tabla, $idEmpresas){
 
 		foreach ($preguntas as $pregunta) {
 			$preguntaSinHTML = strip_tags($pregunta['pregunta']);
-			$letraPregunta = ModeloExcel::sumarLetra('F', $i); // Sumamos 'A' más el número de pregunta
+			$letraPregunta = ModeloExcel::sumarLetra('F', $i); 		// Sumamos 'A' más el número de pregunta
 			$i++;
 			$datos_preguntas[] = array(
 				"pregunta" => $preguntaSinHTML,
 				"tipo_pregunta" => $pregunta['tipo_pregunta'],
-				"letra_Pregunta" => $letraPregunta // Guardamos la letra resultante
+				"letra_Pregunta" => $letraPregunta 		// Guardamos la letra resultante
 			);
 		}
 
@@ -1087,7 +1115,7 @@ static public function mdlGenerarExcelAsistenciasEmpresas($tabla, $idEmpresas){
 			$a++;
 		}
 
-		//print_r($datos_empleados);
+				//print_r($datos_empleados);
 
 		$spreadsheet = new Spreadsheet();
 		$spreadsheet
@@ -1101,7 +1129,7 @@ static public function mdlGenerarExcelAsistenciasEmpresas($tabla, $idEmpresas){
 
 		$activeWorksheet = $spreadsheet->getActiveSheet();
 
-// Set the print header
+		// Set the print header
 		$activeWorksheet->getHeaderFooter()->setOddHeader('&L&G');
 
 		$activeWorksheet->setCellValue('B3', 'Reporte de Calificaciones:');
@@ -1267,7 +1295,7 @@ static public function mdlGenerarExcelAsistenciasEmpresas($tabla, $idEmpresas){
 		$activeWorksheet->mergeCells('B20:F20');
 
 		$activeWorksheet->getColumnDimension('A')->setWidth(20);
-		// Establecer la altura de la fila 1 (por ejemplo, 25 puntos)
+				// Establecer la altura de la fila 1 (por ejemplo, 25 puntos)
 		$activeWorksheet->getRowDimension(1)->setRowHeight(25);
 
 		$activeWorksheet->getColumnDimension('B')->setWidth(20);

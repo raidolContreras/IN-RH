@@ -425,7 +425,8 @@ class FormulariosAjax{
 
 	public function crearExcelAjax(){
 		$idEmpleados = $this->idEmpleados;
-		$generarExcel = ControladorExcel::ctrGeneralExcelAsistencias($idEmpleados);
+		$fecha = $this->fecha;
+		$generarExcel = ControladorExcel::ctrGeneralExcelAsistencias($idEmpleados, $fecha);
 		echo json_encode($generarExcel);
 	}
 
@@ -1457,9 +1458,11 @@ if (isset($_POST['declinarPermiso'])) {
 
 if (isset($_POST['genExcel'])) {
 	$idEmpleados = $_POST['genExcel'];
+	$fecha = (isset($_POST['fecha'])) ? $_POST['fecha'] : null;
 
 	$generarExcel = new FormulariosAjax();
 	$generarExcel -> idEmpleados = $idEmpleados;
+	$generarExcel -> fecha = $fecha;
 	$generarExcel -> crearExcelAjax();
 }
 

@@ -938,7 +938,7 @@ class ControladorFormularios{
 
 		$nombre = ucwords(mb_strtolower($empleado['lastname']." ".$empleado['name'])); 
 		
-		$asistencias = ControladorEmpleados::ctrAsistenciasJustificantes($empleado['idEmpleados']);
+		$asistencias = ControladorEmpleados::ctrAsistenciasJustificantes($empleado['idEmpleados'], null);
 		$horarios = ControladorEmpleados::ctrVerEmpleadosHorariosDHorarios("Empleados_idEmpleados", $empleado['idEmpleados']);
 		$default = ControladorEmpleados::ctrVerEmpleadosHorariosDHorarios("h.default", 1);
 
@@ -1128,13 +1128,13 @@ class ControladorFormularios{
 		return $eliminar;
 	}
 
-	static public function ctrVerSolicitudesVacaciones($idEmpleados){
-		$vacaciones = ModeloFormularios::mdlVerSolicitudesVacaciones($idEmpleados);
+	static public function ctrVerSolicitudesVacaciones($idEmpleados,$fechaSelected){
+		$vacaciones = ModeloFormularios::mdlVerSolicitudesVacaciones($idEmpleados,$fechaSelected);
 		return $vacaciones;
 	}
 
-	static public function ctrVerSolicitudesPermisos($idEmpleados){
-		$vacaciones = ModeloFormularios::mdlVerSolicitudesPermisos($idEmpleados);
+	static public function ctrVerSolicitudesPermisos($idEmpleados,$fechaSelected){
+		$vacaciones = ModeloFormularios::mdlVerSolicitudesPermisos($idEmpleados,$fechaSelected);
 		return $vacaciones;
 	}
 

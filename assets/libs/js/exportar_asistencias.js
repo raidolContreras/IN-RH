@@ -1,7 +1,10 @@
-
 $(document).ready(function() {
   $(".exportarExcel-btn").click(function() {
-    var formData = $(this).closest('.exportarExcel-form').serialize();
+    var formData = $(this).closest('.exportarExcel-form').serializeArray();
+    let fecha = $('#fecha').val();
+
+    // Añadir la fecha al array de formData
+    formData.push({name: 'fecha', value: fecha});
 
     $.ajax({
       url: "ajax/ajax.formularios.php",

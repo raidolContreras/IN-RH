@@ -1,19 +1,20 @@
 <?php 
 
-class Conexion{
+class Conexion {
+    static public function conectar() {
+        $dsn = "mysql:host=193.203.166.24;dbname=u194557050_inconsulting;charset=utf8";
+        $username = "u194557050_ocontreras";
+        $password = "fjz6GG5l7ly{";
 
-  static public function conectar(){
-
-    #PDO("nombre del servidor; nombre de la base de datos", "usuario", "contraseña")
-
-    $link = new PDO("mysql:host=localhost;dbname=u194557050_inconsulting", 
-                  "u194557050_ocontreras", 
-                  "fjz6GG5l7ly{");
-
-    $link->exec("set names utf8");
-
-    return $link;
-
-  }
-
+        try {
+            $options = [
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                PDO::ATTR_TIMEOUT => 10 // Tiempo de espera de 10 segundos
+            ];
+            $link = new PDO($dsn, $username, $password, $options);
+            return $link;
+        } catch (PDOException $e) {
+            die("Error de conexión: " . $e->getMessage());
+        }
+    }
 }
