@@ -250,7 +250,7 @@ class ModeloExcel{
 			$fechaParts = explode('-', $fechaSelected);
 			$mesActual = intval($fechaParts[1]); 
 			$añoActual = intval($fechaParts[0]);
-			$numeroDias = cal_days_in_month(CAL_GREGORIAN, $mesActual, $añoActual);
+			$numeroDias = date('t', mktime(0, 0, 0, $mesActual, 1, $añoActual));
 		} else {
 			$numeroDias = date('t');
 			$mesActual = date('m');
